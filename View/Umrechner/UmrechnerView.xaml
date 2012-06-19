@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="MeisterGeister.View.Umrechner.UmrechnerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d" 
+             d:DesignHeight="493" d:DesignWidth="687" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Expander Name="_expanderLänge" Header="Länge" Grid.Row="0" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="2" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <ViewGeneral:DoubleBox xml:lang="de" Grid.Column="0" Height="51" Margin="10" x:Name="_doubleBoxLängeWert" Width="109" ToolTip="Wert, der umgerechnet werden soll." Value="1.0" NumValueChanged="_doubleBoxLängeWert_NumValueChanged" />
+                    <StackPanel Grid.Column="1" >
+                        <Label Margin="20,10,0,0" Content="Von:" />
+                        <Label Margin="20,0,0,0" Content="Nach:" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" >
+                        <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxLängeVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxLängeVon_SelectionChanged" />
+                        <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxLängeNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxLängeVon_SelectionChanged" />
+                    </StackPanel>
+                    <Button Grid.Column="3" Height="25" Name="_buttonLängeWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonLängeWechseln_Click">
+                        <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
+                    </Button>
+                    <TextBox Grid.Column="4" Height="51" Margin="10" Name="_textBoxLängeErgebnis" ToolTip="Umgerechneter Wert.." MinWidth="125" Width="Auto" IsReadOnly="True" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <ViewGeneral:WikiLinkControl Grid.Column="5" Tag="Aventurische_Maße#L.C3.A4ngenma.C3.9Fe" />
+                </Grid>
+            </Expander>
+            <Expander Name="_expanderMasse" Header="Masse" Grid.Row="1" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="2" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <ViewGeneral:DoubleBox xml:lang="de" Grid.Column="0" Height="51" Margin="10" x:Name="_doubleBoxMasseWert" Width="109" ToolTip="Wert, der umgerechnet werden soll." Value="1.0" NumValueChanged="_doubleBoxMasseWert_NumValueChanged" />
+                    <StackPanel Grid.Column="1" >
+                        <Label Margin="20,10,0,0" Content="Von:" />
+                        <Label Margin="20,0,0,0" Content="Nach:" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" >
+                        <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxMasseVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxMasse_SelectionChanged" />
+                        <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxMasseNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxMasse_SelectionChanged" />
+                    </StackPanel>
+                    <Button Grid.Column="3" Height="25" Name="_buttonMasseWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonMasseWechseln_Click">
+                        <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
+                    </Button>
+                    <TextBox Grid.Column="4" Height="51" Margin="10" Name="_textBoxMasseErgebnis" ToolTip="Umgerechneter Wert.." MinWidth="125" Width="Auto" IsReadOnly="True" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <ViewGeneral:WikiLinkControl Grid.Column="5" Tag="Aventurische_Maße#Gewichtsma.C3.9Fe" />
+                </Grid>
+            </Expander>
+            <Expander Name="_expanderVolumen" Header="Volumen" Grid.Row="2" IsExpanded="False" Background="{StaticResource BackgroundPergamentQuer}" Margin="2" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <ViewGeneral:DoubleBox xml:lang="de" Grid.Column="0" Height="51" Margin="10" x:Name="_doubleBoxVolumenWert" Width="109" ToolTip="Wert, der umgerechnet werden soll." Value="1.0" NumValueChanged="_doubleBoxVolumenWert_NumValueChanged" />
+                    <StackPanel Grid.Column="1" >
+                        <Label Margin="20,10,0,0" Content="Von:" />
+                        <Label Margin="20,0,0,0" Content="Nach:" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" >
+                        <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxVolumenVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxVolumen_SelectionChanged" />
+                        <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxVolumenNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxVolumen_SelectionChanged" />
+                    </StackPanel>
+                    <Button Grid.Column="3" Height="25" Name="_buttonVolumenWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonVolumenWechseln_Click">
+                        <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
+                    </Button>
+                    <TextBox Grid.Column="4" Height="51" Margin="10" Name="_textBoxVolumenErgebnis" ToolTip="Umgerechneter Wert.." MinWidth="125" Width="Auto" IsReadOnly="True" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <ViewGeneral:WikiLinkControl Grid.Column="5" Tag="Aventurische_Maße#Volumenma.C3.9Fe" />
+                </Grid>
+            </Expander>
+            <Expander Name="_expanderFläche" Header="Fläche" Grid.Row="3" IsExpanded="False" Background="{StaticResource BackgroundPergamentQuer}" Margin="2" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <ViewGeneral:DoubleBox xml:lang="de" Grid.Column="0" Height="51" Margin="10" x:Name="_doubleBoxFlächeWert" Width="109" ToolTip="Wert, der umgerechnet werden soll." Value="1.0" NumValueChanged="_doubleBoxFlächeWert_NumValueChanged" />
+                    <StackPanel Grid.Column="1" >
+                        <Label Margin="20,10,0,0" Content="Von:" />
+                        <Label Margin="20,0,0,0" Content="Nach:" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" >
+                        <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxFlächeVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxFläche_SelectionChanged" />
+                        <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxFlächeNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxFläche_SelectionChanged" />
+                    </StackPanel>
+                    <Button Grid.Column="3" Height="25" Name="_buttonFlächeWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonFlächeWechseln_Click">
+                        <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
+                    </Button>
+                    <TextBox Grid.Column="4" Height="51" Margin="10" Name="_textBoxFlächeErgebnis" ToolTip="Umgerechneter Wert.." MinWidth="125" Width="Auto" IsReadOnly="True" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <ViewGeneral:WikiLinkControl Grid.Column="5" Tag="Aventurische_Maße#Fl.C3.A4chenma.C3.9Fe" />
+                </Grid>
+            </Expander>
+            <Expander Name="_expanderWährung" Header="Währung" Grid.Row="4" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="2" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <ViewGeneral:DoubleBox xml:lang="de" Grid.Column="0" Height="51" Margin="10" x:Name="_doubleBoxWährungWert" Width="109" ToolTip="Wert, der umgerechnet werden soll." Value="1.0" NumValueChanged="_doubleBoxWährungWert_NumValueChanged" />
+                    <StackPanel Grid.Column="1" >
+                        <Label Margin="20,10,0,0" Content="Von:" />
+                        <Label Margin="20,0,0,0" Content="Nach:" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" >
+                        <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxWährungVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxWährung_SelectionChanged" />
+                        <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxWährungNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxWährung_SelectionChanged" />
+                    </StackPanel>
+                    <Button Grid.Column="3" Height="25" Name="_buttonWährungWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonWährungWechseln_Click">
+                        <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
+                    </Button>
+                    <TextBox Grid.Column="4" Height="51" Margin="10" Name="_textBoxWährungErgebnis" ToolTip="Umgerechneter Wert.." MinWidth="125" Width="Auto" IsReadOnly="True" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <ViewGeneral:WikiLinkControl Grid.Column="5" Tag="Aventurische_Währungen" />
+                </Grid>
+            </Expander>
+            <Expander Name="_expanderZeit" Header="Zeit" Grid.Row="5" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="2" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="25" />
+                    </Grid.ColumnDefinitions>
+                    <ViewGeneral:DoubleBox xml:lang="de" Grid.Column="0" Height="51" Margin="10" x:Name="_doubleBoxZeitWert" Width="109" ToolTip="Wert, der umgerechnet werden soll." Value="1.0" NumValueChanged="_doubleBoxZeitWert_NumValueChanged" />
+                    <StackPanel Grid.Column="1" >
+                        <Label Margin="20,10,0,0" Content="Von:" />
+                        <Label Margin="20,0,0,0" Content="Nach:" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" >
+                        <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxZeitVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxZeit_SelectionChanged" />
+                        <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxZeitNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxZeit_SelectionChanged" />
+                    </StackPanel>
+                    <Button Grid.Column="3" Height="25" Name="_buttonZeitWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonZeitWechseln_Click">
+                        <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
+                    </Button>
+                    <TextBox Grid.Column="4" Height="51" Margin="10" Name="_textBoxZeitErgebnis" ToolTip="Umgerechneter Wert.." MinWidth="125" Width="Auto" IsReadOnly="True" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <ViewGeneral:WikiLinkControl Grid.Column="5" Tag="Zeit" />
+                </Grid>
+            </Expander>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

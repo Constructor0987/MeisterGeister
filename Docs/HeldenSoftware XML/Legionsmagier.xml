@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.2" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1292539174955" name="Legionsmagier">
+<basis>
+<geschlecht name="männlich"/>
+<settings name="Die Dunklen Zeiten"/>
+<mods/>
+<rasse name="helden.model.DDZRassen.AlHani" string="Al'Hani">
+<groesse gewicht="78" value="178"/>
+<aussehen alter="21" augenfarbe="dunkelbraun" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1003" gbmonat="6" gbtag="12" gprest="0" gpstart="110" haarfarbe="schwarz" kalender="Bosparans Fall" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.DDZKulturen.BosparanischesReich" string="Bosparanisches Reich - Horasiat">
+<variante name="Horasiat"/>
+</kultur>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.DDZprofessionen.BosMagier" string="Bosparanischer Magier: Legionsmagier">
+<variante name="Legionsmagier"/>
+</ausbildung>
+</ausbildungen>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value=""/>
+<abenteuerpunkte value="5000"/>
+<freieabenteuerpunkte value="4860"/>
+</basis>
+<eigenschaften>
+<eigenschaft mod="0" name="Mut" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Klugheit" startwert="13" value="13"/>
+<eigenschaft mod="0" name="Intuition" startwert="12" value="12"/>
+<eigenschaft mod="1" name="Charisma" startwert="11" value="11"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="8" value="8"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="8" value="8"/>
+<eigenschaft mod="0" name="Konstitution" startwert="11" value="11"/>
+<eigenschaft mod="0" name="Körperkraft" startwert="8" value="8"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="8" value="8"/>
+<eigenschaft mod="11" name="Lebensenergie" value="0"/>
+<eigenschaft mod="10" name="Ausdauer" value="0"/>
+<eigenschaft grossemeditation="0" mod="11" mrmod="-2" name="Astralenergie" permanent="-1" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-2" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="9"/>
+<eigenschaft mod="0" name="at" value="6"/>
+<eigenschaft mod="0" name="pa" value="6"/>
+<eigenschaft mod="0" name="fk" value="6"/>
+</eigenschaften>
+<vt>
+<vorteil name="Soziale Anpassungsfähigkeit"/>
+<vorteil name="Vollzauberer"/>
+<vorteil kommentar="Mehrung, Achtung, Geheimhaltung" name="Prinzipientreue" value="6"/>
+<vorteil kommentar="Legion, Imperium, Auftraggeber" name="Verpflichtungen"/>
+<vorteil name="Übler Geruch"/>
+</vt>
+<sf>
+<sonderfertigkeit name="Astrale Meditation"/>
+<sonderfertigkeit name="Große Meditation"/>
+<sonderfertigkeit name="Kraftspeicher"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Bosparanisches Reich"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Merkmalskenntnis: Elementar (Feuer)"/>
+<sonderfertigkeit name="Merkmalskenntnis: Schaden"/>
+<sonderfertigkeit name="Regeneration I"/>
+<sonderfertigkeit name="Repräsentation: Güldenländisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Güldenländisch"/>
+<sonderfertigkeit dauer="" kosten="" name="Stabzauber: Bindung" probe="" wirkung=""/>
+<sonderfertigkeit name="Zauberkontrolle"/>
+</sf>
+<ereignisse>
+<ereignis Alt="0" Neu="0" kommentar="3 GP" obj="RKP" text="Rasse: Al'Hani" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="1 GP" obj="RKP" text="Kultur: Bosparanisches Reich - Horasiat" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="25 GP" obj="RKP" text="Profession: Bosparanischer Magier: Legionsmagier" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="EIGENSCHAFTEN" text="Mut: 12" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="EIGENSCHAFTEN" text="Klugheit: 13" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="EIGENSCHAFTEN" text="Intuition: 12" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="12" kommentar="11 GP" obj="EIGENSCHAFTEN" text="Charisma: 12" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="EIGENSCHAFTEN" text="Fingerfertigkeit: 8" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="EIGENSCHAFTEN" text="Gewandtheit: 8" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="11" kommentar="11 GP" obj="EIGENSCHAFTEN" text="Konstitution: 11" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="EIGENSCHAFTEN" text="Körperkraft: 8" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="8" kommentar="0 GP" obj="EIGENSCHAFTEN" text="Sozialstatus: 8" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="3 GP" obj="SF" text="Kraftspeicher" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Prinzipientreue: 6" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Soziale Anpassungsfähigkeit" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Verpflichtungen" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Vollzauberer" time="1292539178773" version="5.0.8"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="VORTEILE" text="Übler Geruch" time="1292539178773" version="5.0.8"/>
+<ereignis Neu="1" obj="Auswahl" text="Hiebwaffen" time="1292539178773" version="5.0.8"/>
+<ereignis Neu="1" obj="Auswahl" text="Ackerbau" time="1292539178773" version="5.0.8"/>
+<ereignis Neu="3" obj="Auswahl" text="Sprachen kennen Grolmisch" time="1292539178773" version="5.0.8"/>
+<ereignis Neu="3" obj="Auswahl" text="Kryptographie" time="1292539178773" version="5.0.8"/>
+<ereignis Neu="4" obj="Auswahl" text="Tierkunde" time="1292539178773" version="5.0.8"/>
+<ereignis Neu="5" obj="Auswahl" text="Sprachen kennen Wudu" time="1292539178773" version="5.0.8"/>
+<ereignis Abenteuerpunkte="4500" Alt="500" Neu="5000" text="Abenteuerpunkte" time="1292539193801" version="5.0.8"/>
+<ereignis Abenteuerpunkte="-25" Neu="0" obj="Abvenenum reine Speise [Druide/Geode]" text="Zauber aktivieren" time="1308245791109" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-25" Neu="0" obj="Abvenenum reine Speise [Kophtanisch]" text="Zauber aktivieren" time="1308245793388" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-25" Neu="0" obj="Abvenenum reine Speise [Mudramulisch]" text="Zauber aktivieren" time="1308245794300" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-25" Neu="0" obj="Abvenenum reine Speise [Satuarisch]" text="Zauber aktivieren" time="1308245795332" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-20" Neu="0" obj="Adlerauge Luchsenohr [Druide/Geode]" text="Zauber aktivieren" time="1308245802883" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-20" Neu="0" obj="Adlerauge Luchsenohr [Satuarisch]" text="Zauber aktivieren" time="1308245804012" version="5.1.2"/>
+</ereignisse>
+<talentliste>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="2"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="3"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="0"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überzeugen" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geografie" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geschichtswissen" probe=" (KL/KL/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heraldik" probe=" (KL/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kriegskunst" probe=" (MU/KL/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kryptographie" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Magiekunde" probe=" (KL/KL/IN)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Staatskunst" probe=" (KL/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sternkunde" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Tierkunde" probe=" (MU/KL/IN)" value="4"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Aureliani" probe=" (KL/IN/CH)" value="5"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Bosparano" probe=" (KL/IN/CH)" value="11"/>
+<talent k="17" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Grolmisch" probe=" (KL/IN/CH)" value="3"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Wudu" probe=" (KL/IN/CH)" value="5"/>
+<talent k="12" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Imperiale Zeichen" probe=" (KL/KL/FF)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ackerbau" probe=" (IN/FF/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Alchimie" probe=" (MU/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fahrzeug lenken" probe=" (IN/CH/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Gift" probe=" (MU/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Güldenländisch" probe=" (--/--/--)" value="3"/>
+</talentliste>
+<zauberliste>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Abvenenum reine Speise" probe=" (KL/KL/FF)" reichweite="" repraesentation="Druide/Geode" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Abvenenum reine Speise" probe=" (KL/KL/FF)" reichweite="" repraesentation="Kophtanisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Abvenenum reine Speise" probe=" (KL/KL/FF)" reichweite="" repraesentation="Mudramulisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Abvenenum reine Speise" probe=" (KL/KL/FF)" reichweite="" repraesentation="Satuarisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Gegenseitiges Lehren" name="Adlerauge Luchsenohr" probe=" (KL/IN/FF)" reichweite="" repraesentation="Druide/Geode" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Gegenseitiges Lehren" name="Adlerauge Luchsenohr" probe=" (KL/IN/FF)" reichweite="" repraesentation="Satuarisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Gegenseitiges Lehren" name="Armatrutz" probe=" (IN/GE/KO)" reichweite="" repraesentation="Güldenländisch" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Gegenseitiges Lehren" name="Attributo" probe=" (KL/CH/**)" reichweite="" repraesentation="Güldenländisch" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Balsam Salabunde" probe=" (KL/IN/CH)" reichweite="" repraesentation="Güldenländisch" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Cryptographo Zauberschrift" probe=" (KL/KL/IN)" reichweite="" repraesentation="Güldenländisch" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Gegenseitiges Lehren" name="Desintegratus Pulverstaub" probe=" (KL/KO/KK)" reichweite="" repraesentation="Güldenländisch" value="6" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Gegenseitiges Lehren" name="Fortifex arkane Wand" probe=" (IN/KO/KK)" reichweite="" repraesentation="Güldenländisch" value="5" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Gegenseitiges Lehren" name="Gardianum Zauberschild" probe=" (KL/IN/KO)" reichweite="" repraesentation="Güldenländisch" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Ignifaxius Flammenstrahl" probe=" (KL/FF/KO)" reichweite="" repraesentation="Güldenländisch" value="6" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="F" kosten="" lernmethode="Gegenseitiges Lehren" name="Igniplano Flächenbrand" probe=" (MU/IN/KO)" reichweite="" repraesentation="Güldenländisch" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Gegenseitiges Lehren" name="Ignisphaero Feuerball" probe=" (MU/IN/KO)" reichweite="" repraesentation="Güldenländisch" value="6" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="A" kosten="" lernmethode="Gegenseitiges Lehren" name="Odem Arcanum" probe=" (KL/IN/IN)" reichweite="" repraesentation="Güldenländisch" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Schadenszauber bannen" probe=" (MU/IN/KO)" reichweite="" repraesentation="Güldenländisch" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" lernmethode="Gegenseitiges Lehren" name="Transversalis Teleport" probe=" (KL/IN/KO)" reichweite="" repraesentation="Güldenländisch" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+</zauberliste>
+<kampf>
+<kampfwerte name="Dolche">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+</kampf>
+<gegenstände/>
+<ausrüstungen>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+</ausrüstungen>
+<verbindungen/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.2" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1308350203864" name="Dunkler Priester">
+<basis>
+<geschlecht name="männlich"/>
+<settings name="Die Dunklen Zeiten">
+<inc name="Wege der Alchimie"/>
+</settings>
+<mods/>
+<rasse name="helden.model.DDZRassen.Gueldenlaender" string="Güldenländer">
+<groesse gewicht="67" value="167"/>
+<aussehen alter="17" augenfarbe="dunkelbraun" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1003" gbmonat="5" gbtag="3" gprest="4" gpstart="110" haarfarbe="schwarz" kalender="Bosparans Fall" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.DDZKulturen.Suedaventurien" schrift="Lesen/Schreiben Imperiale Zeichen" sprache="Sprachen kennen Bosparano" string="Bosparanische Südprovinzen">
+<variante name="Mysobien und Brabacia"/>
+</kultur>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.DDZprofessionen.Goetterdiener" string="Götterdiener (Moralkodex 12); Geweiht (24 KaP)">
+<variante name="Götterdiener (Moralkodex 12)"/>
+<variante name="Geweiht (24 KaP)"/>
+</ausbildung>
+</ausbildungen>
+<eingegeben value="true"/>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value=""/>
+<abenteuerpunkte value="440000"/>
+<freieabenteuerpunkte value="414883"/>
+</basis>
+<eigenschaften>
+<eigenschaft mod="0" name="Mut" startwert="12" value="17"/>
+<eigenschaft mod="0" name="Klugheit" startwert="10" value="15"/>
+<eigenschaft mod="0" name="Intuition" startwert="12" value="18"/>
+<eigenschaft mod="0" name="Charisma" startwert="13" value="18"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="10" value="15"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="12" value="18"/>
+<eigenschaft mod="0" name="Konstitution" startwert="8" value="12"/>
+<eigenschaft mod="0" name="Körperkraft" startwert="8" value="12"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="6" value="6"/>
+<eigenschaft mod="10" name="Lebensenergie" value="0"/>
+<eigenschaft mod="10" name="Ausdauer" value="0"/>
+<eigenschaft grossemeditation="0" mod="12" mrmod="-1" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="18" name="Karmaenergie" permanent="-6" value="0"/>
+<eigenschaft mod="-1" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="14"/>
+<eigenschaft mod="0" name="at" value="9"/>
+<eigenschaft mod="0" name="pa" value="10"/>
+<eigenschaft mod="0" name="fk" value="9"/>
+</eigenschaften>
+<vt>
+<vorteil name="Sacerdos" value="4"/>
+<vorteil name="Vollzauberer"/>
+<vorteil name="Moralkodex [DDZ]" value="12"/>
+</vt>
+<sf>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Beseelung rufen (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Beseelung rufen (II)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Beseelung rufen (III)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Beseelung rufen (IV)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Beseelung rufen (V)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Essenz kanalisieren (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Essenz kanalisieren (II)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Essenz kanalisieren (III)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Essenz kanalisieren (IV)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Essenz kanalisieren (V)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Macht binden (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Macht binden (II)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Macht binden (III)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Macht binden (IV)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Macht binden (V)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Schutz erflehen (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Schutz erflehen (II)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Schutz erflehen (III)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Schutz erflehen (IV)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Schutz erflehen (V)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Willen erzwingen (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Willen erzwingen (II)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Willen erzwingen (III)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Willen erzwingen (IV)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Willen erzwingen (V)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliches Prinzip stärken (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliches Prinzip stärken (II)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliches Prinzip stärken (III)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliches Prinzip stärken (IV)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliches Prinzip stärken (V)" probe="" wirkung=""/>
+<sonderfertigkeit name="Karmalqueste"/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Blut der Sippe" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Hilfe des Pendels" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Licht der Hoffnung" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Pendel der Hellsicht" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Seelengespür" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Stein der Weisen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Traumgespinste" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Kristallpendel: Weihe des Pendels" probe="" wirkung=""/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Bosparanische Südprovinzen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Liturgiekenntnis (Dunkle Zeiten)"/>
+<sonderfertigkeit name="Meister der Improvisation"/>
+<sonderfertigkeit name="Ritualkenntnis: Alhanisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Tapasuul"/>
+<sonderfertigkeit dauer="" kosten="" name="Tapasuul: Blut für Visar" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Tapasuul: Ein Herz für Visar" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Tapasuul: Gestalt des Tapam" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Tapasuul: Kerker des Satuul" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Tapasuul: Kraft des Tapam" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Zauberzeichen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Zauberzeichen: Bann- und Schutzkreis gegen Chimären" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Zauberzeichen: Fixierungszeichen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Zauberzeichen: Satinavs Siegel" probe="" wirkung=""/>
+<verbilligtesonderfertigkeit name="Dschungelkundig"/>
+</sf>
+<ereignisse>
+<ereignis obj="max GP für Helden: 110" text="EINSTELLUNG" time="1308350205327" version="5.1.2"/>
+<ereignis obj="max Eigenschafts-GP für Helden: 100" text="EINSTELLUNG" time="1308350205327" version="5.1.2"/>
+<ereignis obj="max Eigenschafts-Wert für Helden14" text="EINSTELLUNG" time="1308350205327" version="5.1.2"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Rasse: Güldenländer" text="RKP" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="0" kommentar="1 GP" obj="Kultur: Bosparanische Südprovinzen" text="RKP" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="0" kommentar="18 GP" obj="Profession: Götterdiener (Moralkodex 12); Geweiht (24 KaP)" text="RKP" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Mut: 12" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="10" kommentar="10 GP" obj="Klugheit: 10" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Intuition: 12" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="Charisma: 13" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="10" kommentar="10 GP" obj="Fingerfertigkeit: 10" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Gewandtheit: 12" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="Konstitution: 8" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="Körperkraft: 8" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="6" kommentar="0 GP" obj="Sozialstatus: 6" text="EIGENSCHAFTEN" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="Göttliche Beseelung rufen (IV)" text="SF" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Moralkodex [DDZ]: 12" text="VORTEILE" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Sacerdos: 4" text="VORTEILE" time="1308350205328" version="5.1.2"/>
+<ereignis obj="Auswahl" text="Kulturkunde (Bosparanische Südprovinzen)" time="1308350205328" version="5.1.2"/>
+<ereignis obj="Auswahl" text="Meister der Improvisation" time="1308350205328" version="5.1.2"/>
+<ereignis obj="Auswahl" text="Göttliche Beseelung rufen (I)" time="1308350205328" version="5.1.2"/>
+<ereignis obj="Auswahl" text="Göttliche Macht binden (I)" time="1308350205328" version="5.1.2"/>
+<ereignis obj="Auswahl" text="Göttlichen Schutz erflehen (I)" time="1308350205328" version="5.1.2"/>
+<ereignis obj="Auswahl" text="Göttliche Macht binden (II)" time="1308350205328" version="5.1.2"/>
+<ereignis obj="Auswahl" text="Dschungelkundig" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Klettern" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Pflanzenkunde" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Heilkunde: Gift" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Heilkunde: Krankheiten" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Holzbearbeitung" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Bogen" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Gassenwissen" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="3" obj="Auswahl" text="Sprachen kennen Altes Kemi" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="4" obj="Auswahl" text="Armbrust" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="2" obj="Auswahl" text="Belagerungswaffen" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="3" obj="Auswahl" text="Akrobatik" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Athletik" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Fliegen" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="4" obj="Auswahl" text="Sprachen kennen Aureliani" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="4" obj="Auswahl" text="Sprachen kennen Bosparano" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="6" obj="Auswahl" text="Betören" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="5" obj="Auswahl" text="Etikette" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="4" obj="Auswahl" text="Gassenwissen" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="3" obj="Auswahl" text="Lehren" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="3" obj="Auswahl" text="Menschenkenntnis" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="2" obj="Auswahl" text="Schauspielerei" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="2" obj="Auswahl" text="Schriftlicher Ausdruck" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="2" obj="Auswahl" text="Sich verkleiden" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Überreden" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Überzeugen" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Fährtensuchen" time="1308350205328" version="5.1.2"/>
+<ereignis Neu="1" obj="Auswahl" text="Fallen stellen" time="1308350205328" version="5.1.2"/>
+<ereignis Alt="19" Neu="31" kommentar="Editor" obj="Astralenergie" text="Eigenschaft steigern" time="1308398950530" version="5.1.2"/>
+<ereignis Alt="3" Neu="5" kommentar="Editor" obj="Magieresistenz" text="Eigenschaft steigern" time="1308398950530" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Vollzauberer" text="Vor-/Nachteil hinzugefügt" time="1308398950530" version="5.1.2"/>
+<ereignis Abenteuerpunkte="439560" Alt="440" Neu="440000" text="Abenteuerpunkte" time="1308398959430" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Tapasuul" text="Sonderfertigkeit hinzugefügt" time="1308398976052" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Tapasuul: Kraft des Tapam" text="Sonderfertigkeit hinzugefügt" time="1308399013485" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Tapasuul: Blut für Visar" text="Sonderfertigkeit hinzugefügt" time="1308399013485" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-21" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399022351" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-28" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399022527" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-34" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399022703" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-41" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399022879" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-48" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399023047" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-55" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399023215" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-65" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399023383" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-70" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399023575" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-80" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399023735" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-85" Alt="12" Info="Gegenseitiges Lehren" Neu="13" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399023911" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-350" Alt="12" Neu="13" obj="Mut" text="Eigenschaft steigern" time="1308399027734" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-380" Alt="13" Neu="14" obj="Mut" text="Eigenschaft steigern" time="1308399027887" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-410" Alt="14" Neu="15" obj="Mut" text="Eigenschaft steigern" time="1308399028047" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-450" Alt="15" Neu="16" obj="Mut" text="Eigenschaft steigern" time="1308399028198" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-480" Alt="16" Neu="17" obj="Mut" text="Eigenschaft steigern" time="1308399028351" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-280" Alt="10" Neu="11" obj="Klugheit" text="Eigenschaft steigern" time="1308399028686" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-320" Alt="11" Neu="12" obj="Klugheit" text="Eigenschaft steigern" time="1308399028999" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-350" Alt="12" Neu="13" obj="Klugheit" text="Eigenschaft steigern" time="1308399029151" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-380" Alt="13" Neu="14" obj="Klugheit" text="Eigenschaft steigern" time="1308399029302" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-410" Alt="14" Neu="15" obj="Klugheit" text="Eigenschaft steigern" time="1308399029743" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-350" Alt="12" Neu="13" obj="Intuition" text="Eigenschaft steigern" time="1308399030984" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-380" Alt="13" Neu="14" obj="Intuition" text="Eigenschaft steigern" time="1308399031159" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-410" Alt="14" Neu="15" obj="Intuition" text="Eigenschaft steigern" time="1308399031319" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-450" Alt="15" Neu="16" obj="Intuition" text="Eigenschaft steigern" time="1308399031479" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-480" Alt="16" Neu="17" obj="Intuition" text="Eigenschaft steigern" time="1308399031799" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-510" Alt="17" Neu="18" obj="Intuition" text="Eigenschaft steigern" time="1308399031975" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-380" Alt="13" Neu="14" obj="Charisma" text="Eigenschaft steigern" time="1308399032967" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-410" Alt="14" Neu="15" obj="Charisma" text="Eigenschaft steigern" time="1308399033143" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-450" Alt="15" Neu="16" obj="Charisma" text="Eigenschaft steigern" time="1308399033303" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-480" Alt="16" Neu="17" obj="Charisma" text="Eigenschaft steigern" time="1308399033463" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-510" Alt="17" Neu="18" obj="Charisma" text="Eigenschaft steigern" time="1308399033648" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-280" Alt="10" Neu="11" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1308399034256" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-320" Alt="11" Neu="12" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1308399034455" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-350" Alt="12" Neu="13" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1308399034599" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-380" Alt="13" Neu="14" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1308399034783" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-410" Alt="14" Neu="15" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1308399034959" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-350" Alt="12" Neu="13" obj="Gewandtheit" text="Eigenschaft steigern" time="1308399035735" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-380" Alt="13" Neu="14" obj="Gewandtheit" text="Eigenschaft steigern" time="1308399036030" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-410" Alt="14" Neu="15" obj="Gewandtheit" text="Eigenschaft steigern" time="1308399036199" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-450" Alt="15" Neu="16" obj="Gewandtheit" text="Eigenschaft steigern" time="1308399036375" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-480" Alt="16" Neu="17" obj="Gewandtheit" text="Eigenschaft steigern" time="1308399036567" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-510" Alt="17" Neu="18" obj="Gewandtheit" text="Eigenschaft steigern" time="1308399036751" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-220" Alt="8" Neu="9" obj="Konstitution" text="Eigenschaft steigern" time="1308399037343" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" Alt="9" Neu="10" obj="Konstitution" text="Eigenschaft steigern" time="1308399037575" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-280" Alt="10" Neu="11" obj="Konstitution" text="Eigenschaft steigern" time="1308399037751" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-320" Alt="11" Neu="12" obj="Konstitution" text="Eigenschaft steigern" time="1308399037919" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-220" Alt="8" Neu="9" obj="Körperkraft" text="Eigenschaft steigern" time="1308399039239" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" Alt="9" Neu="10" obj="Körperkraft" text="Eigenschaft steigern" time="1308399039407" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-280" Alt="10" Neu="11" obj="Körperkraft" text="Eigenschaft steigern" time="1308399039583" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-320" Alt="11" Neu="12" obj="Körperkraft" text="Eigenschaft steigern" time="1308399039759" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-200" obj="Tapasuul: Gestalt des Tapam" text="Sonderfertigkeit hinzugefügt" time="1308399058372" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-200" obj="Tapasuul: Ein Herz für Visar" text="Sonderfertigkeit hinzugefügt" time="1308399058373" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Tapasuul: Kerker des Satuul" text="Sonderfertigkeit hinzugefügt" time="1308399058373" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Alhanisch" text="Sonderfertigkeit hinzugefügt" time="1308399174349" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-95" Alt="13" Info="Gegenseitiges Lehren" Neu="14" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399180656" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-105" Alt="14" Info="Gegenseitiges Lehren" Neu="15" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399180832" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-110" Alt="15" Info="Gegenseitiges Lehren" Neu="16" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399181008" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-120" Alt="16" Info="Gegenseitiges Lehren" Neu="17" obj="Ritualkenntnis: Tapasuul" text="Talent steigern" time="1308399181192" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-42" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399182032" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-55" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399182216" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-70" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399182376" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-85" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399182552" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-95" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399182720" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-110" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399182888" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-125" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399183064" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-140" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399183232" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-160" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399183400" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-175" Alt="12" Info="Gegenseitiges Lehren" Neu="13" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399183568" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-190" Alt="13" Info="Gegenseitiges Lehren" Neu="14" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399183744" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-210" Alt="14" Info="Gegenseitiges Lehren" Neu="15" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399183928" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-220" Alt="15" Info="Gegenseitiges Lehren" Neu="16" obj="Ritualkenntnis: Alhanisch" text="Talent steigern" time="1308399184104" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-32" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399184864" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-41" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399185040" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-50" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399185208" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-60" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399185392" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-75" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399185583" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-85" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399185752" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-95" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399185919" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-105" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399186088" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-120" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399186264" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-130" Alt="12" Info="Gegenseitiges Lehren" Neu="13" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399186456" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-140" Alt="13" Info="Gegenseitiges Lehren" Neu="14" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399186640" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-155" Alt="14" Info="Gegenseitiges Lehren" Neu="15" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399186800" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-165" Alt="15" Info="Gegenseitiges Lehren" Neu="16" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399186975" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-180" Alt="16" Info="Gegenseitiges Lehren" Neu="17" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399187128" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-195" Alt="17" Info="Gegenseitiges Lehren" Neu="18" obj="Liturgiekenntnis (Dunkle Zeiten)" text="Talent steigern" time="1308399187280" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttlichen Schutz erflehen (IV)" text="Sonderfertigkeit hinzugefügt" time="1308399238756" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliches Prinzip stärken (III)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-50" obj="Kristallpendel: Traumgespinste" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-150" obj="Kristallpendel: Hilfe des Pendels" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-400" obj="Göttlichen Willen erzwingen (I)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-50" obj="Kristallpendel: Seelengespür" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Macht binden (IV)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttlichen Schutz erflehen (III)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttlichen Schutz erflehen (II)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-400" obj="Göttliche Essenz kanalisieren (I)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" Karmaenergie="-1" obj="Göttliches Prinzip stärken (V)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-400" obj="Göttliches Prinzip stärken (I)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliches Prinzip stärken (IV)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Macht binden (III)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Essenz kanalisieren (II)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Beseelung rufen (II)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliches Prinzip stärken (II)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Kristallpendel: Weihe des Pendels" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Beseelung rufen (III)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" Karmaenergie="-1" obj="Göttliche Macht binden (V)" text="Sonderfertigkeit hinzugefügt" time="1308399238757" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" Karmaenergie="-1" obj="Göttlichen Schutz erflehen (V)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttlichen Willen erzwingen (II)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" Karmaenergie="-1" obj="Göttliche Essenz kanalisieren (V)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-75" obj="Kristallpendel: Licht der Hoffnung" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-75" obj="Kristallpendel: Stein der Weisen" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Essenz kanalisieren (III)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttlichen Willen erzwingen (III)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Beseelung rufen (IV)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" Karmaenergie="-1" obj="Göttlichen Willen erzwingen (V)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-50" obj="Kristallpendel: Blut der Sippe" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttlichen Willen erzwingen (IV)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Göttliche Essenz kanalisieren (IV)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-150" obj="Kristallpendel: Pendel der Hellsicht" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" Karmaenergie="-1" obj="Göttliche Beseelung rufen (V)" text="Sonderfertigkeit hinzugefügt" time="1308399238758" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-100" obj="Zauberzeichen: Fixierungszeichen" text="Sonderfertigkeit hinzugefügt" time="1308399504333" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-200" obj="Zauberzeichen" text="Sonderfertigkeit hinzugefügt" time="1308399504333" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-75" obj="Zauberzeichen: Bann- und Schutzkreis gegen Chimären" text="Sonderfertigkeit hinzugefügt" time="1308400805325" version="5.1.2"/>
+</ereignisse>
+<talentliste>
+<talent lernmethode="Gegenseitiges Lehren" name="Armbrust" probe=" (GE/FF/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Belagerungswaffen" probe=" (GE/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Bogen" probe=" (GE/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Akrobatik" probe=" (MU/GE/KK)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="2"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Fliegen" probe=" (MU/IN/GE)" value="1"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="1"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="6"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="0"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Betören" probe=" (IN/CH/CH)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schauspielerei" probe=" (MU/KL/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schriftlicher Ausdruck" probe=" (KL/IN/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sich verkleiden" probe=" (MU/CH/GE)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überzeugen" probe=" (KL/IN/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fallen stellen" probe=" (KL/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wettervorhersage" probe=" (KL/IN/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geografie" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="11"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Pflanzenkunde" probe=" (KL/IN/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="2"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Altes Kemi" probe=" (KL/IN/CH)" value="3"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Aureliani" probe=" (KL/IN/CH)" value="4"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Bosparano" probe=" (KL/IN/CH)" value="12"/>
+<talent k="12" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Imperiale Zeichen" probe=" (KL/KL/FF)" value="0"/>
+<talent k="24" lernmethode="Gegenseitiges Lehren" name="Schrift der Muttersprache" probe=" (KL/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Boote fahren" probe=" (GE/KO/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Gift" probe=" (MU/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Krankheiten" probe=" (MU/KL/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Alhanisch" probe=" (--/--/--)" value="16"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Tapasuul" probe=" (--/--/--)" value="17"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Liturgiekenntnis (Dunkle Zeiten)" probe=" (MU/IN/CH)" value="18"/>
+</talentliste>
+<zauberliste/>
+<kampf>
+<kampfwerte name="Dolche">
+<attacke value="9"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="9"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="9"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="9"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="9"/>
+<parade value="10"/>
+</kampfwerte>
+</kampf>
+<gegenstände/>
+<ausrüstungen>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+</ausrüstungen>
+<verbindungen/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

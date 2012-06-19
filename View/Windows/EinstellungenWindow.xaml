@@ -1,0 +1,54 @@
+﻿<Window x:Class="MeisterGeister.View.Windows.EinstellungenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Einstellungen" Height="419" Width="466" Icon="/Images/Icons/mechanik.png" Loaded="Window_Loaded" Background="{StaticResource Background1}" Closed="Window_Closed"
+        TextOptions.TextFormattingMode="Display">
+    <Window.Resources>
+        <DataTemplate x:Key="RegelnListTemplate">
+            <StackPanel Margin="4" Orientation="Horizontal">
+                <CheckBox Margin="2" IsChecked="{Binding Path=Anwenden}" />
+                <TextBlock Margin="4,0,0,0" Text="{Binding Path=Typ}" FontWeight="Bold" />
+                <TextBlock Text=": " />
+                <TextBlock Text="{Binding Path=Beschreibung}" TextWrapping="Wrap" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Regelsystem:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="_comboBoxRegelsystem" VerticalAlignment="Top" Width="64" Text="DSA4.1" SelectedIndex="0">
+                    <ComboBoxItem Content="DSA4.1" />
+                </ComboBox>
+            </StackPanel>
+            <Expander Header="Regel-Optionen" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="4">
+                <ListBox ItemsSource="{Binding}" ItemTemplate="{StaticResource RegelnListTemplate}" BorderThickness="0">
+                    <ListBox.Background>
+                        <SolidColorBrush />
+                    </ListBox.Background>
+                </ListBox>
+            </Expander>
+            <Expander Header="Einstellungen" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="4">
+                <ListBox BorderThickness="0">
+                    <ListBox.Background>
+                        <SolidColorBrush />
+                    </ListBox.Background>
+                    <StackPanel Margin="4" Orientation="Horizontal">
+                        <CheckBox Name="_checkBoxFrageNeueKampfrundeAbstellen" Margin="2" Checked="_checkBoxFrageNeueKampfrundeAbstellen_Checked" Unchecked="_checkBoxFrageNeueKampfrundeAbstellen_Unchecked" />
+                        <TextBlock Margin="4,0,0,0" Text="Ende der Kämpfer-Liste (Frage): Soll eine neue KR begonnen werden? (Abstellen)" Width="398" TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                    <StackPanel Margin="4" Orientation="Horizontal">
+                        <CheckBox Name="_checkBoxJingleAbstellen" Margin="2" VerticalAlignment="Center" Checked="CheckBoxJingleAbstellen_Checked" Unchecked="CheckBoxJingleAbstellen_Unchecked" />
+                        <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="Jingle beim Programmstart abstellen?" TextWrapping="WrapWithOverflow" />
+                        <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
+                            <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
+                        </Button>
+                        <TextBlock Margin="15,0,5,0" VerticalAlignment="Center">
+                            <Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate">Mehr Infos zum Jingle.</Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </ListBox>
+            </Expander>
+        </StackPanel>
+    </Grid>
+</Window>

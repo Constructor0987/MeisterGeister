@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MeisterGeister.View.ZooBot.ZooBotView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
+             xmlns:ZooBot="clr-namespace:MeisterGeister.View.ZooBot"
+             mc:Ignorable="d" 
+             d:DesignHeight="377" d:DesignWidth="765">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="4" Grid.Row="0" Orientation="Horizontal" Background="{StaticResource BackgroundPergamentQuer}">
+            <Label Content="Wähle einen Helden:" VerticalAlignment="Center" Margin="8,0,0,0" />
+            <ComboBox Name="_comboBoxHeld" Width="300" Height="28" Margin="4" HorizontalAlignment="Left" ToolTip="Held" DisplayMemberPath="Name" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
+            <Label Content="Fernkampfwaffe:" VerticalAlignment="Center" />
+            <ComboBox Name="_comboBoxFernkampfwaffe" Width="150" Height="28" Margin="4" ToolTip="Fernkampfwaffe" SelectedIndex="0" VerticalContentAlignment="Center" DropDownClosed="ComboBoxAuswahl_DropDownClosed" SelectionChanged="ComboBoxAuswahl_SelectionChanged" />
+        </StackPanel>
+        <WindowsFormsHost Grid.Row="1" Name="windowsFormsHost1" Background="{x:Null}" />
+    </Grid>
+</UserControl>

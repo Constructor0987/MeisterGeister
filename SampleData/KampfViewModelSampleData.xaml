@@ -1,0 +1,8 @@
+﻿<MeisterGeister_ViewModel_Kampf:KampfViewModel 
+    xmlns:MeisterGeister_ViewModel_Kampf="clr-namespace:MeisterGeister.ViewModel.Kampf" 
+    xmlns:MeisterGeister_Model="clr-namespace:MeisterGeister.Model" 
+    xmlns:MeisterGeister_ViewModel_Kampf_Logic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    xmlns:MeisterGeister_ViewModel_Base="clr-namespace:MeisterGeister.ViewModel.Base" 
+    >
+</MeisterGeister_ViewModel_Kampf:KampfViewModel>

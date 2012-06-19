@@ -1,0 +1,69 @@
+//Parser für Würfelwürfe
+// http://www.meistergeister.org
+
+// Namespace allows you to define a different namespace for the Scanner, 
+//     Parser and ParseTree generated classes. By default this is set to "TinyPG"
+// Language allows you to define the language to generate.
+// Only C# (default) or VB are supported for now. 
+// OutputPath allows you to define the absolute or relative outputpath for the
+//     files. The relative path is relative to the grammar file. 
+//     By default this is set to "./"
+// Template path is relative to the TinyPG.exe file. By default this is set to 
+//     "Templates"
+<% @TinyPG Namespace="MeisterGeister.Logic.Würfel" Language="C#" 
+           OutputPath="./" TemplatePath="Templates/C#/" %>
+// the Generate parameter specifies wether the file
+// should be generated. By default this is set to True
+<% @Parser Generate="True" %>
+<% @ParseTree Generate="True" %>  // toggle generation of the the ParseTree.cs file
+<% @Scanner Generate="True" %> // toggle generation of the code for the Scanner
+<% @TextHighlighter Generate="False" %> // toggle generation of the code for the TextHighlighter
+
+NUMBER 	-> @"[0-9]+";
+BROPEN 	->  @"[\(\[]";
+BRCLOSE 	->  @"[\)\]]";
+W		-> @"W";
+PLUSMINUS 	-> @"(\+|-)"; 
+EOF         -> @"^$";
+[Skip] WHITESPACE  -> @"\s+";
+
+Start 		-> AddExpression? EOF
+{
+	if($AddExpression == null)
+		return 0;
+	return $AddExpression;
+};
+
+
+AddExpression -> Atom (PLUSMINUS Atom)*
+{
+	int ergebnis = 0;
+	ergebnis = Convert.ToInt32($Atom);
+	int i = 1;
+	while ($Atom[i] != null) { 
+		if($PLUSMINUS[i-1].ToString() == "+")
+			ergebnis += Convert.ToInt32($Atom[i++]); 
+		else
+			ergebnis -= Convert.ToInt32($Atom[i++]); 
+	} 
+	return ergebnis; 
+};
+
+Atom -> NUMBER? (W NUMBER)?
+{
+	if($NUMBER[0] == null && $W == null)
+		return 0;
+	int anzahl = 1;
+	int seiten = 1;
+	if($NUMBER[0] != null)
+		anzahl = Convert.ToInt32($NUMBER[0]);
+	if($W != null)
+	{
+		seiten = Convert.ToInt32($NUMBER[1]);
+		bool random = true;
+		if(paramlist != null && paramlist.Length > 0  && paramlist[0] is bool) 
+			random = (bool)paramlist[0];
+		return anzahl * (random?Logic.General.RandomNumberGenerator.RandomInt(1, seiten):seiten);
+	}
+	return anzahl;
+};

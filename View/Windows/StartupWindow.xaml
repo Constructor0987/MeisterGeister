@@ -1,0 +1,25 @@
+﻿<Window x:Class="MeisterGeister.View.Windows.StartupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="StartupWindow" Height="490" Width="774" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        TextOptions.TextFormattingMode="Display">
+    <StackPanel VerticalAlignment="Center">
+        <Image Source="/Images/Logos/MG_Logo.png" Height="200" Cursor="Wait" Margin="120,15,15,15">
+            <Image.Effect>
+                <DropShadowEffect Color="DarkGray" ShadowDepth="5" BlurRadius="40" Direction="300" />
+            </Image.Effect>
+        </Image>
+        <StackPanel VerticalAlignment="Center" Width="Auto">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/Images/Texturen/pergament.png" />
+            </StackPanel.Background>
+            <TextBlock Text="MeisterGeister wird initialisiert..." HorizontalAlignment="Center" FontSize="32" FontWeight="Bold" FontFamily="/DSA MeisterGeister;component/Fonts/#Morpheus" />
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Start-Jingle an-/abstellen?" FontSize="18" Margin="4" />
+                <TextBlock Name="_jingleStoppTextBlock" Text="Hier klicken." FontSize="18" Margin="4" Foreground="Blue" Cursor="Hand" MouseDown="_jingleStoppTextBlock_MouseDown" Opacity="0.8" />
+            </StackPanel>
+        </StackPanel>
+        <Image Source="/Images/Logos/DsaFanprojekt_Logo.png" Height="60" Cursor="Wait" Margin="15" />
+    </StackPanel>
+</Window>

@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.2.0" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1323936566868" name="Kiku-Yako" stand="1325062727726">
+<basis>
+<geschlecht name="weiblich"/>
+<settings name="DSA4.1">
+<inc name="Wege der Alchimie"/>
+</settings>
+<mods/>
+<rasse name="helden.model.rasse.Waldmensch" string="Waldmensch">
+<groesse gewicht="51" value="161"/>
+<aussehen alter="17" augenfarbe="hellbraun" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1003" gbmonat="5" gbtag="9" gprest="0" gpstart="110" haarfarbe="schwarz" kalender="Bosparans Fall" stand="" titel=""/>
+<variante name="Waldmensch"/>
+</rasse>
+<kultur name="helden.model.kultur.Dschungelstaemme" string="Dschungelstämme">
+<variante name="keine Spezialisierung"/>
+</kultur>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Jaeger" string="Jägerin">
+<variante name="Jägerin"/>
+</ausbildung>
+</ausbildungen>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value="D:\Dsa\Charakters\MPC\Kiku-Yako\images.jpg"/>
+<abenteuerpunkte value="13480"/>
+<freieabenteuerpunkte value="10"/>
+</basis>
+<eigenschaften>
+<eigenschaft mod="0" name="Mut" startwert="12" value="14"/>
+<eigenschaft mod="0" name="Klugheit" startwert="11" value="12"/>
+<eigenschaft mod="0" name="Intuition" startwert="13" value="17"/>
+<eigenschaft mod="1" name="Charisma" startwert="14" value="15"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="12" value="15"/>
+<eigenschaft mod="1" name="Gewandtheit" startwert="14" value="17"/>
+<eigenschaft mod="1" name="Konstitution" startwert="11" value="13"/>
+<eigenschaft mod="-1" name="Körperkraft" startwert="13" value="15"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="3" value="3"/>
+<eigenschaft mod="8" name="Lebensenergie" value="4"/>
+<eigenschaft mod="14" name="Ausdauer" value="1"/>
+<eigenschaft grossemeditation="0" mod="0" mrmod="-6" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-6" name="Magieresistenz" value="2"/>
+<eigenschaft mod="0" name="ini" value="13"/>
+<eigenschaft mod="0" name="at" value="9"/>
+<eigenschaft mod="0" name="pa" value="10"/>
+<eigenschaft mod="0" name="fk" value="9"/>
+</eigenschaften>
+<vt>
+<vorteil name="Begabung für [Talent]" value="Bogen"/>
+<vorteil name="Entfernungssinn"/>
+<vorteil name="Flink" value="1"/>
+<vorteil name="Gefahreninstinkt"/>
+<vorteil name="Gutaussehend"/>
+<vorteil name="Hitzeresistenz"/>
+<vorteil name="Aberglaube" value="6"/>
+<vorteil name="Angst vor Menschenmassen" value="5"/>
+<vorteil name="Eitelkeit" value="5"/>
+<vorteil name="Impulsiv"/>
+<vorteil name="Kälteempfindlichkeit"/>
+<vorteil name="Meeresangst" value="5"/>
+<vorteil name="Neugier" value="6"/>
+<vorteil name="Prinzipientreue" value="3"/>
+<vorteil name="Rachsucht" value="6"/>
+<vorteil name="Randgruppe"/>
+<vorteil name="Raumangst" value="6"/>
+<vorteil name="Vorurteile" value="6"/>
+<vorteil name="Weltfremd" value="5"/>
+</vt>
+<sf>
+<sonderfertigkeit name="Aufmerksamkeit"/>
+<sonderfertigkeit name="Auspendeln"/>
+<sonderfertigkeit name="Ausweichen I"/>
+<sonderfertigkeit name="Ausweichen II"/>
+<sonderfertigkeit name="Ausweichen III"/>
+<sonderfertigkeit name="Beinarbeit"/>
+<sonderfertigkeit name="Block"/>
+<sonderfertigkeit name="Doppelschlag"/>
+<sonderfertigkeit name="Dschungelkundig"/>
+<sonderfertigkeit name="Eisenarm"/>
+<sonderfertigkeit name="Finte"/>
+<sonderfertigkeit name="Fußfeger"/>
+<sonderfertigkeit name="Gerade"/>
+<sonderfertigkeit name="Gezielter Stich"/>
+<sonderfertigkeit name="Griff"/>
+<sonderfertigkeit name="Handkante"/>
+<sonderfertigkeit name="Hoher Tritt"/>
+<sonderfertigkeit name="Kampfreflexe"/>
+<sonderfertigkeit name="Knie"/>
+<sonderfertigkeit name="Kopfstoß"/>
+<sonderfertigkeit name="Kreuzblock"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Stammesachaz"/>
+<kultur name="Waldmenschen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Meister der Improvisation"/>
+<sonderfertigkeit name="Meisterschütze">
+<talent name="Bogen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Scharfschütze">
+<talent name="Blasrohr"/>
+<talent name="Bogen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Schnellladen">
+<talent name="Bogen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Schwinger"/>
+<sonderfertigkeit name="Sprung"/>
+<sonderfertigkeit name="Sprungtritt"/>
+<sonderfertigkeit name="Standfest"/>
+<sonderfertigkeit name="Sumpfkundig"/>
+<sonderfertigkeit name="Talentspezialisierung Akrobatik (Bodenakrobatik)">
+<talent name="Akrobatik"/>
+<spezialisierung name="Bodenakrobatik"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Akrobatik (Sprünge)">
+<talent name="Akrobatik"/>
+<spezialisierung name="Sprünge"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Athletik (Sprint)">
+<talent name="Athletik"/>
+<spezialisierung name="Sprint"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Blasrohr (Blasrohr)">
+<talent name="Blasrohr"/>
+<spezialisierung name="Blasrohr"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Bogen (Kurzbogen)">
+<talent name="Bogen"/>
+<spezialisierung name="Kurzbogen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Bogenbau (Bogen)">
+<talent name="Bogenbau"/>
+<spezialisierung name="Bogen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Bogenbau (Pfeile)">
+<talent name="Bogenbau"/>
+<spezialisierung name="Pfeile"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Dolche (Jagdmesser)">
+<talent name="Dolche"/>
+<spezialisierung name="Jagdmesser"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Fallen stellen (Gruben)">
+<talent name="Fallen stellen"/>
+<spezialisierung name="Gruben"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Fesseln/Entfesseln (Entfesseln)">
+<talent name="Fesseln/Entfesseln"/>
+<spezialisierung name="Entfesseln"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Fischen/Angeln (Flüsse/Bäche)">
+<talent name="Fischen/Angeln"/>
+<spezialisierung name="Flüsse/Bäche"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Fährtensuchen (Wald/Dschungel)">
+<talent name="Fährtensuchen"/>
+<spezialisierung name="Wald/Dschungel"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Gerber/Kürschner (Kürschner)">
+<talent name="Gerber/Kürschner"/>
+<spezialisierung name="Kürschner"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Heilkunde: Gift (pflanzliche Gifte)">
+<talent name="Heilkunde: Gift"/>
+<spezialisierung name="pflanzliche Gifte"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Heilkunde: Wunden (Schnitte)">
+<talent name="Heilkunde: Wunden"/>
+<spezialisierung name="Schnitte"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Holzbearbeitung (Holzwaffen)">
+<talent name="Holzbearbeitung"/>
+<spezialisierung name="Holzwaffen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Klettern (Freiklettern)">
+<talent name="Klettern"/>
+<spezialisierung name="Freiklettern"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Kochen (Tränke)">
+<talent name="Kochen"/>
+<spezialisierung name="Tränke"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Körperbeherrschung (Standfestigkeit)">
+<talent name="Körperbeherrschung"/>
+<spezialisierung name="Standfestigkeit"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Lederarbeiten (Lederkleidung)">
+<talent name="Lederarbeiten"/>
+<spezialisierung name="Lederkleidung"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Orientierung (Dschungel)">
+<talent name="Orientierung"/>
+<spezialisierung name="Dschungel"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Pflanzenkunde (Dschungel)">
+<talent name="Pflanzenkunde"/>
+<spezialisierung name="Dschungel"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Pflanzenkunde (Sumpf)">
+<talent name="Pflanzenkunde"/>
+<spezialisierung name="Sumpf"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Schleichen (Wald/Dschungel)">
+<talent name="Schleichen"/>
+<spezialisierung name="Wald/Dschungel"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Schwimmen (Tauchen)">
+<talent name="Schwimmen"/>
+<spezialisierung name="Tauchen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Selbstbeherrschung (Wunden Ignorieren)">
+<talent name="Selbstbeherrschung"/>
+<spezialisierung name="Wunden Ignorieren"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Sich verstecken (Wald/Dschungel)">
+<talent name="Sich verstecken"/>
+<spezialisierung name="Wald/Dschungel"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Sinnenschärfe (Hören)">
+<talent name="Sinnenschärfe"/>
+<spezialisierung name="Hören"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Sinnenschärfe (Sehen)">
+<talent name="Sinnenschärfe"/>
+<spezialisierung name="Sehen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Speere (Jagdspieß)">
+<talent name="Speere"/>
+<spezialisierung name="Jagdspieß"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Stimmen imitieren (Jagdwild)">
+<talent name="Stimmen imitieren"/>
+<spezialisierung name="Jagdwild"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Tierkunde (Jagdwild)">
+<talent name="Tierkunde"/>
+<spezialisierung name="Jagdwild"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Tierkunde (Raubtiere)">
+<talent name="Tierkunde"/>
+<spezialisierung name="Raubtiere"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Wildnisleben (Dschungel)">
+<talent name="Wildnisleben"/>
+<spezialisierung name="Dschungel"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Tritt"/>
+<sonderfertigkeit name="Waffenloser Kampfstil: Hruruzat"/>
+<sonderfertigkeit name="Wurf"/>
+</sf>
+<ereignisse>
+<ereignis obj="max GP für Helden: 110" text="EINSTELLUNG" time="1323936569338" version="5.2.0"/>
+<ereignis obj="max Eigenschafts-GP für Helden: 100" text="EINSTELLUNG" time="1323936569338" version="5.2.0"/>
+<ereignis obj="max Eigenschafts-Wert für Helden: 14" text="EINSTELLUNG" time="1323936569338" version="5.2.0"/>
+<ereignis obj="Folgende Sonderfertigkeiten wurden doppelt vergeben:&#10;Dschungelkundig&#10;&#10;Nach Rücksprache mit dem Meister kann eine Sonderfertigkeit  als Ersatz gewählt werden." text="Meistergenehmigung notwendig" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="5 GP" obj="Rasse: Waldmensch" text="RKP" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="11 GP" obj="Kultur: Dschungelstämme" text="RKP" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="11 GP" obj="Profession: Jägerin" text="RKP" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Mut: 12" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="11" kommentar="11 GP" obj="Klugheit: 11" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="Intuition: 13" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="15" kommentar="14 GP" obj="Charisma: 15" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Fingerfertigkeit: 12" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="15" kommentar="14 GP" obj="Gewandtheit: 15" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="12" kommentar="11 GP" obj="Konstitution: 12" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="12" kommentar="13 GP" obj="Körperkraft: 12" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="3" kommentar="0 GP" obj="Sozialstatus: 3" text="EIGENSCHAFTEN" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="100 DOPPELSF" obj="Sumpfkundig" text="SF" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="Waffenloser Kampfstil: Hruruzat" text="SF" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="3" kommentar="12 AP" obj="Blasrohr: 3" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="4" kommentar="17 AP" obj="Blasrohr: 4" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="5" kommentar="22 AP" obj="Blasrohr: 5" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="6" kommentar="27 AP" obj="Blasrohr: 6" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="7" kommentar="33 AP" obj="Blasrohr: 7" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="7" kommentar="33 AP" obj="Bogen: 7" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="5" kommentar="22 AP" obj="Dolche: 5" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="3" kommentar="9 AP" obj="Raufen: 3" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="4" kommentar="13 AP" obj="Raufen: 4" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="5" kommentar="17 AP" obj="Raufen: 5" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="6" kommentar="21 AP" obj="Raufen: 6" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="7" kommentar="25 AP" obj="Raufen: 7" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="5" kommentar="22 AP" obj="Ringen: 5" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="6" kommentar="27 AP" obj="Ringen: 6" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="7" kommentar="33 AP" obj="Ringen: 7" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="6" kommentar="27 AP" obj="Speere: 6" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="7" kommentar="33 AP" obj="Speere: 7" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="4 AP" obj="Akrobatik: 0" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="1" kommentar="3 AP" obj="Akrobatik: 1" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="2" kommentar="7 AP" obj="Akrobatik: 2" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="3" kommentar="12 AP" obj="Akrobatik: 3" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="4" kommentar="17 AP" obj="Akrobatik: 4" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="2 AP" obj="Mechanik: 0" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="1 AP" obj="Sprachen kennen Rssahh: 0" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="2 AP" obj="Abrichten: 0" text="TALENT" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-1 GP" obj="Aberglaube: 6" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="Angst vor Menschenmassen: 5" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="6 GP" obj="Begabung für [Talent]: Bogen" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Eitelkeit: 5" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="10 GP" obj="Entfernungssinn" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="10 GP" obj="Flink: 1" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Gefahreninstinkt" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="5 GP" obj="Gutaussehend" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Hitzeresistenz" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="Impulsiv" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-7 GP" obj="Kälteempfindlichkeit" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Meeresangst: 5" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-1 GP" obj="Neugier: 6" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-3 GP" obj="Prinzipientreue: 3" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-6 GP" obj="Rachsucht: 6" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="Randgruppe" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-9 GP" obj="Raumangst: 6" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-3 GP" obj="Vorurteile: 6" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="Weltfremd: 5" text="VORTEILE" time="1323936569338" version="5.2.0"/>
+<ereignis obj="Auswahl" text="Dschungelkundig" time="1323936569338" version="5.2.0"/>
+<ereignis obj="Auswahl" text="Scharfschütze (Bogen)" time="1323936569338" version="5.2.0"/>
+<ereignis Neu="2" obj="Auswahl" text="Blasrohr" time="1323936569338" version="5.2.0"/>
+<ereignis Neu="3" obj="Auswahl" text="Sprachen kennen Garethi" time="1323936569338" version="5.2.0"/>
+<ereignis Neu="5" obj="Auswahl" text="Bogen" time="1323936569338" version="5.2.0"/>
+<ereignis Neu="1" obj="Auswahl" text="Hiebwaffen" time="1323936569338" version="5.2.0"/>
+<ereignis Neu="2" obj="Auswahl" text="Athletik" time="1323936569338" version="5.2.0"/>
+<ereignis Neu="2" obj="Auswahl" text="Bogenbau" time="1323936569338" version="5.2.0"/>
+<ereignis Neu="3" obj="Auswahl" text="Gerber/Kürschner" time="1323936569338" version="5.2.0"/>
+<ereignis Abenteuerpunkte="13000" Alt="480" Neu="13480" text="Abenteuerpunkte" time="1323936578148" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Lehrmeister" Neu="8" obj="Blasrohr" text="Talent steigern" time="1323936678590" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Lehrmeister" Neu="9" obj="Blasrohr" text="Talent steigern" time="1323936678910" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9" Info="Lehrmeister" Neu="10" obj="Blasrohr" text="Talent steigern" time="1323936679190" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Blasrohr" text="Talent steigern" time="1323936679540" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Blasrohr" text="Talent steigern" time="1323936679740" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Lehrmeister" Neu="8" obj="Bogen" text="Talent steigern" time="1323936682940" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Lehrmeister" Neu="9" obj="Bogen" text="Talent steigern" time="1323936683220" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9" Info="Lehrmeister" Neu="10" obj="Bogen" text="Talent steigern" time="1323936683730" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Bogen" text="Talent steigern" time="1323936683960" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Bogen" text="Talent steigern" time="1323936684300" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="5;0;0" Info="Lehrmeister" Neu="6;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1323936685870" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6;0;0" Info="Lehrmeister" Neu="7;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1323936686220" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7;0;0" Info="Lehrmeister" Neu="8;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1323936687520" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8;0;0" Info="Lehrmeister" Neu="9;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1323936687880" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="7;0;0" Info="Lehrmeister" Neu="8;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323936690710" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-22" Alt="8;0;0" Info="Lehrmeister" Neu="9;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323936691050" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="9;0;0" Info="Lehrmeister" Neu="10;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323936691260" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7;0;0" Info="Lehrmeister" Neu="8;0;0" obj="Ringen" text="Nahkampftalent steigern" time="1323936693000" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8;0;0" Info="Lehrmeister" Neu="9;0;0" obj="Ringen" text="Nahkampftalent steigern" time="1323936693300" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9;0;0" Info="Lehrmeister" Neu="10;0;0" obj="Ringen" text="Nahkampftalent steigern" time="1323936694620" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-28" Alt="10;0;0" Info="Lehrmeister" Neu="11;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323936695390" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-32" Alt="11;0;0" Info="Lehrmeister" Neu="12;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323936695640" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7;0;0" Info="Lehrmeister" Neu="8;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323936697480" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8;0;0" Info="Lehrmeister" Neu="9;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323936697800" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9;0;0" Info="Lehrmeister" Neu="10;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323936697970" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10;0;0" Info="Lehrmeister" Neu="11;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323936698270" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11;0;0" Info="Lehrmeister" Neu="12;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323936698570" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="4" Info="Lehrmeister" Neu="5" obj="Akrobatik" text="Talent steigern" time="1323936700910" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="5" Info="Lehrmeister" Neu="6" obj="Akrobatik" text="Talent steigern" time="1323936701530" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Lehrmeister" Neu="7" obj="Akrobatik" text="Talent steigern" time="1323936701780" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Lehrmeister" Neu="8" obj="Akrobatik" text="Talent steigern" time="1323936701970" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Lehrmeister" Neu="9" obj="Akrobatik" text="Talent steigern" time="1323936702170" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9" Info="Lehrmeister" Neu="10" obj="Akrobatik" text="Talent steigern" time="1323936702460" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Akrobatik" text="Talent steigern" time="1323936702750" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Akrobatik" text="Talent steigern" time="1323936702960" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-9" Alt="2" Info="Lehrmeister" Neu="3" obj="Athletik" text="Talent steigern" time="1323936704110" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="3" Info="Lehrmeister" Neu="4" obj="Athletik" text="Talent steigern" time="1323936704410" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="4" Info="Lehrmeister" Neu="5" obj="Athletik" text="Talent steigern" time="1323936704610" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="5" Info="Lehrmeister" Neu="6" obj="Athletik" text="Talent steigern" time="1323936705250" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Lehrmeister" Neu="7" obj="Athletik" text="Talent steigern" time="1323936705430" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="5" Info="Lehrmeister" Neu="6" obj="Klettern" text="Talent steigern" time="1323936708370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Lehrmeister" Neu="7" obj="Klettern" text="Talent steigern" time="1323936708730" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Lehrmeister" Neu="8" obj="Klettern" text="Talent steigern" time="1323936709150" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Lehrmeister" Neu="9" obj="Klettern" text="Talent steigern" time="1323936709360" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9" Info="Lehrmeister" Neu="10" obj="Klettern" text="Talent steigern" time="1323936709570" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Klettern" text="Talent steigern" time="1323936709780" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Klettern" text="Talent steigern" time="1323936710160" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Lehrmeister" Neu="7" obj="Körperbeherrschung" text="Talent steigern" time="1323936711470" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Lehrmeister" Neu="8" obj="Körperbeherrschung" text="Talent steigern" time="1323936711760" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Lehrmeister" Neu="9" obj="Körperbeherrschung" text="Talent steigern" time="1323936712020" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9" Info="Lehrmeister" Neu="10" obj="Körperbeherrschung" text="Talent steigern" time="1323936712260" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Körperbeherrschung" text="Talent steigern" time="1323936712530" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Körperbeherrschung" text="Talent steigern" time="1323936712850" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Schleichen" text="Talent steigern" time="1323936713950" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Schleichen" text="Talent steigern" time="1323936714270" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="3" Info="Lehrmeister" Neu="4" obj="Schwimmen" text="Talent steigern" time="1323936716200" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="4" Info="Lehrmeister" Neu="5" obj="Schwimmen" text="Talent steigern" time="1323936716640" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="5" Info="Lehrmeister" Neu="6" obj="Schwimmen" text="Talent steigern" time="1323936718130" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Lehrmeister" Neu="7" obj="Schwimmen" text="Talent steigern" time="1323936718370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-9" Alt="2" Info="Lehrmeister" Neu="3" obj="Selbstbeherrschung" text="Talent steigern" time="1323936719820" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="3" Info="Lehrmeister" Neu="4" obj="Selbstbeherrschung" text="Talent steigern" time="1323936720210" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="4" Info="Lehrmeister" Neu="5" obj="Selbstbeherrschung" text="Talent steigern" time="1323936720480" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="5" Info="Lehrmeister" Neu="6" obj="Selbstbeherrschung" text="Talent steigern" time="1323936720790" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Lehrmeister" Neu="7" obj="Selbstbeherrschung" text="Talent steigern" time="1323936721730" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Lehrmeister" Neu="9" obj="Sich verstecken" text="Talent steigern" time="1323936726430" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="9" Info="Lehrmeister" Neu="10" obj="Sich verstecken" text="Talent steigern" time="1323936726820" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Sich verstecken" text="Talent steigern" time="1323936727210" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Sich verstecken" text="Talent steigern" time="1323936727440" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-43" Alt="10" Info="Lehrmeister" Neu="11" obj="Sinnenschärfe" text="Talent steigern" time="1323936729300" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-47" Alt="11" Info="Lehrmeister" Neu="12" obj="Sinnenschärfe" text="Talent steigern" time="1323936729590" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Sinnenschärfe" text="Talent steigern" time="1323936734790" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Sinnenschärfe" text="Talent steigern" time="1323936735000" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Körperbeherrschung" text="Talent steigern" time="1323936738610" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Körperbeherrschung" text="Talent steigern" time="1323936738860" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Klettern" text="Talent steigern" time="1323936739980" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Klettern" text="Talent steigern" time="1323936740200" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Akrobatik" text="Talent steigern" time="1323936743050" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Akrobatik" text="Talent steigern" time="1323936743370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" Alt="14" Info="Lehrmeister" Neu="15" obj="Akrobatik" text="Talent steigern" time="1323936743580" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="1" Info="Lehrmeister" Neu="2" obj="Stimmen imitieren" text="Talent steigern" time="1323936747820" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-9" Alt="2" Info="Lehrmeister" Neu="3" obj="Stimmen imitieren" text="Talent steigern" time="1323936748090" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="3" Info="Lehrmeister" Neu="4" obj="Stimmen imitieren" text="Talent steigern" time="1323936748280" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="4" Info="Lehrmeister" Neu="5" obj="Stimmen imitieren" text="Talent steigern" time="1323936748450" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="5" Info="Lehrmeister" Neu="6" obj="Stimmen imitieren" text="Talent steigern" time="1323936748660" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-25" Alt="6" Info="Lehrmeister" Neu="7" obj="Stimmen imitieren" text="Talent steigern" time="1323936749410" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Lehrmeister" Neu="1" obj="Menschenkenntnis" text="Talent steigern" time="1323936758320" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Lehrmeister" Neu="2" obj="Menschenkenntnis" text="Talent steigern" time="1323936758730" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Lehrmeister" Neu="3" obj="Menschenkenntnis" text="Talent steigern" time="1323936759000" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Menschenkenntnis" text="Talent steigern" time="1323936759400" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Menschenkenntnis" text="Talent steigern" time="1323936760600" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Lehrmeister" Neu="1" obj="Überreden" text="Talent steigern" time="1323936762420" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Lehrmeister" Neu="2" obj="Überreden" text="Talent steigern" time="1323936762750" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Fallen stellen" text="Talent steigern" time="1323936764230" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Fallen stellen" text="Talent steigern" time="1323936764570" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Fallen stellen" text="Talent steigern" time="1323936768280" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Fallen stellen" text="Talent steigern" time="1323936768490" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Fesseln/Entfesseln" text="Talent steigern" time="1323936771540" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Fesseln/Entfesseln" text="Talent steigern" time="1323936772270" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Fesseln/Entfesseln" text="Talent steigern" time="1323936772460" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Fesseln/Entfesseln" text="Talent steigern" time="1323936772830" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Fischen/Angeln" text="Talent steigern" time="1323936773990" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Fischen/Angeln" text="Talent steigern" time="1323936774330" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Fischen/Angeln" text="Talent steigern" time="1323936776690" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Fischen/Angeln" text="Talent steigern" time="1323936776880" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Fährtensuchen" text="Talent steigern" time="1323936778350" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Fährtensuchen" text="Talent steigern" time="1323936778630" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Alt="7" Info="Lehrmeister" Neu="8" obj="Orientierung" text="Talent steigern" time="1323936781520" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Lehrmeister" Neu="9" obj="Orientierung" text="Talent steigern" time="1323936781800" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Lehrmeister" Neu="10" obj="Orientierung" text="Talent steigern" time="1323936782030" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Orientierung" text="Talent steigern" time="1323936782410" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Orientierung" text="Talent steigern" time="1323936782780" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Wettervorhersage" text="Talent steigern" time="1323936783840" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Wettervorhersage" text="Talent steigern" time="1323936784140" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Wettervorhersage" text="Talent steigern" time="1323936784530" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Wettervorhersage" text="Talent steigern" time="1323936784750" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Wildnisleben" text="Talent steigern" time="1323936786350" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Wildnisleben" text="Talent steigern" time="1323936786590" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Götter und Kulte" text="Talent steigern" time="1323936788870" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Mechanik" text="Talent steigern" time="1323936790760" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Mechanik" text="Talent steigern" time="1323936791130" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Mechanik" text="Talent steigern" time="1323936791450" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Pflanzenkunde" text="Talent steigern" time="1323936792620" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Alt="7" Info="Lehrmeister" Neu="8" obj="Pflanzenkunde" text="Talent steigern" time="1323936793010" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Lehrmeister" Neu="9" obj="Pflanzenkunde" text="Talent steigern" time="1323936793190" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Lehrmeister" Neu="10" obj="Pflanzenkunde" text="Talent steigern" time="1323936793370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Pflanzenkunde" text="Talent steigern" time="1323936793590" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Pflanzenkunde" text="Talent steigern" time="1323936793990" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Lehrmeister" Neu="1" obj="Rechnen" text="Talent steigern" time="1323936794910" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Lehrmeister" Neu="2" obj="Rechnen" text="Talent steigern" time="1323936795210" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Lehrmeister" Neu="3" obj="Rechnen" text="Talent steigern" time="1323936795480" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Sagen und Legenden" text="Talent steigern" time="1323936797380" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Sagen und Legenden" text="Talent steigern" time="1323936798850" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Lehrmeister" Neu="9" obj="Tierkunde" text="Talent steigern" time="1323936800030" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Lehrmeister" Neu="10" obj="Tierkunde" text="Talent steigern" time="1323936800490" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Tierkunde" text="Talent steigern" time="1323936801690" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Tierkunde" text="Talent steigern" time="1323936801910" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Lehrmeister" Neu="1" obj="Sprachen kennen Rssahh" text="Talent steigern" time="1323936804320" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Lehrmeister" Neu="2" obj="Sprachen kennen Rssahh" text="Talent steigern" time="1323936804670" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Lehrmeister" Neu="3" obj="Sprachen kennen Rssahh" text="Talent steigern" time="1323936804890" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Sprachen kennen Rssahh" text="Talent steigern" time="1323936805130" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Sprachen kennen Rssahh" text="Talent steigern" time="1323936805370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Abrichten" text="Talent steigern" time="1323936812950" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Abrichten" text="Talent steigern" time="1323936813240" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Abrichten" text="Talent steigern" time="1323936813710" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Lehrmeister" Neu="3" obj="Bogenbau" text="Talent steigern" time="1323936816970" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Bogenbau" text="Talent steigern" time="1323936817240" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Bogenbau" text="Talent steigern" time="1323936817550" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Bogenbau" text="Talent steigern" time="1323936817710" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Bogenbau" text="Talent steigern" time="1323936817850" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Alt="7" Info="Lehrmeister" Neu="8" obj="Bogenbau" text="Talent steigern" time="1323936818030" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Lehrmeister" Neu="9" obj="Bogenbau" text="Talent steigern" time="1323936818230" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Lehrmeister" Neu="10" obj="Bogenbau" text="Talent steigern" time="1323936818530" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Bogenbau" text="Talent steigern" time="1323936818800" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Bogenbau" text="Talent steigern" time="1323936819130" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Lehrmeister" Neu="3" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936821260" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936821550" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936821750" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936821900" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936822050" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Alt="7" Info="Lehrmeister" Neu="8" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936822210" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Lehrmeister" Neu="9" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936822370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Lehrmeister" Neu="10" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936822530" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936822880" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Feuersteinbearbeitung" text="Talent steigern" time="1323936823200" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Gerber/Kürschner" text="Talent steigern" time="1323936825190" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Gerber/Kürschner" text="Talent steigern" time="1323936825570" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Gerber/Kürschner" text="Talent steigern" time="1323936825930" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Gerber/Kürschner" text="Talent steigern" time="1323936826610" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Heilkunde: Gift" text="Talent steigern" time="1323936828250" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Heilkunde: Gift" text="Talent steigern" time="1323936828520" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Heilkunde: Gift" text="Talent steigern" time="1323936828990" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Lehrmeister" Neu="3" obj="Heilkunde: Krankheiten" text="Talent steigern" time="1323936830250" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Heilkunde: Krankheiten" text="Talent steigern" time="1323936830510" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Heilkunde: Krankheiten" text="Talent steigern" time="1323936830670" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Heilkunde: Krankheiten" text="Talent steigern" time="1323936831410" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Heilkunde: Krankheiten" text="Talent steigern" time="1323936831560" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Heilkunde: Wunden" text="Talent steigern" time="1323936832470" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Heilkunde: Wunden" text="Talent steigern" time="1323936832730" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Heilkunde: Wunden" text="Talent steigern" time="1323936832910" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Heilkunde: Wunden" text="Talent steigern" time="1323936833370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Holzbearbeitung" text="Talent steigern" time="1323936834570" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Holzbearbeitung" text="Talent steigern" time="1323936834800" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Lehrmeister" Neu="2" obj="Kochen" text="Talent steigern" time="1323936837770" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Lehrmeister" Neu="3" obj="Kochen" text="Talent steigern" time="1323936838010" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Kochen" text="Talent steigern" time="1323936838160" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Kochen" text="Talent steigern" time="1323936838370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Kochen" text="Talent steigern" time="1323936838670" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Kochen" text="Talent steigern" time="1323936838830" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Alt="7" Info="Lehrmeister" Neu="8" obj="Kochen" text="Talent steigern" time="1323936838970" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Lehrmeister" Neu="9" obj="Kochen" text="Talent steigern" time="1323936839130" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Lehrmeister" Neu="10" obj="Kochen" text="Talent steigern" time="1323936839400" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Lehrmeister" Neu="11" obj="Kochen" text="Talent steigern" time="1323936839690" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Lehrmeister" Neu="12" obj="Kochen" text="Talent steigern" time="1323936839970" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Lehrmeister" Neu="4" obj="Lederarbeiten" text="Talent steigern" time="1323936841150" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Lehrmeister" Neu="5" obj="Lederarbeiten" text="Talent steigern" time="1323936841370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Lehrmeister" Neu="6" obj="Lederarbeiten" text="Talent steigern" time="1323936841540" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Lehrmeister" Neu="7" obj="Lederarbeiten" text="Talent steigern" time="1323936841960" version="5.2.0"/>
+<ereignis Alt="3" Info="Freie Steigerung" Neu="4" obj="Gefahreninstinkt" text="Talent steigern" time="1323936844440" version="5.2.0"/>
+<ereignis Alt="4" Info="Freie Steigerung" Neu="5" obj="Gefahreninstinkt" text="Talent steigern" time="1323936844680" version="5.2.0"/>
+<ereignis Alt="5" Info="Freie Steigerung" Neu="6" obj="Gefahreninstinkt" text="Talent steigern" time="1323936844870" version="5.2.0"/>
+<ereignis Alt="6" Info="Freie Steigerung" Neu="7" obj="Gefahreninstinkt" text="Talent steigern" time="1323936845030" version="5.2.0"/>
+<ereignis Alt="7" Info="Freie Steigerung" Neu="8" obj="Gefahreninstinkt" text="Talent steigern" time="1323936845390" version="5.2.0"/>
+<ereignis Alt="8" Info="Freie Steigerung" Neu="9" obj="Gefahreninstinkt" text="Talent steigern" time="1323936845960" version="5.2.0"/>
+<ereignis Alt="9" Info="Freie Steigerung" Neu="10" obj="Gefahreninstinkt" text="Talent steigern" time="1323936846140" version="5.2.0"/>
+<ereignis Alt="10" Info="Freie Steigerung" Neu="11" obj="Gefahreninstinkt" text="Talent steigern" time="1323936846440" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" obj="Meister der Improvisation" text="Sonderfertigkeit hinzugefügt" time="1323936857922" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-75" obj="Kulturkunde (Stammesachaz)" text="Sonderfertigkeit hinzugefügt" time="1323936866842" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" obj="Standfest" text="Sonderfertigkeit hinzugefügt" time="1323936888682" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Akrobatik (Sprünge)" text="Sonderfertigkeit hinzugefügt" time="1323936895412" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-120" obj="Talentspezialisierung Akrobatik (Bodenakrobatik)" text="Sonderfertigkeit hinzugefügt" time="1323936907222" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Athletik (Sprint)" text="Sonderfertigkeit hinzugefügt" time="1323936914312" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Blasrohr (Blasrohr)" text="Sonderfertigkeit hinzugefügt" time="1323936915842" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Bogen (Kurzbogen)" text="Sonderfertigkeit hinzugefügt" time="1323936919462" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Bogenbau (Pfeile)" text="Sonderfertigkeit hinzugefügt" time="1323936923152" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Dolche (Jagdmesser)" text="Sonderfertigkeit hinzugefügt" time="1323936926854" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Fallen stellen (Gruben)" text="Sonderfertigkeit hinzugefügt" time="1323936930394" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Fesseln/Entfesseln (Entfesseln)" text="Sonderfertigkeit hinzugefügt" time="1323936933394" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Fischen/Angeln (Flüsse/Bäche)" text="Sonderfertigkeit hinzugefügt" time="1323936946564" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Fährtensuchen (Wald/Dschungel)" text="Sonderfertigkeit hinzugefügt" time="1323936949824" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Gerber/Kürschner (Kürschner)" text="Sonderfertigkeit hinzugefügt" time="1323936953134" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Heilkunde: Gift (pflanzliche Gifte)" text="Sonderfertigkeit hinzugefügt" time="1323936956924" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Heilkunde: Wunden (Schnitte)" text="Sonderfertigkeit hinzugefügt" time="1323936960714" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Holzbearbeitung (Holzwaffen)" text="Sonderfertigkeit hinzugefügt" time="1323936964354" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Klettern (Freiklettern)" text="Sonderfertigkeit hinzugefügt" time="1323936967264" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Kochen (Tränke)" text="Sonderfertigkeit hinzugefügt" time="1323936971114" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Körperbeherrschung (Standfestigkeit)" text="Sonderfertigkeit hinzugefügt" time="1323936982404" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Lederarbeiten (Lederkleidung)" text="Sonderfertigkeit hinzugefügt" time="1323936986644" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Orientierung (Dschungel)" text="Sonderfertigkeit hinzugefügt" time="1323936988764" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Pflanzenkunde (Dschungel)" text="Sonderfertigkeit hinzugefügt" time="1323936989454" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Schleichen (Wald/Dschungel)" text="Sonderfertigkeit hinzugefügt" time="1323936994144" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Schwimmen (Tauchen)" text="Sonderfertigkeit hinzugefügt" time="1323936997874" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Selbstbeherrschung (Wunden Ignorieren)" text="Sonderfertigkeit hinzugefügt" time="1323937000964" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Sich verstecken (Wald/Dschungel)" text="Sonderfertigkeit hinzugefügt" time="1323937005124" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Sinnenschärfe (Hören)" text="Sonderfertigkeit hinzugefügt" time="1323937007304" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-120" obj="Talentspezialisierung Sinnenschärfe (Sehen)" text="Sonderfertigkeit hinzugefügt" time="1323937010764" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Stimmen imitieren (Jagdwild)" text="Sonderfertigkeit hinzugefügt" time="1323937015794" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Tierkunde (Jagdwild)" text="Sonderfertigkeit hinzugefügt" time="1323937018874" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-20" obj="Talentspezialisierung Wildnisleben (Dschungel)" text="Sonderfertigkeit hinzugefügt" time="1323937023734" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" obj="Aufmerksamkeit" text="Sonderfertigkeit hinzugefügt" time="1323937036354" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-150" obj="Ausweichen I" text="Sonderfertigkeit hinzugefügt" time="1323937038324" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" obj="Ausweichen II" text="Sonderfertigkeit hinzugefügt" time="1323937040074" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" obj="Finte" text="Sonderfertigkeit hinzugefügt" time="1323937048125" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" obj="Gezielter Stich" text="Sonderfertigkeit hinzugefügt" time="1323937051155" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-150" obj="Kampfreflexe" text="Sonderfertigkeit hinzugefügt" time="1323937054525" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-200" obj="Ausweichen III" text="Sonderfertigkeit hinzugefügt" time="1323937057355" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-150" obj="Scharfschütze (Blasrohr)" text="Sonderfertigkeit hinzugefügt" time="1323937068395" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" obj="Schnellladen (Bogen)" text="Sonderfertigkeit hinzugefügt" time="1323937073595" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-150" obj="Meisterschütze (Bogen)" text="Sonderfertigkeit hinzugefügt" time="1323937079315" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Bogen" text="Talent steigern" time="1323937513525" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Bogen" text="Talent steigern" time="1323937513945" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" Alt="14" Info="Lehrmeister" Neu="15" obj="Bogen" text="Talent steigern" time="1323937514265" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-65" Alt="15" Info="Lehrmeister" Neu="16" obj="Bogen" text="Talent steigern" time="1323937514545" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-70" Alt="16" Info="Lehrmeister" Neu="17" obj="Bogen" text="Talent steigern" time="1323937514915" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-75" Alt="17" Info="Lehrmeister" Neu="18" obj="Bogen" text="Talent steigern" time="1323937515405" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-80" Alt="18" Info="Lehrmeister" Neu="19" obj="Bogen" text="Talent steigern" time="1323937515845" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-85" Alt="19" Info="Lehrmeister" Neu="20" obj="Bogen" text="Talent steigern" time="1323937516075" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Blasrohr" text="Talent steigern" time="1323937519325" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Blasrohr" text="Talent steigern" time="1323937519655" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" Alt="14" Info="Lehrmeister" Neu="15" obj="Blasrohr" text="Talent steigern" time="1323937519905" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-65" Alt="15" Info="Lehrmeister" Neu="16" obj="Blasrohr" text="Talent steigern" time="1323937520275" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-35" Alt="12;0;0" Info="Lehrmeister" Neu="13;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323937524455" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-38" Alt="13;0;0" Info="Lehrmeister" Neu="14;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323937524785" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-41" Alt="14;0;0" Info="Lehrmeister" Neu="15;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323937525025" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-45" Alt="15;0;0" Info="Lehrmeister" Neu="16;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323937525355" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-48" Alt="16;0;0" Info="Lehrmeister" Neu="17;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323937525655" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="17;0;0" Info="Lehrmeister" Neu="18;0;0" obj="Raufen" text="Nahkampftalent steigern" time="1323937526015" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12;0;0" Info="Lehrmeister" Neu="13;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323937528295" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13;0;0" Info="Lehrmeister" Neu="14;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323937528625" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" Alt="14;0;0" Info="Lehrmeister" Neu="15;0;0" obj="Speere" text="Nahkampftalent steigern" time="1323937529355" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" Alt="14" Info="Lehrmeister" Neu="15" obj="Klettern" text="Talent steigern" time="1323937538577" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-65" Alt="15" Info="Lehrmeister" Neu="16" obj="Klettern" text="Talent steigern" time="1323937539827" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Schleichen" text="Talent steigern" time="1323937546857" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Schleichen" text="Talent steigern" time="1323937547367" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Lehrmeister" Neu="8" obj="Selbstbeherrschung" text="Talent steigern" time="1323937551137" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-51" Alt="12" Info="Lehrmeister" Neu="13" obj="Sich verstecken" text="Talent steigern" time="1323937555947" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-55" Alt="13" Info="Lehrmeister" Neu="14" obj="Sich verstecken" text="Talent steigern" time="1323937556237" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" Alt="14" Info="Lehrmeister" Neu="15" obj="Sich verstecken" text="Talent steigern" time="1323937556687" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-29" Alt="7" Info="Lehrmeister" Neu="8" obj="Stimmen imitieren" text="Talent steigern" time="1323937577177" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-34" Alt="8" Info="Lehrmeister" Neu="9" obj="Stimmen imitieren" text="Talent steigern" time="1323937577557" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="12" Info="Lehrmeister" Neu="13" obj="Fährtensuchen" text="Talent steigern" time="1323937588067" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Lehrmeister" Neu="14" obj="Fährtensuchen" text="Talent steigern" time="1323937588587" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="14" Info="Lehrmeister" Neu="15" obj="Fährtensuchen" text="Talent steigern" time="1323937588887" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="12" Info="Lehrmeister" Neu="13" obj="Orientierung" text="Talent steigern" time="1323937589567" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Lehrmeister" Neu="14" obj="Orientierung" text="Talent steigern" time="1323937589857" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="14" Info="Lehrmeister" Neu="15" obj="Orientierung" text="Talent steigern" time="1323937590057" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-22" Alt="15" Info="Lehrmeister" Neu="16" obj="Fährtensuchen" text="Talent steigern" time="1323937591827" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="12" Info="Lehrmeister" Neu="13" obj="Wildnisleben" text="Talent steigern" time="1323937599227" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Lehrmeister" Neu="14" obj="Wildnisleben" text="Talent steigern" time="1323937599627" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="14" Info="Lehrmeister" Neu="15" obj="Wildnisleben" text="Talent steigern" time="1323937599977" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-22" Alt="15" Info="Lehrmeister" Neu="16" obj="Wildnisleben" text="Talent steigern" time="1323937600977" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-24" Alt="16" Info="Lehrmeister" Neu="17" obj="Wildnisleben" text="Talent steigern" time="1323937601297" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-26" Alt="17" Info="Lehrmeister" Neu="18" obj="Wildnisleben" text="Talent steigern" time="1323937602287" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="12" Info="Lehrmeister" Neu="13" obj="Pflanzenkunde" text="Talent steigern" time="1323937607657" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Lehrmeister" Neu="14" obj="Pflanzenkunde" text="Talent steigern" time="1323937608057" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="14" Info="Lehrmeister" Neu="15" obj="Pflanzenkunde" text="Talent steigern" time="1323937608417" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-22" Alt="15" Info="Lehrmeister" Neu="16" obj="Pflanzenkunde" text="Talent steigern" time="1323937608857" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="12" Info="Lehrmeister" Neu="13" obj="Tierkunde" text="Talent steigern" time="1323937610917" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Lehrmeister" Neu="14" obj="Tierkunde" text="Talent steigern" time="1323937611257" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="14" Info="Lehrmeister" Neu="15" obj="Tierkunde" text="Talent steigern" time="1323937611537" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-22" Alt="15" Info="Lehrmeister" Neu="16" obj="Tierkunde" text="Talent steigern" time="1323937611857" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="12" Info="Lehrmeister" Neu="13" obj="Bogenbau" text="Talent steigern" time="1323937616717" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-17" Alt="12" Info="Lehrmeister" Neu="13" obj="Kochen" text="Talent steigern" time="1323937622557" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Lehrmeister" Neu="14" obj="Kochen" text="Talent steigern" time="1323937622867" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Alt="7" Info="Lehrmeister" Neu="8" obj="Fesseln/Entfesseln" text="Talent steigern" time="1323937649317" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Betören" text="Talent aktivieren" time="1323937656907" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Lehren" text="Talent aktivieren" time="1323937660877" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-3" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Singen" text="Talent steigern" time="1323937684337" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Lehren" text="Talent steigern" time="1323937693797" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Lehren" text="Talent steigern" time="1323937694247" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Lehren" text="Talent steigern" time="1323937694617" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Lehren" text="Talent steigern" time="1323937695117" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Lehren" text="Talent steigern" time="1323937695977" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Betören" text="Talent steigern" time="1323937696857" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Betören" text="Talent steigern" time="1323937697227" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Betören" text="Talent steigern" time="1323937697487" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-175" Alt="12" Info="SE" Neu="13" obj="Mut" text="Eigenschaft steigern" time="1323937711887" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-160" Alt="11" Info="SE" Neu="12" obj="Klugheit" text="Eigenschaft steigern" time="1323937713047" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-190" Alt="13" Info="SE" Neu="14" obj="Intuition" text="Eigenschaft steigern" time="1323937714247" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-220" Alt="14" Info="SE" Neu="15" obj="Charisma" text="Eigenschaft steigern" time="1323937715337" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-175" Alt="12" Info="SE" Neu="13" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1323937716397" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-220" Alt="14" Info="SE" Neu="15" obj="Gewandtheit" text="Eigenschaft steigern" time="1323937717697" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-175" Alt="11" Info="SE" Neu="12" obj="Konstitution" text="Eigenschaft steigern" time="1323937718807" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-175" Alt="13" Info="SE" Neu="14" obj="Körperkraft" text="Eigenschaft steigern" time="1323937720967" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="0" Info="SE" Neu="1" obj="Magieresistenz" text="Eigenschaft steigern" time="1323937723137" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-8" Alt="0" Info="SE" Neu="1" obj="Lebensenergie" text="Eigenschaft steigern" time="1323937724827" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-18" Alt="1" Info="SE" Neu="2" obj="Lebensenergie" text="Eigenschaft steigern" time="1323937726037" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-190" Alt="13" Info="SE" Neu="14" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1323937739307" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-210" Alt="14" Info="SE" Neu="15" obj="Intuition" text="Eigenschaft steigern" time="1323937742337" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-190" Alt="14" Info="SE" Neu="15" obj="Körperkraft" text="Eigenschaft steigern" time="1323937745297" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-190" Alt="12" Info="SE" Neu="13" obj="Konstitution" text="Eigenschaft steigern" time="1323937748607" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-240" Alt="15" Info="SE" Neu="16" obj="Gewandtheit" text="Eigenschaft steigern" time="1323937751608" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-190" Alt="13" Info="SE" Neu="14" obj="Mut" text="Eigenschaft steigern" time="1323937758158" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-260" Alt="16" Info="SE" Neu="17" obj="Gewandtheit" text="Eigenschaft steigern" time="1323937764898" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-220" Alt="15" Info="SE" Neu="16" obj="Intuition" text="Eigenschaft steigern" time="1323937769608" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-210" Alt="14" Info="SE" Neu="15" obj="Fingerfertigkeit" text="Eigenschaft steigern" time="1323937777138" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-18" Alt="1" Info="SE" Neu="2" obj="Magieresistenz" text="Eigenschaft steigern" time="1323937783688" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-30" Alt="2" Info="SE" Neu="3" obj="Lebensenergie" text="Eigenschaft steigern" time="1323937785788" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-60" obj="Talentspezialisierung Speere (Jagdspieß)" text="Sonderfertigkeit hinzugefügt" time="1323937903840" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-40" obj="Talentspezialisierung Tierkunde (Raubtiere)" text="Sonderfertigkeit hinzugefügt" time="1323937913750" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-40" obj="Talentspezialisierung Pflanzenkunde (Sumpf)" text="Sonderfertigkeit hinzugefügt" time="1323937929030" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Lehrmeister" Neu="14" obj="Bogenbau" text="Talent steigern" time="1323937971640" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-21" Alt="14" Info="Lehrmeister" Neu="15" obj="Bogenbau" text="Talent steigern" time="1323937972370" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-40" obj="Talentspezialisierung Bogenbau (Bogen)" text="Sonderfertigkeit hinzugefügt" time="1323937983560" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-95" Alt="20" Info="Lehrmeister" Neu="21" obj="Bogen" text="Talent steigern" time="1323938008330" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-100" Alt="21" Info="Lehrmeister" Neu="22" obj="Bogen" text="Talent steigern" time="1323938009610" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-105" Alt="22" Info="Lehrmeister" Neu="23" obj="Bogen" text="Talent steigern" time="1323938010200" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-240" Alt="16" Info="SE" Neu="17" obj="Intuition" text="Eigenschaft steigern" time="1323938032850" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-42" Alt="3" Info="SE" Neu="4" obj="Lebensenergie" text="Eigenschaft steigern" time="1323938048770" version="5.2.0"/>
+<ereignis Abenteuerpunkte="-4" Alt="0" Neu="1" obj="Ausdauer" text="Eigenschaft steigern" time="1323938052450" version="5.2.0"/>
+</ereignisse>
+<talentliste>
+<talent lernmethode="Lehrmeister" name="Blasrohr" probe=" (GE/FF/KK)" value="16"/>
+<talent lernmethode="Lehrmeister" name="Bogen" probe=" (GE/FF/KK)" value="23"/>
+<talent lernmethode="Lehrmeister" name="Dolche" probe=" (GE/GE/KK)" value="9"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Lehrmeister" name="Raufen" probe=" (GE/GE/KK)" value="18"/>
+<talent lernmethode="Lehrmeister" name="Ringen" probe=" (GE/GE/KK)" value="10"/>
+<talent lernmethode="Lehrmeister" name="Speere" probe=" (GE/GE/KK)" value="15"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Lehrmeister" name="Akrobatik" probe=" (MU/GE/KK)" value="15"/>
+<talent be="BEx2" lernmethode="Lehrmeister" name="Athletik" probe=" (GE/KO/KK)" value="7"/>
+<talent be="BEx2" lernmethode="Lehrmeister" name="Klettern" probe=" (MU/GE/KK)" value="16"/>
+<talent be="BEx2" lernmethode="Lehrmeister" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="14"/>
+<talent be="BE" lernmethode="Lehrmeister" name="Schleichen" probe=" (MU/IN/GE)" value="14"/>
+<talent be="BEx2" lernmethode="Lehrmeister" name="Schwimmen" probe=" (GE/KO/KK)" value="7"/>
+<talent be="" lernmethode="Lehrmeister" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="8"/>
+<talent be="BE-2" lernmethode="Lehrmeister" name="Sich verstecken" probe=" (MU/IN/GE)" value="15"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="1"/>
+<talent be="0-&gt;BE" lernmethode="Lehrmeister" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="14"/>
+<talent be="BE-4" lernmethode="Lehrmeister" name="Stimmen imitieren" probe=" (KL/IN/CH)" value="9"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="2"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="-2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Betören" probe=" (IN/CH/CH)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Lehrmeister" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Lehrmeister" name="Überreden" probe=" (MU/IN/CH)" value="2"/>
+<talent lernmethode="Lehrmeister" name="Fallen stellen" probe=" (KL/FF/KK)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Fesseln/Entfesseln" probe=" (FF/GE/KK)" value="8"/>
+<talent lernmethode="Lehrmeister" name="Fischen/Angeln" probe=" (IN/FF/KK)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Fährtensuchen" probe=" (KL/IN/KO)" value="16"/>
+<talent lernmethode="Lehrmeister" name="Orientierung" probe=" (KL/IN/IN)" value="15"/>
+<talent lernmethode="Lehrmeister" name="Wettervorhersage" probe=" (KL/IN/IN)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Wildnisleben" probe=" (IN/GE/KO)" value="18"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Mechanik" probe=" (KL/KL/FF)" value="3"/>
+<talent lernmethode="Lehrmeister" name="Pflanzenkunde" probe=" (KL/IN/FF)" value="16"/>
+<talent lernmethode="Lehrmeister" name="Rechnen" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Lehrmeister" name="Tierkunde" probe=" (MU/KL/IN)" value="16"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="3"/>
+<talent k="15" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Mohisch" probe=" (KL/IN/CH)" value="9"/>
+<talent k="18" lernmethode="Lehrmeister" name="Sprachen kennen Rssahh" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Abrichten" probe=" (MU/IN/CH)" value="3"/>
+<talent lernmethode="Lehrmeister" name="Bogenbau" probe=" (KL/IN/FF)" value="15"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Boote fahren" probe=" (GE/KO/KK)" value="1"/>
+<talent lernmethode="Lehrmeister" name="Feuersteinbearbeitung" probe=" (KL/FF/FF)" value="12"/>
+<talent lernmethode="Lehrmeister" name="Gerber/Kürschner" probe=" (KL/FF/KO)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Heilkunde: Gift" probe=" (MU/KL/IN)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Heilkunde: Krankheiten" probe=" (MU/KL/CH)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="7"/>
+<talent lernmethode="Lehrmeister" name="Kochen" probe=" (KL/IN/FF)" value="14"/>
+<talent lernmethode="Lehrmeister" name="Lederarbeiten" probe=" (KL/FF/FF)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gefahreninstinkt" probe=" (KL/IN/IN)" value="11"/>
+</talentliste>
+<zauberliste/>
+<kampf>
+<kampfwerte name="Dolche">
+<attacke value="14"/>
+<parade value="14"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="11"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="19"/>
+<parade value="18"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="15"/>
+<parade value="14"/>
+</kampfwerte>
+<kampfwerte name="Speere">
+<attacke value="19"/>
+<parade value="15"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="9"/>
+<parade value="10"/>
+</kampfwerte>
+</kampf>
+<gegenstände>
+<gegenstand anzahl="1" name="Armreif" slot="0">
+<modallgemein>
+<gewicht value="10.0"/>
+<preis value="6000"/>
+<name value="Armreif (Obsidian, Schlange)"/>
+</modallgemein>
+</gegenstand>
+<gegenstand anzahl="1" name="Blasrohr" slot="0">
+<modallgemein>
+<gewicht value="15.0"/>
+<preis value="4000"/>
+<name value="Blasrohr (Achaz)"/>
+</modallgemein>
+</gegenstand>
+<gegenstand anzahl="1" name="Blasrohr" slot="1">
+<modallgemein>
+<gewicht value="15.0"/>
+<preis value="4000"/>
+<name value="Blasrohr für Atemgifte"/>
+</modallgemein>
+<Fernkampfwaffe>
+<munition art="keine"/>
+<entfernung E0="2" E1="4" E2="10" E3="0" E4="0"/>
+<tpmod M0="0" M1="-1" M2="-2" M3="0" M4="0"/>
+<trefferpunkte mul="1" sum="-2" w="6"/>
+</Fernkampfwaffe>
+</gegenstand>
+<gegenstand anzahl="1" name="Boabungaha (!)" slot="0"/>
+<gegenstand anzahl="2" name="Bogensehne" slot="0"/>
+<gegenstand anzahl="1" name="Brusttuch" slot="0">
+<modallgemein>
+<gewicht value="8.0"/>
+<preis value="10"/>
+<name value="Brusttuch (Jaguar)"/>
+</modallgemein>
+</gegenstand>
+<gegenstand anzahl="1" name="Gürteltasche, Hartleder" slot="0"/>
+<gegenstand anzahl="1" name="Hüftköcher, Leder (20 Pfeile)" slot="0"/>
+<gegenstand anzahl="1" name="Jagdmesser" slot="0">
+<modallgemein>
+<gewicht value="15.0"/>
+<preis value="500"/>
+<name value="Jagdmesser (Vulkanglas)"/>
+</modallgemein>
+<Nahkampfwaffe variante="0">
+<trefferpunkte mul="1" sum="4" w="6"/>
+<wm at="1" pa="-1"/>
+<bf akt="5" min="5"/>
+<inimod ini="0"/>
+</Nahkampfwaffe>
+</gegenstand>
+<gegenstand anzahl="1" name="Jagdspieß" slot="0">
+<modallgemein>
+<gewicht value="80.0"/>
+<preis value="800"/>
+<name value="Jagdspieß (Vulkanglas)"/>
+</modallgemein>
+<Nahkampfwaffe variante="0">
+<trefferpunkte mul="1" sum="8" w="6"/>
+<wm at="1" pa="0"/>
+<bf akt="5" min="5"/>
+<inimod ini="0"/>
+</Nahkampfwaffe>
+<Nahkampfwaffe variante="1">
+<trefferpunkte mul="1" sum="7" w="6"/>
+<wm at="1" pa="-3"/>
+<bf akt="5" min="5"/>
+<inimod ini="-2"/>
+</Nahkampfwaffe>
+</gegenstand>
+<gegenstand anzahl="1" name="Kajubo (A)" slot="0"/>
+<gegenstand anzahl="1" name="Kukris (!)" slot="0"/>
+<gegenstand anzahl="1" name="Kurzbogen" slot="0">
+<Fernkampfwaffe>
+<entfernung E0="7" E1="18" E2="30" E3="50" E4="75"/>
+<tpmod M0="2" M1="1" M2="1" M3="0" M4="0"/>
+<trefferpunkte mul="1" sum="6" w="6"/>
+</Fernkampfwaffe>
+</gegenstand>
+<gegenstand anzahl="1" name="Lendentuch" slot="0">
+<modallgemein>
+<gewicht value="8.0"/>
+<preis value="10"/>
+<name value="Lendentuch (Jaguar)"/>
+</modallgemein>
+</gegenstand>
+<gegenstand anzahl="20" name="Pfeil" slot="0">
+<modallgemein>
+<gewicht value="3.0"/>
+<preis value="40"/>
+<name value="Pfeil (Vulkanglas)"/>
+</modallgemein>
+</gegenstand>
+<gegenstand anzahl="1" name="Rote Pfeilblüte (W)" slot="0"/>
+<gegenstand anzahl="1" name="Samthauch (!)" slot="0"/>
+<gegenstand anzahl="1" name="Schwarzer Lotus (!)" slot="0"/>
+<gegenstand anzahl="1" name="Shurinknolle (!)" slot="0"/>
+<gegenstand anzahl="1" name="Trinkflasche (5 Schank)" slot="0"/>
+<gegenstand anzahl="1" name="Wurara" slot="0"/>
+</gegenstände>
+<ausrüstungen>
+<heldenausruestung bezeichner="" bfakt="5" bfmin="5" hand="rechts" name="nkwaffe1" schild="0" set="0" slot="0" talent="Speere" waffenname="Jagdspieß"/>
+<heldenausruestung bezeichner="" bfakt="5" bfmin="5" hand="rechts" name="nkwaffe2" schild="0" set="0" slot="0" talent="Dolche" waffenname="Jagdmesser"/>
+<heldenausruestung name="fkwaffe1" set="0" slot="0" waffenname="Kurzbogen"/>
+<heldenausruestung name="fkwaffe2" set="0" slot="0" waffenname="Blasrohr"/>
+<heldenausruestung name="fkwaffe3" set="0" slot="1" waffenname="Blasrohr"/>
+<heldenausruestung name="jagtwaffe" nummer="2" set="0"/>
+</ausrüstungen>
+<verbindungen/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

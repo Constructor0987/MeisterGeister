@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="MeisterGeister.View.Kampf.KampfInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             mc:Ignorable="d" 
+             d:DesignHeight="306" d:DesignWidth="484"
+             Background="Transparent">
+    <UserControl.Resources>
+        <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Opacity" Value="1.0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Kampfunfähig}" Value="true">
+                    <Setter Property="Opacity" Value="0.3" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=AktuellerKämpfer}" Value="true">
+                    <Setter Property="Background" Value="LightGreen" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="KämpferListItemNameStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="Black" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=KampfPartei}" Value="2">
+                    <Setter Property="Foreground" Value="Sienna" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="KämpferListTemplate">
+            <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" Margin="5,0" >
+                <TextBlock Text="{Binding Path=Kurzname}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="{Binding Path=InitiativeInfo}" Margin="8,2,0,0" />
+                    <ViewGeneral:WürfelControl x:Name="_würfelControlInitiative" Ergebnis="{Binding Path=InitiativeWurf}" ErgebnisText="INI-Wurf" Würfel="{Binding Path=InitiativeZufall}" Height="25" Width="25" Margin="2,0,0,0" IsEnabled="False" />
+                    <Rectangle Margin="4" Width="15" Height="15" Fill="{Binding Path=Farbmarkierung}" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <ItemsControl Grid.Column="0" Margin="5,5,0,5" Name="_listBoxKämpfer" DataContext="{Binding KämpferListe}" Padding="30, 20" ItemTemplate="{StaticResource KämpferListTemplate}" ItemsSource="{Binding UpdateSourceTrigger=PropertyChanged}"
+                      Background="{StaticResource BackgroundPergamentHoch}" FontSize="18">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <Grid Grid.Column="1">
+            <StackPanel Margin="5" Background="{StaticResource BackgroundPergamentHoch}" Height="Auto" VerticalAlignment="Top">
+                <TextBlock Text="Kampfrunde:" TextAlignment="Center" FontSize="18" Margin="4,5,4,0" />
+                <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampfrunde}" Margin="4" TextAlignment="Center" FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
+                <TextBlock Text="Zeit:" TextAlignment="Center" FontSize="18" Margin="4,0" />
+                <TextBlock Text="{Binding KampfZeit}" TextAlignment="Center" Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,11 @@
+﻿<MenuItem x:Class="MeisterGeister.View.General.ExterneVerknüpfungAddMenuItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          Header="Externe Verknüpfung..." FontStyle="Italic" Opacity="0.5"
+          FontSize="13">
+    <MenuItem Header="Programm oder Datei" Click="MenuItem_Click" ToolTip="Verknüpfung zu einem externen Programm (etc.) ins Menü einfügen." />
+    <MenuItem Header="Ordner" Click="MenuItem_Click" ToolTip="Verknüpfung zu einem Ordner ins Menü einfügen." />
+    <MenuItem Header="Webseite" Click="MenuItem_Click" ToolTip="Verknüpfung zu einer Webseite ins Menü einfügen." />
+</MenuItem>

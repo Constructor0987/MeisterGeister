@@ -1,0 +1,215 @@
+//Parser der Voraussetzungen für Sonderfertigkeiten und Talente
+// http://www.meistergeister.org
+
+// Namespace allows you to define a different namespace for the Scanner, 
+//     Parser and ParseTree generated classes. By default this is set to "TinyPG"
+// Language allows you to define the language to generate.
+// Only C# (default) or VB are supported for now. 
+// OutputPath allows you to define the absolute or relative outputpath for the
+//     files. The relative path is relative to the grammar file. 
+//     By default this is set to "./"
+// Template path is relative to the TinyPG.exe file. By default this is set to 
+//     "Templates"
+<% @TinyPG Namespace="MeisterGeister.Logic.Voraussetzungen" Language="C#" 
+           OutputPath="./" TemplatePath="Templates/C#/" %>
+// the Generate parameter specifies wether the file
+// should be generated. By default this is set to True
+<% @Parser Generate="True" %>
+<% @ParseTree Generate="True" %>  // toggle generation of the the ParseTree.cs file
+<% @Scanner Generate="True" %> // toggle generation of the code for the Scanner
+<% @TextHighlighter Generate="False" %> // toggle generation of the code for the TextHighlighter
+
+NUMBER 	-> @"[0-9]+";
+BROPEN 	->  @"[\(\[]";
+BRCLOSE 	->  @"[\)\]]";
+NOT           -> @"!";
+ODER          -> @"\|";
+UND           -> @",";
+SF		-> @"SF";
+V		-> @"V";
+N		-> @"N";
+KL		-> @"KL";
+IN		-> @"IN";
+CH		-> @"CH";
+MU		-> @"MU";
+KK		-> @"KK";
+KO		-> @"KO";
+GE		-> @"GE";
+FF		-> @"FF";
+INI		-> @"INI";
+AT		-> @"AT";
+PA		-> @"PA";
+FK		-> @"FK";
+WORT          -> @"[a-zA-ZäüößÄÜÖûÛ'/\-]+\:?";
+QUOTE	     -> @"\""";
+EOF         -> @"^$";
+WHITESPACE  -> @"\s+";
+
+Start 		-> AndExpression? EOF
+{
+	if($AndExpression == null)
+		return true;
+	return $AndExpression;
+};
+
+AndExpression -> OrExpression (UND WHITESPACE? OrExpression)*
+{
+	bool Value = Convert.ToBoolean($OrExpression); 
+	int i = 1;
+	while (Value && $OrExpression[i] != null) { 
+		Value = Value && Convert.ToBoolean($OrExpression[i++]); 
+	} 
+	return Value; 
+};
+
+OrExpression -> Atom (WHITESPACE? ODER WHITESPACE? Atom)*
+{
+	bool Value = Convert.ToBoolean($Atom); 
+	int i = 1;
+	while (!Value && $Atom[i] != null) { 
+		Value = Value || Convert.ToBoolean($Atom[i++]); 
+	} 
+	return Value; 
+};
+
+Atom -> NOT? (Sonderfertigkeit | Vorteil | Nachteil | Eigenschaft | Talent | BROPEN WHITESPACE? AndExpression WHITESPACE? BRCLOSE)
+{
+	bool atom;
+	if($Sonderfertigkeit != null)
+		atom = Convert.ToBoolean($Sonderfertigkeit);
+	else if($Vorteil != null)
+		atom = Convert.ToBoolean($Vorteil);
+	else if($Nachteil!= null)
+		atom = Convert.ToBoolean($Nachteil);
+	else if($Eigenschaft != null)
+		atom = Convert.ToBoolean($Eigenschaft);
+	else if($Talent != null)
+		atom = Convert.ToBoolean($Talent);
+	else
+		atom = Convert.ToBoolean($AndExpression);
+	if($NOT != null)
+		atom = !atom;
+	return atom;
+};
+
+Text -> WORT WHITESPACE? (BROPEN Text BRCLOSE WHITESPACE? | Text)?//(WORT WHITESPACE?)* 
+{
+	string Value = Convert.ToString($WORT);
+	if($BROPEN != null)
+		Value = Value + " " + Convert.ToString($BROPEN) + Convert.ToString($Text) + Convert.ToString($BRCLOSE); 
+	else if($Text != null)
+		Value = Value + " " + Convert.ToString($Text); 
+	return Value;
+};
+
+Wert -> QUOTE (NUMBER | Text) QUOTE WHITESPACE?
+{
+	return $Text;
+};
+
+
+
+//Atome und deren Werte
+
+Eigenschaft -> (INI | KL | IN | CH | MU | KK | KO | GE | FF | AT | PA | FK) WHITESPACE NUMBER
+{
+//	return true;
+
+	MeisterGeister.Model.Held held = null;
+	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
+		held = (MeisterGeister.Model.Held)paramlist[0];
+	if(held == null)
+		return false;
+	int wert = Convert.ToInt32($NUMBER);
+	if($KL != null)
+		return held.KL >= wert;
+	if($IN != null)
+		return held.IN >= wert;
+	if($CH != null)
+		return held.CH >= wert;
+	if($MU != null)
+		return held.MU >= wert;
+	if($KK != null)
+		return held.KK >= wert;
+	if($KO != null)
+		return held.KO >= wert;
+	if($GE != null)
+		return held.GE >= wert;
+	if($FF != null)
+		return held.FF >= wert;
+	if($AT != null)
+		return held.AttackeBasis >= wert;
+	if($FK != null)
+		return held.FernkampfBasis >= wert;
+	if($INI != null)
+		return held.InitiativeBasisOhneSonderfertigkeiten >= wert;
+	return held.ParadeBasis >= wert;
+};
+
+
+Sonderfertigkeit -> SF WHITESPACE Text Wert?
+{
+/*	if(Convert.ToString($Text).Equals("Elementarharmonisierte Aura (Fels/Luft)"))
+		return false;
+	if(Convert.ToString($Text).Equals("Kraftlinienmagie II"))
+		return true;
+//	throw new ArgumentException("y" + Convert.ToString($Text) + "X");
+	if(Convert.ToString($Text).Equals("Merkmalskenntnis (Dämonisch (Tasfarelel))"))
+		return true;
+	return false;
+*/
+	MeisterGeister.Model.Held held = null;
+	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
+		held = (MeisterGeister.Model.Held)paramlist[0];
+	if(held == null)
+		return false;
+	string sfName = Convert.ToString($Text);
+	string wert = null;
+	if($Wert != null)
+		wert = Convert.ToString($Wert);
+	return held.HatSonderfertigkeit(sfName, wert);
+
+};
+
+Vorteil -> V WHITESPACE Text Wert?
+{
+	MeisterGeister.Model.Held held = null;
+	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
+		held = (MeisterGeister.Model.Held)paramlist[0];
+	if(held == null)
+		return false;
+	string vName = Convert.ToString($Text);
+	string wert = null;
+	if($Wert != null)
+		wert = Convert.ToString($Wert);
+	return held.HatVorNachteil(vName, wert);
+};
+
+Nachteil -> N WHITESPACE Text Wert?
+{
+	MeisterGeister.Model.Held held = null;
+	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
+		held = (MeisterGeister.Model.Held)paramlist[0];
+	if(held == null)
+		return false;
+	string vName = Convert.ToString($Text);
+	string wert = null;
+	if($Wert != null)
+		wert = Convert.ToString($Wert);
+	return held.HatVorNachteil(vName, wert);
+};
+
+Talent -> Text NUMBER
+{
+//	return true;
+
+	MeisterGeister.Model.Held held = null;
+	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
+		held = (MeisterGeister.Model.Held)paramlist[0];
+	if(held == null)
+		return false;
+	string tName = Convert.ToString($Text);
+	int wert = Convert.ToInt32($NUMBER);
+	return held.HatTalent(tName, wert);
+
+};

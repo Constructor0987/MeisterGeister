@@ -1,0 +1,14 @@
+﻿<MeisterGeister_ViewModel_Helden:HeldenViewModel 
+    xmlns:MeisterGeister_ViewModel_Helden="clr-namespace:MeisterGeister.ViewModel.Helden" 
+    xmlns:MeisterGeister_Model="clr-namespace:MeisterGeister.Model" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+    xmlns:MeisterGeister_ViewModel_Base="clr-namespace:MeisterGeister.ViewModel.Base" 
+    >
+    <MeisterGeister_ViewModel_Helden:HeldenViewModel.HeldListe>
+        <MeisterGeister_Model:Held Name="Hartmann">
+        </MeisterGeister_Model:Held>
+        <MeisterGeister_Model:Held Name="Bärfried">
+        </MeisterGeister_Model:Held>
+    </MeisterGeister_ViewModel_Helden:HeldenViewModel.HeldListe>
+    
+</MeisterGeister_ViewModel_Helden:HeldenViewModel>

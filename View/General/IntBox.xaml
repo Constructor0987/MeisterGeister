@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="MeisterGeister.View.General.IntBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" MouseWheel="UserControl_MouseWheel"
+             Name="_intBox" Height="23">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
+        <Style x:Key="TextBoxIntStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="{StaticResource DefaultBorderBrushTextBox}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=_intBox, Path=NoBackground}" Value="true">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=_intBox, Path=WeissAufSchwarz}" Value="true">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="Black" />
+                    <Setter Property="BorderBrush" Value="Silver" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" Name="_textBoxInt" Text="{Binding ElementName=_intBox, Path=Value}" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="_textBoxInt_KeyDown" Style="{StaticResource TextBoxIntStyle}" BorderBrush="Transparent"/>
+        <StackPanel Grid.Column="1" Name="_stackPanelButtons" Orientation="Horizontal" Visibility="{Binding ElementName=_intBox, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}">
+            <Button Name="_buttonMinus" Width="18" Click="ButtonMinus_Click">
+                <Image Source="/Images/Icons/General/entf_02.png" />
+            </Button>
+            <Button Name="_buttonPlus" Width="18" Click="ButtonPlus_Click">
+                <Image Source="/Images/Icons/General/add.png" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

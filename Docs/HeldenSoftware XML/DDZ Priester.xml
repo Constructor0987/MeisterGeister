@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.2" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1307655127264" name="DDZ Priester">
+<basis>
+<geschlecht name="männlich"/>
+<settings name="Die Dunklen Zeiten"/>
+<mods/>
+<rasse name="helden.model.DDZRassen.Gueldenlaender" string="Güldenländer">
+<groesse gewicht="76" value="176"/>
+<aussehen alter="17" augenfarbe="grün" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1003" gbmonat="1" gbtag="25" gprest="11" gpstart="110" haarfarbe="rot" kalender="Bosparans Fall" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.DDZKulturen.BosparanischesReich" string="Bosparanisches Reich - Horasiat - Großstadt">
+<variante name="Horasiat"/>
+<variante name="Großstadt"/>
+</kultur>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.DDZprofessionen.Goetterdiener" string="Götterdiener (Moralkodex 12); Geweiht (24 KaP)">
+<variante name="Götterdiener (Moralkodex 12)"/>
+<variante name="Geweiht (24 KaP)"/>
+</ausbildung>
+</ausbildungen>
+<eingegeben value="true"/>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value=""/>
+<abenteuerpunkte value="50000"/>
+<freieabenteuerpunkte value="48271"/>
+</basis>
+<eigenschaften>
+<eigenschaft mod="0" name="Mut" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Klugheit" startwert="10" value="10"/>
+<eigenschaft mod="0" name="Intuition" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Charisma" startwert="13" value="13"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="8" value="8"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="8" value="8"/>
+<eigenschaft mod="0" name="Konstitution" startwert="8" value="8"/>
+<eigenschaft mod="0" name="Körperkraft" startwert="8" value="8"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="6" value="6"/>
+<eigenschaft mod="10" name="Lebensenergie" value="0"/>
+<eigenschaft mod="10" name="Ausdauer" value="0"/>
+<eigenschaft grossemeditation="0" mod="12" mrmod="-1" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="24" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-1" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="9"/>
+<eigenschaft mod="0" name="at" value="6"/>
+<eigenschaft mod="0" name="pa" value="6"/>
+<eigenschaft mod="0" name="fk" value="6"/>
+</eigenschaften>
+<vt>
+<vorteil name="Comes"/>
+<vorteil name="Ererbtes Szepter" value="3"/>
+<vorteil name="Erstgeborener Comes"/>
+<vorteil name="Hohe Karmaenergie" value="3"/>
+<vorteil name="Sacerdos" value="4"/>
+<vorteil name="Soziale Anpassungsfähigkeit"/>
+<vorteil name="Vollzauberer"/>
+<vorteil name="Moralkodex [Angrosch-Kult]"/>
+<vorteil name="Moralkodex [DDZ]" value="12"/>
+<vorteil name="Moralkodex [H'Szint-Kult]"/>
+<vorteil name="Moralkodex [Heshinja]"/>
+<vorteil name="Moralkodex [Zsahh-Kult]"/>
+</vt>
+<sf>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Beseelung rufen (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Essenz kanalisieren (I)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttliche Essenz kanalisieren (II)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Göttlichen Schutz erflehen (I)" probe="" wirkung=""/>
+<sonderfertigkeit name="Karmalqueste"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Bosparanische Südprovinzen"/>
+<kultur name="Bosparanisches Reich"/>
+<kultur name="Emirat Al'Mada"/>
+<kultur name="Nordprovinzen"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Liturgiekenntnis (Dunkle Zeiten)"/>
+<sonderfertigkeit name="Repräsentation: Alhanisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Alhanisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Güldenländisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Kophtanisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Mudramulisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Satuarisch"/>
+<sonderfertigkeit name="Ritualkenntnis: Tapasuul"/>
+<sonderfertigkeit name="Wuchtschlag"/>
+</sf>
+<ereignisse>
+<ereignis obj="max GP für Helden: 110" text="EINSTELLUNG" time="1307655128515" version="5.1.1"/>
+<ereignis obj="max Eigenschafts-GP für Helden: 100" text="EINSTELLUNG" time="1307655128515" version="5.1.1"/>
+<ereignis obj="max Eigenschafts-Wert für Helden14" text="EINSTELLUNG" time="1307655128515" version="5.1.1"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Rasse: Güldenländer" text="RKP" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="Kultur: Bosparanisches Reich - Horasiat - Großstadt" text="RKP" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="0" kommentar="18 GP" obj="Profession: Götterdiener (Moralkodex 12); Geweiht (24 KaP)" text="RKP" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Mut: 12" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="10" kommentar="10 GP" obj="Klugheit: 10" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Intuition: 12" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="Charisma: 13" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="Fingerfertigkeit: 8" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="Gewandtheit: 8" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="Konstitution: 8" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="Körperkraft: 8" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="6" kommentar="0 GP" obj="Sozialstatus: 6" text="EIGENSCHAFTEN" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="0" kommentar="4 AP" obj="Bastardstäbe: 0" text="TALENT" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Moralkodex [DDZ]: 12" text="VORTEILE" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Sacerdos: 4" text="VORTEILE" time="1307655128516" version="5.1.1"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Soziale Anpassungsfähigkeit" text="VORTEILE" time="1307655128516" version="5.1.1"/>
+<ereignis obj="Auswahl" text="Wuchtschlag" time="1307655128516" version="5.1.1"/>
+<ereignis obj="Auswahl" text="Göttliche Beseelung rufen (I)" time="1307655128516" version="5.1.1"/>
+<ereignis obj="Auswahl" text="Göttliche Essenz kanalisieren (I)" time="1307655128516" version="5.1.1"/>
+<ereignis obj="Auswahl" text="Göttlichen Schutz erflehen (I)" time="1307655128516" version="5.1.1"/>
+<ereignis obj="Auswahl" text="Göttliche Essenz kanalisieren (II)" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Hiebwaffen" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Ackerbau" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="3" obj="Auswahl" text="Sprachen kennen Grolmisch" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="4" obj="Auswahl" text="Armbrust" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="2" obj="Auswahl" text="Belagerungswaffen" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="3" obj="Auswahl" text="Akrobatik" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Athletik" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Fliegen" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="4" obj="Auswahl" text="Sprachen kennen Aureliani" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="4" obj="Auswahl" text="Sprachen kennen Bosparano" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="6" obj="Auswahl" text="Betören" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="5" obj="Auswahl" text="Etikette" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="4" obj="Auswahl" text="Gassenwissen" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="3" obj="Auswahl" text="Lehren" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="3" obj="Auswahl" text="Menschenkenntnis" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="2" obj="Auswahl" text="Schauspielerei" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="2" obj="Auswahl" text="Schriftlicher Ausdruck" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="2" obj="Auswahl" text="Sich verkleiden" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Überreden" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Überzeugen" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Fährtensuchen" time="1307655128516" version="5.1.1"/>
+<ereignis Neu="1" obj="Auswahl" text="Fallen stellen" time="1307655128516" version="5.1.1"/>
+<ereignis Abenteuerpunkte="49560" Alt="440" Neu="50000" text="Abenteuerpunkte" time="1308242602974" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Comes" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Ererbtes Szepter: 3" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Erstgeborener Comes" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Hohe Karmaenergie: 3" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Moralkodex [Angrosch-Kult]" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Moralkodex [H'Szint-Kult]" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Moralkodex [Heshinja]" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Moralkodex [Zsahh-Kult]" text="Vor-/Nachteil hinzugefügt" time="1308243056114" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Sprachen kennen Alaani" text="Talent aktivieren" time="1308244668342" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Abvenenum reine Speise [Alhanisch]" text="Zauber aktivieren" time="1308244668342" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Accuratum Zaubernadel [Alhanisch]" text="Zauber aktivieren" time="1308244668342" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Accuratum Zaubernadel [Grolmisch]" text="Zauber aktivieren" time="1308244668342" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Accuratum Zaubernadel [Güldenländisch]" text="Zauber aktivieren" time="1308244668342" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Accuratum Zaubernadel [Kophtanisch]" text="Zauber aktivieren" time="1308244668342" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Accuratum Zaubernadel [Mudramulisch]" text="Zauber aktivieren" time="1308244668342" version="5.1.2"/>
+<ereignis Alt="19" Neu="31" kommentar="Editor" obj="Astralenergie" text="Eigenschaft steigern" time="1308244668342" version="5.1.2"/>
+<ereignis Alt="3" Neu="5" kommentar="Editor" obj="Magieresistenz" text="Eigenschaft steigern" time="1308244668342" version="5.1.2"/>
+<ereignis kommentar="Editor" obj="Vollzauberer" text="Vor-/Nachteil hinzugefügt" time="1308244668342" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-75" obj="Kulturkunde (Bosparanische Südprovinzen)" text="Sonderfertigkeit hinzugefügt" time="1308244793781" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-75" obj="Kulturkunde (Nordprovinzen)" text="Sonderfertigkeit hinzugefügt" time="1308244793781" version="5.1.2"/>
+<ereignis obj="Repräsentation: Alhanisch" text="Sonderfertigkeit hinzugefügt" time="1308244793782" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-75" obj="Kulturkunde (Emirat Al'Mada)" text="Sonderfertigkeit hinzugefügt" time="1308244793782" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Mudramulisch" text="Sonderfertigkeit hinzugefügt" time="1308245157229" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Güldenländisch" text="Sonderfertigkeit hinzugefügt" time="1308245157230" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Kophtanisch" text="Sonderfertigkeit hinzugefügt" time="1308245157230" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Satuarisch" text="Sonderfertigkeit hinzugefügt" time="1308245157230" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Tapasuul" text="Sonderfertigkeit hinzugefügt" time="1308245157230" version="5.1.2"/>
+<ereignis Abenteuerpunkte="-250" obj="Ritualkenntnis: Alhanisch" text="Sonderfertigkeit hinzugefügt" time="1308245157230" version="5.1.2"/>
+</ereignisse>
+<talentliste>
+<talent lernmethode="Gegenseitiges Lehren" name="Armbrust" probe=" (GE/FF/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Bastardstäbe" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Belagerungswaffen" probe=" (GE/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Akrobatik" probe=" (MU/GE/KK)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="1"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Fliegen" probe=" (MU/IN/GE)" value="1"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="4"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="0"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Betören" probe=" (IN/CH/CH)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="9"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schauspielerei" probe=" (MU/KL/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schriftlicher Ausdruck" probe=" (KL/IN/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sich verkleiden" probe=" (MU/CH/GE)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="10"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überzeugen" probe=" (KL/IN/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fallen stellen" probe=" (KL/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geschichtswissen" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="12"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heraldik" probe=" (KL/KL/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Staatskunst" probe=" (KL/IN/CH)" value="1"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Alaani" probe=" (KL/IN/CH)" value="0"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Aureliani" probe=" (KL/IN/CH)" value="4"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Bosparano" probe=" (KL/IN/CH)" value="12"/>
+<talent k="17" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Grolmisch" probe=" (KL/IN/CH)" value="3"/>
+<talent k="12" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Imperiale Zeichen" probe=" (KL/KL/FF)" value="0"/>
+<talent k="24" lernmethode="Gegenseitiges Lehren" name="Schrift der Muttersprache" probe=" (KL/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ackerbau" probe=" (IN/FF/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Alhanisch" probe=" (--/--/--)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Güldenländisch" probe=" (--/--/--)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Kophtanisch" probe=" (--/--/--)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Mudramulisch" probe=" (--/--/--)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Satuarisch" probe=" (--/--/--)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Tapasuul" probe=" (--/--/--)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Liturgiekenntnis (Dunkle Zeiten)" probe=" (MU/IN/CH)" value="3"/>
+</talentliste>
+<zauberliste>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Abvenenum reine Speise" probe=" (KL/KL/FF)" reichweite="" repraesentation="Alhanisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Accuratum Zaubernadel" probe=" (KL/CH/FF)" reichweite="" repraesentation="Alhanisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Accuratum Zaubernadel" probe=" (KL/CH/FF)" reichweite="" repraesentation="Grolmisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Accuratum Zaubernadel" probe=" (KL/CH/FF)" reichweite="" repraesentation="Güldenländisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Accuratum Zaubernadel" probe=" (KL/CH/FF)" reichweite="" repraesentation="Kophtanisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Gegenseitiges Lehren" name="Accuratum Zaubernadel" probe=" (KL/CH/FF)" reichweite="" repraesentation="Mudramulisch" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+</zauberliste>
+<kampf>
+<kampfwerte name="Bastardstäbe">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Dolche">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="6"/>
+<parade value="6"/>
+</kampfwerte>
+</kampf>
+<gegenstände/>
+<ausrüstungen>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+</ausrüstungen>
+<verbindungen/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

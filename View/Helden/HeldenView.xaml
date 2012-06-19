@@ -1,0 +1,832 @@
+﻿<UserControl 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Daten="clr-namespace:MeisterGeister.Daten" 
+             xmlns:LogicGeneral="clr-namespace:MeisterGeister.Logic.General" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:View="clr-namespace:MeisterGeister.View.Inventar" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             xmlns:vmHelden="clr-namespace:MeisterGeister.ViewModel.Helden" 
+             xmlns:MeisterGeister="clr-namespace:MeisterGeister" 
+			 x:Class="MeisterGeister.View.Helden.HeldenView" 
+			 xmlns:MGC="clr-namespace:MeisterGeister.View.Helden.Controls" 
+             Loaded="UserControl_Loaded" 
+             x:Name="_heldenControl1" 
+             mc:Ignorable="d" d:DesignHeight="571" d:DesignWidth="1027"
+             d:DataContext="{d:DesignData /SampleData/HeldenViewModelSampleData.xaml}">    
+    <UserControl.Resources>
+        <!-- Eigenschaften -->
+        <Style x:Key="LabelMuStyle" TargetType="{x:Type Label}"/>
+        <Style x:Key="LabelKlStyle" TargetType="{x:Type Label}"/>
+        <Style x:Key="LabelKoStyle" TargetType="{x:Type Label}"/>
+        <!-- Helden -->
+        <CollectionViewSource x:Key="waffenViewSource" Source="{Binding Waffe, Source={StaticResource DatenDataSet}}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <!-- Helden -->
+        <CollectionViewSource x:Key="heldViewSource" Source="{Binding Held, Source={StaticResource DatenDataSet}}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <Style x:Key="HeldenListItemStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Opacity" Value="1.0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding AktiveHeldengruppe}" Value="false">
+                    <Setter Property="Opacity" Value="0.7" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontStyle" Value="Normal" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding AktiveHeldengruppe}" Value="false">
+                    <Setter Property="FontStyle" Value="Italic" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="HeldListTemplate">
+            <StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical">
+                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- Talente -->
+        <CollectionViewSource x:Key="heldHeld_TalentViewSource" Source="{Binding Held_FK, NotifyOnSourceUpdated=True, Source={StaticResource heldViewSource}}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="TalentgruppeID" />
+                <ComponentModel:SortDescription PropertyName="Talentname" />
+            </CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Row.TalentRow.TalentgruppeRow.Kurzname" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+        <Style x:Key="GroupHeaderStyleTalente" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander Margin="2,0,2,0" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
+                            <Expander.Header>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
+                                </DockPanel>
+                            </Expander.Header>
+                                <Border Margin="2" CornerRadius="3">
+                                    <ItemsPresenter />
+                                </Border>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Zauber -->
+        <CollectionViewSource x:Key="heldHeld_ZauberViewSource" Source="{Binding Held_Zauber_HeldFK, NotifyOnSourceUpdated=True, Source={StaticResource heldViewSource}}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Zaubername" />
+                <ComponentModel:SortDescription PropertyName="Repräsentation" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <!-- Vor-/Nachteile -->
+        <CollectionViewSource x:Key="heldHeld_VorNachteilViewSource" Source="{Binding Held_VorNachteil_HeldFK, Source={StaticResource heldViewSource}}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="VorNachteilTyp" />
+                <ComponentModel:SortDescription PropertyName="VorNachteil" />
+            </CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Row.VorNachteilRow.Typ" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+        <Style x:Key="VorNachteilWertItemStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Row.VorNachteilRow.HatWert}" Value="true" />
+                        <Condition Binding="{Binding Row.VorNachteilRow.WertTyp}" Value="" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Visibility" Value="Visible" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="VorNachteilWertNumItemStyle" TargetType="{x:Type ViewGeneral:IntBox}">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Row.VorNachteilRow.WertTyp}" Value="int">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="GroupHeaderStyleVorNachteile" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander Margin="2,0,2,0" Padding="4" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
+                            <Expander.Header>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
+                                </DockPanel>
+                            </Expander.Header>
+                                <Border Margin="2" CornerRadius="3">
+                                    <ItemsPresenter />
+                                </Border>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate x:Key="VorNachteileTemplate">
+            <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
+                <TextBlock Margin="2,4,0,0" Text="{Binding Row.VorNachteilRow.Name}" />
+                <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="20,0,0,4" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" />
+                <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="20,0,0,4" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding Wert}" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- Sonderfertigkeiten -->
+        <CollectionViewSource x:Key="heldHeld_SonderfertigkeitViewSource" Source="{Binding Held_Sonderfertigkeit_HeldFK, Source={StaticResource heldViewSource}}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="SonderfertigkeitTyp" />
+                <ComponentModel:SortDescription PropertyName="Sonderfertigkeit" />
+            </CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Row.SonderfertigkeitRow.Typ" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+        <Style x:Key="SonderfertigkeitWertItemStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Row.SonderfertigkeitRow.HatWert}" Value="false">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="SonderfertigkeitenTemplate">
+            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                <TextBlock Margin="2,2,0,0" Text="{Binding Row.SonderfertigkeitRow.Name}" />
+                <TextBox Style="{StaticResource SonderfertigkeitWertItemStyle}" Margin="20,0,0,0" MaxLength="1200" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert der Sonderfertigkeit" />
+            </StackPanel>
+        </DataTemplate>
+        <Style x:Key="GroupHeaderStyleSonderfertigkeiten" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander Margin="2,0,2,0" Padding="4" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
+                            <Expander.Header>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
+                                </DockPanel>
+                            </Expander.Header>
+                                <Border Margin="2" CornerRadius="3">
+                                    <ItemsPresenter />
+                                </Border>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Kampftalente -->
+        <Style x:Key="ParadeZuteilungTextBlockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NurAttacke}" Value="true">
+                    <Setter Property="Visibility" Value="Hidden" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ParadeZuteilungIntBoxStyle" TargetType="{x:Type ViewGeneral:IntBox}">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NurAttacke}" Value="true">
+                    <Setter Property="Visibility" Value="Hidden" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="AttackeZuteilungIntBoxStyle" TargetType="{x:Type ViewGeneral:IntBox}">
+            <Setter Property="IsEnabled" Value="true" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NurAttacke}" Value="true">
+                    <Setter Property="IsEnabled" Value="false" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="KampftalenteTemplate">
+            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                <TextBlock Margin="2,2,0,0" Width="Auto" MinWidth="155" Text="{Binding Talentname}" VerticalAlignment="Center" />
+                <ViewGeneral:IntBox Margin="18,0,0,0" FontWeight="Bold" MinWidth="65" ShowButtons="True" Value="{Binding TaW}" />
+                <ViewGeneral:IntBox Style="{StaticResource AttackeZuteilungIntBoxStyle}" Margin="18,0,0,0" MinWidth="65" ShowButtons="True" ToolTip="AT/FK Zuteilung" Value="{Binding ZuteilungAT}" />
+                <ViewGeneral:IntBox Style="{StaticResource ParadeZuteilungIntBoxStyle}" Margin="10,0,0,0" MinWidth="65" ShowButtons="True" ToolTip="PA Zuteilung" Value="{Binding ZuteilungPA}" />
+                <TextBlock Margin="12,2,0,0" Width="Auto" FontWeight="Bold" MinWidth="40" Text="{Binding AttackeWert}" TextAlignment="Center" ToolTip="Attacke/Fernkampf Wert" VerticalAlignment="Center" />
+                <TextBlock Style="{StaticResource ParadeZuteilungTextBlockStyle}" Margin="15,2,0,0" Width="Auto" FontWeight="Bold" MinWidth="40" Text="{Binding ParadeWert}" TextAlignment="Center" ToolTip="Parade Wert" VerticalAlignment="Center" />
+                <TextBlock Margin="10,2,0,0" Width="Auto" FontSize="10" Foreground="Crimson" Text="{Binding ZuteilungsHinweis}" />
+            </StackPanel>
+        </DataTemplate>
+        <!-- Waffen -->
+        <DataTemplate x:Key="WaffenTemplate">
+            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                <TextBlock Margin="2,2,0,0" Width="Auto" MinWidth="155" Text="{Binding Waffe}" VerticalAlignment="Center" />
+                <TextBlock Margin="10,2,0,0" Text="AT " VerticalAlignment="Center" />
+                <TextBlock Margin="5,2,0,0" Width="Auto" Text="{Binding AttackeWertGesamt}" VerticalAlignment="Center" />
+                <TextBlock Margin="10,2,0,0" Text="PA " VerticalAlignment="Center" />
+                <TextBlock Margin="5,2,0,0" Width="Auto" Text="{Binding ParadeWertGesamt}" VerticalAlignment="Center" />
+                <TextBlock Margin="5,2,0,0" Width="Auto" Text="{Binding TPKK}" VerticalAlignment="Center" />
+                <TextBlock Margin="5,2,0,0" Width="Auto" Text="{Binding eBE}" VerticalAlignment="Center" />
+                <TextBlock Margin="18,2,0,0" Width="Auto" Text="{Binding Talent}" VerticalAlignment="Center" />
+                <ComboBox Margin="5,2,0,0" Width="20" ItemsSource="{Binding Waffe.Waffentalente}" SelectedValue="{Binding Talent}" ToolTip="Verwendetes Waffentalent ändern." VerticalAlignment="Center" Visibility="{Binding TalentAuswahlVisibility}" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+	<UserControl.Background>
+		<StaticResource ResourceKey="Background1"/>
+	</UserControl.Background>
+    
+    <UserControl.DataContext>
+        <vmHelden:HeldenViewModel />
+    </UserControl.DataContext>
+    
+    <Grid DataContext="{Binding Source={StaticResource heldViewSource}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" Margin="5" Background="{StaticResource BackgroundPergamentHoch}">
+            <ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource HeldListTemplate}" 
+                     KeyDown="_listBoxHelden_KeyDown" MouseDown="ListBoxHelden_MouseDown" SelectionChanged="ListBoxHelden_SelectionChanged" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
+                <ListBox.ContextMenu>
+                    <ContextMenu Opened="ContextMenu_Opened">
+                    	<MenuItem Height="28" Click="MenuItemHeldNeu_Click" Header="Neu (eingeben)" x:Name="_menuItemHeldNeu" ToolTip="Einen neuen Helden manuell eingeben.">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/General/neu.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    	</MenuItem>
+                    	<MenuItem Height="28" Click="MenuItemHeldImportNeu_Click" Header="Neu (importieren)" x:Name="_menuItemHeldImportNeu">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/General/import.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    		<MenuItem.ToolTip>
+                    			<StackPanel Orientation="Vertical">
+                    				<TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
+                    				<TextBlock Foreground="Red" Text="ACHTUNG!" />
+                    				<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+                    				<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+                    				<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+                    				<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+                    			</StackPanel>
+                    		</MenuItem.ToolTip>
+                    	</MenuItem>
+                    	<Separator />
+                    	<MenuItem Height="28" Click="MenuItemHeldImportDemo_Click" Header="Beispiel-Helden laden" x:Name="_menuItemHeldImportDemo" ToolTip="Beipiel-Helden laden.">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/meistertools_02.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    	</MenuItem>
+                    	<Separator />
+                    	<MenuItem Height="28" Click="MenuItemHeldKopieren_Click" Header="Kopieren" x:Name="_menuItemHeldKopie" ToolTip="Held kopieren.">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/helden_kopieren.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    	</MenuItem>
+                    	<MenuItem Height="28" Click="MenuItemHeldImport_Click" Header="Importieren (Überschreiben)" x:Name="_menuItemHeldImport">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/General/import.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    		<MenuItem.ToolTip>
+                    			<StackPanel Orientation="Vertical">
+                    				<TextBlock FontWeight="Bold" Text="Held aus Datei importieren und überschreiben" />
+                    				<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+                    				<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+                    				<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+                    			</StackPanel>
+                    		</MenuItem.ToolTip>
+                    	</MenuItem>
+                    	<MenuItem Height="28" Click="MenuItemHeldExport_Click" Header="Exportieren" x:Name="_menuItemHeldExport">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/General/export.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    		<MenuItem.ToolTip>
+                    			<StackPanel Orientation="Vertical">
+                    				<TextBlock FontWeight="Bold" Text="Held als XML-Datei exportieren" />
+                    				<TextBlock Foreground="Red" Text="ACHTUNG:" />
+                    				<TextBlock Text="Der Export/Import von Helden funktioniert nur zwischen MeisterGeister-Versionen derselben Versionsnummer!" />
+                    			</StackPanel>
+                    		</MenuItem.ToolTip>
+                    	</MenuItem>
+                    	<Separator />
+                    	<MenuItem Height="28" Click="MenuItemHeldLöschen_Click" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen.">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    	</MenuItem>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+            <Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                <Image.ToolTip>
+                    <StackPanel Width="200">
+                        <TextBlock TextWrapping="Wrap"><Run Text="Rechtsklick für weitere Aktionen."/></TextBlock>
+                        <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                </Image.ToolTip>
+            </Image>
+            <Button Height="23" Margin="5,0,0,6" Width="25" Background="Lime" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                    	<MenuItem Height="28" Click="MenuItemHeldNeu_Click" Header="Neu (eingeben)" ToolTip="Einen neuen Helden manuell eingeben.">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/General/neu.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    	</MenuItem>
+                    	<MenuItem Height="28" Click="MenuItemHeldImportNeu_Click" Header="Neu (importieren)">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/General/import.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    		<MenuItem.ToolTip>
+                    			<StackPanel Orientation="Vertical">
+                    				<TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
+                    				<TextBlock Foreground="Red" Text="ACHTUNG!" />
+                    				<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+                    				<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+                    				<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+                    				<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+                    			</StackPanel>
+                    		</MenuItem.ToolTip>
+                    	</MenuItem>
+                    	<Separator />
+                    	<MenuItem Height="28" Click="MenuItemHeldImportDemo_Click" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
+                    		<MenuItem.Icon>
+                    			<Image Margin="2" Source="/Images/Icons/meistertools_02.png" Stretch="Fill" />
+                    		</MenuItem.Icon>
+                    	</MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                    <Image Source="/Images/Icons/General/add.png" Stretch="Fill" />
+            </Button>
+            <StackPanel Margin="36,0,0,6" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+                <Label Height="23" Width="Auto" Content="{Binding ItemsSource.Count, ElementName=_listBoxHelden}" VerticalContentAlignment="Center" />
+                <Label Height="23" Width="Auto" Content="Helden" VerticalContentAlignment="Center" />
+            </StackPanel>
+            <Button Height="22" Margin="135,0,0,7" Width="48" Click="_buttonExportDemo_Click" Content="Export" HorizontalAlignment="Left" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" />
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="268*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="370*" />
+            </Grid.ColumnDefinitions>                        
+            <TabControl Grid.Row="1" Margin="5,5,5,5" Background="{StaticResource Background1}" x:Name="tabControl1">
+                <TabItem Header="Allgemein" x:Name="_tabItemAllgemein">                	
+					<MGC:ViewHeldAllgemein />
+                </TabItem>
+                <TabItem Header="Eigenschaften" x:Name="_tabItemEigenschaften">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                        <Grid Margin="5" Background="{StaticResource BackgroundPergamentQuer}" x:Name="_gridEigenschaften">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="37*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="28*" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="1" Grid.Row="0" Margin="3" Content="Wert" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Label Grid.Column="2" Grid.Row="0" Margin="3" Content="Mod" HorizontalAlignment="Center" x:Name="_labelEigenschaftMod" ToolTip="Modifikatoren durch Wunden, niedrige LE, etc." VerticalAlignment="Center" />
+                            <Label Grid.Column="4" Grid.Row="0" Margin="3" Content="Wert" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Label Grid.Column="5" Grid.Row="0" Margin="3" Content="Mod" HorizontalAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Style="{StaticResource LabelMuStyle}" Grid.ColumnSpan="2" Grid.Row="1" Margin="5,3,0,3" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding Tag.MU, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisMU, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Style="{StaticResource LabelKlStyle}" Grid.Column="0" Grid.Row="2" Margin="3" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding Tag.KL, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisKL, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Grid.Column="0" Grid.Row="3" Margin="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" Value="{Binding Tag.IN, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisIN, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Grid.Column="0" Grid.Row="4" Margin="3" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Charisma" Value="{Binding Tag.CH, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisCH, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Grid.Column="3" Grid.Row="1" Margin="3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="4" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" Value="{Binding Tag.FF, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="5" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisFF, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Grid.Column="3" Grid.Row="2" Margin="3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="4" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Gewandtheit" Value="{Binding Tag.GE, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="5" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisGE, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Style="{StaticResource LabelKoStyle}" Grid.Column="3" Grid.Row="3" Margin="3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="4" Grid.Row="3" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Konstitution" Value="{Binding Tag.KO, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="5" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisKO, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Grid.Column="3" Grid.Row="4" Margin="3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="4" Grid.Row="4" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Körperkraft" Value="{Binding Tag.KK, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="5" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding Tag.ModErschwernisKK, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="{Binding ToolTip, ElementName=_labelEigenschaftMod}" VerticalAlignment="Center" />
+                            <Label Grid.Column="7" Grid.Row="1" Margin="3" Content="INI-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="9" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockInitiativeBasis" Text="{Binding Tag.InitiativeBasis, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Initiative-Basiswert" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="8" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Initiative-Modifikator durch Rasse/Kultur/Profession" Value="{Binding Tag.InitiativeModGen, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <Label Grid.Column="8" Grid.Row="0" Margin="3" Content="Mod" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Label Grid.Column="9" Grid.Row="0" Margin="3" Content="Wert" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Label Grid.Column="7" Grid.Row="2" Margin="3" Content="AT-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="9" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockAttackeBasis" Text="{Binding Tag.AttackeBasis, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Attacke-Basiswert" VerticalAlignment="Center" />
+                            <Label Grid.Column="7" Grid.Row="3" Margin="3" Content="PA-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="9" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockParadeBasis" Text="{Binding Tag.ParadeBasis, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Parade-Basiswert" VerticalAlignment="Center" />
+                            <Label Grid.Column="7" Grid.Row="4" Margin="3" Content="FK-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="9" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockFernkampfBasis" Text="{Binding Tag.FernkampfBasis, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Fernkampf-Basiswert" VerticalAlignment="Center" />
+                            <Label Grid.Column="0" Grid.Row="6" Margin="3" Content="WS:" HorizontalAlignment="Left" ToolTip="Wundschwelle" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="6" Height="23" Margin="6,2,2,2" Padding="2" Width="Auto" HorizontalAlignment="Left" x:Name="_textBlockWundschwelle" Text="{Binding Tag.Wundschwellen, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Wundschwelle" VerticalAlignment="Center" />
+                            <Label Grid.Column="3" Grid.Row="6" Margin="3" Content="SO:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Column="4" Grid.Row="6" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Sozialstatus" Value="{Binding Tag.Sozialstatus, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <!-- Magieresistenz -->
+                            <Label Grid.Column="7" Grid.Row="6" Margin="3" Content="MR:" HorizontalAlignment="Left" x:Name="_labelMR" VerticalAlignment="Center" />
+                            <ViewGeneral:IntBox x:Name="_intBoxMR" Grid.Column="8" Grid.Row="6" Margin="6,2,2,2" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Magieresistenz-Modifikator durch Rasse/Kultur/Profession, Vor-/Nachteile, Zukauf, etc." Value="{Binding Tag.MagieresistenzMod, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="9" Grid.Row="6" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockMagieresistenz" Text="{Binding Tag.Magieresistenz, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Magieresistenz" VerticalAlignment="Center" />
+                        </Grid>
+                        <Separator />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="240" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="240" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Margin="5" Background="{StaticResource BackgroundPergamentQuer}" x:Name="_gridBasiswerte">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="1" Grid.Row="0" Margin="3" Content="Mod" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <Label Grid.Column="2" Grid.Row="0" Margin="3" Content="Max" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <Label Grid.Column="3" Grid.Row="0" Margin="3" Content="Aktuell" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <!-- Lebensenergie -->
+                                <Label Grid.Column="0" Grid.Row="1" Margin="3" Content="LE:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Lebenspunkte-Modifikator durch Rasse/Kultur/Profession, Vor-/Nachteile, Zukauf, etc." Value="{Binding Tag.LebensenergieMod, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockLebensenergieMax" Text="{Binding Tag.LebensenergieMax, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Maximale Lebensenergie" VerticalAlignment="Center" />
+                                <ViewGeneral:IntBox x:Name="_intBoxLeAktuell" Grid.Column="3" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Lebensenergie" Value="{Binding Tag.LebensenergieAktuell, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                                <Button Grid.Column="4" Grid.Row="1" Height="23" Margin="4" Width="30" Click="ButtonMax_Click" Content="Max" Tag="LE" ToolTip="LE auf den Maximalwert setzen." />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Grid.Column="5" Grid.Row="1" Margin="3,3,3,3" Energie="Lebensenergie" SelectedKämpfer="{Binding Tag, ElementName=_listBoxHelden}" />
+                                <!-- Ausdauer -->
+                                <Label Grid.Column="0" Grid.Row="2" Margin="3" Content="AU:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Ausdauer-Modifikator durch Rasse/Kultur/Profession, Vor-/Nachteile, Zukauf, etc." Value="{Binding Tag.AusdauerMod, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockAusdauerMax" Text="{Binding Tag.AusdauerMax, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Maximale Ausdauer" VerticalAlignment="Center" />
+                                <ViewGeneral:IntBox x:Name="_intBoxAuAktuell" Grid.Column="3" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Ausdauer" Value="{Binding Tag.AusdauerAktuell, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" />
+                                <Button Grid.Column="4" Grid.Row="2" Height="23" Margin="4" Width="30" Click="ButtonMax_Click" Content="Max" Tag="AU" ToolTip="AU auf den Maximalwert setzen." />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Grid.Column="5" Grid.Row="2" Margin="3,3,3,3" Energie="Ausdauer" SelectedKämpfer="{Binding Tag, ElementName=_listBoxHelden}" />
+                                <!-- Astralenergie -->
+                                <Label Grid.Column="0" Grid.Row="3" Margin="3" Content="AE:" HorizontalAlignment="Center" x:Name="_labelAstralenergie" VerticalAlignment="Center" />
+                                <Image Grid.Column="0" Grid.Row="3" Height="16" Margin="0,2,2,0" Width="16" x:Name="_imageAeKeHinweis" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                                    <Image.ToolTip>
+                                        <TextBlock Height="Auto" Width="350" TextWrapping="Wrap"><Run Text="Die Felder für AE/KE werden eingeblendet, sobald ein magie-/karmaspendender Vorteil (Viertel-, Halb- oder Vollzauberer / Geweiht) eingefügt wurde."/></TextBlock>
+                                    </Image.ToolTip>
+                                </Image>
+                                <ViewGeneral:IntBox x:Name="_intBoxAeMod" Grid.Column="1" Grid.Row="3" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Astralenergie-Modifikator durch Rasse/Kultur/Profession, Vor-/Nachteile, Zukauf, etc." Value="{Binding Tag.AstralenergieMod, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=_labelAstralenergie}" />
+                                <TextBlock Grid.Column="2" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockAstralenergieMax" Text="{Binding Tag.AstralenergieMax, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Maximale Astralenergie" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=_labelAstralenergie}" />
+                                <ViewGeneral:IntBox x:Name="_intBoxAeAktuell" Grid.Column="3" Grid.Row="3" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Astralenergie" Value="{Binding Tag.AstralenergieAktuell, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=_labelAstralenergie}" />
+                                <Button Grid.Column="4" Grid.Row="3" Height="23" Margin="4" Width="30" Click="ButtonMax_Click" Content="Max" Tag="AE" ToolTip="AE auf den Maximalwert setzen." Visibility="{Binding Visibility, ElementName=_labelAstralenergie}" />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Grid.Column="5" Grid.Row="3" Margin="3,3,3,3" Energie="Astralenergie" SelectedKämpfer="{Binding Tag, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" Visibility="{Binding Visibility, ElementName=_labelAstralenergie}" />
+                                <!-- Karmaenergie -->
+                                <Label Grid.Column="0" Grid.Row="4" Margin="3" Content="KE:" HorizontalAlignment="Center" x:Name="_labelKarmaenergie" VerticalAlignment="Center" />
+                                <ViewGeneral:IntBox x:Name="_intBoxKeMod" Grid.Column="1" Grid.Row="4" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Karmaenergie-Modifikator durch Rasse/Kultur/Profession, Vor-/Nachteile, Zukauf, etc." Value="{Binding Tag.KarmaenergieMod, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=_labelKarmaenergie}" />
+                                <TextBlock Grid.Column="2" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockKarmaenergieMax" Text="{Binding Tag.KarmaenergieMax, ElementName=_listBoxHelden}" TextAlignment="Center" ToolTip="Maximale Karmaenergie" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=_labelKarmaenergie}" />
+                                <ViewGeneral:IntBox x:Name="_intBoxKeAktuell" Grid.Column="3" Grid.Row="4" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Aktuelle Karmaenergie" Value="{Binding Tag.KarmaenergieAktuell, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Center" Visibility="{Binding Visibility, ElementName=_labelKarmaenergie}" />
+                                <Button Grid.Column="4" Grid.Row="4" Height="23" Margin="4" Width="30" Click="ButtonMax_Click" Content="Max" Tag="KE" ToolTip="KE auf den Maximalwert setzen." Visibility="{Binding Visibility, ElementName=_labelKarmaenergie}" />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Grid.Column="5" Grid.Row="4" Margin="3,3,3,3" Energie="Karmaenergie" SelectedKämpfer="{Binding Tag, ElementName=_listBoxHelden}" Visibility="{Binding Visibility, ElementName=_labelKarmaenergie}" />
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="5" Background="{StaticResource BackgroundPergamentQuer}" x:Name="_gridWunden">
+                                <Grid>
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                                    </Grid.Background>
+                                    <!-- Wunden -->
+                                    <ViewGeneral:IntBox Margin="159,20,6,187" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Unlokalisiert)" Value="{Binding Tag.Wunden, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <ViewGeneral:IntBox Margin="81,14,84,193" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Kopf)" Value="{Binding Tag.WundenKopf, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <ViewGeneral:IntBox Margin="81,54,84,153" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Brust)" Value="{Binding Tag.WundenBrust, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <ViewGeneral:IntBox Margin="13,83,152,124" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (linker Arm)" Value="{Binding Tag.WundenArmL, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <ViewGeneral:IntBox Margin="155,83,10,124" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (rechter Arm)" Value="{Binding Tag.WundenArmR, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <ViewGeneral:IntBox Margin="81,116,84,91" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Bauch)" Value="{Binding Tag.WundenBauch, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (linkes Bein)" Value="{Binding Tag.WundenBeinL, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (rechtes Bein)" Value="{Binding Tag.WundenBeinR, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                    <Label Height="30" Margin="11,13,0,0" Width="64" Content="Wunden" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Rüstung / Waffen" x:Name="_tabItemRüstungWaffen">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid x:Name="_orginalInventar" Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid Margin="5" Background="{StaticResource BackgroundPergamentHoch}">
+                                    <Grid Height="266" Width="257" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Grid.Background>
+                                            <ImageBrush ImageSource="/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                                        </Grid.Background>
+                                        <ViewGeneral:IntBox Margin="159,20,6,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding Tag.RüstungsschutzGesamt, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding Tag.RüstungsschutzKopf, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding Tag.RüstungsschutzBrust, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding Tag.RüstungsschutzRücken, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding Tag.RüstungsschutzArmL, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding Tag.RüstungsschutzArmR, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding Tag.RüstungsschutzBauch, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding Tag.RüstungsschutzBeinL, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding Tag.RüstungsschutzBeinR, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" />
+                                        <Label Height="38" Margin="23,14,0,0" Width="73" Content="Rüstung" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    </Grid>
+                                    <Label Height="27" Margin="14,286,0,0" Content="Behinderung:" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    <ViewGeneral:IntBox Margin="101,287,0,0" Width="65" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Behinderung" Value="{Binding Tag.Behinderung, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" VerticalAlignment="Top" />
+                                </Grid>
+                                <StackPanel Grid.Column="1" Height="Auto" Margin="5,5,5,0" Background="{StaticResource BackgroundPergamentQuer}" VerticalAlignment="Stretch">
+                                    <Label Height="27" Margin="10,10,0,0" Width="240" Content="Waffenwerte:" HorizontalAlignment="Left" />
+                                    <TextBox Height="378" Margin="10,0,10,10" AcceptsReturn="True" HorizontalAlignment="Stretch" MinHeight="120" Text="{Binding Kampfwerte, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" TextWrapping="Wrap" VerticalAlignment="Stretch" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Kampfwerte" x:Name="_tabItemKampfwerte">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0" Background="{StaticResource BackgroundPergamentHoch}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Margin="0,4,0,0" Orientation="Horizontal">
+                                <TextBlock Margin="183,2,0,0" Width="65" FontWeight="Bold" Text="TaW" TextAlignment="Center" />
+                                <TextBlock Margin="18,2,0,0" Width="65" FontWeight="Bold" Text="AT/FK+" TextAlignment="Center" ToolTip="AT/FK Zuteilung" />
+                                <TextBlock Margin="10,2,0,0" Width="65" FontWeight="Bold" Text="PA+" TextAlignment="Center" ToolTip="PA Zuteilung" />
+                                <TextBlock Margin="15,2,0,0" Width="40" FontWeight="Bold" Text="AT/FK" TextAlignment="Center" ToolTip="AT/FK Wert" />
+                                <TextBlock Margin="15,2,0,0" Width="40" FontWeight="Bold" Text="PA" TextAlignment="Center" ToolTip="PA Wert" />
+                            </StackPanel>
+                            <ScrollViewer Grid.Row="1" Padding="8" VerticalScrollBarVisibility="Auto">
+                                <ListBox Background="Transparent" ItemsSource="{Binding Tag.KampfTalente, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" ItemTemplate="{StaticResource KampftalenteTemplate}" x:Name="_listBoxKampfTalente" BorderBrush="#00000000"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Talente" x:Name="_tabItemTalente">
+                    <Grid>
+                        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <ComboBox Height="23" Margin="6,14,0,0" Width="193" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" ToolTip="Talent aktivieren" VerticalAlignment="Top">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource heldHeld_TalentViewSource}}" x:Name="_dataGridHeldTalente" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                            <DataGrid.GroupStyle>
+                                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleTalente}">
+                                    <GroupStyle.Panel>
+                                        <ItemsPanelTemplate>
+                                            <DataGridRowsPresenter />
+                                        </ItemsPanelTemplate>
+                                    </GroupStyle.Panel>
+                                </GroupStyle>
+                            </DataGrid.GroupStyle>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu Opened="ContextMenuTalente_Opened">
+                                	<MenuItem Height="28" Click="MenuItemTalentProben_Click" Header="Probe würfeln" x:Name="_menuItemTalentProben">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                	<MenuItem Height="28" Click="MenuItemTalentWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemTalentWiki">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                	<Separator />
+                                	<MenuItem Height="28" Click="MenuItemTalentLöschen_Click" Header="Löschen" x:Name="_menuItemTalentLöschen">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn x:Name="_columnTalentname" Width="Auto" Binding="{Binding Talentname}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Eigenschaft1}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Eigenschaft2}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Eigenschaft3}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Steigerung}" IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="TaW">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Zauber" x:Name="_tabItemZauber" Visibility="{Binding Visibility, ElementName=_labelAstralenergie}">
+                    <Grid>
+                        <ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxZauber_DropDownClosed" DropDownOpened="_comboBoxZauber_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxZauber_KeyDown" x:Name="_comboBoxZauber" ToolTip="Zauber hinzufügen" VerticalAlignment="Top" />
+                        <ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" ItemsSource="{x:Static LogicGeneral:Repräsentationen.RepräsentationenListe}" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />
+                        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Zauber für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource heldHeld_ZauberViewSource}}" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">
+                            <DataGrid.ContextMenu>
+                                <ContextMenu Opened="ContextMenuZauber_Opened">
+                                	<MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                	<MenuItem Height="28" Click="MenuItemZauberWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                	<Separator />
+                                	<MenuItem Height="28" Click="MenuItemZauberLöschen_Click" Header="Löschen" x:Name="_menuItemZauberLöschen">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Name}" Header="Zaubername" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Eigenschaft1}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Eigenschaft2}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Eigenschaft3}" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Komplex}" Header="Kom." IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Repräsentation}" Header="Rep." IsReadOnly="True" />
+                                <DataGridTemplateColumn Header="ZfW">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Merkmale}" Header="Merkmale" IsReadOnly="True" />
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <StackPanel Height="23" Margin="388,14,0,0" Width="151" HorizontalAlignment="Left" x:Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Top">
+                            <Label Content="Aktivierte Zauber:" />
+                            <Label Content="{Binding Items.Count, ElementName=_dataGridHeldZauber}" />
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Vor- &amp; Nachteile" x:Name="_tabItemVorNachteile">
+                    <Grid>
+                        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Vor-/Nachteil für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <TextBlock Margin="11,16,0,0" HorizontalAlignment="Left" Text="Vorteil einfügen:" VerticalAlignment="Top" />
+                        <ComboBox Height="23" Margin="105,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxVorteil" ToolTip="Vorteil hinzufügen" VerticalAlignment="Top">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <TextBlock Margin="310,16,0,0" HorizontalAlignment="Left" Text="Nachteil einfügen:" VerticalAlignment="Top" />
+                        <ComboBox Height="23" Margin="412,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxNachteil" ToolTip="Nachteil hinzufügen" VerticalAlignment="Top">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <ListBox Margin="2,46,6,6" Padding="0,0,0,10" ItemsSource="{Binding Source={StaticResource heldHeld_VorNachteilViewSource}}" ItemTemplate="{StaticResource VorNachteileTemplate}" KeyDown="ListBoxHeldVorNachteile_KeyDown" MouseDown="ListBoxVorNachteile_MouseDown" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000">
+                            <ListBox.GroupStyle>
+                                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleVorNachteile}">
+                                    <GroupStyle.Panel>
+                                        <ItemsPanelTemplate>
+                                            <DataGridRowsPresenter />
+                                        </ItemsPanelTemplate>
+                                    </GroupStyle.Panel>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
+                            <ListBox.ContextMenu>
+                                <ContextMenu Opened="ContextMenuVorNachteile_Opened">
+                                	<MenuItem Height="28" Click="MenuItemVorNachteilWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                	<Separator />
+                                	<MenuItem Height="28" Click="MenuItemVorNachteilLöschen_Click" Header="Löschen" x:Name="_menuItemVorNachteilLöschen">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Sonderfertigkeiten" x:Name="_tabItemSonderfertigkeiten">
+                    <Grid>
+                        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf eine Sonderfertigkeit für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxSonderfertigkeit_DropDownClosed" DropDownOpened="_comboBoxSonderfertigkeit_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxSonderfertigkeit_KeyDown" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Top">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                        <ListBox Margin="2,46,6,6" ItemsSource="{Binding Source={StaticResource heldHeld_SonderfertigkeitViewSource}}" ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" KeyDown="_listBoxHeldSonderfertigkeiten_KeyDown" MouseDown="ListBoxSonderfertigkeiten_MouseDown" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
+                            <ListBox.GroupStyle>
+                                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleSonderfertigkeiten}">
+                                    <GroupStyle.Panel>
+                                        <ItemsPanelTemplate>
+                                            <DataGridRowsPresenter />
+                                        </ItemsPanelTemplate>
+                                    </GroupStyle.Panel>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
+                            <ListBox.ContextMenu>
+                                <ContextMenu Opened="ContextMenuSonderfertigkeiten_Opened">
+                                	<MenuItem Height="28" Click="MenuItemSonderfertigkeitWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemSonderfertigkeitlWiki">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                	<Separator />
+                                	<MenuItem Height="28" Click="MenuItemSonderfertigkeitLöschen_Click" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen">
+                                		<MenuItem.Icon>
+                                			<Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                		</MenuItem.Icon>
+                                	</MenuItem>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Inventar" />
+                            <Border Margin="2,0,0,0" VerticalAlignment="Top" Padding="2,0" CornerRadius="1" BorderBrush="White">
+                                <TextBlock Text="BETA" FontSize="8" FontWeight="Normal" Foreground="DarkCyan" />
+                            </Border>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <View:InventarView x:Name="_inventarControl" d:DataContext="{d:DesignData /SampleData/InventarSampleData.xaml}" />
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</UserControl>

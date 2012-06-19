@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="MeisterGeister.View.General.WürfelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             x:Name="WürfelControl1"
+             mc:Ignorable="d" 
+             d:DesignHeight="23" d:DesignWidth="23" MouseDoubleClick="WürfelControl1_MouseDoubleClick" Loaded="WürfelControl1_Loaded">
+    <UserControl.ContextMenu>
+        <ContextMenu Opened="ContextMenu_Opened" />
+    </UserControl.ContextMenu>
+    <Grid>
+    	<Grid.ToolTip>
+    		<Binding ElementName="WürfelControl1" Path="ErgebnisText" />
+    	</Grid.ToolTip>
+    	<Grid.Background>
+            <ImageBrush x:Name="_image" ImageSource="/Images/Icons/Wuerfel/w20_blank.png" />
+        </Grid.Background>
+        <TextBlock HorizontalAlignment="Center" Name="_textBlockErgebnis" Text="{Binding ElementName=WürfelControl1, Path=Ergebnis}" VerticalAlignment="Center" FontWeight="Normal" Foreground="White" />
+    </Grid>
+</UserControl>

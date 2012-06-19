@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.0" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1255989058099" name="Harka aus Nadoret">
+<geschlecht name="weiblich"/>
+<setting name="DSA 4.1 und Unter dem Westwind"/>
+<mods/>
+<rasse name="helden.model.rasse.Mittellaender" string="Mittelländerin">
+<groesse gewicht="83" value="183"/>
+<aussehen alter="19" augenfarbe="grau" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1003" gbmonat="8" gbtag="12" gprest="0" gpstart="110" haarfarbe="dunkelblond" kalender="Bosparans Fall" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.kultur.Garetien" string="Mittelländische Städte"/>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Geweihter" string="Geweihte: Ingerimm, Traditioneller Kult">
+<variante name="Ingerimm, Traditioneller Kult"/>
+</ausbildung>
+</ausbildungen>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value="C:\Users\micha\charakterbilder\Harka von Nadoret.jpg"/>
+<abenteuerpunkte value="1200"/>
+<freieabenteuerpunkte value="0"/>
+<eigenschaft mod="0" name="Mut" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Klugheit" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Intuition" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Charisma" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="14" value="14"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="10" value="10"/>
+<eigenschaft mod="0" name="Konstitution" startwert="14" value="14"/>
+<eigenschaft mod="1" name="Körperkraft" startwert="14" value="14"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="7" value="7"/>
+<eigenschaft mod="10" name="Lebensenergie" value="0"/>
+<eigenschaft mod="12" name="Ausdauer" value="1"/>
+<eigenschaft grossemeditation="0" mod="0" mrmod="-3" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="24" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-3" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="9"/>
+<eigenschaft mod="0" name="at" value="7"/>
+<eigenschaft mod="0" name="pa" value="7"/>
+<eigenschaft mod="0" name="fk" value="8"/>
+<vorteil name="Ausdauernd" value="2"/>
+<vorteil name="Begabung für [Talent]" value="Grobschmied"/>
+<vorteil name="Geweiht [zwölfgöttliche Kirche]"/>
+<vorteil name="Herausragende Eigenschaft: Körperkraft" value="1"/>
+<vorteil name="Hitzeresistenz"/>
+<vorteil name="Eingeschränkter Sinn" value="Gehör"/>
+<vorteil name="Jähzorn" value="6"/>
+<vorteil name="Moralkodex [Ingerimm-Kirche]"/>
+<vorteil name="Verpflichtungen"/>
+<vorteil name="Vorurteile" value="12"/>
+<sonderfertigkeit name="Karmalqueste"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Hügelzwerge"/>
+<kultur name="Mittelreich"/>
+</sonderfertigkeit>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Blick für das Handwerk" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Eidsegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Erneuerung des Geborstenen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Feuersegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Geburtssegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Glückssegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Grabsegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Göttliches Zeichen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Harmoniesegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Heilige Schmiedeglut" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Heilungssegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Initiation" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Märtyrersegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Objektsegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Objektweihe" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Objektweihe (III)" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Prophezeiung" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Schutzsegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Speisesegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Tranksegen" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Tsas Segensreicher Neuanfang" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Vertrauter der Flamme" probe="" wirkung=""/>
+<sonderfertigkeit dauer="" kosten="" name="Liturgie: Weisheitssegen" probe="" wirkung=""/>
+<sonderfertigkeit name="Liturgiekenntnis (Ingerimm)"/>
+<sonderfertigkeit name="Meister der Improvisation"/>
+<sonderfertigkeit name="Ortskenntnis">
+<auswahl name="Stadtteil/Kleinstadt"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Grobschmied (Waffenschmied)">
+<talent name="Grobschmied"/>
+<spezialisierung name="Waffenschmied"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Talentspezialisierung Götter und Kulte (dummy)">
+<talent name="Götter und Kulte"/>
+<spezialisierung name="dummy"/>
+</sonderfertigkeit>
+<ereignisse>
+<ereignis Abenteuerpunkte="-7" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Schwimmen" text="Talent steigern" time="1255989156286" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Schwimmen" text="Talent steigern" time="1255989158638" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-17" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Selbstbeherrschung" text="Talent steigern" time="1255989162740" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-22" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Selbstbeherrschung" text="Talent steigern" time="1255989163154" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Sinnenschärfe" text="Talent steigern" time="1255989166841" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-7" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Zechen" text="Talent steigern" time="1255989169989" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Zechen" text="Talent steigern" time="1255989170474" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-17" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Zechen" text="Talent steigern" time="1255989170700" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-22" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Zechen" text="Talent steigern" time="1255989170857" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Gassenwissen" text="Talent steigern" time="1255989178826" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Gassenwissen" text="Talent steigern" time="1255989179131" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Lehren" text="Talent steigern" time="1255989186599" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Lehren" text="Talent steigern" time="1255989186771" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-19" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Götter und Kulte" text="Talent steigern" time="1255989208193" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Sprachen kennen Bosparano" text="Talent steigern" time="1255989225568" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Sprachen kennen Bosparano" text="Talent steigern" time="1255989226146" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Sprachen kennen Bosparano" text="Talent steigern" time="1255989226451" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Sprachen kennen Bosparano" text="Talent steigern" time="1255989226654" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Sprachen kennen Bosparano" text="Talent steigern" time="1255989226857" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Sprachen kennen Bosparano" text="Talent steigern" time="1255989227068" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-8" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Sprachen kennen Bosparano" text="Talent steigern" time="1255989227607" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-5" Neu="0" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent aktivieren" time="1255989246092" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Lesen/Schreiben Rogolan" text="Talent aktivieren" time="1255989248600" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1255989261904" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1255989262912" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1255989263154" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1255989263498" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Lesen/Schreiben Kusliker Zeichen" text="Talent steigern" time="1255989263968" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Lesen/Schreiben Rogolan" text="Talent steigern" time="1255989264904" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Lesen/Schreiben Rogolan" text="Talent steigern" time="1255989265155" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Lesen/Schreiben Rogolan" text="Talent steigern" time="1255989265397" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Lesen/Schreiben Rogolan" text="Talent steigern" time="1255989265717" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Lesen/Schreiben Rogolan" text="Talent steigern" time="1255989265936" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Grobschmied" text="Talent steigern" time="1255989273287" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Grobschmied" text="Talent steigern" time="1255989273467" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Grobschmied" text="Talent steigern" time="1255989275787" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Grobschmied" text="Talent steigern" time="1255989275928" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Holzbearbeitung" text="Talent steigern" time="1255989281944" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Holzbearbeitung" text="Talent steigern" time="1255989282123" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Holzbearbeitung" text="Talent steigern" time="1255989282334" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Steinmetz" text="Talent steigern" time="1255989290654" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Maurer" text="Talent steigern" time="1255989295983" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-3" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Körperbeherrschung" text="Talent steigern" time="1255989333897" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="100" Alt="1100" Neu="1200" text="Abenteuerpunkte" time="1255989416615" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-40" obj="Talentspezialisierung Götter und Kulte (dummy)" text="Sonderfertigkeit hinzugefügt" time="1255989489242" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-50" obj="Liturgie: Objektweihe (III)" text="Sonderfertigkeit hinzugefügt" time="1255989999707" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-10" Alt="1200" Neu="1190" text="Abenteuerpunkte" time="1255990007113" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="10" Alt="1190" Neu="1200" text="Abenteuerpunkte" time="1255990055969" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-4" Alt="0" Neu="1" obj="Ausdauer" text="Eigenschaft steigern" time="1255990060871" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Armbrust" text="Talent steigern" time="1255990084368" version="5.0.2.beta"/>
+</ereignisse>
+<talent lernmethode="Gegenseitiges Lehren" name="Armbrust" probe=" (GE/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Infanteriewaffen" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="1"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="3"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="5"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="1"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überzeugen" probe=" (KL/IN/CH)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Baukunst" probe=" (KL/KL/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geschichtswissen" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gesteinskunde" probe=" (KL/IN/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heraldik" probe=" (KL/KL/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hüttenkunde" probe=" (KL/IN/KO)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Mechanik" probe=" (KL/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schätzen" probe=" (KL/IN/IN)" value="5"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Bosparano" probe=" (KL/IN/CH)" value="7"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="10"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Rogolan" probe=" (KL/IN/CH)" value="9"/>
+<talent k="10" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Kusliker Zeichen" probe=" (KL/KL/FF)" value="5"/>
+<talent k="11" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Rogolan" probe=" (KL/KL/FF)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Bergbau" probe=" (IN/KO/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Grobschmied" probe=" (FF/KO/KK)" value="12"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hauswirtschaft" probe=" (IN/CH/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Maurer" probe=" (FF/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Steinmetz" probe=" (FF/FF/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Liturgiekenntnis (Ingerimm)" probe=" (MU/IN/CH)" value="9"/>
+<kampfwerte name="Dolche">
+<attacke value="8"/>
+<parade value="7"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="12"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Infanteriewaffen">
+<attacke value="8"/>
+<parade value="7"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="11"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="9"/>
+<parade value="7"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="7"/>
+<parade value="7"/>
+</kampfwerte>
+<gegenstand anzahl="1" name="Schmiedehammer" slot="0"/>
+<heldenausruestung bezeichner="" bfakt="1" bfmin="1" hand="rechts" name="nkwaffe1" schild="0" set="0" slot="0" talent="Hiebwaffen" waffenname="Schmiedehammer"/>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

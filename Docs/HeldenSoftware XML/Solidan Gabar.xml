@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.0" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1277578750370" name="Solidan Gabar">
+<geschlecht name="männlich"/>
+<setting name="DSA 4.1 und Unter dem Westwind"/>
+<mods/>
+<rasse name="helden.model.rasse.Mittellaender" string="Mittelländer">
+<groesse gewicht="89" value="189"/>
+<aussehen alter="21" augenfarbe="blau" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1003" gbmonat="11" gbtag="13" gprest="0" gpstart="150" haarfarbe="schwarz" kalender="Bosparans Fall" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.kultur.Mittelreich" string="Mittelländische Landbevölkerung"/>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Magier" string="Konzil der Elemente zu Drakonia - Feuerelementarist">
+<variante name="Konzil der Elemente zu Drakonia - Feuerelementarist"/>
+</ausbildung>
+</ausbildungen>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value=""/>
+<abenteuerpunkte value="10640"/>
+<freieabenteuerpunkte value="2174"/>
+<eigenschaft mod="0" name="Mut" startwert="16" value="16"/>
+<eigenschaft mod="0" name="Klugheit" startwert="16" value="16"/>
+<eigenschaft mod="0" name="Intuition" startwert="16" value="16"/>
+<eigenschaft mod="0" name="Charisma" startwert="12" value="18"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="16" value="16"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="8" value="12"/>
+<eigenschaft mod="0" name="Konstitution" startwert="8" value="12"/>
+<eigenschaft mod="0" name="Körperkraft" startwert="8" value="12"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="7" value="7"/>
+<eigenschaft mod="11" name="Lebensenergie" value="0"/>
+<eigenschaft mod="10" name="Ausdauer" value="0"/>
+<eigenschaft grossemeditation="0" mod="19" mrmod="-2" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-2" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="12"/>
+<eigenschaft mod="0" name="at" value="8"/>
+<eigenschaft mod="0" name="pa" value="8"/>
+<eigenschaft mod="0" name="fk" value="9"/>
+<gilde name="keine"/>
+<vorteil name="Affinität zu " value="Elementaren"/>
+<vorteil name="Akademische Ausbildung (Magier)"/>
+<vorteil name="Astrale Regeneration" value="1"/>
+<vorteil name="Astralmacht" value="1"/>
+<vorteil name="Eidetisches Gedächtnis"/>
+<vorteil name="Hitzeresistenz"/>
+<vorteil name="Hohe Lebenskraft" value="1"/>
+<vorteil name="Schnelle Heilung" value="1"/>
+<vorteil name="Vollzauberer"/>
+<vorteil name="Einbildungen"/>
+<vorteil name="Neugier" value="7"/>
+<vorteil name="Prinzipientreue" value="8"/>
+<vorteil name="Schlechter Ruf" value="1"/>
+<vorteil name="Schulden" value="500"/>
+<vorteil name="Selbstgespräche"/>
+<vorteil name="Sucht" value="Alkohol (6)"/>
+<vorteil name="Unfähigkeit für [Talentgruppe]" value="Gesellschaft"/>
+<vorteil name="Vorurteile" value="6"/>
+<vorteil name="Wahrer Name"/>
+<vorteil name="Weltfremd" value="12"/>
+<sonderfertigkeit name="Astrale Meditation"/>
+<sonderfertigkeit name="Aufmerksamkeit"/>
+<sonderfertigkeit name="Große Meditation"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Mittelreich"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Merkmalskenntnis: Elementar (Feuer)"/>
+<sonderfertigkeit name="Regeneration I"/>
+<sonderfertigkeit name="Regeneration II"/>
+<sonderfertigkeit name="Repräsentation: Magier"/>
+<sonderfertigkeit name="Ritualkenntnis: Gildenmagie"/>
+<sonderfertigkeit dauer="" kosten="" name="Stabzauber: Bindung" probe="" wirkung=""/>
+<sonderfertigkeit name="Talentspezialisierung Magiekunde (Elementarismus)">
+<talent name="Magiekunde"/>
+<spezialisierung name="Elementarismus"/>
+</sonderfertigkeit>
+<ereignisse>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="RKP" text="Rasse: Mittelländer" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="RKP" text="Kultur: Mittelländische Landbevölkerung" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="31 GP" obj="RKP" text="Profession: Konzil der Elemente zu Drakonia - Feuerelementarist" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="16" kommentar="16 GP" obj="EIGENSCHAFTEN" text="Mut: 16" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="16" kommentar="16 GP" obj="EIGENSCHAFTEN" text="Klugheit: 16" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="16" kommentar="16 GP" obj="EIGENSCHAFTEN" text="Intuition: 16" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="EIGENSCHAFTEN" text="Charisma: 12" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="16" kommentar="16 GP" obj="EIGENSCHAFTEN" text="Fingerfertigkeit: 16" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="EIGENSCHAFTEN" text="Gewandtheit: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="EIGENSCHAFTEN" text="Konstitution: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="8 GP" obj="EIGENSCHAFTEN" text="Körperkraft: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="7" kommentar="0 GP" obj="EIGENSCHAFTEN" text="Sozialstatus: 7" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="5 AP" obj="TALENT" text="Schwerter: 0" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="4 AP" obj="TALENT" text="Speere: 0" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="1 AP" obj="TALENT" text="Geografie: 0" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="1 AP" obj="TALENT" text="Kriegskunst: 0" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="2 AP" obj="TALENT" text="Boote fahren: 0" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="4" kommentar="4 AP" obj="ZAUBER" text="Armatrutz [Magier]: 4" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="5" kommentar="6 AP" obj="ZAUBER" text="Armatrutz [Magier]: 5" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="6" kommentar="7 AP" obj="ZAUBER" text="Armatrutz [Magier]: 6" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="7" kommentar="9 AP" obj="ZAUBER" text="Armatrutz [Magier]: 7" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="10 AP" obj="ZAUBER" text="Armatrutz [Magier]: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="9" kommentar="11 AP" obj="ZAUBER" text="Armatrutz [Magier]: 9" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="10" kommentar="13 AP" obj="ZAUBER" text="Armatrutz [Magier]: 10" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="6" kommentar="11 AP" obj="ZAUBER" text="Balsam Salabunde [Magier]: 6" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="7" kommentar="13 AP" obj="ZAUBER" text="Balsam Salabunde [Magier]: 7" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="15 AP" obj="ZAUBER" text="Balsam Salabunde [Magier]: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="9" kommentar="17 AP" obj="ZAUBER" text="Balsam Salabunde [Magier]: 9" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="10" kommentar="19 AP" obj="ZAUBER" text="Balsam Salabunde [Magier]: 10" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="1 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 0" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="1" kommentar="1 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 1" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="2" kommentar="2 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 2" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="3" kommentar="3 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 3" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="4" kommentar="4 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 4" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="5" kommentar="6 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 5" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="6" kommentar="7 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 6" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="7" kommentar="9 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 7" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="10 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="9" kommentar="11 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 9" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="10" kommentar="13 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 10" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="11" kommentar="14 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 11" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="12" kommentar="16 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 12" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="13" kommentar="18 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 13" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="14" kommentar="19 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 14" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="15" kommentar="21 AP" obj="ZAUBER" text="Bannbaladin [Magier]: 15" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="4" kommentar="4 AP" obj="ZAUBER" text="Blitz dich find [Magier]: 4" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="5" kommentar="6 AP" obj="ZAUBER" text="Blitz dich find [Magier]: 5" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="6" kommentar="7 AP" obj="ZAUBER" text="Blitz dich find [Magier]: 6" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="7" kommentar="9 AP" obj="ZAUBER" text="Blitz dich find [Magier]: 7" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="10 AP" obj="ZAUBER" text="Blitz dich find [Magier]: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="9" kommentar="11 AP" obj="ZAUBER" text="Blitz dich find [Magier]: 9" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="10" kommentar="13 AP" obj="ZAUBER" text="Blitz dich find [Magier]: 10" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="2 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 0" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="1" kommentar="1 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 1" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="2" kommentar="3 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 2" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="3" kommentar="5 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 3" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="4" kommentar="7 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 4" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="5" kommentar="9 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 5" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="6" kommentar="11 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 6" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="7" kommentar="13 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 7" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="15 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 8" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="9" kommentar="17 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 9" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="10" kommentar="19 AP" obj="ZAUBER" text="Eisenrost und Patina [Magier]: 10" time="1277578751016" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="3 AP" obj="ZAUBER" text="Halluzination [Druide]: 0" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="2 AP" obj="ZAUBER" text="Herr über das Tierreich [Magier]: 0" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="5 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 8" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="9" kommentar="6 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 9" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="10" kommentar="7 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 10" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="11" kommentar="7 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 11" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="12" kommentar="8 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 12" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="13" kommentar="9 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 13" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="14" kommentar="10 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 14" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="15" kommentar="11 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 15" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="16" kommentar="11 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 16" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="17" kommentar="12 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 17" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="18" kommentar="13 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 18" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="19" kommentar="14 AP" obj="ZAUBER" text="Ignifaxius Flammenstrahl [Magier] (HZ): 19" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="7" kommentar="9 AP" obj="ZAUBER" text="Ignisphaero Feuerball [Magier] (HZ): 7" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="8" kommentar="10 AP" obj="ZAUBER" text="Ignisphaero Feuerball [Magier] (HZ): 8" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="9" kommentar="11 AP" obj="ZAUBER" text="Ignisphaero Feuerball [Magier] (HZ): 9" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="3 AP" obj="ZAUBER" text="Nihilogravo Schwerelos [Magier]: 0" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="2 AP" obj="ZAUBER" text="Paralysis starr wie Stein [Magier]: 0" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="1 AP" obj="ZAUBER" text="Plumbumbarum schwerer Arm [Magier]: 0" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="3 AP" obj="ZAUBER" text="Salander Mutander [Magier]: 0" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="2 AP" obj="ZAUBER" text="Visibili Vanitar [Magier]: 0" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Affinität zu : Elementaren" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Akademische Ausbildung (Magier)" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="4 GP" obj="VORTEILE" text="Astrale Regeneration: 1" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="1 GP" obj="VORTEILE" text="Astralmacht: 1" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="35 GP" obj="VORTEILE" text="Eidetisches Gedächtnis" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="VORTEILE" text="Einbildungen" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Hitzeresistenz" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="VORTEILE" text="Hohe Lebenskraft: 1" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Neugier: 7" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Prinzipientreue: 8" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="-1 GP" obj="VORTEILE" text="Schlechter Ruf: 1" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="5 GP" obj="VORTEILE" text="Schnelle Heilung: 1" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="VORTEILE" text="Schulden: 500" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="-3 GP" obj="VORTEILE" text="Selbstgespräche" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="-6 GP" obj="VORTEILE" text="Sucht: Alkohol (6)" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Unfähigkeit für [Talentgruppe]: Gesellschaft" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Vollzauberer" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="-3 GP" obj="VORTEILE" text="Vorurteile: 6" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="VORTEILE" text="Wahrer Name" time="1277578751017" version="5.0.7"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="VORTEILE" text="Weltfremd: 12" time="1277578751017" version="5.0.7"/>
+<ereignis Neu="1" obj="Auswahl" text="Infanteriewaffen" time="1277578751017" version="5.0.7"/>
+<ereignis Neu="3" obj="Auswahl" text="Sprachen kennen Thorwalsch" time="1277578751017" version="5.0.7"/>
+<ereignis Neu="1" obj="Auswahl" text="Abrichten" time="1277578751017" version="5.0.7"/>
+<ereignis Neu="2" obj="Auswahl" text="Kochen" time="1277578751017" version="5.0.7"/>
+<ereignis Abenteuerpunkte="10000" Alt="640" Neu="10640" text="Abenteuerpunkte" time="1277578783243" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-75" obj="Regeneration II" text="Sonderfertigkeit hinzugefügt" time="1277578886668" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-38" obj="Regeneration I" text="Sonderfertigkeit hinzugefügt" time="1277578886668" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-200" obj="Aufmerksamkeit" text="Sonderfertigkeit hinzugefügt" time="1277578886668" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-220" Alt="8" Neu="9" obj="Gewandtheit" text="Eigenschaft steigern" time="1277578896636" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-250" Alt="9" Neu="10" obj="Gewandtheit" text="Eigenschaft steigern" time="1277578897862" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-280" Alt="10" Neu="11" obj="Gewandtheit" text="Eigenschaft steigern" time="1277578898324" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-320" Alt="11" Neu="12" obj="Gewandtheit" text="Eigenschaft steigern" time="1277578898729" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-220" Alt="8" Neu="9" obj="Konstitution" text="Eigenschaft steigern" time="1277578900281" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-250" Alt="9" Neu="10" obj="Konstitution" text="Eigenschaft steigern" time="1277578900698" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-280" Alt="10" Neu="11" obj="Konstitution" text="Eigenschaft steigern" time="1277578901282" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-320" Alt="11" Neu="12" obj="Konstitution" text="Eigenschaft steigern" time="1277578901699" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-220" Alt="8" Neu="9" obj="Körperkraft" text="Eigenschaft steigern" time="1277578902374" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-250" Alt="9" Neu="10" obj="Körperkraft" text="Eigenschaft steigern" time="1277578902644" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-280" Alt="10" Neu="11" obj="Körperkraft" text="Eigenschaft steigern" time="1277578902935" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-320" Alt="11" Neu="12" obj="Körperkraft" text="Eigenschaft steigern" time="1277578903195" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-7" Alt="1;0;0" Info="Gegenseitiges Lehren" Neu="2;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578930600" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-12" Alt="2;0;0" Info="Gegenseitiges Lehren" Neu="3;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578930859" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-17" Alt="3;0;0" Info="Gegenseitiges Lehren" Neu="4;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578931073" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-22" Alt="4;0;0" Info="Gegenseitiges Lehren" Neu="5;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578931253" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-27" Alt="5;0;0" Info="Gegenseitiges Lehren" Neu="6;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578935200" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-33" Alt="6;0;0" Info="Gegenseitiges Lehren" Neu="7;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578935605" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-39" Alt="7;0;0" Info="Gegenseitiges Lehren" Neu="8;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578935798" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-45" Alt="8;0;0" Info="Gegenseitiges Lehren" Neu="9;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578935999" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-50" Alt="9;0;0" Info="Gegenseitiges Lehren" Neu="10;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578936191" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-55" Alt="10;0;0" Info="Gegenseitiges Lehren" Neu="11;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578936517" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-65" Alt="11;0;0" Info="Gegenseitiges Lehren" Neu="12;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578937046" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-70" Alt="12;0;0" Info="Gegenseitiges Lehren" Neu="13;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578937327" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-75" Alt="13;0;0" Info="Gegenseitiges Lehren" Neu="14;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578937541" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-85" Alt="14;0;0" Info="Gegenseitiges Lehren" Neu="15;0;0" obj="Dolche" text="Nahkampftalent steigern" time="1277578937766" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578982226" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-5" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578982800" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-8" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578983036" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-11" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578983227" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-14" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578983419" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-17" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578983610" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-21" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578983790" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-24" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578984060" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-28" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578984487" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-33" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Salander Mutander [Magier]" text="Zauber steigern" time="1277578984870" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578988200" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-2" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578988391" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-3" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578988571" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-4" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578988751" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-6" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578988920" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-7" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578989100" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-9" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578989291" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578990214" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-11" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578991058" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1277578991339" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578995198" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-3" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578995400" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-5" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578995580" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-7" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578995760" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-9" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578995940" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-11" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578996131" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578996390" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-15" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578996604" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-17" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578996851" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-19" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Paralysis starr wie Stein [Magier]" text="Zauber steigern" time="1277578997335" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277578999574" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-5" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277578999787" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-8" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277578999978" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-11" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277579000159" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-14" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277579000338" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-17" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277579000496" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-21" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277579000654" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-24" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277579000812" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-28" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277579001002" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-33" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Nihilogravo Schwerelos [Magier]" text="Zauber steigern" time="1277579001306" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579008495" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-14" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579009912" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-16" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579010092" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-18" Alt="12" Info="Gegenseitiges Lehren" Neu="13" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579010261" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-19" Alt="13" Info="Gegenseitiges Lehren" Neu="14" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579010441" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-21" Alt="14" Info="Gegenseitiges Lehren" Neu="15" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579010598" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-23" Alt="15" Info="Gegenseitiges Lehren" Neu="16" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579010767" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-24" Alt="16" Info="Gegenseitiges Lehren" Neu="17" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579010936" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-26" Alt="17" Info="Gegenseitiges Lehren" Neu="18" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579011127" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-28" Alt="18" Info="Gegenseitiges Lehren" Neu="19" obj="Ignisphaero Feuerball [Magier]" text="Zauber steigern" time="1277579012342" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-2" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579015504" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579015695" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579015875" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-9" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579016055" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579016212" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579016662" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579017832" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-20" Alt="7" Info="Gegenseitiges Lehren" Neu="8" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579018035" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-23" Alt="8" Info="Gegenseitiges Lehren" Neu="9" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579018237" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-25" Alt="9" Info="Gegenseitiges Lehren" Neu="10" obj="Herr über das Tierreich [Magier]" text="Zauber steigern" time="1277579018845" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-23" Alt="15" Info="Gegenseitiges Lehren" Neu="16" obj="Bannbaladin [Magier]" text="Zauber steigern" time="1277579064396" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-24" Alt="16" Info="Gegenseitiges Lehren" Neu="17" obj="Bannbaladin [Magier]" text="Zauber steigern" time="1277579064654" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-26" Alt="17" Info="Gegenseitiges Lehren" Neu="18" obj="Bannbaladin [Magier]" text="Zauber steigern" time="1277579064914" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-28" Alt="18" Info="Gegenseitiges Lehren" Neu="19" obj="Bannbaladin [Magier]" text="Zauber steigern" time="1277579065149" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-350" Alt="12" Neu="13" obj="Charisma" text="Eigenschaft steigern" time="1277579077682" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-380" Alt="13" Neu="14" obj="Charisma" text="Eigenschaft steigern" time="1277579077930" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-410" Alt="14" Neu="15" obj="Charisma" text="Eigenschaft steigern" time="1277579078099" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-450" Alt="15" Neu="16" obj="Charisma" text="Eigenschaft steigern" time="1277579078279" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-480" Alt="16" Neu="17" obj="Charisma" text="Eigenschaft steigern" time="1277579078447" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-510" Alt="17" Neu="18" obj="Charisma" text="Eigenschaft steigern" time="1277579078650" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-5" Neu="0" obj="Adlerauge Luchsenohr [Magier]" text="Zauber aktivieren" time="1277579137253" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Auris Nasus Oculus [Magier]" text="Zauber aktivieren" time="1277579171952" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-8" Neu="0" obj="Axxeleratus Blitzgeschwind [Magier]" text="Zauber aktivieren" time="1277579177033" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-20" Neu="0" obj="Chronoautos Zeitenfahrt [Magier]" text="Zauber aktivieren" time="1277579220717" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Delicioso Gaumenschmaus [Magier]" text="Zauber aktivieren" time="1277579235837" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Neu="0" obj="Destructibo Arcanitas [Magier]" text="Zauber aktivieren" time="1277579240438" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-8" Neu="0" obj="Höllenpein zerreiße dich! [Magier]" text="Zauber aktivieren" time="1277579269700" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Kulminatio Kugelblitz [Magier]" text="Zauber aktivieren" time="1277579301267" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-5" Neu="0" obj="Menetekel Flammenschrift [Magier]" text="Zauber aktivieren" time="1277579319740" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-20" Neu="0" obj="Panik überkomme euch! [Borbaradianer]" text="Zauber aktivieren" time="1277579341835" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Neu="0" obj="Reversalis Revidum [Magier]" text="Zauber aktivieren" time="1277579373796" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Schwarzer Schrecken [Magier]" text="Zauber aktivieren" time="1277579393529" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Solidirid Weg aus Licht [Magier]" text="Zauber aktivieren" time="1277579406173" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Neu="0" obj="Transformatio Formgestalt [Magier]" text="Zauber aktivieren" time="1277579420089" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Transmutare Körperform [Magier]" text="Zauber aktivieren" time="1277579427525" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Neu="0" obj="Transversalis Teleport [Magier]" text="Zauber aktivieren" time="1277579430214" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-10" Neu="0" obj="Traumgestalt [Magier]" text="Zauber aktivieren" time="1277579458688" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-5" Neu="0" obj="Vogelzwitschern Glockenspiel [Magier]" text="Zauber aktivieren" time="1277579481807" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-5" Neu="0" obj="Weihrauchwolke Wohlgeruch [Magier]" text="Zauber aktivieren" time="1277579491224" version="5.0.7"/>
+<ereignis Abenteuerpunkte="-13" Neu="0" obj="Zauberzwang [Magier]" text="Zauber aktivieren" time="1277579501787" version="5.0.7"/>
+</ereignisse>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="15"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Infanteriewaffen" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schwerter" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Speere" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Stäbe" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="1"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="2"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="3"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="0"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wettervorhersage" probe=" (KL/IN/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Brett-/Kartenspiel" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geografie" probe=" (KL/KL/IN)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geschichtswissen" probe=" (KL/KL/IN)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kriegskunst" probe=" (MU/KL/CH)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Magiekunde" probe=" (KL/KL/IN)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Pflanzenkunde" probe=" (KL/IN/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sternkunde" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Tierkunde" probe=" (MU/KL/IN)" value="1"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Bosparano" probe=" (KL/IN/CH)" value="4"/>
+<talent k="16" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Ferkina" probe=" (KL/IN/CH)" value="2"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="16"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Thorwalsch" probe=" (KL/IN/CH)" value="3"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Tulamidya" probe=" (KL/IN/CH)" value="12"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Urtulamidya" probe=" (KL/IN/CH)" value="4"/>
+<talent k="10" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Kusliker Zeichen" probe=" (KL/KL/FF)" value="5"/>
+<talent k="14" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Tulamidya" probe=" (KL/KL/FF)" value="8"/>
+<talent k="16" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Urtulamidya" probe=" (KL/KL/FF)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Abrichten" probe=" (MU/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ackerbau" probe=" (IN/FF/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Alchimie" probe=" (MU/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Boote fahren" probe=" (GE/KO/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Gildenmagie" probe=" (--/--/--)" value="3"/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Adlerauge Luchsenohr" probe=" (KL/IN/FF)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Analys Arkanstruktur" probe=" (KL/KL/IN)" reichweite="" repraesentation="Magier" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Armatrutz" probe=" (IN/GE/KO)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Attributo" probe=" (KL/CH/**)" reichweite="" repraesentation="Magier" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Auris Nasus Oculus" probe=" (KL/CH/FF)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Axxeleratus Blitzgeschwind" probe=" (KL/GE/KO)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Balsam Salabunde" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Bannbaladin" probe=" (IN/CH/CH)" reichweite="" repraesentation="Magier" value="19" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Blitz dich find" probe=" (KL/IN/GE)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="E" kosten="" name="Caldofrigo heiß und kalt" probe=" (IN/CH/KO)" reichweite="" repraesentation="Magier" value="7" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="F" kosten="" name="Chronoautos Zeitenfahrt" probe=" (MU/CH/KO)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Delicioso Gaumenschmaus" probe=" (KL/CH/FF)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Destructibo Arcanitas" probe=" (KL/KL/FF)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="E" kosten="" name="Dschinnenruf" probe=" (MU/KL/CH)" reichweite="" repraesentation="Magier" value="8" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Eisenrost und Patina" probe=" (KL/CH/GE)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" name="Elementarer Diener" probe=" (MU/KL/CH)" reichweite="" repraesentation="Magier" value="5" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="A" kosten="" name="Flim Flam Funkel" probe=" (KL/KL/FF)" reichweite="" repraesentation="Magier" value="5" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Fulminictus Donnerkeil" probe=" (IN/GE/KO)" reichweite="" repraesentation="Magier" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Gardianum Zauberschild" probe=" (KL/IN/KO)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Halluzination" probe=" (KL/IN/CH)" reichweite="" repraesentation="Druide" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Herr über das Tierreich" probe=" (MU/MU/CH)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Höllenpein zerreiße dich!" probe=" (KL/CH/KO)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="C" kosten="" name="Ignifaxius Flammenstrahl" probe=" (KL/FF/KO)" reichweite="" repraesentation="Magier" value="19" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" name="Ignisphaero Feuerball" probe=" (MU/IN/KO)" reichweite="" repraesentation="Magier" value="19" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Kulminatio Kugelblitz" probe=" (MU/IN/FF)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Leib des Feuers" probe=" (MU/MU/GE)" reichweite="" repraesentation="Magier" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="A" kosten="" name="Manifesto Element" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="7" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="F" kosten="" name="Meister der Elemente" probe=" (MU/KL/CH)" reichweite="" repraesentation="Magier" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Menetekel Flammenschrift" probe=" (KL/CH/FF)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Nihilogravo Schwerelos" probe=" (KL/KO/KK)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="A" kosten="" name="Odem Arcanum" probe=" (KL/IN/IN)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Panik überkomme euch!" probe=" (MU/CH/CH)" reichweite="" repraesentation="Borbaradianer" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Paralysis starr wie Stein" probe=" (IN/CH/KK)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Pfeil des Feuers" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Plumbumbarum schwerer Arm" probe=" (CH/GE/KK)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Reversalis Revidum" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Salander Mutander" probe=" (KL/CH/KO)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Schwarzer Schrecken" probe=" (MU/IN/CH)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Solidirid Weg aus Licht" probe=" (IN/KO/KK)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Transformatio Formgestalt" probe=" (KL/FF/KK)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Transmutare Körperform" probe=" (CH/GE/KO)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Transversalis Teleport" probe=" (KL/IN/KO)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" name="Traumgestalt" probe=" (IN/CH/CH)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Unitatio Geistesbund" probe=" (IN/CH/KO)" reichweite="" repraesentation="Magier" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" name="Visibili Vanitar" probe=" (KL/IN/GE)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Vogelzwitschern Glockenspiel" probe=" (MU/IN/GE)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" name="Wand aus Flammen" probe=" (MU/KL/CH)" reichweite="" repraesentation="Magier" value="7" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" name="Weihrauchwolke Wohlgeruch" probe=" (IN/CH/FF)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" name="Zauberzwang" probe=" (MU/CH/CH)" reichweite="" repraesentation="Magier" value="0" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<kampfwerte name="Dolche">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Infanteriewaffen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Schwerter">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Speere">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Stäbe">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

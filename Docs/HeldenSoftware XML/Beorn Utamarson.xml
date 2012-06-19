@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.0" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1245273861469" name="Beorn Utamarson">
+<geschlecht name="männlich"/>
+<setting name="DSA 4.1 und Unter dem Westwind"/>
+<mods/>
+<rasse name="helden.model.rasse.Thorwaler" string="Thorwaler">
+<groesse gewicht="104" value="195"/>
+<aussehen alter="19" augenfarbe="grau" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="Mutter: Hetfrau" familietext1="Vater:Albernier,Töpfer" familietext2="Svadun,in der nähe von Kendrar" familietext3="" familietext4="" familietext5="" gbjahr="1010" gbmonat="5" gbtag="2" gprest="0" gpstart="110" haarfarbe="weißblond" kalender="Bosparans Fall" stand="" titel=""/>
+<variante name="Thorwaler"/>
+</rasse>
+<kultur name="helden.model.kultur.Thorwal" string="Thorwal">
+<variante name="Thorwal"/>
+</kultur>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Barde" string="Barde: Skalde">
+<variante name="Skalde"/>
+</ausbildung>
+</ausbildungen>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value="C:\Users\micha\charakterbilder\Beorn.jpg"/>
+<abenteuerpunkte value="930"/>
+<freieabenteuerpunkte value="62"/>
+<eigenschaft mod="1" name="Mut" startwert="11" value="11"/>
+<eigenschaft mod="0" name="Klugheit" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Intuition" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Charisma" startwert="14" value="14"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="13" value="13"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="12" value="12"/>
+<eigenschaft mod="1" name="Konstitution" startwert="12" value="12"/>
+<eigenschaft mod="1" name="Körperkraft" startwert="14" value="14"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="8" value="8"/>
+<eigenschaft mod="11" name="Lebensenergie" value="1"/>
+<eigenschaft mod="12" name="Ausdauer" value="2"/>
+<eigenschaft grossemeditation="0" mod="0" mrmod="-5" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-5" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="10"/>
+<eigenschaft mod="0" name="at" value="8"/>
+<eigenschaft mod="0" name="pa" value="8"/>
+<eigenschaft mod="0" name="fk" value="8"/>
+<vorteil kommentar="" name="Balance"/>
+<vorteil kommentar="" name="Begabung für [Talent]" value="Hiebwaffen"/>
+<vorteil kommentar="" name="Glück"/>
+<vorteil kommentar="" name="Gutes Gedächtnis"/>
+<vorteil name="Aberglaube" value="5"/>
+<vorteil name="Gesucht" value="1"/>
+<vorteil name="Goldgier" value="5"/>
+<vorteil kommentar="" name="Impulsiv"/>
+<vorteil name="Jähzorn" value="7"/>
+<vorteil name="Neugier" value="5"/>
+<vorteil name="Raumangst" value="5"/>
+<vorteil kommentar="Hjaldfar-Ottajasko" name="Verpflichtungen"/>
+<vorteil name="Vorurteile" value="8"/>
+<sonderfertigkeit kommentar="" name="Kulturkunde">
+<kultur name="Thorwal"/>
+</sonderfertigkeit>
+<sonderfertigkeit kommentar="" name="Nandusgefälliges Wissen"/>
+<sonderfertigkeit kommentar="" name="Standfest"/>
+<ereignisse>
+<ereignis Alt="0" Neu="4" obj="Sternkunde" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="6" obj="Sprachen kennen Alaani" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="8" obj="Sprachen kennen Garethi" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="6" obj="Sprachen kennen Hjaldingsch" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Sprachen kennen Nujuka" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="10" obj="Sprachen kennen Thorwalsch" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="6" obj="Lesen/Schreiben Hjaldingsche Runen" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Lesen/Schreiben Kusliker Zeichen" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Boote fahren" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="3" obj="Heilkunde: Seele" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Heilkunde: Wunden" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Holzbearbeitung" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="1" obj="Kochen" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="2" obj="Lederarbeiten" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Malen/Zeichnen" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Musizieren" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="2" obj="Schneidern" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Seefahrt" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Alt="0" Neu="4" obj="Viehzucht" text="Erschaffung" time="1245273861476" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="300" Alt="480" Neu="780" text="Abenteuerpunkte" time="1245273998886" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-21" Alt="5;5;0" Info="Gegenseitiges Lehren" Neu="6;5;0" obj="Hiebwaffen" text="Nahkampftalent steigern" time="1245274036446" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-25" Alt="6;5;0" Info="Gegenseitiges Lehren" Neu="7;5;0" obj="Hiebwaffen" text="Nahkampftalent steigern" time="1245274042446" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-12" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Körperbeherrschung" text="Talent steigern" time="1245274061968" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-17" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Körperbeherrschung" text="Talent steigern" time="1245274064945" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-22" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Zechen" text="Talent steigern" time="1245274078414" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-16" Alt="0" Neu="1" obj="Lebensenergie" text="Eigenschaft steigern" time="1245274159153" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-4" Alt="0" Neu="1" obj="Ausdauer" text="Eigenschaft steigern" time="1245274162028" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-9" Alt="1" Neu="2" obj="Ausdauer" text="Eigenschaft steigern" time="1245274163637" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Boote fahren" text="Talent steigern" time="1245274198684" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Seefahrt" text="Talent steigern" time="1245274203286" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Heilkunde: Seele" text="Talent steigern" time="1245274218802" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Sternkunde" text="Talent steigern" time="1245274230481" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-4" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Staatskunst" text="Talent steigern" time="1245274237483" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="2" Info="Gegenseitiges Lehren" Neu="3" obj="Staatskunst" text="Talent steigern" time="1245274241052" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Staatskunst" text="Talent steigern" time="1245274242170" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-14" Alt="5" Info="Gegenseitiges Lehren" Neu="6" obj="Götter und Kulte" text="Talent steigern" time="1245274265186" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-17" Alt="6" Info="Gegenseitiges Lehren" Neu="7" obj="Geschichtswissen" text="Talent steigern" time="1245274268951" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Geografie" text="Talent steigern" time="1245274274146" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Wildnisleben" text="Talent steigern" time="1245274279678" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-11" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Wildnisleben" text="Talent steigern" time="1245274281450" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-29" Alt="7;6;1" Info="Gegenseitiges Lehren" Neu="8;6;1" obj="Hiebwaffen" text="Nahkampftalent steigern" time="1245274309593" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-17" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Wurfbeile" text="Talent steigern" time="1245274320763" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-3" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Schleichen" text="Talent steigern" time="1245274341311" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-8" Alt="3" Info="Gegenseitiges Lehren" Neu="4" obj="Fischen/Angeln" text="Talent steigern" time="1245274375444" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="100" Alt="780" Neu="880" text="Abenteuerpunkte" time="1254759768971" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-1" Alt="0" Info="Gegenseitiges Lehren" Neu="1" obj="Fährtensuchen" text="Talent steigern" time="1254759802308" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Sich verstecken" text="Talent steigern" time="1254759806520" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-6" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Schleichen" text="Talent steigern" time="1254759810467" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="50" Alt="880" Neu="930" text="Abenteuerpunkte" time="1255133203564" version="5.0.2.beta"/>
+<ereignis Abenteuerpunkte="-75" Alt="6" Neu="5" obj="Raumangst: 6" text="Nachteile senken" time="1255133229449" version="5.0.2.beta"/>
+</ereignisse>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfbeile" probe=" (GE/FF/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Gaukeleien" probe=" (MU/CH/FF)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="4"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="4"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Reiten" probe=" (CH/GE/KK)" value="4"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="5"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="1"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="2"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="7"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="3"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Betören" probe=" (IN/CH/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sich verkleiden" probe=" (MU/CH/GE)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überzeugen" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fesseln/Entfesseln" probe=" (FF/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fischen/Angeln" probe=" (IN/FF/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wettervorhersage" probe=" (KL/IN/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geografie" probe=" (KL/KL/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geschichtswissen" probe=" (KL/KL/IN)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heraldik" probe=" (KL/KL/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="12"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schätzen" probe=" (KL/IN/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sprachenkunde" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Staatskunst" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sternkunde" probe=" (KL/KL/IN)" value="5"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Alaani" probe=" (KL/IN/CH)" value="6"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="8"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Hjaldingsch" probe=" (KL/IN/CH)" value="6"/>
+<talent k="15" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Nujuka" probe=" (KL/IN/CH)" value="4"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Thorwalsch" probe=" (KL/IN/CH)" value="10"/>
+<talent k="16" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Hjaldingsche Runen" probe=" (KL/KL/FF)" value="6"/>
+<talent k="10" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Kusliker Zeichen" probe=" (KL/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Boote fahren" probe=" (GE/KO/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Seele" probe=" (IN/CH/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Musizieren" probe=" (IN/CH/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Seefahrt" probe=" (FF/GE/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Viehzucht" probe=" (KL/IN/KK)" value="4"/>
+<kampfwerte name="Dolche">
+<attacke value="11"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="14"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="14"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<gegenstand anzahl="1" name="Amulett" slot="0"/>
+<gegenstand anzahl="1" name="Amulett" slot="1"/>
+<gegenstand anzahl="1" name="Angelhaken mit Schnur" slot="0"/>
+<gegenstand anzahl="6" name="Armreif" slot="0"/>
+<gegenstand anzahl="1" name="Axtgehänge, verstärkt" slot="0"/>
+<gegenstand anzahl="1" name="Brotbeutel" slot="0"/>
+<gegenstand anzahl="1" name="Dolch" slot="0"/>
+<gegenstand anzahl="1" name="Dolchscheide" slot="0"/>
+<gegenstand anzahl="1" name="Drachenhelm" slot="0"/>
+<gegenstand anzahl="1" name="Eisentopf (12 Maß)" slot="0"/>
+<gegenstand anzahl="1" name="Feuerstein &amp; Stahl" slot="0"/>
+<gegenstand anzahl="1" name="Fibel" slot="0"/>
+<gegenstand anzahl="1" name="Gambeson" slot="0"/>
+<gegenstand anzahl="1" name="Halskette" slot="0"/>
+<gegenstand anzahl="1" name="Hohe Stiefel" slot="0"/>
+<gegenstand anzahl="1" name="Holzbecher, einfach" slot="0"/>
+<gegenstand anzahl="1" name="Holzteller, einfach" slot="0"/>
+<gegenstand anzahl="1" name="Horn" slot="0"/>
+<gegenstand anzahl="1" name="Kettenhemd, Lang" slot="0"/>
+<gegenstand anzahl="1" name="Lederrucksack (15 Stein)" slot="0"/>
+<gegenstand anzahl="1" name="Leier" slot="0"/>
+<gegenstand anzahl="1" name="Mantel" slot="0"/>
+<gegenstand anzahl="3" name="Ohrring" slot="0"/>
+<gegenstand anzahl="1" name="Orknase" slot="0"/>
+<gegenstand anzahl="1" name="Pechfackel" slot="0"/>
+<gegenstand anzahl="1" name="Ring" slot="0"/>
+<gegenstand anzahl="1" name="Schal, Wolle" slot="0"/>
+<gegenstand anzahl="1" name="Schmuckkamm" slot="0"/>
+<gegenstand anzahl="1" name="Schneidzahn" slot="0"/>
+<gegenstand anzahl="1" name="Thorwaler Rundschild" slot="0"/>
+<gegenstand anzahl="1" name="Tätowierung" slot="0"/>
+<gegenstand anzahl="1" name="Waffenpflegeutensilien" slot="0"/>
+<gegenstand anzahl="1" name="Wasserschlauch (5 Schank)" slot="0"/>
+<gegenstand anzahl="1" name="Wolldecke" slot="0"/>
+<gegenstand anzahl="1" name="Zeltplane (2 Personen)" slot="0"/>
+<gegenstand anzahl="2" name="Zeltstange" slot="0"/>
+<gegenstand anzahl="1" name="Zunderdose, Wasserdicht" slot="0"/>
+<heldenausruestung bezeichner="einhändig" bfakt="4" bfmin="4" hand="rechts" name="nkwaffe1" schild="0" set="0" slot="0" talent="Hiebwaffen" waffenname="Orknase"/>
+<heldenausruestung bezeichner="einhändig" bfakt="4" bfmin="4" hand="rechts" name="nkwaffe2" schild="1" set="0" slot="0" talent="Hiebwaffen" waffenname="Orknase"/>
+<heldenausruestung bezeichner="" bfakt="2" bfmin="2" hand="rechts" name="nkwaffe3" schild="0" set="0" slot="0" talent="Dolche" waffenname="Dolch"/>
+<heldenausruestung name="fkwaffe1" set="0" slot="0" waffenname="Schneidzahn"/>
+<heldenausruestung name="fkwaffe2" set="0" slot="0" waffenname="Dolch"/>
+<heldenausruestung name="schild1" schildname="Thorwaler Rundschild" set="0" slot="0" verwendungsArt="Schild"/>
+<heldenausruestung name="ruestung1" ruestungsname="Drachenhelm" set="0" slot="0"/>
+<heldenausruestung name="ruestung2" ruestungsname="Hohe Stiefel" set="0" slot="0"/>
+<heldenausruestung name="ruestung3" ruestungsname="Kettenhemd, Lang" set="0" slot="0"/>
+<heldenausruestung name="ruestung4" ruestungsname="Gambeson" set="0" slot="0"/>
+<heldenausruestung name="jagtwaffe" nummer="1" set="0"/>
+<extention/>
+<geldboerse>
+<muenze anzahl="6" name="Batzen" waehrung="Bornland"/>
+<muenze anzahl="4" name="Groschen" waehrung="Bornland"/>
+</geldboerse>
+</held>
+</helden>

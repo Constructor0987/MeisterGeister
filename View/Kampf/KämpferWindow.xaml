@@ -1,0 +1,159 @@
+﻿<Window x:Class="MeisterGeister.View.Kampf.KämpferWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
+        xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+        Title="Kämpfer-Verwaltung" Height="458" Width="793" Topmost="True" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
+    <Window.Resources>
+        <!-- Gegner -->
+        <CollectionViewSource x:Key="gegnerViewSource" Source="{Binding Source={StaticResource DatenDataSet}, Path=Bestiarium}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Name"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220*" />
+            <ColumnDefinition Width="500*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="2,2,2,2" Background="{StaticResource BackgroundPergamentHoch}">
+            <ListBox Name="_listBoxGegner" ItemsSource="{Binding Source={StaticResource gegnerViewSource}}" DisplayMemberPath="Name" SelectionChanged="ListBoxGegner_SelectionChanged" Padding="8">
+                <ListBox.BorderBrush>
+                    <SolidColorBrush />
+                </ListBox.BorderBrush>
+                <ListBox.Background>
+                    <SolidColorBrush />
+                </ListBox.Background>
+            </ListBox>
+        </Grid>
+        <Grid Grid.Column="1" Margin="2,2,2,2" Background="{StaticResource BackgroundPergamentHoch}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <DockPanel LastChildFill="False" Margin="5">
+                <Button Margin="6,6,6,6" Name="_buttonKampfHeldenAdd" Click="ButtonKampfHeldenAdd_Click" Height="23" ToolTip="Helden einfügen" Padding="4,1" DockPanel.Dock="Right">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/Icons/helden_add.png" Stretch="Fill" />
+                            <TextBlock Text="Helden" Margin="4,0,0,0" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Margin="6,6,6,6" Name="_buttonKampfClear" Click="ButtonKampfClear_Click" Height="23" ToolTip="Alle Kämpfer aus Liste entfernen" Padding="4,1" DockPanel.Dock="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/Icons/clear_kampf.png" Stretch="Fill" />
+                        <TextBlock Text="Liste leeren" Margin="4,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Grid DockPanel.Dock="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Margin="6,6,0,6" Name="_buttonAddGegner" Click="ButtonAddGegner_Click" Height="23" ToolTip="Gegner einfügen" Padding="4,1">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Images/Icons/gegner_add.png" Stretch="Fill" />
+                                    <TextBlock Text="Gegner" Margin="4,0,0,0" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <ComboBox Name="_comboBoxGegnerMehrere" Margin="0,6,6,6" Width="20" ToolTip="Mehrere Gegner einfügen" SelectionChanged="ComboBoxGegnerMehrere_SelectionChanged">
+                            <ComboBoxItem>1</ComboBoxItem>
+                            <ComboBoxItem>2</ComboBoxItem>
+                            <ComboBoxItem>3</ComboBoxItem>
+                            <ComboBoxItem>4</ComboBoxItem>
+                            <ComboBoxItem>5</ComboBoxItem>
+                            <ComboBoxItem>6</ComboBoxItem>
+                            <ComboBoxItem>7</ComboBoxItem>
+                            <ComboBoxItem>8</ComboBoxItem>
+                            <ComboBoxItem>9</ComboBoxItem>
+                            <ComboBoxItem>10</ComboBoxItem>
+                            <ComboBoxItem>11</ComboBoxItem>
+                            <ComboBoxItem>12</ComboBoxItem>
+                            <ComboBoxItem>13</ComboBoxItem>
+                            <ComboBoxItem>14</ComboBoxItem>
+                            <ComboBoxItem>15</ComboBoxItem>
+                            <ComboBoxItem>16</ComboBoxItem>
+                            <ComboBoxItem>17</ComboBoxItem>
+                            <ComboBoxItem>18</ComboBoxItem>
+                            <ComboBoxItem>19</ComboBoxItem>
+                            <ComboBoxItem>20</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+            </DockPanel>
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="54*" />
+                    <RowDefinition Height="54*" />
+                    <RowDefinition Height="36*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="38" />
+                    <ColumnDefinition Width="92*" />
+                    <ColumnDefinition Width="38" />
+                    <ColumnDefinition Width="105*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Margin="6,6,56,2" Name="_textBoxGegner" Text="Gegner" Height="23" Grid.ColumnSpan="4" />
+                <StackPanel Grid.Column="3" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Margin="0,6,1,0" Name="_buttonSaveGegner" Click="ButtonSaveGegner_Click" VerticalAlignment="Top"  Height="23" ToolTip="Gegner als Vorlage speichern" Width="23">
+                        <Button.Content>
+                            <Image Source="/Images/Icons/General/speichern.png" Stretch="Fill" />
+                        </Button.Content>
+                    </Button>
+                    <Button Margin="0,6,6,0" Name="_buttonDeleteGegner" Click="ButtonDeleteGegner_Click" VerticalAlignment="Top"  Height="23" ToolTip="Gegner-Vorlage löschen" Width="23">
+                        <Button.Content>
+                            <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+                <Label Grid.Row="1" Content="INI:" VerticalContentAlignment="Center" Padding="8" />
+                <ViewGeneral:IntBox Margin="5,1,5,1" x:Name="_intBoxGegnerInitiative" ToolTip="Initiative-Basis" Value="10" Grid.Row="1" Grid.Column="1" ShowButtons="True" />
+                <Label Grid.Row="1" Grid.Column="2" Content="KO:" VerticalContentAlignment="Center" Padding="8" />
+                <ViewGeneral:IntBox Margin="5,1,5,1" x:Name="_intBoxGegnerKonstitution" ToolTip="Konstitution" Value="10" Grid.Row="1" Grid.Column="3" ShowButtons="True" />
+                <Label Grid.Row="2" Content="LE:" VerticalContentAlignment="Center" Padding="8" />
+                <ViewGeneral:IntBox Margin="5,1,5,1" x:Name="_intBoxGegnerLebensenergie" ToolTip="Lebensenergie" Value="30" Grid.Row="2" Grid.Column="1" ShowButtons="True" />
+                <Label Grid.Row="2" Grid.Column="2" Content="AU:" VerticalContentAlignment="Center" Padding="8" />
+                <ViewGeneral:IntBox Margin="5,1,5,1" x:Name="_intBoxGegnerAusdauer" ToolTip="Parade" Value="30" Grid.Row="2" Grid.Column="3" ShowButtons="True" />
+                <Label Grid.Row="3" Grid.Column="2" Content="PA:" VerticalContentAlignment="Center" Padding="8" />
+                <ViewGeneral:IntBox Margin="5,1,5,1" x:Name="_intBoxGegnerParade" ToolTip="Parade" Value="10" Grid.Row="3" Grid.Column="3" ShowButtons="True" />
+                <TextBox Grid.Row="5" Name="_textBoxGegnerKampfwerte" Grid.ColumnSpan="4" Margin="6,2,6,2" TextWrapping="Wrap" FontSize="10" ToolTip="Kampfwerte (z.B. Klauen: DK N AT 14 TP 1W6+3)" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="250" />
+                <TextBox Grid.Row="6" Name="_textBoxGegnerBesonderheiten" Grid.ColumnSpan="4" Margin="6,2,6,2" AcceptsReturn="True" TextWrapping="Wrap" FontSize="10" ToolTip="Besonderheiten" VerticalScrollBarVisibility="Auto" MaxLength="1000" />
+                <TextBox Grid.Row="7" Name="_textBoxGegnerSonderfertigkeiten" Grid.ColumnSpan="4" Margin="6,2,6,4" AcceptsReturn="True" TextWrapping="Wrap" FontSize="10" ToolTip="Sonderfertigkeiten" VerticalScrollBarVisibility="Auto" MaxLength="1000" />
+                <CheckBox Grid.Row="8" Grid.ColumnSpan="4" Name="_checkBoxVerbündeter" Margin="6" Content="Verbündeter der Helden" />
+                <!--Rüstung-->
+                <Grid Grid.Column="4" Grid.RowSpan="9" HorizontalAlignment="Left" Width="257" Height="350" VerticalAlignment="Top">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                    </Grid.Background>
+                    <ViewGeneral:IntBox Value="2" x:Name="_intBoxGegnerRSges"
+                                        ToolTip="Rüstungsschutz (Gesamt)" ShowButtons="True" Width="65" Margin="159,13,6,314" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="81,13,84,314" Value="2" x:Name="_intBoxGegnerRSKo"
+                                        ToolTip="Rüstungsschutz (Kopf)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="60,70,132,257" Value="2" x:Name="_intBoxGegnerRSBr"
+                                        ToolTip="Rüstungsschutz (Brust)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="130,70,62,257" Value="2" x:Name="_intBoxGegnerRSRü"
+                                        ToolTip="Rüstungsschutz (Rücken)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="21,138,171,189" Value="2" x:Name="_intBoxGegnerRSAL"
+                                        ToolTip="Rüstungsschutz (linker Arm)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="172,138,18,189" Value="2" x:Name="_intBoxGegnerRSAR"
+                                        ToolTip="Rüstungsschutz (rechter Arm)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="81,167,84,160" Value="2" x:Name="_intBoxGegnerRSBa"
+                                        ToolTip="Rüstungsschutz (Bauch)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="40,179,125,28" Value="2" x:Name="_intBoxGegnerRSBL"
+                                        ToolTip="Rüstungsschutz (linkes Bein)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <ViewGeneral:IntBox Margin="130,179,35,28" Value="2" x:Name="_intBoxGegnerRSBR"
+                                        ToolTip="Rüstungsschutz (rechtes Bein)" ShowButtons="True" Width="65" MinValue="0" NumValueChanged="IntBoxGegnerRS_NumValueChanged" />
+                    <Label Content="Rüstung" Margin="23,14,0,0" Height="38" Width="73" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

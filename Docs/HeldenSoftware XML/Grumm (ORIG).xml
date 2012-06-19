@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.1.0" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1222038304364" name="Grumm (ORIG)">
+<geschlecht name="männlich"/>
+<setting name="DSA 4.1 und Unter dem Westwind"/>
+<mods/>
+<rasse name="helden.model.rasse.Goblin" string="Goblin">
+<groesse gewicht="47" value="147"/>
+<aussehen alter="13" augenfarbe="gelb" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="1001" gbmonat="3" gbtag="6" gprest="0" gpstart="110" haarfarbe="rotbraun" kalender="Bosparans Fall" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.kultur.Goblinbande" string="Goblinbande"/>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Einbrecher" string="Einbrecher"/>
+</ausbildungen>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value="C:\Users\micha\charakterbilder\Gruum"/>
+<abenteuerpunkte value="590"/>
+<freieabenteuerpunkte value="0"/>
+<eigenschaft mod="-2" name="Mut" startwert="14" value="14"/>
+<eigenschaft mod="-2" name="Klugheit" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Intuition" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Charisma" startwert="10" value="10"/>
+<eigenschaft mod="2" name="Fingerfertigkeit" startwert="14" value="14"/>
+<eigenschaft mod="2" name="Gewandtheit" startwert="14" value="14"/>
+<eigenschaft mod="0" name="Konstitution" startwert="12" value="12"/>
+<eigenschaft mod="-1" name="Körperkraft" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="2" value="2"/>
+<eigenschaft mod="4" name="Lebensenergie" value="0"/>
+<eigenschaft mod="12" name="Ausdauer" value="0"/>
+<eigenschaft grossemeditation="0" mod="0" mrmod="-5" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-5" name="Magieresistenz" value="0"/>
+<eigenschaft mod="2" name="ini" value="12"/>
+<eigenschaft mod="0" name="at" value="8"/>
+<eigenschaft mod="0" name="pa" value="8"/>
+<eigenschaft mod="0" name="fk" value="8"/>
+<vorteil name="Balance"/>
+<vorteil name="Begabung für [Talent]" value="Klettern"/>
+<vorteil name="Besonderer Besitz" value="Hochwertige Dietriche"/>
+<vorteil name="Dämmerungssicht"/>
+<vorteil name="Flink" value="1"/>
+<vorteil name="Gefahreninstinkt"/>
+<vorteil name="Herausragender Sinn" value="Gehör"/>
+<vorteil name="Kälteresistenz"/>
+<vorteil name="Natürliche Waffen" value="Biss"/>
+<vorteil name="Natürlicher Rüstungsschutz" value="1"/>
+<vorteil name="Richtungssinn"/>
+<vorteil name="Aberglaube" value="5"/>
+<vorteil name="Gesucht" value="1"/>
+<vorteil name="Goldgier" value="7"/>
+<vorteil name="Kleinwüchsig"/>
+<vorteil name="Neugier" value="8"/>
+<vorteil name="Randgruppe"/>
+<vorteil name="Unstet"/>
+<vorteil name="Vorurteile" value="6"/>
+<sonderfertigkeit name="Biss"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Goblins"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Standfest"/>
+<sonderfertigkeit name="Talentspezialisierung Klettern (Freiklettern)">
+<talent name="Klettern"/>
+<spezialisierung name="Freiklettern"/>
+</sonderfertigkeit>
+<ereignisse>
+<ereignis Abenteuerpunkte="150" Alt="440" Neu="590" text="Abenteuerpunkte" time="1222038427397" version=""/>
+<ereignis Abenteuerpunkte="-55" Alt="10" Info="Gegenseitiges Lehren" Neu="11" obj="Schleichen" text="Talent steigern" time="1222038479536" version=""/>
+<ereignis Abenteuerpunkte="-65" Alt="11" Info="Gegenseitiges Lehren" Neu="12" obj="Schleichen" text="Talent steigern" time="1222038479976" version=""/>
+<ereignis Abenteuerpunkte="-6" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Rechnen" text="Talent steigern" time="1222038645774" version=""/>
+<ereignis Abenteuerpunkte="-17" Alt="4" Info="Gegenseitiges Lehren" Neu="5" obj="Schätzen" text="Talent steigern" time="1222038663669" version=""/>
+<ereignis Abenteuerpunkte="-7" Alt="1" Info="Gegenseitiges Lehren" Neu="2" obj="Tanzen" text="Talent steigern" time="1222038685188" version=""/>
+<ereignis Abenteuerpunkte="499410" Alt="590" Neu="500000" text="Abenteuerpunkte" time="1222499151051" version=""/>
+<ereignis Abenteuerpunkte="-500000" Alt="500000" Neu="0" text="Abenteuerpunkte" time="1223493285175" version=""/>
+<ereignis Abenteuerpunkte="590" Alt="0" Neu="590" text="Abenteuerpunkte" time="1223493290135" version=""/>
+</ereignisse>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schleuder" probe=" (GE/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Speere" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfspeere" probe=" (GE/FF/KK)" value="1"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Akrobatik" probe=" (MU/GE/KK)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="5"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="11"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="9"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="12"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="5"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="2"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="7"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="-1"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="8"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Taschendiebstahl" probe=" (MU/IN/FF)" value="3"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="-1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sich verkleiden" probe=" (MU/CH/GE)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fallen stellen" probe=" (KL/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fesseln/Entfesseln" probe=" (FF/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fischen/Angeln" probe=" (IN/FF/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Mechanik" probe=" (KL/KL/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Pflanzenkunde" probe=" (KL/IN/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schätzen" probe=" (KL/IN/IN)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Tierkunde" probe=" (MU/KL/IN)" value="1"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="6"/>
+<talent k="12" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Goblinisch" probe=" (KL/IN/CH)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schlösser knacken" probe=" (IN/FF/FF)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gefahreninstinkt" probe=" (KL/IN/IN)" value="3"/>
+<kampfwerte name="Dolche">
+<attacke value="11"/>
+<parade value="11"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="10"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="10"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Speere">
+<attacke value="10"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="10"/>
+<parade value="9"/>
+</kampfwerte>
+<gegenstand anzahl="1" name="Dolch" slot="0">
+<modallgemein>
+<gewicht value="20.0"/>
+<preis value="2000"/>
+<name value="Borndorn"/>
+</modallgemein>
+<Nahkampfwaffe variante="0">
+<trefferpunkte mul="1" sum="2" w="6"/>
+<bf akt="1" min="1"/>
+</Nahkampfwaffe>
+</gegenstand>
+<heldenausruestung bezeichner="" bfakt="1" bfmin="1" hand="rechts" name="nkwaffe1" schild="0" set="0" slot="0" talent="Dolche" waffenname="Dolch"/>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

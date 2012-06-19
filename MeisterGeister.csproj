@@ -1,0 +1,1174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C31CF4D7-A04C-4438-947E-68D1B34FF7B8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MeisterGeister</RootNamespace>
+    <AssemblyName>DSA MeisterGeister</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ExpressionBlendVersion>4.0.20621.0</ExpressionBlendVersion>
+    <Utf8Output>true</Utf8Output>
+    <PublishUrl>publish\setup\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.0.0.2</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NO_JINGLE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\Logos\MG_Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>976F53EAD03E8169FCEC56D473B5D88DE161F563</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>DSA.Tools_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ares.MeisterGeisterPlugin, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL" />
+    <Reference Include="ArtefaktGenerator, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="DG-Suche, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\DG-Suche.dll</HintPath>
+    </Reference>
+    <Reference Include="ImpromptuInterface">
+      <HintPath>.\ImpromptuInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Expression.Effects, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.Expression.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Daten\DatabaseDSADataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseDSADataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Daten\DatabaseTools.cs" />
+    <Compile Include="Daten\DatabaseUpdate.cs" />
+    <Compile Include="Daten\SqlCeUpgrade.cs" />
+    <Compile Include="Logic\General\AudioPlayer.cs" />
+    <Compile Include="Logic\General\Eigenschaft.cs" />
+    <Compile Include="Logic\General\Eigenschaften.cs" />
+    <Compile Include="Logic\General\Held.cs" />
+    <Compile Include="Logic\General\HeldKampfTalent.cs" />
+    <Compile Include="Logic\General\HeldWaffeWert.cs" />
+    <Compile Include="Logic\General\IProbe.cs" />
+    <Compile Include="Logic\General\Literatur.cs" />
+    <Compile Include="Logic\General\ProbenErgebnis.cs" />
+    <Compile Include="Logic\General\RandomNumberGenerator.cs" />
+    <Compile Include="Logic\General\Repräsentationen.cs" />
+    <Compile Include="Logic\General\Sonderfertigkeit.cs" />
+    <Compile Include="Logic\General\Talent.cs" />
+    <Compile Include="Logic\General\TalentTypen.cs" />
+    <Compile Include="Logic\General\VorNachteil.cs" />
+    <Compile Include="Logic\General\Würfel.cs" />
+    <Compile Include="Logic\General\Zauber.cs" />
+    <Compile Include="Logic\Global\Tool.cs" />
+    <Compile Include="Logic\NSC\NscGenerator.cs" />
+    <Compile Include="Logic\Würfel\Parser.cs" />
+    <Compile Include="Logic\Würfel\ParseTree.cs" />
+    <Compile Include="Logic\Würfel\Scanner.cs" />
+    <Compile Include="Model\Abenteuer_Ereignis_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Abenteuer_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Abenteuer_Szene_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Abenteuer_Verweis_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Audio_Playlist_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Audio_Playlist_Titel_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Audio_Titel_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Ausrüstung.cs" />
+    <Compile Include="Model\Ausrüstung_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Bestiarium_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Einstellungen_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Extensions\DependentPropertyAttribute.cs" />
+    <Compile Include="Model\Farbe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fernkampfwaffe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Gegner.cs" />
+    <Compile Include="Model\Gegner_Angriff.cs" />
+    <Compile Include="Model\Gegner_Angriff_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Gegner_Kampfregel_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Gegner_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Handelsgut_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Ausrüstung_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Inventar_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Munition_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Sonderfertigkeit_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Talent_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_VorNachteil_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held_Zauber_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Inventar_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Kampfregel_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Audio_Titel.cs" />
+    <Compile Include="Model\Audio_Playlist.cs" />
+    <Compile Include="Model\Notizen.cs" />
+    <Compile Include="Model\Service\AudioService.cs" />
+    <Compile Include="Model\Service\KampfService.cs" />
+    <Compile Include="Model\Service\NotizService.cs" />
+    <Compile Include="Model\Talent.cs" />
+    <Compile Include="Model\Trageort_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Zauber.cs" />
+    <Compile Include="Model\Munition.cs" />
+    <Compile Include="Model\Rasse_Farbe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rüstung.cs" />
+    <Compile Include="Model\Kultur_Name_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Kultur_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MenuLink_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Munition_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Name_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Notizen_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NscMerkmal_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rasse_Kultur_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rasse_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Regeln_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rüstung_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Schild.cs" />
+    <Compile Include="Model\Schild_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Service\MenuLinkService.cs" />
+    <Compile Include="Model\Extensions\SqlFunctionsExtension.cs" />
+    <Compile Include="Model\Service\NamenService.cs" />
+    <Compile Include="Model\Service\RegelnService.cs" />
+    <Compile Include="Model\Service\RüstungService.cs" />
+    <Compile Include="Model\Service\SchildService.cs" />
+    <Compile Include="Model\Sonderfertigkeit_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Talentgruppe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Talent_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Version_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\VorNachteil_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Waffe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Zauberzeichen_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Zauber_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
+    <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
+    <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
+    <Compile Include="ViewModel\Helden\Controls\ViewModelHeldAllgemein.cs" />
+    <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
+    <Compile Include="ViewModel\Inventar\Logic\IAusrüstung.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Distanzklasse.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IWaffe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IWaffeMitTPKK.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Kampf.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IFernkampfwaffe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\INahkampfwaffe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Kampfstil.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\InitiativListe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\KämpferInfo.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Attacke.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Angriffsaktion.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\KeineAktion.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Parade.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Abwehraktion.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Manöver\Manöver.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModifikator.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IEndetMit.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModEigenschaft.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModProbe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
+    <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
+    <Compile Include="ViewModel\NscGenerator\Person.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
+    <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">
+      <DependentUpon>AbenteuerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Alchimie\AlchimieView.xaml.cs">
+      <DependentUpon>AlchimieView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AresPlayer\AresPlayerView.xaml.cs">
+      <DependentUpon>AresPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\DereGlobusLinkControl.xaml.cs">
+      <DependentUpon>DereGlobusLinkControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\EnergieControl.xaml.cs">
+      <DependentUpon>EnergieControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\ExterneVerknüpfungMenuItem.xaml.cs">
+      <DependentUpon>ExterneVerknüpfungMenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\ExterneVerknüpfungAddMenuItem.xaml.cs">
+      <DependentUpon>ExterneVerknüpfungAddMenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Arena\ArenaControlPanel.cs" />
+    <Compile Include="View\Arena\ArenaViewer.cs" />
+    <Compile Include="View\Arena\CreatureCanvas.cs" />
+    <Compile Include="View\Arena\CreatureContextMenu.cs" />
+    <Compile Include="View\ArtGen\ArtGenView.xaml.cs">
+      <DependentUpon>ArtGenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\AudioPlayerView.xaml.cs">
+      <DependentUpon>AudioPlayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Logic\Umrechner\Flächen.cs" />
+    <Compile Include="Logic\Umrechner\Längen.cs" />
+    <Compile Include="Logic\Umrechner\Massen.cs" />
+    <Compile Include="Logic\Umrechner\Volumen.cs" />
+    <Compile Include="Logic\Umrechner\Währung.cs" />
+    <Compile Include="Logic\Umrechner\Zeit.cs" />
+    <Compile Include="ViewModel\Basar\Logic\IHandelsgut.cs" />
+    <Compile Include="Model\Fernkampfwaffe.cs" />
+    <Compile Include="Model\Service\FernkampfwaffeService.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Behinderung.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IWunden.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IRüstungsschutz.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Trefferzone.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\ITrefferzonenIndexer.cs" />
+    <Compile Include="Model\Service\NscService.cs" />
+    <Compile Include="ViewModel\Basar\Logic\BasarItem.cs" />
+    <Compile Include="Logic\Voraussetzungen\Parser.cs" />
+    <Compile Include="Logic\Voraussetzungen\ParseTree.cs" />
+    <Compile Include="Logic\Voraussetzungen\Scanner.cs" />
+    <Compile Include="Model\Extensions\EntityFrameworkHelper.cs" />
+    <Compile Include="Model\Extensions\ObjectContextExtension.cs" />
+    <Compile Include="Model\Extensions\ObjectQueryExtension.cs" />
+    <Compile Include="Model\Extensions\TreeNode.cs" />
+    <Compile Include="Model\Service\SerializationService.cs" />
+    <Compile Include="Model\Handelsgut.cs" />
+    <Compile Include="Model\Service\InventarService.cs" />
+    <Compile Include="Model\Service\VersionService.cs" />
+    <Compile Include="Model\VorNachteil.cs" />
+    <Compile Include="Model\Waffe.cs" />
+    <Compile Include="ViewModel\Basar\BasarViewModel.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\TrefferzonenHelper.cs" />
+    <Compile Include="ViewModel\Schmiede\Logic\Nahkampfwaffenverbesserung.cs" />
+    <Compile Include="View\Basar\BasarView.xaml.cs">
+      <DependentUpon>BasarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\ViewHeldAllgemein.xaml.cs">
+      <DependentUpon>ViewHeldAllgemein.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Inventar\Trageort.xaml.cs">
+      <DependentUpon>Trageort.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
+      <DependentUpon>KampfInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Zauberzeichen\ZauberzeichenView.xaml.cs">
+      <DependentUpon>ZauberzeichenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ZooBot\ZooBotView.xaml.cs">
+      <DependentUpon>ZooBotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\FormatTextBox.xaml.cs">
+      <DependentUpon>FormatTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Globus\GlobusView.xaml.cs">
+      <DependentUpon>GlobusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\HeldenView.xaml.cs">
+      <DependentUpon>HeldenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\IntBox.xaml.cs">
+      <DependentUpon>IntBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kalender\KalenderView.xaml.cs">
+      <DependentUpon>KalenderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\KampfView.xaml.cs">
+      <DependentUpon>KampfView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\DoubleBox.xaml.cs">
+      <DependentUpon>DoubleBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Notiz\NotizView.xaml.cs">
+      <DependentUpon>NotizView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\TabControl.xaml.cs">
+      <DependentUpon>TabControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpielerScreen\SpielerScreenControlView.xaml.cs">
+      <DependentUpon>SpielerScreenControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Umrechner\UmrechnerView.xaml.cs">
+      <DependentUpon>UmrechnerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\WikiLinkControl.xaml.cs">
+      <DependentUpon>WikiLinkControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProbenWürfel\WürfelbecherView.xaml.cs">
+      <DependentUpon>WürfelbecherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Arena\ArenaWindow.xaml.cs">
+      <DependentUpon>ArenaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Arena\CreateNewArenaWindow.xaml.cs">
+      <DependentUpon>CreateNewArenaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\KämpferWindow.xaml.cs">
+      <DependentUpon>KämpferWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpielerScreen\SpielerWindow.xaml.cs">
+      <DependentUpon>SpielerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\StartupWindow.xaml.cs">
+      <DependentUpon>StartupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Logic\General\Log.cs" />
+    <Compile Include="ViewModel\Arena\Arena.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Arena\Logic\ArenaHindernisAbstract.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Arena\Logic\ArenaHindernisRechteckig.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Arena\Logic\Creature.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Arena\Logic\Enemy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Arena\Logic\Hero.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Basar\Logic\Preis.cs" />
+    <Compile Include="Logic\Global\Global.cs" />
+    <Compile Include="Logic\Kalender\Datum.cs" />
+    <Compile Include="Logic\Settings\Einstellungen.cs" />
+    <Compile Include="Logic\HeldenImport\HeldenSoftwareImporter.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADate.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendar.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarDwarfs.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarGjalskerland.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarGregorian.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarMyranisch.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarNorbards.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarNovadi.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarOrcs.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarSaurians.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarThorwal.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\DSADateCalendarTwelve.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\MathUtil.cs" />
+    <Compile Include="Logic\Kalender\DsaTool\Season.cs" />
+    <Compile Include="Logic\Kalender\Woche.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\Aktion.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\Manöver.cs" />
+    <Compile Include="Logic\Kalender\Feiertag.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\Trefferzone.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\TrefferzoneEnum.cs" />
+    <Compile Include="Logic\Kalender\Kalender.cs" />
+    <Compile Include="Logic\Kalender\Monat.cs" />
+    <Compile Include="Logic\Kalender\WochentagEnum.cs" />
+    <Compile Include="Logic\Kalender\Zeitrechnung.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IKämpfer.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Rüstungsschutz.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Waffenset.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Wesen.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Wunden.cs" />
+    <Compile Include="View\Windows\EinstellungenWindow.xaml.cs">
+      <DependentUpon>EinstellungenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Kampf\LogicAlt\Gegner.cs" />
+    <Compile Include="View\Windows\MsgWindow.xaml.cs">
+      <DependentUpon>MsgWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\InfoWindow.xaml.cs">
+      <DependentUpon>InfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Kampf\LogicAlt\Kampf.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\KampfAktion.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\KampfAktionListe.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\KämpferList.cs" />
+    <Compile Include="View\ProbenWürfel\ProbenView.xaml.cs">
+      <DependentUpon>ProbenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\General\WürfelControl.xaml.cs">
+      <DependentUpon>WürfelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Kampf\LogicAlt\IKämpfer.cs" />
+    <Compile Include="Logic\Settings\Regeln.cs" />
+    <Compile Include="ViewModel\Kampf\LogicAlt\Wesen.cs" />
+    <Compile Include="View\Windows\InputWindow.xaml.cs">
+      <DependentUpon>InputWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Globus\SelectLandmarkeWindow.xaml.cs">
+      <DependentUpon>SelectLandmarkeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Held.cs" />
+    <Compile Include="Model\MeisterGeisterModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MeisterGeisterModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Service\HandelsgutService.cs" />
+    <Compile Include="Model\Service\HeldService.cs" />
+    <Compile Include="Model\Service\Base\ServiceBase.cs" />
+    <Compile Include="Model\Service\TalentService.cs" />
+    <Compile Include="Model\Service\WaffeService.cs" />
+    <Compile Include="Model\Sonderfertigkeit.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Base\CommandBase.cs" />
+    <Compile Include="ViewModel\NscGenerator\NscGeneratorViewModel.cs" />
+    <Compile Include="ViewModel\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModel\Schmiede\SchmiedeViewModel.cs" />
+    <Compile Include="ViewModel\Inventar\Inventar.cs" />
+    <Compile Include="View\Schmiede\SchmiedeView.xaml.cs">
+      <DependentUpon>SchmiedeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NscGenerator\NscGeneratorView.xaml.cs">
+      <DependentUpon>NscGeneratorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Inventar\InventarView.xaml.cs">
+      <DependentUpon>InventarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ZooBot\Hauptfenster.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\ZooBot\Hauptfenster.designer.cs">
+      <DependentUpon>Hauptfenster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\ZooBot\Logic\Landschaften.cs" />
+    <Compile Include="ViewModel\ZooBot\Logic\Pflanzen.cs" />
+    <Compile Include="ViewModel\ZooBot\Logic\Regionen.cs" />
+    <Compile Include="ViewModel\ZooBot\Logic\Tiere.cs" />
+    <Compile Include="View\ZooBot\Wuerfeleingabe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ZooBot\Wuerfeleingabe.designer.cs">
+      <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
+    </Compile>
+    <Page Include="SampleData\HeldenViewModelSampleData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleData\KampfViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Abenteuer\AbenteuerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Alchimie\AlchimieView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AresPlayer\AresPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\DereGlobusLinkControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\EnergieControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\ExterneVerknüpfungMenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\ExterneVerknüpfungAddMenuItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ArtGen\ArtGenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\AudioPlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Basar\BasarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\Controls\ViewHeldAllgemein.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Inventar\Trageort.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Kampf\KampfInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Zauberzeichen\ZauberzeichenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ZooBot\ZooBotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\FormatTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Globus\GlobusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\HeldenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\IntBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kalender\KalenderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\KampfView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\DoubleBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Notiz\NotizView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProbenWürfel\ProbenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpielerScreen\SpielerScreenControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Umrechner\UmrechnerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\WikiLinkControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProbenWürfel\WürfelbecherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\WürfelControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Arena\ArenaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Arena\CreateNewArenaWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Kampf\KämpferWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpielerScreen\SpielerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\StartupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EinstellungenWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\MsgWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\InfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\Windows\InputWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Globus\SelectLandmarkeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Themes\Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Schmiede\SchmiedeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NscGenerator\NscGeneratorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Inventar\InventarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ZooBot\Hauptfenster.resx">
+      <DependentUpon>Hauptfenster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ZooBot\Wuerfeleingabe.resx">
+      <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Daten\DatabaseDSADataSet.xsc">
+      <DependentUpon>DatabaseDSADataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Daten\DatabaseDSADataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>DatabaseDSADataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Daten\DatabaseDSADataSet.xss">
+      <DependentUpon>DatabaseDSADataSet.xsd</DependentUpon>
+    </None>
+    <EntityDeploy Include="Model\MeisterGeisterModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MeisterGeisterModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Logic\Voraussetzungen\Voraussetzungen.tpg" />
+    <None Include="Logic\Würfel\Würfel.tpg" />
+    <None Include="Model\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Model\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\DataSources\MeisterGeister.Model.DatabaseDSAEntities.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BlendEmbeddedFont Include="Fonts\MORPHEUS.TTF">
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Characters>
+      </Characters>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
+    <Resource Include="Images\Icons\General\add.png" />
+    <Resource Include="Images\Icons\General\entf_01.png" />
+    <Resource Include="Images\Icons\General\entf_02.png" />
+    <Resource Include="Images\Icons\meisterperson.png" />
+    <Resource Include="Images\Icons\nahkampf_01.png" />
+    <Resource Include="Images\Icons\nahkampf_02.png" />
+    <Resource Include="Images\Icons\ruestung.png" />
+    <Resource Include="Images\Icons\schild.png" />
+    <Resource Include="Images\Icons\General\export.png" />
+    <Resource Include="Images\Icons\General\import.png" />
+    <Resource Include="Images\Icons\General\neu.png" />
+    <Resource Include="Images\Icons\General\oeffnen.png" />
+    <Resource Include="Images\Icons\General\ok.png" />
+    <Resource Include="Images\Icons\General\pfeil_links.png" />
+    <Resource Include="Images\Icons\General\pfeil_oben.png" />
+    <Resource Include="Images\Icons\General\pfeil_rechts.png" />
+    <Resource Include="Images\Icons\General\pfeil_unten.png" />
+    <Resource Include="Images\Icons\General\refresh.png" />
+    <Resource Include="Images\Icons\General\speichern.png" />
+    <Resource Include="Images\Icons\General\filter.png" />
+    <Resource Include="Images\Icons\General\suchen.png" />
+    <Resource Include="Images\Icons\Wetter\gewitter.png" />
+    <Resource Include="Images\Icons\Wetter\regen.png" />
+    <Resource Include="Images\Icons\Wetter\sonne.png" />
+    <Resource Include="Images\Icons\Wuerfel\w10.png" />
+    <Resource Include="Images\Icons\Wuerfel\w12.png" />
+    <Resource Include="Images\Icons\Wuerfel\w20.png" />
+    <Resource Include="Images\Icons\Wuerfel\w20_blank.png" />
+    <Resource Include="Images\Icons\Wuerfel\w6_blank.png" />
+    <Resource Include="Images\Icons\Wuerfel\wuerfel.png" />
+    <Resource Include="Images\Icons\Wuerfel\w6.png" />
+    <Resource Include="Images\Icons\alchimie.png" />
+    <Resource Include="Images\Icons\angeln.png" />
+    <Resource Include="Images\Icons\artefakt.png" />
+    <Resource Include="Images\Icons\ausruestung.png" />
+    <Resource Include="Images\Icons\General\feder.png" />
+    <Resource Include="Images\Icons\fernkampf.png" />
+    <Resource Include="Images\Icons\foliant.png" />
+    <Resource Include="Images\Icons\gegner.png" />
+    <Resource Include="Images\Icons\geschlecht_m.png" />
+    <Resource Include="Images\Icons\geschlecht_w.png" />
+    <Resource Include="Images\Icons\gewicht.png" />
+    <Resource Include="Images\Icons\helden.png" />
+    <Resource Include="Images\Icons\jagd.png" />
+    <Resource Include="Images\Icons\kalender.png" />
+    <Resource Include="Images\Icons\kartenzeichnen.png" />
+    <Resource Include="Images\Icons\kraeutersuche.png" />
+    <Resource Include="Images\Icons\magie.png" />
+    <Resource Include="Images\Icons\masse.png" />
+    <Resource Include="Images\Icons\mechanik.png" />
+    <Resource Include="Images\Icons\meistertools_01.png" />
+    <Resource Include="Images\Icons\meistertools_02.png" />
+    <Resource Include="Images\Icons\muenze.png" />
+    <Resource Include="Images\Icons\muenzen.png" />
+    <Resource Include="Images\Icons\munition.png" />
+    <Resource Include="Images\Icons\notiz.png" />
+    <Resource Include="Images\Icons\proviant.png" />
+    <Resource Include="Images\Icons\schaden.png" />
+    <Resource Include="Images\Icons\schmiede.png" />
+    <Resource Include="Images\Icons\tot.png" />
+    <Resource Include="Images\Icons\ueberanstrengung.png" />
+    <Resource Include="Images\Icons\wuerfelbecher.png" />
+    <Resource Include="Images\Logos\DereGlobus_Logo.png" />
+    <Resource Include="Images\Logos\Ulisses_Logo.png" />
+    <Resource Include="Images\Logos\HerokonOnline_Logo.png" />
+    <Resource Include="Images\Logos\SilverStyleStudios_Logo.png" />
+    <Resource Include="Images\Logos\2w6plus6_Icon.png" />
+    <Resource Include="Images\Logos\Tanelorn_Favicon.png" />
+    <Resource Include="Images\Logos\HerokonOnline_Icon.png" />
+    <Resource Include="Images\Icons\helden_kopieren.png" />
+    <Resource Include="Images\Koerperzonen\koerperzonen_01.png" />
+    <Resource Include="Images\Logos\DereGlobus_Icon2.png" />
+    <Resource Include="Images\Icons\General\copy.png" />
+    <Resource Include="Images\Icons\General\cut.png" />
+    <Resource Include="Images\Icons\General\paste.png" />
+    <Resource Include="Images\Icons\audio2.png" />
+    <Resource Include="Images\Icons\bodenplan.png" />
+    <Resource Include="Images\Icons\Wetter\eiskristall.png" />
+    <Resource Include="Images\Icons\hesinde.png" />
+    <Resource Include="Images\Icons\pinsel.png" />
+    <Resource Include="Images\Icons\substitution_01.png" />
+    <Resource Include="Images\Icons\substitution_02.png" />
+    <Resource Include="Images\Icons\substitution_03.png" />
+    <Resource Include="Images\Icons\substitution_04.png" />
+    <Resource Include="Images\Icons\substitution_05.png" />
+    <Resource Include="Images\Icons\substitution_06.png" />
+    <Resource Include="Images\Icons\zauberzeichen.png" />
+    <Resource Include="Images\Logos\Rakshazar_Icon.png" />
+    <Resource Include="Images\Icons\clear_kampf.png" />
+    <Resource Include="Images\Icons\gegner_entf.png" />
+    <Resource Include="Images\Icons\gegner_add.png" />
+    <Resource Include="Images\Icons\helden_add.png" />
+    <Resource Include="Images\Icons\kämpfer_entf.png" />
+    <Resource Include="Images\Logos\Ares_Logo.png" />
+    <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
+    <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License\Apache License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audio\meistergeister.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Daten\DatabaseDSA_35.sdf" />
+    <Resource Include="Images\Logos\MG_Icon.ico" />
+    <Resource Include="Images\Logos\MG_Logo.png" />
+    <Content Include="Libs\ImpromptuInterface.dll" />
+    <Content Include="Libs\DG-Suche.dll" />
+    <Resource Include="Images\Icons\General\kreise.png" />
+    <Resource Include="Images\Wesen\crow.png" />
+    <Resource Include="Images\Wesen\question_mark_portrait.jpg" />
+    <Resource Include="Images\Logos\facebook.png" />
+    <Resource Include="Images\Logos\twitter.png" />
+    <Content Include="Libs\Microsoft.Expression.Effects.dll" />
+    <None Include="Daten\InsertHandelsgut.txt" />
+    <Content Include="Libs\System.Windows.Interactivity.dll" />
+    <Resource Include="Images\Texturen\papier2.jpg" />
+    <Resource Include="Images\Icons\Extensions\pdf.png" />
+    <Resource Include="Images\Icons\Extensions\doc.png" />
+    <Resource Include="Images\Icons\Extensions\xls.png" />
+    <Resource Include="Images\Icons\Extensions\txt.png" />
+    <Resource Include="Images\Icons\General\web.png" />
+    <Resource Include="Images\Logos\DsaFanprojekt_Logo.png" />
+    <Content Include="Libs\Microsoft.Expression.Interactions.dll" />
+    <Content Include="Libs\ArtefaktGenerator.dll" />
+    <Content Include="Daten\DatabaseDSA.sdf" />
+    <Resource Include="Daten\demoHelden.xml" />
+    <Resource Include="Images\Icons\General\question.png" />
+    <Resource Include="Images\Texturen\papier.jpg" />
+    <Resource Include="Images\Icons\General\screen.png" />
+    <Resource Include="Images\Icons\General\update.png" />
+    <Content Include="Audio\WuerfelnSound0000.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\Icons\General\audio.png" />
+    <Resource Include="Images\Icons\General\email.png" />
+    <Resource Include="Images\Logos\Vinsalt_Favicon.png" />
+    <Resource Include="Images\Madamal\mada1.jpg" />
+    <Resource Include="Images\Madamal\mada2.jpg" />
+    <Resource Include="Images\Madamal\mada3.jpg" />
+    <Resource Include="Images\Madamal\mada4.jpg" />
+    <Resource Include="Images\Madamal\mada5.jpg" />
+    <Resource Include="Images\Madamal\mada6.jpg" />
+    <Resource Include="Images\Madamal\mada7.jpg" />
+    <Resource Include="Images\Madamal\mada8.jpg" />
+    <Resource Include="Images\Madamal\mada9.jpg" />
+    <Resource Include="Images\Madamal\mada10.jpg" />
+    <Resource Include="Images\Madamal\mada11.jpg" />
+    <Resource Include="Images\Madamal\mada12.jpg" />
+    <Resource Include="Images\Madamal\mada13.jpg" />
+    <Resource Include="Images\Madamal\mada14.jpg" />
+    <Resource Include="Images\Madamal\mada15.jpg" />
+    <Resource Include="Images\Madamal\mada16.jpg" />
+    <Resource Include="Images\Madamal\mada17.jpg" />
+    <Resource Include="Images\Madamal\mada18.jpg" />
+    <Resource Include="Images\Madamal\mada19.jpg" />
+    <Resource Include="Images\Madamal\mada20.jpg" />
+    <Resource Include="Images\Madamal\mada21.jpg" />
+    <Resource Include="Images\Madamal\mada22.jpg" />
+    <Resource Include="Images\Madamal\mada23.jpg" />
+    <Resource Include="Images\Madamal\mada24.jpg" />
+    <Resource Include="Images\Madamal\mada25.jpg" />
+    <Resource Include="Images\Madamal\mada26.jpg" />
+    <Resource Include="Images\Madamal\mada27.jpg" />
+    <Resource Include="Images\Madamal\mada28.jpg" />
+    <Resource Include="Images\Logos\Dsa4_Favicon.png" />
+    <Resource Include="Images\Logos\Ulisses_Icon.png" />
+    <Resource Include="Images\Logos\Orkenspalter_Favicon.png" />
+    <Resource Include="Images\Logos\DereGlobus_Icon.png" />
+    <Resource Include="Images\Logos\DereGlobusSuche_Logo.png" />
+    <Resource Include="Images\Logos\Rakshazar_Favicon.png" />
+    <Resource Include="Images\Logos\DereGlobus_Favicon.png" />
+    <Resource Include="Images\Texturen\pergament.png" />
+    <Content Include="README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\Icons\General\info.png" />
+    <Resource Include="Images\Logos\WikiAventurica_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 3.5 SP2</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.4.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 4.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\NscGenerator\Logic\" />
+  </ItemGroup>
+  <ItemGroup>
+    <DesignData Include="SampleData\BasarViewModelSampleData.xaml" />
+    <DesignData Include="SampleData\InventarSampleData.xaml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(TargetDir)Daten"
+copy "$(ProjectDir)Daten\DatabaseDSA.sdf" "$(TargetDir)Daten\DatabaseDSA_Standard.sdf"
+
+if not $(ConfigurationName) == Debug (
+   rmdir /s /q "$(ProjectDir)publish\$(TargetName)"
+   mkdir "$(ProjectDir)publish\$(TargetName)"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Daten"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Audio"
+   mkdir "$(ProjectDir)publish\$(TargetName)\License"
+   mkdir "$(ProjectDir)publish\$(TargetName)\de"
+   copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)README.txt" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Daten\DatabaseDSA_Standard.sdf" "$(ProjectDir)publish\$(TargetName)\Daten"
+   copy "$(TargetDir)DG-Suche.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Microsoft.Expression.Interactions.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Microsoft.Expression.Effects.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)System.Windows.Interactivity.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)ImpromptuInterface.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)ArtefaktGenerator.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)Ares.MeisterGeisterPlugin.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)de\Ares.MeisterGeisterPlugin.resources.dll" "$(ProjectDir)publish\$(TargetName)\de"
+   copy "$(TargetDir)Audio\meistergeister.wav" "$(ProjectDir)publish\$(TargetName)\Audio"
+   copy "$(TargetDir)Audio\WuerfelnSound0000.wav" "$(ProjectDir)publish\$(TargetName)\Audio"
+   copy "$(TargetDir)License\Apache License.txt" "$(ProjectDir)publish\$(TargetName)\License"
+   call "C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetName).zip" "$(ProjectDir)publish\$(TargetName)" -mx
+   move  "$(TargetDir)$(TargetName).zip" "$(ProjectDir)publish"
+)</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
