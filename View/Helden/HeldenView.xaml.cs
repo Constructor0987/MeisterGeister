@@ -28,38 +28,11 @@ namespace MeisterGeister.View.Helden
         {
             InitializeComponent();
 
-#if !(DEBUG)
-            _buttonExportDemo.Visibility = System.Windows.Visibility.Collapsed;
-#endif
-
             _comboBoxTalentAktivieren.SelectedIndex = -1;
             _comboBoxSonderfertigkeit.SelectedIndex = -1;
             _comboBoxVorteil.SelectedIndex = -1;
             _comboBoxNachteil.SelectedIndex = -1;
             _comboBoxZauber.SelectedIndex = -1;
-            _listBoxHelden.Tag = SelectedHeld;
-        }
-
-        private void ButtonHeldNeu_Click(object sender, RoutedEventArgs e)
-        {
-            _buttonHeldNeu.ContextMenu.IsOpen = true;
-        }
-
-        private void HeldNeu()
-        {
-            Held.Neu();
-        }
-
-        private void ListBoxHelden_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (IsInitialized)
-            {
-                App.SaveAll();
-                _listBoxHelden.Tag = SelectedHeld;
-                Global.SelectedHeldGUID = SelectedHeld.Id;
-                ((Held)_listBoxHelden.Tag).PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(SelectedHeld_PropertyChanged);
-                RefreshHeld();
-            }
         }
 
         public event System.ComponentModel.PropertyChangedEventHandler HeldChanged;
@@ -86,7 +59,7 @@ namespace MeisterGeister.View.Helden
             _labelKarmaenergie.Visibility = System.Windows.Visibility.Visible;
             _imageAeKeHinweis.Visibility = System.Windows.Visibility.Collapsed;
 
-            Held held = (Held)_listBoxHelden.Tag;
+            Held held = SelectedHeld;
 
             if (!held.Magiebegabt && !held.Geweiht)
                 _imageAeKeHinweis.Visibility = System.Windows.Visibility.Visible;
@@ -138,11 +111,9 @@ namespace MeisterGeister.View.Helden
         {
             get
             {
-                DatabaseDSADataSet.HeldRow heldRow = null;
-                if (_listBoxHelden != null && _listBoxHelden.SelectedItem != null)
-                    heldRow = (DatabaseDSADataSet.HeldRow)((System.Data.DataRowView)_listBoxHelden.SelectedItem).Row;
-
-                Held held = new Held(heldRow);
+                Held held = null;
+                if(Global.SelectedHeldGUID != Guid.Empty)
+                    held = new Held(Global.SelectedHeldGUID);
                 return held;
             }
         }
@@ -159,159 +130,7 @@ namespace MeisterGeister.View.Helden
                 errWin.ShowDialog();
             }
 
-            ListBoxHelden_SelectionChanged(sender, null);
-        }
-
-        private void HeldDelete()
-        {
-            Held h = SelectedHeld;
-            if (MessageBox.Show(string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name), "Held löschen",
-                                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                h.Delete();
-                _listBoxHelden.SelectedIndex = -1;
-            }
-        }
-
-        private void ListBoxHelden_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (_listBoxHelden.SelectedItem != null)
-            {
-                switch (e.Key)
-                {
-                    // Aktion löschen
-                    case Key.Delete:
-                        HeldDelete();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        private void MenuItemHeldLöschen_Click(object sender, RoutedEventArgs e)
-        {
-            HeldDelete();
-        }
-
-        private void MenuItemHeldNeu_Click(object sender, RoutedEventArgs e)
-        {
-            HeldNeu();
-        }
-
-        private void MenuItemHeldExport_Click(object sender, RoutedEventArgs e)
-        {
-            var objDialog = new SaveFileDialog();
-            objDialog.Title = "Held exportieren";
-            objDialog.Filter = "XML-Dateien (*.xml)|*.xml";
-            objDialog.DefaultExt = "xml";
-            objDialog.AddExtension = true;
-            objDialog.FileName = SelectedHeld.Name;
-            objDialog.InitialDirectory = _workingPath;
-            DialogResult objResult = objDialog.ShowDialog();
-            if (objResult == DialogResult.OK)
-            {
-                try
-                {
-                    string expPfad = SelectedHeld.ExportHeld(objDialog.FileName);
-                    _workingPath = expPfad.Replace(objDialog.FileName, null);
-
-                    MessageBox.Show("Der Held wurde in \'" + expPfad + "\' gespeichert.");
-                }
-                catch (Exception ex)
-                {
-                    MsgWindow errWin = new MsgWindow("Fehler beim Export", "Beim Export des Helden ist ein Fehler aufgetreten!", ex);
-                    errWin.ShowDialog();
-                }
-            }
-        }
-
-        private string _workingPath = Environment.CurrentDirectory;
-
-        private void MenuItemHeldImport_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Beim Importieren wird der ausgewählte Held überschrieben. Soll der Vorgang fortgesetzt werden?", "Held importieren",
-                MessageBoxButton.YesNo) == MessageBoxResult.No)
-                return;
-            var objDialog = new OpenFileDialog();
-            objDialog.Title = "Held importieren";
-            objDialog.Filter = "MeisterGeister und Helden-Software Dateien (*.xml)|*.xml";
-            objDialog.DefaultExt = "xml";
-            objDialog.AddExtension = true;
-            objDialog.FileName = SelectedHeld.Name;
-            objDialog.InitialDirectory = _workingPath;
-            DialogResult objResult = objDialog.ShowDialog();
-            if (objResult == DialogResult.OK)
-            {
-                try
-                {
-                    string expPfad = SelectedHeld.ImportHeld(objDialog.FileName);
-                    _workingPath = expPfad.Replace(objDialog.SafeFileName, null);
-
-                    MessageBox.Show("Der Held wurde aus \'" + expPfad + "\' importiert.");
-                }
-                catch (Exception ex)
-                {
-                    MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
-                    errWin.ShowDialog();
-                }
-            }
-        }
-
-        private void MenuItemHeldImportNeu_Click(object sender, RoutedEventArgs e)
-        {
-            var objDialog = new OpenFileDialog();
-            objDialog.Title = "Neuen Helden importieren";
-            objDialog.Filter = "MeisterGeister und Helden-Software Dateien (*.xml)|*.xml";
-            objDialog.DefaultExt = "xml";
-            objDialog.AddExtension = true;
-            objDialog.FileName = SelectedHeld.Name;
-            objDialog.InitialDirectory = _workingPath;
-            DialogResult objResult = objDialog.ShowDialog();
-            if (objResult == DialogResult.OK)
-            {
-                try
-                {
-                    string expPfad = Held.ImportHeldNeu(objDialog.FileName);
-                    _workingPath = expPfad.Replace(objDialog.SafeFileName, null);
-
-                    MessageBox.Show("Der Held wurde aus \'" + expPfad + "\' importiert."
-                        + "\n\nHINWEIS: Helden können auch per Drag&Drop importiert werden.");
-                }
-                catch (Exception ex)
-                {
-                    MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
-                    errWin.ShowDialog();
-                }
-            }
-        }
-
-        private void MenuItemHeldKopieren_Click(object sender, RoutedEventArgs e)
-        {
-            SelectedHeld.Kopie();
-        }
-
-        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-        {
-            if (_listBoxHelden.SelectedItem == null)
-            {
-                _menuItemHeldLöschen.IsEnabled = false;
-                _menuItemHeldImport.IsEnabled = false;
-                _menuItemHeldExport.IsEnabled = false;
-                _menuItemHeldKopie.IsEnabled = false;
-            }
-            else
-            {
-                _menuItemHeldLöschen.IsEnabled = true;
-                _menuItemHeldImport.IsEnabled = true;
-                _menuItemHeldExport.IsEnabled = true;
-                _menuItemHeldKopie.IsEnabled = true;
-            }
-        }
-
-        private void ListBoxHelden_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _listBoxHelden.SelectedItem = null;
+            //ListBoxHelden_SelectionChanged(sender, null);
         }
 
         private void _listBoxHeldSonderfertigkeiten_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -490,10 +309,7 @@ namespace MeisterGeister.View.Helden
             DeleteHeldVorNachteil();
         }
 
-        private void _buttonExportDemo_Click(object sender, RoutedEventArgs e)
-        {
-            Held.GeneriereDemoHelden();
-        }
+
 
         private void ContextMenuTalente_Opened(object sender, RoutedEventArgs e)
         {
@@ -715,15 +531,7 @@ namespace MeisterGeister.View.Helden
             }
         }
 
-        private void _listBoxHelden_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (sender is System.Windows.Controls.ListBox && e.Key == Key.Delete)
-            {
-                var liBo = (System.Windows.Controls.ListBox)sender;
-                if (liBo.SelectedItem != null)
-                    HeldDelete();
-            }
-        }
+        
 
         private void _dataGridHeldTalente_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -738,25 +546,7 @@ namespace MeisterGeister.View.Helden
             }
         }
 
-        private void MenuItemHeldImportDemo_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                _listBoxHelden.UnselectAll();
-                _listBoxHelden.SelectionChanged -= ListBoxHelden_SelectionChanged;
-                Held.LadeDemoHelden();
-                _listBoxHelden.SelectionChanged += ListBoxHelden_SelectionChanged;
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-                MessageBox.Show(ex.FileName + "\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            }
-            catch (System.Xml.XmlException ex)
-            {
-                MessageBox.Show("Die Demo-Helden Datei ist beschädigt." + "\n\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        
 
         private void _comboBoxZauber_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -834,31 +624,7 @@ namespace MeisterGeister.View.Helden
             System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedZauber.WikiLink);
         }                
 
-        private void ListBoxHelden_Drop(object sender, System.Windows.DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
-            {
-                string[] droppedFiles = e.Data.GetData(System.Windows.DataFormats.FileDrop, true) as string[];
-
-                foreach (string file in droppedFiles)
-                {
-                    if (!file.EndsWith("xml"))
-                    {
-                        MessageBox.Show(file + "\n\nFalscher Dateityp!");
-                        continue;
-                    }
-                    try
-                {
-                    string expPfad = Held.ImportHeldNeu(file);
-                }
-                catch (Exception ex)
-                {
-                    MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
-                    errWin.ShowDialog();
-                }
-                }
-            }
-        }
+        
         
     }
 }

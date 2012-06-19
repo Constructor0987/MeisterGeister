@@ -343,6 +343,7 @@
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
+    <Compile Include="ViewModel\Helden\Controls\ViewModelHeldListe.cs" />
     <Compile Include="ViewModel\Helden\Controls\ViewModelHeldAllgemein.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Inventar\Logic\IAusrüstung.cs">
@@ -442,6 +443,9 @@
     </Compile>
     <Compile Include="View\Helden\Controls\ViewHeldAllgemein.xaml.cs">
       <DependentUpon>ViewHeldAllgemein.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\ViewHeldListe.xaml.cs">
+      <DependentUpon>ViewHeldListe.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Inventar\Trageort.xaml.cs">
       <DependentUpon>Trageort.xaml</DependentUpon>
@@ -697,6 +701,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Helden\Controls\ViewHeldAllgemein.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\ViewHeldListe.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

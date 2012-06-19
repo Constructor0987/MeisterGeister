@@ -1,0 +1,155 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="MeisterGeister.View.Helden.Controls.ViewHeldListe"
+	x:Name="UserControl"
+	d:DesignWidth="190" d:DesignHeight="561">
+	<UserControl.Resources>
+
+		<Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
+			<Setter Property="FontStyle" Value="Normal" />
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding AktiveHeldengruppe}" Value="false">
+					<Setter Property="FontStyle" Value="Italic" />
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+		<Style x:Key="HeldenListItemStyle" TargetType="{x:Type StackPanel}">
+			<Setter Property="Opacity" Value="1.0" />
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding AktiveHeldengruppe}" Value="false">
+					<Setter Property="Opacity" Value="0.7" />
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
+		<DataTemplate x:Key="HeldListTemplate">
+			<StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical">
+				<TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}" />
+			</StackPanel>
+		</DataTemplate>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot">
+		<Grid Grid.Column="0" Grid.Row="0" Background="{StaticResource BackgroundPergamentHoch}">
+			<ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource HeldListTemplate}" 
+				KeyDown="_listBoxHelden_KeyDown" MouseDown="ListBoxHelden_MouseDown" SelectionChanged="ListBoxHelden_SelectionChanged" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
+				<ListBox.ContextMenu>
+					<ContextMenu Opened="ContextMenu_Opened">
+						<MenuItem Height="28" Click="MenuItemHeldNeu_Click" Header="Neu (eingeben)" x:Name="_menuItemHeldNeu" ToolTip="Einen neuen Helden manuell eingeben.">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Height="28" Click="MenuItemHeldImportNeu_Click" Header="Neu (importieren)" x:Name="_menuItemHeldImportNeu">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
+							</MenuItem.Icon>
+							<MenuItem.ToolTip>
+								<StackPanel Orientation="Vertical">
+									<TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
+									<TextBlock Foreground="Red" Text="ACHTUNG!" />
+									<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+									<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+									<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+									<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+								</StackPanel>
+							</MenuItem.ToolTip>
+						</MenuItem>
+						<Separator />
+						<MenuItem Height="28" Click="MenuItemHeldImportDemo_Click" Header="Beispiel-Helden laden" x:Name="_menuItemHeldImportDemo" ToolTip="Beipiel-Helden laden.">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<Separator />
+						<MenuItem Height="28" Click="MenuItemHeldKopieren_Click" Header="Kopieren" x:Name="_menuItemHeldKopie" ToolTip="Held kopieren.">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/helden_kopieren.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Height="28" Click="MenuItemHeldImport_Click" Header="Importieren (Überschreiben)" x:Name="_menuItemHeldImport">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
+							</MenuItem.Icon>
+							<MenuItem.ToolTip>
+								<StackPanel Orientation="Vertical">
+									<TextBlock FontWeight="Bold" Text="Held aus Datei importieren und überschreiben" />
+									<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+									<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+									<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+								</StackPanel>
+							</MenuItem.ToolTip>
+						</MenuItem>
+						<MenuItem Height="28" Click="MenuItemHeldExport_Click" Header="Exportieren" x:Name="_menuItemHeldExport">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
+							</MenuItem.Icon>
+							<MenuItem.ToolTip>
+								<StackPanel Orientation="Vertical">
+									<TextBlock FontWeight="Bold" Text="Held als XML-Datei exportieren" />
+									<TextBlock Foreground="Red" Text="ACHTUNG:" />
+									<TextBlock Text="Der Export/Import von Helden funktioniert nur zwischen MeisterGeister-Versionen derselben Versionsnummer!" />
+								</StackPanel>
+							</MenuItem.ToolTip>
+						</MenuItem>
+						<Separator />
+						<MenuItem Height="28" Click="MenuItemHeldLöschen_Click" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen.">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</ContextMenu>
+				</ListBox.ContextMenu>
+			</ListBox>
+			<Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+				<Image.ToolTip>
+					<StackPanel Width="200">
+						<TextBlock TextWrapping="Wrap"><Run Text="Rechtsklick für weitere Aktionen."/></TextBlock>
+						<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
+					</StackPanel>
+				</Image.ToolTip>
+			</Image>
+			<Button Height="23" Margin="5,0,0,6" Width="25" Background="Lime" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
+				<Button.ContextMenu>
+					<ContextMenu>
+						<MenuItem Height="28" Click="MenuItemHeldNeu_Click" Header="Neu (eingeben)" ToolTip="Einen neuen Helden manuell eingeben.">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Height="28" Click="MenuItemHeldImportNeu_Click" Header="Neu (importieren)">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
+							</MenuItem.Icon>
+							<MenuItem.ToolTip>
+								<StackPanel Orientation="Vertical">
+									<TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
+									<TextBlock Foreground="Red" Text="ACHTUNG!" />
+									<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+									<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+									<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+									<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+								</StackPanel>
+							</MenuItem.ToolTip>
+						</MenuItem>
+						<Separator />
+						<MenuItem Height="28" Click="MenuItemHeldImportDemo_Click" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</ContextMenu>
+				</Button.ContextMenu>
+				<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
+			</Button>
+			<StackPanel Margin="36,0,0,6" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+				<Label Height="23" Width="Auto" Content="{Binding ItemsSource.Count, ElementName=_listBoxHelden}" VerticalContentAlignment="Center" />
+				<Label Height="23" Width="Auto" Content="Helden" VerticalContentAlignment="Center" />
+			</StackPanel>
+			<Button Height="22" Margin="135,0,0,7" Width="48" Click="_buttonExportDemo_Click" Content="Export" HorizontalAlignment="Left" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" />
+		</Grid>
+	</Grid>
+</UserControl>
