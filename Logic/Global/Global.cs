@@ -58,12 +58,13 @@ namespace MeisterGeister
             get { return _selectedHeld; }
             set
             {
-                HeldSelectionChanging(null, new EventArgs() );
+                if (HeldSelectionChanging != null)
+                    HeldSelectionChanging(null, new EventArgs());
+                
                 _selectedHeld = value;
+                
                 if (HeldSelectionChanged != null)
-                {
                     HeldSelectionChanged(null, new EventArgs());
-                }
             }
         }
         public static Guid SelectedHeldGUID
