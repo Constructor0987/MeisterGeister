@@ -345,6 +345,7 @@
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="ViewModel\Helden\Controls\ViewModelHeldListe.cs" />
     <Compile Include="ViewModel\Helden\Controls\ViewModelHeldAllgemein.cs" />
+    <Compile Include="ViewModel\Helden\Controls\VorNachteileViewModel.cs" />
     <Compile Include="ViewModel\Inventar\Logic\IAusrüstung.cs">
       <SubType>Code</SubType>
     </Compile>
