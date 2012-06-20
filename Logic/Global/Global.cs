@@ -58,6 +58,10 @@ namespace MeisterGeister
             get { return _selectedHeld; }
             set
             {
+                // Falls der gleiche Held erneut gesetzt werden soll -> abbrechen
+                if (_selectedHeld == value)
+                    return;
+
                 if (HeldSelectionChanging != null)
                     HeldSelectionChanging(null, new EventArgs());
                 
