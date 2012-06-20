@@ -120,16 +120,6 @@ namespace MeisterGeister.View.Helden
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                (this.DataContext as VM.Helden.HeldenViewModel).LoadDaten();
-            }
-            catch (Exception ex)
-            {
-                MsgWindow errWin = new MsgWindow("Helden-Verwaltung", "Beim Laden der Helden-Verwaltung ist ein Fehler aufgetreten.", ex);
-                errWin.ShowDialog();
-            }
-
             //ListBoxHelden_SelectionChanged(sender, null);
         }
 

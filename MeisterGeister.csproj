@@ -345,7 +345,6 @@
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="ViewModel\Helden\Controls\ViewModelHeldListe.cs" />
     <Compile Include="ViewModel\Helden\Controls\ViewModelHeldAllgemein.cs" />
-    <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Inventar\Logic\IAusrüstung.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -652,10 +651,6 @@
     <Compile Include="View\ZooBot\Wuerfeleingabe.designer.cs">
       <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </Compile>
-    <Page Include="SampleData\HeldenViewModelSampleData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SampleData\KampfViewModelSampleData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

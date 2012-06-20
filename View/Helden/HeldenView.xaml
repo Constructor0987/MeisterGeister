@@ -8,7 +8,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:View="clr-namespace:MeisterGeister.View.Inventar" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
-             xmlns:vmHelden="clr-namespace:MeisterGeister.ViewModel.Helden" 
              xmlns:MeisterGeister="clr-namespace:MeisterGeister" 
 			 x:Class="MeisterGeister.View.Helden.HeldenView" 
 			 xmlns:MGC="clr-namespace:MeisterGeister.View.Helden.Controls" 
@@ -241,10 +240,6 @@
 	<UserControl.Background>
 		<StaticResource ResourceKey="Background1"/>
 	</UserControl.Background>
-    
-    <UserControl.DataContext>
-        <vmHelden:HeldenViewModel />
-    </UserControl.DataContext>
     
     <Grid DataContext="{Binding Source={StaticResource heldViewSource}}">
         <Grid.ColumnDefinitions>
