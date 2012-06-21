@@ -33,7 +33,7 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
-		<Grid Grid.Column="0" Grid.Row="0" Background="{StaticResource BackgroundPergamentHoch}">
+		<Grid Grid.Column="0" Grid.Row="0" Background="{DynamicResource BackgroundPergamentHoch}">
 			<ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource HeldListTemplate}" 
 				KeyDown="_listBoxHelden_KeyDown" MouseDown="ListBoxHelden_MouseDown" SelectionChanged="ListBoxHelden_SelectionChanged" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
 				<ListBox.ContextMenu>

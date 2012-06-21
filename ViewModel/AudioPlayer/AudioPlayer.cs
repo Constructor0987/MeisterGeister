@@ -86,6 +86,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         public Base.CommandBase OnAddTitel
         {
             get { return _onAddTitel; }
+			set { _onAddTitel = value;}
         }
 
         /// <summary>

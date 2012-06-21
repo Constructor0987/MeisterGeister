@@ -9,12 +9,13 @@
              xmlns:View="clr-namespace:MeisterGeister.View.Inventar" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              xmlns:MeisterGeister="clr-namespace:MeisterGeister" 
+                xmlns:Held="clr-namespace:MeisterGeister.View.Helden.Controls" 
 			 x:Class="MeisterGeister.View.Helden.HeldenView" 
 			 xmlns:MGC="clr-namespace:MeisterGeister.View.Helden.Controls" 
              Loaded="UserControl_Loaded" 
              x:Name="_heldenControl1" 
              mc:Ignorable="d" d:DesignHeight="571" d:DesignWidth="1027"
-             d:DataContext="{d:DesignData /SampleData/HeldenViewModelSampleData.xaml}">    
+             >    
     <UserControl.Resources>
         <!-- Eigenschaften -->
         <Style x:Key="LabelMuStyle" TargetType="{x:Type Label}"/>
@@ -703,7 +704,7 @@
                         </StackPanel>
                     </TabItem.Header>
                     <View:InventarView x:Name="_inventarControl" d:DataContext="{d:DesignData /SampleData/InventarSampleData.xaml}" />
-                </TabItem>
+                </TabItem>				
             </TabControl>
         </Grid>
     </Grid>
