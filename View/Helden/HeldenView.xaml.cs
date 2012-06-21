@@ -28,7 +28,7 @@ namespace MeisterGeister.View.Helden
         {
             InitializeComponent();
 
-            _comboBoxTalentAktivieren.SelectedIndex = -1;
+
             _comboBoxSonderfertigkeit.SelectedIndex = -1;
             _comboBoxVorteil.SelectedIndex = -1;
             _comboBoxNachteil.SelectedIndex = -1;
@@ -93,18 +93,7 @@ namespace MeisterGeister.View.Helden
             if (!held.Geweiht)
                 _labelKarmaenergie.Visibility = System.Windows.Visibility.Collapsed;
 
-            // Talente-Sortierung aktualisieren
-            if (_dataGridHeldTalente.Items is System.Windows.Data.CollectionView)
-            {
-                System.Windows.Data.CollectionViewSource csv = (System.Windows.Data.CollectionViewSource)FindResource("heldHeld_TalentViewSource");
-                if (csv != null && csv.View != null)
-                {
-                    csv.View.SortDescriptions.Clear();
-                    csv.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("TalentgruppeID", System.ComponentModel.ListSortDirection.Ascending));
-                    csv.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("Talentname", System.ComponentModel.ListSortDirection.Ascending));
-                    _dataGridHeldTalente.ItemsSource = csv.View;
-                }
-            }            
+            
         }
 
         public Held SelectedHeld
@@ -202,17 +191,7 @@ namespace MeisterGeister.View.Helden
             }
         }
 
-        private DatabaseDSADataSet.Held_TalentRow SelectedTalentRow
-        {
-            get
-            {
-                DatabaseDSADataSet.Held_TalentRow talentRow = null;
-                if (_dataGridHeldTalente.SelectedItem != null)
-                    talentRow = (DatabaseDSADataSet.Held_TalentRow)((System.Data.DataRowView)_dataGridHeldTalente.SelectedItem).Row;
-
-                return talentRow;
-            }
-        }
+        
 
         private DatabaseDSADataSet.Held_ZauberRow SelectedZauberRow
         {
@@ -226,10 +205,7 @@ namespace MeisterGeister.View.Helden
             }
         }
 
-        private Talent SelectedTalent
-        {
-            get { return new Talent(SelectedTalentRow.TalentRow); }
-        }
+     
 
         private Zauber SelectedZauber
         {
@@ -249,18 +225,7 @@ namespace MeisterGeister.View.Helden
             }
         }
 
-        private bool DeleteHeldTalent()
-        {
-            bool deleted = false;
-            DatabaseDSADataSet.Held_TalentRow talent = SelectedTalentRow;
-            if (MessageBox.Show(string.Format("Soll das Talent '{0}' entfernt werden?", talent.TalentRow.Talentname), "Talent entfernen", MessageBoxButton.YesNo,
-                                MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-            {
-                SelectedHeld.DeleteTalent(talent);
-                deleted = true;
-            }
-            return deleted;
-        }
+      
 
         private void DeleteHeldSonderfertigkeit()
         {
@@ -301,21 +266,7 @@ namespace MeisterGeister.View.Helden
 
 
 
-        private void ContextMenuTalente_Opened(object sender, RoutedEventArgs e)
-        {
-            if (_dataGridHeldTalente.SelectedItem == null)
-            {
-                _menuItemTalentLöschen.IsEnabled = false;
-                _menuItemTalentWiki.IsEnabled = false;
-                _menuItemTalentProben.IsEnabled = false;
-            }
-            else
-            {
-                _menuItemTalentLöschen.IsEnabled = true;
-                _menuItemTalentWiki.IsEnabled = true;
-                _menuItemTalentProben.IsEnabled = true;
-            }
-        }
+     
 
         private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)
         {
@@ -331,25 +282,13 @@ namespace MeisterGeister.View.Helden
             }
         }
 
-        private void MenuItemTalentLöschen_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteHeldTalent();
-        }
+       
 
-        private void MenuItemTalentWiki_Click(object sender, RoutedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedTalent.WikiLink);
-        }
+        
 
         public event ProbeWürfelnEventHandler ProbeWürfeln;
 
-        private void MenuItemTalentProben_Click(object sender, RoutedEventArgs e)
-        {
-            if (ProbeWürfeln != null)
-            {
-                ProbeWürfeln(SelectedTalentRow.TalentRow.Talentname);
-            }
-        }
+
 
         private void MenuItemZauberProben_Click(object sender, RoutedEventArgs e)
         {
@@ -392,10 +331,7 @@ namespace MeisterGeister.View.Helden
                
         
         
-        private void _comboBoxTalentAktivieren_DropDownOpened(object sender, EventArgs e)
-        {
-            SetTalenteAktivierbar();
-        }
+
 
         private void _comboBoxSonderfertigkeit_DropDownOpened(object sender, EventArgs e)
         {
@@ -407,11 +343,7 @@ namespace MeisterGeister.View.Helden
             SetVorNachteileAktivierbar();
         }
 
-        private void SetTalenteAktivierbar()
-        {
-            _comboBoxTalentAktivieren.ItemsSource = SelectedHeld.TalenteAktivierbar;
-            _comboBoxTalentAktivieren.SelectedIndex = -1;
-        }
+
 
         private void SetSonderfertigkeitenAktivierbar()
         {
@@ -427,10 +359,7 @@ namespace MeisterGeister.View.Helden
             _comboBoxNachteil.SelectedIndex = -1;
         }
 
-        private void _comboBoxTalentAktivieren_DropDownClosed(object sender, EventArgs e)
-        {
-            InsertTalent();
-        }
+        
 
         private void _comboBoxVorNachteil_DropDownClosed(object sender, EventArgs e)
         {
@@ -445,11 +374,7 @@ namespace MeisterGeister.View.Helden
             InsertSonderfertigkeit();
         }
 
-        private void _comboBoxTalentAktivieren_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                InsertTalent();
-        }
+        
 
         private void _comboBoxVorNachteil_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -468,20 +393,7 @@ namespace MeisterGeister.View.Helden
                 InsertSonderfertigkeit();
         }
 
-        private void InsertTalent()
-        {
-            if (IsInitialized)
-            {
-                if (_comboBoxTalentAktivieren.SelectedItem != null && _comboBoxTalentAktivieren.SelectedItem is string && SelectedHeld.Id != Guid.Empty)
-                {
-                    string talent = _comboBoxTalentAktivieren.SelectedItem.ToString();
-                    if (SelectedHeld.AddTalent(talent) == false)
-                        MessageBox.Show(string.Format("Das Talent '{0}' ist bereits vorhanden.", talent.ToString()), "Talent hinzufügen");
-                    RefreshHeld();
-                    SetTalenteAktivierbar();
-                }
-            }
-        }
+    
 
         private void InsertSonderfertigkeit()
         {
@@ -523,18 +435,7 @@ namespace MeisterGeister.View.Helden
 
         
 
-        private void _dataGridHeldTalente_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (sender is System.Windows.Controls.DataGrid && e.Key == Key.Delete)
-            {
-                var grid = (System.Windows.Controls.DataGrid)sender;
 
-                if (grid.SelectedItems.Count > 0)
-                {
-                    e.Handled = !DeleteHeldTalent();
-                }
-            }
-        }
 
         
 

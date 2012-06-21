@@ -343,8 +343,9 @@
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
-    <Compile Include="ViewModel\Helden\Controls\ViewModelHeldListe.cs" />
-    <Compile Include="ViewModel\Helden\Controls\ViewModelHeldAllgemein.cs" />
+    <Compile Include="ViewModel\Helden\Controls\TalentViewModel.cs" />
+    <Compile Include="ViewModel\Helden\Controls\ListeViewModel.cs" />
+    <Compile Include="ViewModel\Helden\Controls\AllgemeinViewModel.cs" />
     <Compile Include="ViewModel\Helden\Controls\VorNachteileViewModel.cs" />
     <Compile Include="ViewModel\Inventar\Logic\IAusrüstung.cs">
       <SubType>Code</SubType>
@@ -441,11 +442,14 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Helden\Controls\ViewHeldAllgemein.xaml.cs">
-      <DependentUpon>ViewHeldAllgemein.xaml</DependentUpon>
+    <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">
+      <DependentUpon>AllgemeinView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Helden\Controls\ViewHeldListe.xaml.cs">
-      <DependentUpon>ViewHeldListe.xaml</DependentUpon>
+    <Compile Include="View\Helden\Controls\ListeView.xaml.cs">
+      <DependentUpon>ListeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\TalentView.xaml.cs">
+      <DependentUpon>TalentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Inventar\Trageort.xaml.cs">
       <DependentUpon>Trageort.xaml</DependentUpon>
@@ -696,11 +700,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Helden\Controls\ViewHeldAllgemein.xaml">
+    <Page Include="View\Helden\Controls\AllgemeinView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Helden\Controls\ViewHeldListe.xaml">
+    <Page Include="View\Helden\Controls\ListeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\TalentView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

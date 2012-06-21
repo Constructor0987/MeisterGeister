@@ -57,16 +57,16 @@ namespace MeisterGeister
         {
             get { return _selectedHeld; }
             set
-            {
+            {                                    
+                 Global.ContextHeld.Update<Model.Held>(SelectedHeld);
                 // Falls der gleiche Held erneut gesetzt werden soll -> abbrechen
-                if (_selectedHeld == value)
-                    return;
-
+                 if (_selectedHeld == value) {
+                     return;
+                 }
+                 
                 if (HeldSelectionChanging != null)
                     HeldSelectionChanging(null, new EventArgs());
-                
                 _selectedHeld = value;
-                
                 if (HeldSelectionChanged != null)
                     HeldSelectionChanged(null, new EventArgs());
             }

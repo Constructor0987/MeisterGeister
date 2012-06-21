@@ -1,0 +1,111 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:System_ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" xmlns:MeisterGeister_View_General="clr-namespace:MeisterGeister.View.General"
+	mc:Ignorable="d"
+	x:Class="MeisterGeister.View.Helden.Controls.TalentView"
+	x:Name="UserControl"
+	d:DesignWidth="807" d:DesignHeight="529.04" Loaded="UserControl_Loaded">
+
+	<UserControl.Resources>
+		<Style x:Key="GroupHeaderStyleTalente" TargetType="{x:Type GroupItem}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type GroupItem}">
+						<Expander Margin="2,0,2,0" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
+							<Expander.Header>
+								<DockPanel LastChildFill="True">
+									<TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
+								</DockPanel>
+							</Expander.Header>
+							<Border Margin="2" CornerRadius="3">
+								<ItemsPresenter />
+							</Border>
+						</Expander>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+        <!-- Helden -->
+		<CollectionViewSource x:Key="heldViewSource" Source="{Binding Held, Source={StaticResource DatenDataSet}}">
+			<CollectionViewSource.SortDescriptions>
+				<System_ComponentModel:SortDescription PropertyName="Name" />
+			</CollectionViewSource.SortDescriptions>
+		</CollectionViewSource>
+        <!-- Talente -->
+		<CollectionViewSource x:Key="heldHeld_TalentViewSource" Source="{Binding Held_FK, NotifyOnSourceUpdated=True, Source={StaticResource heldViewSource}}">
+			<CollectionViewSource.SortDescriptions>
+				<System_ComponentModel:SortDescription PropertyName="TalentgruppeID" />
+				<System_ComponentModel:SortDescription PropertyName="Talentname" />
+			</CollectionViewSource.SortDescriptions>
+			<CollectionViewSource.GroupDescriptions>
+				<PropertyGroupDescription PropertyName="Kurzname" />
+			</CollectionViewSource.GroupDescriptions>
+		</CollectionViewSource>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot">
+		<Grid>
+			<Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+				<Image.ToolTip>
+					<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+				</Image.ToolTip>
+			</Image>
+			<ComboBox Height="23" Margin="6,14,0,0" Width="193" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" ToolTip="Talent aktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentListe}" DisplayMemberPath="Talentname">
+				<ComboBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<VirtualizingStackPanel />
+					</ItemsPanelTemplate>
+				</ComboBox.ItemsPanel>
+			</ComboBox>
+			<DataGrid ItemsSource="{Binding HeldTalentListe}" Margin="0,43,0,6" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" x:Name="_dataGridHeldTalente" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+				<DataGrid.GroupStyle>
+					<GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleTalente}">
+						<GroupStyle.Panel>
+							<ItemsPanelTemplate>
+								<DataGridRowsPresenter />
+							</ItemsPanelTemplate>
+						</GroupStyle.Panel>
+					</GroupStyle>
+				</DataGrid.GroupStyle>
+				<DataGrid.ContextMenu>
+					<ContextMenu Opened="ContextMenuTalente_Opened">
+						<MenuItem Height="28" Click="MenuItemTalentProben_Click" Header="Probe würfeln" x:Name="_menuItemTalentProben">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Height="28" Click="MenuItemTalentWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemTalentWiki">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<Separator />
+						<MenuItem Height="28" Click="MenuItemTalentLöschen_Click" Header="Löschen" x:Name="_menuItemTalentLöschen">
+							<MenuItem.Icon>
+								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</ContextMenu>
+				</DataGrid.ContextMenu>
+				<DataGrid.Columns>
+					<DataGridTextColumn x:Name="_columnTalentname" Width="Auto" Binding="{Binding Talentname}" IsReadOnly="True" />
+					<DataGridTextColumn Width="Auto" Binding="{Binding Eigenschaft1}" IsReadOnly="True" />
+					<DataGridTextColumn Width="Auto" Binding="{Binding Eigenschaft2}" IsReadOnly="True" />
+					<DataGridTextColumn Width="Auto" Binding="{Binding Eigenschaft3}" IsReadOnly="True" />
+					<DataGridTextColumn Width="Auto" Binding="{Binding Steigerung}" IsReadOnly="True" />
+					<DataGridTemplateColumn Header="TaW">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<MeisterGeister_View_General:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</Grid>
+</UserControl>

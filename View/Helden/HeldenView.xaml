@@ -486,66 +486,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Talente" x:Name="_tabItemTalente">
-                    <Grid>
-                        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-                            <Image.ToolTip>
-                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                            </Image.ToolTip>
-                        </Image>
-                        <ComboBox Height="23" Margin="6,14,0,0" Width="193" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" ToolTip="Talent aktivieren" VerticalAlignment="Top">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                        </ComboBox>
-                        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource heldHeld_TalentViewSource}}" x:Name="_dataGridHeldTalente" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                            <DataGrid.GroupStyle>
-                                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleTalente}">
-                                    <GroupStyle.Panel>
-                                        <ItemsPanelTemplate>
-                                            <DataGridRowsPresenter />
-                                        </ItemsPanelTemplate>
-                                    </GroupStyle.Panel>
-                                </GroupStyle>
-                            </DataGrid.GroupStyle>
-                            <DataGrid.ContextMenu>
-                                <ContextMenu Opened="ContextMenuTalente_Opened">
-                                	<MenuItem Height="28" Click="MenuItemTalentProben_Click" Header="Probe würfeln" x:Name="_menuItemTalentProben">
-                                		<MenuItem.Icon>
-                                			<Image Margin="2" Source="/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
-                                		</MenuItem.Icon>
-                                	</MenuItem>
-                                	<MenuItem Height="28" Click="MenuItemTalentWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemTalentWiki">
-                                		<MenuItem.Icon>
-                                			<Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
-                                		</MenuItem.Icon>
-                                	</MenuItem>
-                                	<Separator />
-                                	<MenuItem Height="28" Click="MenuItemTalentLöschen_Click" Header="Löschen" x:Name="_menuItemTalentLöschen">
-                                		<MenuItem.Icon>
-                                			<Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                                		</MenuItem.Icon>
-                                	</MenuItem>
-                                </ContextMenu>
-                            </DataGrid.ContextMenu>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn x:Name="_columnTalentname" Width="Auto" Binding="{Binding Talentname}" IsReadOnly="True" />
-                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Eigenschaft1}" IsReadOnly="True" />
-                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Eigenschaft2}" IsReadOnly="True" />
-                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Eigenschaft3}" IsReadOnly="True" />
-                                <DataGridTextColumn Width="Auto" Binding="{Binding Row.TalentRow.Steigerung}" IsReadOnly="True" />
-                                <DataGridTemplateColumn Header="TaW">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
+                    <Held:TalentView/>
                 </TabItem>
                 <TabItem Header="Zauber" x:Name="_tabItemZauber" Visibility="{Binding Visibility, ElementName=_labelAstralenergie}">
                     <Grid>
