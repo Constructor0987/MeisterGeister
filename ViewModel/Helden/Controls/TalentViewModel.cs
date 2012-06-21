@@ -37,8 +37,7 @@ namespace MeisterGeister.ViewModel.Helden.Controls {
         #region //METHODEN
         public void Init() {
             //All-Add
-            TalentListe = Global.ContextTalent.TalentListe
-                .Where(item => item.TalentgruppeID == 1).ToList();
+            TalentListe = Global.ContextTalent.TalentListe.ToList();
 
             //TODO DW: Wenn Heldenliste wieder bedienbar, entfernen
             //DemoType  
@@ -46,13 +45,12 @@ namespace MeisterGeister.ViewModel.Helden.Controls {
                 SelectedHeld = new M.Held() { Name = "Mein Held" };
                 SelectedHeld.Held_Talent.Add(new M.Held_Talent() { Talentname = "Hiebwaffen", TaW = 4, HeldGUID = Global.SelectedHeldGUID, ZuteilungAT = 3, ZuteilungPA = 1 });
                 SelectedHeld.Held_Talent.Add(new M.Held_Talent() { Talentname = "Raufen", TaW = 9, HeldGUID = Global.SelectedHeldGUID, ZuteilungAT = 5, ZuteilungPA = 4 });
-                SelectedHeld.Held_Talent.Add(new M.Held_Talent() { Talentname = "Speere", TaW = 10, HeldGUID = Global.SelectedHeldGUID, ZuteilungAT = 6, ZuteilungPA = 4 });                
-                
+                SelectedHeld.Held_Talent.Add(new M.Held_Talent() { Talentname = "Speere", TaW = 10, HeldGUID = Global.SelectedHeldGUID, ZuteilungAT = 6, ZuteilungPA = 4 });
+                SelectedHeld.Held_Talent.Add(new M.Held_Talent() { Talentname = "Körperbeherrschung", TaW = 2, HeldGUID = Global.SelectedHeldGUID, ZuteilungAT = 0, ZuteilungPA = 0 });                                
                 //Held
                 HeldTalentListe = Global.ContextTalent.TalentListe
                     .Where(item => SelectedHeld.Held_Talent
-                        .Select(value => value.Talentname).Contains(item.Talentname)
-                        && item.TalentgruppeID == 1).ToList();
+                        .Select(value => value.Talentname).Contains(item.Talentname)).ToList();
             }
         }
         #endregion
