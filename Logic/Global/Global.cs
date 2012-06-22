@@ -47,37 +47,47 @@ namespace MeisterGeister
         #region //FELDER
 
         private static Model.Held _selectedHeld;
-        private static Guid _selectedHeldGUID;
 
         #endregion
 
         #region //EIGENSCHAFTSMETHODEN
 
+        /// <summary>
+        /// Ruft den aktuell ausgewählten Helden ab, oder legt ihn fest.
+        /// </summary>
         public static Model.Held SelectedHeld
         {
             get { return _selectedHeld; }
             set
             {                                    
-                 Global.ContextHeld.Update<Model.Held>(SelectedHeld);
-                // Falls der gleiche Held erneut gesetzt werden soll -> abbrechen
-                 if (_selectedHeld == value) {
-                     return;
-                 }
-                 
+                // Falls der gleiche Held erneut gesetzt werden soll
+                // -> abbrechen, da keine Änderung erfolgt
+                if (_selectedHeld == value)
+                    return;
+                
+                // Event vor der Held-Änderung werfen
                 if (HeldSelectionChanging != null)
                     HeldSelectionChanging(null, new EventArgs());
+
+                // neuen Helden setzen und Änderungen in DB speichern
                 _selectedHeld = value;
+                if (_selectedHeld != null)
+                    Global.ContextHeld.Update<Model.Held>(SelectedHeld);
+
+                // Event nach der Held-Änderung werfen
                 if (HeldSelectionChanged != null)
                     HeldSelectionChanged(null, new EventArgs());
             }
         }
+
+        /// <summary>
+        /// Ruft die GUID des aktuell ausgewählten Helden ab, oder legt ihn über die GUID fest.
+        /// </summary>
         public static Guid SelectedHeldGUID
         {
-            get { return _selectedHeldGUID; }
+            get { return SelectedHeld == null ? Guid.Empty : SelectedHeld.HeldGUID; }
             set
             {
-                _selectedHeldGUID = value;
-
                 SelectedHeld = ContextHeld.HeldenListe.Where(h => h.HeldGUID == value).FirstOrDefault();
             }
         }
