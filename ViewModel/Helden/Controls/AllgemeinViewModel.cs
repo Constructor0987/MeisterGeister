@@ -23,12 +23,7 @@ namespace MeisterGeister.ViewModel.Helden.Controls {
         #region //KONSTRUKTOR
         public AllgemeinViewModel() {
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            Global.HeldSelectionChanging += (s, ev) => { SelectedHeldChanging(); };
-
-            //TODO DW: Wenn Heldenliste wieder bedienbar, entfernen
-            if (Global.SelectedHeld == null) {
-                Global.SelectedHeld = new M.Held() { Name = "Mein Held" };                
-            }
+            Global.HeldSelectionChanging += (s, ev) => { SelectedHeldChanging(); };            
         }
         #endregion
         #region //METHODEN

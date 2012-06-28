@@ -34,15 +34,15 @@ namespace MeisterGeister.View.Helden.Controls
 		}
         private void RefreshHeld() {
             // Talente-Sortierung aktualisieren
-            if (_dataGridHeldTalente.Items is System.Windows.Data.CollectionView) {
-                System.Windows.Data.CollectionViewSource csv = (System.Windows.Data.CollectionViewSource)FindResource("heldHeld_TalentViewSource");
-                if (csv != null && csv.View != null) {
-                    csv.View.SortDescriptions.Clear();
-                    csv.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("TalentgruppeID", System.ComponentModel.ListSortDirection.Ascending));
-                    csv.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("Talentname", System.ComponentModel.ListSortDirection.Ascending));
-                    _dataGridHeldTalente.ItemsSource = csv.View;
-                }
-            }
+            //if (_dataGridHeldTalente.Items is System.Windows.Data.CollectionView) {
+            //    System.Windows.Data.CollectionViewSource csv = (System.Windows.Data.CollectionViewSource)FindResource("heldHeld_TalentViewSource");
+            //    if (csv != null && csv.View != null) {
+            //        csv.View.SortDescriptions.Clear();
+            //        csv.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("TalentgruppeID", System.ComponentModel.ListSortDirection.Ascending));
+            //        csv.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("Talentname", System.ComponentModel.ListSortDirection.Ascending));
+            //        _dataGridHeldTalente.ItemsSource = csv.View;
+            //    }
+            //}
         }
 
 
@@ -76,15 +76,15 @@ namespace MeisterGeister.View.Helden.Controls
         }
 
         private void ContextMenuTalente_Opened(object sender, RoutedEventArgs e) {
-            if (_dataGridHeldTalente.SelectedItem == null) {
-                _menuItemTalentLöschen.IsEnabled = false;
-                _menuItemTalentWiki.IsEnabled = false;
-                _menuItemTalentProben.IsEnabled = false;
-            } else {
-                _menuItemTalentLöschen.IsEnabled = true;
-                _menuItemTalentWiki.IsEnabled = true;
-                _menuItemTalentProben.IsEnabled = true;
-            }
+            //if (_dataGridHeldTalente.SelectedItem == null) {
+            //    _menuItemTalentLöschen.IsEnabled = false;
+            //    _menuItemTalentWiki.IsEnabled = false;
+            //    _menuItemTalentProben.IsEnabled = false;
+            //} else {
+            //    _menuItemTalentLöschen.IsEnabled = true;
+            //    _menuItemTalentWiki.IsEnabled = true;
+            //    _menuItemTalentProben.IsEnabled = true;
+            //}
         }
 
         private void MenuItemTalentLöschen_Click(object sender, RoutedEventArgs e) {

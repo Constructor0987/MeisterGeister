@@ -53,24 +53,124 @@
 					<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
 				</Image.ToolTip>
 			</Image>
-			<ComboBox Height="23" Margin="6,14,0,0" Width="193" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" ToolTip="Talent aktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentListe}" DisplayMemberPath="Talentname">
+			<StackPanel>
+			<ComboBox Height="23" Margin="6,14,0,0" Width="193" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" ToolTip="Talent aktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentAuswahlListe}" DisplayMemberPath="Talentname">
 				<ComboBox.ItemsPanel>
 					<ItemsPanelTemplate>
 						<VirtualizingStackPanel />
 					</ItemsPanelTemplate>
 				</ComboBox.ItemsPanel>
 			</ComboBox>
-			<DataGrid ItemsSource="{Binding HeldTalentListe}" Margin="0,43,0,6" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" x:Name="_dataGridHeldTalente" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-				<DataGrid.GroupStyle>
-					<GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleTalente}">
-						<GroupStyle.Panel>
-							<ItemsPanelTemplate>
-								<DataGridRowsPresenter />
-							</ItemsPanelTemplate>
-						</GroupStyle.Panel>
-					</GroupStyle>
-				</DataGrid.GroupStyle>
-				<DataGrid.ContextMenu>
+			<Expander Header="Kampf" >
+			<DataGrid ItemsSource="{Binding KampftalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>					
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.ZuteilungAT}" IsReadOnly="True" Header="AT+"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.ZuteilungPA}" IsReadOnly="True" Header="PA+"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+			</Expander>
+			<Expander Header="Körper" >
+			<DataGrid ItemsSource="{Binding KoerperTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+			</Expander>
+			<Expander Header="Gesellschaft" >
+			<DataGrid ItemsSource="{Binding GesellschaftTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+			</Expander>
+			<Expander Header="Natur" >
+			<DataGrid ItemsSource="{Binding NaturTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+			</Expander>
+			<Expander Header="Wissen" >
+			<DataGrid ItemsSource="{Binding WissenTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+			</Expander>
+			<Expander Header="Sprache" >
+			<DataGrid ItemsSource="{Binding SpracheTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+			</Expander>
+			<Expander Header="Handwerk" >
+			<DataGrid ItemsSource="{Binding HandwerkTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>					
+					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
+				</DataGrid.Columns>
+			</DataGrid>
+			</Expander>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</UserControl>
+<!-- TODO DW: Menü MVVM überführen
+<DataGrid.ContextMenu>
 					<ContextMenu Opened="ContextMenuTalente_Opened">
 						<MenuItem Height="28" Click="MenuItemTalentProben_Click" Header="Probe würfeln" x:Name="_menuItemTalentProben">
 							<MenuItem.Icon>
@@ -90,22 +190,4 @@
 						</MenuItem>
 					</ContextMenu>
 				</DataGrid.ContextMenu>
-				<DataGrid.Columns>
-					<DataGridTextColumn x:Name="_columnTalentname" Width="Auto" Binding="{Binding Talentname}" IsReadOnly="True" />
-					<DataGridTextColumn Width="Auto" Binding="{Binding Eigenschaft1}" IsReadOnly="True" />
-					<DataGridTextColumn Width="Auto" Binding="{Binding Eigenschaft2}" IsReadOnly="True" />
-					<DataGridTextColumn Width="Auto" Binding="{Binding Eigenschaft3}" IsReadOnly="True" />
-					<DataGridTextColumn Width="Auto" Binding="{Binding Steigerung}" IsReadOnly="True" />
-					<DataGridTemplateColumn Header="TaW">
-						<DataGridTemplateColumn.CellTemplate>
-							<DataTemplate>
-								<MeisterGeister_View_General:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
-					</DataGridTemplateColumn>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-		</Grid>
-	</Grid>
-</UserControl>
+-->
