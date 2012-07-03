@@ -39,7 +39,7 @@ Genre	    1 Byte
 
  * */
 
-namespace MeisterGeister.View.General
+namespace MeisterGeister.View.AudioPlayer
 {
     /// <summary>
     /// Interaktionslogik für AudioPlayerView.xaml
