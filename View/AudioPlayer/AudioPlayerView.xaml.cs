@@ -1175,14 +1175,21 @@ namespace MeisterGeister.View.AudioPlayer
                 //zur datenbank hinzufügen
                 if (Global.ContextAudio.Insert<Audio_Playlist>(playlist))               //erfolgreich hinzugefügt
                 {
+                    AktKlangPlaylist = playlist;
                     AktualisiereKlangPlaylist();
+                    for (int i =0; i <= lbKlang.Items.Count-1; i++)
+                        if ((lbKlang.Items[i] as ListBoxItem).Content.ToString() == playlist.Name)
+                            lbKlang.SelectedIndex = i;
+
                     //nun kann man verschiedene titel zB. so holen
           //          List<Audio_Titel> titelMitNeuImNamen = Global.ContextAudio.TitelListe.Where(t => t.Name.StartsWith("Neu")).ToList();
                 }
             }
             else
             {
-                Audio_Playlist playlist = playlistliste[0];
+                var errWin = new MsgWindow("Datenbankfehler", "Playlist schon vorhanden. Bitte wiederholen Sie den Vorgang und wählen einen anderen Titel");
+                errWin.ShowDialog();
+                errWin.Close();
             }
         }
 
@@ -1633,7 +1640,11 @@ namespace MeisterGeister.View.AudioPlayer
                 AktKlangPlaylist.Name = tboxPlaylistName.Text;
                 Global.ContextAudio.Save();                
                 ((ListBoxItem)lbKlang.Items[lbKlang.SelectedIndex]).Content = AktKlangPlaylist.Name;
-                ((TabItemControl)tcKlang.SelectedItem)._textBlockTitel.Text = AktKlangPlaylist.Name;
+        
+                if (tcKlang.SelectedIndex == 0)
+                    tiKlang0.Header = AktKlangPlaylist.Name;
+                else
+                    ((TabItemControl)tcKlang.SelectedItem)._textBlockTitel.Text = AktKlangPlaylist.Name;
             }
         }
 
@@ -1832,6 +1843,42 @@ namespace MeisterGeister.View.AudioPlayer
                ((dif < 0 && dif + momentan >= 0)))
                 tboxklangsongparallel.Text = (Convert.ToInt32(tboxklangsongparallel.Text) + dif).ToString();
             
+        }
+
+        private void comboBox1_MouseEnter(object sender, MouseEventArgs e)
+        {
+            comboBox1.Items.Clear();
+            List<Audio_Playlist> playlistliste = Global.ContextAudio.PlaylistListe.ToList();
+            for (int i = 0; i < playlistliste.Count; i++)
+                comboBox1.Items.Add(newItem: playlistliste[i].Name);
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboBox1.SelectedItem != null)
+            {
+                List<Audio_Playlist> playlistliste = Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(comboBox1.SelectedItem)).ToList();
+                if (playlistliste.Count != 0)
+                {
+                    if (AktKlangPlaylist != null && AktKlangPlaylist.Name == playlistliste[0].Name)
+                        AktKlangPlaylist = null;
+                    try
+                    {
+                        bool warHintergrundmusik = playlistliste[0].Hintergrundmusik;
+                        if (Global.ContextAudio.Delete<Audio_Playlist>(playlistliste[0]))
+                            if (warHintergrundmusik)
+                                AktualisiereHintergrundPlaylist();
+                            else
+                                AktualisiereKlangPlaylist();
+                    }                    
+                    catch (Exception ex)
+                    {
+                        var errWin = new MsgWindow("Playlist Fehler", "Die Playliste konnte nicht erfolgreich gelöscht werden", ex);
+                        errWin.ShowDialog();
+                        errWin.Close();
+                    }
+                }
+            }
         }
 
     }

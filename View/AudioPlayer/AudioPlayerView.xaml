@@ -431,6 +431,9 @@
                                
                         </MeisterGeister_View_General:TabItemControl>
                     </TabControl>
+                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="563,126,0,0" Name="comboBox1" VerticalAlignment="Top" Width="252" MouseEnter="comboBox1_MouseEnter" />
+                    <Label Content="Lösche Playlist" Height="28" HorizontalAlignment="Left" Margin="471,123,0,0" Name="label10" VerticalAlignment="Top" />
+                    <Button Content="Lösche Playlist" Height="39" HorizontalAlignment="Left" Margin="839,116,0,0" Name="button1" VerticalAlignment="Top" Width="90" Click="button1_Click" />
                 </Grid>
             </TabItem>
         </TabControl>
