@@ -10,11 +10,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+//Eigene Usings
 using MeisterGeister.Model;
 using MeisterGeister.View.Windows;
+using VM = MeisterGeister.ViewModel.Helden;
+//Weitere Usings
 using System.Windows.Forms;
-using VM = MeisterGeister.ViewModel.Helden.Controls;
 
 namespace MeisterGeister.View.Helden.Controls
 {

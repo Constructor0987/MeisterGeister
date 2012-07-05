@@ -343,11 +343,11 @@
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
-    <Compile Include="ViewModel\Helden\Controls\TalentViewModel.cs" />
-    <Compile Include="ViewModel\Helden\Controls\ListeViewModel.cs" />
-    <Compile Include="ViewModel\Helden\Controls\AllgemeinViewModel.cs" />
-    <Compile Include="ViewModel\Helden\Controls\VorNachteileViewModel.cs" />
-    <Compile Include="ViewModel\Inventar\Logic\IAusrüstung.cs">
+    <Compile Include="ViewModel\Helden\TalentViewModel.cs" />
+    <Compile Include="ViewModel\Helden\ListeViewModel.cs" />
+    <Compile Include="ViewModel\Helden\AllgemeinViewModel.cs" />
+    <Compile Include="ViewModel\Helden\VorNachteileViewModel.cs" />
+    <Compile Include="ViewModel\Helden\Logic\IAusrüstung.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
@@ -451,7 +451,7 @@
     <Compile Include="View\Helden\Controls\TalentView.xaml.cs">
       <DependentUpon>TalentView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Inventar\Trageort.xaml.cs">
+    <Compile Include="View\Helden\Controls\Trageort.xaml.cs">
       <DependentUpon>Trageort.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
@@ -630,14 +630,14 @@
     <Compile Include="ViewModel\NscGenerator\NscGeneratorViewModel.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeViewModel.cs" />
-    <Compile Include="ViewModel\Inventar\Inventar.cs" />
+    <Compile Include="ViewModel\Helden\InventarViewModel.cs" />
     <Compile Include="View\Schmiede\SchmiedeView.xaml.cs">
       <DependentUpon>SchmiedeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NscGenerator\NscGeneratorView.xaml.cs">
       <DependentUpon>NscGeneratorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Inventar\InventarView.xaml.cs">
+    <Compile Include="View\Helden\Controls\InventarView.xaml.cs">
       <DependentUpon>InventarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ZooBot\Hauptfenster.cs">
@@ -712,7 +712,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Inventar\Trageort.xaml">
+    <Page Include="View\Helden\Controls\Trageort.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -852,7 +852,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Inventar\InventarView.xaml">
+    <Page Include="View\Helden\Controls\InventarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1143,7 +1143,6 @@
   </ItemGroup>
   <ItemGroup>
     <DesignData Include="SampleData\BasarViewModelSampleData.xaml" />
-    <DesignData Include="SampleData\InventarSampleData.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

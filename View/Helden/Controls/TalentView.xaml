@@ -3,171 +3,538 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:System_ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" xmlns:MeisterGeister_View_General="clr-namespace:MeisterGeister.View.General"
+	xmlns:System_ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
+    xmlns:MeisterGeister_View_General="clr-namespace:MeisterGeister.View.General"
+	xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
 	mc:Ignorable="d"
 	x:Class="MeisterGeister.View.Helden.Controls.TalentView"
 	x:Name="UserControl"
-	d:DesignWidth="807" d:DesignHeight="529.04" Loaded="UserControl_Loaded">
+	d:DesignWidth="807"
+    d:DesignHeight="529.04"
+    Loaded="UserControl_Loaded">	
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Expander Grid.Row="0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Talentauswahl" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Grid x:Name="Hinzufuegen">
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid Margin="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="1" Height="23" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentAuswahlListe}" SelectedItem="{Binding TalentAuswahl}" DisplayMemberPath="Talentname">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <Button Grid.Column="2" Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Expander>
+        <Expander Grid.Row="1" Margin="0,5,0,0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Kampftalente" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding KampftalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected"  >
+                            <DataGrid.Columns>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                            		</DataGridTextColumn.Header>
+                            	</DataGridTextColumn>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.ZuteilungAT}" IsReadOnly="True" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT+" HorizontalAlignment="Stretch"/>
+                            		</DataGridTextColumn.Header>
+									</DataGridTextColumn>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.ZuteilungPA}" IsReadOnly="True" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA+"/>
+                            		</DataGridTextColumn.Header>                    	
+								</DataGridTextColumn>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                            		</DataGridTextColumn.Header>                    	
+								</DataGridTextColumn>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                            		</DataGridTextColumn.Header>                    	                    	
+								</DataGridTextColumn>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                            		</DataGridTextColumn.Header>                    	                    	                    	
+								</DataGridTextColumn>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                            		</DataGridTextColumn.Header>                    	                    	                    	                    	
+								</DataGridTextColumn>
+                            	<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                            		<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                            		</DataGridTextColumn.Header>                    	                    	                    	                    	                    	
+								</DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+        <Expander Grid.Row="2" Margin="0,5,0,0">
+            <Expander.Header>
+                <TextBlock Text="Körpertalente" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding KoerperTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                	<DataGridTextColumn.Header>
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                            		</DataGridTextColumn.Header>                        
+								</DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+        <Expander Grid.Row="3" Margin="0,5,0,0">
+            <Expander.Header>
+                <TextBlock Text="Gesellschaftstalente" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-	<UserControl.Resources>
-		<Style x:Key="GroupHeaderStyleTalente" TargetType="{x:Type GroupItem}">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type GroupItem}">
-						<Expander Margin="2,0,2,0" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
-							<Expander.Header>
-								<DockPanel LastChildFill="True">
-									<TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
-								</DockPanel>
-							</Expander.Header>
-							<Border Margin="2" CornerRadius="3">
-								<ItemsPresenter />
-							</Border>
-						</Expander>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-        <!-- Helden -->
-		<CollectionViewSource x:Key="heldViewSource" Source="{Binding Held, Source={StaticResource DatenDataSet}}">
-			<CollectionViewSource.SortDescriptions>
-				<System_ComponentModel:SortDescription PropertyName="Name" />
-			</CollectionViewSource.SortDescriptions>
-		</CollectionViewSource>
-        <!-- Talente -->
-		<CollectionViewSource x:Key="heldHeld_TalentViewSource" Source="{Binding Held_FK, NotifyOnSourceUpdated=True, Source={StaticResource heldViewSource}}">
-			<CollectionViewSource.SortDescriptions>
-				<System_ComponentModel:SortDescription PropertyName="TalentgruppeID" />
-				<System_ComponentModel:SortDescription PropertyName="Talentname" />
-			</CollectionViewSource.SortDescriptions>
-			<CollectionViewSource.GroupDescriptions>
-				<PropertyGroupDescription PropertyName="Kurzname" />
-			</CollectionViewSource.GroupDescriptions>
-		</CollectionViewSource>
-	</UserControl.Resources>
+                        <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding GesellschaftTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+        <Expander Grid.Row="4" Margin="0,5,0,0">
+            <Expander.Header>
+                <TextBlock Text="Naturtalente" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-	<Grid x:Name="LayoutRoot">
-		<Grid>
-			<Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-				<Image.ToolTip>
-					<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-				</Image.ToolTip>
-			</Image>
-			<StackPanel>
-			<ComboBox Height="23" Margin="6,14,0,0" Width="193" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" ToolTip="Talent aktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentAuswahlListe}" DisplayMemberPath="Talentname">
-				<ComboBox.ItemsPanel>
-					<ItemsPanelTemplate>
-						<VirtualizingStackPanel />
-					</ItemsPanelTemplate>
-				</ComboBox.ItemsPanel>
-			</ComboBox>
-			<Expander Header="Kampf" >
-			<DataGrid ItemsSource="{Binding KampftalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>					
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.ZuteilungAT}" IsReadOnly="True" Header="AT+"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.ZuteilungPA}" IsReadOnly="True" Header="PA+"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-			</Expander>
-			<Expander Header="Körper" >
-			<DataGrid ItemsSource="{Binding KoerperTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-			</Expander>
-			<Expander Header="Gesellschaft" >
-			<DataGrid ItemsSource="{Binding GesellschaftTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-			</Expander>
-			<Expander Header="Natur" >
-			<DataGrid ItemsSource="{Binding NaturTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-			</Expander>
-			<Expander Header="Wissen" >
-			<DataGrid ItemsSource="{Binding WissenTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-			</Expander>
-			<Expander Header="Sprache" >
-			<DataGrid ItemsSource="{Binding SpracheTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-			</Expander>
-			<Expander Header="Handwerk" >
-			<DataGrid ItemsSource="{Binding HandwerkTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">							
-				<DataGrid.Columns>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" Header="Name"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" Header="E1"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True" Header="E2"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" Header="E3"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" Header="Kat"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" Header="TaW"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" Header="eBE"/>
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" Header="Voraussetzung"/>					
-					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" Header="Bemerkung" />
-				</DataGrid.Columns>
-			</DataGrid>
-			</Expander>
-			</StackPanel>
-		</Grid>
-	</Grid>
+                        <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding NaturTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+        <Expander Grid.Row="5" Margin="0,5,0,0">
+            <Expander.Header>
+                <TextBlock Text="Wissenstalente" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding WissenTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+        <Expander Grid.Row="6" Margin="0,5,0,0">
+            <Expander.Header>
+                <TextBlock Text="Sprachtalente" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SpracheTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+        <Expander Grid.Row="7" Margin="0,5,0,0">
+            <Expander.Header>
+                <TextBlock Text="Handwerkstalente" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                            <Image.ToolTip>
+                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                            </Image.ToolTip>
+                        </Image>
+                        <DataGrid Grid.Column="1" ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding HandwerkTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+    </Grid>
 </UserControl>
 <!-- TODO DW: Menü MVVM überführen
 <DataGrid.ContextMenu>

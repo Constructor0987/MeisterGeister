@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using MeisterGeister.Model;
 using MeisterGeister.View.Windows;
 //Eigene Usings
-using VM = MeisterGeister.ViewModel.Helden.Controls;
+using VM = MeisterGeister.ViewModel.Helden;
 
 namespace MeisterGeister.View.Helden.Controls {
     public partial class ViewHeldAllgemein : System.Windows.Controls.UserControl {        

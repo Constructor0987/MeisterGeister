@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 // Eigene Usings
-using VM = MeisterGeister.ViewModel.Helden.Controls;
+using VM = MeisterGeister.ViewModel.Helden;
 using MeisterGeister.View.Kampf;
 
 

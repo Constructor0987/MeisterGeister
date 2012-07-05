@@ -16,7 +16,7 @@ using VM = MeisterGeister.ViewModel.Inventar;
 //Weitere Usings
 using System.Diagnostics;
 
-namespace MeisterGeister.View.Inventar {
+namespace MeisterGeister.View.Helden.Controls {
     public partial class InventarView : UserControl {
 
         public InventarView() {
