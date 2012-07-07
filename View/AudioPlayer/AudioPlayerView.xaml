@@ -131,7 +131,7 @@
                                     <RowDefinition Height="30*" />
                                     <RowDefinition Height="30" />
                                 </Grid.RowDefinitions>
-                                <Label Content="" Grid.Row="1" Height="33" HorizontalAlignment="Left" Name="lblBgTitel" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
+                                <Label Content="" Grid.Row="1" Height="33" HorizontalAlignment="Left" Name="lblBgTitel" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" Visibility="Hidden" />
                                 <Label Content="" Grid.Row="2" Height="33" HorizontalAlignment="Left" Name="lblBgArtist" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
                                 <Label Content="" Grid.Row="3" Height="33" HorizontalAlignment="Left" Name="lblBgAlbum" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
                                 <Label Content="" Grid.Row="4" Height="33" HorizontalAlignment="Left" Name="lblBgJahr" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
@@ -163,7 +163,7 @@
                         <RowDefinition Height="312*" />
                     </Grid.RowDefinitions>
 
-                    <Border BorderBrush="Silver" BorderThickness="0" Grid.Column="1" Height="40" HorizontalAlignment="Stretch" Margin="0" Name="brdKlang" VerticalAlignment="Top" Background="{StaticResource BackgroundMenu}" Visibility="Hidden">
+                    <Border BorderBrush="Silver" BorderThickness="0" Grid.Column="1" Height="40" HorizontalAlignment="Stretch" Margin="0" Name="brdKlang" VerticalAlignment="Top" Background="{StaticResource BackgroundMenu}">
                         <Grid Name="grdKlangPlaylistInfo">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10" />
@@ -174,11 +174,11 @@
                                 <ColumnDefinition Width="140" />
                                 <ColumnDefinition Width="66*" />
                             </Grid.ColumnDefinitions>
-                            <TextBox HorizontalAlignment="Stretch" Name="tboxPlaylistName" Style="{Binding}" Background="{x:Null}" FontWeight="Bold" KeyDown="tboxPlaylistName_KeyDown" Visibility="Hidden" ToolTip="Text abändern und ENTER-Taste drücken um die Playlist umzubenennen" Height="25" Grid.Column="1" Margin="5,0" />
-                            <Label Content="Songs parallel" Height="28" Name="label6" FlowDirection="LeftToRight" HorizontalAlignment="Left" Visibility="Hidden" Grid.Column="2" />
+                            <TextBox HorizontalAlignment="Stretch" Name="tboxPlaylistName" Style="{Binding}" Background="{x:Null}" FontWeight="Bold" KeyDown="tboxPlaylistName_KeyDown" ToolTip="Text abändern und ENTER-Taste drücken um die Playlist umzubenennen" Height="25" Grid.Column="1" Margin="5,0" Visibility="Hidden" />
+                            <Label Content="Songs parallel" Height="28" Name="label6" FlowDirection="LeftToRight" HorizontalAlignment="Left" Grid.Column="2" />
                             <!-- <ViewGeneral:IntBox HorizontalAlignment="Left" Value="1"  ShowButtons="True" MinWidth="65" x:Name="klangsongparallel0" MaxValue="1" MinValue="1" NumValueChanged="klangsongparallel0_NumValueChanged" Visibility="Hidden" Grid.Column="3" /> -->
-                            <RadioButton Content="Hintergrundmusik" GroupName="TypListe" Height="17" IsChecked="False" Name="rbIstMusikPlaylist" VerticalAlignment="Center" HorizontalAlignment="Left" Width="112" Click="rbIstMusikPlaylist_Click" Visibility="Hidden" Grid.Column="4" />
-                            <RadioButton Content="Klänge &amp; Geräusche" GroupName="TypListe" Height="17" IsChecked="False" Name="rbIstKlangPlaylist" VerticalAlignment="Center" Click="rbIstKlangPlaylist_Click" Visibility="Hidden" Grid.Column="5" HorizontalAlignment="Left" />
+                            <RadioButton Content="Hintergrundmusik" GroupName="TypListe" Height="17" IsChecked="False" Name="rbIstMusikPlaylist" VerticalAlignment="Center" HorizontalAlignment="Left" Width="112" Click="rbIstMusikPlaylist_Click" Grid.Column="5" />
+                            <RadioButton Content="Klänge &amp; Geräusche" GroupName="TypListe" Height="17" IsChecked="False" Name="rbIstKlangPlaylist" VerticalAlignment="Center" Click="rbIstKlangPlaylist_Click" Grid.Column="4" HorizontalAlignment="Left" />
 
                             <Button Grid.Column="3" Margin="33,10,0,8" Name="btnSongParMinus" Width="18" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Click="btnSongParPlus_Click" Tag="-1">
                                 <Image Source="/Images/Icons/General/entf_02.png" />
@@ -191,9 +191,9 @@
                     </Border>
 
                     <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcKlang" Grid.Column="1" Grid.Row="1" Margin="3,8,6,9" SelectionChanged="tcKlang_SelectionChanged" Visibility="Visible">
-                        <TabItem Header="tiKlang0" x:Name="tiKlang0">
+                        <TabItem Header="NeuePlayliste0" x:Name="tiKlang0">
                             <Grid Name="Grid0">
-                                <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" Drop="grdKlang0_Drop" SizeChanged="ScrollViewer_SizeChanged" HorizontalScrollBarVisibility="Auto" Height="439" Name="sviewer0">
+                                <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" Drop="grdKlang0_Drop" HorizontalScrollBarVisibility="Auto" Height="439" Name="sviewer0">
                                     <Grid Name="grdKlang0" AllowDrop="True" Drop="grdKlang0_Drop" ToolTip="Musikdateien über Drag&amp;Drop einfügen">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="40" />
@@ -389,8 +389,8 @@
                         <RadioButton Content="Alle" GroupName="KlangListe" HorizontalAlignment="Left" IsChecked="True" Margin="0,8,0,0" Name="rbKlangAlle" VerticalAlignment="Top" Click="rbKlangAlle_Click" />
                         <RadioButton Content="Musik" GroupName="KlangListe" Height="17" HorizontalAlignment="Right" IsChecked="False" Margin="0,8,3,0" Name="rbKlangMusik" VerticalAlignment="Top" Click="rbKlangKlang_Click" />
                     </Grid>
-                    <Button Content="Neue Liste" HorizontalAlignment="Right" Name="btnNeuePlaylist" VerticalAlignment="Top" Click="bntNeuePlaylist_Click" Height="23" Width="65" Margin="3,3,3,0" />
-                    <Button Content="Liste löschen" HorizontalAlignment="Left" Name="btnPlaylistLoeschen" VerticalAlignment="Top" Height="23" Width="80" Margin="3,3,3,0" IsEnabled="False" />
+                    <Button Content="Neue Liste" HorizontalAlignment="Right" Name="btnNeuePlaylist" VerticalAlignment="Top" Click="bntNeuePlaylist_Click" Height="23" Width="65" Margin="3,3,3,0" Visibility="Visible" IsEnabled="False" />
+                    <Button Content="Liste löschen" HorizontalAlignment="Left" Name="btnPlaylistLoeschen" VerticalAlignment="Top" Height="23" Width="80" Margin="3,3,3,0" IsEnabled="False" Click="btnPlaylistLoeschen_Click" />
                 </Grid>            
             </TabItem>
             <TabItem Header="tabItem3" Name="tabItem3">
