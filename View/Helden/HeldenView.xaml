@@ -90,61 +90,6 @@
                 <ComponentModel:SortDescription PropertyName="Repräsentation" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <!-- Vor-/Nachteile -->
-        <CollectionViewSource x:Key="heldHeld_VorNachteilViewSource" Source="{Binding Held_VorNachteil_HeldFK, Source={StaticResource heldViewSource}}">
-            <CollectionViewSource.SortDescriptions>
-                <ComponentModel:SortDescription PropertyName="VorNachteilTyp" />
-                <ComponentModel:SortDescription PropertyName="VorNachteil" />
-            </CollectionViewSource.SortDescriptions>
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Row.VorNachteilRow.Typ" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
-        <Style x:Key="VorNachteilWertItemStyle" TargetType="{x:Type TextBox}">
-            <Setter Property="Visibility" Value="Collapsed" />
-            <Style.Triggers>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Row.VorNachteilRow.HatWert}" Value="true" />
-                        <Condition Binding="{Binding Row.VorNachteilRow.WertTyp}" Value="" />
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Visibility" Value="Visible" />
-                </MultiDataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="VorNachteilWertNumItemStyle" TargetType="{x:Type ViewGeneral:IntBox}">
-            <Setter Property="Visibility" Value="Collapsed" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Row.VorNachteilRow.WertTyp}" Value="int">
-                    <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="GroupHeaderStyleVorNachteile" TargetType="{x:Type GroupItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <Expander Margin="2,0,2,0" Padding="4" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
-                            <Expander.Header>
-                                <DockPanel LastChildFill="True">
-                                    <TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
-                                </DockPanel>
-                            </Expander.Header>
-                                <Border Margin="2" CornerRadius="3">
-                                    <ItemsPresenter />
-                                </Border>
-                        </Expander>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <DataTemplate x:Key="VorNachteileTemplate">
-            <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
-                <TextBlock Margin="2,4,0,0" Text="{Binding Row.VorNachteilRow.Name}" />
-                <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="20,0,0,4" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" />
-                <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="20,0,0,4" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding Wert}" />
-            </StackPanel>
-        </DataTemplate>
         <!-- Sonderfertigkeiten -->
         <CollectionViewSource x:Key="heldHeld_SonderfertigkeitViewSource" Source="{Binding Held_Sonderfertigkeit_HeldFK, Source={StaticResource heldViewSource}}">
             <CollectionViewSource.SortDescriptions>
@@ -544,55 +489,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Vor- &amp; Nachteile" x:Name="_tabItemVorNachteile">
-                    <Grid>
-                        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-                            <Image.ToolTip>
-                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Vor-/Nachteil für weitere Aktionen."/></TextBlock>
-                            </Image.ToolTip>
-                        </Image>
-                        <TextBlock Margin="11,16,0,0" HorizontalAlignment="Left" Text="Vorteil einfügen:" VerticalAlignment="Top" />
-                        <ComboBox Height="23" Margin="105,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxVorteil" ToolTip="Vorteil hinzufügen" VerticalAlignment="Top">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                        </ComboBox>
-                        <TextBlock Margin="310,16,0,0" HorizontalAlignment="Left" Text="Nachteil einfügen:" VerticalAlignment="Top" />
-                        <ComboBox Height="23" Margin="412,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxNachteil" ToolTip="Nachteil hinzufügen" VerticalAlignment="Top">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
-                        </ComboBox>
-                        <ListBox Margin="2,46,6,6" Padding="0,0,0,10" ItemsSource="{Binding Source={StaticResource heldHeld_VorNachteilViewSource}}" ItemTemplate="{StaticResource VorNachteileTemplate}" KeyDown="ListBoxHeldVorNachteile_KeyDown" MouseDown="ListBoxVorNachteile_MouseDown" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000">
-                            <ListBox.GroupStyle>
-                                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleVorNachteile}">
-                                    <GroupStyle.Panel>
-                                        <ItemsPanelTemplate>
-                                            <DataGridRowsPresenter />
-                                        </ItemsPanelTemplate>
-                                    </GroupStyle.Panel>
-                                </GroupStyle>
-                            </ListBox.GroupStyle>
-                            <ListBox.ContextMenu>
-                                <ContextMenu Opened="ContextMenuVorNachteile_Opened">
-                                	<MenuItem Height="28" Click="MenuItemVorNachteilWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">
-                                		<MenuItem.Icon>
-                                			<Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
-                                		</MenuItem.Icon>
-                                	</MenuItem>
-                                	<Separator />
-                                	<MenuItem Height="28" Click="MenuItemVorNachteilLöschen_Click" Header="Löschen" x:Name="_menuItemVorNachteilLöschen">
-                                		<MenuItem.Icon>
-                                			<Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                                		</MenuItem.Icon>
-                                	</MenuItem>
-                                </ContextMenu>
-                            </ListBox.ContextMenu>
-                        </ListBox>
-                    </Grid>
+                    <Held:VorNachteileView/>
                 </TabItem>
                 <TabItem Header="Sonderfertigkeiten" x:Name="_tabItemSonderfertigkeiten">
                     <Grid>
