@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="MeisterGeister.View.Schmiede.SchmiedeNahkampfwaffeView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:vmSchmiede="clr-namespace:MeisterGeister.ViewModel.Schmiede"
+			 xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+			 xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
+			 mc:Ignorable="d" 
+			 d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+	<UserControl.DataContext>
+		<vmSchmiede:SchmiedeNahkampfwaffeViewModel />
+	</UserControl.DataContext>
+	<Grid OpacityMask="Black">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="450*" />
+			<ColumnDefinition Width="296" />
+		</Grid.ColumnDefinitions>
+		<StackPanel Grid.Column="1" Margin="36,32,0,0" Orientation="Vertical" VerticalAlignment="Top">
+			<TextBlock Margin="5" Text="Talent:" />
+			<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=NahkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedNahkampfwaffeTalent}" />
+			<TextBlock Margin="5" Text="Waffe:" />
+			<ComboBox Margin="5,0,5,20" Height="23" ItemsSource="{Binding Path=NahkampfwaffeListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedNahkampfwaffe}" />
+			<TextBlock Margin="5" Text="allgemeine Verbesserungen:" />
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="TP" Margin="5" VerticalAlignment="Center" />
+				<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TpVerbesserung}" />
+				<TextBlock Text="BF" Margin="5" VerticalAlignment="Center" />
+				<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=BfVerbesserung}" />
+			</StackPanel>
+			<TextBlock Margin="5" Text="persönliche Nahkampfwaffen:" />
+			<StackPanel Orientation="Horizontal">
+				<CheckBox Margin="5,0,10,0" Content="INI + 1" Height="16" IsChecked="{Binding Path=IniVerbesserung}" />
+				<CheckBox Margin="5,0,10,0" Content="AT-WM + 1" Height="16" IsChecked="{Binding Path=AtWmVerbesserung}"  />
+				<CheckBox Margin="5,0,10,0" Content="PA-WM + 1" Height="16" IsChecked="{Binding Path=PaWmVerbesserung}"  />
+			</StackPanel>
+			<TextBlock Margin="5" Text="Material:" />
+			<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=NahkampfwaffeMaterialListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedNahkampfwaffeMaterial}" />
+			<TextBlock Margin="5" Text="Technik:" />
+			<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=NahkampfwaffeTechnikListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedNahkampfwaffeTechnik}" />
+		</StackPanel>
+		<StackPanel Margin="36,32,0,0" Background="{StaticResource BackgroundPergamentHoch}" >
+			<TextBlock Margin="20,20,20,10" FontWeight="Bold" Text="{Binding Path=ErstellteNahkampfwaffe.Name}" />
+			<Grid Margin="20,10,20,10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<TextBlock Text="TP" HorizontalAlignment="Left" />
+				<TextBlock Text="DK"  Grid.Column="1" />
+				<TextBlock Text="TP/KK"  Grid.Column="2" />
+				<TextBlock Text="WM"  Grid.Column="3" />
+				<TextBlock Text="INI"  Grid.Column="4" />
+				<TextBlock Text="BF"  Grid.Column="5" />
+				<TextBlock Grid.Row="1" Grid.Column="0">
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0}W{1}+{2}">
+									<Binding Path="ErstellteNahkampfwaffe.TPWürfelAnzahl" />
+									<Binding Path="ErstellteNahkampfwaffe.TPWürfel" />
+									<Binding Path="ErstellteNahkampfwaffe.TPBonus" />
+								</MultiBinding>
+							</TextBlock.Text>
+				</TextBlock>
+				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.DK}"  Grid.Row="1" Grid.Column="1" />
+				<TextBlock Grid.Row="1" Grid.Column="2">
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0}/{1}">
+									<Binding Path="ErstellteNahkampfwaffe.TPKKSchritt" />
+									<Binding Path="ErstellteNahkampfwaffe.TPKKSchwelle" />
+								</MultiBinding>
+							</TextBlock.Text>
+				</TextBlock>
+				<TextBlock Grid.Row="1" Grid.Column="3">
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0}/{1}">
+									<Binding Path="ErstellteNahkampfwaffe.WMAT" />
+									<Binding Path="ErstellteNahkampfwaffe.WMPA" />
+								</MultiBinding>
+							</TextBlock.Text>
+				</TextBlock>
+				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.INI}"  Grid.Row="1" Grid.Column="4" />
+				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.BF}"  Grid.Row="1" Grid.Column="5" />
+			</Grid>
+			<StackPanel Orientation="Horizontal" Margin="20,0,20,0">
+				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
+				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
+			</StackPanel>
+			<TextBlock Margin="20,40,20,10" FontWeight="Bold" Text="Schmiedevorgang" />
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="benötigte Talentpunkte:" />
+				<TextBlock Margin="5" Text="{Binding Path=ProbePunkte, StringFormat={}{0} TaP*}" />
+			</StackPanel>
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="Erschwernis:" />
+				<TextBlock Margin="5" Text="{Binding Path=ProbeErschwernis}" />
+			</StackPanel>
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="Dauer jeder Probe:" />
+				<TextBlock Margin="5" Text="{Binding Path=ProbeDauerInZe, StringFormat={}{0} ZE}" />
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</UserControl>

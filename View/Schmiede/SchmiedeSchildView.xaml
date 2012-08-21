@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="MeisterGeister.View.Schmiede.SchmiedeSchildView"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:vmSchmiede="clr-namespace:MeisterGeister.ViewModel.Schmiede"
+			 xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+			 xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
+			 mc:Ignorable="d" 
+			 d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+	<UserControl.DataContext>
+		<vmSchmiede:SchmiedeSchildViewModel />
+	</UserControl.DataContext>
+	<Grid OpacityMask="Black">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="450*" />
+			<ColumnDefinition Width="296" />
+		</Grid.ColumnDefinitions>
+		<StackPanel Grid.Column="1" Margin="36,32,0,0" Orientation="Vertical" VerticalAlignment="Top">
+			<TextBlock Margin="5" Text="Schild:" />
+			<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=SchildListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedSchild}" />
+		</StackPanel>
+		<StackPanel Margin="36,32,0,0" Background="{StaticResource BackgroundPergamentHoch}" >
+			<TextBlock Margin="20,20,20,10" FontWeight="Bold" Text="{Binding Path=SelectedSchild.Name}" />
+			<Grid Margin="20,10,20,10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+					<ColumnDefinition Width="Auto" MinWidth="50" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<TextBlock Text="Typ" HorizontalAlignment="Left" />
+				<TextBlock Text="Größe"  Grid.Column="1" />
+				<TextBlock Text="WM"  Grid.Column="2" />
+				<TextBlock Text="INI"  Grid.Column="3" />
+				<TextBlock Text="BF"  Grid.Column="4" />
+				<TextBlock Text="{Binding Path=SelectedSchild.Typ}"  Grid.Row="1" Grid.Column="0" />
+				<TextBlock Text="{Binding Path=SelectedSchild.Größe}"  Grid.Row="1" Grid.Column="1" />
+				<TextBlock Grid.Row="1" Grid.Column="2">
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0}/{1}">
+									<Binding Path="SelectedSchild.WMAT" />
+									<Binding Path="SelectedSchild.WMPA" />
+								</MultiBinding>
+							</TextBlock.Text>
+				</TextBlock>
+				<TextBlock Text="{Binding Path=SelectedSchild.INI}"  Grid.Row="1" Grid.Column="3" />
+				<TextBlock Text="{Binding Path=SelectedSchild.BF}"  Grid.Row="1" Grid.Column="4" />
+			</Grid>
+			<StackPanel Orientation="Horizontal" Margin="20,0,20,0">
+				<TextBlock Text="{Binding Path=SelectedSchild.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
+				<TextBlock Text="{Binding Path=SelectedSchild.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
+			</StackPanel>
+			<TextBlock Margin="20,40,20,10" FontWeight="Bold" Text="Schmiedevorgang" />
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="benötigte Talentpunkte:" />
+				<TextBlock Margin="5" Text="{Binding Path=ProbePunkte, StringFormat={}{0} TaP*}" />
+			</StackPanel>
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="Erschwernis:" />
+				<TextBlock Margin="5" Text="+0" />
+			</StackPanel>
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="Dauer jeder Probe:" />
+				<TextBlock Margin="5" Text="8 ZE (dabei oft lange Wartezeiten, bis Leim trocknet)" />
+			</StackPanel>
+		</StackPanel>
+	</Grid>
+</UserControl>

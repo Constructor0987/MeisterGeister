@@ -373,6 +373,8 @@
     <Compile Include="ViewModel\NscGenerator\Person.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Schmiede\SchmiedeNahkampfwaffeViewModel.cs" />
+    <Compile Include="ViewModel\Schmiede\SchmiedeSchildViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">
       <DependentUpon>AbenteuerView.xaml</DependentUpon>
@@ -448,6 +450,12 @@
     </Compile>
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Schmiede\SchmiedeNahkampfwaffeView.xaml.cs">
+      <DependentUpon>SchmiedeNahkampfwaffeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Schmiede\SchmiedeSchildView.xaml.cs">
+      <DependentUpon>SchmiedeSchildView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Zauberzeichen\ZauberzeichenView.xaml.cs">
       <DependentUpon>ZauberzeichenView.xaml</DependentUpon>
@@ -705,6 +713,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Kampf\KampfInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Schmiede\SchmiedeNahkampfwaffeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Schmiede\SchmiedeSchildView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
