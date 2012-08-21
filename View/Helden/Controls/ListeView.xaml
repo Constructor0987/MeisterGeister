@@ -4,7 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
-	x:Class="MeisterGeister.View.Helden.Controls.ViewHeldListe"
+	x:Class="MeisterGeister.View.Helden.Controls.ListeView"
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Helden"
 	x:Name="UserControl"
 	d:DesignWidth="190" d:DesignHeight="561">

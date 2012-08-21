@@ -248,7 +248,7 @@
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <MGC:ViewHeldListe Margin="5"/>
+        <MGC:ListeView Margin="5"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -260,7 +260,7 @@
             </Grid.ColumnDefinitions>                        
             <TabControl Grid.Row="1" Margin="5,5,5,5" Background="{StaticResource Background1}" x:Name="tabControl1">
                 <TabItem Header="Allgemein" x:Name="_tabItemAllgemein">                	
-					<MGC:ViewHeldAllgemein />
+					<MGC:AllgemeinView />
                 </TabItem>
                 <TabItem Header="Eigenschaften" x:Name="_tabItemEigenschaften">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -645,7 +645,7 @@
                             </Border>
                         </StackPanel>
                     </TabItem.Header>
-                    <Held:InventarView x:Name="_inventarControl" d:DataContext="{d:DesignData /SampleData/InventarSampleData.xaml}" />
+                    <Held:InventarView x:Name="_inventarControl" />
                 </TabItem>				
             </TabControl>
         </Grid>

@@ -17,9 +17,9 @@ using MeisterGeister.View.Windows;
 using VM = MeisterGeister.ViewModel.Helden;
 
 namespace MeisterGeister.View.Helden.Controls {
-    public partial class ViewHeldAllgemein : System.Windows.Controls.UserControl {        
+    public partial class AllgemeinView : System.Windows.Controls.UserControl {        
         #region //KONSTRUKTOR
-        public ViewHeldAllgemein() {
+        public AllgemeinView() {
             this.InitializeComponent();            
             this.DataContext = new VM.AllgemeinViewModel();            
             (this.DataContext as VM.AllgemeinViewModel).RefreshNotiz += (s, ev) => { RefreshNotizentool(); };            

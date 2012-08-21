@@ -22,9 +22,9 @@ namespace MeisterGeister.View.Helden.Controls
 	/// <summary>
 	/// Interaktionslogik für ViewHeldListe.xaml
 	/// </summary>
-    public partial class ViewHeldListe : System.Windows.Controls.UserControl
+    public partial class ListeView : System.Windows.Controls.UserControl
 	{
-		public ViewHeldListe()
+		public ListeView()
 		{
 			this.InitializeComponent();
 #if !(DEBUG)

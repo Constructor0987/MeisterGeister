@@ -69,7 +69,8 @@ namespace MeisterGeister.ViewModel.Helden
 
         public void LoadDaten()
         {
-            HeldListe = Global.ContextHeld.HeldenListe.OrderBy(h => h.Name).ToList();
+            if (Global.ContextHeld != null)
+                HeldListe = Global.ContextHeld.HeldenListe.OrderBy(h => h.Name).ToList();
         }
 
         private Base.CommandBase onNewHeld;

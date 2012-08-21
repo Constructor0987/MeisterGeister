@@ -454,6 +454,9 @@
     <Compile Include="View\Helden\Controls\Trageort.xaml.cs">
       <DependentUpon>Trageort.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Helden\Controls\VorNachteileView.xaml.cs">
+      <DependentUpon>VorNachteileView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
@@ -715,6 +718,10 @@
     <Page Include="View\Helden\Controls\Trageort.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\VorNachteileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kampf\KampfInfoView.xaml">
       <SubType>Designer</SubType>

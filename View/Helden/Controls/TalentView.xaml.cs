@@ -30,7 +30,13 @@ namespace MeisterGeister.View.Helden.Controls
 		}
 #endregion
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-        	(this.DataContext as VM.TalentViewModel).Init();
+            try
+            {
+                (this.DataContext as VM.TalentViewModel).Init();
+            }
+            catch (Exception)
+            {
+            }
 		}
         private void RefreshHeld() {
             // Talente-Sortierung aktualisieren
