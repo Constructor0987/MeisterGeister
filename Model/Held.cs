@@ -21,6 +21,13 @@ namespace MeisterGeister.Model
         {
             HeldGUID = Guid.NewGuid();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+            SetDefaultValues();
+        }
+
+        private void SetDefaultValues()
+        {
+            Name = "Alrik";
+            AktiveHeldengruppe = false;
         }
 
         [DependentProperty("Name")]
@@ -614,6 +621,13 @@ namespace MeisterGeister.Model
 
         public Talent AddTalent(Talent t, int wert, int? zuteilungAT, int? zuteilungPA)
         {
+            IEnumerable<Held_Talent> existierendeZuordnung = Held_Talent.Where(hta => hta.Talentname == t.Talentname && hta.HeldGUID == HeldGUID);
+            if (existierendeZuordnung.Count() != 0)
+            {
+                //Oder eine Exception werfen?
+                return existierendeZuordnung.First().Talent;
+            }
+
             Held_Talent ht = Global.ContextHeld.New<Held_Talent>();
             ht.HeldGUID = HeldGUID;
             ht.Held = this;
@@ -1114,6 +1128,17 @@ namespace MeisterGeister.Model
         public override string ToString()
         {
             return Name;
+        }
+
+        public void AddBasisTalente()
+        {
+            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis").ToList())
+            {
+                if(t.TalentgruppeID != 1)
+                    AddTalent(t, 0);
+                else
+                    AddTalent(t, 0, 0, 0);
+            }
         }
 
     }

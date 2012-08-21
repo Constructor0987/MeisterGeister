@@ -16,12 +16,19 @@ namespace MeisterGeister.ViewModel.Helden
 
         public ListeViewModel()
         {
+            onNewHeld = new Base.CommandBase(NewHeld, null);
+            onDeleteHeld = new Base.CommandBase(DeleteHeld, null);
+
+            LoadDaten();
+            if (Global.SelectedHeld != null)
+                selectedHeld = Global.SelectedHeld;
         }
 
         public Held SelectedHeld {
             get { return selectedHeld; }
             set {
                 selectedHeld = value;
+                Global.SelectedHeld = value;
                 OnChanged("SelectedHeld");
             }
         }
@@ -63,6 +70,52 @@ namespace MeisterGeister.ViewModel.Helden
         public void LoadDaten()
         {
             HeldListe = Global.ContextHeld.HeldenListe.OrderBy(h => h.Name).ToList();
+        }
+
+        private Base.CommandBase onNewHeld;
+        public Base.CommandBase OnNewHeld
+        {
+            get { return onNewHeld; }
+        }
+
+        private void NewHeld(object sender)
+        {
+            Held h = Global.ContextHeld.New<Held>();
+            h.AddBasisTalente();
+            if (Global.ContextHeld.Insert<Held>(h))
+            {
+                //Liste aktualisieren
+                LoadDaten();
+            }
+        }
+
+        private Base.CommandBase onDeleteHeld;
+        public Base.CommandBase OnDeleteHeld
+        {
+            get { return onDeleteHeld; }
+        }
+
+        private void DeleteHeld(object sender)
+        {
+            Held h = SelectedHeld;
+            if (h != null && Global.ContextHeld.Delete<Held>(h))
+            {
+                //Liste aktualisieren
+                LoadDaten();
+                SelectedHeld = HeldListe.FirstOrDefault();
+            }
+        }
+
+        public string ExportHeld(string pfad)
+//        private void ExportHeld(object sender)
+        {
+            Held h = SelectedHeld;
+            if (h != null)
+            {
+                h.Export(pfad);
+                return pfad;
+            }
+            return null;
         }
 
     }

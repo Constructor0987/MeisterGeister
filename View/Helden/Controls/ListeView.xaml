@@ -5,6 +5,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
 	x:Class="MeisterGeister.View.Helden.Controls.ViewHeldListe"
+    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Helden"
 	x:Name="UserControl"
 	d:DesignWidth="190" d:DesignHeight="561">
 	<UserControl.Resources>
@@ -34,11 +35,11 @@
 
 	<Grid x:Name="LayoutRoot">
 		<Grid Grid.Column="0" Grid.Row="0" Background="{DynamicResource BackgroundPergamentHoch}">
-			<ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource HeldListTemplate}" 
-				KeyDown="_listBoxHelden_KeyDown" MouseDown="ListBoxHelden_MouseDown" SelectionChanged="ListBoxHelden_SelectionChanged" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
+			<ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
+				KeyDown="_listBoxHelden_KeyDown" MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
 				<ListBox.ContextMenu>
 					<ContextMenu Opened="ContextMenu_Opened">
-						<MenuItem Height="28" Click="MenuItemHeldNeu_Click" Header="Neu (eingeben)" x:Name="_menuItemHeldNeu" ToolTip="Einen neuen Helden manuell eingeben.">
+                        <MenuItem Height="28"  Command="{Binding OnNewHeld}" Header="Neu (eingeben)" x:Name="_menuItemHeldNeu" ToolTip="Einen neuen Helden manuell eingeben.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
 							</MenuItem.Icon>
@@ -96,7 +97,7 @@
 							</MenuItem.ToolTip>
 						</MenuItem>
 						<Separator />
-						<MenuItem Height="28" Click="MenuItemHeldLöschen_Click" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen.">
+						<MenuItem Height="28" Click="MenuItemHeldDelete_Click" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
 							</MenuItem.Icon>
@@ -115,7 +116,7 @@
 			<Button Height="23" Margin="5,0,0,6" Width="25" Background="Lime" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
 				<Button.ContextMenu>
 					<ContextMenu>
-						<MenuItem Height="28" Click="MenuItemHeldNeu_Click" Header="Neu (eingeben)" ToolTip="Einen neuen Helden manuell eingeben.">
+                        <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu (eingeben)" ToolTip="Einen neuen Helden manuell eingeben.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
 							</MenuItem.Icon>

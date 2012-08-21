@@ -34,16 +34,20 @@ namespace MeisterGeister.View.Helden.Controls
             this.DataContext = new VM.ListeViewModel();
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            //try
+            //{
+            //    (this.DataContext as VM.Inventar).LoadDaten();
+            //}
+            //catch (Exception) { }
+        }
+
         private string _workingPath = Environment.CurrentDirectory;
 
         private void ButtonHeldNeu_Click(object sender, RoutedEventArgs e)
         {
             _buttonHeldNeu.ContextMenu.IsOpen = true;
-        }
-
-        private void HeldNeu()
-        {
-            //TODO JT: Held.Neu();
         }
 
         private void _buttonExportDemo_Click(object sender, RoutedEventArgs e)
@@ -91,7 +95,7 @@ namespace MeisterGeister.View.Helden.Controls
         {
             if (IsInitialized)
             {
-                App.SaveAll();
+                //App.SaveAll();
                 //TODO JT: 
                 //Global.SelectedHeldGUID = SelectedHeld.Id;
                 //Global.SelectedHeld.PropertyChanged += SelectedHeld_PropertyChanged;
@@ -121,8 +125,8 @@ namespace MeisterGeister.View.Helden.Controls
             if (System.Windows.MessageBox.Show(string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name), "Held löschen",
                                 MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                //TODO JT: h.Delete();
-                _listBoxHelden.SelectedIndex = -1;
+                //h.Delete();
+                (this.DataContext as VM.ListeViewModel).OnDeleteHeld.Execute(null);
             }
         }
 
@@ -146,42 +150,45 @@ namespace MeisterGeister.View.Helden.Controls
             }
         }
 
-        private void MenuItemHeldLöschen_Click(object sender, RoutedEventArgs e)
+        private void MenuItemHeldDelete_Click(object sender, RoutedEventArgs e)
         {
             HeldDelete();
-        }
-
-        private void MenuItemHeldNeu_Click(object sender, RoutedEventArgs e)
-        {
-            HeldNeu();
         }
 
         private void MenuItemHeldExport_Click(object sender, RoutedEventArgs e)
         {
             //TODO JT: 
-            //var objDialog = new SaveFileDialog();
-            //objDialog.Title = "Held exportieren";
-            //objDialog.Filter = "XML-Dateien (*.xml)|*.xml";
-            //objDialog.DefaultExt = "xml";
-            //objDialog.AddExtension = true;
-            //objDialog.FileName = SelectedHeld.Name;
-            //objDialog.InitialDirectory = _workingPath;
-            //DialogResult objResult = objDialog.ShowDialog();
-            //if (objResult == DialogResult.OK)
-            //{
-            //    try
-            //    {
-            //        string expPfad = SelectedHeld.ExportHeld(objDialog.FileName);
-            //        _workingPath = expPfad.Replace(objDialog.FileName, null);
+            var objDialog = new SaveFileDialog();
+            objDialog.Title = "Held exportieren";
+            objDialog.Filter = "XML-Dateien (*.xml)|*.xml";
+            objDialog.DefaultExt = "xml";
+            objDialog.AddExtension = true;
+            objDialog.FileName = (this.DataContext as VM.ListeViewModel).SelectedHeld.Name;
+            objDialog.InitialDirectory = _workingPath;
+            DialogResult objResult = objDialog.ShowDialog();
+            if (objResult == DialogResult.OK)
+            {
+                try
+                {
+                    string expPfad = (this.DataContext as VM.ListeViewModel).ExportHeld(objDialog.FileName);
+                    if (expPfad != null)
+                    {
+                        _workingPath = expPfad.Replace(objDialog.FileName, null);
 
-            //        System.Windows.MessageBox.Show("Der Held wurde in \'" + expPfad + "\' gespeichert.");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MsgWindow errWin = new MsgWindow("Fehler beim Export", "Beim Export des Helden ist ein Fehler aufgetreten!", ex);
-            //        errWin.ShowDialog();
-            //    }
-            //}
+                        System.Windows.MessageBox.Show("Der Held wurde in \'" + expPfad + "\' gespeichert.");
+                    }
+                    else
+                    {
+                        MsgWindow errWin = new MsgWindow("Fehler beim Export", "Beim Export des Helden ist ein Fehler aufgetreten!");
+                        errWin.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MsgWindow errWin = new MsgWindow("Fehler beim Export", "Beim Export des Helden ist ein Fehler aufgetreten!", ex);
+                    errWin.ShowDialog();
+                }
+            }
         }
 
         private void MenuItemHeldImport_Click(object sender, RoutedEventArgs e)

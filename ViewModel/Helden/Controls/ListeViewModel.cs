@@ -65,5 +65,34 @@ namespace MeisterGeister.ViewModel.Helden.Controls
             HeldListe = Global.ContextHeld.HeldenListe.OrderBy(h => h.Name).ToList();
         }
 
+        public void ImportDemoHelden()
+        {
+        }
+
+        public void ImportHeld(string pfad)
+        {
+            ImportHeld(pfad, false);
+        }
+
+        public void ImportHeld(string pfad, bool alsNeuerHeld)
+        {
+        }
+
+        public void KopiereHeld(Held h)
+        {
+        }
+
+        public void ExportHeld(Held h, string pfad)
+        {
+            //TODO JT: try catch etc.
+            h.Export(pfad);
+        }
+
+        public void DeleteHeld(Held h)
+        {
+        }
+
+
+
     }
 }
