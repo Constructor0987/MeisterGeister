@@ -16,6 +16,9 @@
             <Button Click="ButtonSchmiede_Click" Tag="Nahkampfwaffe" ToolTip="Schmiede: Nahkampfwaffe" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2" />
             </Button>
+            <Button Click="ButtonSchmiede_Click" Tag="Fernkampfwaffe" ToolTip="Schmiede: Fernkampfwaffe" VerticalAlignment="Center" Height="50">
+                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Margin="2" />
+            </Button>
             <Button Click="ButtonSchmiede_Click" Tag="Schild" ToolTip="Schmiede: Schild" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2" />
             </Button>

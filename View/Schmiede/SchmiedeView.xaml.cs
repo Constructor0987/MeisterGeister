@@ -140,6 +140,12 @@ namespace MeisterGeister.View.Schmiede
                 Icon = "/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png",
                 ViewType = typeof(View.Schmiede.SchmiedeNahkampfwaffeView)
             });
+            SchmiedeListe.Add("Fernkampfwaffe", new Schmiede()
+            {
+                Name = "Fernkampfwaffe",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png",
+                ViewType = typeof(View.Schmiede.SchmiedeFernkampfwaffeView)
+            });
             SchmiedeListe.Add("Schild", new Schmiede()
             {
                 Name = "Schild",

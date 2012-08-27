@@ -92,7 +92,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             set
             {
                 _iniVerbesserung = value ? 1 : 0;
-                OnChanged("IniVerbessert");
+                OnChanged("IniVerbesserung");
                 BerechneNahkampfwaffe();
             }
         }
@@ -103,7 +103,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             set
             {
                 _atWmVerbesserung = value ? 1 : 0;
-                OnChanged("AtWmVerbessert");
+                OnChanged("AtWmVerbesserung");
                 BerechneNahkampfwaffe();
             }
         }
@@ -114,7 +114,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             set
             {
                 _paWmVerbesserung = value ? 1 : 0;
-                OnChanged("PaWmVerbessert");
+                OnChanged("PaWmVerbesserung");
                 BerechneNahkampfwaffe();
             }
         }
