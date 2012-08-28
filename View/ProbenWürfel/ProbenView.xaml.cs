@@ -384,7 +384,7 @@ namespace MeisterGeister.View.ProbenWürfel
                 _probenErgebnisse.Clear();
                 foreach (DatabaseDSADataSet.HeldRow heldRow in App.DatenDataSet.Held)
                 {
-                    if (heldRow.AktiveHeldengruppe)
+                    if (!heldRow.IsAktiveHeldengruppeNull() && heldRow.AktiveHeldengruppe)
                         AddHeldProbenItem(new Held(heldRow), probe);
                 }
                 _probenErgebnisse.Sort(new ProbenErgebnisComparer()); // Sortieren
