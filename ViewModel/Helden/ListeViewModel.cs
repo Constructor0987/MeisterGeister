@@ -18,7 +18,9 @@ namespace MeisterGeister.ViewModel.Helden
         {
             onNewHeld = new Base.CommandBase(NewHeld, null);
             onDeleteHeld = new Base.CommandBase(DeleteHeld, null);
-
+            onExportDemoHelden = new Base.CommandBase(ExportDemoHelden, null);
+            onImportDemoHelden = new Base.CommandBase(ImportDemoHelden, null);
+            
             LoadDaten();
             if (Global.SelectedHeld != null)
                 selectedHeld = Global.SelectedHeld;
@@ -118,6 +120,43 @@ namespace MeisterGeister.ViewModel.Helden
             }
             return null;
         }
+
+        private Base.CommandBase onExportDemoHelden;
+        public Base.CommandBase OnExportDemoHelden
+        {
+            get { return onExportDemoHelden; }
+        }
+        private void ExportDemoHelden(object sender)
+        {
+            if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
+                System.IO.Directory.CreateDirectory("Daten\\Helden\\Demohelden");
+            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+            foreach (Held h in HeldListe)
+            {
+                string fileName = System.IO.Path.Combine("Daten\\Helden\\Demohelden", System.IO.Path.ChangeExtension(h.Name, "xml"));
+                h.Export(fileName, true);
+            }
+            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+        }
+
+        private Base.CommandBase onImportDemoHelden;
+        public Base.CommandBase OnImportDemoHelden
+        {
+            get { return onImportDemoHelden; }
+        }
+        private void ImportDemoHelden(object sender)
+        {
+            if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
+                return;
+            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+            foreach (string fileName in System.IO.Directory.EnumerateFiles("Daten\\Helden\\Demohelden", "*.xml", System.IO.SearchOption.TopDirectoryOnly))
+            {
+                Held h = Held.Import(fileName, true);
+            }
+            MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+            LoadDaten();
+        }
+
 
     }
 }

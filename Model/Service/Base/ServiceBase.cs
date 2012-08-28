@@ -124,8 +124,7 @@ namespace MeisterGeister.Model.Service {
             return Context.GetObjectSet<T>().ToList<T>();
         }
 
-        //DIESER BEFEHL IST FÜR DIE MIGRATION MIT DEM ALTEN SYSTEM GEDACHT, 
-        //SOBALD DIESES KOMPLETT ABGELÖST WURDE; KANN DIESER BEFEHL ENTFERNT WERDEN
+        //Für Import
         public void UpdateList<T>() where T : class {
             List<T> tmp = Liste<T>();
             //Erhaltung des Objektes. So bleiben alle gespeicherten Referenzen in anderen Klassen korrekt.

@@ -28,7 +28,7 @@
 		</Style>
 		<DataTemplate x:Key="HeldListTemplate">
 			<StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical">
-				<TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}" />
+                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}"  ToolTip="{Binding HeldGUID}" />
 			</StackPanel>
 		</DataTemplate>
 	</UserControl.Resources>
@@ -60,7 +60,7 @@
 							</MenuItem.ToolTip>
 						</MenuItem>
 						<Separator />
-						<MenuItem Height="28" Click="MenuItemHeldImportDemo_Click" Header="Beispiel-Helden laden" x:Name="_menuItemHeldImportDemo" ToolTip="Beipiel-Helden laden.">
+                        <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" x:Name="_menuItemHeldImportDemo" ToolTip="Beipiel-Helden laden.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
 							</MenuItem.Icon>
@@ -137,7 +137,7 @@
 							</MenuItem.ToolTip>
 						</MenuItem>
 						<Separator />
-						<MenuItem Height="28" Click="MenuItemHeldImportDemo_Click" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
+                        <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
 							</MenuItem.Icon>
@@ -150,7 +150,7 @@
 				<Label Height="23" Width="Auto" Content="{Binding ItemsSource.Count, ElementName=_listBoxHelden}" VerticalContentAlignment="Center" />
 				<Label Height="23" Width="Auto" Content="Helden" VerticalContentAlignment="Center" />
 			</StackPanel>
-			<Button Height="22" Margin="135,0,0,7" Width="48" Click="_buttonExportDemo_Click" Content="Export" HorizontalAlignment="Left" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" />
+            <Button Height="22" Margin="135,0,0,7" Width="48" Command="{Binding OnExportDemoHelden}" Content="Export" HorizontalAlignment="Left" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" />
 		</Grid>
 	</Grid>
 </UserControl>

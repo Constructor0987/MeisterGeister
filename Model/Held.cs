@@ -1108,19 +1108,19 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Import Export
-        public static Held Import(string pfad)
+        public static Held Import(string pfad, bool batch = false)
         {
-            Service.SerializationService serialization = new Service.SerializationService();
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             Guid heldGuid = serialization.ImportHeld(pfad);
             if (heldGuid == Guid.Empty)
                 return null;
             Global.ContextHeld.UpdateList<Held>();
-            return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).First();
+            return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
 
-        public void Export(string pfad)
+        public void Export(string pfad, bool batch = false)
         {
-            Service.SerializationService serialization =  new Service.SerializationService();
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             serialization.ExportHeld(HeldGUID, pfad);
         }
         #endregion

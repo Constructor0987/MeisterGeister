@@ -32,9 +32,28 @@ namespace MeisterGeister.Model.Service
             }
         }
 
-        public SerializationService()
+        private static SerializationService instance = null;
+
+        private SerializationService()
         {
             LoadAllUserData();
+        }
+
+        public static SerializationService GetInstance()
+        {
+            return GetInstance(false);
+        }
+
+        public static SerializationService GetInstance(bool forceNew)
+        {
+            if (instance == null || forceNew)
+                instance = new SerializationService();
+            return instance;
+        }
+
+        public static void DestroyInstance()
+        {
+            instance = null;
         }
 
         /// <summary>
@@ -74,6 +93,7 @@ namespace MeisterGeister.Model.Service
                 results = q.ToList();
         }
 
+        #region Insert/Update/Delete/Save/New
         public virtual bool Insert<T>(T aModelObject) where T : class
         {
             try
@@ -154,60 +174,6 @@ namespace MeisterGeister.Model.Service
             }
         }
 
-        //Block deaktiviert, weil die neue Funktion LoadAllUserdata da ist.
-        ///// <summary>
-        ///// Die HeldenListe nur mit den Zuordnungstabellen und dem Inventar - ohne Stammdaten.
-        ///// </summary>
-        //public List<Held> HeldenListe()
-        //{
-        //    return HeldenListe(false);
-        //}
-
-        ///// <summary>
-        ///// Die HeldenListe, entweder nur mit den Zuordnungstabellen, oder auch mit allen Stammdaten.
-        ///// </summary>
-        //public List<Held> HeldenListe(bool mitAllenStammdaten)
-        //{
-        //    if(mitAllenStammdaten)
-        //        return Context.GetObjectSet<Held>()
-        //        .Include("Held_Talent")
-        //        .Include("Held_Sonderfertigkeit")
-        //        .Include("Held_VorNachteil")
-        //        .Include("Held_Fernkampfwaffe")
-        //        .Include("Held_Inventar")
-        //        .Include("Held_Rüstung")
-        //        .Include("Held_Schild")
-        //        .Include("Held_Waffe")
-        //        .Include("Held_Zauber")
-
-        //        .Include("Held_Talent.Talent")
-        //        .Include("Held_Sonderfertigkeit.Sonderfertigkeit")
-        //        .Include("Held_VorNachteil.VorNachteil")
-        //        .Include("Held_Fernkampfwaffe.Fernkampfwaffe")
-        //        .Include("Held_Inventar.Inventar")
-        //        .Include("Held_Rüstung.Rüstung")
-        //        .Include("Held_Schild.Schild")
-        //        .Include("Held_Waffe.Waffe")
-        //        .Include("Held_Zauber.Zauber")
-
-        //        .ToList<Held>();
-        //    //nur die Konnektoren und das Inventar
-        //    return Context.GetObjectSet<Held>()
-        //        .Include("Held_Talent")
-        //        .Include("Held_Sonderfertigkeit")
-        //        .Include("Held_VorNachteil")
-        //        .Include("Held_Fernkampfwaffe")
-        //        .Include("Held_Inventar")
-        //        .Include("Held_Rüstung")
-        //        .Include("Held_Schild")
-        //        .Include("Held_Waffe")
-        //        .Include("Held_Zauber")
-
-        //        .Include("Held_Inventar.Inventar")
-
-        //        .ToList<Held>();
-        //}
-
         public T New<T>() where T : class
         {
             return Context.CreateObject<T>();
@@ -217,7 +183,9 @@ namespace MeisterGeister.Model.Service
         {
             return Context.SaveChanges();
         }
+        #endregion
 
+        #region De-/Serialize
         public static T DeserializeObject<T>(Stream stream) where T : class
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), null, int.MaxValue, false, true, null, new ProxyDataContractResolver());
@@ -274,6 +242,42 @@ namespace MeisterGeister.Model.Service
                 stream.Close();
             }
         }
+        #endregion
+
+        #region ObjectState
+        public virtual System.Data.EntityState GetEntityState(object entity)
+        {
+            return Context.ObjectStateManager.GetObjectStateEntry(entity).State;
+        }
+
+        public virtual IEnumerable<ObjectStateEntry> GetObjectStateEntriesWithEntityState<T>(System.Data.EntityState state)
+        {
+            return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T);
+        }
+
+        public virtual IEnumerable<T> GetObjectsWithEntityState<T>(System.Data.EntityState state)
+        {
+            return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T).Select(os => (T)os.Entity);
+        }
+
+        protected virtual IDictionary<object, System.Data.EntityState> GetChangedEntities()
+        {
+            IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified);
+            IDictionary<object, System.Data.EntityState> ret = new Dictionary<object, System.Data.EntityState>();
+            foreach (ObjectStateEntry os in objectStates)
+                ret.Add(os.Entity, os.State);
+            return ret;
+        }
+
+        protected virtual IDictionary<T, System.Data.EntityState> GetChangedEntities<T>() where T : class
+        {
+            IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified).Where(os => os.Entity is T);
+            IDictionary<T, System.Data.EntityState> ret = new Dictionary<T, System.Data.EntityState>();
+            foreach (ObjectStateEntry os in objectStates)
+                ret.Add(os.Entity as T, os.State);
+            return ret;
+        }
+        #endregion
 
         #region Held
         /// <summary>
@@ -329,6 +333,40 @@ namespace MeisterGeister.Model.Service
                     return held.HeldGUID;
             }
             return Guid.Empty;
+        }
+
+        /// <summary>
+        /// Markiert alle an den Helden angehängten Informationen zum Löschen. Lediglich der Held selbst bleibt.
+        /// </summary>
+        /// <param name="h"></param>
+        /// <returns></returns>
+        public bool DeleteHeldData(Held h)
+        {
+            if(h==null)
+                return false;
+            if (Context.Held.Where(a => a.HeldGUID == h.HeldGUID).Count() == 0)
+                return true;
+            List<object> toDelete = new List<object>();
+
+            toDelete.AddRange(Context.Held_Ausrüstung.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Inventar.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Munition.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Sonderfertigkeit.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Talent.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_VorNachteil.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Zauber.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+
+            try
+            {
+                foreach (object o in toDelete)
+                    Context.DeleteObject(o);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
         #endregion
 

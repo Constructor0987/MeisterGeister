@@ -17,9 +17,9 @@ namespace MeisterGeister.Model
         }
 
         #region Import Export
-        public static Gegner Import(string pfad)
+        public static Gegner Import(string pfad, bool batch = false)
         {
-            Service.SerializationService serialization = new Service.SerializationService();
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             Guid gegnerGuid = serialization.ImportGegner(pfad);
             if (gegnerGuid == Guid.Empty)
                 return null;
@@ -27,9 +27,9 @@ namespace MeisterGeister.Model
             return Global.ContextKampf.Liste<Gegner>().Where(g => g.GegnerGUID == gegnerGuid).First();
         }
 
-        public void Export(string pfad)
+        public void Export(string pfad, bool batch = false)
         {
-            Service.SerializationService serialization = new Service.SerializationService();
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             serialization.ExportGegner(GegnerGUID, pfad);
         }
         #endregion

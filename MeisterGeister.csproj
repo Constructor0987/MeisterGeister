@@ -1024,6 +1024,16 @@
     <Resource Include="Images\Icons\helden_add.png" />
     <Resource Include="Images\Icons\kämpfer_entf.png" />
     <Resource Include="Images\Logos\Ares_Logo.png" />
+    <Resource Include="Daten\Helden\Demohelden\Ascalarion Mondfeuer.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Bärfried Tannhauser.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Hartmann von Falkenstein.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Horatio di Camino.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Megrim bren Skrayana, Die Dämonenmeisterin.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Merlin der Zauberzeichenmeister.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Mirshan Yakubansunya.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Ottojarld der Runenmeister.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Sybia Aylasuni.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Xebragral Sohn des Xormannal.xml" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1155,6 +1165,9 @@
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(TargetDir)Daten"
 copy "$(ProjectDir)Daten\DatabaseDSA.sdf" "$(TargetDir)Daten\DatabaseDSA_Standard.sdf"
+mkdir "$(TargetDir)Daten\Helden"
+mkdir "$(TargetDir)Daten\Helden\Demohelden"
+copy "$(ProjectDir)Daten\Helden\Demohelden\*.xml" "$(TargetDir)Daten\Helden\Demohelden\"
 
 if not $(ConfigurationName) == Debug (
    rmdir /s /q "$(ProjectDir)publish\$(TargetName)"
