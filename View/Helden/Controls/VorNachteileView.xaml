@@ -6,26 +6,16 @@
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="700">
+             d:DesignHeight="300" d:DesignWidth="700" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <!-- Vor-/Nachteile -->
-        <CollectionViewSource x:Key="heldHeld_VorNachteilViewSource">
-            <!--Source="{Binding Held_VorNachteil_HeldFK, Source={StaticResource heldViewSource}}">-->
-            <CollectionViewSource.SortDescriptions>
-                <ComponentModel:SortDescription PropertyName="VorNachteilTyp" />
-                <ComponentModel:SortDescription PropertyName="VorNachteil" />
-            </CollectionViewSource.SortDescriptions>
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Row.VorNachteilRow.Typ" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
         <Style x:Key="VorNachteilWertItemStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Row.VorNachteilRow.HatWert}" Value="true" />
-                        <Condition Binding="{Binding Row.VorNachteilRow.WertTyp}" Value="" />
+                        <Condition Binding="{Binding VorNachteil.HatWert}" Value="true" />
+                        <Condition Binding="{Binding VorNachteil.WertTyp}" Value="{x:Null}" />
                     </MultiDataTrigger.Conditions>
                     <Setter Property="Visibility" Value="Visible" />
                 </MultiDataTrigger>
@@ -34,7 +24,7 @@
         <Style x:Key="VorNachteilWertNumItemStyle" TargetType="{x:Type ViewGeneral:IntBox}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Row.VorNachteilRow.WertTyp}" Value="int">
+                <DataTrigger Binding="{Binding VorNachteil.WertTyp}" Value="int">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>
@@ -59,9 +49,9 @@
         </Style>
         <DataTemplate x:Key="VorNachteileTemplate">
             <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
-                <TextBlock Margin="2,4,0,0" Text="{Binding Row.VorNachteilRow.Name}" />
+                <TextBlock Margin="2,4,0,0" Text="{Binding VorNachteil.Name}" />
                 <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="20,0,0,4" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" />
-                <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="20,0,0,4" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding Wert}" />
+                <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="20,0,0,4" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" />
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
@@ -87,8 +77,8 @@
                 </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
         </ComboBox>
-        <ListBox Margin="2,46,6,6" Padding="0,0,0,10" ItemsSource="{Binding Source={StaticResource heldHeld_VorNachteilViewSource}}" ItemTemplate="{StaticResource VorNachteileTemplate}" KeyDown="ListBoxHeldVorNachteile_KeyDown" MouseDown="ListBoxVorNachteile_MouseDown" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000">
-            <ListBox.GroupStyle>
+        <ListBox Margin="2,46,6,6" Padding="0,0,0,10" ItemsSource="{Binding VorNachteilListe}" ItemTemplate="{StaticResource VorNachteileTemplate}" KeyDown="ListBoxHeldVorNachteile_KeyDown" MouseDown="ListBoxVorNachteile_MouseDown" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000">
+            <!--<ListBox.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleVorNachteile}">
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
@@ -111,7 +101,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-            </ListBox.ContextMenu>
+            </ListBox.ContextMenu>-->
         </ListBox>
     </Grid>
 </UserControl>

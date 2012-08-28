@@ -95,9 +95,10 @@ namespace MeisterGeister.View.General
         private static object OnCoerceValue(DependencyObject d, Object baseValue)
         {
             IntBox box = (IntBox)d;
+
             if (box.MarkPlusValue)
                 box.MarkRed((int)baseValue > 0);
-            
+
             if ((int)baseValue < box.MinValue)
                 return box.MinValue;
             else if ((int)baseValue > box.MaxValue)

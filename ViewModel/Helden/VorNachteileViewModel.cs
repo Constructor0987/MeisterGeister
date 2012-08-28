@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
@@ -27,11 +28,15 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 Global.SelectedHeld = value;
                 OnChanged("SelectedHeld");
+                Init();
             }
         }
 
         // Listen
-
+        public List<Model.Held_VorNachteil> VorNachteilListe
+        {
+            get { return SelectedHeld == null ? null : SelectedHeld.Held_VorNachteil.ToList(); }
+        }
 
         // Commands
 
@@ -50,9 +55,9 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        public void Init()
         {
-                
+            OnChanged("VorNachteilListe");
         }
 
         #endregion
@@ -62,9 +67,11 @@ namespace MeisterGeister.ViewModel.Helden
         private void SelectedHeldChanged()
         {
             OnChanged("SelectedHeld");
+            Init();
         }
 
         #endregion
 
     }
+    
 }

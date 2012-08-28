@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+//Eigene Usings
+using MeisterGeister.Model;
+using VM = MeisterGeister.ViewModel.Helden;
 
 namespace MeisterGeister.View.Helden.Controls
 {
@@ -23,8 +26,19 @@ namespace MeisterGeister.View.Helden.Controls
         {
             InitializeComponent();
 
-            _comboBoxVorteil.SelectedIndex = -1;
-            _comboBoxNachteil.SelectedIndex = -1;
+            //VM an View Registrieren
+            this.DataContext = new VM.VorNachteileViewModel(); 
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                (this.DataContext as VM.VorNachteileViewModel).Init();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void ListBoxVorNachteile_MouseDown(object sender, MouseButtonEventArgs e)
@@ -36,13 +50,13 @@ namespace MeisterGeister.View.Helden.Controls
         {
             if (_listBoxHeldVorNachteile.SelectedItem == null)
             {
-                _menuItemVorNachteilLöschen.IsEnabled = false;
-                _menuItemVorNachteilWiki.IsEnabled = false;
+                //_menuItemVorNachteilLöschen.IsEnabled = false;
+                //_menuItemVorNachteilWiki.IsEnabled = false;
             }
             else
             {
-                _menuItemVorNachteilLöschen.IsEnabled = true;
-                _menuItemVorNachteilWiki.IsEnabled = true;
+                //_menuItemVorNachteilLöschen.IsEnabled = true;
+                //_menuItemVorNachteilWiki.IsEnabled = true;
             }
         }
 
