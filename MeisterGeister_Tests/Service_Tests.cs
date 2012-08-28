@@ -100,5 +100,21 @@ namespace MeisterGeister_Tests
 
         }
 
+        // leider werden IDs nicht aktualisiert.
+        [Test]
+        [Ignore]
+        public void IDUpdate()
+        {
+            Held h = Global.ContextHeld.New<Held>();
+            Guid hguid = h.HeldGUID;
+            Sonderfertigkeit s = Global.ContextHeld.LoadSonderfertigkeitByName("Eiserner Wille I");
+            Assert.IsNotNull(s);
+            h.AddSonderfertigkeit(s, null);
+            Assert.AreEqual(hguid, s.Held_Sonderfertigkeit.First().HeldGUID);
+            h.HeldGUID = Guid.NewGuid();
+            Assert.AreEqual(h.HeldGUID, s.Held_Sonderfertigkeit.First().HeldGUID);
+            Global.ContextHeld.DiscardChanges();
+        }
+
     }
 }

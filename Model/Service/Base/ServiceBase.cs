@@ -149,5 +149,11 @@ namespace MeisterGeister.Model.Service {
         public virtual int Save() {
             return Context.SaveChanges();
         }
+
+        public virtual void DiscardChanges()
+        {
+            Context.DiscardChanges();
+        }
+
     }
 }

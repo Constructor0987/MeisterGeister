@@ -157,6 +157,37 @@ namespace MeisterGeister.ViewModel.Helden
             LoadDaten();
         }
 
-
+        public string ImportHeld(string pfad)
+        {
+            Guid hGuid = Guid.Empty;
+            if(!System.IO.File.Exists(pfad))
+                throw new System.IO.FileNotFoundException("Die Datei konnte nicht gefunden werden.", pfad);
+            bool isHeldenSoftware = false;
+            if (Logic.HeldenImport.HeldenSoftwareImporter.IsHeldenSoftwareFile(pfad))
+            {
+                hGuid = Logic.HeldenImport.HeldenSoftwareImporter.GetGuidFromFile(pfad);
+                isHeldenSoftware = true;
+            }
+            else if (Model.Service.SerializationService.IsMeistergeisterFile(pfad))
+            {
+                Held h = Model.Service.SerializationService.DeserializeObjectFromFile<Held>(pfad);
+                hGuid = h.HeldGUID;
+            }
+            else
+                throw new ArgumentException(String.Format("Die Datei {0} ist in keinem bekannten Format", pfad));
+            Held existing = null;
+            if ((existing = Global.ContextHeld.HeldenListe.Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null)
+            {
+                //überschreiben?
+                if (System.Windows.MessageBox.Show(String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?", hGuid, existing.Name), "Held importieren",
+                System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.No)
+                    return pfad;
+            }
+            if (isHeldenSoftware)
+                ;//Logic.HeldenImport.HeldenSoftwareImporter importer = new Logic.HeldenImport.HeldenSoftwareImporter(pfad);
+            else
+                Held.Import(pfad);
+            return pfad;
+        }
     }
 }

@@ -858,6 +858,76 @@ namespace MeisterGeister.Logic.HeldenImport
                 gui.Show();
             }
         }
+
+        public static bool IsHeldenSoftwareFile(string xmlFile)
+        {
+            System.IO.FileStream fs = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                sr = new System.IO.StreamReader(fs);
+                for (int i = 1; i <= 6 && !sr.EndOfStream; i++)
+                {
+                    string line = sr.ReadLine();
+                    if (line.Contains("helden.xsd"))
+                        return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (sr != null)
+                    sr.Close();
+                if (fs != null)
+                    fs.Close();
+            }
+            return false;
+        }
+
+        public static Guid GetGuidFromFile(string xmlFile)
+        {
+            string key = GetKeyFromFile(xmlFile);
+            if (key == null)
+                return Guid.Empty;
+            return KeyToGuid(key);
+        }
+        
+        public static string GetKeyFromFile(string xmlFile)
+        {
+            System.IO.FileStream fs = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                sr = new System.IO.StreamReader(fs);
+                for (int i = 1; i <= 6 && !sr.EndOfStream; i++)
+                {
+                    string line = sr.ReadLine();
+                    if (line != null && line.Contains("<held "))
+                    {
+                        System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex("key=\"(\\w+)\"");
+                        System.Text.RegularExpressions.Match match = re.Match(line);
+                        return match.Groups[1].Value;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (sr != null)
+                    sr.Close();
+                if (fs != null)
+                    fs.Close();
+            }
+            return null;
+        }
     }
 
     public enum ImportTypen

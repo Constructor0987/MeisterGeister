@@ -141,7 +141,11 @@ namespace MeisterGeister.Model.Extensions
             else
             {
                 if (applyChanges)
+                {
+                    if (context.ObjectStateManager.GetObjectStateEntry(attachedEntity).State == EntityState.Deleted)
+                        context.ObjectStateManager.ChangeObjectState(attachedEntity, EntityState.Modified);
                     context.ApplyCurrentValues(entityKey.EntitySetName, entity);
+                }
                 return attachedEntity;
             }
         }
@@ -324,5 +328,37 @@ namespace MeisterGeister.Model.Extensions
             }
         }
 
+        public static IEnumerable<ObjectStateEntry> GetChangedObjects(this ObjectContext context)
+        {
+            return context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified);
+        }
+
+        public static void DiscardChanges(this ObjectContext context)
+        {
+
+            foreach (ObjectStateEntry entry in context.GetChangedObjects())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Deleted:
+                        entry.ChangeState(EntityState.Unchanged);
+                        goto case System.Data.EntityState.Modified;
+                    case EntityState.Modified:
+                        System.Data.Common.DbDataRecord original = entry.OriginalValues;
+                        foreach (string prop in entry.GetModifiedProperties())
+                        {
+                            int ordinal = original.GetOrdinal(prop);
+                            entry.CurrentValues.SetValue(ordinal, original[ordinal]);
+                            //RaisePropertyChanged(entry.Entity, prop);
+                        }
+                        break;
+                    case EntityState.Added:
+                        entry.ChangeState(EntityState.Detached);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

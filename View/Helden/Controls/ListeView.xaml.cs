@@ -47,12 +47,8 @@ namespace MeisterGeister.View.Helden.Controls
 
         private void ButtonHeldNeu_Click(object sender, RoutedEventArgs e)
         {
+            _buttonHeldNeu.ContextMenu.PlacementTarget = this;
             _buttonHeldNeu.ContextMenu.IsOpen = true;
-        }
-
-        private void _buttonExportDemo_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO JT: Held.GeneriereDemoHelden();
         }
 
         private void _listBoxHelden_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -163,7 +159,8 @@ namespace MeisterGeister.View.Helden.Controls
             objDialog.Filter = "XML-Dateien (*.xml)|*.xml";
             objDialog.DefaultExt = "xml";
             objDialog.AddExtension = true;
-            objDialog.FileName = (this.DataContext as VM.ListeViewModel).SelectedHeld.Name;
+            if ((this.DataContext as VM.ListeViewModel).SelectedHeld != null)
+                objDialog.FileName = (this.DataContext as VM.ListeViewModel).SelectedHeld.Name;
             objDialog.InitialDirectory = _workingPath;
             DialogResult objResult = objDialog.ShowDialog();
             if (objResult == DialogResult.OK)
@@ -193,33 +190,30 @@ namespace MeisterGeister.View.Helden.Controls
 
         private void MenuItemHeldImport_Click(object sender, RoutedEventArgs e)
         {
-            //TODO JT: 
-            //if (System.Windows.MessageBox.Show("Beim Importieren wird der ausgewählte Held überschrieben. Soll der Vorgang fortgesetzt werden?", "Held importieren",
-            //    MessageBoxButton.YesNo) == MessageBoxResult.No)
-            //    return;
-            //var objDialog = new OpenFileDialog();
-            //objDialog.Title = "Held importieren";
-            //objDialog.Filter = "MeisterGeister und Helden-Software Dateien (*.xml)|*.xml";
-            //objDialog.DefaultExt = "xml";
-            //objDialog.AddExtension = true;
-            //objDialog.FileName = SelectedHeld.Name;
-            //objDialog.InitialDirectory = _workingPath;
-            //DialogResult objResult = objDialog.ShowDialog();
-            //if (objResult == DialogResult.OK)
-            //{
-            //    try
-            //    {
-            //        string expPfad = SelectedHeld.ImportHeld(objDialog.FileName);
-            //        _workingPath = expPfad.Replace(objDialog.SafeFileName, null);
+            var objDialog = new OpenFileDialog();
+            objDialog.Title = "Held importieren";
+            objDialog.Filter = "MeisterGeister und Helden-Software Dateien (*.xml)|*.xml";
+            objDialog.DefaultExt = "xml";
+            objDialog.AddExtension = true;
+            if((this.DataContext as VM.ListeViewModel).SelectedHeld != null)
+                objDialog.FileName = (this.DataContext as VM.ListeViewModel).SelectedHeld.Name; 
+            objDialog.InitialDirectory = _workingPath;
+            DialogResult objResult = objDialog.ShowDialog();
+            if (objResult == DialogResult.OK)
+            {
+                try
+                {
+                    string expPfad = (this.DataContext as VM.ListeViewModel).ImportHeld(objDialog.FileName);
+                    _workingPath = expPfad.Replace(objDialog.SafeFileName, null);
 
-            //        System.Windows.MessageBox.Show("Der Held wurde aus \'" + expPfad + "\' importiert.");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
-            //        errWin.ShowDialog();
-            //    }
-            //}
+                    System.Windows.MessageBox.Show("Der Held wurde aus \'" + expPfad + "\' importiert.");
+                }
+                catch (Exception ex)
+                {
+                    MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
+                    errWin.ShowDialog();
+                }
+            }
         }
 
         private void MenuItemHeldImportNeu_Click(object sender, RoutedEventArgs e)

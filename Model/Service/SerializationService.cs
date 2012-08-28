@@ -93,7 +93,7 @@ namespace MeisterGeister.Model.Service
                 results = q.ToList();
         }
 
-        #region Insert/Update/Delete/Save/New
+        #region Insert/Update/Delete/Save/New/Discard
         public virtual bool Insert<T>(T aModelObject) where T : class
         {
             try
@@ -182,6 +182,11 @@ namespace MeisterGeister.Model.Service
         public int Save()
         {
             return Context.SaveChanges();
+        }
+
+        public virtual void DiscardChanges()
+        {
+            Context.DiscardChanges();
         }
         #endregion
 
@@ -282,14 +287,14 @@ namespace MeisterGeister.Model.Service
         #region Held
         /// <summary>
         /// Aktualisert den Held und alle an ihn angehängten Zuordnungstabellen sowie das Inventar. Stammdaten bleiben unangestastet.
-        /// Bisher nur additiv. Es wird momentan nichts gelöscht.
         /// </summary>
         public bool InsertOrUpdateHeld(Held held)
         {
-            // Mögliche erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
-            // So kann man z.B. einen Guid/ID-Filter realisieren um userdaten von stammdaten zu trennen bzw stammdaten nciht zu überschreiben
+            // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
+            // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
             try
             {
+                DeleteHeldData(held);
                 Context.AttachObjectGraph(held,
                     h => h.Held_Inventar,
                     h => h.Held_Inventar.First().Inventar,
@@ -422,5 +427,34 @@ namespace MeisterGeister.Model.Service
             return Guid.Empty;
         }
         #endregion
+
+        public static bool IsMeistergeisterFile(string xmlFile)
+        {
+            System.IO.FileStream fs = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                sr = new System.IO.StreamReader(fs);
+                char[] buffer = new char[400];
+                sr.Read(buffer, 0, 400);
+                string line = new string(buffer);
+                if (line.Contains("MeisterGeister.Model"))
+                    return true;
+                
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (sr != null)
+                    sr.Close();
+                if (fs != null)
+                    fs.Close();
+            }
+            return false;
+        }
     }
 }
