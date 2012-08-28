@@ -2171,7 +2171,7 @@ namespace MeisterGeister.Logic.General
             System.Collections.Generic.List<Held> heldList = new System.Collections.Generic.List<Held>();
             foreach (DatabaseDSADataSet.HeldRow heldRow in App.DatenDataSet.Held)
             {
-                if (heldRow.AktiveHeldengruppe)
+                if (!heldRow.IsAktiveHeldengruppeNull() && heldRow.AktiveHeldengruppe)
                     heldList.Add(new Held(heldRow));
             }
             return heldList;
