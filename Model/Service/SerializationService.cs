@@ -315,6 +315,31 @@ namespace MeisterGeister.Model.Service
             }
         }
 
+        public Guid CloneHeld(Guid heldGuid)
+        {
+            return CloneHeld(heldGuid, Guid.NewGuid());
+        }
+
+        private static Held ReplaceGuid(Held held, Guid newGuid)
+        {
+            string xml = SerializeObject<Held>(held);
+            xml = xml.Replace(String.Format("<HeldGUID>{0}</HeldGUID>", held.HeldGUID), String.Format("<HeldGUID>{0}</HeldGUID>", newGuid));
+            Held newHeld = DeserializeObject<Held>(xml);
+            return newHeld;
+        }
+
+        public Guid CloneHeld(Guid heldGuid, Guid newGuid)
+        {
+            Held held = Context.Held.Where(h => h.HeldGUID == heldGuid).First();
+            if (held != null)
+            {
+                Held newHeld = ReplaceGuid(held, newGuid);
+                if (InsertOrUpdateHeld(newHeld))
+                    return newHeld.HeldGUID;
+            }
+            return Guid.Empty;
+        }
+
         public void ExportHeld(Guid heldGuid, string pfad)
         {
             //Userdaten geladen
@@ -325,18 +350,33 @@ namespace MeisterGeister.Model.Service
             }
         }
 
+
         /// <summary>
-        /// Mit überschreiben.
+        /// Importiert einen Helden aus einer XML-Datei. Bestehende Daten werden überschrieben.
         /// </summary>
+        /// <param name="pfad">Xml-Datei</param>
         public Guid ImportHeld(string pfad)
         {
-            //Userdaten geladen
-            Held held = DeserializeObjectFromFile<Held>(pfad);
-            if (held != null)
-            {
-                if(InsertOrUpdateHeld(held))
-                    return held.HeldGUID;
-            }
+            return ImportHeld(pfad, Guid.Empty);
+        }
+        
+        /// <summary>
+        /// Importiert einen Helden aus einer XML-Datei.
+        /// </summary>
+        /// <param name="pfad">Xml-Datei</param>
+        /// <param name="newGuid">Wenn Guid.Empty, dann wird überschrieben, sonst wird eine Kopie mit der neuen Guid importiert.</param>
+        /// <returns>Guid des importierten Helden oder Guid.Empty</returns>
+        public Guid ImportHeld(string pfad, Guid newGuid)
+        {
+                //Userdaten geladen
+                Held held = DeserializeObjectFromFile<Held>(pfad);;
+                if (newGuid != Guid.Empty)
+                    held = ReplaceGuid(held, newGuid);
+                if (held != null)
+                {
+                    if (InsertOrUpdateHeld(held))
+                        return held.HeldGUID;
+                }
             return Guid.Empty;
         }
 
@@ -377,7 +417,7 @@ namespace MeisterGeister.Model.Service
 
         #region Gegner
         /// <summary>
-        /// Aktualisert den Held und alle an ihn angehängten Zuordnungstabellen sowie das Inventar. Stammdaten bleiben unangestastet.
+        /// Aktualisert den Gegner und alle an ihn angehängten Zuordnungstabellen. Stammdaten bleiben unangestastet.
         /// Bisher nur additiv. Es wird momentan nichts gelöscht.
         /// </summary>
         public bool InsertOrUpdateGegner(Gegner gegner)
@@ -423,6 +463,20 @@ namespace MeisterGeister.Model.Service
             {
                 if (InsertOrUpdateGegner(gegner))
                     return gegner.GegnerGUID;
+            }
+            return Guid.Empty;
+        }
+
+        public Guid CloneGegner(Guid gegnerGuid, Guid newGuid)
+        {
+            Gegner gegner = Context.Gegner.Where(h => h.GegnerGUID == gegnerGuid).First();
+            if (gegner != null)
+            {
+                string xml = SerializeObject<Gegner>(gegner);
+                xml = xml.Replace(String.Format("<GegnerGUID>{0}</GegnerGUID>", gegnerGuid), String.Format("<GegnerGUID>{0}</GegnerGUID>", newGuid));
+                Gegner newGegner = DeserializeObject<Gegner>(xml);
+                if (InsertOrUpdateGegner(newGegner))
+                    return newGuid;
             }
             return Guid.Empty;
         }

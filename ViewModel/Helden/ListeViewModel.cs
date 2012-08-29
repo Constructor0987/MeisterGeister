@@ -18,6 +18,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             onNewHeld = new Base.CommandBase(NewHeld, null);
             onDeleteHeld = new Base.CommandBase(DeleteHeld, null);
+            onCloneHeld = new Base.CommandBase(CloneHeld, null);
             onExportDemoHelden = new Base.CommandBase(ExportDemoHelden, null);
             onImportDemoHelden = new Base.CommandBase(ImportDemoHelden, null);
             
@@ -176,18 +177,40 @@ namespace MeisterGeister.ViewModel.Helden
             else
                 throw new ArgumentException(String.Format("Die Datei {0} ist in keinem bekannten Format", pfad));
             Held existing = null;
+            bool overwrite = true;
             if ((existing = Global.ContextHeld.HeldenListe.Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null)
             {
+                //TODO: messagebox mit Überschreiben, Kopie importieren, Abbrechen
                 //überschreiben?
-                if (System.Windows.MessageBox.Show(String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?", hGuid, existing.Name), "Held importieren",
-                System.Windows.MessageBoxButton.YesNo) == System.Windows.MessageBoxResult.No)
+                System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show(
+                        String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name), 
+                        "Held importieren",
+                        System.Windows.MessageBoxButton.YesNoCancel
+                    );
+                if (result == System.Windows.MessageBoxResult.Cancel || result == System.Windows.MessageBoxResult.None)
                     return pfad;
+                else if (result == System.Windows.MessageBoxResult.No)
+                    overwrite = false;
             }
             if (isHeldenSoftware)
+                //TODO HeldenImport mit Kopie
                 ;//Logic.HeldenImport.HeldenSoftwareImporter importer = new Logic.HeldenImport.HeldenSoftwareImporter(pfad);
             else
-                Held.Import(pfad);
+                Held.Import(pfad, overwrite?Guid.Empty:Guid.NewGuid());
+            LoadDaten();
             return pfad;
+        }
+
+
+        private Base.CommandBase onCloneHeld;
+        public Base.CommandBase OnCloneHeld
+        {
+            get { return onCloneHeld; }
+        }
+        private void CloneHeld(object sender)
+        {
+            Held h = SelectedHeld.Clone();
+            LoadDaten();
         }
     }
 }

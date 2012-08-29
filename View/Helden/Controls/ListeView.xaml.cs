@@ -76,7 +76,7 @@ namespace MeisterGeister.View.Helden.Controls
                     }
                     try
                     {
-                        //TODO JT: string expPfad = Held.ImportHeldNeu(file);
+                        string expPfad = (this.DataContext as VM.ListeViewModel).ImportHeld(file);
                     }
                     catch (Exception ex)
                     {
@@ -126,30 +126,25 @@ namespace MeisterGeister.View.Helden.Controls
             }
         }
 
-        private void MenuItemHeldImportDemo_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                _listBoxHelden.UnselectAll();
-                _listBoxHelden.SelectionChanged -= ListBoxHelden_SelectionChanged;
-                //TODO JT: Held.LadeDemoHelden();
-                _listBoxHelden.SelectionChanged += ListBoxHelden_SelectionChanged;
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-                System.Windows.MessageBox.Show(ex.FileName + "\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
+        //private void MenuItemHeldImportDemo_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        _listBoxHelden.UnselectAll();
+        //        _listBoxHelden.SelectionChanged -= ListBoxHelden_SelectionChanged;
+        //        //TODO JT: Held.LadeDemoHelden();
+        //        _listBoxHelden.SelectionChanged += ListBoxHelden_SelectionChanged;
+        //    }
+        //    catch (System.IO.FileNotFoundException ex)
+        //    {
+        //        System.Windows.MessageBox.Show(ex.FileName + "\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            }
-            catch (System.Xml.XmlException ex)
-            {
-                System.Windows.MessageBox.Show("Die Demo-Helden Datei ist beschädigt." + "\n\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void MenuItemHeldDelete_Click(object sender, RoutedEventArgs e)
-        {
-            HeldDelete();
-        }
+        //    }
+        //    catch (System.Xml.XmlException ex)
+        //    {
+        //        System.Windows.MessageBox.Show("Die Demo-Helden Datei ist beschädigt." + "\n\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
 
         private void MenuItemHeldExport_Click(object sender, RoutedEventArgs e)
         {
@@ -216,46 +211,11 @@ namespace MeisterGeister.View.Helden.Controls
             }
         }
 
-        private void MenuItemHeldImportNeu_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO JT: 
-            //var objDialog = new OpenFileDialog();
-            //objDialog.Title = "Neuen Helden importieren";
-            //objDialog.Filter = "MeisterGeister und Helden-Software Dateien (*.xml)|*.xml";
-            //objDialog.DefaultExt = "xml";
-            //objDialog.AddExtension = true;
-            //objDialog.FileName = SelectedHeld.Name;
-            //objDialog.InitialDirectory = _workingPath;
-            //DialogResult objResult = objDialog.ShowDialog();
-            //if (objResult == DialogResult.OK)
-            //{
-            //    try
-            //    {
-            //        string expPfad = Held.ImportHeldNeu(objDialog.FileName);
-            //        _workingPath = expPfad.Replace(objDialog.SafeFileName, null);
-
-            //        System.Windows.MessageBox.Show("Der Held wurde aus \'" + expPfad + "\' importiert."
-            //            + "\n\nHINWEIS: Helden können auch per Drag&Drop importiert werden.");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
-            //        errWin.ShowDialog();
-            //    }
-            //}
-        }
-
-        private void MenuItemHeldKopieren_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO JT: SelectedHeld.Kopie();
-        }
-
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             if (_listBoxHelden.SelectedItem == null)
             {
                 _menuItemHeldLöschen.IsEnabled = false;
-                _menuItemHeldImport.IsEnabled = false;
                 _menuItemHeldExport.IsEnabled = false;
                 _menuItemHeldKopie.IsEnabled = false;
             }

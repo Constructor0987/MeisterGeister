@@ -1110,8 +1110,16 @@ namespace MeisterGeister.Model
         #region Import Export
         public static Held Import(string pfad, bool batch = false)
         {
+            return Import(pfad, Guid.Empty, batch);
+        }
+        /// <summary>
+        /// Wenn newGuid nicht Emtpy ist, dann wird der held mit der neuen Guid als Kopie importiert.
+        /// </summary>
+        /// <returns></returns>
+        public static Held Import(string pfad, Guid newGuid, bool batch = false)
+        {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            Guid heldGuid = serialization.ImportHeld(pfad);
+            Guid heldGuid = serialization.ImportHeld(pfad, newGuid);
             if (heldGuid == Guid.Empty)
                 return null;
             Global.ContextHeld.UpdateList<Held>();
@@ -1122,6 +1130,21 @@ namespace MeisterGeister.Model
         {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             serialization.ExportHeld(HeldGUID, pfad);
+        }
+
+        public Held Clone(bool batch = false)
+        {
+            return Clone(Guid.NewGuid(), batch);
+        }
+
+        public Held Clone(Guid newGuid, bool batch = false)
+        {
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
+            Guid heldGuid = serialization.CloneHeld(HeldGUID, newGuid);
+            if (heldGuid == Guid.Empty)
+                return null;
+            Global.ContextHeld.UpdateList<Held>();
+            return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
         #endregion
 
