@@ -240,7 +240,7 @@ namespace MeisterGeister.Model
             set
             {
                 LE_Mod = value;
-                NotifyPropertyChanged("LebensenergieMod");
+                OnChanged("LebensenergieMod");
             }
         }
         [DependentProperty("LE_Aktuell")]

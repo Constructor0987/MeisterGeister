@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -98,7 +98,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_ort = value;
-    			NotifyPropertyChanged("Ort");
+    			OnChanged("Ort");
     		}
     
         }
@@ -111,7 +111,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_anzahl = value;
-    			NotifyPropertyChanged("Anzahl");
+    			OnChanged("Anzahl");
     		}
     
         }
@@ -173,7 +173,7 @@ namespace MeisterGeister.Model
     
         private void FixupFernkampfwaffe(Fernkampfwaffe previousValue)
         {
-    		NotifyPropertyChanged("Fernkampfwaffe");
+    		OnChanged("Fernkampfwaffe");
             if (previousValue != null && previousValue.Held_Munition.Contains(this))
             {
                 previousValue.Held_Munition.Remove(this);
@@ -194,7 +194,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld(Held previousValue)
         {
-    		NotifyPropertyChanged("Held");
+    		OnChanged("Held");
             if (previousValue != null && previousValue.Held_Munition.Contains(this))
             {
                 previousValue.Held_Munition.Remove(this);
@@ -215,7 +215,7 @@ namespace MeisterGeister.Model
     
         private void FixupMunition(Munition previousValue)
         {
-    		NotifyPropertyChanged("Munition");
+    		OnChanged("Munition");
             if (previousValue != null && previousValue.Held_Munition.Contains(this))
             {
                 previousValue.Held_Munition.Remove(this);

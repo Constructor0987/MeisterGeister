@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_farbeID = value;
-    			NotifyPropertyChanged("FarbeID");
+    			OnChanged("FarbeID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -101,7 +101,7 @@ namespace MeisterGeister.Model
     
         private void FixupRasse_Farbe(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Rasse_Farbe");
+    		OnChanged("Rasse_Farbe");
             if (e.NewItems != null)
             {
                 foreach (Rasse_Farbe item in e.NewItems)

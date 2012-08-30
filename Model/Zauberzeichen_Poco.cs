@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_zauberzeichenGUID = value;
-    			NotifyPropertyChanged("ZauberzeichenGUID");
+    			OnChanged("ZauberzeichenGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_typ = value;
-    			NotifyPropertyChanged("Typ");
+    			OnChanged("Typ");
     		}
     
         }
@@ -99,7 +99,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_lernkosten = value;
-    			NotifyPropertyChanged("Lernkosten");
+    			OnChanged("Lernkosten");
     		}
     
         }
@@ -112,7 +112,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_komplexität = value;
-    			NotifyPropertyChanged("Komplexität");
+    			OnChanged("Komplexität");
     		}
     
         }
@@ -125,7 +125,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_merkmal = value;
-    			NotifyPropertyChanged("Merkmal");
+    			OnChanged("Merkmal");
     		}
     
         }
@@ -138,7 +138,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_reichweitenDivisor = value;
-    			NotifyPropertyChanged("ReichweitenDivisor");
+    			OnChanged("ReichweitenDivisor");
     		}
     
         }
@@ -151,7 +151,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -164,7 +164,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_verbreitung = value;
-    			NotifyPropertyChanged("Verbreitung");
+    			OnChanged("Verbreitung");
     		}
     
         }
@@ -177,7 +177,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_komponenten = value;
-    			NotifyPropertyChanged("Komponenten");
+    			OnChanged("Komponenten");
     		}
     
         }
@@ -190,7 +190,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -203,7 +203,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_setting = value;
-    			NotifyPropertyChanged("Setting");
+    			OnChanged("Setting");
     		}
     
         }
@@ -233,7 +233,7 @@ namespace MeisterGeister.Model
     
         private void FixupSonderfertigkeit(Sonderfertigkeit previousValue)
         {
-    		NotifyPropertyChanged("Sonderfertigkeit");
+    		OnChanged("Sonderfertigkeit");
             if (previousValue != null && previousValue.Zauberzeichen.Contains(this))
             {
                 previousValue.Zauberzeichen.Remove(this);

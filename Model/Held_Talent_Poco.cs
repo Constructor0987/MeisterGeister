@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -60,7 +60,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_taW = value;
-    			NotifyPropertyChanged("TaW");
+    			OnChanged("TaW");
     		}
     
         }
@@ -92,7 +92,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -105,7 +105,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_zuteilungAT = value;
-    			NotifyPropertyChanged("ZuteilungAT");
+    			OnChanged("ZuteilungAT");
     		}
     
         }
@@ -118,7 +118,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_zuteilungPA = value;
-    			NotifyPropertyChanged("ZuteilungPA");
+    			OnChanged("ZuteilungPA");
     		}
     
         }
@@ -164,7 +164,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld(Held previousValue)
         {
-    		NotifyPropertyChanged("Held");
+    		OnChanged("Held");
             if (previousValue != null && previousValue.Held_Talent.Contains(this))
             {
                 previousValue.Held_Talent.Remove(this);
@@ -185,7 +185,7 @@ namespace MeisterGeister.Model
     
         private void FixupTalent(Talent previousValue)
         {
-    		NotifyPropertyChanged("Talent");
+    		OnChanged("Talent");
             if (previousValue != null && previousValue.Held_Talent.Contains(this))
             {
                 previousValue.Held_Talent.Remove(this);

@@ -31,7 +31,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Kämpfer.FreieAktionen = 2 + bonus;
                 //Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
                 //TODO JT: PABonusDurchHoheIni(bonus) anlegen , wenn bonus > 0;
-                NotifyPropertyChanged("Initiative");
+                OnChanged("Initiative");
             }
         }
         public int InitiativeBasis
@@ -57,7 +57,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(String info)
+        public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -104,7 +104,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             base.Add(ki);
             _kämpfer_kämpferinfo.Add(ki.Kämpfer, ki);
             ki.PropertyChanged += OnKämpferInfoChanged;
-            NotifyPropertyChanged("List");
+            OnChanged("List");
             Sort();
         }
 
@@ -124,14 +124,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             ki.PropertyChanged -= OnKämpferInfoChanged;
             base.Remove(ki);
-            NotifyPropertyChanged("List");
+            OnChanged("List");
         }
 
         public new void RemoveAt(int index)
         {
             this[index].PropertyChanged -= OnKämpferInfoChanged;
             base.RemoveAt(index);
-            NotifyPropertyChanged("List");
+            OnChanged("List");
         }
 
         public new void RemoveAll(Predicate<KämpferInfo> match)
@@ -159,7 +159,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void Sort()
         {
             base.Sort(CompareInitiative);
-            NotifyPropertyChanged("Sort");
+            OnChanged("Sort");
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(String info)
+        public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {

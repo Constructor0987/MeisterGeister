@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_trageortGUID = value;
-    			NotifyPropertyChanged("TrageortGUID");
+    			OnChanged("TrageortGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tragkraftFaktor = value;
-    			NotifyPropertyChanged("TragkraftFaktor");
+    			OnChanged("TragkraftFaktor");
     		}
     
         }
@@ -114,7 +114,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_Ausrüstung(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_Ausrüstung");
+    		OnChanged("Held_Ausrüstung");
             if (e.NewItems != null)
             {
                 foreach (Held_Ausrüstung item in e.NewItems)

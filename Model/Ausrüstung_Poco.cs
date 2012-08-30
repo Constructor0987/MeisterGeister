@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_ausrüstungGUID = value;
-    			NotifyPropertyChanged("AusrüstungGUID");
+    			OnChanged("AusrüstungGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_preis = value;
-    			NotifyPropertyChanged("Preis");
+    			OnChanged("Preis");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_gewicht = value;
-    			NotifyPropertyChanged("Gewicht");
+    			OnChanged("Gewicht");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_verbreitung = value;
-    			NotifyPropertyChanged("Verbreitung");
+    			OnChanged("Verbreitung");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_setting = value;
-    			NotifyPropertyChanged("Setting");
+    			OnChanged("Setting");
     		}
     
         }
@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -243,7 +243,7 @@ namespace MeisterGeister.Model
     
         private void FixupFernkampfwaffe(Fernkampfwaffe previousValue)
         {
-    		NotifyPropertyChanged("Fernkampfwaffe");
+    		OnChanged("Fernkampfwaffe");
             if (previousValue != null && ReferenceEquals(previousValue.Ausrüstung, this))
             {
                 previousValue.Ausrüstung = null;
@@ -257,7 +257,7 @@ namespace MeisterGeister.Model
     
         private void FixupRüstung(Rüstung previousValue)
         {
-    		NotifyPropertyChanged("Rüstung");
+    		OnChanged("Rüstung");
             if (previousValue != null && ReferenceEquals(previousValue.Ausrüstung, this))
             {
                 previousValue.Ausrüstung = null;
@@ -271,7 +271,7 @@ namespace MeisterGeister.Model
     
         private void FixupSchild(Schild previousValue)
         {
-    		NotifyPropertyChanged("Schild");
+    		OnChanged("Schild");
             if (previousValue != null && ReferenceEquals(previousValue.Ausrüstung, this))
             {
                 previousValue.Ausrüstung = null;
@@ -285,7 +285,7 @@ namespace MeisterGeister.Model
     
         private void FixupWaffe(Waffe previousValue)
         {
-    		NotifyPropertyChanged("Waffe");
+    		OnChanged("Waffe");
             if (previousValue != null && ReferenceEquals(previousValue.Ausrüstung, this))
             {
                 previousValue.Ausrüstung = null;
@@ -299,7 +299,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_Ausrüstung(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_Ausrüstung");
+    		OnChanged("Held_Ausrüstung");
             if (e.NewItems != null)
             {
                 foreach (Held_Ausrüstung item in e.NewItems)

@@ -26,7 +26,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 _inimod = value;
-                NotifyPropertyChanged("Initiative");
+                OnChanged("Initiative");
             }
         }
 
@@ -49,13 +49,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private void OnKämpferInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
         {
             if (args.PropertyName == "Initiative")
-                NotifyPropertyChanged("Initiative");
+                OnChanged("Initiative");
         }
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(String info)
+        public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -99,7 +99,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             base.Add(ki);
             ki.PropertyChanged += OnManöverInfoChanged;
-            NotifyPropertyChanged("List");
+            OnChanged("List");
             Sort();
         }
 
@@ -124,14 +124,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             mi.PropertyChanged -= OnManöverInfoChanged;
             base.Remove(mi);
-            NotifyPropertyChanged("List");
+            OnChanged("List");
         }
 
         public new void RemoveAt(int index)
         {
             this[index].PropertyChanged -= OnManöverInfoChanged;
             base.RemoveAt(index);
-            NotifyPropertyChanged("List");
+            OnChanged("List");
         }
 
         public new void RemoveAll(Predicate<ManöverInfo> match)
@@ -151,7 +151,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 mi.PropertyChanged -= OnManöverInfoChanged;
                 base.Remove(mi);
             }
-            NotifyPropertyChanged("List");
+            OnChanged("List");
         }
         #endregion
 
@@ -164,7 +164,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void Sort()
         {
             base.Sort(CompareInitiative);
-            NotifyPropertyChanged("Sort");
+            OnChanged("Sort");
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(String info)
+        public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {

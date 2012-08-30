@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -60,7 +60,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -73,7 +73,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPWürfel = value;
-    			NotifyPropertyChanged("TPWürfel");
+    			OnChanged("TPWürfel");
     		}
     
         }
@@ -86,7 +86,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPWürfelAnzahl = value;
-    			NotifyPropertyChanged("TPWürfelAnzahl");
+    			OnChanged("TPWürfelAnzahl");
     		}
     
         }
@@ -99,7 +99,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPBonus = value;
-    			NotifyPropertyChanged("TPBonus");
+    			OnChanged("TPBonus");
     		}
     
         }
@@ -112,7 +112,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_aT = value;
-    			NotifyPropertyChanged("AT");
+    			OnChanged("AT");
     		}
     
         }
@@ -125,7 +125,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_dK = value;
-    			NotifyPropertyChanged("DK");
+    			OnChanged("DK");
     		}
     
         }
@@ -138,7 +138,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_reichweite = value;
-    			NotifyPropertyChanged("Reichweite");
+    			OnChanged("Reichweite");
     		}
     
         }
@@ -151,7 +151,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -181,7 +181,7 @@ namespace MeisterGeister.Model
     
         private void FixupGegner(Gegner previousValue)
         {
-    		NotifyPropertyChanged("Gegner");
+    		OnChanged("Gegner");
             if (previousValue != null && previousValue.Gegner_Angriff.Contains(this))
             {
                 previousValue.Gegner_Angriff.Remove(this);

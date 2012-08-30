@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -79,7 +79,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_erschwernis = value;
-    			NotifyPropertyChanged("Erschwernis");
+    			OnChanged("Erschwernis");
     		}
     
         }
@@ -92,7 +92,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tP = value;
-    			NotifyPropertyChanged("TP");
+    			OnChanged("TP");
     		}
     
         }
@@ -105,7 +105,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -151,7 +151,7 @@ namespace MeisterGeister.Model
     
         private void FixupGegner(Gegner previousValue)
         {
-    		NotifyPropertyChanged("Gegner");
+    		OnChanged("Gegner");
             if (previousValue != null && previousValue.Gegner_Kampfregel.Contains(this))
             {
                 previousValue.Gegner_Kampfregel.Remove(this);
@@ -172,7 +172,7 @@ namespace MeisterGeister.Model
     
         private void FixupKampfregel(Kampfregel previousValue)
         {
-    		NotifyPropertyChanged("Kampfregel");
+    		OnChanged("Kampfregel");
             if (previousValue != null && previousValue.Gegner_Kampfregel.Contains(this))
             {
                 previousValue.Gegner_Kampfregel.Remove(this);

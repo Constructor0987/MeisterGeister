@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bestiariumID = value;
-    			NotifyPropertyChanged("BestiariumID");
+    			OnChanged("BestiariumID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_iNI_Basis = value;
-    			NotifyPropertyChanged("INI_Basis");
+    			OnChanged("INI_Basis");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_iNI_Zufall = value;
-    			NotifyPropertyChanged("INI_Zufall");
+    			OnChanged("INI_Zufall");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kampfwerte = value;
-    			NotifyPropertyChanged("Kampfwerte");
+    			OnChanged("Kampfwerte");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_pA = value;
-    			NotifyPropertyChanged("PA");
+    			OnChanged("PA");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_lE = value;
-    			NotifyPropertyChanged("LE");
+    			OnChanged("LE");
     		}
     
         }
@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rS = value;
-    			NotifyPropertyChanged("RS");
+    			OnChanged("RS");
     		}
     
         }
@@ -145,7 +145,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_gS = value;
-    			NotifyPropertyChanged("GS");
+    			OnChanged("GS");
     		}
     
         }
@@ -158,7 +158,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_aU = value;
-    			NotifyPropertyChanged("AU");
+    			OnChanged("AU");
     		}
     
         }
@@ -171,7 +171,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_mR = value;
-    			NotifyPropertyChanged("MR");
+    			OnChanged("MR");
     		}
     
         }
@@ -184,7 +184,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kO = value;
-    			NotifyPropertyChanged("KO");
+    			OnChanged("KO");
     		}
     
         }
@@ -197,7 +197,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_besonderheiten = value;
-    			NotifyPropertyChanged("Besonderheiten");
+    			OnChanged("Besonderheiten");
     		}
     
         }
@@ -210,7 +210,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_sonderfertigkeiten = value;
-    			NotifyPropertyChanged("Sonderfertigkeiten");
+    			OnChanged("Sonderfertigkeiten");
     		}
     
         }
@@ -223,7 +223,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_quelle = value;
-    			NotifyPropertyChanged("Quelle");
+    			OnChanged("Quelle");
     		}
     
         }
@@ -236,7 +236,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSKopf = value;
-    			NotifyPropertyChanged("RSKopf");
+    			OnChanged("RSKopf");
     		}
     
         }
@@ -249,7 +249,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSBrust = value;
-    			NotifyPropertyChanged("RSBrust");
+    			OnChanged("RSBrust");
     		}
     
         }
@@ -262,7 +262,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSRücken = value;
-    			NotifyPropertyChanged("RSRücken");
+    			OnChanged("RSRücken");
     		}
     
         }
@@ -275,7 +275,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSArmL = value;
-    			NotifyPropertyChanged("RSArmL");
+    			OnChanged("RSArmL");
     		}
     
         }
@@ -288,7 +288,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSArmR = value;
-    			NotifyPropertyChanged("RSArmR");
+    			OnChanged("RSArmR");
     		}
     
         }
@@ -301,7 +301,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSBauch = value;
-    			NotifyPropertyChanged("RSBauch");
+    			OnChanged("RSBauch");
     		}
     
         }
@@ -314,7 +314,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSBeinL = value;
-    			NotifyPropertyChanged("RSBeinL");
+    			OnChanged("RSBeinL");
     		}
     
         }
@@ -327,7 +327,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rSBeinR = value;
-    			NotifyPropertyChanged("RSBeinR");
+    			OnChanged("RSBeinR");
     		}
     
         }

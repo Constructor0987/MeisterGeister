@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_zauberID = value;
-    			NotifyPropertyChanged("ZauberID");
+    			OnChanged("ZauberID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_eigenschaft1 = value;
-    			NotifyPropertyChanged("Eigenschaft1");
+    			OnChanged("Eigenschaft1");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_eigenschaft2 = value;
-    			NotifyPropertyChanged("Eigenschaft2");
+    			OnChanged("Eigenschaft2");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_eigenschaft3 = value;
-    			NotifyPropertyChanged("Eigenschaft3");
+    			OnChanged("Eigenschaft3");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_komplex = value;
-    			NotifyPropertyChanged("Komplex");
+    			OnChanged("Komplex");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_repräsentationen = value;
-    			NotifyPropertyChanged("Repräsentationen");
+    			OnChanged("Repräsentationen");
     		}
     
         }
@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_merkmale = value;
-    			NotifyPropertyChanged("Merkmale");
+    			OnChanged("Merkmale");
     		}
     
         }
@@ -145,7 +145,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -158,7 +158,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_setting = value;
-    			NotifyPropertyChanged("Setting");
+    			OnChanged("Setting");
     		}
     
         }
@@ -205,7 +205,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_Zauber(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_Zauber");
+    		OnChanged("Held_Zauber");
             if (e.NewItems != null)
             {
                 foreach (Held_Zauber item in e.NewItems)

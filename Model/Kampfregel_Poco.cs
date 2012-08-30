@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kampfregelGUID = value;
-    			NotifyPropertyChanged("KampfregelGUID");
+    			OnChanged("KampfregelGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_manöver = value;
-    			NotifyPropertyChanged("Manöver");
+    			OnChanged("Manöver");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -140,7 +140,7 @@ namespace MeisterGeister.Model
     
         private void FixupGegner_Kampfregel(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Gegner_Kampfregel");
+    		OnChanged("Gegner_Kampfregel");
             if (e.NewItems != null)
             {
                 foreach (Gegner_Kampfregel item in e.NewItems)

@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -79,7 +79,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_zfW = value;
-    			NotifyPropertyChanged("ZfW");
+    			OnChanged("ZfW");
     		}
     
         }
@@ -92,7 +92,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_repräsentation = value;
-    			NotifyPropertyChanged("Repräsentation");
+    			OnChanged("Repräsentation");
     		}
     
         }
@@ -105,7 +105,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -151,7 +151,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld(Held previousValue)
         {
-    		NotifyPropertyChanged("Held");
+    		OnChanged("Held");
             if (previousValue != null && previousValue.Held_Zauber.Contains(this))
             {
                 previousValue.Held_Zauber.Remove(this);
@@ -172,7 +172,7 @@ namespace MeisterGeister.Model
     
         private void FixupZauber(Zauber previousValue)
         {
-    		NotifyPropertyChanged("Zauber");
+    		OnChanged("Zauber");
             if (previousValue != null && previousValue.Held_Zauber.Contains(this))
             {
                 previousValue.Held_Zauber.Remove(this);

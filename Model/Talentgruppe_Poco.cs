@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_talentgruppeID = value;
-    			NotifyPropertyChanged("TalentgruppeID");
+    			OnChanged("TalentgruppeID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_gruppenname = value;
-    			NotifyPropertyChanged("Gruppenname");
+    			OnChanged("Gruppenname");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kurzname = value;
-    			NotifyPropertyChanged("Kurzname");
+    			OnChanged("Kurzname");
     		}
     
         }
@@ -114,7 +114,7 @@ namespace MeisterGeister.Model
     
         private void FixupTalent(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Talent");
+    		OnChanged("Talent");
             if (e.NewItems != null)
             {
                 foreach (Talent item in e.NewItems)

@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_ereignisGUID = value;
-    			NotifyPropertyChanged("EreignisGUID");
+    			OnChanged("EreignisGUID");
     		}
     
         }
@@ -73,7 +73,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -169,7 +169,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Szene(Abenteuer_Szene previousValue)
         {
-    		NotifyPropertyChanged("Abenteuer_Szene");
+    		OnChanged("Abenteuer_Szene");
             if (previousValue != null && previousValue.Abenteuer_Ereignis.Contains(this))
             {
                 previousValue.Abenteuer_Ereignis.Remove(this);
@@ -190,7 +190,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Verweis(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Abenteuer_Verweis");
+    		OnChanged("Abenteuer_Verweis");
             if (e.NewItems != null)
             {
                 foreach (Abenteuer_Verweis item in e.NewItems)
@@ -213,7 +213,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Verweis1(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Abenteuer_Verweis1");
+    		OnChanged("Abenteuer_Verweis1");
             if (e.NewItems != null)
             {
                 foreach (Abenteuer_Verweis item in e.NewItems)
