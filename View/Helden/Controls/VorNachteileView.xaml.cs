@@ -50,32 +50,14 @@ namespace MeisterGeister.View.Helden.Controls
         {
             if (_listBoxHeldVorNachteile.SelectedItem == null)
             {
-                //_menuItemVorNachteilLöschen.IsEnabled = false;
-                //_menuItemVorNachteilWiki.IsEnabled = false;
+                _menuItemVorNachteilLöschen.IsEnabled = false;
+                _menuItemVorNachteilWiki.IsEnabled = false;
             }
             else
             {
-                //_menuItemVorNachteilLöschen.IsEnabled = true;
-                //_menuItemVorNachteilWiki.IsEnabled = true;
+                _menuItemVorNachteilLöschen.IsEnabled = true;
+                _menuItemVorNachteilWiki.IsEnabled = true;
             }
-        }
-
-        private void MenuItemVorNachteilLöschen_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteHeldVorNachteil();
-        }
-
-        private void DeleteHeldVorNachteil()
-        {
-            //DatabaseDSADataSet.Held_VorNachteilRow vorNach = SelectedVorNachteil;
-            //if (MessageBox.Show(string.Format("Soll der Vor-/Nachteil '{0}' entfernt werden?", vorNach.VorNachteilRow.Name), "Vor-/Nachteil entfernen", MessageBoxButton.YesNo,
-            //                    MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-            //{
-            //    {
-            //        SelectedHeld.DeleteVorNachteil(vorNach);
-            //        _listBoxHeldVorNachteile.SelectedIndex = -1;
-            //    }
-            //}
         }
 
         private void ListBoxHeldVorNachteile_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -86,7 +68,8 @@ namespace MeisterGeister.View.Helden.Controls
                 {
                     // VorNachteil löschen
                     case Key.Delete:
-                        DeleteHeldVorNachteil();
+                        // TODO MT: Lösch-Frage einbauen
+                        (this.DataContext as VM.VorNachteileViewModel).OnDeleteVorNachteil.Execute(null);
                         break;
                     default:
                         break;

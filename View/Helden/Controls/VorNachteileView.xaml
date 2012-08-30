@@ -111,7 +111,8 @@
                     </GroupStyle.Panel>
                 </GroupStyle>
             </ListBox.GroupStyle>
-            <!--<ListBox.ContextMenu>
+            
+            <ListBox.ContextMenu>
                 <ContextMenu Opened="ContextMenuVorNachteile_Opened">
                     <MenuItem Height="28" Click="MenuItemVorNachteilWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">
                         <MenuItem.Icon>
@@ -119,13 +120,13 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Click="MenuItemVorNachteilLöschen_Click" Header="Löschen" x:Name="_menuItemVorNachteilLöschen">
+                    <MenuItem Height="28" Command="{Binding OnDeleteVorNachteil}" Header="Löschen" x:Name="_menuItemVorNachteilLöschen">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-            </ListBox.ContextMenu>-->
+            </ListBox.ContextMenu>
         </ListBox>
     </Grid>
 </UserControl>

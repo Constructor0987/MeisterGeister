@@ -8,19 +8,17 @@ namespace MeisterGeister.ViewModel.Helden
 {
     public class VorNachteileViewModel : Base.ViewModelBase
     {
-        #region //---- FELDER ----
+        #region //---- COMMANDS ----
 
-        // Selection
-        Model.Held_VorNachteil _selectedHeldVorNachteil = null;
-
-        // Listen
-
-        // Commands
-
+        private Base.CommandBase onDeleteVorNachteil;
+        public Base.CommandBase OnDeleteVorNachteil
+        {
+            get { return onDeleteVorNachteil; }
+        }
 
         #endregion
 
-        #region //---- EIGENSCHAFTEN ----
+        #region //---- EIGENSCHAFTEN & FELDER ----
 
         // Selection
         public Model.Held SelectedHeld
@@ -33,6 +31,7 @@ namespace MeisterGeister.ViewModel.Helden
                 Init();
             }
         }
+        Model.Held_VorNachteil _selectedHeldVorNachteil = null;
         public Model.Held_VorNachteil SelectedHeldVorNachteil
         {
             get { return _selectedHeldVorNachteil; }
@@ -45,8 +44,19 @@ namespace MeisterGeister.ViewModel.Helden
             get { return SelectedHeld == null ? null : SelectedHeld.Held_VorNachteil.ToList(); }
         }
 
-        // Commands
+        Model.VorNachteil _vorteilAuswahlListe = null;
+        public Model.VorNachteil VorteilAuswahlListe
+        {
+            get { return _vorteilAuswahlListe; }
+            set { _vorteilAuswahlListe = value; OnChanged("VorteilAuswahlListe"); }
+        }
 
+        Model.VorNachteil _nachteilAuswahlListe = null;
+        public Model.VorNachteil NachteilAuswahlListe
+        {
+            get { return _nachteilAuswahlListe; }
+            set { _nachteilAuswahlListe = value; OnChanged("NachteilAuswahlListe"); }
+        }
 
         #endregion
 
@@ -56,6 +66,8 @@ namespace MeisterGeister.ViewModel.Helden
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+
+            onDeleteVorNachteil = new Base.CommandBase(DeleteVorNachteil, null);
         }
 
         #endregion
@@ -65,6 +77,18 @@ namespace MeisterGeister.ViewModel.Helden
         public void Init()
         {
             OnChanged("VorNachteilListe");
+        }
+
+        private void DeleteVorNachteil(object sender)
+        {
+            // TODO MT: Lösch-Frage einbauen
+
+            Model.Held_VorNachteil h = SelectedHeldVorNachteil;
+            if (h != null && Global.ContextHeld.Delete<Model.Held_VorNachteil>(h))
+            {
+                //Liste aktualisieren
+                //Init();
+            }
         }
 
         #endregion
