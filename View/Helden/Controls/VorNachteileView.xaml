@@ -29,11 +29,12 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="GroupHeaderStyleVorNachteile" TargetType="{x:Type GroupItem}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <Expander Margin="2,0,2,0" Padding="4" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
+                        <Expander Margin="2,0,2,0" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
                             <Expander.Header>
                                 <DockPanel LastChildFill="True">
                                     <TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
@@ -47,6 +48,17 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <CollectionViewSource x:Key="VorNachteilListeView" Source="{Binding VorNachteilListe}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="VorNachteil.Typ" />
+                <ComponentModel:SortDescription PropertyName="VorNachteil.Name" />
+            </CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="VorNachteil.Typ" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+        
         <DataTemplate x:Key="VorNachteileTemplate">
             <StackPanel Margin="0,4,0,0" Orientation="Horizontal">
                 <TextBlock Margin="2,4,0,0" Text="{Binding VorNachteil.Name}" />
@@ -77,8 +89,10 @@
                 </ItemsPanelTemplate>
             </ComboBox.ItemsPanel>
         </ComboBox>
-        <ListBox Margin="2,46,6,6" Padding="0,0,0,10" ItemsSource="{Binding VorNachteilListe}" ItemTemplate="{StaticResource VorNachteileTemplate}" KeyDown="ListBoxHeldVorNachteile_KeyDown" MouseDown="ListBoxVorNachteile_MouseDown" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000">
-            <!--<ListBox.GroupStyle>
+        <ListBox Margin="2,46,6,6" Padding="0,0,0,10" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000"
+                 ItemsSource="{Binding Source={StaticResource VorNachteilListeView}}" ItemTemplate="{StaticResource VorNachteileTemplate}" SelectedItem="{Binding SelectedHeldVorNachteil}"
+                 KeyDown="ListBoxHeldVorNachteile_KeyDown" MouseDown="ListBoxVorNachteile_MouseDown">
+            <ListBox.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleVorNachteile}">
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
@@ -87,7 +101,7 @@
                     </GroupStyle.Panel>
                 </GroupStyle>
             </ListBox.GroupStyle>
-            <ListBox.ContextMenu>
+            <!--<ListBox.ContextMenu>
                 <ContextMenu Opened="ContextMenuVorNachteile_Opened">
                     <MenuItem Height="28" Click="MenuItemVorNachteilWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">
                         <MenuItem.Icon>

@@ -10,7 +10,8 @@ namespace MeisterGeister.ViewModel.Helden
     {
         #region //---- FELDER ----
 
-        // Felder
+        // Selection
+        Model.Held_VorNachteil _selectedHeldVorNachteil = null;
 
         // Listen
 
@@ -21,6 +22,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- EIGENSCHAFTEN ----
 
+        // Selection
         public Model.Held SelectedHeld
         {
             get { return Global.SelectedHeld; }
@@ -30,6 +32,11 @@ namespace MeisterGeister.ViewModel.Helden
                 OnChanged("SelectedHeld");
                 Init();
             }
+        }
+        public Model.Held_VorNachteil SelectedHeldVorNachteil
+        {
+            get { return _selectedHeldVorNachteil; }
+            set { _selectedHeldVorNachteil = value; OnChanged("SelectedHeldVorNachteil"); } 
         }
 
         // Listen
