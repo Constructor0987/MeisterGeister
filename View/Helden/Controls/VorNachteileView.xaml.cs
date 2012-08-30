@@ -41,11 +41,6 @@ namespace MeisterGeister.View.Helden.Controls
             }
         }
 
-        private void ListBoxVorNachteile_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            _listBoxHeldVorNachteile.SelectedItem = null;
-        }
-
         private void ContextMenuVorNachteile_Opened(object sender, RoutedEventArgs e)
         {
             if (_listBoxHeldVorNachteile.SelectedItem == null)
@@ -91,14 +86,15 @@ namespace MeisterGeister.View.Helden.Controls
 
         private void MenuItemVorNachteilWiki_Click(object sender, RoutedEventArgs e)
         {
-            //System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedVorNachteil.VorNachteilRow.Name);
+            System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + (this.DataContext as VM.VorNachteileViewModel).SelectedHeldVorNachteil.VorNachteil.Name);
         }
 
         private void SetVorNachteileAktivierbar()
         {
-            //_comboBoxVorteil.ItemsSource = SelectedHeld.VorteileWählbar;
+            // TODO MT: Bereits vorhandene VorNachteile aus Auswahl entfernen
+            _comboBoxVorteil.ItemsSource = (this.DataContext as VM.VorNachteileViewModel).VorteilAuswahlListe;
             _comboBoxVorteil.SelectedIndex = -1;
-            //_comboBoxNachteil.ItemsSource = SelectedHeld.NachteileWählbar;
+            _comboBoxNachteil.ItemsSource = (this.DataContext as VM.VorNachteileViewModel).NachteilAuswahlListe;
             _comboBoxNachteil.SelectedIndex = -1;
         }
 

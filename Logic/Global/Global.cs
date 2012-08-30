@@ -27,6 +27,7 @@ namespace MeisterGeister
         public static Service.NamenService ContextNamen;
         public static Service.RegelnService ContextRegeln;
         public static Service.NotizService ContextNotizen;
+        public static Service.VorNachteilService ContextVorNachteil;
 
         // MenuLink
         public static Service.MenuLinkService _contextMenuLink;
@@ -121,6 +122,7 @@ namespace MeisterGeister
             ContextRüstung = new Service.RüstungService();
 
             ContextTalent = new Service.TalentService();
+            ContextVorNachteil = new Service.VorNachteilService();
             ContextHandelsgut = new Service.HandelsgutService();
             ContextNsc = new Service.NscService();
             ContextNamen = new Service.NamenService();

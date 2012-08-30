@@ -29,7 +29,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        
+
         <Style x:Key="GroupHeaderStyleVorNachteile" TargetType="{x:Type GroupItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -58,9 +58,9 @@
                 <PropertyGroupDescription PropertyName="VorNachteil.Typ" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
-        
+
         <DataTemplate x:Key="VorNachteileTemplate">
-            <Border Margin="5,5,5,0" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#79CD8525">
+            <Border Margin="5,5,5,0" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#79DBA051">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="{Binding VorNachteil.Name}" VerticalAlignment="Center" />
                     <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" />
@@ -69,39 +69,54 @@
             </Border>
         </DataTemplate>
     </UserControl.Resources>
+
     <Grid>
-        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-            <Image.ToolTip>
-                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Vor-/Nachteil für weitere Aktionen."/></TextBlock>
-            </Image.ToolTip>
-        </Image>
-        <TextBlock Margin="11,16,0,0" HorizontalAlignment="Left" Text="Vorteil einfügen:" VerticalAlignment="Top" />
-        <ComboBox Height="23" Margin="105,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxVorteil" ToolTip="Vorteil hinzufügen" VerticalAlignment="Top">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
-        </ComboBox>
-        <TextBlock Margin="310,16,0,0" HorizontalAlignment="Left" Text="Nachteil einfügen:" VerticalAlignment="Top" />
-        <ComboBox Height="23" Margin="412,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxNachteil" ToolTip="Nachteil hinzufügen" VerticalAlignment="Top">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
-        </ComboBox>
-        <ListBox Margin="2,46,6,6" Padding="0,0,0,10" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <TextBlock Margin="10" HorizontalAlignment="Left" Text="Vorteil:" VerticalAlignment="Center" />
+            <ComboBox Height="23" Margin="0" Width="193" DisplayMemberPath="Name" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxVorteil" ToolTip="Vorteil hinzufügen" VerticalAlignment="Center">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Button Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen" Margin="5,0,0,0">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+            </Button>
+            <TextBlock Margin="10" HorizontalAlignment="Left" Text="Nachteil:" VerticalAlignment="Center" />
+            <ComboBox Height="23" Margin="0" Width="193" DisplayMemberPath="Name" DropDownClosed="_comboBoxVorNachteil_DropDownClosed" DropDownOpened="_comboBoxVorNachteil_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxVorNachteil_KeyDown" x:Name="_comboBoxNachteil" ToolTip="Nachteil hinzufügen" VerticalAlignment="Center">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Button Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen" Margin="5,0,0,0">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+            </Button>
+            <Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                <Image.ToolTip>
+                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Vor-/Nachteil für weitere Aktionen."/></TextBlock>
+                </Image.ToolTip>
+            </Image>
+        </DockPanel>
+
+        <ListBox Grid.Row="1" Margin="6" Padding="0,0,0,10" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000"
                  ItemsSource="{Binding Source={StaticResource VorNachteilListeView}}" ItemTemplate="{StaticResource VorNachteileTemplate}" SelectedItem="{Binding SelectedHeldVorNachteil}"
-                 KeyDown="ListBoxHeldVorNachteile_KeyDown" MouseDown="ListBoxVorNachteile_MouseDown">
-            
+                 KeyDown="ListBoxHeldVorNachteile_KeyDown">
+
             <!-- Variante mit Wraping -->
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-            
+
             <ListBox.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleVorNachteile}">
                     <GroupStyle.Panel>
@@ -111,7 +126,7 @@
                     </GroupStyle.Panel>
                 </GroupStyle>
             </ListBox.GroupStyle>
-            
+
             <ListBox.ContextMenu>
                 <ContextMenu Opened="ContextMenuVorNachteile_Opened">
                     <MenuItem Height="28" Click="MenuItemVorNachteilWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">

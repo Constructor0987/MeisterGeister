@@ -21,6 +21,7 @@ namespace MeisterGeister.ViewModel.Helden
         #region //---- EIGENSCHAFTEN & FELDER ----
 
         // Selection
+        [DependentProperty("VorNachteilListe")]
         public Model.Held SelectedHeld
         {
             get { return Global.SelectedHeld; }
@@ -28,7 +29,6 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 Global.SelectedHeld = value;
                 OnChanged("SelectedHeld");
-                Init();
             }
         }
         Model.Held_VorNachteil _selectedHeldVorNachteil = null;
@@ -44,15 +44,15 @@ namespace MeisterGeister.ViewModel.Helden
             get { return SelectedHeld == null ? null : SelectedHeld.Held_VorNachteil.ToList(); }
         }
 
-        Model.VorNachteil _vorteilAuswahlListe = null;
-        public Model.VorNachteil VorteilAuswahlListe
+        List<Model.VorNachteil> _vorteilAuswahlListe = null;
+        public List<Model.VorNachteil> VorteilAuswahlListe
         {
             get { return _vorteilAuswahlListe; }
             set { _vorteilAuswahlListe = value; OnChanged("VorteilAuswahlListe"); }
         }
 
-        Model.VorNachteil _nachteilAuswahlListe = null;
-        public Model.VorNachteil NachteilAuswahlListe
+        List<Model.VorNachteil> _nachteilAuswahlListe = null;
+        public List<Model.VorNachteil> NachteilAuswahlListe
         {
             get { return _nachteilAuswahlListe; }
             set { _nachteilAuswahlListe = value; OnChanged("NachteilAuswahlListe"); }
@@ -76,6 +76,14 @@ namespace MeisterGeister.ViewModel.Helden
 
         public void Init()
         {
+            // TODO MT: Bereits vorhandene VorNachteile aus Auswahl entfernen
+            VorteilAuswahlListe = Global.ContextVorNachteil.VorNachteilListe.Where(v => v.Vorteil == true).OrderBy(v => v.Name).ToList();
+            NachteilAuswahlListe = Global.ContextVorNachteil.VorNachteilListe.Where(n => n.Nachteil == true).OrderBy(n => n.Name).ToList();
+        }
+
+        public void Refresh()
+        {
+            OnChanged("SelectedHeld");
             OnChanged("VorNachteilListe");
         }
 
@@ -97,8 +105,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void SelectedHeldChanged()
         {
-            OnChanged("SelectedHeld");
-            Init();
+            Refresh();
         }
 
         #endregion
