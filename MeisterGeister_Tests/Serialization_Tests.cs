@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using MeisterGeister.Model;
 using MeisterGeister.Model.Service;
@@ -31,6 +32,25 @@ namespace MeisterGeister_Tests
         [TearDown]
         public void TearDownTest()
         {
+        }
+
+        [Test]
+        public void ImportManualCreatedHeld()
+        {
+            SerializationService serializer = SerializationService.GetInstance(true);
+            Held h1 = new Held();
+            Guid heldGuid = h1.HeldGUID;
+            Held_Sonderfertigkeit hs = new Held_Sonderfertigkeit();
+            hs.HeldGUID = h1.HeldGUID;
+            hs.SonderfertigkeitID = Global.ContextHeld.LoadSonderfertigkeitByName("Kampfreflexe").SonderfertigkeitID;
+            h1.Held_Sonderfertigkeit.Add(hs);
+            Assert.IsTrue(serializer.InsertOrUpdateHeld(h1));
+            Assert.IsFalse(heldGuid == Guid.Empty);
+            Global.ContextHeld.UpdateList<Held>();
+            Held h2 = Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
+            Assert.IsNotNull(h2);
+            Assert.IsNotNull(h2.Held_Sonderfertigkeit.FirstOrDefault());
+            Assert.AreEqual("Kampfreflexe", h2.Held_Sonderfertigkeit.FirstOrDefault().Sonderfertigkeit.Name);
         }
 
         //[Test]

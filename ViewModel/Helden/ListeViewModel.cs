@@ -193,8 +193,7 @@ namespace MeisterGeister.ViewModel.Helden
                     overwrite = false;
             }
             if (isHeldenSoftware)
-                //TODO HeldenImport mit Kopie
-                ;//Logic.HeldenImport.HeldenSoftwareImporter importer = new Logic.HeldenImport.HeldenSoftwareImporter(pfad);
+                Logic.HeldenImport.HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite?Guid.Empty:Guid.NewGuid());
             else
                 Held.Import(pfad, overwrite?Guid.Empty:Guid.NewGuid());
             LoadDaten();

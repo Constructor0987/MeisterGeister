@@ -2102,8 +2102,8 @@ namespace MeisterGeister.Logic.General
             ds.ReadXml(pfad);
             if (ds.Tables.Contains("helden") && ds.Tables.Contains("held"))
             { // Helden-Software Format
-                var heldConverter = new Logic.HeldenImport.HeldenSoftwareImporter(dsExport, this, pfad);
-                heldConverter.ImportHeldenSoftwareFile();
+                //var heldConverter = new Logic.HeldenImport.HeldenSoftwareImporter(dsExport, this, pfad);
+                //heldConverter.ImportHeldenSoftwareFile();
                 dsExport.EndInit();
             }
             else
