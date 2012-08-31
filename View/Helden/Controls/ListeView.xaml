@@ -36,8 +36,11 @@
 	<Grid x:Name="LayoutRoot">
 		<Grid Grid.Column="0" Grid.Row="0" Background="{DynamicResource BackgroundPergamentHoch}">
 			<ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
-				KeyDown="_listBoxHelden_KeyDown" MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
-				<ListBox.ContextMenu>
+				MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
+                <ListBox.InputBindings>
+                    <KeyBinding Key="Delete" Command="{Binding OnDeleteHeld}" />
+                </ListBox.InputBindings>
+                <ListBox.ContextMenu>
 					<ContextMenu Opened="ContextMenu_Opened">
                         <MenuItem Height="28"  Command="{Binding OnNewHeld}" Header="Neu" x:Name="_menuItemHeldNeu" ToolTip="Einen neuen Helden eingeben.">
 							<MenuItem.Icon>
@@ -56,7 +59,7 @@
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/helden_kopieren.png" Stretch="Fill" />
 							</MenuItem.Icon>
 						</MenuItem>
-						<MenuItem Height="28" Click="MenuItemHeldImport_Click" Header="Importieren" x:Name="_menuItemHeldImport">
+                        <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren" x:Name="_menuItemHeldImport">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
 							</MenuItem.Icon>
@@ -70,7 +73,7 @@
 								</StackPanel>
 							</MenuItem.ToolTip>
 						</MenuItem>
-						<MenuItem Height="28" Click="MenuItemHeldExport_Click" Header="Exportieren" x:Name="_menuItemHeldExport">
+                        <MenuItem Height="28" Command="{Binding OnExportHeld}" Header="Exportieren" x:Name="_menuItemHeldExport">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
 							</MenuItem.Icon>
@@ -107,7 +110,7 @@
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
 							</MenuItem.Icon>
 						</MenuItem>
-						<MenuItem Height="28" Click="MenuItemHeldImport_Click" Header="Importieren">
+                        <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
 							</MenuItem.Icon>

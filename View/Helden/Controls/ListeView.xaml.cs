@@ -31,16 +31,62 @@ namespace MeisterGeister.View.Helden.Controls
             _buttonExportDemo.Visibility = System.Windows.Visibility.Collapsed;
 #endif
             //VM an View Registrieren
-            this.DataContext = new VM.ListeViewModel();
+            this.DataContext = new VM.ListeViewModel(Popup, Confirm, ConfirmYesNoCancel, ChooseFile, ShowError);
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void Popup(string msg)
         {
-            //try
-            //{
-            //    (this.DataContext as VM.Inventar).LoadDaten();
-            //}
-            //catch (Exception) { }
+            System.Windows.MessageBox.Show(msg);
+        }
+
+        private void ShowError(string msg, Exception ex)
+        {
+            MsgWindow errWin = new MsgWindow("Fehler", msg, ex);
+            errWin.ShowDialog();
+        }
+
+        private bool Confirm(string msg, string caption)
+        {
+            return (System.Windows.MessageBox.Show(msg, caption, MessageBoxButton.YesNo) == MessageBoxResult.Yes);
+        }
+
+        private int ConfirmYesNoCancel(string msg, string caption)
+        {
+            MessageBoxResult res = System.Windows.MessageBox.Show(msg, caption, MessageBoxButton.YesNoCancel);
+            if (res == MessageBoxResult.Yes || res == MessageBoxResult.OK)
+                return 2;
+            if (res == MessageBoxResult.No)
+                return 1;
+            return 0;
+        }
+
+        private string ChooseFile(string title, string extension, string filename, bool saveFile)
+        {
+            FileDialog objDialog;
+            if(saveFile)
+                objDialog = new SaveFileDialog();
+            else
+                objDialog = new OpenFileDialog();
+            objDialog.Title = title;
+            //TODO: mehr extensions und diese gemeinsam nutzbar machen?
+            switch (extension)
+            {
+                case "xml":
+                    objDialog.Filter = "XML-Dateien (*.xml)|*.xml";
+                    objDialog.DefaultExt = "xml";
+                    break;
+                default:
+                    goto case "xml";
+            }
+            objDialog.AddExtension = true;
+            objDialog.FileName = filename;
+            objDialog.InitialDirectory = _workingPath;
+            if (objDialog.ShowDialog() == DialogResult.OK)
+            {
+                //_workingPath =  ?.Replace(objDialog.FileName, null);
+                return objDialog.FileName;
+            }
+            return null;
         }
 
         private string _workingPath = Environment.CurrentDirectory;
@@ -49,16 +95,6 @@ namespace MeisterGeister.View.Helden.Controls
         {
             _buttonHeldNeu.ContextMenu.PlacementTarget = this;
             _buttonHeldNeu.ContextMenu.IsOpen = true;
-        }
-
-        private void _listBoxHelden_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (sender is System.Windows.Controls.ListBox && e.Key == Key.Delete)
-            {
-                var liBo = (System.Windows.Controls.ListBox)sender;
-                if (liBo.SelectedItem != null)
-                    HeldDelete();
-            }
         }
 
         private void ListBoxHelden_Drop(object sender, System.Windows.DragEventArgs e)
@@ -71,7 +107,7 @@ namespace MeisterGeister.View.Helden.Controls
                 {
                     if (!file.EndsWith("xml"))
                     {
-                        System.Windows.MessageBox.Show(file + "\n\nFalscher Dateityp!");
+                        Popup(file + "\n\nFalscher Dateityp!");
                         continue;
                     }
                     try
@@ -80,133 +116,8 @@ namespace MeisterGeister.View.Helden.Controls
                     }
                     catch (Exception ex)
                     {
-                        MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
-                        errWin.ShowDialog();
+                        ShowError("Beim Import ist ein Fehler aufgetreten!", ex);
                     }
-                }
-            }
-        }
-
-        private void ListBoxHelden_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (IsInitialized)
-            {
-                //App.SaveAll();
-                //TODO JT: 
-                //Global.SelectedHeldGUID = SelectedHeld.Id;
-                //Global.SelectedHeld.PropertyChanged += SelectedHeld_PropertyChanged;
-                //RefreshHeld();
-            }
-        }
-
-        private void ListBoxHelden_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (_listBoxHelden.SelectedItem != null)
-            {
-                switch (e.Key)
-                {
-                    // Aktion löschen
-                    case Key.Delete:
-                        HeldDelete();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        private void HeldDelete()
-        {
-            Held h = (this.DataContext as VM.ListeViewModel).SelectedHeld;
-            if (System.Windows.MessageBox.Show(string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name), "Held löschen",
-                                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                //h.Delete();
-                (this.DataContext as VM.ListeViewModel).OnDeleteHeld.Execute(null);
-            }
-        }
-
-        //private void MenuItemHeldImportDemo_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        _listBoxHelden.UnselectAll();
-        //        _listBoxHelden.SelectionChanged -= ListBoxHelden_SelectionChanged;
-        //        //TODO JT: Held.LadeDemoHelden();
-        //        _listBoxHelden.SelectionChanged += ListBoxHelden_SelectionChanged;
-        //    }
-        //    catch (System.IO.FileNotFoundException ex)
-        //    {
-        //        System.Windows.MessageBox.Show(ex.FileName + "\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
-
-        //    }
-        //    catch (System.Xml.XmlException ex)
-        //    {
-        //        System.Windows.MessageBox.Show("Die Demo-Helden Datei ist beschädigt." + "\n\n" + ex.Message, "Demo-Helden laden", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
-
-        private void MenuItemHeldExport_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO JT: 
-            var objDialog = new SaveFileDialog();
-            objDialog.Title = "Held exportieren";
-            objDialog.Filter = "XML-Dateien (*.xml)|*.xml";
-            objDialog.DefaultExt = "xml";
-            objDialog.AddExtension = true;
-            if ((this.DataContext as VM.ListeViewModel).SelectedHeld != null)
-                objDialog.FileName = (this.DataContext as VM.ListeViewModel).SelectedHeld.Name;
-            objDialog.InitialDirectory = _workingPath;
-            DialogResult objResult = objDialog.ShowDialog();
-            if (objResult == DialogResult.OK)
-            {
-                try
-                {
-                    string expPfad = (this.DataContext as VM.ListeViewModel).ExportHeld(objDialog.FileName);
-                    if (expPfad != null)
-                    {
-                        _workingPath = expPfad.Replace(objDialog.FileName, null);
-
-                        System.Windows.MessageBox.Show("Der Held wurde in \'" + expPfad + "\' gespeichert.");
-                    }
-                    else
-                    {
-                        MsgWindow errWin = new MsgWindow("Fehler beim Export", "Beim Export des Helden ist ein Fehler aufgetreten!");
-                        errWin.ShowDialog();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MsgWindow errWin = new MsgWindow("Fehler beim Export", "Beim Export des Helden ist ein Fehler aufgetreten!", ex);
-                    errWin.ShowDialog();
-                }
-            }
-        }
-
-        private void MenuItemHeldImport_Click(object sender, RoutedEventArgs e)
-        {
-            var objDialog = new OpenFileDialog();
-            objDialog.Title = "Held importieren";
-            objDialog.Filter = "MeisterGeister und Helden-Software Dateien (*.xml)|*.xml";
-            objDialog.DefaultExt = "xml";
-            objDialog.AddExtension = true;
-            if((this.DataContext as VM.ListeViewModel).SelectedHeld != null)
-                objDialog.FileName = (this.DataContext as VM.ListeViewModel).SelectedHeld.Name; 
-            objDialog.InitialDirectory = _workingPath;
-            DialogResult objResult = objDialog.ShowDialog();
-            if (objResult == DialogResult.OK)
-            {
-                try
-                {
-                    string expPfad = (this.DataContext as VM.ListeViewModel).ImportHeld(objDialog.FileName);
-                    _workingPath = expPfad.Replace(objDialog.SafeFileName, null);
-
-                    System.Windows.MessageBox.Show("Der Held wurde aus \'" + expPfad + "\' importiert.");
-                }
-                catch (Exception ex)
-                {
-                    MsgWindow errWin = new MsgWindow("Fehler beim Import", "Beim Import ist ein Fehler aufgetreten!", ex);
-                    errWin.ShowDialog();
                 }
             }
         }

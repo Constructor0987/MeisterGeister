@@ -9,19 +9,31 @@ namespace MeisterGeister.ViewModel.Helden
 {
     public class ListeViewModel : Base.ViewModelBase
     {
-
         private Held selectedHeld = new Held();
         private bool hasChanges = false;
         private List<Model.Held> _heldListe;
 
-        public ListeViewModel()
+        private Action<string> popup;
+        private Action<string, Exception> showError;
+        private Func<string, string, bool> confirm;
+        private Func<string, string, int> confirmYesNoCancel;
+        private Func<string, string, string, bool, string> chooseFile;
+
+        /// <summary>
+        /// ViewModel mit Callbacks.
+        /// </summary>
+        /// <param name="popup">Ein OK-Popup-Dialog. (Nachricht)</param>
+        /// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
+        /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
+        /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateierweiterung, Dateiname, zum speichern)</param>
+        public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, string, bool, string> chooseFile, Action<string, Exception> showError)
         {
-            onNewHeld = new Base.CommandBase(NewHeld, null);
-            onDeleteHeld = new Base.CommandBase(DeleteHeld, null);
-            onCloneHeld = new Base.CommandBase(CloneHeld, null);
-            onExportDemoHelden = new Base.CommandBase(ExportDemoHelden, null);
-            onImportDemoHelden = new Base.CommandBase(ImportDemoHelden, null);
-            
+            this.popup = popup;
+            this.confirm = confirm;
+            this.confirmYesNoCancel = confirmYesNoCancel;
+            this.chooseFile = chooseFile;
+            this.showError = showError;
+
             LoadDaten();
             if (Global.SelectedHeld != null)
                 selectedHeld = Global.SelectedHeld;
@@ -72,14 +84,24 @@ namespace MeisterGeister.ViewModel.Helden
 
         public void LoadDaten()
         {
+            Guid tmp = (SelectedHeld==null)?Guid.Empty:SelectedHeld.HeldGUID;
+            SelectedHeld = null;
             if (Global.ContextHeld != null)
+            {
                 HeldListe = Global.ContextHeld.HeldenListe.OrderBy(h => h.Name).ToList();
+                if(tmp != Guid.Empty)
+                    SelectedHeld = HeldListe.Where(h => h.HeldGUID == tmp).FirstOrDefault();
+            }
         }
 
-        private Base.CommandBase onNewHeld;
+        private Base.CommandBase onNewHeld = null;
         public Base.CommandBase OnNewHeld
         {
-            get { return onNewHeld; }
+            get {
+                if(onNewHeld == null)
+                    onNewHeld = new Base.CommandBase(NewHeld, null);
+                return onNewHeld; 
+            }
         }
 
         private void NewHeld(object sender)
@@ -93,39 +115,73 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
-        private Base.CommandBase onDeleteHeld;
+        private Base.CommandBase onDeleteHeld = null;
         public Base.CommandBase OnDeleteHeld
         {
-            get { return onDeleteHeld; }
+            get {
+                if(onDeleteHeld == null)
+                    onDeleteHeld = new Base.CommandBase(DeleteHeld, null);
+                return onDeleteHeld; 
+            }
         }
 
         private void DeleteHeld(object sender)
         {
             Held h = SelectedHeld;
-            if (h != null && Global.ContextHeld.Delete<Held>(h))
+            if (h != null)
             {
-                //Liste aktualisieren
-                LoadDaten();
-                SelectedHeld = HeldListe.FirstOrDefault();
+                if (confirm(string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name), "Held löschen")
+                    && Global.ContextHeld.Delete<Held>(h))
+                {
+                    //Liste aktualisieren
+                    LoadDaten();
+                    SelectedHeld = HeldListe.FirstOrDefault();
+                }
             }
         }
 
-        public string ExportHeld(string pfad)
-//        private void ExportHeld(object sender)
+        private Base.CommandBase onExportHeld = null;
+        public Base.CommandBase OnExportHeld
+        {
+            get
+            {
+                if (onExportHeld == null)
+                    onExportHeld = new Base.CommandBase(ExportHeld, null);
+                return onExportHeld;
+            }
+        }
+//        public string ExportHeld(string pfad)
+        private void ExportHeld(object sender)
         {
             Held h = SelectedHeld;
             if (h != null)
             {
-                h.Export(pfad);
-                return pfad;
+                string pfad = chooseFile("Held exportieren", "xml", h.Name, true);
+                if (pfad != null)
+                {
+                    try
+                    {
+                        h.Export(pfad);
+                        popup("Der Held wurde in \'" + pfad + "\' gespeichert.");
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        showError("Beim Export ist ein Fehler aufgetreten.", ex);
+                    }
+                }
             }
-            return null;
+            return;
         }
 
-        private Base.CommandBase onExportDemoHelden;
+        private Base.CommandBase onExportDemoHelden = null;
         public Base.CommandBase OnExportDemoHelden
         {
-            get { return onExportDemoHelden; }
+            get {
+                if(onExportDemoHelden == null)
+                    onExportDemoHelden = new Base.CommandBase(ExportDemoHelden, null);
+                return onExportDemoHelden; 
+            }
         }
         private void ExportDemoHelden(object sender)
         {
@@ -140,10 +196,14 @@ namespace MeisterGeister.ViewModel.Helden
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
         }
 
-        private Base.CommandBase onImportDemoHelden;
+        private Base.CommandBase onImportDemoHelden = null;
         public Base.CommandBase OnImportDemoHelden
         {
-            get { return onImportDemoHelden; }
+            get {
+                if(onImportDemoHelden == null)
+                    onImportDemoHelden = new Base.CommandBase(ImportDemoHelden, null);
+                return onImportDemoHelden; 
+            }
         }
         private void ImportDemoHelden(object sender)
         {
@@ -158,6 +218,32 @@ namespace MeisterGeister.ViewModel.Helden
             LoadDaten();
         }
 
+        private Base.CommandBase onImportHeld = null;
+        public Base.CommandBase OnImportHeld
+        {
+            get
+            {
+                if (onImportHeld == null)
+                    onImportHeld = new Base.CommandBase(ImportHeldCommand, null);
+                return onImportHeld;
+            }
+        }
+        public void ImportHeldCommand(object sender)
+        {
+            string pfad = chooseFile("Held importieren", "xml", "", false);
+            if (pfad != null)
+            {
+                try
+                {
+                    ImportHeld(pfad);
+                }
+                catch (Exception ex)
+                {
+                    showError("Beim Import ist ein Fehler aufgetreten.", ex);
+                }
+            }
+
+        }
         public string ImportHeld(string pfad)
         {
             Guid hGuid = Guid.Empty;
@@ -180,16 +266,13 @@ namespace MeisterGeister.ViewModel.Helden
             bool overwrite = true;
             if ((existing = Global.ContextHeld.HeldenListe.Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null)
             {
-                //TODO: messagebox mit Überschreiben, Kopie importieren, Abbrechen
                 //überschreiben?
-                System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show(
-                        String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name), 
-                        "Held importieren",
-                        System.Windows.MessageBoxButton.YesNoCancel
-                    );
-                if (result == System.Windows.MessageBoxResult.Cancel || result == System.Windows.MessageBoxResult.None)
+                int result = confirmYesNoCancel(
+                    String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\n\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name),
+                    "Held importieren");
+                if (result == 0)
                     return pfad;
-                else if (result == System.Windows.MessageBoxResult.No)
+                else if (result == 1)
                     overwrite = false;
             }
             if (isHeldenSoftware)
@@ -201,10 +284,14 @@ namespace MeisterGeister.ViewModel.Helden
         }
 
 
-        private Base.CommandBase onCloneHeld;
+        private Base.CommandBase onCloneHeld = null;
         public Base.CommandBase OnCloneHeld
         {
-            get { return onCloneHeld; }
+            get {
+                if(onCloneHeld == null)
+                    onCloneHeld = new Base.CommandBase(CloneHeld, null);
+                return onCloneHeld;
+            }
         }
         private void CloneHeld(object sender)
         {
