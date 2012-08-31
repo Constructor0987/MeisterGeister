@@ -823,6 +823,17 @@ namespace MeisterGeister.Model
         }
 
         /// <summary>
+        /// Die Vorteile, die der Held noch wählen kann.
+        /// </summary>
+        public List<VorNachteil> VorteileWählbar
+        {
+            get
+            {
+                return Global.ContextVorNachteil.VorNachteilListe.Where(v => v.Vorteil == true).Except(Vorteile.Keys).OrderBy(v => v.Name).ToList();
+            }
+        }
+
+        /// <summary>
         /// Die Nachteile des Helden.
         /// Nicht zum ändern von Werten, da die Werte in Held_VorNachteil stehen.
         /// </summary>
@@ -831,6 +842,17 @@ namespace MeisterGeister.Model
             get
             {
                 return Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Nachteil == true).ToDictionary(hvn => hvn.VorNachteil, hvn => hvn.Wert);
+            }
+        }
+
+        /// <summary>
+        /// Die Nachteile, die der Held noch wählen kann.
+        /// </summary>
+        public List<VorNachteil> NachteileWählbar
+        {
+            get
+            {
+                return Global.ContextVorNachteil.VorNachteilListe.Where(n => n.Nachteil == true).Except(Nachteile.Keys).OrderBy(n => n.Name).ToList();
             }
         }
 

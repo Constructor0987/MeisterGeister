@@ -16,12 +16,30 @@ namespace MeisterGeister.ViewModel.Helden
             get { return onDeleteVorNachteil; }
         }
 
+        private Base.CommandBase onAddVorteil;
+        public Base.CommandBase OnAddVorteil
+        {
+            get { return onAddVorteil; }
+        }
+
+        private Base.CommandBase onAddNachteil;
+        public Base.CommandBase OnAddNachteil
+        {
+            get { return onAddNachteil; }
+        }
+
+        private Base.CommandBase onOpenWiki;
+        public Base.CommandBase OnOpenWiki
+        {
+            get { return onOpenWiki; }
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
 
         // Selection
-        [DependentProperty("VorNachteilListe")]
+        [DependentProperty("VorNachteilListe"), DependentProperty("VorteilAuswahlListe"), DependentProperty("NachteilAuswahlListe")]
         public Model.Held SelectedHeld
         {
             get { return Global.SelectedHeld; }
@@ -38,24 +56,34 @@ namespace MeisterGeister.ViewModel.Helden
             set { _selectedHeldVorNachteil = value; OnChanged("SelectedHeldVorNachteil"); } 
         }
 
+        Model.VorNachteil _selectedAddVorteil = null;
+        public Model.VorNachteil SelectedAddVorteil
+        {
+            get { return _selectedAddVorteil; }
+            set { _selectedAddVorteil = value; OnChanged("SelectedAddVorteil"); }
+        }
+
+        Model.VorNachteil _selectedAddNAchteil = null;
+        public Model.VorNachteil SelectedAddNachteil
+        {
+            get { return _selectedAddNAchteil; }
+            set { _selectedAddNAchteil = value; OnChanged("SelectedAddNachteil"); }
+        }
+
         // Listen
         public List<Model.Held_VorNachteil> VorNachteilListe
         {
             get { return SelectedHeld == null ? null : SelectedHeld.Held_VorNachteil.ToList(); }
         }
 
-        List<Model.VorNachteil> _vorteilAuswahlListe = null;
         public List<Model.VorNachteil> VorteilAuswahlListe
         {
-            get { return _vorteilAuswahlListe; }
-            set { _vorteilAuswahlListe = value; OnChanged("VorteilAuswahlListe"); }
+            get { return SelectedHeld == null ? null : SelectedHeld.VorteileWählbar; }
         }
 
-        List<Model.VorNachteil> _nachteilAuswahlListe = null;
         public List<Model.VorNachteil> NachteilAuswahlListe
         {
-            get { return _nachteilAuswahlListe; }
-            set { _nachteilAuswahlListe = value; OnChanged("NachteilAuswahlListe"); }
+            get { return SelectedHeld == null ? null : SelectedHeld.NachteileWählbar; }
         }
 
         #endregion
@@ -68,6 +96,9 @@ namespace MeisterGeister.ViewModel.Helden
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
 
             onDeleteVorNachteil = new Base.CommandBase(DeleteVorNachteil, null);
+            onAddVorteil = new Base.CommandBase(AddVorteil, null);
+            onAddNachteil = new Base.CommandBase(AddNachteil, null);
+            onOpenWiki = new Base.CommandBase(OpenWiki, null);
         }
 
         #endregion
@@ -76,15 +107,15 @@ namespace MeisterGeister.ViewModel.Helden
 
         public void Init()
         {
-            // TODO MT: Bereits vorhandene VorNachteile aus Auswahl entfernen
-            VorteilAuswahlListe = Global.ContextVorNachteil.VorNachteilListe.Where(v => v.Vorteil == true).OrderBy(v => v.Name).ToList();
-            NachteilAuswahlListe = Global.ContextVorNachteil.VorNachteilListe.Where(n => n.Nachteil == true).OrderBy(n => n.Name).ToList();
+            
         }
 
-        public void Refresh()
+        public void NotifyRefresh()
         {
             OnChanged("SelectedHeld");
             OnChanged("VorNachteilListe");
+            OnChanged("VorteilAuswahlListe");
+            OnChanged("NachteilAuswahlListe");
         }
 
         private void DeleteVorNachteil(object sender)
@@ -93,10 +124,35 @@ namespace MeisterGeister.ViewModel.Helden
 
             Model.Held_VorNachteil h = SelectedHeldVorNachteil;
             if (h != null && Global.ContextHeld.Delete<Model.Held_VorNachteil>(h))
+                NotifyRefresh();
+        }
+
+        private void AddVorteil(object sender)
+        {
+            if (SelectedHeld != null && SelectedAddVorteil != null)
             {
-                //Liste aktualisieren
-                //Init();
+                if (!SelectedHeld.HatVorNachteil(SelectedAddVorteil))
+                    SelectedHeld.AddVorNachteil(SelectedAddVorteil, null);
+
+                NotifyRefresh();
             }
+        }
+
+        private void AddNachteil(object sender)
+        {
+            if (SelectedHeld != null && SelectedAddNachteil != null)
+            {
+                if (!SelectedHeld.HatVorNachteil(SelectedAddNachteil))
+                    SelectedHeld.AddVorNachteil(SelectedAddNachteil, null);
+
+                NotifyRefresh();
+            }
+        }
+
+        private void OpenWiki(object sender)
+        {
+            if (SelectedHeldVorNachteil != null)
+                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedHeldVorNachteil.VorNachteil.Name);
         }
 
         #endregion
@@ -105,7 +161,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void SelectedHeldChanged()
         {
-            Refresh();
+            NotifyRefresh();
         }
 
         #endregion
