@@ -229,6 +229,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _talentMapping.Add("Ritualkenntnis: Satuarisch", "Ritualkenntnis (Satuarisch)");
             _talentMapping.Add("Ritualkenntnis: Tapasuul", "Ritualkenntnis (Tapasuul)");
             _talentMapping.Add("Brettspiel", "Brett-/Kartenspiel");
+            _talentMapping.Add("Fahrzeug lenken", "Fahrzeug Lenken");
         }
         #endregion
 
