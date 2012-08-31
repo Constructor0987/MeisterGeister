@@ -55,34 +55,5 @@ namespace MeisterGeister.View.Helden.Controls
             }
         }
 
-        private void ListBoxHeldVorNachteile_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (_listBoxHeldVorNachteile.SelectedItem != null)
-            {
-                switch (e.Key)
-                {
-                    // VorNachteil löschen
-                    case Key.Delete:
-                        // TODO MT: Lösch-Frage einbauen
-                        (this.DataContext as VM.VorNachteileViewModel).OnDeleteVorNachteil.Execute(null);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        //private DatabaseDSADataSet.Held_VorNachteilRow SelectedVorNachteil
-        //{
-        //    get
-        //    {
-        //        DatabaseDSADataSet.Held_VorNachteilRow vorNachRow = null;
-        //        if (_listBoxHeldVorNachteile.SelectedItem != null)
-        //            vorNachRow = (DatabaseDSADataSet.Held_VorNachteilRow)((System.Data.DataRowView)_listBoxHeldVorNachteile.SelectedItem).Row;
-
-        //        return vorNachRow;
-        //    }
-        //}
-
     }
 }

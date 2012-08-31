@@ -109,16 +109,12 @@
         </DockPanel>
 
         <ListBox Grid.Row="1" Margin="4" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000"
-                 ItemsSource="{Binding Source={StaticResource VorNachteilListeView}}" ItemTemplate="{StaticResource VorNachteileTemplate}" SelectedItem="{Binding SelectedHeldVorNachteil}"
-                 KeyDown="ListBoxHeldVorNachteile_KeyDown">
-
-            <!-- Variante mit Wraping -->
+                 ItemsSource="{Binding Source={StaticResource VorNachteilListeView}}" ItemTemplate="{StaticResource VorNachteileTemplate}" SelectedItem="{Binding SelectedHeldVorNachteil}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-
             <ListBox.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleVorNachteile}">
                     <GroupStyle.Panel>
@@ -128,7 +124,6 @@
                     </GroupStyle.Panel>
                 </GroupStyle>
             </ListBox.GroupStyle>
-
             <ListBox.ContextMenu>
                 <ContextMenu Opened="ContextMenuVorNachteile_Opened">
                     <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">
@@ -144,6 +139,9 @@
                     </MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
+            <ListBox.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding OnDeleteVorNachteil}" />
+            </ListBox.InputBindings>
         </ListBox>
     </Grid>
 </UserControl>
