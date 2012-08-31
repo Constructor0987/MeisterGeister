@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="MeisterGeister.View.Helden.Controls.SonderfertigkeitenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             mc:Ignorable="d" 
+             d:DesignHeight="299" d:DesignWidth="677">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="heldHeld_SonderfertigkeitViewSource" Source="{Binding}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="SonderfertigkeitTyp" />
+                <ComponentModel:SortDescription PropertyName="Sonderfertigkeit" />
+            </CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Row.SonderfertigkeitRow.Typ" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+        <Style x:Key="SonderfertigkeitWertItemStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Row.SonderfertigkeitRow.HatWert}" Value="false">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="SonderfertigkeitenTemplate">
+            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
+                <TextBlock Margin="2,2,0,0" Text="{Binding Row.SonderfertigkeitRow.Name}" />
+                <TextBox Style="{StaticResource SonderfertigkeitWertItemStyle}" Margin="20,0,0,0" MaxLength="1200" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert der Sonderfertigkeit" />
+            </StackPanel>
+        </DataTemplate>
+        <Style x:Key="GroupHeaderStyleSonderfertigkeiten" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander Margin="2,0,2,0" Padding="4" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
+                            <Expander.Header>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
+                                </DockPanel>
+                            </Expander.Header>
+                            <Border Margin="2" CornerRadius="3">
+                                <ItemsPresenter />
+                            </Border>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+            <Image.ToolTip>
+                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf eine Sonderfertigkeit für weitere Aktionen."/></TextBlock>
+            </Image.ToolTip>
+        </Image>
+        <ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxSonderfertigkeit_DropDownClosed" DropDownOpened="_comboBoxSonderfertigkeit_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxSonderfertigkeit_KeyDown" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Top">
+            <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ComboBox.ItemsPanel>
+        </ComboBox>
+        <ListBox Margin="2,46,6,6" ItemsSource="{Binding Source={StaticResource heldHeld_SonderfertigkeitViewSource}}" ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" KeyDown="_listBoxHeldSonderfertigkeiten_KeyDown" MouseDown="ListBoxSonderfertigkeiten_MouseDown" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
+            <ListBox.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleSonderfertigkeiten}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </ListBox.GroupStyle>
+            <ListBox.ContextMenu>
+                <ContextMenu Opened="ContextMenuSonderfertigkeiten_Opened">
+                    <MenuItem Height="28" Click="MenuItemSonderfertigkeitWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemSonderfertigkeitlWiki">
+                        <MenuItem.Icon>
+                            <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Height="28" Click="MenuItemSonderfertigkeitLöschen_Click" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen">
+                        <MenuItem.Icon>
+                            <Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+    </Grid>
+</UserControl>

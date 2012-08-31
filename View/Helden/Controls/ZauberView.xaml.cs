@@ -22,6 +22,8 @@ namespace MeisterGeister.View.Helden.Controls
         public ZauberView()
         {
             InitializeComponent();
+
+            // TODO MT: ViewModel erstellen
         }
 
         //private DatabaseDSADataSet.Held_ZauberRow SelectedZauberRow

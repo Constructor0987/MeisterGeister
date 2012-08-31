@@ -345,6 +345,7 @@
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
+    <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\TalentViewModel.cs" />
     <Compile Include="ViewModel\Helden\ListeViewModel.cs" />
     <Compile Include="ViewModel\Helden\AllgemeinViewModel.cs" />
@@ -447,8 +448,14 @@
     <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">
       <DependentUpon>AllgemeinView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Helden\Controls\EigenschaftenView.xaml.cs">
+      <DependentUpon>EigenschaftenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Helden\Controls\ListeView.xaml.cs">
       <DependentUpon>ListeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\SonderfertigkeitenView.xaml.cs">
+      <DependentUpon>SonderfertigkeitenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Helden\Controls\TalentView.xaml.cs">
       <DependentUpon>TalentView.xaml</DependentUpon>
@@ -712,9 +719,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Helden\Controls\EigenschaftenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Helden\Controls\ListeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\SonderfertigkeitenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Helden\Controls\TalentView.xaml">
       <Generator>MSBuild:Compile</Generator>

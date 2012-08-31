@@ -3,9 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
              d:DesignHeight="299" d:DesignWidth="677">
+    <UserControl.Resources>
+        <!-- Zauber -->
+        <CollectionViewSource x:Key="heldHeld_ZauberViewSource" Source="{Binding}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="Zaubername" />
+                <ComponentModel:SortDescription PropertyName="Repräsentation" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <Grid>
         <ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxZauber_DropDownClosed" DropDownOpened="_comboBoxZauber_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxZauber_KeyDown" x:Name="_comboBoxZauber" ToolTip="Zauber hinzufügen" VerticalAlignment="Top" />
         <ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />
