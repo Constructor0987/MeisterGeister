@@ -914,6 +914,30 @@ namespace MeisterGeister.Model
             return HatSonderfertigkeit(sonderfertigkeit, null);
         }
 
+        /// <summary>
+        /// Die Sonderfertigkeiten des Helden.
+        /// Nicht zum ändern von Werten, da die Werte in Held_Sonderfertigkeit stehen.
+        /// </summary>
+        public IDictionary<Sonderfertigkeit, string> Sonderfertigkeiten
+        {
+            get
+            {
+                return Held_Sonderfertigkeit.ToDictionary(hsf => hsf.Sonderfertigkeit, hsf => hsf.Wert);
+            }
+        }
+
+        //TODO: Ob es ratsam ist nur die mit erfüllten Voraussetzungen anzuzeigen?
+        /// <summary>
+        /// Die Sonderfertigkeiten, die der Held wählen kann. Die Voraussetzungen müssen erfüllt sein.
+        /// </summary>
+        public List<Sonderfertigkeit> SonderfertigkeitenWählbar
+        {
+            get
+            {
+                return Global.ContextHeld.Liste<Sonderfertigkeit>().Where(sf => sf.CheckVoraussetzungen(this) ).Except(Sonderfertigkeiten.Keys).OrderBy(sf => sf.Name).ToList();
+            }
+        }
+
         #endregion
 
         public int Behinderung
