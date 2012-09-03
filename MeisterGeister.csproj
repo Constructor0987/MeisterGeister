@@ -1029,6 +1029,11 @@
     <Resource Include="Images\Icons\helden_add.png" />
     <Resource Include="Images\Icons\kämpfer_entf.png" />
     <Resource Include="Images\Logos\Ares_Logo.png" />
+    <Resource Include="Images\Icons\General\audioadd.png" />
+    <Resource Include="Images\Icons\General\pause.png" />
+    <Resource Include="Images\Icons\General\play.png" />
+    <Resource Include="Images\Icons\General\play_next.png" />
+    <Resource Include="Images\Icons\General\play_stop.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
