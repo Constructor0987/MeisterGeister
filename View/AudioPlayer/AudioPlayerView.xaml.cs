@@ -742,6 +742,7 @@ namespace MeisterGeister.View.AudioPlayer
                         grdKlang.UnregisterName(StackZeile.Name);
                     else
                         this.UnregisterName(StackZeile.Name);
+                    
                 }
                 if (grdKlang != null)
                     grdKlang.RowDefinitions.RemoveRange(1, grdKlang.RowDefinitions.Count -2);
@@ -1199,7 +1200,7 @@ namespace MeisterGeister.View.AudioPlayer
                     pos++;
                 }
             }
-            if (lbBackground.Items.Count >= playlistliste.Count)
+            if (lbBackground.Items.Count >= playlistliste.Count && playlistliste.Count != 0)
             {
                 for (int i = playlistliste.Count - 1; i < playlistliste.Count; i++)
                     lbBackground.Items[i] = null;
@@ -1772,9 +1773,12 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void tiKlangPlaylistClose_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = 0; i < laufendeSongs[tcKlang.SelectedIndex].Count(); i++)
-                _player[tcKlang.SelectedIndex][laufendeSongs[tcKlang.SelectedIndex][i]].Stop();
 
+            if (laufendeSongs[tcKlang.SelectedIndex] != null)
+            {
+                for (int i = 0; i < laufendeSongs[tcKlang.SelectedIndex].Count(); i++)
+                    _player[tcKlang.SelectedIndex][laufendeSongs[tcKlang.SelectedIndex][i]].Stop();
+            }
             Int32 spalte = tcKlang.Items.Count - 2;
 
             this.UnregisterName("tiKlang" + spalte);
@@ -1782,6 +1786,8 @@ namespace MeisterGeister.View.AudioPlayer
             this.UnregisterName("sviewer" + spalte);
             this.UnregisterName("grdKlang" + spalte);
             this.UnregisterName("grdKlangTop" + spalte);
+            if (spalte == 1)
+                tcKlang.SelectedIndex = 0;
         }
 
         private void tiPlus_MouseUp(object sender, MouseButtonEventArgs e)
@@ -1818,7 +1824,7 @@ namespace MeisterGeister.View.AudioPlayer
 
             ToggleButton tbtn = (ToggleButton)grdKlangTop.FindName("btnKlangStop" + spalte);
             tbtn.Click += new RoutedEventHandler(btnKlangStop0_Click);
-            this.RegisterName(tbtn.Name, tbtn);
+       //     this.RegisterName(tbtn.Name, tbtn);
 
         /*        CheckBox cboxListeAn = grdKlangTop.FindName("cboxListeAn" + zeile) as CheckBox;
                 //cboxListeAn.Click += new RoutedEventHandler(chkTitel0_0_Click);
