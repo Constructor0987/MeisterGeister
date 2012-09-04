@@ -685,10 +685,18 @@ namespace MeisterGeister.View.AudioPlayer
                                 KlangNewRow(playlisttitel.Audio_Titel.Pfad, seite, x, playlisttitel);
                             }
                             ((Grid)this.FindName("grdKlang" + seite)).Visibility = Visibility.Visible;
-                            tboxklangsongparallel.Text = AktKlangPlaylist.MaxSongsParallel.ToString(); //.Value  
+                            tboxklangsongparallel.Text = AktKlangPlaylist.MaxSongsParallel.ToString();
                             maxsongsparallel[seite] = AktKlangPlaylist.MaxSongsParallel;
                             zeilenAufSeite[seite] = Convert.ToUInt16(AktKlangPlaylist.Audio_Playlist_Titel.Count);
+                            
+                            LblKlangSongsParallel.Visibility = Visibility.Visible;
+                            tboxklangsongparallel.Visibility = Visibility.Visible;
+                            btnSongParMinus.Visibility = Visibility.Visible;
+                            btnSongParPlus.Visibility = Visibility.Visible;
                         }
+                        rbIstKlangPlaylist.Visibility = Visibility.Visible;
+                        rbIstMusikPlaylist.Visibility = Visibility.Visible;
+
                         ((Grid)this.FindName("grdKlangTop" + seite)).Visibility = Visibility.Visible;
                         CheckPlayStandbySongs(seite);                        
                     }
@@ -744,6 +752,13 @@ namespace MeisterGeister.View.AudioPlayer
                         this.UnregisterName(StackZeile.Name);
                     
                 }
+                LblKlangSongsParallel.Visibility = Visibility.Hidden;
+                tboxklangsongparallel.Visibility = Visibility.Hidden;
+                btnSongParMinus.Visibility = Visibility.Hidden;
+                btnSongParPlus.Visibility = Visibility.Hidden;
+                rbIstKlangPlaylist.Visibility = Visibility.Hidden;
+                rbIstMusikPlaylist.Visibility = Visibility.Hidden;
+
                 if (grdKlang != null)
                     grdKlang.RowDefinitions.RemoveRange(1, grdKlang.RowDefinitions.Count -2);
                 zeilenAufSeite[seite] = 0;
@@ -766,6 +781,127 @@ namespace MeisterGeister.View.AudioPlayer
             XmlReader xmlTextReader = new XmlTextReader(stringReader); 
             UIElement DeepCopyobject = (UIElement)XamlReader.Load(xmlTextReader);
             return DeepCopyobject;
+        }
+
+        private void ZeigeKlangTop(UInt16 seite, bool sichtbar)
+        {            
+            if (sichtbar)
+            {
+                ((Label)this.FindName("lblVolTop"+seite)).Visibility = Visibility.Visible;
+                btnAllVolMin0.Visibility = Visibility.Visible;
+                btnAllVolDown0.Visibility = Visibility.Visible;
+                btnAllVolMax0.Visibility = Visibility.Visible;
+                btnAllVolUp0.Visibility = Visibility.Visible;
+                chkbxVolChange0.Visibility = Visibility.Visible;
+                lblVolRange0.Visibility = Visibility.Visible;
+                btnVolMinMinus0.Visibility = Visibility.Visible;
+                btnVolMinPlus0.Visibility = Visibility.Visible;
+                btnVolMaxMinus0.Visibility = Visibility.Visible;
+                btnVolMaxPlus0.Visibility = Visibility.Visible;
+
+                lblKlangPause0.Visibility = Visibility.Visible;
+                btnKlangPauseMin0.Visibility = Visibility.Visible;
+                btnKlangPauseDown0.Visibility = Visibility.Visible;
+                btnKlangPauseUp0.Visibility = Visibility.Visible;
+                btnKlangPauseMax0.Visibility = Visibility.Visible;
+                chkBoxKlangPause0.Visibility = Visibility.Visible;
+                lblKlangPauseRange0.Visibility = Visibility.Visible;
+                btnKlangPauseMinMinus0.Visibility = Visibility.Visible;
+                btnKlangPauseMinPlus0.Visibility = Visibility.Visible;
+                btnKlangPauseMaxMinus0.Visibility = Visibility.Visible;
+                btnKlangPauseMaxPlus0.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                lblVolTop0.Visibility = Visibility.Hidden;
+                btnAllVolMin0.Visibility = Visibility.Hidden;
+                btnAllVolDown0.Visibility = Visibility.Hidden;
+                btnAllVolMax0.Visibility = Visibility.Hidden;
+                btnAllVolUp0.Visibility = Visibility.Hidden;
+                chkbxVolChange0.Visibility = Visibility.Hidden;
+                lblVolRange0.Visibility = Visibility.Hidden;
+                btnVolMinMinus0.Visibility = Visibility.Hidden;
+                btnVolMinPlus0.Visibility = Visibility.Hidden;
+                btnVolMaxMinus0.Visibility = Visibility.Hidden;
+                btnVolMaxPlus0.Visibility = Visibility.Hidden;
+
+                lblKlangPause0.Visibility = Visibility.Hidden;
+                btnKlangPauseMin0.Visibility = Visibility.Hidden;
+                btnKlangPauseDown0.Visibility = Visibility.Hidden;
+                btnKlangPauseUp0.Visibility = Visibility.Hidden;
+                btnKlangPauseMax0.Visibility = Visibility.Hidden;
+                chkBoxKlangPause0.Visibility = Visibility.Hidden;
+                lblKlangPauseRange0.Visibility = Visibility.Hidden;
+                btnKlangPauseMinMinus0.Visibility = Visibility.Hidden;
+                btnKlangPauseMinPlus0.Visibility = Visibility.Hidden;
+                btnKlangPauseMaxMinus0.Visibility = Visibility.Hidden;
+                btnKlangPauseMaxPlus0.Visibility = Visibility.Hidden;
+            }
+        /*    (Label)"label4" 
+            <Button "btnAllVolMin" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Lautstärke aller aktiven Klänge auf 0%" Tag="-100" Click="btnAllVolUp_Click" />
+            <Button "btnAllVolDown" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge verringern" Tag="-10" Click="btnAllVolUp_Click" />
+            <Button "btnAllVolMax" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Lautstärke aller aktiven Klänge auf 100%" Tag="100" Click="btnAllVolUp_Click" />
+            <Button "btnAllVolUp" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge erhöhen" Click="btnAllVolUp_Click" Tag="10" />
+            <CheckBox Name="checkBox2" VerticalAlignment="Bottom" Width="14" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" ToolTip="Lautstärke aller aktiven Klänge automatisch variieren" />
+            <Label "label5" Padding="0" VerticalAlignment="Top" Grid.RowSpan="2" Margin="24,0,2,0" Grid.Row="1" />
+            <Button Name="button7" VerticalAlignment="Bottom" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Right" Width="22" ToolTip="Minimale Lautstärke aller variierbaren Klänge verringern" />
+            <Button Name="button8" VerticalAlignment="Bottom" Width="22" Grid.Column="6" Grid.Row="1" ToolTip="Minimale Lautstärke aller variierbaren Klänge erhöhen" />
+            <Button Name="button9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge verringern" />
+            <Button Name="button10" VerticalAlignment="Bottom" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge erhöhen" />
+            <Label Name="lblKlangPause0" Padding="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" Width="123" Grid.Row="1" />
+            <Button Name="btnKlangPauseMin0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 0%" />
+            <Button Name="btnKlangPauseDown0" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge verringern" />
+            <Button Content="&gt;&gt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" Name="btnKlangPauseMax0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 100%" />
+            <Button Content="&gt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" Name="btnKlangPauseUp0" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" />
+            <CheckBox Height="14" Margin="0,2,0,5" Name="chkBoxKlangPause0_0" VerticalAlignment="Bottom" Width="14" Grid.Column="10" Grid.Row="1" HorizontalAlignment="Center" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" />
+            <Label Content="Pause Range [ms]" Grid.Column="11" Grid.ColumnSpan="2" Height="17" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Name="lblKlangPauseRange0" Padding="0" VerticalAlignment="Top" Grid.RowSpan="2" Margin="24,0,2,0" Grid.Row="1" />
+            <Button Content="-" Height="22" Margin="0,0,30,1" Name="btnKlangPauseMinMinus0" VerticalAlignment="Bottom" Grid.Column="11" Grid.Row="1" HorizontalAlignment="Right" Width="22" ToolTip="Minimale Pausenzeit aller variierbaren Klänge verringern" />
+            <Button Content="+" Height="22" HorizontalAlignment="Right" Margin="0,0,0,1" Name="btnKlangPauseMinPlus0" VerticalAlignment="Bottom" Width="22" Grid.Column="11" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge erhöhen" />
+            <Button Content="-" Grid.Column="12" Grid.Row="1" Height="22" Margin="0,0,30,1" Name="btnKlangPauseMaxMinus0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Pausenzeit aller variierbaren Klänge verringern" />
+            <Button Content="+" Grid.Column="12" Grid.Row="1" Height="22" HorizontalAlignment="Right" Name="btnKlangPauseMaxPlus0" VerticalAlignment="Bottom" Width="22" Margin="0,0,0,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge erhöhen" />
+       */ }
+
+        private void ZeigeKlangSettings(UInt16 seite, UInt16 row, bool sichtbar)
+        {
+            StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + seite + "_" + row);
+            Slider sldVol = (Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + row);
+            if (!sichtbar)
+            {
+                ((Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((CheckBox)spnlZeile.FindName("chkVolMove" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnVolMinMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnVolMinPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((TextBox)spnlZeile.FindName("tboxVolMin" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnVolMaxMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnVolMaxPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((TextBox)spnlZeile.FindName("tboxVolMax" + seite + "_" + row)).Visibility = Visibility.Hidden;
+
+                ((Slider)spnlZeile.FindName("sldKlangPause" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((CheckBox)spnlZeile.FindName("chkKlangPauseMove" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnPauseMinMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnPauseMinPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((TextBox)spnlZeile.FindName("tboxPauseMin" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnPauseMaxMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((Button)spnlZeile.FindName("_btnPauseMaxPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
+                ((TextBox)spnlZeile.FindName("tboxPauseMax" + seite + "_" + row)).Visibility = Visibility.Hidden;
+            }
+            else 
+            {
+                ((Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((CheckBox)spnlZeile.FindName("chkVolMove" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((Button)spnlZeile.FindName("_btnVolMinMinus" + seite + "_" + row)).Visibility = Visibility.Visible; 
+                ((Button)spnlZeile.FindName("_btnVolMinPlus" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((TextBox)spnlZeile.FindName("tboxVolMin" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((Button)spnlZeile.FindName("_btnVolMaxMinus" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((Button)spnlZeile.FindName("_btnVolMaxPlus" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((TextBox)spnlZeile.FindName("tboxVolMax" + seite + "_" + row)).Visibility = Visibility.Visible;
+
+                ((Slider)spnlZeile.FindName("sldKlangPause" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((CheckBox)spnlZeile.FindName("chkKlangPauseMove" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((Button)spnlZeile.FindName("_btnPauseMinMinus" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((Button)spnlZeile.FindName("_btnPauseMinPlus" + seite + "_" + row)).Visibility = Visibility.Visible;
+                ((TextBox)spnlZeile.FindName("tboxPauseMin" + seite + "_" + row)).Visibility = Visibility.Visible;
+            }
         }
 
         private void KlangNewRow(string songdatei, UInt16 seite, UInt16 row, Audio_Playlist_Titel playlisttitel)
@@ -797,65 +933,74 @@ namespace MeisterGeister.View.AudioPlayer
             chkTitel.ToolTip = songdatei;
             chkTitel.Tag = songdatei;
 
-            // Schieberegler Lautstärke
-            Slider sldVol = (Slider)newStack.FindName("sldKlangVol" + seite + "_" + row);
-            sldVol.Value = playlisttitel.Volume;
-            sldVol.Tag = row;
-            sldVol.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
-            sldVol.ToolTip = Math.Round(sldVol.Value) + " %";
+            if (playlisttitel.Audio_Playlist.Hintergrundmusik)
+            {
+                ZeigeKlangSettings(seite, row, false);
+                ZeigeKlangTop(seite, false);
+            }
+            else
+            {
+                // Schieberegler Lautstärke
+                Slider sldVol = (Slider)newStack.FindName("sldKlangVol" + seite + "_" + row);
+                sldVol.Value = playlisttitel.Volume;
+                sldVol.Tag = row;
+                sldVol.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
+                sldVol.ToolTip = Math.Round(sldVol.Value) + " %";
 
-            //Checkbox Automatisch veränderbare Lautstärke
-            CheckBox chkVolMove = (CheckBox)newStack.FindName("chkVolMove" + seite + "_" + row);
-            chkVolMove.Tag = row;
-            chkVolMove.Click += new RoutedEventHandler(chkVolMove0_0_Click);
+                //Checkbox Automatisch veränderbare Lautstärke
+                CheckBox chkVolMove = (CheckBox)newStack.FindName("chkVolMove" + seite + "_" + row);
+                chkVolMove.Tag = row;
+                chkVolMove.Click += new RoutedEventHandler(chkVolMove0_0_Click);
 
-            // Volume Minimum Plus/Minus (für ein Song)
-            //   (newStack.FindName("iboxVolMin0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxVolMin0_0_LostFocus);
-            Button btnVolMinMinus = (Button)newStack.FindName("_btnVolMinMinus" + seite + "_" + row);
-            btnVolMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-            Button btnVolMinPlus = (Button)newStack.FindName("_btnVolMinPlus" + seite + "_" + row);
-            btnVolMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);            
-            TextBox tboxVolMin = (TextBox)newStack.FindName("tboxVolMin" + seite + "_" + row);
-            tboxVolMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
+                // Volume Minimum Plus/Minus (für ein Song)
+                //   (newStack.FindName("iboxVolMin0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxVolMin0_0_LostFocus);
+                Button btnVolMinMinus = (Button)newStack.FindName("_btnVolMinMinus" + seite + "_" + row);
+                btnVolMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+                Button btnVolMinPlus = (Button)newStack.FindName("_btnVolMinPlus" + seite + "_" + row);
+                btnVolMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+                TextBox tboxVolMin = (TextBox)newStack.FindName("tboxVolMin" + seite + "_" + row);
+                tboxVolMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
 
-            // Volume Maximum Plus/Minus (für ein Song)
-            //   (newStack.FindName("iboxVolMax0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxVolMax0_0_LostFocus);
-            Button btnVolMaxMinus = (Button)newStack.FindName("_btnVolMaxMinus" + seite + "_" + row);
-            btnVolMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click); //_btnVolMaxMinus0_X_Click);
-            Button btnVolMaxPlus = (Button)newStack.FindName("_btnVolMaxPlus" + seite + "_" + row);
-            btnVolMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);            
-            TextBox tboxVolMax = (TextBox)newStack.FindName("tboxVolMax" + seite + "_" + row);
-            tboxVolMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
-            
-            // Schieberegler Zwischenpause
-            Slider sldKlangPause = (Slider)newStack.FindName("sldKlangPause" + seite + "_" + row);
-            sldKlangPause.Value = playlisttitel.Pause;
-            sldKlangPause.Tag = row;
-            sldKlangPause.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
-            sldKlangPause.ToolTip = Math.Round(sldKlangPause.Value) + " ms";
+                // Volume Maximum Plus/Minus (für ein Song)
+                //   (newStack.FindName("iboxVolMax0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxVolMax0_0_LostFocus);
+                Button btnVolMaxMinus = (Button)newStack.FindName("_btnVolMaxMinus" + seite + "_" + row);
+                btnVolMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click); //_btnVolMaxMinus0_X_Click);
+                Button btnVolMaxPlus = (Button)newStack.FindName("_btnVolMaxPlus" + seite + "_" + row);
+                btnVolMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+                TextBox tboxVolMax = (TextBox)newStack.FindName("tboxVolMax" + seite + "_" + row);
+                tboxVolMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
 
-            // Checkbox veränderbare Zwischenpause
-            CheckBox chkKlangPauseMove = (CheckBox)newStack.FindName("chkKlangPauseMove" + seite + "_" + row);
-            chkKlangPauseMove.Tag = row;
-            chkKlangPauseMove.Click += new RoutedEventHandler(chkKlangPauseMove0_0_Click);
+                // Schieberegler Zwischenpause
+                Slider sldKlangPause = (Slider)newStack.FindName("sldKlangPause" + seite + "_" + row);
+                sldKlangPause.Value = playlisttitel.Pause;
+                sldKlangPause.Tag = row;
+                sldKlangPause.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
+                sldKlangPause.ToolTip = Math.Round(sldKlangPause.Value) + " ms";
 
-            // Zwischenpause Minimum Plus/Minus (für ein Song)
-            //    (newStack.FindName("iboxKlangPauseMin0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxKlangPauseMin0_0_LostFocus);
-            Button btnPauseMinMinus = (Button)newStack.FindName("_btnPauseMinMinus" + seite + "_" + row);
-            btnPauseMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-            Button btnPauseMinPlus = (Button)newStack.FindName("_btnPauseMinPlus" + seite + "_" + row);
-            btnPauseMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);            
-            TextBox tboxPauseMin = (TextBox)newStack.FindName("tboxPauseMin" + seite + "_" + row);
-            tboxPauseMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
+                // Checkbox veränderbare Zwischenpause
+                CheckBox chkKlangPauseMove = (CheckBox)newStack.FindName("chkKlangPauseMove" + seite + "_" + row);
+                chkKlangPauseMove.Tag = row;
+                chkKlangPauseMove.Click += new RoutedEventHandler(chkKlangPauseMove0_0_Click);
 
-            // Zwischenpause Maximum Plus/Minus (für ein Song)
-            //    (newStack.FindName("iboxKlangPauseMax0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxKlangPauseMax0_0_LostFocus);
-            Button btnPauseMaxMinus = (Button)newStack.FindName("_btnPauseMaxMinus" + seite + "_" + row);
-            btnPauseMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-            Button btnPauseMaxPlus = (Button)newStack.FindName("_btnPauseMaxPlus" + seite + "_" + row);
-            btnPauseMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);            
-            TextBox tboxPauseMax = (TextBox)newStack.FindName("tboxPauseMax" + seite + "_" + row);
-            tboxPauseMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
+                // Zwischenpause Minimum Plus/Minus (für ein Song)
+                //    (newStack.FindName("iboxKlangPauseMin0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxKlangPauseMin0_0_LostFocus);
+                Button btnPauseMinMinus = (Button)newStack.FindName("_btnPauseMinMinus" + seite + "_" + row);
+                btnPauseMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+                Button btnPauseMinPlus = (Button)newStack.FindName("_btnPauseMinPlus" + seite + "_" + row);
+                btnPauseMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+                TextBox tboxPauseMin = (TextBox)newStack.FindName("tboxPauseMin" + seite + "_" + row);
+                tboxPauseMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
+
+                // Zwischenpause Maximum Plus/Minus (für ein Song)
+                //    (newStack.FindName("iboxKlangPauseMax0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxKlangPauseMax0_0_LostFocus);
+                Button btnPauseMaxMinus = (Button)newStack.FindName("_btnPauseMaxMinus" + seite + "_" + row);
+                btnPauseMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+                Button btnPauseMaxPlus = (Button)newStack.FindName("_btnPauseMaxPlus" + seite + "_" + row);
+                btnPauseMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+                TextBox tboxPauseMax = (TextBox)newStack.FindName("tboxPauseMax" + seite + "_" + row);
+                tboxPauseMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
+
+            }
 /*
 
             //        Einstellung Minimaler Lautstärkewert
@@ -1132,7 +1277,15 @@ namespace MeisterGeister.View.AudioPlayer
                     }                    
                 }
                 if (hinzugefuegt)
+                {
                     ((Grid)this.FindName("grdKlangTop" + tcKlang.SelectedIndex)).Visibility = Visibility.Visible;
+                    LblKlangSongsParallel.Visibility = Visibility.Visible;
+                    tboxklangsongparallel.Visibility = Visibility.Visible;
+                    btnSongParMinus.Visibility = Visibility.Visible;
+                    btnSongParPlus.Visibility = Visibility.Visible;
+                    rbIstKlangPlaylist.Visibility = Visibility.Visible;
+                    rbIstMusikPlaylist.Visibility = Visibility.Visible;
+                }
             }
             finally
             {
@@ -1188,7 +1341,7 @@ namespace MeisterGeister.View.AudioPlayer
                     lbitem.Name = "titel" + i;
                     lbitem.Tag = playlistliste[i].Audio_PlaylistGUID;
                     lbitem.Content = playlistliste[i].Name;
-                    if (lbBackground.Items.Count < i-1)
+                    if (lbBackground.Items.Count <= i)
                         lbBackground.Items.Add(lbitem);
                     else
                     {
@@ -1200,10 +1353,11 @@ namespace MeisterGeister.View.AudioPlayer
                     pos++;
                 }
             }
-            if (lbBackground.Items.Count >= playlistliste.Count && playlistliste.Count != 0)
+            if (lbBackground.Items.Count > pos && lbBackground.Items.Count != 0)
             {
-                for (int i = playlistliste.Count - 1; i < playlistliste.Count; i++)
-                    lbBackground.Items[i] = null;
+                for (int i = pos; i < lbBackground.Items.Count; i++)
+                    lbBackground.Items.RemoveAt(i);
+                    //lbBackground.Items[i] = null;
             }
         }
 
@@ -1587,6 +1741,16 @@ namespace MeisterGeister.View.AudioPlayer
                     Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, titel[i]);      
                //     lbKlang_SelectionChanged(lbKlang, new SelectionChangedEventArgs(null,null,null));
                 }
+
+            if (titel.Count == 0)
+            {
+                LblKlangSongsParallel.Visibility = Visibility.Hidden;
+                tboxklangsongparallel.Visibility = Visibility.Hidden;
+                btnSongParMinus.Visibility = Visibility.Hidden;
+                btnSongParPlus.Visibility = Visibility.Hidden;
+                rbIstKlangPlaylist.Visibility = Visibility.Hidden;
+                rbIstMusikPlaylist.Visibility = Visibility.Hidden;
+            }
         }
 
         private void rbKlangKlang_Click(object sender, RoutedEventArgs e)
@@ -1613,13 +1777,21 @@ namespace MeisterGeister.View.AudioPlayer
         {
             AktKlangPlaylist.Hintergrundmusik = false;
             Global.ContextAudio.Save();
+            UInt16 seite = Convert.ToUInt16(tcKlang.SelectedIndex);
+            ZeigeKlangTop(seite, true);
+            for (int i = 0; i < zeilenAufSeite[seite]; i++)
+                ZeigeKlangSettings(seite, Convert.ToUInt16(i), true);
             AktualisiereKlangPlaylist();
         }
         
         private void rbIstMusikPlaylist_Click(object sender, RoutedEventArgs e)
-        {
+        {                        
             AktKlangPlaylist.Hintergrundmusik = true;
             Global.ContextAudio.Save();
+            UInt16 seite = Convert.ToUInt16(tcKlang.SelectedIndex);
+            ZeigeKlangTop(seite, false);
+            for (int i = 0; i < zeilenAufSeite[seite]; i++)
+                ZeigeKlangSettings(seite, Convert.ToUInt16(i), false);
             AktualisiereKlangPlaylist();
         }
 
@@ -1740,6 +1912,27 @@ namespace MeisterGeister.View.AudioPlayer
                             tboxklangsongparallel.TextChanged += new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
 
                             zeilenAufSeite[tcKlang.SelectedIndex] = Convert.ToUInt16(AktKlangPlaylist.Audio_Playlist_Titel.Count);
+
+                            CheckBox chbx = (CheckBox)((StackPanel)this.FindName("spnlKlangRow" + tcKlang.SelectedIndex + "_0")).FindName("chkTitel" + tcKlang.SelectedIndex + "_0");
+                            if (playlistliste[0].Hintergrundmusik)
+                            {
+                                if (chbx.Visibility == Visibility.Visible)
+                                {
+                                    ZeigeKlangTop(Convert.ToUInt16(tcKlang.SelectedIndex), false);
+                                    for (int r = 0; r < zeilenAufSeite[tcKlang.SelectedIndex]; r++)
+                                        ZeigeKlangSettings(Convert.ToUInt16(tcKlang.SelectedIndex), Convert.ToUInt16(r), false);
+                                }
+                            }
+                            else
+                            {
+                                if (chbx.Visibility == Visibility.Hidden)
+                                {
+                                    ZeigeKlangTop(Convert.ToUInt16(tcKlang.SelectedIndex), true);
+                                    for (int r = 0; r < zeilenAufSeite[tcKlang.SelectedIndex]; r++)
+                                        ZeigeKlangSettings(Convert.ToUInt16(tcKlang.SelectedIndex), Convert.ToUInt16(r), true);
+                                }
+                            }
+
                         }
                         ((Grid)this.FindName("grdKlangTop" + tcKlang.SelectedIndex)).Visibility = Visibility.Visible;
                     }
@@ -1749,6 +1942,11 @@ namespace MeisterGeister.View.AudioPlayer
                         rbIstMusikPlaylist.IsChecked = rbKlangMusik.IsChecked;
                         tboxPlaylistName.Text = s;
                         tboxPlaylistName.Visibility = Visibility.Visible;
+                        LblKlangSongsParallel.Visibility = Visibility.Visible;
+                        tboxklangsongparallel.Visibility = Visibility.Visible;
+                        btnSongParMinus.Visibility = Visibility.Visible;
+                        btnSongParPlus.Visibility = Visibility.Visible;
+                        
                         tboxklangsongparallel.TextChanged -= new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
                         tboxklangsongparallel.Tag = null;
                         tboxklangsongparallel.Text = "0";
@@ -2184,7 +2382,16 @@ namespace MeisterGeister.View.AudioPlayer
                             }
                         }
                         if (hinzugefuegt)
+                        {
                             ((Grid)this.FindName("grdKlangTop" + tcKlang.SelectedIndex)).Visibility = Visibility.Visible;
+
+                            LblKlangSongsParallel.Visibility = Visibility.Visible;
+                            tboxklangsongparallel.Visibility = Visibility.Visible;
+                            btnSongParMinus.Visibility = Visibility.Visible;
+                            btnSongParPlus.Visibility = Visibility.Visible;
+                            rbIstKlangPlaylist.Visibility = Visibility.Visible;
+                            rbIstMusikPlaylist.Visibility = Visibility.Visible;
+                        }
                     }
                 }
                 finally
