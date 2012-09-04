@@ -346,7 +346,7 @@
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
-    <Compile Include="ViewModel\Helden\SonderfertigkeitenModel.cs" />
+    <Compile Include="ViewModel\Helden\SonderfertigkeitenViewModel.cs" />
     <Compile Include="ViewModel\Helden\TalentViewModel.cs" />
     <Compile Include="ViewModel\Helden\ListeViewModel.cs" />
     <Compile Include="ViewModel\Helden\AllgemeinViewModel.cs" />
