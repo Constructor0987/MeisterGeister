@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+//Eigene Usings
+using MeisterGeister.Model;
+using VM = MeisterGeister.ViewModel.Helden;
 
 namespace MeisterGeister.View.Helden.Controls
 {
@@ -23,7 +26,19 @@ namespace MeisterGeister.View.Helden.Controls
         {
             InitializeComponent();
 
-            // TODO MT: ViewModel erstellen
+            //VM an View Registrieren
+            this.DataContext = new VM.EigenschaftenViewModel();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                (this.DataContext as VM.EigenschaftenViewModel).Init();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void ButtonMax_Click(object sender, RoutedEventArgs e)

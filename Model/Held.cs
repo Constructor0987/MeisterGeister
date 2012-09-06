@@ -44,6 +44,7 @@ namespace MeisterGeister.Model
         }
 
         #region Eigenschaften
+        [DependentProperty("MU")]
         public int Mut
         {
             get
@@ -55,6 +56,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KL")]
         public int Klugheit
         {
             get
@@ -66,6 +68,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("IN")]
         public int Intuition
         {
             get
@@ -77,6 +80,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("CH")]
         public int Charisma
         {
             get
@@ -88,6 +92,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("FF")]
         public int Fingerfertigkeit
         {
             get
@@ -99,6 +104,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("GE")]
         public int Gewandheit
         {
             get
@@ -110,6 +116,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KO")]
         public int Konstitution
         {
             get
@@ -121,6 +128,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KK")]
         public int Körperkraft
         {
             get
@@ -267,6 +275,17 @@ namespace MeisterGeister.Model
             }
         }
 
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string LebensenergieStatus
+        {
+            get { return "TODO..."; }
+        }
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string LebensenergieStatusDetails
+        {
+            get { return "TODO..."; }
+        }
+
         #endregion
 
         #region Ausdauer
@@ -311,6 +330,17 @@ namespace MeisterGeister.Model
                     Modifikatoren.FindAll(m => m is Mod.IModAU).Select(m => (Mod.IModAU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAUMod(e));
                 return e;
             }
+        }
+
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string AusdauerStatus
+        {
+            get { return "TODO..."; }
+        }
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string AusdauerStatusDetails
+        {
+            get { return "TODO..."; }
         }
 
         #endregion
@@ -439,6 +469,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("MR_Mod")]
         public int MagieresistenzMod
         {
             get
@@ -452,6 +483,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
         public int Magieresistenz
         {
             get
@@ -528,6 +560,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("INI_Mod"), DependentProperty("MU"), DependentProperty("IN"), DependentProperty("GE")]
         public int InitiativeBasis
         {
             get
@@ -545,6 +578,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("INI_Mod")]
         public int InitiativeModGen
         {
             get
@@ -573,6 +607,7 @@ namespace MeisterGeister.Model
 
         #region Attacke/Parade
 
+        [DependentProperty("MU"), DependentProperty("GE"), DependentProperty("KK")]
         public int AttackeBasis
         {
             get
@@ -581,6 +616,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("IN"), DependentProperty("GE"), DependentProperty("KK")]
         public int ParadeBasis
         {
             get
@@ -601,6 +637,7 @@ namespace MeisterGeister.Model
 
         #region Fernkampf
 
+        [DependentProperty("IN"), DependentProperty("FF"), DependentProperty("KK")]
         public int FernkampfBasis
         {
             get
@@ -789,7 +826,7 @@ namespace MeisterGeister.Model
         public bool HatVorNachteil(string vn, string wert)
         {
             
-            Held_VorNachteil hvn = Held_VorNachteil.Where(hvn2 => hvn2.VorNachteil != null && hvn2.VorNachteil.Name == vn).First();
+            Held_VorNachteil hvn = Held_VorNachteil.Where(hvn2 => hvn2.VorNachteil != null && hvn2.VorNachteil.Name == vn).FirstOrDefault();
             //Wert abprüfen
             if (hvn != null && wert != null && (hvn.VorNachteil.HatWert ?? false))
             {

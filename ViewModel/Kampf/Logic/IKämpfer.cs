@@ -34,6 +34,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int KarmaenergieMax { get; }
         int KarmaenergieAktuell { get; set; }
 
+        //Energie-Stati
+        string LebensenergieStatus { get; }
+        string LebensenergieStatusDetails { get; }
+        string AusdauerStatus { get; }
+        string AusdauerStatusDetails { get; }
+
         //Kampf relevantes
         //int INI { get; }
         int InitiativeBasis { get; }

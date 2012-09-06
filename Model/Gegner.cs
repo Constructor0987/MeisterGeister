@@ -94,6 +94,17 @@ namespace MeisterGeister.Model
             }
         }
 
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string LebensenergieStatus
+        {
+            get { throw new NotImplementedException(); }
+        }
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string LebensenergieStatusDetails
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public int AusdauerMax
         {
             get { return AU; }
@@ -109,6 +120,16 @@ namespace MeisterGeister.Model
             {
                 throw new NotImplementedException();
             }
+        }
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string AusdauerStatus
+        {
+            get { throw new NotImplementedException(); }
+        }
+        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        public string AusdauerStatusDetails
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public int AstralenergieMax
@@ -270,5 +291,6 @@ namespace MeisterGeister.Model
         {
             return Name;
         }
+
     }
 }

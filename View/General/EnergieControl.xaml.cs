@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 // Eigene Usings
-using MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.View.General
 {
