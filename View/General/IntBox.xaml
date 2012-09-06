@@ -32,10 +32,10 @@
         <TextBox Grid.Column="0" Name="_textBoxInt" Text="{Binding ElementName=_intBox, Path=Value}" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="_textBoxInt_KeyDown" Style="{StaticResource TextBoxIntStyle}" BorderBrush="Transparent"/>
         <StackPanel Grid.Column="1" Name="_stackPanelButtons" Orientation="Horizontal" Visibility="{Binding ElementName=_intBox, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}">
             <Button Name="_buttonMinus" Width="18" Click="ButtonMinus_Click">
-                <Image Source="/Images/Icons/General/entf_02.png" />
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
             </Button>
             <Button Name="_buttonPlus" Width="18" Click="ButtonPlus_Click">
-                <Image Source="/Images/Icons/General/add.png" />
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
             </Button>
         </StackPanel>
     </Grid>

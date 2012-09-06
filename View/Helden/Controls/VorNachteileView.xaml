@@ -101,7 +101,7 @@
             <Button Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen" Margin="5,0,0,0">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
             </Button>
-            <Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+            <Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
                 <Image.ToolTip>
                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Vor-/Nachteil für weitere Aktionen."/></TextBlock>
                 </Image.ToolTip>
@@ -128,13 +128,13 @@
                 <ContextMenu Opened="ContextMenuVorNachteile_Opened">
                     <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">
                         <MenuItem.Icon>
-                            <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Height="28" Command="{Binding OnDeleteVorNachteil}" Header="Löschen" x:Name="_menuItemVorNachteilLöschen">
                         <MenuItem.Icon>
-                            <Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>

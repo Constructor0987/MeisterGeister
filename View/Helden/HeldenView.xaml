@@ -122,7 +122,7 @@
                                 <Grid Margin="5" Background="{StaticResource BackgroundPergamentHoch}">
                                     <Grid Height="266" Width="257" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Grid.Background>
-                                            <ImageBrush ImageSource="/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                                            <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
                                         </Grid.Background>
                                         <ViewGeneral:IntBox Margin="159,20,6,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedHeld.RS.GesamtRS}" />
                                         <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RSKopf}" />

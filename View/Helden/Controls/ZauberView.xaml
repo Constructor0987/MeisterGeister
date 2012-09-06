@@ -20,7 +20,7 @@
         <ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxZauber_DropDownClosed" DropDownOpened="_comboBoxZauber_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxZauber_KeyDown" x:Name="_comboBoxZauber" ToolTip="Zauber hinzufügen" VerticalAlignment="Top" />
         <ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />
         <!--<ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" ItemsSource="{x:Static LogicGeneral:Repräsentationen.RepräsentationenListe}" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />-->
-        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
             <Image.ToolTip>
                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Zauber für weitere Aktionen."/></TextBlock>
             </Image.ToolTip>
@@ -31,18 +31,18 @@
                 <ContextMenu Opened="ContextMenuZauber_Opened">
                     <MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">
                         <MenuItem.Icon>
-                            <Image Margin="2" Source="/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Height="28" Click="MenuItemZauberWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
                         <MenuItem.Icon>
-                            <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Height="28" Click="MenuItemZauberLöschen_Click" Header="Löschen" x:Name="_menuItemZauberLöschen">
                         <MenuItem.Icon>
-                            <Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>

@@ -136,7 +136,7 @@
                     <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Grid.Column="5" Grid.Row="2" Margin="3,3,3,3" Energie="Ausdauer" SelectedKämpfer="{Binding SelectedHeld}" />
                     <!-- Astralenergie -->
                     <Label Grid.Column="0" Grid.Row="3" Margin="3" Content="AE:" HorizontalAlignment="Center" x:Name="_labelAstralenergie" VerticalAlignment="Center" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                    <Image Grid.Column="0" Grid.Row="3" Height="16" Margin="0,2,2,0" Width="16" x:Name="_imageAeKeHinweis" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top" Visibility="{Binding HinweisMagieKarmaVisibility}">
+                    <Image Grid.Column="0" Grid.Row="3" Height="16" Margin="0,2,2,0" Width="16" x:Name="_imageAeKeHinweis" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top" Visibility="{Binding HinweisMagieKarmaVisibility}">
                         <Image.ToolTip>
                             <TextBlock Height="Auto" Width="350" TextWrapping="Wrap"><Run Text="Die Felder für AE/KE werden eingeblendet, sobald ein magie-/karmaspendender Vorteil (Viertel-, Halb- oder Vollzauberer / Geweiht) eingefügt wurde."/></TextBlock>
                         </Image.ToolTip>
@@ -157,7 +157,7 @@
                 <Grid Grid.Column="2" Margin="5" Background="{StaticResource BackgroundPergamentQuer}" x:Name="_gridWunden">
                     <Grid>
                         <Grid.Background>
-                            <ImageBrush ImageSource="/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                            <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
                         </Grid.Background>
                         <!-- Wunden -->
                         <ViewGeneral:IntBox Margin="159,20,6,187" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Unlokalisiert)" Value="{Binding SelectedHeld.Wunden}" />

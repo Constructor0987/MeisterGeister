@@ -52,7 +52,7 @@
     </UserControl.Resources>
     
     <Grid>
-        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
             <Image.ToolTip>
                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf eine Sonderfertigkeit für weitere Aktionen."/></TextBlock>
             </Image.ToolTip>
@@ -78,13 +78,13 @@
                 <ContextMenu Opened="ContextMenuSonderfertigkeiten_Opened">
                     <MenuItem Height="28" Click="MenuItemSonderfertigkeitWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemSonderfertigkeitlWiki">
                         <MenuItem.Icon>
-                            <Image Margin="2" Source="/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
                     <MenuItem Height="28" Click="MenuItemSonderfertigkeitLöschen_Click" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen">
                         <MenuItem.Icon>
-                            <Image Margin="2" Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
