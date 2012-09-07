@@ -39,31 +39,32 @@ Genre	    1 Byte
 
  * */
 
+
 namespace MeisterGeister.View.AudioPlayer
 {
     /// <summary>
     /// Interaktionslogik für AudioPlayerView.xaml
     /// </summary>
     /// 
-
-
+    
     delegate void updateBGSongCallback(MediaPlayer _player, string tekst);
 
     public partial class AudioPlayerView : UserControl
     {
         DispatcherTimer KlangProgBarTimer = new DispatcherTimer();
         DispatcherTimer HintergrundProgBarTimer = new DispatcherTimer();
-        public String[] AnzKlangParallel = new String[0];
+        public String[] AnzKlangParallel = new String[0];                   // Seite | Zeile | GetHashCode
+        public UInt16 tiErstellt = 0;
      //   string savedSpnlKlang =
      //       "<StackPanel Name=\"spnlKlangRow\" Grid.Row=\"2\" Grid.ColumnSpan=\"14\" xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:mgvg=\"clr-namespace:MeisterGeister.View.General;assembly=DSA MeisterGeister\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width=\"1\" /><ColumnDefinition Width=\"35\" /><ColumnDefinition Width=\"100*\" /><ColumnDefinition Width=\"42\" /><ColumnDefinition Width=\"28\" /><ColumnDefinition Width=\"92\" /><ColumnDefinition Width=\"21\" /><ColumnDefinition Width=\"75\" /><ColumnDefinition Width=\"72\" /><ColumnDefinition Width=\"14\" /><ColumnDefinition Width=\"92\" /><ColumnDefinition Width=\"21\" /><ColumnDefinition Width=\"75\" /><ColumnDefinition Width=\"72\" /></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition Height=\"23\" /></Grid.RowDefinitions><Image Source=\"pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/entf_01.png\" Stretch=\"Fill\" Name=\"imgTrash0_X\" Tag=\"0\" Width=\"16\" Height=\"16\" Margin=\"0,0,0,4\" HorizontalAlignment=\"Left\" VerticalAlignment=\"Bottom\" Grid.Column=\"1\" Grid.Row=\"2\" /><ProgressBar Name=\"pbarTitel0_X\" Height=\"18\" Margin=\"15,0,0,3\" VerticalAlignment=\"Bottom\" Grid.Column=\"2\" Grid.Row=\"2\" Grid.ColumnSpan=\"1\" /><CheckBox IsChecked=\"False\" Name=\"chkTitel0_X\" Height=\"20\" Margin=\"0,2,0,0\" HorizontalAlignment=\"Left\" Grid.Column=\"2\" Grid.Row=\"2\" Grid.ColumnSpan=\"1\">chkTitel0</CheckBox><Label HorizontalContentAlignment=\"Center\" Padding=\"0,0,0,0\" Name=\"lblDauer0_X\" Height=\"14\" Margin=\"5,3,0,6\" Grid.Column=\"3\" Grid.Row=\"2\">-:--</Label><Button Name=\"btnFile0_X\" Width=\"17\" Height=\"23\" Margin=\"6,0,0,0\" HorizontalAlignment=\"Left\" Grid.Column=\"4\" Grid.Row=\"2\">...</Button><Slider Maximum=\"100\" Value=\"50\" Name=\"sldVol0_X\" Height=\"23\" Margin=\"6,0,4,0\" ToolTip=\"50 %\" Grid.Column=\"5\" Grid.Row=\"2\" /><CheckBox Name=\"chkVolMove0_X\" Width=\"14\" Height=\"14\" Margin=\"0,6,0,4\" Grid.Column=\"6\" Grid.Row=\"2\" /><mgvg:IntBox MinValue=\"0\" MaxValue=\"100\" ShowButtons=\"True\" Value=\"0\" Name=\"iboxVolMin0_X\" MinWidth=\"65\" Height=\"23\" HorizontalAlignment=\"Left\" Grid.Column=\"7\" Grid.Row=\"2\"><mgvg:IntBox.Resources><BooleanToVisibilityConverter x:Key=\"BooleanToVisibilityConverter1\" /><Style TargetType=\"TextBox\" x:Key=\"TextBoxIntStyle\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></mgvg:IntBox.Resources><Grid><Grid.ColumnDefinitions><ColumnDefinition Width=\"*\" /><ColumnDefinition Width=\"Auto\" /></Grid.ColumnDefinitions><TextBox TextAlignment=\"Center\" BorderBrush=\"#00FFFFFF\" HorizontalContentAlignment=\"Center\" VerticalContentAlignment=\"Center\" Name=\"_textBoxInt\" Grid.Column=\"0\"><TextBox.Style><Style TargetType=\"TextBox\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></TextBox.Style>0</TextBox><StackPanel Orientation=\"Horizontal\" Name=\"_stackPanelButtons\" Visibility=\"Visible\" Grid.Column=\"1\"><Button Name=\"_buttonMinus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/entf_02.png\" /></Button><Button Name=\"_buttonPlus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/add.png\" /></Button></StackPanel></Grid></mgvg:IntBox><mgvg:IntBox MinValue=\"0\" MaxValue=\"100\" ShowButtons=\"True\" Value=\"0\" Name=\"iboxVolMax0_X\" MinWidth=\"65\" Height=\"23\" HorizontalAlignment=\"Left\" Grid.Column=\"8\" Grid.Row=\"2\"><mgvg:IntBox.Resources><BooleanToVisibilityConverter x:Key=\"BooleanToVisibilityConverter1\" /><Style TargetType=\"TextBox\" x:Key=\"TextBoxIntStyle\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></mgvg:IntBox.Resources><Grid><Grid.ColumnDefinitions><ColumnDefinition Width=\"*\" /><ColumnDefinition Width=\"Auto\" /></Grid.ColumnDefinitions><TextBox TextAlignment=\"Center\" BorderBrush=\"#00FFFFFF\" HorizontalContentAlignment=\"Center\" VerticalContentAlignment=\"Center\" Name=\"_textBoxInt\" Grid.Column=\"0\"><TextBox.Style><Style TargetType=\"TextBox\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></TextBox.Style>0</TextBox><StackPanel Orientation=\"Horizontal\" Name=\"_stackPanelButtons\" Visibility=\"Visible\" Grid.Column=\"1\"><Button Name=\"_buttonMinus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/entf_02.png\" /></Button><Button Name=\"_buttonPlus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/add.png\" /></Button></StackPanel></Grid></mgvg:IntBox><Slider Interval=\"50\" Maximum=\"30000\" Value=\"1000\" LargeChange=\"500\" SmallChange=\"100\" Name=\"sldKlangPause0_X\" Height=\"23\" Margin=\"6,0,4,0\" ToolTip=\"1000 ms\" Grid.Column=\"10\" Grid.Row=\"2\" /><CheckBox Name=\"chkKlangPauseMove0_X\" Width=\"14\" Height=\"14\" Margin=\"0,6,0,4\" Grid.Column=\"11\" Grid.Row=\"2\" /><mgvg:IntBox MinValue=\"0\" MaxValue=\"30000\" ShowButtons=\"True\" Value=\"0\" Name=\"iboxKlangPauseMin0_X\" MinWidth=\"65\" Height=\"23\" HorizontalAlignment=\"Left\" Grid.Column=\"12\" Grid.Row=\"2\"><mgvg:IntBox.Resources><BooleanToVisibilityConverter x:Key=\"BooleanToVisibilityConverter1\" /><Style TargetType=\"TextBox\" x:Key=\"TextBoxIntStyle\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></mgvg:IntBox.Resources><Grid><Grid.ColumnDefinitions><ColumnDefinition Width=\"*\" /><ColumnDefinition Width=\"Auto\" /></Grid.ColumnDefinitions><TextBox TextAlignment=\"Center\" BorderBrush=\"#00FFFFFF\" HorizontalContentAlignment=\"Center\" VerticalContentAlignment=\"Center\" Name=\"_textBoxInt\" Grid.Column=\"0\"><TextBox.Style><Style TargetType=\"TextBox\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></TextBox.Style>0</TextBox><StackPanel Orientation=\"Horizontal\" Name=\"_stackPanelButtons\" Visibility=\"Visible\" Grid.Column=\"1\"><Button Name=\"_buttonMinus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/entf_02.png\" /></Button><Button Name=\"_buttonPlus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/add.png\" /></Button></StackPanel></Grid></mgvg:IntBox><mgvg:IntBox MinValue=\"0\" MaxValue=\"30000\" ShowButtons=\"True\" Value=\"0\" Name=\"iboxKlangPauseMax0_X\" MinWidth=\"65\" Height=\"23\" HorizontalAlignment=\"Left\" Grid.Column=\"13\" Grid.Row=\"2\"><mgvg:IntBox.Resources><BooleanToVisibilityConverter x:Key=\"BooleanToVisibilityConverter1\" /><Style TargetType=\"TextBox\" x:Key=\"TextBoxIntStyle\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></mgvg:IntBox.Resources><Grid><Grid.ColumnDefinitions><ColumnDefinition Width=\"*\" /><ColumnDefinition Width=\"Auto\" /></Grid.ColumnDefinitions><TextBox TextAlignment=\"Center\" BorderBrush=\"#00FFFFFF\" HorizontalContentAlignment=\"Center\" VerticalContentAlignment=\"Center\" Name=\"_textBoxInt\" Grid.Column=\"0\"><TextBox.Style><Style TargetType=\"TextBox\"><Style.Triggers><DataTrigger Binding=\"{Binding Path=NoBackground, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#00FFFFFF</SolidColorBrush></Setter.Value></Setter></DataTrigger><DataTrigger Binding=\"{Binding Path=WeissAufSchwarz, ElementName=_intBox}\" Value=\"true\"><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><SolidColorBrush>#FFC0C0C0</SolidColorBrush></Setter.Value></Setter></DataTrigger></Style.Triggers><Style.Resources><ResourceDictionary /></Style.Resources><Setter Property=\"TextElement.Foreground\"><Setter.Value><SolidColorBrush>#FF000000</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Panel.Background\"><Setter.Value><SolidColorBrush>#FFFFFFFF</SolidColorBrush></Setter.Value></Setter><Setter Property=\"Border.BorderBrush\"><Setter.Value><LinearGradientBrush EndPoint=\"0,20\" MappingMode=\"Absolute\"><LinearGradientBrush.GradientStops><GradientStop Color=\"#FFABADB3\" Offset=\"0.05\" /><GradientStop Color=\"#FFE2E3EA\" Offset=\"0.07\" /><GradientStop Color=\"#FFE3E9EF\" Offset=\"1\" /></LinearGradientBrush.GradientStops></LinearGradientBrush></Setter.Value></Setter></Style></TextBox.Style>0</TextBox><StackPanel Orientation=\"Horizontal\" Name=\"_stackPanelButtons\" Visibility=\"Visible\" Grid.Column=\"1\"><Button Name=\"_buttonMinus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/entf_02.png\" /></Button><Button Name=\"_buttonPlus\" Width=\"18\"><Image Source=\"pack://application:,,,/Images/Icons/General/add.png\" /></Button></StackPanel></Grid></mgvg:IntBox></Grid></StackPanel>";
 
+        public int[] SeiteXHatObjGruppe = new int[8] {0, -1, -1, -1, -1, -1, -1, -1};
         public int[][] laufendeSongs = new int[8][];
         public int[][] standbySongs = new int[8][];
         public int[] maxsongsparallel = new int[8];
         public UInt16[] zeilenAufSeite = new UInt16[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
         public Audio_Playlist AktHintergrundPlaylist, AktKlangPlaylist;
 
-        public String[] BGSong = new String[3] { "MusikSong", "Interpret", "Verzeichnis" };
         public string orgStackString;
        // public TabItemControl AktKlangTabitem;
 
@@ -77,7 +78,7 @@ namespace MeisterGeister.View.AudioPlayer
         public AudioPlayerView()
         {
             InitializeComponent();
-            
+
             KlangProgBarTimer.Tick += new EventHandler(KlangProgBarTimer_Tick);
             KlangProgBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             KlangProgBarTimer.Tag = 0;
@@ -182,7 +183,7 @@ namespace MeisterGeister.View.AudioPlayer
                     _player.Volume = vol;
                     _player.Play();
                 }
-                
+
                 if (seite >= 0)
                     _player.MediaFailed += new EventHandler<ExceptionEventArgs>(Player_KlangMediaFailed);
                 else
@@ -204,10 +205,12 @@ namespace MeisterGeister.View.AudioPlayer
             if (_player != null)
                 _player.Volume = vol / 100;
         }
-        
-        void CheckPlayStandbySongs(int seite)
+
+        void CheckPlayStandbySongs(int objGruppe)
         {
-            Grid grdKlang = (Grid)this.FindName("grdKlang" + seite);        
+            Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
+
+            int seite = Array.IndexOf(SeiteXHatObjGruppe, objGruppe);
 
             if ((laufendeSongs[seite] == null && standbySongs[seite] != null) ||
                (laufendeSongs[seite] != null && standbySongs[seite] != null &&
@@ -235,9 +238,9 @@ namespace MeisterGeister.View.AudioPlayer
                             RemoveSongStandby(seite, w.Ergebnis);
 
                             // Titel anstarten
-                            StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + seite + "_" + zuspielendersong);
-                            if (((CheckBox)spnlZeile.FindName("chkTitel" + seite + "_" + zuspielendersong)) != null)
-                                chkTitel0_0_Click((spnlZeile.FindName("chkTitel" + seite + "_" + zuspielendersong)), new RoutedEventArgs());
+                            StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + zuspielendersong);
+                            if (((CheckBox)spnlZeile.FindName("chkTitel" + objGruppe + "_" + zuspielendersong)) != null)
+                                chkTitel0_0_Click((spnlZeile.FindName("chkTitel" + objGruppe + "_" + zuspielendersong)), new RoutedEventArgs());
                         }
                     }
                 }
@@ -254,23 +257,33 @@ namespace MeisterGeister.View.AudioPlayer
 
             UInt16 seite = Convert.ToUInt16(werte[0]);
             UInt16 zeile = Convert.ToUInt16(werte[1]);
+            UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[seite]);
 
-            // Player löschen, auf Urspring zurück
+            // Player löschen, auf Ursprung zurück
             _player[seite][zeile] = null;
             ProgressBar prog = (ProgressBar)this.FindName("pbarTitel" + s);
             if (prog == null)
-                prog = (ProgressBar)((StackPanel)this.FindName("spnlKlangRow" + seite + "_" + zeile)).FindName("pbarTitel" + s);
+                prog = (ProgressBar)((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + zeile)).FindName("pbarTitel" + s);
 
             if (prog != null) 
-                prog.Value = 0; 
+                prog.Value = 0;
 
+            StackPanel spnl = ((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + zeile));
+            if (((CheckBox)spnl.FindName("chkKlangPauseMove" + objGruppe + "_" + zeile)).IsChecked == true)
+            {
+                UInt16 v = Convert.ToUInt16(Convert.ToUInt16(((TextBox)spnl.FindName("tboxPauseMax" + objGruppe + "_" + zeile)).Text) -
+                                            Convert.ToUInt16((((TextBox)spnl.FindName("tboxPauseMin" + objGruppe + "_" + zeile))).Text));
+                Würfel w = new Würfel(v);
+                w.Würfeln(1);
+                ((Slider)spnl.FindName("sldKlangPause" + objGruppe + "_" + zeile)).Value = w.Ergebnis;
+            }
             // Song aus der Liste der laufenden Songs herausnehmen
             RemoveSongLaufend(seite, zeile);
 
             // Song in die Liste der Standby-Songs aufnehmen
             AddSongStandby(seite, zeile);
 
-            CheckPlayStandbySongs(seite);
+            CheckPlayStandbySongs(objGruppe);
         }
 
         void AddSongStandby(UInt16 seite, UInt16 zeile)
@@ -307,7 +320,8 @@ namespace MeisterGeister.View.AudioPlayer
             for (int i = 0; i <= AnzKlangParallel.Length - 1; i++)
             {
                 string[] s = AnzKlangParallel[i].Split(Separator, StringSplitOptions.None);
-                if (s[0] == seite.ToString() && s[1] == zeile.ToString())
+
+                if (seite.ToString() == s[0] && s[1] == zeile.ToString())
                 {
                     for (int x = i; x < AnzKlangParallel.Length - 1; x++)
                         AnzKlangParallel[x] = AnzKlangParallel[x + 1];
@@ -343,17 +357,18 @@ namespace MeisterGeister.View.AudioPlayer
                 char[] Separator = new char[] { '|' };
                 string[] s = AnzKlangParallel[x].Split(Separator, StringSplitOptions.None);
                 if (s[2] == (((MediaPlayer)sender).GetHashCode()).ToString())
-                {                    
-                    grdKlang = (Grid)this.FindName("grdKlang" + s[0]);
-                    Slider sld = (Slider)this.FindName("sldKlangPause" + s[0]+ "_" + s[1]);
+                {
+                    int objGruppe = SeiteXHatObjGruppe[Convert.ToUInt16(s[0])];
+                    grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
+                    Slider sld = (Slider)this.FindName("sldKlangPause" + objGruppe + "_" + s[1]);
                     if (sld == null)
-                        sld = (Slider)((StackPanel)this.FindName("spnlKlangRow" + s[0] + "_" + s[1])).FindName("sldKlangPause" + s[0]+ "_" + s[1]);
+                        sld = (Slider)((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + s[1])).FindName("sldKlangPause" + objGruppe + "_" + s[1]);
 
 
                     KlangPlayEndetimer = new DispatcherTimer();
-                    KlangPlayEndetimer.Interval = TimeSpan.FromMilliseconds(sld.Value); //((StackPanel)this.FindName("spnlKlangRow" + s[0] + "_" + s[1]))
+                    KlangPlayEndetimer.Interval = TimeSpan.FromMilliseconds(sld.Value); //((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + s[1]))
                     KlangPlayEndetimer.Tick += new EventHandler(KlangPlayEndetimer_Tick);
-                    KlangPlayEndetimer.Tag = s[0] + "_" + s[1];
+                    KlangPlayEndetimer.Tag = s[0] + "_" + s[1];   // Seite + Zeile
                     KlangPlayEndetimer.Start();
                     break;
                 }
@@ -376,18 +391,19 @@ namespace MeisterGeister.View.AudioPlayer
                 s = AnzKlangParallel[i].Split(Separator, StringSplitOptions.None);
                 if (mediahash == Convert.ToInt32(s[2]))
                 {
-                    UInt16 x = Convert.ToUInt16(s[0]);
-                    UInt16 y = Convert.ToUInt16(s[1]);
+                    UInt16 zeile = Convert.ToUInt16(s[1]);
+                    UInt16 seite = Convert.ToUInt16(s[0]);
+                    UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[seite]);
 
-                    Grid grdKlang = (Grid)this.FindName("grdKlang" + s[0]);
-                    StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + x + "_" + y);
+                    Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
+                    StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + zeile);
                     spnlZeile.Background = Brushes.Yellow;
                     spnlZeile.ToolTip = "Datei kann nicht abgespielt werden (Falscher oder nicht kompatibler Typ).";
-                    _player[x][y].Stop();
-                    _player[x][y] = null;
-                    RemoveSongLaufend(x, y);
-                    RemoveSongParallel(x, y);
-                    CheckPlayStandbySongs(x);
+                    _player[seite][zeile].Stop();
+                    _player[seite][zeile] = null;
+                    RemoveSongLaufend(seite, zeile);
+                    RemoveSongParallel(seite, zeile);
+                    CheckPlayStandbySongs(objGruppe);
                 }
             }
         }
@@ -403,11 +419,13 @@ namespace MeisterGeister.View.AudioPlayer
             {                
                 char[] Separator = new char[] { '|' };
                 string[] s = AnzKlangParallel[i].Split(Separator, StringSplitOptions.None);
-                UInt16 x = Convert.ToUInt16(s[0]);
-                UInt16 y = Convert.ToUInt16(s[1]);
-                grdKlang = (Grid)this.FindName("grdKlang" + s[0]);
+                UInt16 zeile = Convert.ToUInt16(s[1]);
+                UInt16 seite = Convert.ToUInt16(s[0]);
+                UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[seite]);
 
-                StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + x + "_" + y);
+                grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
+
+                StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + zeile);
                 if (spnlZeile.Tag != null)
                 {                    
                     DateTime dtJetzt = DateTime.Now;
@@ -416,38 +434,38 @@ namespace MeisterGeister.View.AudioPlayer
                     TimeSpan diffResult = dtJetzt - dtVorher;
                     if (diffResult.TotalSeconds > 1)
                     {
-                        if (!_player[x][y].HasAudio)
+                        if (!_player[seite][zeile].HasAudio)
                         {
                             spnlZeile.Background = Brushes.Yellow;
                             spnlZeile.ToolTip = "Datei kann nicht abgespielt werden";
-                            _player[x][y].Stop();
-                            _player[x][y] = null;
-                            RemoveSongLaufend(x, y);
-                            RemoveSongParallel(x, y);
-                            CheckPlayStandbySongs(x);
+                            _player[seite][zeile].Stop();
+                            _player[seite][zeile] = null;
+                            RemoveSongLaufend(seite, zeile);
+                            RemoveSongParallel(seite, zeile);
+                            CheckPlayStandbySongs(objGruppe);
                         }
                         else
                             spnlZeile.Background = null;
                     }
                 }
-                if (_player[x][y] != null && _player[x][y].HasAudio == false && _player[x][y].BufferingProgress == 1)
+                if (_player[seite][zeile] != null && _player[seite][zeile].HasAudio == false && _player[seite][zeile].BufferingProgress == 1)
                     spnlZeile.Tag = DateTime.Now;
                 else
                     spnlZeile.Tag = null;
                 
                 if (KlangProgBarTimer.Tag.ToString() == "0")
                 {
-                    CheckBox ch = (CheckBox)spnlZeile.FindName("chkTitel" + x + "_" + y);
-                    ProgressBar prog = (ProgressBar)spnlZeile.FindName("pbarTitel" + x + "_" + y);
-                    Slider sldVol = (Slider)spnlZeile.FindName("sldKlangVol" + x + "_" + y);
+                    CheckBox ch = (CheckBox)spnlZeile.FindName("chkTitel" + objGruppe + "_" + zeile);
+                    ProgressBar prog = (ProgressBar)spnlZeile.FindName("pbarTitel" + objGruppe + "_" + zeile);
+                    Slider sldVol = (Slider)spnlZeile.FindName("sldKlangVol" + objGruppe + "_" + zeile);
 
-                    if (ch.IsChecked == true && prog != null && _player[x][y] != null)
+                    if (ch.IsChecked == true && prog != null && _player[seite][zeile] != null)
                     {
-                        CheckBox chAkt = (CheckBox)spnlZeile.FindName("chkVolMove" + x + "_" + y);
+                        CheckBox chAkt = (CheckBox)spnlZeile.FindName("chkVolMove" + objGruppe + "_" + zeile);
                         if (chAkt.IsChecked == true)
                         {
-                            TextBox tboxMin = (TextBox)spnlZeile.FindName("tboxVolMin" + x + "_" + y);
-                            TextBox tboxMax = (TextBox)spnlZeile.FindName("tboxVolMax" + x + "_" + y);
+                            TextBox tboxMin = (TextBox)spnlZeile.FindName("tboxVolMin" + objGruppe + "_" + zeile);
+                            TextBox tboxMax = (TextBox)spnlZeile.FindName("tboxVolMax" + objGruppe + "_" + zeile);
                             uint v = 5;
                             if (sldVol.Value >= Convert.ToUInt32(tboxMax.Text) || sldVol.Value <= Convert.ToUInt32(tboxMin.Text))
                                 v = 3;
@@ -459,13 +477,13 @@ namespace MeisterGeister.View.AudioPlayer
                                 sldVol.Value = sldVol.Value + (w.Ergebnis - 3) * 2;
                         }
                         //if prog.Value >= prog.Maximum
-                        if (prog.Maximum == 10000 && _player[x][y].NaturalDuration.HasTimeSpan)
-                            prog.Maximum = _player[x][y].NaturalDuration.TimeSpan.TotalMilliseconds;
-                        Label lbl = (Label)spnlZeile.FindName("lblDauer" + x + "_" + y);
-                        if (lbl.Content.ToString() == "-:--" && _player[x][y].NaturalDuration.HasTimeSpan)
-                            lbl.Content = _player[x][y].NaturalDuration.TimeSpan.ToString().Substring(3, 5);
+                        if (prog.Maximum == 10000 && _player[seite][zeile].NaturalDuration.HasTimeSpan)
+                            prog.Maximum = _player[seite][zeile].NaturalDuration.TimeSpan.TotalMilliseconds;
+                        Label lbl = (Label)spnlZeile.FindName("lblDauer" + objGruppe + "_" + zeile);
+                        if (lbl.Content.ToString() == "-:--" && _player[seite][zeile].NaturalDuration.HasTimeSpan)
+                            lbl.Content = _player[seite][zeile].NaturalDuration.TimeSpan.ToString().Substring(3, 5);
 
-                        prog.Value = _player[x][y].Position.TotalMilliseconds;
+                        prog.Value = _player[seite][zeile].Position.TotalMilliseconds;
                     }
                 }
             }
@@ -647,32 +665,41 @@ namespace MeisterGeister.View.AudioPlayer
                 try
                 { 
                     Mouse.OverrideCursor = Cursors.Wait;
-                    UInt16 seite = Convert.ToUInt16(tcKlang.SelectedIndex);
+
+                    UInt16 objGruppe;
+                    if (tcKlang.SelectedIndex == 0)
+                        objGruppe = Convert.ToUInt16(((TabItem)tcKlang.SelectedItem).Name.Substring(7));
+                    else
+                        objGruppe = Convert.ToUInt16(((TabItemControl)tcKlang.SelectedItem).Name.Substring(7));
                     
                     for (int i = 0; i <= grdKlangPlaylistInfo.Children.Count - 1; i++)
                         grdKlangPlaylistInfo.Children[i].Visibility = Visibility.Visible;
 
                     string s = ((ListBoxItem)lbKlang.Items[lbKlang.SelectedIndex]).Content.ToString();
 
-                    ((Grid)this.FindName("grdKlang" + seite)).Visibility = Visibility.Hidden;
+                    ((Grid)this.FindName("grdKlang" + objGruppe)).Visibility = Visibility.Hidden;
                     List<Audio_Playlist> playlistliste = Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(s)).ToList();
                     if (playlistliste.Count == 1)
                     {
                         List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(playlistliste[0]);
-                        PlaylisteLeeren(seite);
+                        PlaylisteLeeren(objGruppe);
                         AktKlangPlaylist = playlistliste[0];
+
                         if (AktKlangPlaylist.Hintergrundmusik)
                             rbIstMusikPlaylist.IsChecked = true;
                         else
                             rbIstKlangPlaylist.IsChecked = true;
+
                         tboxPlaylistName.Text = AktKlangPlaylist.Name;
                         if (tcKlang.SelectedIndex == 0)
                             ((TabItem)tcKlang.SelectedItem).Header = AktKlangPlaylist.Name;
                         else
                             ((TabItemControl)tcKlang.SelectedItem)._textBlockTitel.Text = AktKlangPlaylist.Name;
-                        
+
                         if (titelliste.Count > 0)
                         {
+                            int seite = Array.IndexOf(SeiteXHatObjGruppe, objGruppe);
+
                             tboxklangsongparallel.TextChanged -= new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
                             tboxklangsongparallel.Tag = AktKlangPlaylist.Audio_Playlist_Titel.Count;
                             tboxklangsongparallel.Text = "0";
@@ -682,23 +709,35 @@ namespace MeisterGeister.View.AudioPlayer
                             for (UInt16 x = 0; x <= AktKlangPlaylist.Audio_Playlist_Titel.Count - 1; x++)
                             {
                                 Audio_Playlist_Titel playlisttitel = Global.ContextAudio.LoadPlaylist_TitelByPlaylist(AktKlangPlaylist, titelliste[x])[0];
-                                KlangNewRow(playlisttitel.Audio_Titel.Pfad, seite, x, playlisttitel);
+                                KlangNewRow(playlisttitel.Audio_Titel.Pfad, objGruppe, x, playlisttitel);
+
+                                if (AktKlangPlaylist.Hintergrundmusik)
+                                    ZeigeKlangSettings(objGruppe, x, false);
                             }
-                            ((Grid)this.FindName("grdKlang" + seite)).Visibility = Visibility.Visible;
+
+                            ((Grid)this.FindName("grdKlang" + objGruppe)).Visibility = Visibility.Visible;
+                            if (AktKlangPlaylist.Hintergrundmusik)
+                            {
+                                ZeigeKlangSongsParallel(false);
+                                ZeigeKlangTop(objGruppe, false);
+                            }
+                            else
+                                ZeigeKlangSongsParallel(true);
+
                             tboxklangsongparallel.Text = AktKlangPlaylist.MaxSongsParallel.ToString();
                             maxsongsparallel[seite] = AktKlangPlaylist.MaxSongsParallel;
                             zeilenAufSeite[seite] = Convert.ToUInt16(AktKlangPlaylist.Audio_Playlist_Titel.Count);
-                            
-                            LblKlangSongsParallel.Visibility = Visibility.Visible;
-                            tboxklangsongparallel.Visibility = Visibility.Visible;
-                            btnSongParMinus.Visibility = Visibility.Visible;
-                            btnSongParPlus.Visibility = Visibility.Visible;
+                            rbIstKlangPlaylist.Visibility = Visibility.Visible;
+                            rbIstMusikPlaylist.Visibility = Visibility.Visible;
                         }
-                        rbIstKlangPlaylist.Visibility = Visibility.Visible;
-                        rbIstMusikPlaylist.Visibility = Visibility.Visible;
+                        else
+                        {
+                            rbIstKlangPlaylist.Visibility = Visibility.Hidden;
+                            rbIstMusikPlaylist.Visibility = Visibility.Hidden;
+                        }
 
-                        ((Grid)this.FindName("grdKlangTop" + seite)).Visibility = Visibility.Visible;
-                        CheckPlayStandbySongs(seite);                        
+                        ((Grid)this.FindName("grdKlangTop" + objGruppe)).Visibility = Visibility.Visible;
+                        CheckPlayStandbySongs(objGruppe);                        
                     }
                     else
                     {
@@ -708,7 +747,7 @@ namespace MeisterGeister.View.AudioPlayer
 
                         for (int i = 0; i <= grdKlangPlaylistInfo.Children.Count - 1; i++)
                             grdKlangPlaylistInfo.Children[i].Visibility = Visibility.Hidden;
-                        ((Grid)this.FindName("grdKlangTop" + seite)).Visibility = Visibility.Hidden;
+                        ((Grid)this.FindName("grdKlangTop" + objGruppe)).Visibility = Visibility.Hidden;
                     }
                 }
                 finally
@@ -719,43 +758,60 @@ namespace MeisterGeister.View.AudioPlayer
                 btnPlaylistLoeschen.IsEnabled = false;
         }
 
-        private void PlaylisteLeeren(UInt16 seite)
+        private void AlleKlangSongsAus(UInt16 objGruppe, bool checkboxAus, bool ZeileLoeschen)
         {
-            if (AktKlangPlaylist != null)
-            {
-                Grid grdKlang = (Grid)this.FindName("grdKlang" + seite);
-                Array.Resize(ref standbySongs[seite], 0);
-                for (UInt16 i = 0; i < zeilenAufSeite[seite]; i++)
-                {
-                    StackPanel StackZeile = (StackPanel)this.FindName("spnlKlangRow" + seite + "_" + i);
-                    if (((CheckBox)StackZeile.FindName("chkTitel" + seite + "_" + i)).IsChecked.Value == true)
-                    {
-                        ((CheckBox)StackZeile.FindName("chkTitel" + seite + "_" + i)).Click -= new RoutedEventHandler(chkTitel0_0_Click);
-                        ((CheckBox)StackZeile.FindName("chkTitel" + seite + "_" + i)).IsChecked = false;
-                        if (_player[seite][i] != null)
-                        {
-                            _player[seite][i].Stop();
-                            _player[seite][i] = null;
-                        }
-                        if (laufendeSongs[seite] != null && laufendeSongs[seite].Contains(i))
-                                RemoveSongLaufend(seite, i);
+            int seite = Array.IndexOf(SeiteXHatObjGruppe, objGruppe);
 
-                        ((ProgressBar)StackZeile.FindName("pbarTitel" + seite + "_" + i)).Maximum = 100;
-                        ((ProgressBar)StackZeile.FindName("pbarTitel" + seite + "_" + i)).Value = 0;
-                        RemoveSongParallel(seite, i);
+            Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
+
+            Array.Resize(ref standbySongs[seite], 0);
+
+            for (UInt16 i = 0; i < zeilenAufSeite[seite]; i++)
+            {
+                StackPanel StackZeile = (StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + i);
+                if (((CheckBox)StackZeile.FindName("chkTitel" + objGruppe + "_" + i)).IsChecked.Value == true)
+                {
+                    if (checkboxAus)
+                    {
+                        ((CheckBox)StackZeile.FindName("chkTitel" + objGruppe + "_" + i)).Click -= new RoutedEventHandler(chkTitel0_0_Click);
+                        ((CheckBox)StackZeile.FindName("chkTitel" + objGruppe + "_" + i)).IsChecked = false;
                     }
-                    
+                    if (_player[seite][i] != null)
+                    {
+                        _player[seite][i].Stop();
+                        _player[seite][i] = null;
+                    }
+                    if (laufendeSongs[seite] != null && laufendeSongs[seite].Contains(i))
+                        RemoveSongLaufend(Convert.ToUInt16(seite), i);
+
+                    ((ProgressBar)StackZeile.FindName("pbarTitel" + objGruppe + "_" + i)).Maximum = 100;
+                    ((ProgressBar)StackZeile.FindName("pbarTitel" + objGruppe + "_" + i)).Value = 0;
+                    RemoveSongParallel(seite, i);
+                }
+                if (ZeileLoeschen)
+                {
+                    ((Grid)StackZeile.FindName("grdKlangRow" + objGruppe + "_" + i)).Children.Remove((Image)StackZeile.FindName("imgTrash" + objGruppe + "_" + i));
+
                     grdKlang.Children.Remove(StackZeile);
                     if (seite == 0)
                         grdKlang.UnregisterName(StackZeile.Name);
                     else
                         this.UnregisterName(StackZeile.Name);
-                    
                 }
-                LblKlangSongsParallel.Visibility = Visibility.Hidden;
-                tboxklangsongparallel.Visibility = Visibility.Hidden;
-                btnSongParMinus.Visibility = Visibility.Hidden;
-                btnSongParPlus.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void PlaylisteLeeren(UInt16 objGruppe)
+        {
+            if (AktKlangPlaylist != null)
+            {
+                int seite = Array.IndexOf(SeiteXHatObjGruppe, objGruppe);
+
+                Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
+
+                AlleKlangSongsAus(objGruppe, true, true);
+                
+                ZeigeKlangSongsParallel(false);                
                 rbIstKlangPlaylist.Visibility = Visibility.Hidden;
                 rbIstMusikPlaylist.Visibility = Visibility.Hidden;
 
@@ -783,252 +839,169 @@ namespace MeisterGeister.View.AudioPlayer
             return DeepCopyobject;
         }
 
-        private void ZeigeKlangTop(UInt16 seite, bool sichtbar)
-        {            
+        private void ZeigeKlangTop(UInt16 objGruppe, bool sichtbar)
+        {
+            Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);    
+            Grid grdKlangTop = (Grid)grdKlang.FindName("grdKlangTop" + objGruppe);
             if (sichtbar)
             {
-                ((Label)this.FindName("lblVolTop"+seite)).Visibility = Visibility.Visible;
-                btnAllVolMin0.Visibility = Visibility.Visible;
-                btnAllVolDown0.Visibility = Visibility.Visible;
-                btnAllVolMax0.Visibility = Visibility.Visible;
-                btnAllVolUp0.Visibility = Visibility.Visible;
-                chkbxVolChange0.Visibility = Visibility.Visible;
-                lblVolRange0.Visibility = Visibility.Visible;
-                btnVolMinMinus0.Visibility = Visibility.Visible;
-                btnVolMinPlus0.Visibility = Visibility.Visible;
-                btnVolMaxMinus0.Visibility = Visibility.Visible;
-                btnVolMaxPlus0.Visibility = Visibility.Visible;
-
-                lblKlangPause0.Visibility = Visibility.Visible;
-                btnKlangPauseMin0.Visibility = Visibility.Visible;
-                btnKlangPauseDown0.Visibility = Visibility.Visible;
-                btnKlangPauseUp0.Visibility = Visibility.Visible;
-                btnKlangPauseMax0.Visibility = Visibility.Visible;
-                chkBoxKlangPause0.Visibility = Visibility.Visible;
-                lblKlangPauseRange0.Visibility = Visibility.Visible;
-                btnKlangPauseMinMinus0.Visibility = Visibility.Visible;
-                btnKlangPauseMinPlus0.Visibility = Visibility.Visible;
-                btnKlangPauseMaxMinus0.Visibility = Visibility.Visible;
-                btnKlangPauseMaxPlus0.Visibility = Visibility.Visible;
+                for (int i = grdKlangTop.ColumnDefinitions.Count - 1; i >= grdKlangTop.ColumnDefinitions.Count-9; i--)
+                    grdKlangTop.ColumnDefinitions[i].Width = grdKlangTopX.ColumnDefinitions[i].Width;                                                
             }
             else
             {
-                lblVolTop0.Visibility = Visibility.Hidden;
-                btnAllVolMin0.Visibility = Visibility.Hidden;
-                btnAllVolDown0.Visibility = Visibility.Hidden;
-                btnAllVolMax0.Visibility = Visibility.Hidden;
-                btnAllVolUp0.Visibility = Visibility.Hidden;
-                chkbxVolChange0.Visibility = Visibility.Hidden;
-                lblVolRange0.Visibility = Visibility.Hidden;
-                btnVolMinMinus0.Visibility = Visibility.Hidden;
-                btnVolMinPlus0.Visibility = Visibility.Hidden;
-                btnVolMaxMinus0.Visibility = Visibility.Hidden;
-                btnVolMaxPlus0.Visibility = Visibility.Hidden;
-
-                lblKlangPause0.Visibility = Visibility.Hidden;
-                btnKlangPauseMin0.Visibility = Visibility.Hidden;
-                btnKlangPauseDown0.Visibility = Visibility.Hidden;
-                btnKlangPauseUp0.Visibility = Visibility.Hidden;
-                btnKlangPauseMax0.Visibility = Visibility.Hidden;
-                chkBoxKlangPause0.Visibility = Visibility.Hidden;
-                lblKlangPauseRange0.Visibility = Visibility.Hidden;
-                btnKlangPauseMinMinus0.Visibility = Visibility.Hidden;
-                btnKlangPauseMinPlus0.Visibility = Visibility.Hidden;
-                btnKlangPauseMaxMinus0.Visibility = Visibility.Hidden;
-                btnKlangPauseMaxPlus0.Visibility = Visibility.Hidden;
-            }
-        /*    (Label)"label4" 
-            <Button "btnAllVolMin" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Lautstärke aller aktiven Klänge auf 0%" Tag="-100" Click="btnAllVolUp_Click" />
-            <Button "btnAllVolDown" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge verringern" Tag="-10" Click="btnAllVolUp_Click" />
-            <Button "btnAllVolMax" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Lautstärke aller aktiven Klänge auf 100%" Tag="100" Click="btnAllVolUp_Click" />
-            <Button "btnAllVolUp" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge erhöhen" Click="btnAllVolUp_Click" Tag="10" />
-            <CheckBox Name="checkBox2" VerticalAlignment="Bottom" Width="14" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" ToolTip="Lautstärke aller aktiven Klänge automatisch variieren" />
-            <Label "label5" Padding="0" VerticalAlignment="Top" Grid.RowSpan="2" Margin="24,0,2,0" Grid.Row="1" />
-            <Button Name="button7" VerticalAlignment="Bottom" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Right" Width="22" ToolTip="Minimale Lautstärke aller variierbaren Klänge verringern" />
-            <Button Name="button8" VerticalAlignment="Bottom" Width="22" Grid.Column="6" Grid.Row="1" ToolTip="Minimale Lautstärke aller variierbaren Klänge erhöhen" />
-            <Button Name="button9" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge verringern" />
-            <Button Name="button10" VerticalAlignment="Bottom" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge erhöhen" />
-            <Label Name="lblKlangPause0" Padding="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" Width="123" Grid.Row="1" />
-            <Button Name="btnKlangPauseMin0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 0%" />
-            <Button Name="btnKlangPauseDown0" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge verringern" />
-            <Button Content="&gt;&gt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" Name="btnKlangPauseMax0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 100%" />
-            <Button Content="&gt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" Name="btnKlangPauseUp0" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" />
-            <CheckBox Height="14" Margin="0,2,0,5" Name="chkBoxKlangPause0_0" VerticalAlignment="Bottom" Width="14" Grid.Column="10" Grid.Row="1" HorizontalAlignment="Center" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" />
-            <Label Content="Pause Range [ms]" Grid.Column="11" Grid.ColumnSpan="2" Height="17" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Name="lblKlangPauseRange0" Padding="0" VerticalAlignment="Top" Grid.RowSpan="2" Margin="24,0,2,0" Grid.Row="1" />
-            <Button Content="-" Height="22" Margin="0,0,30,1" Name="btnKlangPauseMinMinus0" VerticalAlignment="Bottom" Grid.Column="11" Grid.Row="1" HorizontalAlignment="Right" Width="22" ToolTip="Minimale Pausenzeit aller variierbaren Klänge verringern" />
-            <Button Content="+" Height="22" HorizontalAlignment="Right" Margin="0,0,0,1" Name="btnKlangPauseMinPlus0" VerticalAlignment="Bottom" Width="22" Grid.Column="11" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge erhöhen" />
-            <Button Content="-" Grid.Column="12" Grid.Row="1" Height="22" Margin="0,0,30,1" Name="btnKlangPauseMaxMinus0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Pausenzeit aller variierbaren Klänge verringern" />
-            <Button Content="+" Grid.Column="12" Grid.Row="1" Height="22" HorizontalAlignment="Right" Name="btnKlangPauseMaxPlus0" VerticalAlignment="Bottom" Width="22" Margin="0,0,0,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge erhöhen" />
-       */ }
-
-        private void ZeigeKlangSettings(UInt16 seite, UInt16 row, bool sichtbar)
-        {
-            StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + seite + "_" + row);
-            Slider sldVol = (Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + row);
-            if (!sichtbar)
-            {
-                ((Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((CheckBox)spnlZeile.FindName("chkVolMove" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnVolMinMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnVolMinPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((TextBox)spnlZeile.FindName("tboxVolMin" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnVolMaxMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnVolMaxPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((TextBox)spnlZeile.FindName("tboxVolMax" + seite + "_" + row)).Visibility = Visibility.Hidden;
-
-                ((Slider)spnlZeile.FindName("sldKlangPause" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((CheckBox)spnlZeile.FindName("chkKlangPauseMove" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnPauseMinMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnPauseMinPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((TextBox)spnlZeile.FindName("tboxPauseMin" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnPauseMaxMinus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((Button)spnlZeile.FindName("_btnPauseMaxPlus" + seite + "_" + row)).Visibility = Visibility.Hidden;
-                ((TextBox)spnlZeile.FindName("tboxPauseMax" + seite + "_" + row)).Visibility = Visibility.Hidden;
-            }
-            else 
-            {
-                ((Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((CheckBox)spnlZeile.FindName("chkVolMove" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((Button)spnlZeile.FindName("_btnVolMinMinus" + seite + "_" + row)).Visibility = Visibility.Visible; 
-                ((Button)spnlZeile.FindName("_btnVolMinPlus" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((TextBox)spnlZeile.FindName("tboxVolMin" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((Button)spnlZeile.FindName("_btnVolMaxMinus" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((Button)spnlZeile.FindName("_btnVolMaxPlus" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((TextBox)spnlZeile.FindName("tboxVolMax" + seite + "_" + row)).Visibility = Visibility.Visible;
-
-                ((Slider)spnlZeile.FindName("sldKlangPause" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((CheckBox)spnlZeile.FindName("chkKlangPauseMove" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((Button)spnlZeile.FindName("_btnPauseMinMinus" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((Button)spnlZeile.FindName("_btnPauseMinPlus" + seite + "_" + row)).Visibility = Visibility.Visible;
-                ((TextBox)spnlZeile.FindName("tboxPauseMin" + seite + "_" + row)).Visibility = Visibility.Visible;
+                for (int i = 12; i >= 4; i--)
+                    grdKlangTop.ColumnDefinitions[i].Width = new GridLength(0);
             }
         }
 
-        private void KlangNewRow(string songdatei, UInt16 seite, UInt16 row, Audio_Playlist_Titel playlisttitel)
+        private void ZeigeKlangSongsParallel(bool sichtbar)
         {
-            StackPanel newStack = (StackPanel)DeepCopy(null, "0_X", seite +"_" + row); //spnlKlangRow0_X
+            if (sichtbar)
+            {
+                lblKlangSongsParallel.Visibility = Visibility.Visible;
+                tboxklangsongparallel.Visibility = Visibility.Visible;
+                btnSongParMinus.Visibility = Visibility.Visible;
+                btnSongParPlus.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                lblKlangSongsParallel.Visibility = Visibility.Hidden;
+                tboxklangsongparallel.Visibility = Visibility.Hidden;
+                btnSongParMinus.Visibility = Visibility.Hidden;
+                btnSongParPlus.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void ZeigeKlangSettings(UInt16 objGruppe, UInt16 row, bool sichtbar)
+        {
+            StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + row);
+            if (spnlZeile != null)
+            {
+                Grid grdKlangRow = (Grid)spnlZeile.FindName("grdKlangRow" + objGruppe + "_" + row);
+
+                if (!sichtbar)
+                {
+                    for (int i = 12; i >= 4; i--)
+                        grdKlangRow.ColumnDefinitions[i].Width = new GridLength(0);
+                }
+                else
+                {
+                    for (int i = 12; i >= 4; i--)
+                        grdKlangRow.ColumnDefinitions[i].Width = grdKlangRow0_X.ColumnDefinitions[i].Width;
+                }
+            }
+        }
+
+        private void KlangNewRow(string songdatei, UInt16 objGruppe, UInt16 row, Audio_Playlist_Titel playlisttitel)
+        {
+            StackPanel newStack = (StackPanel)DeepCopy(null, "0_X", objGruppe +"_" + row); //spnlKlangRow0_X
            
             newStack.Visibility = Visibility.Visible;
-            //newStack.Name = "spnlKlangRow" + seite + "_" + row;
-            Grid grdKlang = (Grid)this.FindName("grdKlang" + seite);       
+            //newStack.Name = "spnlKlangRow" + objGruppe + "_" + row;
+            Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);       
                   
             grdKlang.Children.Add(newStack); 
             Grid.SetRow(newStack, grdKlang.RowDefinitions.Count - 1);
 
             this.RegisterName(newStack.Name, newStack);
             //Papierkorb
-            Image imgTrash = (Image)newStack.FindName("imgTrash" + seite + "_" + row);
+            Image imgTrash = (Image)newStack.FindName("imgTrash" + objGruppe + "_" + row);
             imgTrash.Tag = playlisttitel.Audio_Titel.Audio_TitelGUID;
             imgTrash.MouseUp += new MouseButtonEventHandler(imgTrash0_0_MouseUp);
 
             //Titel
-            CheckBox chkTitel = (CheckBox)newStack.FindName("chkTitel" + seite + "_" + row);
+            CheckBox chkTitel = (CheckBox)newStack.FindName("chkTitel" + objGruppe + "_" + row);
             chkTitel.Click += new RoutedEventHandler(chkTitel0_0_Click);
             chkTitel.Content = System.IO.Path.GetFileNameWithoutExtension(songdatei);
             if (playlisttitel.Aktiv)
             {
                 chkTitel.IsChecked = playlisttitel.Aktiv;
-                AddSongStandby(seite, row);
+                AddSongStandby(Convert.ToUInt16(Array.IndexOf(SeiteXHatObjGruppe, objGruppe)), row);
             }
             chkTitel.ToolTip = songdatei;
             chkTitel.Tag = songdatei;
-
-            if (playlisttitel.Audio_Playlist.Hintergrundmusik)
-            {
-                ZeigeKlangSettings(seite, row, false);
-                ZeigeKlangTop(seite, false);
-            }
-            else
-            {
-                // Schieberegler Lautstärke
-                Slider sldVol = (Slider)newStack.FindName("sldKlangVol" + seite + "_" + row);
-                sldVol.Value = playlisttitel.Volume;
-                sldVol.Tag = row;
-                sldVol.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
-                sldVol.ToolTip = Math.Round(sldVol.Value) + " %";
-
-                //Checkbox Automatisch veränderbare Lautstärke
-                CheckBox chkVolMove = (CheckBox)newStack.FindName("chkVolMove" + seite + "_" + row);
-                chkVolMove.Tag = row;
-                chkVolMove.Click += new RoutedEventHandler(chkVolMove0_0_Click);
-
-                // Volume Minimum Plus/Minus (für ein Song)
-                //   (newStack.FindName("iboxVolMin0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxVolMin0_0_LostFocus);
-                Button btnVolMinMinus = (Button)newStack.FindName("_btnVolMinMinus" + seite + "_" + row);
-                btnVolMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-                Button btnVolMinPlus = (Button)newStack.FindName("_btnVolMinPlus" + seite + "_" + row);
-                btnVolMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-                TextBox tboxVolMin = (TextBox)newStack.FindName("tboxVolMin" + seite + "_" + row);
-                tboxVolMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
-
-                // Volume Maximum Plus/Minus (für ein Song)
-                //   (newStack.FindName("iboxVolMax0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxVolMax0_0_LostFocus);
-                Button btnVolMaxMinus = (Button)newStack.FindName("_btnVolMaxMinus" + seite + "_" + row);
-                btnVolMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click); //_btnVolMaxMinus0_X_Click);
-                Button btnVolMaxPlus = (Button)newStack.FindName("_btnVolMaxPlus" + seite + "_" + row);
-                btnVolMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-                TextBox tboxVolMax = (TextBox)newStack.FindName("tboxVolMax" + seite + "_" + row);
-                tboxVolMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
-
-                // Schieberegler Zwischenpause
-                Slider sldKlangPause = (Slider)newStack.FindName("sldKlangPause" + seite + "_" + row);
-                sldKlangPause.Value = playlisttitel.Pause;
-                sldKlangPause.Tag = row;
-                sldKlangPause.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
-                sldKlangPause.ToolTip = Math.Round(sldKlangPause.Value) + " ms";
-
-                // Checkbox veränderbare Zwischenpause
-                CheckBox chkKlangPauseMove = (CheckBox)newStack.FindName("chkKlangPauseMove" + seite + "_" + row);
-                chkKlangPauseMove.Tag = row;
-                chkKlangPauseMove.Click += new RoutedEventHandler(chkKlangPauseMove0_0_Click);
-
-                // Zwischenpause Minimum Plus/Minus (für ein Song)
-                //    (newStack.FindName("iboxKlangPauseMin0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxKlangPauseMin0_0_LostFocus);
-                Button btnPauseMinMinus = (Button)newStack.FindName("_btnPauseMinMinus" + seite + "_" + row);
-                btnPauseMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-                Button btnPauseMinPlus = (Button)newStack.FindName("_btnPauseMinPlus" + seite + "_" + row);
-                btnPauseMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-                TextBox tboxPauseMin = (TextBox)newStack.FindName("tboxPauseMin" + seite + "_" + row);
-                tboxPauseMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
-
-                // Zwischenpause Maximum Plus/Minus (für ein Song)
-                //    (newStack.FindName("iboxKlangPauseMax0_" + row) as IntBox).LostFocus += new RoutedEventHandler(iboxKlangPauseMax0_0_LostFocus);
-                Button btnPauseMaxMinus = (Button)newStack.FindName("_btnPauseMaxMinus" + seite + "_" + row);
-                btnPauseMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-                Button btnPauseMaxPlus = (Button)newStack.FindName("_btnPauseMaxPlus" + seite + "_" + row);
-                btnPauseMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
-                TextBox tboxPauseMax = (TextBox)newStack.FindName("tboxPauseMax" + seite + "_" + row);
-                tboxPauseMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_0_PreviewTextInput);
-
-            }
-/*
-
-            //        Einstellung Minimaler Lautstärkewert
-            iboxVolMin.Name = "iboxVolMin" + tcKlang.SelectedIndex + "_" + Convert.ToString(row);
-            iboxVolMin.Value = playlisttitel.VolumeMin;
-            iboxVolMin.Tag = row;
-            iboxVolMin.LostFocus += new RoutedEventHandler(iboxVolMin0_0_LostFocus);
-
-            //        Einstellung Maximaler Lautstärkewert
-            iboxVolMax.Name = "iboxVolMax" + tcKlang.SelectedIndex + "_" + Convert.ToString(row);
-            iboxVolMax.Value = playlisttitel.VolumeMax;
-            iboxVolMax.Tag = row;
-            iboxVolMax.LostFocus += new RoutedEventHandler(iboxVolMax0_0_LostFocus);
             
-                        
-            //        Einstellung Minimaler Zwischenpausenwert
-            iboxKlangPauseMin.Name = "iboxKlangPauseMin" + tcKlang.SelectedIndex + "_" + Convert.ToString(row);
-            iboxKlangPauseMin.Value = Convert.ToInt32(playlisttitel.PauseMin);
-            iboxKlangPauseMin.Tag = row;
-            iboxKlangPauseMin.LostFocus += new RoutedEventHandler(iboxKlangPauseMin0_0_LostFocus);
-            
-            //        Einstellung Maximaler Zwischenpausenwert
-            iboxKlangPauseMax.Name = "iboxKlangPauseMax" + tcKlang.SelectedIndex + "_" + Convert.ToString(row);
-            iboxKlangPauseMax.Value = Convert.ToInt32(playlisttitel.PauseMax);
-            iboxKlangPauseMax.Value = Convert.ToInt32(playlisttitel.PauseMax);
-            iboxKlangPauseMax.Tag = row;
-            iboxKlangPauseMax.LostFocus += new RoutedEventHandler(iboxKlangPauseMax0_0_LostFocus);
-        */
+            // Schieberegler Lautstärke
+            Slider sldVol = (Slider)newStack.FindName("sldKlangVol" + objGruppe + "_" + row);
+            sldVol.Minimum = playlisttitel.VolumeMin;
+            sldVol.Maximum = playlisttitel.VolumeMax;
+            sldVol.Value = playlisttitel.Volume;
+            sldVol.Tag = row;
+            sldVol.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
+            sldVol.ToolTip = Math.Round(sldVol.Value) + " %";
+
+            //Checkbox Automatisch veränderbare Lautstärke
+            CheckBox chkVolMove = (CheckBox)newStack.FindName("chkVolMove" + objGruppe + "_" + row);
+            chkVolMove.IsChecked = playlisttitel.VolumeChange;
+            chkVolMove.Tag = row;
+            chkVolMove.Click += new RoutedEventHandler(chkVolMove0_0_Click);
+
+            // Volume Minimum Plus/Minus (für ein Song)
+            Button btnVolMinMinus = (Button)newStack.FindName("_btnVolMinMinus" + objGruppe + "_" + row);
+            btnVolMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+            Button btnVolMinPlus = (Button)newStack.FindName("_btnVolMinPlus" + objGruppe + "_" + row);
+            btnVolMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+
+            TextBox tboxVolMin = (TextBox)newStack.FindName("tboxVolMin" + objGruppe + "_" + row);
+            tboxVolMin.Text = Convert.ToString(playlisttitel.VolumeMin);
+            tboxVolMin.Tag = row;
+            tboxVolMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            tboxVolMin.TextChanged += new TextChangedEventHandler(tboxVolMin0_X_TextChanged);
+
+            // Volume Maximum Plus/Minus (für ein Song)
+            Button btnVolMaxMinus = (Button)newStack.FindName("_btnVolMaxMinus" + objGruppe + "_" + row);
+            btnVolMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click); 
+            Button btnVolMaxPlus = (Button)newStack.FindName("_btnVolMaxPlus" + objGruppe + "_" + row);
+            btnVolMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+
+            TextBox tboxVolMax = (TextBox)newStack.FindName("tboxVolMax" + objGruppe + "_" + row);
+            tboxVolMax.Text = Convert.ToString(playlisttitel.VolumeMax);
+            tboxVolMax.Tag = row;
+            tboxVolMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            tboxVolMax.TextChanged += new TextChangedEventHandler(tboxVolMin0_X_TextChanged);
+
+            // Schieberegler Zwischenpause
+            Slider sldKlangPause = (Slider)newStack.FindName("sldKlangPause" + objGruppe + "_" + row);
+            sldKlangPause.Minimum = playlisttitel.PauseMin;
+            sldKlangPause.Maximum = playlisttitel.PauseMax;
+            sldKlangPause.Value = playlisttitel.Pause;
+            sldKlangPause.TickFrequency = 10;
+            sldKlangPause.Tag = row;
+            sldKlangPause.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
+            sldKlangPause.ToolTip = Math.Round(sldKlangPause.Value) + " ms";
+
+            // Checkbox veränderbare Zwischenpause
+            CheckBox chkKlangPauseMove = (CheckBox)newStack.FindName("chkKlangPauseMove" + objGruppe + "_" + row);
+            chkKlangPauseMove.IsChecked = playlisttitel.PauseChange;
+            chkKlangPauseMove.Tag = row;
+            chkKlangPauseMove.Click += new RoutedEventHandler(chkKlangPauseMove0_0_Click);
+
+            // Zwischenpause Minimum Plus/Minus (für ein Song)
+            Button btnPauseMinMinus = (Button)newStack.FindName("_btnPauseMinMinus" + objGruppe + "_" + row);
+            btnPauseMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+            Button btnPauseMinPlus = (Button)newStack.FindName("_btnPauseMinPlus" + objGruppe + "_" + row);
+            btnPauseMinPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+
+            TextBox tboxPauseMin = (TextBox)newStack.FindName("tboxPauseMin" + objGruppe + "_" + row);
+            tboxPauseMin.Text = Convert.ToString(playlisttitel.PauseMin);
+            tboxPauseMin.Tag = row;
+            tboxPauseMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            tboxPauseMin.TextChanged += new TextChangedEventHandler(tboxVolMin0_X_TextChanged);
+
+            // Zwischenpause Maximum Plus/Minus (für ein Song)
+            Button btnPauseMaxMinus = (Button)newStack.FindName("_btnPauseMaxMinus" + objGruppe + "_" + row);
+            btnPauseMaxMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+            Button btnPauseMaxPlus = (Button)newStack.FindName("_btnPauseMaxPlus" + objGruppe + "_" + row);
+            btnPauseMaxPlus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+
+            TextBox tboxPauseMax = (TextBox)newStack.FindName("tboxPauseMax" + objGruppe + "_" + row);
+            tboxPauseMax.Text = Convert.ToString(playlisttitel.PauseMax);
+            tboxPauseMax.Tag = row;
+            tboxPauseMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            tboxPauseMax.TextChanged += new TextChangedEventHandler(tboxVolMin0_X_TextChanged);
+
+          
             RowDefinition rowDef1 = new RowDefinition();
             rowDef1.Height = grdKlang.RowDefinitions[1].Height;
             grdKlang.RowDefinitions.Insert(grdKlang.RowDefinitions.Count, rowDef1);
@@ -1040,10 +1013,6 @@ namespace MeisterGeister.View.AudioPlayer
                 if (_player[tcKlang.SelectedIndex].Length < row + 1)
                     Array.Resize(ref _player[tcKlang.SelectedIndex], _player[tcKlang.SelectedIndex].Length + 1);
             }
-                //_player[tcKlang.SelectedIndex] = new MediaPlayer[row + 1];
-
-//            if (chkTitel.IsChecked.Value == true)
-//                chkTitel0_0_Click((this.FindName("chkTitel" + tcKlang.SelectedIndex + "_" + row)), new RoutedEventArgs());
         }
 
         private void chkTitel0_0_Click(object sender, RoutedEventArgs e)
@@ -1053,8 +1022,9 @@ namespace MeisterGeister.View.AudioPlayer
             char[] Separator = new char[] { '_' };
             string[] werte = s.Split(Separator, StringSplitOptions.None);
 
-            UInt16 seite = Convert.ToUInt16(werte[0]);
+            UInt16 objGruppe = Convert.ToUInt16(werte[0]);
             UInt16 zeile = Convert.ToUInt16(werte[1]);
+            int seite = Array.IndexOf(SeiteXHatObjGruppe, objGruppe);
 
             string file = ((CheckBox)sender).Tag.ToString();
             StackPanel spnlZeile = (StackPanel)((Grid)((CheckBox) sender).Parent).Parent;
@@ -1072,12 +1042,12 @@ namespace MeisterGeister.View.AudioPlayer
                     if ((laufendeSongs[seite] == null) ||
                        (Convert.ToInt32(maxsongsparallel[seite]) > laufendeSongs[seite].Length))
                     {
-                        _player[seite][zeile] = PlayFile(seite, zeile, _player[seite][zeile], file, ((Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + zeile)).Value / 100);
+                        _player[seite][zeile] = PlayFile(seite, zeile, _player[seite][zeile], file, ((Slider)spnlZeile.FindName("sldKlangVol" + objGruppe + "_" + zeile)).Value / 100);
                                               
                         if (_player[seite][zeile].NaturalDuration.HasTimeSpan)
-                            ((ProgressBar)spnlZeile.FindName("pbarTitel" + seite + "_" + zeile)).Maximum = _player[seite][zeile].NaturalDuration.TimeSpan.TotalMilliseconds;
+                            ((ProgressBar)spnlZeile.FindName("pbarTitel" + objGruppe + "_" + zeile)).Maximum = _player[seite][zeile].NaturalDuration.TimeSpan.TotalMilliseconds;
                         else
-                            ((ProgressBar)spnlZeile.FindName("pbarTitel" + seite + "_" + zeile)).Maximum = 10000;
+                            ((ProgressBar)spnlZeile.FindName("pbarTitel" + objGruppe + "_" + zeile)).Maximum = 10000;
 
                         if (laufendeSongs[seite] == null)
                             Array.Resize(ref laufendeSongs[seite], 1);
@@ -1087,7 +1057,7 @@ namespace MeisterGeister.View.AudioPlayer
                
                     }
                     else
-                        AddSongStandby(seite, zeile);
+                        AddSongStandby(Convert.ToUInt16(seite), zeile);
                 }
                 else
                 {
@@ -1096,10 +1066,10 @@ namespace MeisterGeister.View.AudioPlayer
                         _player[seite][zeile].Stop();
                         _player[seite][zeile] = null;
 
-                        RemoveSongLaufend(seite, zeile);
+                        RemoveSongLaufend(Convert.ToUInt16(seite), zeile);
                     }
-                    ((ProgressBar)spnlZeile.FindName("pbarTitel" + seite + "_" + zeile)).Maximum = 100;
-                    ((ProgressBar)spnlZeile.FindName("pbarTitel" + seite + "_" + zeile)).Value = 0;
+                    ((ProgressBar)spnlZeile.FindName("pbarTitel" + objGruppe + "_" + zeile)).Maximum = 100;
+                    ((ProgressBar)spnlZeile.FindName("pbarTitel" + objGruppe + "_" + zeile)).Value = 0;
 
                     RemoveSongParallel(seite, zeile);
                     CheckPlayStandbySongs(seite);
@@ -1114,13 +1084,12 @@ namespace MeisterGeister.View.AudioPlayer
                     KlangProgBarTimer.IsEnabled = false;
                     KlangProgBarTimer.Stop();
                 }
-
                 
                 string cap;
                 if (seite == 0)
-                    cap = ((TabItem)tcKlang.FindName("tiKlang"+seite)).Header.ToString();
+                    cap = ((TabItem)tcKlang.FindName("tiKlang" + objGruppe)).Header.ToString();
                 else
-                    cap = ((TabItemControl)tcKlang.FindName("tiKlang" + seite))._textBlockTitel.Text;
+                    cap = ((TabItemControl)tcKlang.FindName("tiKlang" + objGruppe))._textBlockTitel.Text;
 
                 List<Audio_Playlist> playlistliste = Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(cap)).ToList();
                 if (playlistliste.Count == 1)
@@ -1144,40 +1113,6 @@ namespace MeisterGeister.View.AudioPlayer
             }
         }
 
-   /*     private void sldVol0_0_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (_player != null)
-            {
-                string s = ((Slider)sender).Name.Substring(11);
-
-                char[] Separator = new char[] { '_' };
-                string[] werte = s.Split(Separator, StringSplitOptions.None);
-
-                int seite = Convert.ToInt32(werte[0]);
-                int zeile = Convert.ToInt32(werte[1]);
-
-                if (_player[seite].Length - 1 >= zeile && _player[seite][zeile] != null)
-                    _player[seite][zeile].Volume = Math.Round(e.NewValue)/100;
-                ((Slider)sender).ToolTip = Math.Round(e.NewValue) + " %";
-            }            
-        }*/
-
-        /*private void klangsongparallel0_NumValueChanged(IntBox sender)
-        {
-            if (tcKlang.SelectedIndex >= 0)
-            {
-                CheckPlayStandbySongs(tcKlang.SelectedIndex);
-                AktKlangPlaylist.MaxSongsParallel = (sender as IntBox).Value;
-
-                try { Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist); }
-                catch (Exception ex)
-                {
-                    var errWin = new MsgWindow("Datenfehler", "Die Datenbank konnte nicht aktualisiert werden", ex);
-                    errWin.ShowDialog();
-                    errWin.Close();
-                }
-            }
-        }*/
         private void NeueKlangPlaylistInDB()
         {
             string NeuePlaylist;
@@ -1236,22 +1171,26 @@ namespace MeisterGeister.View.AudioPlayer
                 tboxklangsongparallel.Tag = zeilenAufSeite[tcKlang.SelectedIndex]+1;
 
                 List<Audio_Playlist_Titel> playlisttitel = Global.ContextAudio.LoadPlaylist_TitelByPlaylist(AktKlangPlaylist, titel);
+                if (playlisttitel.Count == 1)
+                {
+                    playlisttitel[0].VolumeChange = false;
+                    playlisttitel[0].Volume = 50;
+                    playlisttitel[0].VolumeMin = 0;
+                    playlisttitel[0].VolumeMax = 100;
 
-                playlisttitel[0].VolumeChange = false;
-                playlisttitel[0].Volume = 50;
-                playlisttitel[0].VolumeMin = 0;
-                playlisttitel[0].VolumeMax = 100;
+                    playlisttitel[0].PauseChange = false;
+                    playlisttitel[0].Pause = 1000;
+                    playlisttitel[0].PauseMin = 100;
+                    playlisttitel[0].PauseMax = 10000;
 
-                playlisttitel[0].PauseChange = false;
-                playlisttitel[0].Pause = 1000;
-                playlisttitel[0].PauseMin = 100;
-                playlisttitel[0].PauseMax = 10000;
+                    KlangNewRow(datei, Convert.ToUInt16(SeiteXHatObjGruppe[seite]), zeilenAufSeite[seite], playlisttitel[0]);
 
-                KlangNewRow(datei, seite, zeilenAufSeite[seite], playlisttitel[0]);
-                zeilenAufSeite[seite]++;
+                    if (AktKlangPlaylist.Hintergrundmusik)
+                        ZeigeKlangSettings(seite, Convert.ToUInt16(zeilenAufSeite[seite]), false);
+                    zeilenAufSeite[seite]++;
+                }
             }
         }
-
 
         private void grdKlang0_Drop(object sender, DragEventArgs e)
         {
@@ -1277,12 +1216,20 @@ namespace MeisterGeister.View.AudioPlayer
                     }                    
                 }
                 if (hinzugefuegt)
-                {
-                    ((Grid)this.FindName("grdKlangTop" + tcKlang.SelectedIndex)).Visibility = Visibility.Visible;
-                    LblKlangSongsParallel.Visibility = Visibility.Visible;
-                    tboxklangsongparallel.Visibility = Visibility.Visible;
-                    btnSongParMinus.Visibility = Visibility.Visible;
-                    btnSongParPlus.Visibility = Visibility.Visible;
+                {                    
+                    UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[tcKlang.SelectedIndex]);
+                    ((Grid)this.FindName("grdKlangTop" + objGruppe)).Visibility = Visibility.Visible;
+
+                    if (AktKlangPlaylist.Hintergrundmusik)
+                    {
+                        ZeigeKlangSongsParallel(false);
+                        ZeigeKlangTop(objGruppe, false);
+                    }
+                    else
+                    {
+                        ZeigeKlangSongsParallel(true);
+                        ZeigeKlangTop(objGruppe, true);
+                    }
                     rbIstKlangPlaylist.Visibility = Visibility.Visible;
                     rbIstMusikPlaylist.Visibility = Visibility.Visible;
                 }
@@ -1665,13 +1612,17 @@ namespace MeisterGeister.View.AudioPlayer
         private void chkVolMove0_0_Click(object sender, RoutedEventArgs e)
         {
             int zeile = Convert.ToInt32(((CheckBox)sender).Tag);
+
             List<Audio_Titel> titel = Global.ContextAudio.LoadTitelByPlaylist(AktKlangPlaylist);
             List<Audio_Playlist_Titel> playlisttitel = Global.ContextAudio.LoadPlaylist_TitelByPlaylist(AktKlangPlaylist, titel[zeile]);
 
             if (playlisttitel.Count != 0)
             {
                 playlisttitel[0].VolumeChange = ((CheckBox)sender).IsChecked.Value;
-                try { Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel[0]); }
+                try 
+                { 
+                    Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel[0]);
+                }
                 catch (Exception ex)
                 {
                     var errWin = new MsgWindow("Datenfehler", "Die Datenbank konnte nicht aktualisiert werden", ex);
@@ -1709,7 +1660,10 @@ namespace MeisterGeister.View.AudioPlayer
             if (playlisttitel.Count != 0)
             {
                 playlisttitel[0].PauseChange = ((CheckBox)sender).IsChecked.Value;
-                try { Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel[0]); }
+                try 
+                { 
+                    Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel[0]);
+                }
                 catch (Exception ex)
                 {
                     var errWin = new MsgWindow("Datenfehler", "Die Datenbank konnte nicht aktualisiert werden", ex);
@@ -1726,13 +1680,14 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void imgTrash0_0_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            Int16 objGruppe = Convert.ToInt16(SeiteXHatObjGruppe[tcKlang.SelectedIndex]);
             List<Audio_Titel> titel = Global.ContextAudio.LoadTitelByPlaylist(AktKlangPlaylist);
-            Grid grdKlang = (Grid)this.FindName("grdKlang" + tcKlang.SelectedIndex);
+            Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
 
             for (int i=0; i <= titel.Count-1; i++)
                 if (titel[i].Audio_TitelGUID.Equals(((Image)sender).Tag))
                 {
-                    CheckBox chbx = (CheckBox)((StackPanel)this.FindName("spnlKlangRow" + tcKlang.SelectedIndex + "_" + i)).FindName("chkTitel" + tcKlang.SelectedIndex + "_" + i);
+                    CheckBox chbx = (CheckBox)((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + i)).FindName("chkTitel" + objGruppe + "_" + i);
                     if (chbx.IsChecked.Value == true)
                     {                    
                         chbx.IsChecked = false;
@@ -1743,14 +1698,7 @@ namespace MeisterGeister.View.AudioPlayer
                 }
 
             if (titel.Count == 0)
-            {
-                LblKlangSongsParallel.Visibility = Visibility.Hidden;
-                tboxklangsongparallel.Visibility = Visibility.Hidden;
-                btnSongParMinus.Visibility = Visibility.Hidden;
-                btnSongParPlus.Visibility = Visibility.Hidden;
-                rbIstKlangPlaylist.Visibility = Visibility.Hidden;
-                rbIstMusikPlaylist.Visibility = Visibility.Hidden;
-            }
+                ZeigeKlangSongsParallel(false);
         }
 
         private void rbKlangKlang_Click(object sender, RoutedEventArgs e)
@@ -1776,26 +1724,43 @@ namespace MeisterGeister.View.AudioPlayer
         private void rbIstKlangPlaylist_Click(object sender, RoutedEventArgs e)
         {
             AktKlangPlaylist.Hintergrundmusik = false;
-            Global.ContextAudio.Save();
+            Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
+                //.Save();
             UInt16 seite = Convert.ToUInt16(tcKlang.SelectedIndex);
-            ZeigeKlangTop(seite, true);
-            for (int i = 0; i < zeilenAufSeite[seite]; i++)
-                ZeigeKlangSettings(seite, Convert.ToUInt16(i), true);
+            UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[seite]);
+
+            ZeigeKlangSongsParallel(true);
+            ZeigeKlangTop(objGruppe, true);
+
+            for (UInt16 i = 0; i < zeilenAufSeite[seite]; i++)
+            {
+                ZeigeKlangSettings(objGruppe, i, true);
+                StackPanel spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + i);
+                if (((CheckBox)spnlZeile.FindName("chkTitel" + objGruppe + "_" + i)).IsChecked == true)
+                    AddSongStandby(seite, i);
+            }
             AktualisiereKlangPlaylist();
+            CheckPlayStandbySongs(objGruppe);
         }
         
         private void rbIstMusikPlaylist_Click(object sender, RoutedEventArgs e)
         {                        
             AktKlangPlaylist.Hintergrundmusik = true;
-            Global.ContextAudio.Save();
+            Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
+                //.Save();
             UInt16 seite = Convert.ToUInt16(tcKlang.SelectedIndex);
+            UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[seite]);
+
+            AlleKlangSongsAus(objGruppe, false, false);
+
+            ZeigeKlangSongsParallel(false);
             ZeigeKlangTop(seite, false);
             for (int i = 0; i < zeilenAufSeite[seite]; i++)
-                ZeigeKlangSettings(seite, Convert.ToUInt16(i), false);
+                ZeigeKlangSettings(objGruppe, Convert.ToUInt16(i), false);
             AktualisiereKlangPlaylist();
         }
 
-        private void tboxPlaylistName_KeyDown(object sender, KeyEventArgs e)
+        private void tboxPlaylistName_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
@@ -1821,7 +1786,6 @@ namespace MeisterGeister.View.AudioPlayer
                     {
                         NeueKlangPlaylistInDB();
                     }
-
                 }
                 for (int i = 0; i <= lbKlang.Items.Count - 1; i++)
                 {
@@ -1829,7 +1793,8 @@ namespace MeisterGeister.View.AudioPlayer
                         ((ListBoxItem)lbKlang.Items[i]).Content = tboxPlaylistName.Text;
                 }
                 AktKlangPlaylist.Name = tboxPlaylistName.Text;
-                Global.ContextAudio.Save();
+                Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
+                //.Save();
 
                 if (tcKlang.SelectedIndex == 0)
                     tiKlang0.Header = AktKlangPlaylist.Name;
@@ -1864,8 +1829,7 @@ namespace MeisterGeister.View.AudioPlayer
                     tcKlang.SelectedIndex = -1;
                 else
                     tcKlang.SelectedIndex = tcKlang.Items.Count - 2;
-            }
-            
+            }            
             string s = "";
             if (((TabItem)tcKlang.Items[0]).Header.ToString() == "")
             {
@@ -1877,7 +1841,6 @@ namespace MeisterGeister.View.AudioPlayer
                     s = "NeuePlayliste0-" + ver;
                     ver++;
                 }
-
                 ((TabItem)tcKlang.SelectedItem).Header = s;
                 plylstliste = Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(s)).ToList();
             }
@@ -1890,6 +1853,8 @@ namespace MeisterGeister.View.AudioPlayer
                     else
                         s = ((TabItem)tcKlang.SelectedItem).Header.ToString();
                 
+                    UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[tcKlang.SelectedIndex]);
+
                     List<Audio_Playlist> playlistliste = Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(s)).ToList();
                     if (playlistliste.Count == 1)
                     {
@@ -1902,6 +1867,7 @@ namespace MeisterGeister.View.AudioPlayer
                             rbIstKlangPlaylist.IsChecked = true;
                         tboxPlaylistName.Text = AktKlangPlaylist.Name;
 
+
                         if (titelliste.Count > 0)
                         {
                             tboxklangsongparallel.TextChanged -= new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
@@ -1913,46 +1879,52 @@ namespace MeisterGeister.View.AudioPlayer
 
                             zeilenAufSeite[tcKlang.SelectedIndex] = Convert.ToUInt16(AktKlangPlaylist.Audio_Playlist_Titel.Count);
 
-                            CheckBox chbx = (CheckBox)((StackPanel)this.FindName("spnlKlangRow" + tcKlang.SelectedIndex + "_0")).FindName("chkTitel" + tcKlang.SelectedIndex + "_0");
+
+                            CheckBox chbx = (CheckBox)((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_0")).FindName("chkTitel" + objGruppe + "_0");
                             if (playlistliste[0].Hintergrundmusik)
                             {
+                                ZeigeKlangSongsParallel(false);
                                 if (chbx.Visibility == Visibility.Visible)
                                 {
-                                    ZeigeKlangTop(Convert.ToUInt16(tcKlang.SelectedIndex), false);
+                                    ZeigeKlangTop(objGruppe, false);
                                     for (int r = 0; r < zeilenAufSeite[tcKlang.SelectedIndex]; r++)
-                                        ZeigeKlangSettings(Convert.ToUInt16(tcKlang.SelectedIndex), Convert.ToUInt16(r), false);
+                                        ZeigeKlangSettings(objGruppe, Convert.ToUInt16(r), false);
                                 }
                             }
                             else
                             {
+                                ZeigeKlangSongsParallel(true);
                                 if (chbx.Visibility == Visibility.Hidden)
                                 {
-                                    ZeigeKlangTop(Convert.ToUInt16(tcKlang.SelectedIndex), true);
+                                    ZeigeKlangTop(objGruppe, true);
                                     for (int r = 0; r < zeilenAufSeite[tcKlang.SelectedIndex]; r++)
-                                        ZeigeKlangSettings(Convert.ToUInt16(tcKlang.SelectedIndex), Convert.ToUInt16(r), true);
+                                        ZeigeKlangSettings(objGruppe, Convert.ToUInt16(r), true);
                                 }
                             }
-
                         }
-                        ((Grid)this.FindName("grdKlangTop" + tcKlang.SelectedIndex)).Visibility = Visibility.Visible;
+                        ((Grid)this.FindName("grdKlangTop" + objGruppe)).Visibility = Visibility.Visible;
                     }
                     else
                     {
+                        lbKlang.SelectionChanged -= new SelectionChangedEventHandler(lbKlang_SelectionChanged);
+                        lbKlang.SelectedIndex = -1;
+                        lbKlang.SelectionChanged += new SelectionChangedEventHandler(lbKlang_SelectionChanged);
+
                         rbIstKlangPlaylist.IsChecked = rbKlangKlang.IsChecked;
                         rbIstMusikPlaylist.IsChecked = rbKlangMusik.IsChecked;
                         tboxPlaylistName.Text = s;
                         tboxPlaylistName.Visibility = Visibility.Visible;
-                        LblKlangSongsParallel.Visibility = Visibility.Visible;
-                        tboxklangsongparallel.Visibility = Visibility.Visible;
-                        btnSongParMinus.Visibility = Visibility.Visible;
-                        btnSongParPlus.Visibility = Visibility.Visible;
+                        ZeigeKlangSongsParallel(false);
+
+                        rbIstKlangPlaylist.Visibility = Visibility.Hidden; // .Visible;
+                        rbIstMusikPlaylist.Visibility = Visibility.Hidden; // .Visible;
                         
                         tboxklangsongparallel.TextChanged -= new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
                         tboxklangsongparallel.Tag = null;
                         tboxklangsongparallel.Text = "0";
                         maxsongsparallel[tcKlang.SelectedIndex] = 0;
                         tboxklangsongparallel.TextChanged += new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
-                        zeilenAufSeite[tcKlang.SelectedIndex] = 0;
+                        //zeilenAufSeite[tcKlang.SelectedIndex] = 0;
                     }
                 }
                 int i = 0;
@@ -1963,65 +1935,121 @@ namespace MeisterGeister.View.AudioPlayer
                         lbKlang.SelectionChanged -= new SelectionChangedEventHandler(lbKlang_SelectionChanged);
                         lbKlang.SelectedIndex = i;
                         lbKlang.SelectionChanged += new SelectionChangedEventHandler(lbKlang_SelectionChanged);
+                        rbIstKlangPlaylist.Visibility = Visibility.Visible;
+                        rbIstMusikPlaylist.Visibility = Visibility.Visible;
                     }
                     i++;
                 }
             }
         }
 
+
         private void tiKlangPlaylistClose_Click(object sender, RoutedEventArgs e)
         {
-
-            if (laufendeSongs[tcKlang.SelectedIndex] != null)
+            //Name des TabItem herausfinden      
+            UInt16 objGruppe = Convert.ToUInt16((((TabItemControl)((StackPanel)(((Button)sender).Parent)).Parent)).Name.Substring(7)); 
+            int seite = Array.IndexOf(SeiteXHatObjGruppe, objGruppe);
+            
+            if (laufendeSongs[seite] != null) 
             {
-                for (int i = 0; i < laufendeSongs[tcKlang.SelectedIndex].Count(); i++)
-                    _player[tcKlang.SelectedIndex][laufendeSongs[tcKlang.SelectedIndex][i]].Stop();
+                for (int i = 0; i < laufendeSongs[seite].Count(); i++)
+                    _player[seite][laufendeSongs[seite][i]].Stop();
             }
-            Int32 spalte = tcKlang.Items.Count - 2;
+            PlaylisteLeeren(objGruppe);
 
-            this.UnregisterName("tiKlang" + spalte);
-            this.UnregisterName("Grid" + spalte);
-            this.UnregisterName("sviewer" + spalte);
-            this.UnregisterName("grdKlang" + spalte);
-            this.UnregisterName("grdKlangTop" + spalte);
-            if (spalte == 1)
-                tcKlang.SelectedIndex = 0;
+            this.UnregisterName("tiKlang" + objGruppe);
+            this.UnregisterName("Grid" + objGruppe);
+            this.UnregisterName("sviewer" + objGruppe);
+            this.UnregisterName("grdKlang" + objGruppe);
+            this.UnregisterName("grdKlangTop" + objGruppe);
+
+            for (int i=seite; i < 7; i++)
+                SeiteXHatObjGruppe[i] = SeiteXHatObjGruppe[i+1];
+            SeiteXHatObjGruppe[7] = -1;
+            
+            if (tcKlang.SelectedIndex == tcKlang.Items.Count -2)
+                tcKlang.SelectedIndex = tcKlang.SelectedIndex-1;
         }
 
         private void tiPlus_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            AktKlangPlaylist = null;
-            Int32 spalte = tcKlang.Items.Count - 2;
+            tiErstellt++;
+            Int32 objGruppe = tiErstellt;
 
-            Grid GridTmp = (Grid)DeepCopy(GridX, "X", spalte.ToString());
+            AktKlangPlaylist = null;
+            Grid GridTmp = (Grid)DeepCopy(GridX, "X", objGruppe.ToString());
             
             TabItemControl tabItem = new TabItemControl();
             tabItem.Visibility = Visibility.Visible;
             tabItem._image.Source = null;
             tabItem._image.Width = 0;
             tabItem.Height = 19;
-            tabItem.Name = "tiKlang" + spalte;
-            tabItem._textBlockTitel.Text = "NeuePlaylist" + spalte;
+            tabItem.Name = "tiKlang" + objGruppe;
+
+
+            string NeuePlaylist = "NeuePlaylist" + (tcKlang.Items.Count - 2);
+         /*   if (tcKlang.SelectedIndex == 0)
+                NeuePlaylist = ((TabItem)tcKlang.SelectedItem).Header.ToString();
+            else
+                NeuePlaylist = ((TabItemControl)tcKlang.SelectedItem)._textBlockTitel.Text;
+            */
+            int ver = 0;
+            while (Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(NeuePlaylist)).ToList().Count != 0)
+            {
+                NeuePlaylist = "NeuePlaylist" + (tcKlang.Items.Count - 2) + "-" + ver;
+                ver++;
+            }
+
+            tabItem._textBlockTitel.Text = NeuePlaylist; // "NeuePlaylist" + (tcKlang.Items.Count - 2);
             tabItem._buttonClose.Click += new RoutedEventHandler(tiKlangPlaylistClose_Click);
 
-            tcKlang.Items.Insert(spalte, tabItem);
-
-            this.RegisterName("tiKlang" + spalte, tabItem);
+            SeiteXHatObjGruppe[tcKlang.Items.Count - 2] = objGruppe;
+            tcKlang.Items.Insert(tcKlang.Items.Count-2, tabItem);
+            this.RegisterName("tiKlang" + objGruppe, tabItem);
             tabItem.Content = GridTmp;
             this.RegisterName(GridTmp.Name, GridTmp);
 
 
-            ScrollViewer scrViewer = (ScrollViewer)GridTmp.FindName("sviewer" + spalte);
+            ScrollViewer scrViewer = (ScrollViewer)GridTmp.FindName("sviewer" + objGruppe);
+            scrViewer.Drop += new DragEventHandler(grdKlang0_Drop);
             this.RegisterName(scrViewer.Name, scrViewer);
 
-            Grid grdKlang = (Grid)scrViewer.FindName("grdKlang" + spalte);
+            Grid grdKlang = (Grid)scrViewer.FindName("grdKlang" + objGruppe);
             this.RegisterName(grdKlang.Name, grdKlang);
-
-            Grid grdKlangTop = (Grid)grdKlang.FindName("grdKlangTop" + spalte);
+            
+            Grid grdKlangTop = (Grid)grdKlang.FindName("grdKlangTop" + objGruppe);
             this.RegisterName(grdKlangTop.Name, grdKlangTop);
-
-            ToggleButton tbtn = (ToggleButton)grdKlangTop.FindName("btnKlangStop" + spalte);
+                   
+            ToggleButton tbtn = (ToggleButton)grdKlangTop.FindName("btnKlangStop" + objGruppe);
             tbtn.Click += new RoutedEventHandler(btnKlangStop0_Click);
+
+            /*
+            ((Label)this.FindName("lblTopVol" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolMin" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolDown" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolMax" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolUp" + seite)).Visibility = Visibility.Hidden;
+            ((CheckBox)this.FindName("chkbxTopVolChange" + seite)).Visibility = Visibility.Hidden;
+            ((Label)this.FindName("lblTopVolRange" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolMinMinus" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolMinPlus" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolMaxMinus" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopVolMaxPlus" + seite)).Visibility = Visibility.Hidden;
+
+            ((Label)this.FindName("lblTopPause" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseMin" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseDown" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseUp" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseMax" + seite)).Visibility = Visibility.Hidden;
+            ((CheckBox)this.FindName("chkBoxTopPause" + seite)).Visibility = Visibility.Hidden;
+            ((Label)this.FindName("lblTopPauseRange" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseMinMinus" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseMinPlus" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseMaxMinus" + seite)).Visibility = Visibility.Hidden;
+            ((Button)this.FindName("btnTopPauseMaxPlus" + seite)).Visibility = Visibility.Hidden;
+            */
+
+
        //     this.RegisterName(tbtn.Name, tbtn);
 
         /*        CheckBox cboxListeAn = grdKlangTop.FindName("cboxListeAn" + zeile) as CheckBox;
@@ -2056,18 +2084,56 @@ namespace MeisterGeister.View.AudioPlayer
                 this.RegisterName(btnKlangVolMaxPlus.Name, btnKlangVolMaxPlus);
             
             */
-            
-            tcKlang.SelectedIndex = spalte;
+            tcKlang.SelectedIndex = tcKlang.Items.Count-2-1;
 
             lbKlang.SelectionChanged -= new SelectionChangedEventHandler(lbKlang_SelectionChanged);
             lbKlang.SelectedIndex = -1;
             lbKlang.SelectionChanged += new SelectionChangedEventHandler(lbKlang_SelectionChanged);
         }
 
-        private void tboxVolMin0_0_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void tboxVolMin0_X_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             foreach (var item in e.Text)
                 e.Handled = !char.IsDigit(item);
+        }
+
+        private void tboxVolMin0_X_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (AktKlangPlaylist != null)
+            {
+                UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[tcKlang.SelectedIndex]);
+
+                List<Audio_Titel> titel = Global.ContextAudio.LoadTitelByPlaylist(AktKlangPlaylist);
+                List<Audio_Playlist_Titel> playlisttitel = Global.ContextAudio.LoadPlaylist_TitelByPlaylist(AktKlangPlaylist, titel[Convert.ToInt32(((TextBox)(sender)).Tag)]);
+                if (playlisttitel.Count != 0)
+                {
+                    Grid grd = (Grid)((TextBox)(sender)).Parent;
+                    if (((TextBox)(sender)).Name.StartsWith("tboxVolMin"))
+                    {
+                        playlisttitel[0].VolumeMin = Convert.ToInt16(((TextBox)(sender)).Text);
+                        ((Slider)grd.FindName("sldKlangVol" + objGruppe + "_" + Convert.ToString(((TextBox)(sender)).Tag))).Minimum = playlisttitel[0].VolumeMin;
+                    }
+                    if (((TextBox)(sender)).Name.StartsWith("tboxVolMax"))
+                    {
+                        playlisttitel[0].VolumeMax = Convert.ToInt16(((TextBox)(sender)).Text);
+                        ((Slider)grd.FindName("sldKlangVol" + objGruppe + "_" + Convert.ToString(((TextBox)(sender)).Tag))).Maximum = playlisttitel[0].VolumeMax;
+                    }
+
+                    if (((TextBox)(sender)).Name.StartsWith("tboxPauseMin"))
+                    {
+                        playlisttitel[0].PauseMin = Convert.ToInt16(((TextBox)(sender)).Text);
+                        ((Slider)grd.FindName("sldKlangPause" + objGruppe + "_" + Convert.ToString(((TextBox)(sender)).Tag))).Minimum = playlisttitel[0].PauseMin;
+                    }
+                    if (((TextBox)(sender)).Name.StartsWith("tboxPauseMax"))
+                    {
+                        playlisttitel[0].PauseMax = Convert.ToInt16(((TextBox)(sender)).Text);
+                        ((Slider)grd.FindName("sldKlangPause" + objGruppe + "_" + Convert.ToString(((TextBox)(sender)).Tag))).Maximum = playlisttitel[0].PauseMax;
+                    }
+
+                    Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel[0]);
+                }
+                //.Save();
+            }
         }
 
         private void _btnVolMinMinus0_X_Click(object sender, RoutedEventArgs e)
@@ -2106,9 +2172,10 @@ namespace MeisterGeister.View.AudioPlayer
             // int zeile = Convert.ToInt32((sender as Button).Name.Substring(16));
 
             StackPanel spnl = (StackPanel)((Grid)((Button)sender).Parent).Parent;
+            UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[seite]);
 
-            TextBox tbox = (TextBox)spnl.FindName(s_tbox + seite + "_" + zeile);
-            Slider sld = (Slider)spnl.FindName(s_sld + seite + "_" + zeile);
+            TextBox tbox = (TextBox)spnl.FindName(s_tbox + objGruppe + "_" + zeile);
+            Slider sld = (Slider)spnl.FindName(s_sld + objGruppe + "_" + zeile);
 
             int wert = Convert.ToInt32(((Button)sender).Tag);
             if (wert < 0)
@@ -2152,7 +2219,7 @@ namespace MeisterGeister.View.AudioPlayer
                         AktKlangPlaylist.MaxSongsParallel = Convert.ToInt32(tboxklangsongparallel.Text);
                         maxsongsparallel[tcKlang.SelectedIndex] = AktKlangPlaylist.MaxSongsParallel;
 
-                        CheckPlayStandbySongs(tcKlang.SelectedIndex);
+                        CheckPlayStandbySongs(Convert.ToUInt16(SeiteXHatObjGruppe[tcKlang.SelectedIndex]));
 
                         try { Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist); }
                         catch (Exception ex)
@@ -2199,7 +2266,9 @@ namespace MeisterGeister.View.AudioPlayer
                     {
                         if (((ListBoxItem)lbKlang.Items[i]).Content.ToString() == playlistliste[0].Name)
                         {
-                            PlaylisteLeeren(Convert.ToUInt16(tcKlang.SelectedIndex));
+                            UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[tcKlang.SelectedIndex]);
+
+                            PlaylisteLeeren(objGruppe);
 
                             tboxPlaylistName.Text = "NeuePlayliste" + tcKlang.SelectedIndex;
                             if (tcKlang.SelectedIndex == 0)
@@ -2212,12 +2281,12 @@ namespace MeisterGeister.View.AudioPlayer
                             tboxklangsongparallel.Text = "0";
                             maxsongsparallel[tcKlang.SelectedIndex] = 0;
                             tboxklangsongparallel.TextChanged += new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
-                        
-                            zeilenAufSeite[i] = 0;                            
+
+                            zeilenAufSeite[tcKlang.SelectedIndex] = 0;                            
                             for (int i2 = 0; i2 <= grdKlangPlaylistInfo.Children.Count - 1; i2++)
                                 grdKlangPlaylistInfo.Children[i2].Visibility = Visibility.Hidden;
 
-                            ((Grid)this.FindName("grdKlangTop" + tcKlang.SelectedIndex)).Visibility = Visibility.Hidden;
+                            ((Grid)this.FindName("grdKlangTop" + objGruppe)).Visibility = Visibility.Hidden;
                         }
                     }
                     AktKlangPlaylist = null;
@@ -2255,15 +2324,20 @@ namespace MeisterGeister.View.AudioPlayer
         {
             if (_player != null)
             {
-                string c = ((Slider)sender).Name.Substring(11);
+                string c;
+                if (((Slider)sender).Name.StartsWith("sldKlangVol"))
+                    c = ((Slider)sender).Name.Substring(11);
+                else
+                    c = ((Slider)sender).Name.Substring(13);
                 char[] Separator = new char[] { '_' };
                 string[] werte = c.Split(Separator, StringSplitOptions.None);
 
-                int seite = Convert.ToInt32(werte[0]);
+                int objGruppe = Convert.ToInt32(werte[0]);
                 int reihe = Convert.ToInt32(werte[1]);
+                int seite = Array.IndexOf(SeiteXHatObjGruppe, objGruppe);
+
                 if (((Slider)sender).Name.StartsWith("sldKlangVol", StringComparison.CurrentCulture))
                 {
-
                     if (_player[seite].Length - 1 >= reihe && _player[seite][reihe] != null)
                         _player[seite][reihe].Volume = Math.Round(e.NewValue) / 100;
                     ((Slider)sender).ToolTip = Math.Round(e.NewValue) + " %";
@@ -2275,9 +2349,9 @@ namespace MeisterGeister.View.AudioPlayer
 
                 string s;
                 if (seite > 0)
-                    s = ((TabItemControl)tcKlang.FindName("tiKlang"+seite))._textBlockTitel.Text.ToString();
+                    s = ((TabItemControl)tcKlang.FindName("tiKlang" + objGruppe))._textBlockTitel.Text.ToString();
                 else
-                    s = ((TabItem)tcKlang.FindName("tiKlang" + seite)).Header.ToString();
+                    s = ((TabItem)tcKlang.FindName("tiKlang" + objGruppe)).Header.ToString();
         
                 //string s = ((ListBoxItem)lbKlang.Items[lbKlang.SelectedIndex]).Content.ToString();
 
@@ -2294,7 +2368,10 @@ namespace MeisterGeister.View.AudioPlayer
                     else
                         playlisttitel[0].Pause = Convert.ToInt32(Math.Round(((Slider)sender).Value));
 
-                    try { Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel[0]); }
+                    try 
+                    {                         
+                        Global.ContextAudio.Update<Audio_Playlist_Titel>(playlisttitel[0]); 
+                    }
                     catch (Exception ex)
                     {
                         var errWin = new MsgWindow("Datenfehler", "Die Datenbank konnte nicht aktualisiert werden", ex);
@@ -2309,16 +2386,18 @@ namespace MeisterGeister.View.AudioPlayer
         {
             int seite = tcKlang.SelectedIndex;
             int zeile = 0;
+            UInt16 objGruppe = Convert.ToUInt16(seite);
+
             StackPanel spnlZeile;
             while (zeile >= 0)
             {
-                spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + seite + "_" + zeile);
+                spnlZeile = (StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + zeile);
 
                 if (spnlZeile != null)
                 {
-                    Slider sldVol = (Slider)spnlZeile.FindName("sldKlangVol" + seite + "_" + zeile);
+                    Slider sldVol = (Slider)spnlZeile.FindName("sldKlangVol" + objGruppe + "_" + zeile);
 
-                    if ((spnlZeile.FindName("chkTitel" + seite + "_" + zeile) as CheckBox).IsChecked == true)
+                    if ((spnlZeile.FindName("chkTitel" + objGruppe + "_" + zeile) as CheckBox).IsChecked == true)
                         sldVol.Value = sldVol.Value + Convert.ToInt32(((sender) as Button).Tag);
                     zeile++;
                 }
@@ -2373,7 +2452,7 @@ namespace MeisterGeister.View.AudioPlayer
                   //      string[] gedroppteDateien = (string[])e.Data.GetData(DataFormats.FileDrop, true);
                         string[] extension = new String[4] { ".mp3", ".wav", ".wma", ".ogg" };
 
-                        foreach (string dateihinzu in dlg.FileNames)  //  string droppedFilePath in gedroppteDateien)
+                        foreach (string dateihinzu in dlg.FileNames)  
                         {
                             if (Array.IndexOf(extension, dateihinzu.Substring(dateihinzu.Length - 4)) != -1)
                             {
@@ -2383,12 +2462,19 @@ namespace MeisterGeister.View.AudioPlayer
                         }
                         if (hinzugefuegt)
                         {
-                            ((Grid)this.FindName("grdKlangTop" + tcKlang.SelectedIndex)).Visibility = Visibility.Visible;
+                            UInt16 objGruppe = Convert.ToUInt16(SeiteXHatObjGruppe[tcKlang.SelectedIndex]);
+                            ((Grid)this.FindName("grdKlangTop" + objGruppe)).Visibility = Visibility.Visible;
 
-                            LblKlangSongsParallel.Visibility = Visibility.Visible;
-                            tboxklangsongparallel.Visibility = Visibility.Visible;
-                            btnSongParMinus.Visibility = Visibility.Visible;
-                            btnSongParPlus.Visibility = Visibility.Visible;
+                            if (AktKlangPlaylist.Hintergrundmusik)
+                            {
+                                ZeigeKlangSongsParallel(false);
+                                ZeigeKlangTop(objGruppe, false);
+                            }
+                            else
+                            {
+                                ZeigeKlangSongsParallel(true);
+                                ZeigeKlangTop(objGruppe, true);
+                            }
                             rbIstKlangPlaylist.Visibility = Visibility.Visible;
                             rbIstMusikPlaylist.Visibility = Visibility.Visible;
                         }
@@ -2399,7 +2485,6 @@ namespace MeisterGeister.View.AudioPlayer
                     Mouse.OverrideCursor = null;
                 }
             }
-
         }
 
         private void image1_MouseDown(object sender, MouseButtonEventArgs e)
@@ -2427,8 +2512,7 @@ namespace MeisterGeister.View.AudioPlayer
             Paragraph parx = new Paragraph();
             Button btn = new Button();
             ScrollViewer scr = new ScrollViewer();
-
-
+            
             RowDefinition rowDef1 = new RowDefinition();
             RowDefinition rowDef2 = new RowDefinition();
             RowDefinition rowDef3 = new RowDefinition();
