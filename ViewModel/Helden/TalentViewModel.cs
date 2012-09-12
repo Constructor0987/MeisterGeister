@@ -6,19 +6,24 @@ using System.Text;
 using System.ComponentModel;
 //Eigene Usings
 using M = MeisterGeister.Model;
+using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Helden {
     public class TalentViewModel : Base.ViewModelBase {
         #region //FELDER
+        //Test
+        private List<string> text = new List<string>();
+        public List<string> Text { get { return text; } set { value = text; OnChanged("Text"); } }
+
         //Listen
         private List<Model.Talent> talentAuswahlListe = new List<Model.Talent>();
-        private List<TalentListeItem> kampfTalentListe = new List<TalentListeItem>();
-        private List<TalentListeItem> koerperTalentListe = new List<TalentListeItem>();
-        private List<TalentListeItem> gesellschaftTalentListe = new List<TalentListeItem>();
-        private List<TalentListeItem> naturTalentListe = new List<TalentListeItem>();
-        private List<TalentListeItem> wissenTalentListe = new List<TalentListeItem>();
-        private List<TalentListeItem> spracheTalentListe = new List<TalentListeItem>();
-        private List<TalentListeItem> handwerkTalentListe = new List<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> kampfTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> koerperTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> gesellschaftTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> naturTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> wissenTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> spracheTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> handwerkTalentListe = new ObservableCollection<TalentListeItem>();
         //Selection
         private M.Held selectedHeld;
         private M.Talent talentAuswahl;
@@ -33,23 +38,25 @@ namespace MeisterGeister.ViewModel.Helden {
         #region //EIGENSCHAFTEN
         //Listen
         public List<Model.Talent> TalentauswahlListe { get { return talentAuswahlListe; } set { talentAuswahlListe = value; OnChanged("TalentauswahlListe"); } }
-        public List<TalentListeItem> KampftalentListe { get { return kampfTalentListe; } set { kampfTalentListe = value; OnChanged("KampftalentListe"); } }
-        public List<TalentListeItem> KoerperTalentListe { get { return koerperTalentListe; } set { koerperTalentListe = value; OnChanged("KoerperTalentListe"); } }
-        public List<TalentListeItem> GesellschaftTalentListe { get { return gesellschaftTalentListe; } set { gesellschaftTalentListe = value; OnChanged("GesellschaftTalentListe"); } }
-        public List<TalentListeItem> NaturTalentListe { get { return naturTalentListe; } set { naturTalentListe = value; OnChanged("NaturTalentListe"); } }
-        public List<TalentListeItem> WissenTalentListe { get { return wissenTalentListe; } set { wissenTalentListe = value; OnChanged("WissenTalentListe"); } }
-        public List<TalentListeItem> SpracheTalentListe { get { return spracheTalentListe; } set { spracheTalentListe = value; OnChanged("SpracheTalentListe"); } }
-        public List<TalentListeItem> HandwerkTalentListe { get { return handwerkTalentListe; } set { handwerkTalentListe = value; OnChanged("HandwerkTalentListe"); } }
+        public ObservableCollection<TalentListeItem> KampftalentListe { get { return kampfTalentListe; } set { kampfTalentListe = value; OnChanged("KampftalentListe"); } }
+        public ObservableCollection<TalentListeItem> KoerperTalentListe { get { return koerperTalentListe; } set { koerperTalentListe = value; OnChanged("KoerperTalentListe"); } }
+        public ObservableCollection<TalentListeItem> GesellschaftTalentListe { get { return gesellschaftTalentListe; } set { gesellschaftTalentListe = value; OnChanged("GesellschaftTalentListe"); } }
+        public ObservableCollection<TalentListeItem> NaturTalentListe { get { return naturTalentListe; } set { naturTalentListe = value; OnChanged("NaturTalentListe"); } }
+        public ObservableCollection<TalentListeItem> WissenTalentListe { get { return wissenTalentListe; } set { wissenTalentListe = value; OnChanged("WissenTalentListe"); } }
+        public ObservableCollection<TalentListeItem> SpracheTalentListe { get { return spracheTalentListe; } set { spracheTalentListe = value; OnChanged("SpracheTalentListe"); } }
+        public ObservableCollection<TalentListeItem> HandwerkTalentListe { get { return handwerkTalentListe; } set { handwerkTalentListe = value; OnChanged("HandwerkTalentListe"); } }
         //Selection
         public Model.Held SelectedHeld { get { return selectedHeld; } set { selectedHeld = value; OnChanged("SelectedHeld"); } }
-        public M.Talent TalentAuswahl{ get { return talentAuswahl; } set { talentAuswahl = value; OnChanged("TalentAuswahl"); } }
-        public TalentListeItem KampfTalent{ get { return kampfTalent; } set { kampfTalent = value; OnChanged("KampfTalent"); } }
-        public TalentListeItem KoerperTalent{ get { return koerperTalent; } set { koerperTalent = value; OnChanged("KoerperTalent"); } }
-        public TalentListeItem GesellschaftTalent{ get { return gesellschaftTalent; } set { gesellschaftTalent = value; OnChanged("GesellschaftTalent"); } }
-        public TalentListeItem NaturTalent{ get { return naturTalent; } set { naturTalent = value; OnChanged("NaturTalent"); } }
-        public TalentListeItem WissenTalent{ get { return wissenTalent; } set { wissenTalent = value; OnChanged("WissenTalent"); } }
-        public TalentListeItem SpracheTalent{ get { return spracheTalent; } set { spracheTalent = value; OnChanged("SpracheTalent"); } }
-        public TalentListeItem HandwerkTalent{ get { return handwerkTalent; } set { handwerkTalent = value; OnChanged("HandwerkTalent"); } }
+        public M.Talent TalentAuswahl { get { return talentAuswahl; } set { talentAuswahl = value; OnChanged("TalentAuswahl"); } }
+        public TalentListeItem KampfTalent { get { return kampfTalent; } set { kampfTalent = value; OnChanged("KampfTalent"); } }
+        public TalentListeItem KoerperTalent { get { return koerperTalent; } set { koerperTalent = value; OnChanged("KoerperTalent"); } }
+        public TalentListeItem GesellschaftTalent { get { return gesellschaftTalent; } set { gesellschaftTalent = value; OnChanged("GesellschaftTalent"); } }
+        public TalentListeItem NaturTalent { get { return naturTalent; } set { naturTalent = value; OnChanged("NaturTalent"); } }
+        public TalentListeItem WissenTalent { get { return wissenTalent; } set { wissenTalent = value; OnChanged("WissenTalent"); } }
+        public TalentListeItem SpracheTalent { get { return spracheTalent; } set { spracheTalent = value; OnChanged("SpracheTalent"); } }
+        public TalentListeItem HandwerkTalent { get { return handwerkTalent; } set { handwerkTalent = value; OnChanged("HandwerkTalent"); } }
+        //Command
+        public Base.CommandBase OnAddTalent;
         #endregion
         #region //KONSTRUKTOR
         public TalentViewModel() {
@@ -59,23 +66,42 @@ namespace MeisterGeister.ViewModel.Helden {
         }
         #endregion
         #region //METHODEN
+        bool initFlag = false;
         public void Init() {
-            //Clear
+            if (initFlag == false) {
+                //Clear
+                KampftalentListe.Clear();
+                KoerperTalentListe.Clear();
+                GesellschaftTalentListe.Clear();
+                NaturTalentListe.Clear();
+                WissenTalentListe.Clear();
+                HandwerkTalentListe.Clear();
+                SpracheTalentListe.Clear();
+
+                //All-Add für Talentauswahl
+                TalentauswahlListe = Global.ContextTalent.TalentListe.OrderBy(item => item.Talentname).ToList();
+                //Heldentalente in Listen laden
+                if (Global.SelectedHeld != null) {
+                    SelectedHeldChanged();
+                }
+                initFlag = true;
+            }
+        }
+        private void ReInit() {
             KampftalentListe.Clear();
             KoerperTalentListe.Clear();
             GesellschaftTalentListe.Clear();
             NaturTalentListe.Clear();
             WissenTalentListe.Clear();
-            HandwerkTalentListe.Clear();
             SpracheTalentListe.Clear();
-
-            if (SelectedHeld == null) {
-                //TODO DW: Wenn Heldenliste wieder bedienbar, entfernen                
-                SelectedHeld = Global.ContextHeld.HeldenListe.FirstOrDefault();
-            }
-            //All-Add für Talentauswahl
-            TalentauswahlListe = Global.ContextTalent.TalentListe.ToList();
-            //Heldentalente in Listen laden
+            HandwerkTalentListe.Clear();
+        }
+        #endregion
+        #region //EVENTS
+        //Event
+        void SelectedHeldChanged() {
+            SelectedHeld = Global.SelectedHeld;
+            ReInit();
             if (SelectedHeld != null) {
                 foreach (var item in SelectedHeld.Held_Talent) {
                     switch (Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault().TalentgruppeID) {
@@ -126,12 +152,6 @@ namespace MeisterGeister.ViewModel.Helden {
                     }
                 }
             }
-        }
-        #endregion
-        #region //EVENTS
-        //Event
-        void SelectedHeldChanged() {
-            SelectedHeld = Global.SelectedHeld;
         }
         #endregion
     }

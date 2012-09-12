@@ -633,7 +633,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Service\HandelsgutService.cs" />
-    <Compile Include="Model\Service\HeldService.cs" />
+    <Compile Include="Model\Service\DataService.cs" />
     <Compile Include="Model\Service\Base\ServiceBase.cs" />
     <Compile Include="Model\Service\TalentService.cs" />
     <Compile Include="Model\Service\WaffeService.cs" />

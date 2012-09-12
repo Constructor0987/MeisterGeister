@@ -18,20 +18,17 @@ using MeisterGeister.View.Windows;
 using System.Globalization;
 using System.Windows.Markup;
 
-namespace MeisterGeister
-{
+namespace MeisterGeister {
     /// <summary>
     /// Interaktionslogik für "App.xaml"
     /// </summary>
-    public partial class App : Application
-    {
+    public partial class App : Application {
         /// <summary>
         /// Startup-Fenster, das während der Initialisierung und des Abspielens des Jingles angezeigt wird.
         /// </summary>
         static StartupWindow _splashScreen = new StartupWindow();
 
-        public App()
-        {
+        public App() {
             // Startup-Fenster anzeigen (schließt sich automatisch)
             _splashScreen.Show();
 
@@ -39,16 +36,12 @@ namespace MeisterGeister
             System.Windows.Forms.Application.EnableVisualStyles();
 
             // Prüfen, ob Datenbank vorhanden ist
-            if (!File.Exists(@"Daten\DatabaseDSA.sdf"))
-            {
+            if (!File.Exists(@"Daten\DatabaseDSA.sdf")) {
                 // Es handelt sich vermutlich um eine Neuinstallation:
                 // Standard-Datenbank kopieren und umbenennen
-                try
-                {
+                try {
                     File.Copy(@"Daten\DatabaseDSA_Standard.sdf", @"Daten\DatabaseDSA.sdf", false);
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     MsgWindow errWin = new MsgWindow("Datenbank-Fehler", "Die Standard-Datanbank konnte nicht gefunden werden!", ex);
                     errWin.ShowDialog();
                     Shutdown();
@@ -57,8 +50,7 @@ namespace MeisterGeister
             }
 
             // Erneut prüfen...
-            if (!File.Exists(@"Daten\DatabaseDSA.sdf"))
-            {
+            if (!File.Exists(@"Daten\DatabaseDSA.sdf")) {
                 string msg = "Die Datenbank-Datei \"Daten\\DatabaseDSA.sdf\" konnte nicht gefunden werden. Das Programm wird geschlossen.";
                 MsgWindow errWin = new MsgWindow("Datenbank-Fehler", msg);
                 errWin.ShowDialog();
@@ -67,8 +59,7 @@ namespace MeisterGeister
             }
 
             // Schreibrecht prüfen
-            if (!IsWriteable(Environment.CurrentDirectory + @"\Daten\DatabaseDSA.sdf"))
-            {
+            if (!IsWriteable(Environment.CurrentDirectory + @"\Daten\DatabaseDSA.sdf")) {
                 string msg = "Das Programm hat keinen schreibenden Zugriff auf die Datenbank-Datei \"Daten\\DatabaseDSA.sdf\". "
                     + "Kopiere DSA MeisterGeister in ein Verzeichnis mit Schreibzugriff und starte es erneut.";
                 MsgWindow errWin = new MsgWindow("Datenbank-Fehler", msg);
@@ -81,8 +72,7 @@ namespace MeisterGeister
             object sqlCompactVersion = "-";
             sqlCompactVersion = Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v4.0", "Version", "-");
             string sqlCompactVersionNeeded = "4.0.8"; //4.0.8482.1 oder 4.0.8876.1
-            if (sqlCompactVersion == null || !sqlCompactVersion.ToString().StartsWith(sqlCompactVersionNeeded))
-            {
+            if (sqlCompactVersion == null || !sqlCompactVersion.ToString().StartsWith(sqlCompactVersionNeeded)) {
                 string msg = "Es ist keine, eine falsche oder eine beschädigte Microsoft SQL Server Compact Edition installiert.\n"
                     + "Installiert:\t" + sqlCompactVersion
                     + "\nBenötigt:\t\t" + sqlCompactVersionNeeded + "\n\nDie benötigte Edition kann unter folgendem Link heruntergeladen werden:\n\n"
@@ -94,25 +84,20 @@ namespace MeisterGeister
             }
 
             //Version der Datenbank überprüfen und upgraden.
-            try
-            {
+            try {
                 SqlCeUpgrade.Run(@"Daten\DatabaseDSA.sdf");
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MsgWindow errWin = new MsgWindow("Fehler beim Datenbank-Upgrade", "Beim Datenbank-Upgrade ist ein Fehler aufgetreten!", ex);
                 errWin.ShowDialog();
                 Shutdown();
             }
 
             // Auf Datenbank-Update prüfen
-            try
-            {
+            try {
                 string msg = string.Empty;
                 MsgWindow msgWin = null;
 
-                switch (DatabaseUpdate.PerformDatabaseUpdate())
-                {
+                switch (DatabaseUpdate.PerformDatabaseUpdate()) {
                     case DatabaseUpdateResult.DatenbankVersionOK:
                         break;
                     case DatabaseUpdateResult.DatenbankUpdateOK:
@@ -143,9 +128,7 @@ namespace MeisterGeister
                         Shutdown();
                         return;
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MsgWindow errWin = new MsgWindow("Fehler beim Datenbank-Update", "Beim Datenbank-Update ist ein Fehler aufgetreten!\n" + DatabaseUpdate.UpdateStatus, ex);
                 errWin.ShowDialog();
                 Shutdown();
@@ -154,8 +137,7 @@ namespace MeisterGeister
 
             InitializeComponent();
 
-            try
-            {
+            try {
                 // Einstellungen aus Datenbank laden
                 LoadEinstellungenFromDatabase();
 
@@ -164,9 +146,7 @@ namespace MeisterGeister
                 if (!Einstellungen.JingleAbstellen)
                     AudioPlayer.PlayJingle();
 #endif
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MsgWindow errWin = new MsgWindow("Audio Fehler", "Beim Abspielen des Start-Jingles ist ein Fehler aufgetreten.", ex);
                 Nullable<bool> dialogResult = errWin.ShowDialog();
                 errWin.Close();
@@ -177,22 +157,19 @@ namespace MeisterGeister
             LoadDataFromDatabase();
         }
 
-        private void LoadEinstellungenFromDatabase()
-        {
+        private void LoadEinstellungenFromDatabase() {
             // Dataset und TableAdapter erzeugen
             DatenDataSet = ((Daten.DatabaseDSADataSet)(FindResource("DatenDataSet")));
             DatenDataSetTableAdapters = new Daten.DatabaseDSADataSetTableAdapters.TableAdapterManager();
             DatenDataSetTableAdapters.EinstellungenTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.EinstellungenTableAdapter();
 
             // Daten aus der Datenbank laden
-            if (DatenDataSet != null)
-            {
+            if (DatenDataSet != null) {
                 DatenDataSetTableAdapters.EinstellungenTableAdapter.Fill(DatenDataSet.Einstellungen);
             }
         }
 
-        private void LoadDataFromDatabase()
-        {
+        private void LoadDataFromDatabase() {
             // TableAdapter erzeugen
             DatenDataSetTableAdapters.TalentgruppeTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.TalentgruppeTableAdapter();
             DatenDataSetTableAdapters.TalentTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.TalentTableAdapter();
@@ -209,8 +186,7 @@ namespace MeisterGeister
             DatenDataSetTableAdapters.NameTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.NameTableAdapter();
 
             // Daten aus der Datenbank laden
-            if (DatenDataSet != null)
-            {
+            if (DatenDataSet != null) {
                 DatenDataSetTableAdapters.TalentgruppeTableAdapter.Fill(DatenDataSet.Talentgruppe);
                 DatenDataSetTableAdapters.TalentTableAdapter.Fill(DatenDataSet.Talent);
                 DatenDataSetTableAdapters.ZauberTableAdapter.Fill(DatenDataSet.Zauber);
@@ -229,10 +205,8 @@ namespace MeisterGeister
             Global.Init();
         }
 
-        public static bool IsWriteable(string filename)
-        {
-            if (File.Exists(filename))
-            {
+        public static bool IsWriteable(string filename) {
+            if (File.Exists(filename)) {
                 FileInfo fi = new FileInfo(filename);
                 if (fi.IsReadOnly)
                     return false;
@@ -243,8 +217,7 @@ namespace MeisterGeister
         public static DatabaseDSADataSet DatenDataSet { get; set; }
         public static Daten.DatabaseDSADataSetTableAdapters.TableAdapterManager DatenDataSetTableAdapters { get; set; }
 
-        public static void SaveHelden()
-        {
+        public static void SaveHelden() {
             // Änderungen in Datenbank speichern
             DatenDataSetTableAdapters.HeldTableAdapter.Update(DatenDataSet.Held);
             DatenDataSetTableAdapters.Held_TalentTableAdapter.Update(DatenDataSet.Held_Talent);
@@ -256,8 +229,7 @@ namespace MeisterGeister
             Global.ContextHeld.UpdateList<Model.Held>();
         }
 
-        public static void SaveGegner()
-        {
+        public static void SaveGegner() {
             // Änderungen in Datenbank speichern
             DatenDataSetTableAdapters.BestiariumTableAdapter.Update(DatenDataSet.Bestiarium);
 
@@ -266,37 +238,29 @@ namespace MeisterGeister
             DatenDataSetTableAdapters.BestiariumTableAdapter.Fill(DatenDataSet.Bestiarium);
         }
 
-        public static void SaveAll()
-        {
+        public static void SaveAll() {
             // Änderungen in Datenbank speichern
-            if (DatenDataSetTableAdapters != null && DatenDataSet != null && DatenDataSet.HasChanges())
-            {
-                try
-                {
+            if (DatenDataSetTableAdapters != null && DatenDataSet != null && DatenDataSet.HasChanges()) {
+                try {
                     DatenDataSetTableAdapters.UpdateAll(DatenDataSet);
                     //DatenDataSet.AcceptChanges();
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     MsgWindow errWin = new MsgWindow("Fehler beim Speichern der Datenbank", "Beim Speichern der Datenbank ist ein Fehler aufgetreten!", ex);
                     errWin.ShowDialog();
                 }
             }
         }
 
-        public static Version[] GetVersionDownload()
-        {
+        public static Version[] GetVersionDownload() {
             Version[] v = new Version[] { new Version(), new Version() };
             WebClient w = new WebClient();
-            try
-            {
+            try {
                 string s = w.DownloadString("http://www.meistergeister.org/version/");
 
                 MatchCollection m1 = Regex.Matches(s, "(<span id=\"version\".*?>.*?</span>)", RegexOptions.Singleline);
                 MatchCollection m2 = Regex.Matches(s, "(<span id=\"versionBeta\".*?>.*?</span>)", RegexOptions.Singleline);
 
-                if (m1.Count > 0)
-                {
+                if (m1.Count > 0) {
                     string value = m1[0].Value;
                     value = value.Replace("<span id=\"version\">", string.Empty).Replace("</span>", string.Empty);
                     string[] values = value.Split('.');
@@ -305,8 +269,7 @@ namespace MeisterGeister
                     else if (values.Length > 3)
                         v[0] = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), Convert.ToInt32(values[3]), Convert.ToInt32(values[2]));
                 }
-                if (m2.Count > 0)
-                {
+                if (m2.Count > 0) {
                     string value = m2[0].Value;
                     value = value.Replace("<span id=\"versionBeta\">", string.Empty).Replace("</span>", string.Empty);
                     string[] values = value.Split('.');
@@ -316,33 +279,28 @@ namespace MeisterGeister
                         v[1] = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), Convert.ToInt32(values[3]), Convert.ToInt32(values[2]));
                 }
                 return v;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Auf Updates prüfen");
             }
 
             return v;
         }
 
-        public static string GetVersionString(Version v)
-        {
+        public static string GetVersionString(Version v) {
             if (v.Build == 0)
                 return string.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Revision);
             else
                 return string.Format("{0}.{1}.{2}.{3}", v.Major, v.Minor, v.Revision, v.Build);
         }
 
-        public static Version GetVersionProgramm()
-        {
+        public static Version GetVersionProgramm() {
             // Programm-Version abrufen
             Assembly assem = Assembly.GetExecutingAssembly();
             AssemblyName assemName = assem.GetName();
             return assemName.Version;
         }
 
-        public static void CheckUpdates()
-        {
+        public static void CheckUpdates() {
             Version[] vDownload = GetVersionDownload();
             Version vProgramm = GetVersionProgramm();
             string vDownloadString = GetVersionString(vDownload[0]);
@@ -352,8 +310,7 @@ namespace MeisterGeister
 
             if (vDownload == null || vDownload[0] == new Version())
                 infoText = "Die aktuelle Programm Version konnte nicht geprüft werden.";
-            else
-            {
+            else {
                 vProgramm = new Version(vProgramm.Major, vProgramm.Minor, vProgramm.Revision, vProgramm.Build);
                 vDownload[1] = new Version(vDownload[1].Major, vDownload[1].Minor, vDownload[1].Revision, vDownload[1].Build);
 
@@ -373,8 +330,7 @@ namespace MeisterGeister
         }
 
 
-        internal static string GetOSName()
-        {
+        internal static string GetOSName() {
             if (Environment.OSVersion.Version.ToString().StartsWith("6.2"))
                 return "Windows 8";
             else if (Environment.OSVersion.Version.ToString().StartsWith("6.1.8400"))
@@ -394,17 +350,14 @@ namespace MeisterGeister
             return "Unbekannt";
         }
 
-        internal static void CloseSplashScreen()
-        {
-            if (_splashScreen != null)
-            {
+        internal static void CloseSplashScreen() {
+            if (_splashScreen != null) {
                 _splashScreen.KillMe();
                 _splashScreen = null;
             }
         }
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
+        protected override void OnStartup(StartupEventArgs e) {
             base.OnStartup(e);
 
             FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
@@ -412,8 +365,7 @@ namespace MeisterGeister
 
         }
 
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-        {
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
             // Dieser EventHandler fängt alle unbehandelten Ausnahmen und zeigt den Fehler an.
             MsgWindow errWin = new MsgWindow("Unbehandelte Ausnahme", "Es ist eine unbehandelte Ausnahme aufgetreten. Das Programm wird beendet.\n", e.Exception);
             errWin.ShowDialog();

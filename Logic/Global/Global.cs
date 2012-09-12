@@ -13,7 +13,7 @@ namespace MeisterGeister
         #region //CONTEXTE
 
         public static Service.AudioService ContextAudio;
-        public static Service.HeldService ContextHeld;
+        public static Service.DataService ContextHeld;
         public static Service.InventarService ContextInventar;
         public static Service.KampfService ContextKampf;
         //TODO ??: aus der Schmiede die Referenz entfernen, dann löschen
@@ -112,7 +112,7 @@ namespace MeisterGeister
         public static void Init()
         {
             ContextAudio = new Service.AudioService();
-            ContextHeld = new Service.HeldService();
+            ContextHeld = new Service.DataService();
             ContextInventar = new Service.InventarService();
             ContextKampf = new Service.KampfService();
             //TODO ??: Services besser gruppieren
