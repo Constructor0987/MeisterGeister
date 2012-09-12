@@ -22,7 +22,7 @@ namespace MeisterGeister.Model.Service
     /// </summary>
     public class SerializationService
     {
-        private static DatabaseDSAEntities serializationContext = new DatabaseDSAEntities(ServiceBase.ConnectionString, true, true);
+        private static DatabaseDSAEntities serializationContext = null;
 
         public static DatabaseDSAEntities Context
         {
@@ -36,6 +36,7 @@ namespace MeisterGeister.Model.Service
 
         private SerializationService()
         {
+            serializationContext = new DatabaseDSAEntities(ServiceBase.ConnectionString, true, true);
             LoadAllUserData();
         }
 
@@ -53,6 +54,8 @@ namespace MeisterGeister.Model.Service
 
         public static void DestroyInstance()
         {
+            serializationContext.Dispose();
+            serializationContext = null;
             instance = null;
         }
 
@@ -295,7 +298,7 @@ namespace MeisterGeister.Model.Service
             try
             {
                 DeleteHeldData(held);
-                Context.AttachObjectGraph(held,
+                Held output = Context.AttachObjectGraph(held,
                     h => h.Held_Inventar,
                     h => h.Held_Inventar.First().Inventar,
                     h => h.Held_Ausrüstung,
@@ -305,7 +308,7 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_Zauber
                 );
                 Save(); //TODO ??: Besser wäre ein check, ob was überschrieben wird und ein Aufruf, des Save aus dem UI
-                return true;
+                return output!=null;
             }
             catch (Exception e)
             {
