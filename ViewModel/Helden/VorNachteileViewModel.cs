@@ -90,7 +90,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- KONSTRUKTOR ----
 
-        public VorNachteileViewModel()
+        public VorNachteileViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError) : base(confirm, showError)
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
@@ -120,11 +120,14 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void DeleteVorNachteil(object sender)
         {
-            // TODO MT: Lösch-Frage einbauen
-
             Model.Held_VorNachteil h = SelectedHeldVorNachteil;
-            if (h != null && Global.ContextHeld.Delete<Model.Held_VorNachteil>(h))
+            if (h != null
+                && Confirm("Vor-/Nachteil löschen", String.Format("Soll der Vor-/Nachteil {0} wirklich vom Helden entfernt werden?", h.VorNachteil.Name))
+                && Global.ContextHeld.Delete<Model.Held_VorNachteil>(h))
+            {
+                SelectedHeldVorNachteil = null;
                 NotifyRefresh();
+            }
         }
 
         private void AddVorteil(object sender)

@@ -25,9 +25,7 @@ namespace MeisterGeister.View.Helden.Controls
         public VorNachteileView()
         {
             InitializeComponent();
-
-            //VM an View Registrieren
-            this.DataContext = new VM.VorNachteileViewModel(); 
+            this.DataContext = new VM.VorNachteileViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
