@@ -19,8 +19,8 @@ namespace MeisterGeister.ViewModel.Helden
         /// <param name="popup">Ein OK-Popup-Dialog. (Nachricht)</param>
         /// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
         /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
-        /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateierweiterung, Dateiname, zum speichern)</param>
-        public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, string, bool, string> chooseFile, Action<string, Exception> showError) : 
+        /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterungen ...)</param>
+        public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
             LoadDaten();
@@ -145,7 +145,7 @@ namespace MeisterGeister.ViewModel.Helden
             Held h = SelectedHeld;
             if (h != null)
             {
-                string pfad = ChooseFile("Held exportieren", "xml", h.Name, true);
+                string pfad = ChooseFile("Held exportieren", h.Name, true, "xml");
                 if (pfad != null)
                 {
                     try
@@ -219,7 +219,7 @@ namespace MeisterGeister.ViewModel.Helden
         }
         public void ImportHeldCommand(object sender)
         {
-            string pfad = ChooseFile("Held importieren", "xml", "", false);
+            string pfad = ChooseFile("Held importieren", "", false, "xml");
             if (pfad != null)
             {
                 try

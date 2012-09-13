@@ -40,7 +40,7 @@ namespace MeisterGeister.View.General
             return 0;
         }
 
-        public static string ChooseFile(string title, string extension, string filename, bool saveFile)
+        public static string ChooseFile(string title, string filename, bool saveFile, params string[] extensions)
         {
             FileDialog objDialog;
             if (saveFile)
@@ -48,16 +48,31 @@ namespace MeisterGeister.View.General
             else
                 objDialog = new OpenFileDialog();
             objDialog.Title = title;
-            //TODO: mehr extensions?
-            switch (extension)
+            objDialog.DefaultExt = String.Empty;
+            objDialog.Filter = String.Empty;
+            //TODO: mehr extension-Typen?
+            foreach (string extension in extensions)
             {
-                case "xml":
-                    objDialog.Filter = "XML-Dateien (*.xml)|*.xml";
-                    objDialog.DefaultExt = "xml";
-                    break;
-                default:
-                    goto case "xml";
+                string filter = String.Empty;
+                switch (extension)
+                {
+                    case "xml":
+                        filter = "XML-Dateien (*.xml)|*.xml";
+                        break;
+                    case "*.*":
+                    case "*":
+                        filter = "Alle Dateien (*.*)|*.*";
+                        break;
+                    default:
+                        break;
+                }
+                if (objDialog.Filter != String.Empty)
+                    objDialog.Filter += "|";
+                objDialog.Filter += filter;
             }
+            if(objDialog.Filter==String.Empty)
+                objDialog.Filter = "Alle Dateien (*.*)|*.*";
+            
             objDialog.AddExtension = true;
             objDialog.FileName = filename;
             objDialog.InitialDirectory = Environment.CurrentDirectory;

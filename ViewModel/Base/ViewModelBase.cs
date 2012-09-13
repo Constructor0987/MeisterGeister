@@ -15,7 +15,7 @@ namespace MeisterGeister.ViewModel.Base {
         private Action<string, Exception> showError;
         private Func<string, string, bool> confirm;
         private Func<string, string, int> confirmYesNoCancel;
-        private Func<string, string, string, bool, string> chooseFile;
+        private Func<string, string, bool, string[], string> chooseFile;
         #endregion
 
         #region Konstruktoren
@@ -27,7 +27,7 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
         /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
         /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateierweiterung, Dateiname, zum speichern)</param>
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, string, bool, string> chooseFile, Action<string, Exception> showError)
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError)
         {
             this.popup = popup;
             this.confirm = confirm;
@@ -101,14 +101,14 @@ namespace MeisterGeister.ViewModel.Base {
         /// Zur Auswahl einer Datei.
         /// </summary>
         /// <param name="header">Fenstertitel</param>
-        /// <param name="extension">Dateierweiterung</param>
         /// <param name="filename">vorbesetzter Dateiname</param>
         /// <param name="save">true für einen SaveDialog, false für einen OpenDialog</param>
+        /// <param name="extensions">Dateierweiterungen</param>
         /// <returns>Den ausgewählten Dateipfad oder null</returns>
-        public string ChooseFile(string header, string extension, string filename, bool save)
+        public string ChooseFile(string header, string filename, bool save, params string[] extensions)
         {
             if (chooseFile != null)
-                return chooseFile(header, extension, filename, save);
+                return chooseFile(header, filename, save, extensions);
             return null;
         }
 
