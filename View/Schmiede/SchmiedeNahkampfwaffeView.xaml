@@ -106,6 +106,18 @@
 				<TextBlock Margin="5" Text="Dauer jeder Probe:" />
 				<TextBlock Margin="5" Text="{Binding Path=ProbeDauerInZe, StringFormat={}{0} ZE}" />
 			</StackPanel>
+			<StackPanel Margin="15,30,15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="TaW des Schmieds" />
+				<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmied}" />
+			</StackPanel>
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="Zus. Erschwernis/Erleichterung" />
+				<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
+			</StackPanel>
+			<StackPanel Margin="15,0" Orientation="Horizontal">
+				<TextBlock Margin="5" Text="Nicwin'sche Abschätzung der Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
+				<TextBlock Margin="5" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Tage}" />
+			</StackPanel>
 		</StackPanel>
 	</Grid>
 </UserControl>

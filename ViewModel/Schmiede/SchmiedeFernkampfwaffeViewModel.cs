@@ -54,6 +54,10 @@ namespace MeisterGeister.ViewModel.Schmiede
         private int _probeErschwernis;
         private double _probeDauerInZe;
 
+        private int _tawSchmied;
+        private int _tawSchmiedMod;
+        private int _probeDauerNApprox;
+
         private Model.Fernkampfwaffe _erstellteFernkampfwaffe;
         private Model.Waffe _erstellteNahkampfwaffe;
 
@@ -263,6 +267,45 @@ namespace MeisterGeister.ViewModel.Schmiede
             {
                 _probeDauerInZe = value;
                 OnChanged("ProbeDauerInZe");
+            }
+        }
+
+        public int ProbeDauerNApprox
+        {
+            get { return _probeDauerNApprox; }
+            private set
+            {
+                _probeDauerNApprox = value;
+                OnChanged("ProbeDauerNApprox");
+            }
+        }
+
+        public int TawSchmied
+        {
+            get { return _tawSchmied; }
+            set
+            {
+                if (value < 0) value = 0;
+                if (value == _tawSchmied) return;
+                _tawSchmied = value;
+                OnChanged("TawSchmied");
+                BerechneNicwinscheApproximation();
+            }
+        }
+
+        public int TawSchmiedMod
+        {
+            get { return _tawSchmiedMod; }
+            set
+            {
+                if (value < -7)
+                    value = -7;
+                else if (value > 7)
+                    value = 7;
+                if (value == _tawSchmiedMod) return;
+                _tawSchmiedMod = value;
+                OnChanged("TawSchmiedMod");
+                BerechneNicwinscheApproximation();
             }
         }
 
@@ -536,6 +579,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             SelectedFernkampfwaffeMaterial = FernkampfwaffeMaterialListe.First();
             FernkampfwaffeTechnikListe = new Techniken();
             SelectedFernkampfwaffeTechnik = FernkampfwaffeTechnikListe.First();
+            TawSchmied = 12;
         }
 
         #endregion
@@ -566,6 +610,16 @@ namespace MeisterGeister.ViewModel.Schmiede
             AnzeigenKkPersonalisierbar = IstBogen ? Visibility.Visible : Visibility.Hidden;
             AnzeigenNahkampfPersonalisierbar = IstNahkampfPersonalisierbar ? Visibility.Visible : Visibility.Hidden;
             AnzeigenTpVerbesserung = (IstWurfwaffe || IstAuchNahkampfwaffe) ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        private void BerechneNicwinscheApproximation()
+        {
+            int tapStern = TawSchmied - TawSchmiedMod - ProbeErschwernis;
+            if (tapStern > TawSchmied) tapStern = TawSchmied;
+            tapStern /= 2;
+            if (tapStern < 1) tapStern = 1;
+            ProbeDauerNApprox = (ProbePunkte  * (int)ProbeDauerInZe) / (4 * tapStern);
+            ProbeDauerNApprox = (tapStern > 0) ? tapStern : 1;
         }
 
         private void BerechneFernkampfwaffe()
@@ -630,6 +684,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             }
             OnChanged("ErstellteFernkampfwaffe");
             OnChanged("ErstellteNahkampfwaffe");
+            BerechneNicwinscheApproximation();
         }
         #endregion
 

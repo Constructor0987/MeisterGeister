@@ -22,6 +22,9 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         //Felder
         private int _probePunkte;
+        private int _tawSchmied;
+        private int _tawSchmiedMod;
+        private int _probeDauerNApprox;
         
         //Listen + SelectedItems
         private Model.Schild _selectedSchild;
@@ -39,6 +42,45 @@ namespace MeisterGeister.ViewModel.Schmiede
             {
                 _probePunkte = value;
                 OnChanged("ProbePunkte");
+            }
+        }
+
+        public int ProbeDauerNApprox
+        {
+            get { return _probeDauerNApprox; }
+            private set
+            {
+                _probeDauerNApprox = value;
+                OnChanged("ProbeDauerNApprox");
+            }
+        }
+
+        public int TawSchmied
+        {
+            get { return _tawSchmied; }
+            set
+            {
+                if (value < 0) value = 0;
+                if (value == _tawSchmied) return;
+                _tawSchmied = value;
+                OnChanged("TawSchmied");
+                BerechneNicwinscheApproximation();
+            }
+        }
+
+        public int TawSchmiedMod
+        {
+            get { return _tawSchmiedMod; }
+            set
+            {
+                if (value < -7)
+                    value = -7;
+                else if (value > 7)
+                    value = 7;
+                if (value == _tawSchmiedMod) return;
+                _tawSchmiedMod = value;
+                OnChanged("TawSchmiedMod");
+                BerechneNicwinscheApproximation();
             }
         }
 
@@ -74,7 +116,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeSchildViewModel()
         {
-
+            TawSchmied = 12;
         }
 
         #endregion
@@ -89,10 +131,21 @@ namespace MeisterGeister.ViewModel.Schmiede
             OnChanged("SchildListe");
         }
 
+        private void BerechneNicwinscheApproximation()
+        {
+            int tapStern = TawSchmied - TawSchmiedMod;
+            if (tapStern > TawSchmied) tapStern = TawSchmied;
+            tapStern /= 2;
+            if (tapStern < 1) tapStern = 1;
+            tapStern = ProbePunkte * 2 / tapStern;
+            ProbeDauerNApprox = (tapStern > 0) ? tapStern : 1;
+        }
+
         private void BerechneSchild()
         {
             if (_selectedSchild == null) return;
             ProbePunkte = _selectedSchild.WMPA * 3;
+            BerechneNicwinscheApproximation();
         }
         #endregion
 
