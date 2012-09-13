@@ -26,7 +26,7 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="popup">Ein OK-Popup-Dialog. (Nachricht)</param>
         /// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
         /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
-        /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateierweiterung, Dateiname, zum speichern)</param>
+        /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterung ...)</param>
         protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError)
         {
             this.popup = popup;
