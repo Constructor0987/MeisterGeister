@@ -355,6 +355,7 @@
     <Compile Include="ViewModel\Helden\Logic\IAusrüstung.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Distanzklasse.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWaffe.cs" />

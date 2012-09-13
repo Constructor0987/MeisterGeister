@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using VM = MeisterGeister.ViewModel.Helden;
+
 namespace MeisterGeister.View.Helden.Controls
 {
     /// <summary>
@@ -22,8 +24,7 @@ namespace MeisterGeister.View.Helden.Controls
         public ZauberView()
         {
             InitializeComponent();
-
-            // TODO MT: ViewModel erstellen
+            this.DataContext = new VM.ZauberViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
         }
 
         //private DatabaseDSADataSet.Held_ZauberRow SelectedZauberRow
