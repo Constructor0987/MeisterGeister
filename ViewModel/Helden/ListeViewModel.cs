@@ -88,7 +88,7 @@ namespace MeisterGeister.ViewModel.Helden
             SelectedHeld = null;
             if (Global.ContextHeld != null)
             {
-                HeldListe = Global.ContextHeld.HeldenListe.OrderBy(h => h.Name).ToList();
+                HeldListe = Global.ContextHeld.Liste<Held>().OrderBy(h => h.Name).ToList();
                 if(tmp != Guid.Empty)
                     SelectedHeld = HeldListe.Where(h => h.HeldGUID == tmp).FirstOrDefault();
             }
@@ -264,7 +264,7 @@ namespace MeisterGeister.ViewModel.Helden
                 throw new ArgumentException(String.Format("Die Datei {0} ist in keinem bekannten Format", pfad));
             Held existing = null;
             bool overwrite = true;
-            if ((existing = Global.ContextHeld.HeldenListe.Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null)
+            if ((existing = Global.ContextHeld.Liste<Held>().Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null)
             {
                 //überschreiben?
                 int result = confirmYesNoCancel(

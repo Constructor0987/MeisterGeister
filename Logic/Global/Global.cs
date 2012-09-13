@@ -89,7 +89,7 @@ namespace MeisterGeister
             get { return SelectedHeld == null ? Guid.Empty : SelectedHeld.HeldGUID; }
             set
             {
-                SelectedHeld = ContextHeld.HeldenListe.Where(h => h.HeldGUID == value).FirstOrDefault();
+                SelectedHeld = ContextHeld.Liste<Held>().Where(h => h.HeldGUID == value).FirstOrDefault();
             }
         }
 

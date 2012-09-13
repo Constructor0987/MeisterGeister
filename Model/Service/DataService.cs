@@ -11,14 +11,9 @@ namespace MeisterGeister.Model.Service {
 
         #region //----- EIGENSCHAFTEN ----
 
-        public List<Model.Held> HeldenListe
-        {
-            get { return Liste<Held>(); }
-        }
-
         public List<Model.Held> HeldenGruppeListe
         {
-            get { return HeldenListe.Where(h => h.AktiveHeldengruppe == true).OrderBy(h => h.Name).ToList(); }
+            get { return Liste<Held>().Where(h => h.AktiveHeldengruppe == true).OrderBy(h => h.Name).ToList(); }
         }
 
         #endregion

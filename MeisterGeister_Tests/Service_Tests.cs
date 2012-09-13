@@ -35,7 +35,7 @@ namespace MeisterGeister_Tests
         private void DeleteHelden()
         {
             List<Held> deleteMe = new List<Held>();
-            deleteMe.AddRange(MeisterGeister.Global.ContextHeld.HeldenListe.AsEnumerable());
+            deleteMe.AddRange(MeisterGeister.Global.ContextHeld.Liste<Held>().AsEnumerable());
             foreach (Held h in deleteMe)
                 Assert.IsTrue(MeisterGeister.Global.ContextHeld.Delete<Held>(h), "Held gelöscht");
         }
@@ -50,7 +50,7 @@ namespace MeisterGeister_Tests
         [Test]
         public void CloneTest()
         {
-            int a = Global.ContextHeld.HeldenListe.Count;
+            int a = Global.ContextHeld.Liste<Held>().Count;
             Held h = Global.ContextHeld.New<Held>();
             h.Name = "Karl Ranseier der Zweite";
             Held h2 = Global.ContextHeld.Clone<Held>(h);
@@ -62,22 +62,22 @@ namespace MeisterGeister_Tests
         {
             DeleteHelden();
             //Keine Helden
-            Assert.AreEqual(0, Global.ContextHeld.HeldenListe.Count, "Keine Helden in der Datenbank");
+            Assert.AreEqual(0, Global.ContextHeld.Liste<Held>().Count, "Keine Helden in der Datenbank");
             //Neuen Held erstellen            
             Held h = Global.ContextHeld.New<Held>();
             h.Name = "Karl Ranseier der Zweite";
             Held h2 = Global.ContextHeld.New<Held>();
             h2.Name = "Ludwig der Dritte";
             //Keine Helden
-            Assert.AreEqual(0, Global.ContextHeld.HeldenListe.Count, "Keine Helden in der Datenbank");
+            Assert.AreEqual(0, Global.ContextHeld.Liste<Held>().Count, "Keine Helden in der Datenbank");
             //Einfügen
             Assert.IsTrue(Global.ContextHeld.Insert<Held>(h));
             //Ein Held
-            Assert.AreEqual(1, Global.ContextHeld.HeldenListe.Count, "Ein Held in der Datenbank");
+            Assert.AreEqual(1, Global.ContextHeld.Liste<Held>().Count, "Ein Held in der Datenbank");
             //Einfügen
             Assert.IsTrue(Global.ContextHeld.Insert<Held>(h2));
             //Zwei Helden
-            Assert.AreEqual(2, Global.ContextHeld.HeldenListe.Count, "Zwei Helden in der Datenbank");
+            Assert.AreEqual(2, Global.ContextHeld.Liste<Held>().Count, "Zwei Helden in der Datenbank");
             
             //Sonderfertigkeit laden
             Sonderfertigkeit eisernerWille = Global.ContextHeld.LoadSonderfertigkeitByName("Eiserner Wille I");
