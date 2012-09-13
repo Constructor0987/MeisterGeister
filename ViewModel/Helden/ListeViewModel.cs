@@ -13,12 +13,6 @@ namespace MeisterGeister.ViewModel.Helden
         private bool hasChanges = false;
         private List<Model.Held> _heldListe;
 
-        private Action<string> popup;
-        private Action<string, Exception> showError;
-        private Func<string, string, bool> confirm;
-        private Func<string, string, int> confirmYesNoCancel;
-        private Func<string, string, string, bool, string> chooseFile;
-
         /// <summary>
         /// ViewModel mit Callbacks.
         /// </summary>
@@ -26,14 +20,9 @@ namespace MeisterGeister.ViewModel.Helden
         /// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
         /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
         /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateierweiterung, Dateiname, zum speichern)</param>
-        public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, string, bool, string> chooseFile, Action<string, Exception> showError)
+        public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, string, bool, string> chooseFile, Action<string, Exception> showError) : 
+            base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
-            this.popup = popup;
-            this.confirm = confirm;
-            this.confirmYesNoCancel = confirmYesNoCancel;
-            this.chooseFile = chooseFile;
-            this.showError = showError;
-
             LoadDaten();
             if (Global.SelectedHeld != null)
                 selectedHeld = Global.SelectedHeld;
@@ -130,7 +119,7 @@ namespace MeisterGeister.ViewModel.Helden
             Held h = SelectedHeld;
             if (h != null)
             {
-                if (confirm(string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name), "Held löschen")
+                if (Confirm(string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name), "Held löschen")
                     && Global.ContextHeld.Delete<Held>(h))
                 {
                     //Liste aktualisieren
@@ -156,18 +145,18 @@ namespace MeisterGeister.ViewModel.Helden
             Held h = SelectedHeld;
             if (h != null)
             {
-                string pfad = chooseFile("Held exportieren", "xml", h.Name, true);
+                string pfad = ChooseFile("Held exportieren", "xml", h.Name, true);
                 if (pfad != null)
                 {
                     try
                     {
                         h.Export(pfad);
-                        popup("Der Held wurde in \'" + pfad + "\' gespeichert.");
+                        PopUp("Der Held wurde in \'" + pfad + "\' gespeichert.");
                         return;
                     }
                     catch (Exception ex)
                     {
-                        showError("Beim Export ist ein Fehler aufgetreten.", ex);
+                        ShowError("Beim Export ist ein Fehler aufgetreten.", ex);
                     }
                 }
             }
@@ -230,7 +219,7 @@ namespace MeisterGeister.ViewModel.Helden
         }
         public void ImportHeldCommand(object sender)
         {
-            string pfad = chooseFile("Held importieren", "xml", "", false);
+            string pfad = ChooseFile("Held importieren", "xml", "", false);
             if (pfad != null)
             {
                 try
@@ -239,7 +228,7 @@ namespace MeisterGeister.ViewModel.Helden
                 }
                 catch (Exception ex)
                 {
-                    showError("Beim Import ist ein Fehler aufgetreten.", ex);
+                    ShowError("Beim Import ist ein Fehler aufgetreten.", ex);
                 }
             }
 
@@ -267,7 +256,7 @@ namespace MeisterGeister.ViewModel.Helden
             if ((existing = Global.ContextHeld.Liste<Held>().Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null)
             {
                 //überschreiben?
-                int result = confirmYesNoCancel(
+                int result = ConfirmYesNoCancel(
                     String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\n\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name),
                     "Held importieren");
                 if (result == 0)

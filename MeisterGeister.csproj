@@ -447,6 +447,7 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\ViewHelper.cs" />
     <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">
       <DependentUpon>AllgemeinView.xaml</DependentUpon>
     </Compile>
