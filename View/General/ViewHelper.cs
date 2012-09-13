@@ -25,12 +25,12 @@ namespace MeisterGeister.View.General
             errWin.ShowDialog();
         }
 
-        public static bool Confirm(string msg, string caption)
+        public static bool Confirm(string caption, string msg)
         {
             return (System.Windows.MessageBox.Show(msg, caption, MessageBoxButton.YesNo) == MessageBoxResult.Yes);
         }
 
-        public static int ConfirmYesNoCancel(string msg, string caption)
+        public static int ConfirmYesNoCancel(string caption, string msg)
         {
             MessageBoxResult res = System.Windows.MessageBox.Show(msg, caption, MessageBoxButton.YesNoCancel);
             if (res == MessageBoxResult.Yes || res == MessageBoxResult.OK)

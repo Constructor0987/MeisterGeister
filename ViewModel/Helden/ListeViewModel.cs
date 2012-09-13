@@ -119,7 +119,7 @@ namespace MeisterGeister.ViewModel.Helden
             Held h = SelectedHeld;
             if (h != null)
             {
-                if (Confirm(string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name), "Held löschen")
+                if (Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
                     && Global.ContextHeld.Delete<Held>(h))
                 {
                     //Liste aktualisieren
@@ -257,8 +257,9 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 //überschreiben?
                 int result = ConfirmYesNoCancel(
-                    String.Format("Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\n\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name),
-                    "Held importieren");
+                    "Held importieren",
+                    String.Format( "Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\n\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name)
+                );
                 if (result == 0)
                     return pfad;
                 else if (result == 1)

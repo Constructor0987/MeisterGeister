@@ -8,26 +8,26 @@
              mc:Ignorable="d" 
              d:DesignHeight="299" d:DesignWidth="677">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="heldHeld_SonderfertigkeitViewSource" Source="{Binding}">
+        <CollectionViewSource x:Key="SonderfertigkeitListeView" Source="{Binding SonderfertigkeitListe}">
             <CollectionViewSource.SortDescriptions>
-                <ComponentModel:SortDescription PropertyName="SonderfertigkeitTyp" />
-                <ComponentModel:SortDescription PropertyName="Sonderfertigkeit" />
+                <ComponentModel:SortDescription PropertyName="Sonderfertigkeit.Typ" />
+                <ComponentModel:SortDescription PropertyName="Sonderfertigkeit.Name" />
             </CollectionViewSource.SortDescriptions>
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Row.SonderfertigkeitRow.Typ" />
+                <PropertyGroupDescription PropertyName="Sonderfertigkeit.Typ" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
         <Style x:Key="SonderfertigkeitWertItemStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Visibility" Value="Visible" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Row.SonderfertigkeitRow.HatWert}" Value="false">
+                <DataTrigger Binding="{Binding Sonderfertigkeit.HatWert}" Value="false">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="SonderfertigkeitenTemplate">
             <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
-                <TextBlock Margin="2,2,0,0" Text="{Binding Row.SonderfertigkeitRow.Name}" />
+                <TextBlock Margin="2,2,0,0" Text="{Binding Sonderfertigkeit.Name}" />
                 <TextBox Style="{StaticResource SonderfertigkeitWertItemStyle}" Margin="20,0,0,0" MaxLength="1200" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert der Sonderfertigkeit" />
             </StackPanel>
         </DataTemplate>
@@ -52,19 +52,24 @@
     </UserControl.Resources>
     
     <Grid>
-        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-            <Image.ToolTip>
-                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf eine Sonderfertigkeit für weitere Aktionen."/></TextBlock>
-            </Image.ToolTip>
-        </Image>
-        <ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxSonderfertigkeit_DropDownClosed" DropDownOpened="_comboBoxSonderfertigkeit_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxSonderfertigkeit_KeyDown" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Top">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
-        </ComboBox>
-        <ListBox Margin="2,46,6,6" ItemsSource="{Binding Source={StaticResource heldHeld_SonderfertigkeitViewSource}}" ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" KeyDown="_listBoxHeldSonderfertigkeiten_KeyDown" MouseDown="ListBoxSonderfertigkeiten_MouseDown" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
+        <DockPanel Grid.Row="0">
+            <ComboBox Height="23" Margin="6,14,0,0" Width="193" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" HorizontalAlignment="Left" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Top">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Button Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" Margin="5,14,0,0" VerticalAlignment="Top">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+            </Button>
+            <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                <Image.ToolTip>
+                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf eine Sonderfertigkeit für weitere Aktionen."/></TextBlock>
+                </Image.ToolTip>
+            </Image>
+        </DockPanel>
+        <ListBox Grid.Row="1" Margin="2,46,6,6" ItemsSource="{Binding Source={StaticResource SonderfertigkeitListeView}}" SelectedItem="{Binding SelectedHeldSonderfertigkeit}" ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
             <ListBox.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleSonderfertigkeiten}">
                     <GroupStyle.Panel>
@@ -76,19 +81,22 @@
             </ListBox.GroupStyle>
             <ListBox.ContextMenu>
                 <ContextMenu Opened="ContextMenuSonderfertigkeiten_Opened">
-                    <MenuItem Height="28" Click="MenuItemSonderfertigkeitWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemSonderfertigkeitlWiki">
+                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemSonderfertigkeitlWiki">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Click="MenuItemSonderfertigkeitLöschen_Click" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen">
+                    <MenuItem Height="28" Command="{Binding OnDeleteSonderfertigkeit}" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
+            <ListBox.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding OnDeleteSonderfertigkeit}" />
+            </ListBox.InputBindings>
         </ListBox>
     </Grid>
 </UserControl>

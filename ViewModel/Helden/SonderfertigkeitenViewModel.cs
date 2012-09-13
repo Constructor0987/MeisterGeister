@@ -57,9 +57,9 @@ namespace MeisterGeister.ViewModel.Helden
         }
 
         // Listen
-        public List<Model.Held_VorNachteil> VorNachteilListe
+        public List<Model.Held_Sonderfertigkeit> SonderfertigkeitListe
         {
-            get { return SelectedHeld == null ? null : SelectedHeld.Held_VorNachteil.ToList(); }
+            get { return SelectedHeld == null ? null : SelectedHeld.Held_Sonderfertigkeit.ToList(); }
         }
 
         public List<Model.Sonderfertigkeit> SonderfertigkeitAuswahlListe
@@ -71,7 +71,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- KONSTRUKTOR ----
 
-        public SonderfertigkeitenViewModel()
+        public SonderfertigkeitenViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError) : base(confirm, showError)
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
@@ -92,19 +92,21 @@ namespace MeisterGeister.ViewModel.Helden
 
         public void NotifyRefresh()
         {
-            //OnChanged("SelectedHeld");
-            //OnChanged("VorNachteilListe");
-            //OnChanged("VorteilAuswahlListe");
-            //OnChanged("NachteilAuswahlListe");
+            OnChanged("SelectedHeld");
+            OnChanged("SonderfertigkeitListe");
+            OnChanged("SonderfertigkeitAuswahlListe");
         }
 
         private void DeleteSonderfertigkeit(object sender)
         {
-            // TODO MT: Lösch-Frage einbauen
-
             Model.Held_Sonderfertigkeit h = SelectedHeldSonderfertigkeit;
-            if (h != null && Global.ContextHeld.Delete<Model.Held_Sonderfertigkeit>(h))
+            if (h != null
+                && Confirm("Sonderfertigkeit löschen", String.Format("Soll die Sonderfertigkeit {0} wirklich vom Helden entfernt werden?", h.Sonderfertigkeit.Name))
+                && Global.ContextHeld.Delete<Model.Held_Sonderfertigkeit>(h))
+            {
+                SelectedHeldSonderfertigkeit = null;
                 NotifyRefresh();
+            }
         }
 
         private void AddSonderfertigkeit(object sender)
