@@ -16,62 +16,117 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
+
     <Grid>
-        <ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxZauber_DropDownClosed" DropDownOpened="_comboBoxZauber_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxZauber_KeyDown" x:Name="_comboBoxZauber" ToolTip="Zauber hinzufügen" VerticalAlignment="Top" />
-        <ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />
-        <!--<ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" ItemsSource="{x:Static LogicGeneral:Repräsentationen.RepräsentationenListe}" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />-->
-        <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-            <Image.ToolTip>
-                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Zauber für weitere Aktionen."/></TextBlock>
-            </Image.ToolTip>
-        </Image>
-        <!--<DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">-->
-        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Expander Grid.Row="0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Zauber Auswahl" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--<ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxZauber_DropDownClosed" DropDownOpened="_comboBoxZauber_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxZauber_KeyDown" x:Name="_comboBoxZauber" ToolTip="Zauber hinzufügen" VerticalAlignment="Top" />-->
+                    <!--<ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />-->
+                    <!--<ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" ItemsSource="{x:Static LogicGeneral:Repräsentationen.RepräsentationenListe}" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />-->
+
+                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ZauberAuswahlListe}" SelectedItem="{Binding SelectedAddZauber}" DisplayMemberPath="Name" ToolTip="Zauber" VerticalAlignment="Center">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <ComboBox Grid.Column="1" Height="23" ItemsSource="{Binding RepräsentationAuswahlListe}" SelectedItem="{Binding SelectedRepräsentation}" DisplayMemberPath="Name" ToolTip="Repräsentation" VerticalAlignment="Center">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    
+                    <Button Grid.Column="2" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen">
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                    </Button>
+
+                    <StackPanel Grid.Column="3" Margin="5,0,0,0" MinWidth="150" Orientation="Horizontal" VerticalAlignment="Center" >
+                        <Label Content="Aktivierte Zauber:" VerticalContentAlignment="Center" />
+                        <Label Content="{Binding SelectedHeld.Held_Zauber.Count}" VerticalContentAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Expander>
+
+        <Expander Grid.Row="1" Margin="0,5,0,0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Zauber" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                        <Image.ToolTip>
+                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Zauber für weitere Aktionen."/></TextBlock>
+                        </Image.ToolTip>
+                    </Image>
+                    <DataGrid Grid.Column="1" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
                   ItemsSource="{Binding Source={StaticResource ZauberListeView}}" SelectedItem="{Binding SelectedHeldZauber}">
-            <DataGrid.ContextMenu>
-                <ContextMenu Opened="ContextMenuZauber_Opened">
-                    <MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">
-                        <MenuItem.Icon>
-                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
-                        <MenuItem.Icon>
-                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Height="28" Command="{Binding OnDeleteZauber}" Header="Löschen" x:Name="_menuItemZauberLöschen">
-                        <MenuItem.Icon>
-                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-            <DataGrid.InputBindings>
-                <KeyBinding Key="Delete" Command="{Binding OnDeleteZauber}" />
-            </DataGrid.InputBindings>
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Name}" Header="Zaubername" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft2}" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft3}" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Komplex}" Header="Kom." IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Repräsentation}" Header="Rep." IsReadOnly="True" />
-                <DataGridTemplateColumn Header="ZfW">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Merkmale}" Header="Merkmale" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel Height="23" Margin="388,14,0,0" Width="151" HorizontalAlignment="Left" x:Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Top">
-            <Label Content="Aktivierte Zauber:" />
-            <Label Content="{Binding SelectedHeld.Held_Zauber.Count}" />
-        </StackPanel>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu Opened="ContextMenuZauber_Opened">
+                            <MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Height="28" Command="{Binding OnDeleteZauber}" Header="Löschen" x:Name="_menuItemZauberLöschen">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding OnDeleteZauber}" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Name}" Header="Zaubername" IsReadOnly="True" />
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True" />
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft2}" IsReadOnly="True" />
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft3}" IsReadOnly="True" />
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Komplex}" Header="Kom." IsReadOnly="True" />
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Repräsentation}" Header="Rep." IsReadOnly="True" />
+                        <DataGridTemplateColumn Header="ZfW">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Merkmale}" Header="Merkmale" IsReadOnly="True" />
+                        <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                </Grid>
+            </Border>
+        </Expander>
     </Grid>
 </UserControl>

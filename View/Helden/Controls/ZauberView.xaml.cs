@@ -92,7 +92,7 @@ namespace MeisterGeister.View.Helden.Controls
         private void SetZauberAktivierbar()
         {
             //_comboBoxZauber.ItemsSource = Zauber.ZauberList;
-            _comboBoxZauber.SelectedIndex = -1;
+            //_comboBoxZauber.SelectedIndex = -1;
         }
 
         private void _comboBoxZauber_DropDownOpened(object sender, EventArgs e)
