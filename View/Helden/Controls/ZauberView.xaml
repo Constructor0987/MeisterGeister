@@ -9,9 +9,9 @@
              d:DesignHeight="299" d:DesignWidth="677">
     <UserControl.Resources>
         <!-- Zauber -->
-        <CollectionViewSource x:Key="heldHeld_ZauberViewSource" Source="{Binding}">
+        <CollectionViewSource x:Key="ZauberListeView" Source="{Binding ZauberListe}">
             <CollectionViewSource.SortDescriptions>
-                <ComponentModel:SortDescription PropertyName="Zaubername" />
+                <ComponentModel:SortDescription PropertyName="Zauber.Name" />
                 <ComponentModel:SortDescription PropertyName="Repräsentation" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
@@ -25,8 +25,8 @@
                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Zauber für weitere Aktionen."/></TextBlock>
             </Image.ToolTip>
         </Image>
-        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">
-        <!--<DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource heldHeld_ZauberViewSource}}" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">-->
+        <!--<DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">-->
+        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource ZauberListeView}}" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">
             <DataGrid.ContextMenu>
                 <ContextMenu Opened="ContextMenuZauber_Opened">
                     <MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">
@@ -48,26 +48,26 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
             <DataGrid.Columns>
-                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Name}" Header="Zaubername" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Eigenschaft1}" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Eigenschaft2}" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Eigenschaft3}" IsReadOnly="True" />
-                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Komplex}" Header="Kom." IsReadOnly="True" />
+                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Name}" Header="Zaubername" IsReadOnly="True" />
+                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True" />
+                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft2}" IsReadOnly="True" />
+                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft3}" IsReadOnly="True" />
+                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Komplex}" Header="Kom." IsReadOnly="True" />
                 <DataGridTextColumn Width="Auto" Binding="{Binding Repräsentation}" Header="Rep." IsReadOnly="True" />
                 <DataGridTemplateColumn Header="ZfW">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" />
+                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Width="Auto" Binding="{Binding Row.ZauberRow.Merkmale}" Header="Merkmale" IsReadOnly="True" />
+                <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Merkmale}" Header="Merkmale" IsReadOnly="True" />
                 <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}" Header="Bemerkung" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Height="23" Margin="388,14,0,0" Width="151" HorizontalAlignment="Left" x:Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Top">
             <Label Content="Aktivierte Zauber:" />
-            <Label Content="{Binding Items.Count, ElementName=_dataGridHeldZauber}" />
+            <Label Content="{Binding SelectedHeld.Held_Zauber.Count}" />
         </StackPanel>
     </Grid>
 </UserControl>
