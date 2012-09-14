@@ -24,7 +24,7 @@ namespace MeisterGeister.View.Helden.Controls
         public ZauberView()
         {
             InitializeComponent();
-            this.DataContext = new VM.ZauberViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+            this.DataContext = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
         }
 
         //private DatabaseDSADataSet.Held_ZauberRow SelectedZauberRow

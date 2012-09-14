@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
@@ -59,21 +60,32 @@ namespace MeisterGeister.ViewModel.Helden
         // Listen
         public List<Model.Held_Zauber> ZauberListe
         {
-            get { return SelectedHeld == null ? null : SelectedHeld.Held_Zauber.ToList(); }
+            get { return SelectedHeld == null ? null : SelectedHeld.Held_Zauber.OrderBy(hz => hz.Zauber.Name).ThenBy(hz => hz.Repräsentation).ToList(); }
         }
 
-        // TODO MT
-        //public List<Model.Zauber> ZauberAuswahlListe
-        //{
-        //    get { return SelectedHeld == null ? null : SelectedHeld.ZauberWählbar; }
-        //}
+        public List<Model.Zauber> ZauberAuswahlListe
+        {
+            get { return SelectedHeld == null ? null : SelectedHeld.ZauberWählbar; }
+        }
+
+        public Dictionary<string,string> RepräsentationAuswahlListe
+        {
+            get { return Repräsentationen.RepräsentationenListe; }
+        }
+
+        KeyValuePair<string, string> _selectedRepräsentation;
+        public KeyValuePair<string, string> SelectedRepräsentation
+        {
+            get { return _selectedRepräsentation; }
+            set { _selectedRepräsentation = value; OnChanged("SelectedRepräsentation"); }
+        }
 
         #endregion
 
         #region //---- KONSTRUKTOR ----
 
-        public ZauberViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError)
-            : base(confirm, showError)
+        public ZauberViewModel(Action<string> popup, Func<string, string, bool> confirm, Action<string, Exception> showError)
+            : base(popup, confirm, showError)
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
@@ -103,7 +115,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             Model.Held_Zauber h = SelectedHeldZauber;
             if (h != null
-                && Confirm("Zauber löschen", String.Format("Soll die Zauber {0} wirklich vom Helden entfernt werden?", h.Zauber.Name))
+                && Confirm("Zauber löschen", String.Format("Soll die Zauber '{0}' wirklich vom Helden entfernt werden?", h.Zauber.Name))
                 && Global.ContextHeld.Delete<Model.Held_Zauber>(h))
             {
                 SelectedHeldZauber = null;
@@ -115,11 +127,15 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null && SelectedAddZauber != null)
             {
-                // TODO MT
-                //if (!SelectedHeld.HatZauber(SelectedAddZauber))
-                //    SelectedHeld.AddZauber(SelectedAddZauber, null);
-
-                NotifyRefresh();
+                if (SelectedRepräsentation.Key == null)
+                    PopUp("Es muss eine Repräsentation ausgewählt sein!");
+                else if (SelectedHeld.HatZauber(SelectedAddZauber, SelectedRepräsentation.Key))
+                    PopUp(String.Format("Der Held hat den Zauber '{0}' in der Repräsentation '{1}' bereits.", SelectedAddZauber.Name, SelectedRepräsentation.Key));
+                else
+                {
+                    SelectedHeld.AddZauber(SelectedAddZauber, 0, SelectedRepräsentation.Key);
+                    NotifyRefresh();
+                }
             }
         }
 
