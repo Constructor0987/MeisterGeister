@@ -272,9 +272,6 @@
                 </Grid.RowDefinitions>
                 <Grid x:Name="HeldTitel" Grid.Row="0">
                     <Border Style="{DynamicResource ControlTitelBorder}">
-                        <Border.Effect>
-                            <DropShadowEffect/>
-                        </Border.Effect>
                         <TextBlock Text="Held" Style="{DynamicResource TextTitel}" />
                     </Border>
                 </Grid>
@@ -406,9 +403,6 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Border x:Name="FilterTitel" Style="{DynamicResource ControlTitelBorder}" >
-                    <Border.Effect>
-                        <DropShadowEffect/>
-                    </Border.Effect>
                     <TextBlock Text="Filter" Style="{DynamicResource TextTitel}"/>
                 </Border>
                 <Border Grid.Row="1" Style="{DynamicResource ControlContentBorder}">
@@ -785,15 +779,12 @@
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0" x:Name="InventarTitel" Style="{DynamicResource ControlTitelBorder}" >
-                    <Border.Effect>
-                        <DropShadowEffect/>
-                    </Border.Effect>
                     <TextBlock Text="Inventar" Style="{DynamicResource TextTitel}" />
                 </Border>
 
                 <Border Style="{DynamicResource ControlContentBorder}" Grid.Row="1">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                        <Grid x:Name="InventarAnzeigen" Background="{DynamicResource BackgroundPergamentHoch}">
+                        <Grid x:Name="InventarAnzeigen">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />

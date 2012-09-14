@@ -68,7 +68,7 @@
 
         <Expander Grid.Row="0" IsExpanded="True">
             <Expander.Header>
-                <TextBlock Text="Sonderfertigkeit Auswahl" Style="{DynamicResource TextTitel}" />
+                <TextBlock Text="Sonderfertigkeitauswahl" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
                 <Grid Margin="5">

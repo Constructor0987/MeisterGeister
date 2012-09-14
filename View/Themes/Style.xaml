@@ -157,7 +157,7 @@
         <Setter Property="Height" Value="20"/>
     </Style>
     <Style x:Key="ControlContentBorder" TargetType="{x:Type Border}">
-    	<Setter Property="Effect" Value="{DynamicResource LightBloom}" />
+        <Setter Property="Effect" Value="{DynamicResource LightBloom}" />
         <Setter Property="Background" Value="#389E804D"/>
         <Setter Property="BorderBrush" Value="#FFBEB3A3"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -438,7 +438,7 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type Expander}">
 					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="true">
-						<DockPanel>
+                        <DockPanel>
 							<Border Style="{DynamicResource ControlTitelBorder}" DockPanel.Dock="Top">
 							<ToggleButton Margin="20,0,0,0" x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" Content="{TemplateBinding Header}" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="Right" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="Stretch"/>
 							</Border>

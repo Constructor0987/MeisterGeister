@@ -69,7 +69,7 @@
         </CollectionViewSource>
 
         <DataTemplate x:Key="VorNachteileTemplate">
-            <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#386C5327">
+            <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#38A08350">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="{Binding VorNachteil.Name}" VerticalAlignment="Center" />
                     <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" />
@@ -90,7 +90,7 @@
 
         <Expander Grid.Row="0" IsExpanded="True">
             <Expander.Header>
-                <TextBlock Text="Vor-/Nachteil Auswahl" Style="{DynamicResource TextTitel}" />
+                <TextBlock Text="Vor-/Nachteilauswahl" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
                 <Grid Margin="5">

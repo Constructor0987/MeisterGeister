@@ -14,7 +14,7 @@
 
         <Expander Grid.Row="0" IsExpanded="True">
             <Expander.Header>
-                <TextBlock Text="Zauber Auswahl" Style="{DynamicResource TextTitel}" />
+                <TextBlock Text="Zauberauswahl" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
                 <Grid Margin="5">
