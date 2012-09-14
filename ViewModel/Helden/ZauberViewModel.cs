@@ -109,6 +109,10 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("SelectedHeld");
             OnChanged("ZauberListe");
             OnChanged("ZauberAuswahlListe");
+
+            // Standard Repräsentation
+            if (SelectedHeld != null)
+                SelectedRepräsentation = RepräsentationAuswahlListe.SingleOrDefault(r => r.Key == SelectedHeld.RepräsentationStandard);
         }
 
         private void DeleteZauber(object sender)

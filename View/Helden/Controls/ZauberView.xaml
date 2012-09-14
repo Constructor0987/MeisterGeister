@@ -3,20 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
              d:DesignHeight="299" d:DesignWidth="677">
-    <UserControl.Resources>
-        <!-- Zauber -->
-        <CollectionViewSource x:Key="ZauberListeView" Source="{Binding ZauberListe}">
-            <CollectionViewSource.SortDescriptions>
-                <ComponentModel:SortDescription PropertyName="Zauber.Name" />
-                <ComponentModel:SortDescription PropertyName="Repräsentation" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-    </UserControl.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -35,10 +24,6 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-
-                    <!--<ComboBox Height="23" Margin="6,14,0,0" Width="193" DisplayMemberPath="Key" DropDownClosed="_comboBoxZauber_DropDownClosed" DropDownOpened="_comboBoxZauber_DropDownOpened" HorizontalAlignment="Left" KeyDown="_comboBoxZauber_KeyDown" x:Name="_comboBoxZauber" ToolTip="Zauber hinzufügen" VerticalAlignment="Top" />-->
-                    <!--<ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />-->
-                    <!--<ComboBox Height="23" Margin="213,14,0,0" Width="142" DisplayMemberPath="Value" HorizontalAlignment="Left" ItemsSource="{x:Static LogicGeneral:Repräsentationen.RepräsentationenListe}" x:Name="_comboBoxRepräsentation" SelectedValuePath="Key" ToolTip="Repräsentation des Zaubers" VerticalAlignment="Top" />-->
 
                     <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ZauberAuswahlListe}" SelectedItem="{Binding SelectedAddZauber}" DisplayMemberPath="Name" ToolTip="Zauber" VerticalAlignment="Center">
                         <ComboBox.ItemsPanel>
@@ -82,8 +67,8 @@
                             <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Zauber für weitere Aktionen."/></TextBlock>
                         </Image.ToolTip>
                     </Image>
-                    <DataGrid Grid.Column="1" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
-                  ItemsSource="{Binding Source={StaticResource ZauberListeView}}" SelectedItem="{Binding SelectedHeldZauber}">
+                    <DataGrid Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
+                        ItemsSource="{Binding ZauberListe}" SelectedItem="{Binding SelectedHeldZauber}">
                     <DataGrid.ContextMenu>
                         <ContextMenu Opened="ContextMenuZauber_Opened">
                             <MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">

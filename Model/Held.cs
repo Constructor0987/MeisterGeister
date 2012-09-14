@@ -823,6 +823,40 @@ namespace MeisterGeister.Model
             }
         }
 
+        /// <summary>
+        /// Die erlernten Repräsentationen des Helden.
+        /// </summary>
+        public IDictionary<Sonderfertigkeit, string> Repräsentationen
+        {
+            get
+            {
+                return Held_Sonderfertigkeit.Where(hsf => hsf.Sonderfertigkeit.Name.StartsWith("Repräsentation")).ToDictionary(hsf => hsf.Sonderfertigkeit, hsf => hsf.Wert);
+            }
+        }
+
+        public string RepräsentationStandard
+        {
+            get
+            {
+                var rep = Repräsentationen.Select(r => r.Key.Name.Replace("Repräsentation (", string.Empty).TrimEnd(')')).ToList();
+
+                if (rep != null && rep.Count == 1)
+                {
+                    return Logic.General.Repräsentationen.GetKürzel(rep[0]);
+                }
+                else if (rep != null && rep.Count > 1)
+                {
+                    // Held hat mehrerer Repräsentationen.
+                    // Ermitteln welche Repäsentation mit den meisten Zaubern vertren ist.
+
+                    var maxRep = Held_Zauber.GroupBy(hz => hz.Repräsentation).OrderByDescending(r => r.Count());
+                    return maxRep.FirstOrDefault().Key;
+                }
+                else
+                    return "Mag";
+            }
+        }
+
         #endregion
 
         #region Vor/Nachteile
