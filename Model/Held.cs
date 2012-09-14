@@ -774,6 +774,57 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region Zauber
+
+        public Zauber AddZauber(Zauber z, int wert, string rep)
+        {
+            IEnumerable<Held_Zauber> existierendeZuordnung = Held_Zauber.Where(hza => hza.ZauberID == z.ZauberID
+                && hza.Repräsentation == rep
+                && hza.HeldGUID == HeldGUID);
+            if (existierendeZuordnung.Count() != 0)
+            {
+                //Oder eine Exception werfen?
+                return existierendeZuordnung.First().Zauber;
+            }
+
+            Held_Zauber hz = Global.ContextHeld.New<Held_Zauber>();
+            hz.HeldGUID = HeldGUID;
+            hz.Held = this;
+
+            hz.ZauberID = z.ZauberID;
+            hz.Zauber = z;
+
+            hz.ZfW = wert;
+            hz.Repräsentation = rep;
+
+            Held_Zauber.Add(hz);
+            return z;
+        }
+
+        /// <summary>
+        /// Prüft, ob der Held den Zauber in der angegebenen Repräsentation besitzt.
+        /// </summary>
+        /// <param name="z">Zauber.</param>
+        /// <param name="rep">Repräsentation.</param>
+        /// <returns></returns>
+        public bool HatZauber(Zauber z, string rep)
+        {
+            return Held_Zauber.Where(hz => hz.Zauber == z && hz.Repräsentation == rep).Count() > 0;
+        }
+
+        /// <summary>
+        /// Die Zauber, die der Held noch wählen kann.
+        /// </summary>
+        public List<Zauber> ZauberWählbar
+        {
+            get
+            {
+                return Global.ContextZauber.ZauberListe.OrderBy(z => z.Name).ToList();
+            }
+        }
+
+        #endregion
+
         #region Vor/Nachteile
 
         public VorNachteil AddVorNachteil(VorNachteil vn, string wert)

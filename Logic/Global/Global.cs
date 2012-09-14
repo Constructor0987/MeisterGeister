@@ -28,6 +28,7 @@ namespace MeisterGeister
         public static Service.RegelnService ContextRegeln;
         public static Service.NotizService ContextNotizen;
         public static Service.VorNachteilService ContextVorNachteil;
+        public static Service.ZauberService ContextZauber;
 
         // MenuLink
         public static Service.MenuLinkService _contextMenuLink;
@@ -128,6 +129,7 @@ namespace MeisterGeister
             ContextNamen = new Service.NamenService();
             ContextRegeln = new Service.RegelnService();
             ContextNotizen = new Service.NotizService();
+            ContextZauber = new Service.ZauberService();
         }
 
         #endregion
