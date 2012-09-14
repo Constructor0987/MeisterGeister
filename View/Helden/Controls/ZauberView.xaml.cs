@@ -46,16 +46,16 @@ namespace MeisterGeister.View.Helden.Controls
 
         private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)
         {
-            if (_dataGridHeldZauber.SelectedItem == null)
-            {
-                _menuItemZauberLöschen.IsEnabled = false;
-                _menuItemZauberWiki.IsEnabled = false;
-            }
-            else
-            {
-                _menuItemZauberLöschen.IsEnabled = true;
-                _menuItemZauberWiki.IsEnabled = true;
-            }
+            //if (_dataGridHeldZauber.SelectedItem == null)
+            //{
+            //    _menuItemZauberLöschen.IsEnabled = false;
+            //    _menuItemZauberWiki.IsEnabled = false;
+            //}
+            //else
+            //{
+            //    _menuItemZauberLöschen.IsEnabled = true;
+            //    _menuItemZauberWiki.IsEnabled = true;
+            //}
         }
 
         private void MenuItemZauberProben_Click(object sender, RoutedEventArgs e)
@@ -105,42 +105,5 @@ namespace MeisterGeister.View.Helden.Controls
             InsertZauber();
         }
 
-        private void _dataGridHeldZauber_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (sender is System.Windows.Controls.DataGrid && e.Key == Key.Delete)
-            {
-                var grid = (System.Windows.Controls.DataGrid)sender;
-
-                if (grid.SelectedItems.Count > 0)
-                {
-                    //DatabaseDSADataSet.Held_ZauberRow zauber = SelectedZauberRow;
-                    //if (MessageBox.Show(string.Format("Soll der Zauber '{0}' entfernt werden?", zauber.ZauberRow.Name), "Zauber entfernen", MessageBoxButton.YesNo,
-                    //                    MessageBoxImage.Question, MessageBoxResult.Yes) != MessageBoxResult.Yes)
-                    //{
-                    //    e.Handled = true;
-                    //}
-                }
-            }
-        }
-
-        private void MenuItemZauberLöschen_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteHeldZauber();
-        }
-
-        private void DeleteHeldZauber()
-        {
-            //DatabaseDSADataSet.Held_ZauberRow zauber = SelectedZauberRow;
-            //if (MessageBox.Show(string.Format("Soll der Zauber '{0}' entfernt werden?", zauber.ZauberRow.Name), "Zauber entfernen", MessageBoxButton.YesNo,
-            //                            MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
-            //{
-            //    SelectedHeld.DeleteZauber(zauber);
-            //}
-        }
-
-        private void MenuItemZauberWiki_Click(object sender, RoutedEventArgs e)
-        {
-            //System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedZauber.WikiLink);
-        }  
     }
 }

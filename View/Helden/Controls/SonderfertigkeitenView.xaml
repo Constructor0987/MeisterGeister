@@ -35,14 +35,23 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <Expander Margin="2,0,2,0" Padding="4" Background="{StaticResource BackgroundPergamentQuer}" IsExpanded="True">
+                        <Expander Margin="0,5,0,0" IsExpanded="True">
                             <Expander.Header>
-                                <DockPanel LastChildFill="True">
-                                    <TextBlock FontWeight="Bold" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
-                                </DockPanel>
+                                <TextBlock Style="{DynamicResource TextTitel}" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
                             </Expander.Header>
-                            <Border Margin="2" CornerRadius="3">
-                                <ItemsPresenter />
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                                        <Image.ToolTip>
+                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Element für weitere Aktionen."/></TextBlock>
+                                        </Image.ToolTip>
+                                    </Image>
+                                    <ItemsPresenter Grid.Column="1" />
+                                </Grid>
                             </Border>
                         </Expander>
                     </ControlTemplate>
@@ -52,24 +61,36 @@
     </UserControl.Resources>
     
     <Grid>
-        <DockPanel Grid.Row="0">
-            <ComboBox Height="23" Margin="6,14,0,0" Width="193" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" HorizontalAlignment="Left" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Top">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-            </ComboBox>
-            <Button Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" Margin="5,14,0,0" VerticalAlignment="Top">
-                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
-            </Button>
-            <Image Grid.Row="0" Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-                <Image.ToolTip>
-                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf eine Sonderfertigkeit für weitere Aktionen."/></TextBlock>
-                </Image.ToolTip>
-            </Image>
-        </DockPanel>
-        <ListBox Grid.Row="1" Margin="2,46,6,6" ItemsSource="{Binding Source={StaticResource SonderfertigkeitListeView}}" SelectedItem="{Binding SelectedHeldSonderfertigkeit}" ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Expander Grid.Row="0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Sonderfertigkeit Auswahl" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Center">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <Button Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen">
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                    </Button>
+                </Grid>
+            </Border>
+        </Expander>
+        
+        <ListBox Grid.Row="1" ItemsSource="{Binding Source={StaticResource SonderfertigkeitListeView}}" SelectedItem="{Binding SelectedHeldSonderfertigkeit}" ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
             <ListBox.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleSonderfertigkeiten}">
                     <GroupStyle.Panel>

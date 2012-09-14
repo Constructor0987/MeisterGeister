@@ -26,7 +26,8 @@
             </Image.ToolTip>
         </Image>
         <!--<DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">-->
-        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource ZauberListeView}}" x:Name="_dataGridHeldZauber" PreviewKeyDown="_dataGridHeldZauber_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" BorderBrush="#00000000">
+        <DataGrid Margin="0,43,0,6" AutoGenerateColumns="False" Background="{StaticResource BackgroundPergamentQuer}" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
+                  ItemsSource="{Binding Source={StaticResource ZauberListeView}}" SelectedItem="{Binding SelectedHeldZauber}">
             <DataGrid.ContextMenu>
                 <ContextMenu Opened="ContextMenuZauber_Opened">
                     <MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">
@@ -34,19 +35,22 @@
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Height="28" Click="MenuItemZauberWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
+                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Click="MenuItemZauberLöschen_Click" Header="Löschen" x:Name="_menuItemZauberLöschen">
+                    <MenuItem Height="28" Command="{Binding OnDeleteZauber}" Header="Löschen" x:Name="_menuItemZauberLöschen">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding OnDeleteZauber}" />
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Name}" Header="Zaubername" IsReadOnly="True" />
                 <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True" />
@@ -57,7 +61,7 @@
                 <DataGridTemplateColumn Header="ZfW">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" />
+                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
