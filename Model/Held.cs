@@ -651,6 +651,16 @@ namespace MeisterGeister.Model
 
         #region Talente
 
+        public Talent AddTalent(string tName, int wert)
+        {
+            Talent talent = Global.ContextTalent.TalentListe.Where(t => t.Talentname == tName).SingleOrDefault();
+
+            if (talent == null)
+                throw new System.ArgumentNullException("Talent nicht gefunden.");
+
+            return AddTalent(talent, wert, null, null);
+        }
+
         public Talent AddTalent(Talent t, int wert)
         {
             return AddTalent(t, wert, null, null);
@@ -677,6 +687,10 @@ namespace MeisterGeister.Model
             ht.ZuteilungPA = zuteilungPA;
 
             Held_Talent.Add(ht);
+
+            // TODO ??: Abhängige VorNachteile und Sonderfertigkeiten automatisch einfügen.
+            // TODO ??: Später ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+
             return t;
         }
 
@@ -895,6 +909,22 @@ namespace MeisterGeister.Model
                 throw new System.ArgumentNullException("Weder Vor noch Nachteil gesetzt");
             }
             Held_VorNachteil.Add(hvn);
+
+            // abhängige Talente automatisch einfügen
+            // TODO ??: Ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+            if (vn.Name == VorNachteil.Empathie)
+                AddTalent("Empathie5", 3);
+            else if (vn.Name == VorNachteil.Gefahreninstinkt)
+                AddTalent("Gefahreninstinkt", 3);
+            else if (vn.Name == VorNachteil.Geräuschhexerei)
+                AddTalent("Geräuschhexerei", 3);
+            else if (vn.Name == VorNachteil.Magiegespür)
+                AddTalent("Magiegespür", 3);
+            else if (vn.Name == VorNachteil.Prophezeien)
+                AddTalent("Prophezeien", 3);
+            else if (vn.Name == VorNachteil.Zwergennase)
+                AddTalent("Zwergennase", 3);
+
             return vn;                        
         }
 
@@ -995,6 +1025,10 @@ namespace MeisterGeister.Model
             hs.Wert = wert;
                         
             Held_Sonderfertigkeit.Add(hs);
+
+            // TODO ??: Abhängige Talente automatisch einfügen.
+            // TODO ??: Später ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+
             return s;
         }
 
