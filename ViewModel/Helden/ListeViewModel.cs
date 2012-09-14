@@ -222,14 +222,18 @@ namespace MeisterGeister.ViewModel.Helden
             string pfad = ChooseFile("Held importieren", "", false, "xml");
             if (pfad != null)
             {
+                #if !DEBUG
                 try
                 {
+                #endif
                     ImportHeld(pfad);
+                #if !DEBUG
                 }
                 catch (Exception ex)
                 {
                     ShowError("Beim Import ist ein Fehler aufgetreten.", ex);
                 }
+                #endif
             }
 
         }

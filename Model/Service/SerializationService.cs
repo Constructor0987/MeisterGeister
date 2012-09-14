@@ -268,7 +268,7 @@ namespace MeisterGeister.Model.Service
             return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T).Select(os => (T)os.Entity);
         }
 
-        protected virtual IDictionary<object, System.Data.EntityState> GetChangedEntities()
+        public virtual IDictionary<object, System.Data.EntityState> GetChangedEntities()
         {
             IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified);
             IDictionary<object, System.Data.EntityState> ret = new Dictionary<object, System.Data.EntityState>();
@@ -277,7 +277,7 @@ namespace MeisterGeister.Model.Service
             return ret;
         }
 
-        protected virtual IDictionary<T, System.Data.EntityState> GetChangedEntities<T>() where T : class
+        public virtual IDictionary<T, System.Data.EntityState> GetChangedEntities<T>() where T : class
         {
             IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified).Where(os => os.Entity is T);
             IDictionary<T, System.Data.EntityState> ret = new Dictionary<T, System.Data.EntityState>();
@@ -295,8 +295,10 @@ namespace MeisterGeister.Model.Service
         {
             // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
             // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
+#if !DEBUG
             try
             {
+#endif
                 DeleteHeldData(held);
                 Held output = Context.AttachObjectGraph(held,
                     h => h.Held_Inventar,
@@ -309,13 +311,16 @@ namespace MeisterGeister.Model.Service
                 );
                 Save(); //TODO ??: Besser wäre ein check, ob was überschrieben wird und ein Aufruf, des Save aus dem UI
                 return output!=null;
-            }
+#if !DEBUG
+        }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
-                Debug.WriteLine(e.InnerException);
-                return false;
+                throw e;
+                //Debug.WriteLine(e.Message);
+                //Debug.WriteLine(e.InnerException);
+                //return false;
             }
+#endif
         }
 
         public Guid CloneHeld(Guid heldGuid)

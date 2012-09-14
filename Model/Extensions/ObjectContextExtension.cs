@@ -180,7 +180,20 @@ namespace MeisterGeister.Model.Extensions
                 object keyValue = ImpromptuInterface.Impromptu.InvokeGet(o, keyMember.Name);
                 key.Add(keyMember.Name, keyValue);
             }
-            return new EntityKey(context.DefaultContainerName + "." + entitysetname, key);
+            try
+            {
+                return new EntityKey(context.DefaultContainerName + "." + entitysetname, key);
+            }
+            catch (ArgumentException ex)
+            {
+                string keyString = String.Empty;
+                foreach (string k in key.Keys)
+                    keyString += String.Format("{0}:{1}\n", k, key[k]);
+                ArgumentException e = new ArgumentException("Error while creating the key.\nKey values:\n" + keyString, ex);
+                foreach (string k in key.Keys)
+                    e.Data.Add(k, key[k]);
+                throw e;
+            }
         }
 
         public static EntitySet GetEntitySet(this ObjectContext context, Type entityType)
@@ -306,23 +319,22 @@ namespace MeisterGeister.Model.Extensions
                 }
                 else if (!typeof(IEnumerable).IsAssignableFrom(property.PropertyInfo.PropertyType)) //-> EntityReference
                 {
-                    //no action
-                    //// Load reference of currently attached in context:
+                    // Load reference of currently attached in context:
                     //RelatedEnd relatedEnd = (RelatedEnd)attachedowner.PublicGetProperty(property.PropertyInfo.Name + "Reference");
                     //if (((EntityObject)attachedowner).EntityState != EntityState.Added && !relatedEnd.IsLoaded)
                     //    relatedEnd.Load();
 
-                    //// Recursively navigate through new value (unless it's null):
-                    //object attachedinstance;
-                    //if (related == null)
-                    //    attachedinstance = null;
-                    //else
-                    //{
-                    //    attachedinstance = context.AddOrAttachInstance(related, !property.NoUpdate);
-                    //    NavigatePropertySet(context, childnode, related, attachedinstance);
-                    //}
+                    // Recursively navigate through new value (unless it's null):
+                    object attachedinstance;
+                    if (related == null)
+                        attachedinstance = null;
+                    else
+                    {
+                        attachedinstance = context.AddOrAttachInstance(related, !property.NoUpdate);
+                        NavigatePropertySet(context, childnode, related, attachedinstance);
+                    }
 
-                    //// Synchronise value:
+                    // Synchronise value:
                     //property.PropertyInfo.SetValue(attachedowner, attachedinstance, null);
                 }
             }

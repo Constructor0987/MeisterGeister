@@ -426,10 +426,14 @@ namespace MeisterGeister.Logic.HeldenImport
             // Zauber
             ImportZauber(_xmlDoc, _held, _importLog);
 
+            // Inventar
+            ImportInventar(_xmlDoc, _held, _importLog);
+
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
             if (!serializer.InsertOrUpdateHeld(_held))
             {
                 //FEHLER! Held konnte nicht in die Datenbank eingefügt werden.
+                throw new Exception("Held konnte nicht in die Datenbank eingefügt werden.");
             }
             Global.ContextHeld.UpdateList<Held>();
 
@@ -890,7 +894,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 System.Windows.Controls.TextBox txtLog = new System.Windows.Controls.TextBox();
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
-                txtLog.Text = _importPfad 
+                txtLog.Text = _importPfad
                     + "\n\nEinige Werte konnten nicht importiert werden. Wenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, sende bitte die Helden-XML-Datei an 'info@meistergeister.org' oder melde das Problem im Forum (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
@@ -936,7 +940,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 return Guid.Empty;
             return KeyToGuid(key);
         }
-        
+
         public static string GetKeyFromFile(string xmlFile)
         {
             System.IO.FileStream fs = null;
@@ -969,6 +973,124 @@ namespace MeisterGeister.Logic.HeldenImport
             }
             return null;
         }
+
+        private static void ImportInventar(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
+        {
+            string name = string.Empty;
+            double gewicht = 0.0;
+            double preis = 0.0;
+            int anzahl = 0;
+            string vtXpath = "helden/held/gegenstand";
+            XmlNodeList gegenstaende = _xmlDoc.SelectNodes(vtXpath);
+
+            foreach (XmlNode gegenstand in gegenstaende)
+            {
+                name = gegenstand.Attributes["name"].Value.Trim();
+                if (!Int32.TryParse(gegenstand.Attributes["anzahl"].Value.Trim(), out anzahl))
+                    anzahl = 1;
+                if (gegenstand.HasChildNodes)
+                    foreach (XmlNode gchild in gegenstand.ChildNodes)
+                    {
+                        if (gchild.Name == "modallgemein")
+                        {
+                            foreach (XmlNode mchild in gegenstand.ChildNodes)
+                            {
+                                if (mchild.Name == "name")
+                                {
+                                    name = mchild.Attributes["value"].Value.Trim();
+                                }
+                                else if (mchild.Name == "preis")
+                                {
+                                    Double.TryParse(mchild.Attributes["value"].Value.Trim(), out preis);
+                                }
+                                else if (mchild.Name == "gewicht")
+                                {
+                                    Double.TryParse(mchild.Attributes["value"].Value.Trim(), out gewicht);
+                                }
+                            }
+                        }
+                    }
+
+                bool isnew = false;
+                Ausrüstung a = null;
+                Inventar i = null;
+
+                //alles durchsuchen
+                i = Global.ContextHeld.Liste<Inventar>().Where(li => li.Name.ToLowerInvariant()==name.ToLowerInvariant()).FirstOrDefault();
+                if (i == null && a == null)
+                {
+                    a = Global.ContextHeld.Liste<Ausrüstung>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+                }
+                if(i == null && a == null)
+                {
+                    Handelsgut h = Global.ContextHeld.Liste<Handelsgut>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+                    if (h != null)
+                    {
+                        i = new Inventar();
+                        i.Name = h.Name;
+                        i.Tags = h.Tags;
+                        i.Preis = h.Preis;
+                        i.ME = h.ME;
+                        i.Literatur = h.Literatur;
+                        i.Kategorie = h.Kategorie;
+                        i.HandelsgutGUID = h.HandelsgutGUID;
+                        i.Gewicht = h.Gewicht;
+                        i.Bemerkung = h.Bemerkung;
+                        isnew = true;
+                    }
+                }
+                //wenn nichts gefunden, dann einen Gegenstand im inventar neu erstellen
+                if (a==null && i==null)
+                {
+                    i = new Inventar();
+                    i.Name = name;
+                    i.Gewicht = gewicht;
+                    i.Kategorie = "Import";
+                    //TODO JT: Einheit automatisch bestimmen
+                    i.Preis = String.Format("{0}S", preis/100.0);
+                    isnew = true;
+                    //gegenstand wurde nicht erkannt und wurde im Inventar hinzugefügt
+                    AddImportLog(ImportTypen.Gegenstand, name, null, _importLog);
+                }
+                //sonst in held_Ausrüstung oder Held_inventar hinzufügen, bzw anzahl erhöhen.
+                if (i != null)
+                {
+                    Held_Inventar hi = _held.Held_Inventar.Where(hhi => hhi.InventarGUID == i.InventarGUID).FirstOrDefault();
+                    if (hi == null)
+                    {
+                        hi = new Held_Inventar();
+                        hi.HeldGUID = _held.HeldGUID;
+                        hi.InventarGUID = i.InventarGUID;
+                        hi.Anzahl = anzahl;
+                        hi.Angelegt = false;
+                        hi.Ort = "Rucksack";
+                        if(isnew)
+                            hi.Inventar = i;
+                        _held.Held_Inventar.Add(hi);
+                    }
+                    else
+                        hi.Anzahl += anzahl;
+                }
+                else if (a != null)
+                {
+                    Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
+                    if (ha == null)
+                    {
+                        ha = new Held_Ausrüstung();
+                        ha.AusrüstungGUID = a.AusrüstungGUID;
+                        ha.HeldGUID = _held.HeldGUID;
+                        ha.Angelegt = false;
+                        ha.Anzahl = anzahl;
+                        ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
+                        _held.Held_Ausrüstung.Add(ha);
+                    }
+                    else
+                    {
+                        ha.Anzahl += anzahl;
+                    }
+                }
+            }
+        }
     }
 
     public enum ImportTypen
@@ -976,6 +1098,7 @@ namespace MeisterGeister.Logic.HeldenImport
         VorNachteil,
         Sonderfertigkeit,
         Talent,
-        Zauber
+        Zauber,
+        Gegenstand
     }
 }
