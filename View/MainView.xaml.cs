@@ -143,7 +143,8 @@ namespace MeisterGeister.View
                     ((Kampf.KampfView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
                     break;
                 case "Helden":
-                    ((Helden.HeldenView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
+                    // TODO ??: ProbeWürfeln Event
+                    //((Helden.HeldenView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
                     ((Helden.HeldenView)con).HeldChanged += TabItemControl_RefreshHeld;
                     break;
                 case "Kalender":

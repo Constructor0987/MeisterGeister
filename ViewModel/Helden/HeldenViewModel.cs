@@ -24,6 +24,23 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
+        private System.Windows.Controls.TabItem _selectedTabItem = null;
+        /// <summary>
+        /// Der aktuell ausgewählte Tab.
+        /// </summary>
+        public System.Windows.Controls.TabItem SelectedTabItem
+        {
+            get { return _selectedTabItem; }
+            set { _selectedTabItem = value; OnChanged("SelectedTabItem"); }
+        }
+
+        private int _selectedTabIndex = 0;
+        public int SelectedTabIndex 
+        {
+            get { return _selectedTabIndex; }
+            set { _selectedTabIndex = value < -1 ? -1 : value; OnChanged("SelectedTabIndex"); }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -43,13 +60,23 @@ namespace MeisterGeister.ViewModel.Helden
             
         }
 
+        public void NotifyRefresh()
+        {
+            OnChanged("SelectedHeld");
+            
+            // Prüfen, ob ein ausgeblendeter Tab ausgewält ist
+            if (SelectedTabItem == null
+                || SelectedTabItem.Visibility != System.Windows.Visibility.Visible)
+                SelectedTabIndex--;
+        }
+
         #endregion
 
         #region //---- EVENTS ----
 
         private void SelectedHeldChanged()
         {
-            OnChanged("SelectedHeld");
+            NotifyRefresh();
         }
 
         #endregion

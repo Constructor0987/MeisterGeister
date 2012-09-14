@@ -13,9 +13,9 @@
             x:Name="_heldenControl1" 
             mc:Ignorable="d"
             d:DesignHeight="571"
-            d:DesignWidth="1027"
-             >
+            d:DesignWidth="1027">
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
         <!-- Talente -->
         <!--<CollectionViewSource x:Key="heldHeld_TalentViewSource" Source="{Binding Held_FK, NotifyOnSourceUpdated=True, Source={StaticResource heldViewSource}}">
             <CollectionViewSource.SortDescriptions>
@@ -103,8 +103,8 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="370*" />
-            </Grid.ColumnDefinitions>                        
-            <TabControl Grid.Row="1" Margin="5,5,5,5" Background="{StaticResource Background1}" x:Name="tabControl1">
+            </Grid.ColumnDefinitions>
+            <TabControl Grid.Row="1" Margin="5,5,5,5" Background="{StaticResource Background1}" x:Name="tabControl1" SelectedItem="{Binding SelectedTabItem}" SelectedIndex="{Binding SelectedTabIndex}">
                 <TabItem Header="Allgemein" x:Name="_tabItemAllgemein">                	
 					<Held:AllgemeinView />
                 </TabItem>
@@ -172,7 +172,7 @@
                 <TabItem Header="Talente" x:Name="_tabItemTalente">
                     <Held:TalentView/>
                 </TabItem>
-                <TabItem Header="Zauber" x:Name="_tabItemZauber" Visibility="{Binding Visibility, ElementName=_labelAstralenergie}">
+                <TabItem Header="Zauber" x:Name="_tabItemZauber" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}">
                     <Held:ZauberView/>
                 </TabItem>
                 <TabItem Header="Vor- &amp; Nachteile" x:Name="_tabItemVorNachteile">
