@@ -873,6 +873,9 @@ namespace MeisterGeister.Logic.HeldenImport
                 case ImportTypen.Zauber:
                     typString = "Zauber: ";
                     break;
+                case ImportTypen.Gegenstand:
+                    typString = "Gegenstand: ";
+                    break;
                 default:
                     break;
             }
@@ -895,7 +898,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
                 txtLog.Text = _importPfad
-                    + "\n\nEinige Werte konnten nicht importiert werden. Wenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, sende bitte die Helden-XML-Datei an 'info@meistergeister.org' oder melde das Problem im Forum (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
+                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet werden, konnten denen in unserer Datenbank nicht zugeordnet wereden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, sende bitte die Helden-XML-Datei an 'info@meistergeister.org' oder melde das Problem im Forum (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;
