@@ -37,7 +37,7 @@ namespace MeisterGeister.Model.Service {
         /// </summary>
         public Sonderfertigkeit LoadSonderfertigkeitByName(string aName)
         {
-            var tmp = Context.Sonderfertigkeit.Where(s => s.Name.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
+            var tmp = Context.Sonderfertigkeit.Where(s => s.Name.ToLower() == aName.ToLower()).FirstOrDefault();
             return tmp;
         }
 
@@ -46,9 +46,9 @@ namespace MeisterGeister.Model.Service {
         /// </summary>
         public Zauber LoadZauberByName(string aName)
         {
-            var tmp = Context.Zauber.Where(s => s.Name.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
+            var tmp = Context.Zauber.Where(s => s.Name.ToLower() == aName.ToLower()).FirstOrDefault();
             if(tmp==null)
-                tmp = Context.Zauber.Where(s => s.Name.ToLowerInvariant().StartsWith(aName.ToLowerInvariant())).FirstOrDefault();
+                tmp = Context.Zauber.Where(s => s.Name.ToLower().StartsWith(aName.ToLower())).FirstOrDefault();
             return tmp;
         }
 
@@ -57,7 +57,7 @@ namespace MeisterGeister.Model.Service {
         /// </summary>
         public Talent LoadTalentByName(string aName)
         {
-            var tmp = Context.Talent.Where(s => s.Talentname.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
+            var tmp = Context.Talent.Where(s => s.Talentname.ToLower() == aName.ToLower()).FirstOrDefault();
             return tmp;
         }
 
@@ -68,7 +68,7 @@ namespace MeisterGeister.Model.Service {
         /// <returns></returns>
         public VorNachteil LoadVorNachteilByName(string aName)
         {
-            var tmp = Context.VorNachteil.Where(s => s.Name.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
+            var tmp = Context.VorNachteil.Where(s => s.Name.ToLower() == aName.ToLower()).FirstOrDefault();
             return tmp;
         }
 

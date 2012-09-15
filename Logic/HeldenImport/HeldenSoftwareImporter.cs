@@ -29,12 +29,37 @@ namespace MeisterGeister.Logic.HeldenImport
 
             // Sonderfertigkeit-Mapping
             SetSonderfertigkeitenMapping();
+            
+            // Gegenstand-Mapping
+            SetGegenstandMapping();
         }
 
         private static System.Collections.Generic.Dictionary<string, string> _talentMapping = new Dictionary<string, string>();
         private static System.Collections.Generic.Dictionary<string, string> _zauberMapping = new Dictionary<string, string>();
         private static System.Collections.Generic.Dictionary<string, string> _vorNachteilMapping = new Dictionary<string, string>();
         private static System.Collections.Generic.Dictionary<string, string> _sonderfertigkeitMapping = new Dictionary<string, string>();
+        private static System.Collections.Generic.Dictionary<string, string> _gegenstandMapping = new Dictionary<string, string>();
+
+        private static void SetGegenstandMapping()
+        {
+            _gegenstandMapping.Add("linkhand (kling.br.)", "linkhand mit klingenbrecher");
+            _gegenstandMapping.Add("linkhand und klingenbrecher", "linkhand mit klingenbrecher");
+            _gegenstandMapping.Add("hartholzharnisch", "maraskanischer hartholzharnisch");
+            _gegenstandMapping.Add("gambeson", "gambeson/wattierter waffenrock");
+            _gegenstandMapping.Add("wattierter waffenrock", "gambeson/wattierter waffenrock");
+            _gegenstandMapping.Add("fuhrmannsmantel", "fellumhang/fuhrmannsmantel");
+            _gegenstandMapping.Add("fellumhang", "fellumhang/fuhrmannsmantel");
+            _gegenstandMapping.Add("bart", "bart/halsberge");
+            _gegenstandMapping.Add("halsberge", "bart/halsberge");
+            _gegenstandMapping.Add("beintaschen", "beintaschen/schürze");
+            _gegenstandMapping.Add("schürze", "beintaschen/schürze");
+            _gegenstandMapping.Add("lederweste", "lederweste/pelzweste");
+            _gegenstandMapping.Add("pelzweste", "lederweste/pelzweste");
+            _gegenstandMapping.Add("stechhelm", "stechhelm/visierhelm");
+            _gegenstandMapping.Add("visierhelm", "stechhelm/visierhelm");
+            _gegenstandMapping.Add("wattiertes unterzeug", "wattiertes unterzeug/wattierte unterkleidung");
+            _gegenstandMapping.Add("wattierte unterkleidung", "wattiertes unterzeug/wattierte unterkleidung");
+        }
 
         private static void SetSonderfertigkeitenMapping()
         {
@@ -51,7 +76,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _sonderfertigkeitMapping.Add("repräsentation: achaz", "repräsentation (achaz-kristallomantisch)");
             _sonderfertigkeitMapping.Add("repräsentation: borbaradianer", "repräsentation (borbaradianisch)");
             _sonderfertigkeitMapping.Add("repräsentation: druide", "repräsentation (druidisch)");
-            _sonderfertigkeitMapping.Add("repräsentation: rlf", "repräsentation (elfisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: elf", "repräsentation (elfisch)");
             _sonderfertigkeitMapping.Add("repräsentation: geode", "repräsentation (geodisch)");
             _sonderfertigkeitMapping.Add("repräsentation: hexe", "repräsentation (hexisch)");
             _sonderfertigkeitMapping.Add("repräsentation: magier", "repräsentation (gildenmagisch)");
@@ -1018,11 +1043,13 @@ namespace MeisterGeister.Logic.HeldenImport
                 Ausrüstung a = null;
                 Inventar i = null;
 
+                if(_gegenstandMapping.ContainsKey(name.ToLowerInvariant()))
+                    name = _gegenstandMapping[name.ToLowerInvariant()];
                 //alles durchsuchen
-                i = Global.ContextHeld.Liste<Inventar>().Where(li => li.Name.ToLowerInvariant()==name.ToLowerInvariant()).FirstOrDefault();
+                a = Global.ContextHeld.Liste<Ausrüstung>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
                 if (i == null && a == null)
                 {
-                    a = Global.ContextHeld.Liste<Ausrüstung>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+                    i = Global.ContextHeld.Liste<Inventar>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
                 }
                 if(i == null && a == null)
                 {
