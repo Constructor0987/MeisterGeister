@@ -54,7 +54,8 @@ namespace MeisterGeister.Model.Service
 
         public static void DestroyInstance()
         {
-            serializationContext.Dispose();
+            if(serializationContext!=null)
+                serializationContext.Dispose();
             serializationContext = null;
             instance = null;
         }

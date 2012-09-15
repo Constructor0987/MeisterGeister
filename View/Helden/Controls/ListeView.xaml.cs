@@ -53,7 +53,7 @@ namespace MeisterGeister.View.Helden.Controls
                     }
                     try
                     {
-                        string expPfad = (this.DataContext as VM.ListeViewModel).ImportHeld(file);
+                        Held importHeld = (this.DataContext as VM.ListeViewModel).ImportHeld(file);
                     }
                     catch (Exception ex)
                     {

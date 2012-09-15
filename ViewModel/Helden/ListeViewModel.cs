@@ -226,7 +226,8 @@ namespace MeisterGeister.ViewModel.Helden
                 try
                 {
                 #endif
-                    ImportHeld(pfad);
+                    Held h = ImportHeld(pfad);
+                    SelectedHeld = h;
                 #if !DEBUG
                 }
                 catch (Exception ex)
@@ -237,9 +238,10 @@ namespace MeisterGeister.ViewModel.Helden
             }
 
         }
-        public string ImportHeld(string pfad)
+        public Held ImportHeld(string pfad)
         {
             Guid hGuid = Guid.Empty;
+            Held importHeld = null;
             if(!System.IO.File.Exists(pfad))
                 throw new System.IO.FileNotFoundException("Die Datei konnte nicht gefunden werden.", pfad);
             bool isHeldenSoftware = false;
@@ -265,16 +267,16 @@ namespace MeisterGeister.ViewModel.Helden
                     String.Format( "Es existiert bereits der Held \"{1}\" mit der Guid {0} soll dieser überschrieben werden?\n\nBei \"Nein\" wird eine Kopie mit einer neuen Guid angelegt.", hGuid, existing.Name)
                 );
                 if (result == 0)
-                    return pfad;
+                    return null;
                 else if (result == 1)
                     overwrite = false;
             }
             if (isHeldenSoftware)
-                Logic.HeldenImport.HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite?Guid.Empty:Guid.NewGuid());
+                importHeld = Logic.HeldenImport.HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite?Guid.Empty:Guid.NewGuid());
             else
-                Held.Import(pfad, overwrite?Guid.Empty:Guid.NewGuid());
+                importHeld = Held.Import(pfad, overwrite?Guid.Empty:Guid.NewGuid());
             LoadDaten();
-            return pfad;
+            return importHeld;
         }
 
 

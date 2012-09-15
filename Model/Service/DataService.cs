@@ -32,15 +32,43 @@ namespace MeisterGeister.Model.Service {
             return tmp;
         }
 
+        /// <summary>
+        /// Case-insensitiv.
+        /// </summary>
         public Sonderfertigkeit LoadSonderfertigkeitByName(string aName)
         {
-            var tmp = Context.Sonderfertigkeit.Where(s => s.Name == aName).FirstOrDefault();
+            var tmp = Context.Sonderfertigkeit.Where(s => s.Name.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
             return tmp;
         }
 
+        /// <summary>
+        /// Case-insensitiv.
+        /// </summary>
+        public Zauber LoadZauberByName(string aName)
+        {
+            var tmp = Context.Zauber.Where(s => s.Name.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
+            if(tmp==null)
+                tmp = Context.Zauber.Where(s => s.Name.ToLowerInvariant().StartsWith(aName.ToLowerInvariant())).FirstOrDefault();
+            return tmp;
+        }
+
+        /// <summary>
+        /// Case-insensitiv.
+        /// </summary>
+        public Talent LoadTalentByName(string aName)
+        {
+            var tmp = Context.Talent.Where(s => s.Talentname.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
+            return tmp;
+        }
+
+        /// <summary>
+        /// Case-insensitiv.
+        /// </summary>
+        /// <param name="aName"></param>
+        /// <returns></returns>
         public VorNachteil LoadVorNachteilByName(string aName)
         {
-            var tmp = Context.VorNachteil.Where(s => s.Name == aName).FirstOrDefault();
+            var tmp = Context.VorNachteil.Where(s => s.Name.ToLowerInvariant() == aName.ToLowerInvariant()).FirstOrDefault();
             return tmp;
         }
 
