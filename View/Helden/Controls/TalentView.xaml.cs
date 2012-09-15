@@ -28,7 +28,7 @@ namespace MeisterGeister.View.Helden.Controls
 			this.InitializeComponent();
             this.DataContext = new VM.TalentViewModel();
 		}
-#endregion
+        #endregion
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
             try
             {

@@ -4,8 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:System_ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
-    xmlns:MeisterGeister_View_General="clr-namespace:MeisterGeister.View.General"
-	xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+    xmlns:MGControl="clr-namespace:MeisterGeister.View.General" 
 	mc:Ignorable="d"
 	x:Class="MeisterGeister.View.Helden.Controls.TalentView"
 	x:Name="UserControl"
@@ -45,7 +44,7 @@
                                             </ItemsPanelTemplate>
                                         </ComboBox.ItemsPanel>
                                     </ComboBox>
-                                    <Button Grid.Column="2" Command="{Binding OnAddTalent}" VerticalAlignment="Center" Height="23">
+                                    <Button Grid.Column="2" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23">
                                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                     </Button>
                                 </Grid>
@@ -69,8 +68,7 @@
                                         <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                     </Image.ToolTip>
                                 </Image>
-                                <DataGrid Grid.Column="1" ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding KampftalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" >
-                                    <!-- EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" -->
+                                <DataGrid Grid.Column="1" ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding KampftalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
@@ -92,11 +90,16 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
-                                            <DataGridTextColumn.Header>
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                            </DataGridTextColumn.Header>
-                                        </DataGridTextColumn>
+										<DataGridTemplateColumn>
+											<DataGridTemplateColumn.Header>
+												<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+											</DataGridTemplateColumn.Header>
+											<DataGridTemplateColumn.CellTemplate>
+				                                <DataTemplate>
+				                                    <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW}" />
+				                                </DataTemplate>
+				                            </DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
@@ -107,12 +110,12 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                    </DataGrid.Columns>
+                                    </DataGrid.Columns>								
                                 </DataGrid>
                             </Grid>
                         </Grid>
@@ -134,7 +137,7 @@
                                         <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                     </Image.ToolTip>
                                 </Image>
-                                <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding KoerperTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected">
+                                <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding KoerperTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
@@ -161,11 +164,16 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
-                                            <DataGridTextColumn.Header>
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                            </DataGridTextColumn.Header>
-                                        </DataGridTextColumn>
+                                        <DataGridTemplateColumn>
+											<DataGridTemplateColumn.Header>
+												<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+											</DataGridTemplateColumn.Header>
+											<DataGridTemplateColumn.CellTemplate>
+				                                <DataTemplate>
+				                                    <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW}" />
+				                                </DataTemplate>
+				                            </DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
@@ -176,7 +184,7 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                             </DataGridTextColumn.Header>
@@ -231,11 +239,16 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
-                                            <DataGridTextColumn.Header>
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                            </DataGridTextColumn.Header>
-                                        </DataGridTextColumn>
+                                        <DataGridTemplateColumn>
+											<DataGridTemplateColumn.Header>
+												<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+											</DataGridTemplateColumn.Header>
+											<DataGridTemplateColumn.CellTemplate>
+				                                <DataTemplate>
+				                                    <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW}" />
+				                                </DataTemplate>
+				                            </DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
@@ -246,7 +259,7 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                             </DataGridTextColumn.Header>
@@ -301,11 +314,16 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
-                                            <DataGridTextColumn.Header>
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                            </DataGridTextColumn.Header>
-                                        </DataGridTextColumn>
+                                        <DataGridTemplateColumn>
+											<DataGridTemplateColumn.Header>
+												<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+											</DataGridTemplateColumn.Header>
+											<DataGridTemplateColumn.CellTemplate>
+				                                <DataTemplate>
+				                                    <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW}" />
+				                                </DataTemplate>
+				                            </DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
@@ -316,7 +334,7 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                             </DataGridTextColumn.Header>
@@ -371,11 +389,16 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
-                                            <DataGridTextColumn.Header>
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                            </DataGridTextColumn.Header>
-                                        </DataGridTextColumn>
+                                        <DataGridTemplateColumn>
+											<DataGridTemplateColumn.Header>
+												<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+											</DataGridTemplateColumn.Header>
+											<DataGridTemplateColumn.CellTemplate>
+				                                <DataTemplate>
+				                                    <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW}" />
+				                                </DataTemplate>
+				                            </DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
@@ -386,7 +409,7 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                             </DataGridTextColumn.Header>
@@ -441,11 +464,16 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
-                                            <DataGridTextColumn.Header>
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                            </DataGridTextColumn.Header>
-                                        </DataGridTextColumn>
+                                        <DataGridTemplateColumn>
+											<DataGridTemplateColumn.Header>
+												<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+											</DataGridTemplateColumn.Header>
+											<DataGridTemplateColumn.CellTemplate>
+				                                <DataTemplate>
+				                                    <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW}" />
+				                                </DataTemplate>
+				                            </DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
@@ -456,7 +484,7 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                             </DataGridTextColumn.Header>
@@ -511,11 +539,16 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.TaW}" IsReadOnly="False" >
-                                            <DataGridTextColumn.Header>
-                                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                            </DataGridTextColumn.Header>
-                                        </DataGridTextColumn>
+                                        <DataGridTemplateColumn>
+											<DataGridTemplateColumn.Header>
+												<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+											</DataGridTemplateColumn.Header>
+											<DataGridTemplateColumn.CellTemplate>
+				                                <DataTemplate>
+				                                    <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding TaW}" />
+				                                </DataTemplate>
+				                            </DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
                                         <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
@@ -526,7 +559,7 @@
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                             </DataGridTextColumn.Header>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Bemerkung}" >
+                                        <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                             <DataGridTextColumn.Header>
                                                 <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                             </DataGridTextColumn.Header>
@@ -541,25 +574,3 @@
         </ScrollViewer>
     </Grid>
 </UserControl>
-<!-- TODO DW: Menü MVVM überführen
-<DataGrid.ContextMenu>
-					<ContextMenu Opened="ContextMenuTalente_Opened">
-						<MenuItem Height="28" Click="MenuItemTalentProben_Click" Header="Probe würfeln" x:Name="_menuItemTalentProben">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-						<MenuItem Height="28" Click="MenuItemTalentWiki_Click" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemTalentWiki">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-						<Separator />
-						<MenuItem Height="28" Click="MenuItemTalentLöschen_Click" Header="Löschen" x:Name="_menuItemTalentLöschen">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-					</ContextMenu>
-				</DataGrid.ContextMenu>
--->
