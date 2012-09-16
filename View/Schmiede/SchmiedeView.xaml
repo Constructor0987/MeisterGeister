@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vmSchmiede="clr-namespace:MeisterGeister.ViewModel.Schmiede"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-             xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
              mc:Ignorable="d" 
              d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
     <UserControl.DataContext>

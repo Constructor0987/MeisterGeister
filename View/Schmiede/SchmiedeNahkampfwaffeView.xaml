@@ -5,7 +5,6 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:vmSchmiede="clr-namespace:MeisterGeister.ViewModel.Schmiede"
 			 xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-			 xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
 			 mc:Ignorable="d" 
 			 d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
 	<UserControl.DataContext>
@@ -115,7 +114,7 @@
 				<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
 			</StackPanel>
 			<StackPanel Margin="15,0" Orientation="Horizontal">
-                <TextBlock Margin="5" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
+				<TextBlock Margin="5" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
 				<TextBlock Margin="5" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Tage}" />
 			</StackPanel>
 		</StackPanel>
