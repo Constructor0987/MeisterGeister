@@ -37,7 +37,7 @@ namespace MeisterGeister.Logic.General
             return (int)pt.Eval(random);
         }
 
-        public static int Würfeln(int seiten)
+        public static int Wurf(int seiten)
         {
             return RandomNumberGenerator.RandomInt(1, seiten);
         }

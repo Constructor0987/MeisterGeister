@@ -74,7 +74,7 @@ namespace MeisterGeister.Logic.General.INACTIVE
             int einsen = 0, zwanzigen = 0;
             for (int i = 0; i < Werte.Length; i++)
             {
-                pe.Würfe[i] = Würfel.Würfeln(20);
+                pe.Würfe[i] = Würfel.Wurf(20);
                 pe.Übrig -= Math.Max(0, pe.Würfe[i] - Werte[i]);
                 if (pe.Würfe[i] == 1)
                     einsen++;
