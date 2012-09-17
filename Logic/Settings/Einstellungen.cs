@@ -36,10 +36,12 @@ namespace MeisterGeister.Logic.Settings
             if (Global.IsInitialized)
             {
                 Model.Einstellungen e = Global.ContextHeld.LoadEinstellungByName(name);
+                bool isnew = false;
                 if (e == null)
                 {
                     e = Global.ContextHeld.New<Model.Einstellungen>();
                     e.Name = name;
+                    isnew = true;
                 }
                 if (typeof(T) == typeof(Boolean) || typeof(T) == typeof(bool))
                     e.WertBool = (bool)(object)value;
@@ -47,7 +49,7 @@ namespace MeisterGeister.Logic.Settings
                     e.WertInt = (int)(object)value;
                 else if (typeof(T) == typeof(string) || typeof(T) == typeof(String))
                 {
-                    if (((string)(object)value).Length > 300)
+                    if (value == null || ((string)(object)value).Length > 300)
                     {
                         e.WertString = String.Empty;
                         e.WertText = (string)(object)value;
@@ -58,6 +60,10 @@ namespace MeisterGeister.Logic.Settings
                         e.WertString = (string)(object)value;
                     }
                 }
+                if(isnew)
+                    Global.ContextHeld.Insert<Model.Einstellungen>(e);
+                else
+                    Global.ContextHeld.Update<Model.Einstellungen>(e);
                 return e;
             }
             return null;
@@ -95,7 +101,7 @@ namespace MeisterGeister.Logic.Settings
             }
             set
             {
-                SetEinstellung<int>("SelectedTab", 0);
+                SetEinstellung<int>("SelectedTab", value);
             }
         }
 
@@ -107,7 +113,7 @@ namespace MeisterGeister.Logic.Settings
             }
             set
             {
-                SetEinstellung<string>("StartTabs", String.Empty);
+                SetEinstellung<string>("StartTabs", value);
             }
         }
 
@@ -119,7 +125,7 @@ namespace MeisterGeister.Logic.Settings
             }
             set
             {
-                SetEinstellung<string>("KalenderExpandedSections", "111111");
+                SetEinstellung<string>("KalenderExpandedSections", value);
             }
         }
 
@@ -131,7 +137,7 @@ namespace MeisterGeister.Logic.Settings
             }
             set
             {
-                SetEinstellung<string>("UmrechnerExpandedSections", "111111");
+                SetEinstellung<string>("UmrechnerExpandedSections", value);
             }
         }
 
@@ -143,7 +149,31 @@ namespace MeisterGeister.Logic.Settings
             }
             set
             {
-                SetEinstellung<string>("Standort", "Gareth#29.79180235685203#3.735098459067687");
+                SetEinstellung<string>("Standort", value);
+            }
+        }
+
+        public static string SelectedHeld
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("SelectedHeld", null);
+            }
+            set
+            {
+                SetEinstellung<string>("SelectedHeld", value);
+            }
+        }
+
+        public static int HeldenSelectedTab
+        {
+            get
+            {
+                return GetOrCreateEinstellung<int>("SelectedHeldenTab", 0);
+            }
+            set
+            {
+                SetEinstellung<int>("SelectedHeldenTab", value);
             }
         }
     }

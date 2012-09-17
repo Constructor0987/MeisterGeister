@@ -47,7 +47,7 @@ namespace MeisterGeister.View
             foreach (string tab in tabs)
                 StarteTab(tab);
 
-            if (_tabControlMain.Items.Count > 0)
+            if (_tabControlMain.Items.Count > 0 && Einstellungen.SelectedTab >=0 && Einstellungen.SelectedTab < _tabControlMain.Items.Count)
                 _tabControlMain.SelectedIndex = Einstellungen.SelectedTab;
 
             _tabControlMain.SelectionChanged += _tabControlMain_SelectionChanged;

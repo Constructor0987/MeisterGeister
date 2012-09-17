@@ -38,7 +38,11 @@ namespace MeisterGeister.ViewModel.Helden
         public int SelectedTabIndex 
         {
             get { return _selectedTabIndex; }
-            set { _selectedTabIndex = value < -1 ? -1 : value; OnChanged("SelectedTabIndex"); }
+            set { 
+                _selectedTabIndex = value < -1 ? -1 : value;
+                Logic.Settings.Einstellungen.HeldenSelectedTab = value;
+                OnChanged("SelectedTabIndex");
+            }
         }
 
         #endregion
@@ -47,6 +51,8 @@ namespace MeisterGeister.ViewModel.Helden
 
         public HeldenViewModel()
         {
+            SelectedTabIndex = Logic.Settings.Einstellungen.HeldenSelectedTab;
+
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
         }

@@ -240,8 +240,9 @@ namespace MeisterGeister {
 
         public static void SaveAll() {
             // Änderungen in Datenbank speichern
-            if (DatenDataSetTableAdapters != null && DatenDataSet != null && DatenDataSet.HasChanges()) {
+            if (DatenDataSetTableAdapters != null && DatenDataSet != null && DatenDataSet.HasChanges() && Global.IsInitialized) {
                 try {
+                    Global.ContextHeld.Save();
                     DatenDataSetTableAdapters.UpdateAll(DatenDataSet);
                     //DatenDataSet.AcceptChanges();
                 } catch (Exception ex) {

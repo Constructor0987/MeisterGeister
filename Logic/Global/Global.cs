@@ -79,7 +79,12 @@ namespace MeisterGeister
                 // neuen Helden setzen und Änderungen in DB speichern
                 _selectedHeld = value;
                 if (_selectedHeld != null)
+                {
                     Global.ContextHeld.Update<Model.Held>(SelectedHeld);
+                    Logic.Settings.Einstellungen.SelectedHeld = value.HeldGUID.ToString();
+                }
+                else
+                    Logic.Settings.Einstellungen.SelectedHeld = null;
 
                 // Event nach der Held-Änderung werfen
                 if (HeldSelectionChanged != null)
@@ -137,6 +142,13 @@ namespace MeisterGeister
             ContextZauber = new Service.ZauberService();
 
             IsInitialized = true;
+
+            if (Logic.Settings.Einstellungen.SelectedHeld != null)
+            {
+                Guid heldguid;
+                if (Guid.TryParse(Logic.Settings.Einstellungen.SelectedHeld, out heldguid))
+                    SelectedHeldGUID = heldguid;
+            }
         }
 
         #endregion

@@ -23,9 +23,9 @@ namespace MeisterGeister.ViewModel.Helden
         public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
-            LoadDaten();
             if (Global.SelectedHeld != null)
                 selectedHeld = Global.SelectedHeld;
+            LoadDaten();
         }
 
         public Held SelectedHeld {
