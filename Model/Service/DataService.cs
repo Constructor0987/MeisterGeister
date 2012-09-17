@@ -74,7 +74,7 @@ namespace MeisterGeister.Model.Service {
 
         #endregion
 
-
+        #region Zauberzeichen
         public List<Held> LoadHeldenGruppeWithZauberzeichen()
         {
             List<Held> tmp = Liste<Sonderfertigkeit>().Where(s => s.Name == "Zauberzeichen" || s.Name == "Runenkunde" || s.Name.StartsWith("Zauberzeichen: Bann") || s.Name.StartsWith("Zauberzeichen: Schutz"))
@@ -132,8 +132,9 @@ namespace MeisterGeister.Model.Service {
                 .Join(Context.Talent, ht => ht.Talentname, t => t.Talentname, (ht, t) => t).Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst" || t.Talentname == "Tätowieren").ToList();
             return talente;
         }
+        #endregion
 
-
+        #region Alchimie
         public List<string> LoadIntensitätsbestimmungFertigkeitenAlchimieByHeld(Held held)
         {
             List<string> zauber = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Zauber, h => h.HeldGUID, hz => hz.HeldGUID, (h, hz) => hz)
@@ -163,5 +164,23 @@ namespace MeisterGeister.Model.Service {
             ret.Add("Infundibulum der Allweisen");
             return ret;
         }
+        #endregion
+
+        #region Einstellungen/Settings
+        public Einstellungen LoadEinstellungByName(string name)
+        {
+            return Context.Einstellungen.Where(e => e.Name == name).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Alle Einstellungen, deren name so beginnt.
+        /// </summary>
+        /// <param name="name">Anfang des Namens (case insensitiv)</param>
+        /// <returns></returns>
+        public IList<Einstellungen> LoadEinstellungenByName(string name)
+        {
+            return Context.Einstellungen.Where(e => e.Name.ToLower().StartsWith(name)).ToList();
+        }
+        #endregion
     }
 }

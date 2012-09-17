@@ -7,22 +7,71 @@ namespace MeisterGeister.Logic.Settings
 {
     public static class Einstellungen
     {
+        public static T GetOrCreateEinstellung<T>(string name, T defaultValue)
+        {
+            if (Global.IsInitialized)
+            {
+                Model.Einstellungen e = Global.ContextHeld.LoadEinstellungByName(name);
+                if (e == null)
+                {
+                    e = Einstellungen.SetEinstellung<T>(name, defaultValue);
+                }
+                if (typeof(T) == typeof(Boolean) || typeof(T) == typeof(bool))
+                    return (T)(object)e.WertBool;
+                else if (typeof(T) == typeof(int) || typeof(T) == typeof(Int32) || typeof(T) == typeof(Int64))
+                    return (T)(object)e.WertInt;
+                else if (typeof(T) == typeof(string) || typeof(T) == typeof(String))
+                {
+                    if (e.WertText != null && e.WertText != String.Empty)
+                        return (T)(object)e.WertText;
+                    else
+                        return (T)(object)e.WertString;
+                }
+            }
+            return defaultValue;
+        }
+
+        public static Model.Einstellungen SetEinstellung<T>(string name, T value)
+        {
+            if (Global.IsInitialized)
+            {
+                Model.Einstellungen e = Global.ContextHeld.LoadEinstellungByName(name);
+                if (e == null)
+                {
+                    e = Global.ContextHeld.New<Model.Einstellungen>();
+                    e.Name = name;
+                }
+                if (typeof(T) == typeof(Boolean) || typeof(T) == typeof(bool))
+                    e.WertBool = (bool)(object)value;
+                else if (typeof(T) == typeof(int) || typeof(T) == typeof(Int32) || typeof(T) == typeof(Int64))
+                    e.WertInt = (int)(object)value;
+                else if (typeof(T) == typeof(string) || typeof(T) == typeof(String))
+                {
+                    if (((string)(object)value).Length > 300)
+                    {
+                        e.WertString = String.Empty;
+                        e.WertText = (string)(object)value;
+                    }
+                    else
+                    {
+                        e.WertText = String.Empty;
+                        e.WertString = (string)(object)value;
+                    }
+                }
+                return e;
+            }
+            return null;
+        }
+
         public static bool FrageNeueKampfrundeAbstellen
         {
             get
             {
-                if (App.DatenDataSet == null)
-                    return false;
-                var row = App.DatenDataSet.Einstellungen.FindByName("FrageNeueKampfrundeAbstellen");
-                if (row == null || row.IsWertBoolNull())
-                    return false;
-                return row.WertBool;
+                return GetOrCreateEinstellung<bool>("FrageNeueKampfrundeAbstellen", false);
             }
             set
             {
-                var row = App.DatenDataSet.Einstellungen.FindByName("FrageNeueKampfrundeAbstellen");
-                if (row != null)
-                    row.WertBool = value;
+                SetEinstellung<bool>("FrageNeueKampfrundeAbstellen", value);
             }
         }
 
@@ -30,18 +79,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                if (App.DatenDataSet == null)
-                    return false;
-                var row = App.DatenDataSet.Einstellungen.FindByName("JingleAbstellen");
-                if (row == null || row.IsWertBoolNull())
-                    return false;
-                return row.WertBool;
+                return GetOrCreateEinstellung<bool>("JingleAbstellen", false);
             }
             set
             {
-                var row = App.DatenDataSet.Einstellungen.FindByName("JingleAbstellen");
-                if (row != null)
-                    row.WertBool = value;
+                SetEinstellung<bool>("JingleAbstellen", value);
             }
         }
 
@@ -49,18 +91,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                if (App.DatenDataSet == null)
-                    return 0;
-                var row = App.DatenDataSet.Einstellungen.FindByName("SelectedTab");
-                if (row == null || row.IsWertIntNull())
-                    return 0;
-                return row.WertInt;
+                return GetOrCreateEinstellung<int>("SelectedTab", 0);
             }
             set
             {
-                var row = App.DatenDataSet.Einstellungen.FindByName("SelectedTab");
-                if (row != null)
-                    row.WertInt = value;
+                SetEinstellung<int>("SelectedTab", 0);
             }
         }
 
@@ -68,18 +103,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                if (App.DatenDataSet == null)
-                    return string.Empty;
-                var row = App.DatenDataSet.Einstellungen.FindByName("StartTabs");
-                if (row == null || row.IsWertTextNull())
-                    return string.Empty;
-                return row.WertText;
+                return GetOrCreateEinstellung<string>("StartTabs", String.Empty);
             }
             set
             {
-                var row = App.DatenDataSet.Einstellungen.FindByName("StartTabs");
-                if (row != null)
-                    row.WertText = value;
+                SetEinstellung<string>("StartTabs", String.Empty);
             }
         }
 
@@ -87,18 +115,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                if (App.DatenDataSet == null)
-                    return "111111";
-                var row = App.DatenDataSet.Einstellungen.FindByName("KalenderExpandedSections");
-                if (row == null || row.IsWertStringNull())
-                    return "111111";
-                return row.WertString;
+                return GetOrCreateEinstellung<string>("KalenderExpandedSections", "111111");
             }
             set
             {
-                var row = App.DatenDataSet.Einstellungen.FindByName("KalenderExpandedSections");
-                if (row != null)
-                    row.WertString = value;
+                SetEinstellung<string>("KalenderExpandedSections", "111111");
             }
         }
 
@@ -106,18 +127,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                if (App.DatenDataSet == null)
-                    return "111111";
-                var row = App.DatenDataSet.Einstellungen.FindByName("UmrechnerExpandedSections");
-                if (row == null || row.IsWertStringNull())
-                    return "111111";
-                return row.WertString;
+                return GetOrCreateEinstellung<string>("UmrechnerExpandedSections", "111111");
             }
             set
             {
-                var row = App.DatenDataSet.Einstellungen.FindByName("UmrechnerExpandedSections");
-                if (row != null)
-                    row.WertString = value;
+                SetEinstellung<string>("UmrechnerExpandedSections", "111111");
             }
         }
 
@@ -125,18 +139,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                if (App.DatenDataSet == null)
-                    return "Gareth#29.79180235685203#3.735098459067687";
-                var row = App.DatenDataSet.Einstellungen.FindByName("Standort");
-                if (row == null || row.IsWertTextNull())
-                    return "Gareth#29.79180235685203#3.735098459067687";
-                return row.WertText;
+                return GetOrCreateEinstellung<string>("Standort", "Gareth#29.79180235685203#3.735098459067687");
             }
             set
             {
-                var row = App.DatenDataSet.Einstellungen.FindByName("Standort");
-                if (row != null)
-                    row.WertText = value;
+                SetEinstellung<string>("Standort", "Gareth#29.79180235685203#3.735098459067687");
             }
         }
     }

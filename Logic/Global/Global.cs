@@ -53,6 +53,11 @@ namespace MeisterGeister
         #endregion
 
         #region //EIGENSCHAFTSMETHODEN
+        public static bool IsInitialized
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Ruft den aktuell ausgewählten Helden ab, oder legt ihn fest.
@@ -100,7 +105,7 @@ namespace MeisterGeister
 
         static Global()
         {
-
+            IsInitialized = false;
         }
 
         #endregion
@@ -130,6 +135,8 @@ namespace MeisterGeister
             ContextRegeln = new Service.RegelnService();
             ContextNotizen = new Service.NotizService();
             ContextZauber = new Service.ZauberService();
+
+            IsInitialized = true;
         }
 
         #endregion
