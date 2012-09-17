@@ -37,6 +37,11 @@ namespace MeisterGeister.Logic.General
             return (int)pt.Eval(random);
         }
 
+        public static int Würfeln(int seiten)
+        {
+            return RandomNumberGenerator.RandomInt(1, seiten);
+        }
+
         public static event EventHandler SoundAbspielenChanged;
 
         public static bool SoundAbspielen

@@ -161,6 +161,7 @@
     <Compile Include="Logic\General\HeldWaffeWert.cs" />
     <Compile Include="Logic\General\IProbe.cs" />
     <Compile Include="Logic\General\Literatur.cs" />
+    <Compile Include="Logic\General\Probe.cs" />
     <Compile Include="Logic\General\ProbenErgebnis.cs" />
     <Compile Include="Logic\General\RandomNumberGenerator.cs" />
     <Compile Include="Logic\General\Repräsentationen.cs" />
