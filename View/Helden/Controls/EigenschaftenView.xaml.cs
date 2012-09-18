@@ -39,6 +39,14 @@ namespace MeisterGeister.View.Helden.Controls
             catch (Exception)
             {
             }
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
         }
 
         private void ButtonMax_Click(object sender, RoutedEventArgs e)

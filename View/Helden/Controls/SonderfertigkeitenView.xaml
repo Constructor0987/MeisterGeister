@@ -6,6 +6,7 @@
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
+             Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              d:DesignHeight="299" d:DesignWidth="677">
     <UserControl.Resources>
         <CollectionViewSource x:Key="SonderfertigkeitListeView" Source="{Binding SonderfertigkeitListe}">

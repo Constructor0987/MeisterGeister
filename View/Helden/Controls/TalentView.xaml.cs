@@ -37,7 +37,16 @@ namespace MeisterGeister.View.Helden.Controls
             catch (Exception)
             {
             }
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
 		}
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
+
         private void RefreshHeld() {
             // Talente-Sortierung aktualisieren
             //if (_dataGridHeldTalente.Items is System.Windows.Data.CollectionView) {

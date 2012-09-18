@@ -7,7 +7,7 @@ using System.ComponentModel;
 using M = MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Helden {
-    public class AllgemeinViewModel : Base.ViewModelBase {
+    public class AllgemeinViewModel : Base.ViewModelBase, Logic.IChangeListener {
         #region //FELDER
         //EasyTypes
         private bool hasChanges = false;
@@ -22,8 +22,7 @@ namespace MeisterGeister.ViewModel.Helden {
         #endregion
         #region //KONSTRUKTOR
         public AllgemeinViewModel() {
-            Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            Global.HeldSelectionChanging += (s, ev) => { SelectedHeldChanging(); };            
+            AttachEvents();
         }
         #endregion
         #region //METHODEN
@@ -31,10 +30,26 @@ namespace MeisterGeister.ViewModel.Helden {
             if (new string[] { "Name", "BildLink", "Rasse", "Kultur", "Profession", "AktiveHeldengruppe" }.Contains(args.PropertyName))
                 hasChanges = true;
         }
+
+        private void AttachEvents()
+        {
+            Global.HeldSelectionChanged += SelectedHeldChanged;
+            Global.HeldSelectionChanging += SelectedHeldChanging;
+            SelectedHeldChanged(null, null);
+        }
+
+        private void DetachEvents()
+        {
+            SelectedHeldChanging(null, null);
+            Global.HeldSelectionChanged -= SelectedHeldChanged;
+            Global.HeldSelectionChanging -= SelectedHeldChanging;
+        }
+
         #endregion
         #region //EVENTS
         //Event
-        void SelectedHeldChanged() {
+        void SelectedHeldChanged(object sender, EventArgs args)
+        {
             SelectedHeld = Global.SelectedHeld;
             if (SelectedHeld != null)
                 SelectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
@@ -42,7 +57,8 @@ namespace MeisterGeister.ViewModel.Helden {
                 RefreshNotiz(this, new EventArgs());
             }
         }
-        void SelectedHeldChanging() {
+        void SelectedHeldChanging(object sender, EventArgs args)
+        {
             if (Global.SelectedHeld != null) {
                 if (hasChanges)
                     Global.ContextHeld.Update<Model.Held>(SelectedHeld);
@@ -51,5 +67,20 @@ namespace MeisterGeister.ViewModel.Helden {
             }
         }
         #endregion
+
+        private bool listenToChangeEvents = true;
+
+        public bool ListenToChangeEvents
+        {
+            get { return listenToChangeEvents; }
+            set { 
+                listenToChangeEvents = value;
+                if (listenToChangeEvents)
+                    AttachEvents();
+                else
+                    DetachEvents();
+            }
+        }
+        
     }
 }

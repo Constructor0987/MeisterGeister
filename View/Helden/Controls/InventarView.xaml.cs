@@ -27,6 +27,13 @@ namespace MeisterGeister.View.Helden.Controls {
             try {
                 (this.DataContext as VM.Inventar).LoadDaten();
             } catch (Exception) { }
+            if (DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener != null)
+                (this.DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener != null)
+                (this.DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
         }
 
     }

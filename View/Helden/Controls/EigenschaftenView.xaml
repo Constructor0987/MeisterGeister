@@ -6,7 +6,8 @@
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
-             d:DesignHeight="463" d:DesignWidth="660" Loaded="UserControl_Loaded">
+             d:DesignHeight="463" d:DesignWidth="660"
+             Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     </UserControl.Resources>

@@ -28,12 +28,21 @@ namespace MeisterGeister.View.Helden.Controls {
 
         #region //EVENTS        
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {            
-        }        
+            if(DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
         private void ImageWikiHeldenbrief_MouseDown(object sender, MouseButtonEventArgs e) {
             if ((this.DataContext as VM.AllgemeinViewModel).SelectedHeld != null)
                 System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/Spielerhelden/" 
                     + (this.DataContext as VM.AllgemeinViewModel).SelectedHeld.Name.Replace(" ", "_"));
+            
         }
+
         private void ButtonBildLinkSetzenDatei_Click(object sender, RoutedEventArgs e) {
             if ((this.DataContext as VM.AllgemeinViewModel).SelectedHeld != null && (this.DataContext as VM.AllgemeinViewModel).SelectedHeld != null) {
                 OpenFileDialog dlg = new OpenFileDialog();

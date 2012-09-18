@@ -5,6 +5,8 @@ using System.Text;
 using MeisterGeister.Model;
 using System.ComponentModel;
 
+using MeisterGeister.Logic.HeldenImport;
+
 namespace MeisterGeister.ViewModel.Helden
 {
     public class ListeViewModel : Base.ViewModelBase
@@ -245,9 +247,9 @@ namespace MeisterGeister.ViewModel.Helden
             if(!System.IO.File.Exists(pfad))
                 throw new System.IO.FileNotFoundException("Die Datei konnte nicht gefunden werden.", pfad);
             bool isHeldenSoftware = false;
-            if (Logic.HeldenImport.HeldenSoftwareImporter.IsHeldenSoftwareFile(pfad))
+            if (HeldenSoftwareImporter.IsHeldenSoftwareFile(pfad))
             {
-                hGuid = Logic.HeldenImport.HeldenSoftwareImporter.GetGuidFromFile(pfad);
+                hGuid = HeldenSoftwareImporter.GetGuidFromFile(pfad);
                 isHeldenSoftware = true;
             }
             else if (Model.Service.SerializationService.IsMeistergeisterFile(pfad))
@@ -272,7 +274,7 @@ namespace MeisterGeister.ViewModel.Helden
                     overwrite = false;
             }
             if (isHeldenSoftware)
-                importHeld = Logic.HeldenImport.HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite?Guid.Empty:Guid.NewGuid());
+                importHeld = HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite?Guid.Empty:Guid.NewGuid());
             else
                 importHeld = Held.Import(pfad, overwrite?Guid.Empty:Guid.NewGuid());
             LoadDaten();

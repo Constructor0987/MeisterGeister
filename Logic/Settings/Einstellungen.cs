@@ -17,9 +17,17 @@ namespace MeisterGeister.Logic.Settings
                     e = Einstellungen.SetEinstellung<T>(name, defaultValue);
                 }
                 if (typeof(T) == typeof(Boolean) || typeof(T) == typeof(bool))
-                    return (T)(object)e.WertBool;
+                {
+                    if (e.WertBool != null)
+                        return (T)(object)e.WertBool;
+                    return defaultValue;
+                }
                 else if (typeof(T) == typeof(int) || typeof(T) == typeof(Int32) || typeof(T) == typeof(Int64))
-                    return (T)(object)e.WertInt;
+                {
+                    if (e.WertInt != null)
+                        return (T)(object)e.WertInt;
+                    return defaultValue;
+                }
                 else if (typeof(T) == typeof(string) || typeof(T) == typeof(String))
                 {
                     if (e.WertText != null && e.WertText != String.Empty)

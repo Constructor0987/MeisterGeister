@@ -37,6 +37,13 @@ namespace MeisterGeister.View.Helden.Controls
             catch (Exception)
             {
             }
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
         }
 
         private void ContextMenuVorNachteile_Opened(object sender, RoutedEventArgs e)

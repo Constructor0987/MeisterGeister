@@ -29,6 +29,9 @@ namespace MeisterGeister {
         static StartupWindow _splashScreen = new StartupWindow();
 
         public App() {
+#if !DEBUG
+            this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+#endif
             // Startup-Fenster anzeigen (schließt sich automatisch)
             _splashScreen.Show();
 

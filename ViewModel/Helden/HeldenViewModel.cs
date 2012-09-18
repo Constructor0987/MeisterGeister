@@ -40,7 +40,7 @@ namespace MeisterGeister.ViewModel.Helden
             get { return _selectedTabIndex; }
             set { 
                 _selectedTabIndex = value < -1 ? -1 : value;
-                Logic.Settings.Einstellungen.HeldenSelectedTab = value;
+                MeisterGeister.Logic.Settings.Einstellungen.HeldenSelectedTab = _selectedTabIndex;
                 OnChanged("SelectedTabIndex");
             }
         }
@@ -51,7 +51,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         public HeldenViewModel()
         {
-            SelectedTabIndex = Logic.Settings.Einstellungen.HeldenSelectedTab;
+            SelectedTabIndex = MeisterGeister.Logic.Settings.Einstellungen.HeldenSelectedTab;
 
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };

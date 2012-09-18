@@ -12,7 +12,7 @@ using Logik = MeisterGeister.ViewModel.Inventar.Logic;
 using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Inventar {
-    public class Inventar : Base.ViewModelBase {
+    public class Inventar : Base.ViewModelBase, MeisterGeister.ViewModel.Helden.Logic.IChangeListener {
 
         #region //FELDER
 
@@ -534,6 +534,10 @@ namespace MeisterGeister.ViewModel.Inventar {
         #region //EVENTS
 
         void SelectedHeldChanged() {
+            //FIXME Hack
+            if (!ListenToChangeEvents)
+                return;
+
             SelectedHeld = Global.SelectedHeld;
             if (IsLoaded == false) {
                 LoadDaten();
@@ -761,6 +765,15 @@ namespace MeisterGeister.ViewModel.Inventar {
         #endregion
 
         #endregion
+
+        private bool listenToChangeEvents = true;
+
+        public bool ListenToChangeEvents
+        {
+            get { return listenToChangeEvents; }
+            set { listenToChangeEvents = value; SelectedHeldChanged(); }
+        }
+        
 
     }
 

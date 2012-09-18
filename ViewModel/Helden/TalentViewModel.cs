@@ -9,7 +9,7 @@ using M = MeisterGeister.Model;
 using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Helden {
-    public class TalentViewModel : Base.ViewModelBase {
+    public class TalentViewModel : Base.ViewModelBase, Logic.IChangeListener {
         #region //FELDER
         //Intern
         bool initFlag = false;
@@ -187,6 +187,8 @@ namespace MeisterGeister.ViewModel.Helden {
         #region //EVENTS
         //Global
         void SelectedHeldChanged() {
+            if (!ListenToChangeEvents)
+                return;
             SelectedHeld = Global.SelectedHeld;
             ReInit();
             if (SelectedHeld != null) {
@@ -265,6 +267,15 @@ namespace MeisterGeister.ViewModel.Helden {
             }
         }        
         #endregion
+
+        private bool listenToChangeEvents = true;
+
+        public bool ListenToChangeEvents
+        {
+            get { return listenToChangeEvents; }
+            set { listenToChangeEvents = value; SelectedHeldChanged(); }
+        }
+        
     }
     #region SUBKLASSEN
     public class TalentListeItem : Base.ViewModelBase {

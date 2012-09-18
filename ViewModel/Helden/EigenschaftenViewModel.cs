@@ -6,7 +6,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
-    public class EigenschaftenViewModel : Base.ViewModelBase
+    public class EigenschaftenViewModel : Base.ViewModelBase, Logic.IChangeListener
     {
         #region //---- COMMANDS ----
 
@@ -68,11 +68,21 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void SelectedHeldChanged()
         {
+            if (!ListenToChangeEvents)
+                return;
             NotifyRefresh();
         }
 
         #endregion
 
+        private bool listenToChangeEvents = true;
+
+        public bool ListenToChangeEvents
+        {
+            get { return listenToChangeEvents; }
+            set { listenToChangeEvents = value; SelectedHeldChanged(); }
+        }
+        
     }
     
 }

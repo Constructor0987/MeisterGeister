@@ -27,6 +27,17 @@ namespace MeisterGeister.View.Helden.Controls
             this.DataContext = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext as VM.Logic.IChangeListener != null)
+                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        }
+
         private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)
         {
             //if (_dataGridHeldZauber.SelectedItem == null)
