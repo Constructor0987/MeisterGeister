@@ -43,11 +43,7 @@
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.Background>
-                                <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                            </ComboBox.Background>
-                        </ComboBox>
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
                     </StackPanel>
                     <Border Margin="5" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
                         <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
@@ -176,11 +172,7 @@
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.Background>
-                                <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                            </ComboBox.Background>
-                        </ComboBox>
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
                     </StackPanel>
                     <Border Margin="5" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
                         <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
@@ -271,11 +263,7 @@
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.Background>
-                                <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                            </ComboBox.Background>
-                        </ComboBox>
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
                     </StackPanel>
                     <Border Margin="5" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
                         <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
