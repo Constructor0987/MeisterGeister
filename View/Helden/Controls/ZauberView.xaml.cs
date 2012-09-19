@@ -40,16 +40,16 @@ namespace MeisterGeister.View.Helden.Controls
 
         private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)
         {
-            //if (_dataGridHeldZauber.SelectedItem == null)
-            //{
-            //    _menuItemZauberLöschen.IsEnabled = false;
-            //    _menuItemZauberWiki.IsEnabled = false;
-            //}
-            //else
-            //{
-            //    _menuItemZauberLöschen.IsEnabled = true;
-            //    _menuItemZauberWiki.IsEnabled = true;
-            //}
+            if (_dataGridHeldZauber.SelectedItem == null)
+            {
+                _menuItemZauberLöschen.IsEnabled = false;
+                _menuItemZauberWiki.IsEnabled = false;
+            }
+            else
+            {
+                _menuItemZauberLöschen.IsEnabled = true;
+                _menuItemZauberWiki.IsEnabled = true;
+            }
         }
 
         private void MenuItemZauberProben_Click(object sender, RoutedEventArgs e)

@@ -14,7 +14,7 @@
     		<Binding ElementName="WürfelControl1" Path="ErgebnisText" />
     	</Grid.ToolTip>
     	<Grid.Background>
-            <ImageBrush x:Name="_image" ImageSource="/Images/Icons/Wuerfel/w20_blank.png" />
+            <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank.png" />
         </Grid.Background>
         <TextBlock HorizontalAlignment="Center" Name="_textBlockErgebnis" Text="{Binding ElementName=WürfelControl1, Path=Ergebnis}" VerticalAlignment="Center" FontWeight="Normal" Foreground="White" />
     </Grid>

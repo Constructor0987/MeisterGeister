@@ -111,7 +111,7 @@
                 <TabItem Header="Eigenschaften" x:Name="_tabItemEigenschaften">
                     <Held:EigenschaftenView />
                 </TabItem>
-                <TabItem Header="Rüstung / Waffen" x:Name="_tabItemRüstungWaffen">
+                <TabItem Header="Kampf" x:Name="_tabItemKampf">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <Grid>
                             <Grid x:Name="_orginalInventar" Margin="0">

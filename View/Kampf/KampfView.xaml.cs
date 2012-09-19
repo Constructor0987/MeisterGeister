@@ -310,7 +310,7 @@ namespace MeisterGeister.View.Kampf
             }
         }
 
-        private void WürfelControlInitiative_WürfelGeändert(uint ergebnis, EigenschaftProbenErgebnis probenErgebnis)
+        private void WürfelControlInitiative_WürfelGeändert(uint ergebnis)
         {
             _selectedKämpfer.InitiativeWurf = ergebnis;
             SortKämpfer();
@@ -654,6 +654,7 @@ namespace MeisterGeister.View.Kampf
             KampfInfoView infoView = new KampfInfoView(_kampf);
             MainView.ShowSpielerInfo(infoView);
         }
+
     }
 
     public delegate void ProbeWürfelnEventHandler(string talentname);

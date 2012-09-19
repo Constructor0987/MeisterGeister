@@ -532,10 +532,10 @@ namespace MeisterGeister.View.ProbenWürfel
             SetProbe();
         }
 
-        private void WürfelControlEigenschaft_WürfelGeändert(uint ergebnis, EigenschaftProbenErgebnis probenErgebnis)
+        private void WürfelControlEigenschaft_WürfelGeändert(uint ergebnis)
         {
-            probenErgebnis.Gewürfelt = ergebnis;
-            ProbenErgebnisAktualisieren(probenErgebnis);
+            //probenErgebnis.Gewürfelt = ergebnis;
+            //ProbenErgebnisAktualisieren(probenErgebnis);
             _listBoxProbenErgebnis.Items.Refresh();
             BerechneProbeÜbrigSumme();
         }

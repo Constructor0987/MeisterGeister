@@ -74,7 +74,7 @@ namespace MeisterGeister.View.General
             Ergebnis = ergebnis.ToString();
             if (WürfelGeändert != null)
             {
-                WürfelGeändert(ergebnis, ProbenErgebnis);
+                WürfelGeändert(ergebnis);
             }
         }
 
@@ -110,14 +110,6 @@ namespace MeisterGeister.View.General
             get { return Height; }
             set { base.Height = value; Width = value; }
         }
-
-        public EigenschaftProbenErgebnis ProbenErgebnis
-        {
-            get { return (EigenschaftProbenErgebnis)GetValue(ProbenErgebnisProperty); }
-            set { SetValue(ProbenErgebnisProperty, value); }
-        }
-        public static readonly DependencyProperty ProbenErgebnisProperty = DependencyProperty.Register(
-          "ProbenErgebnis", typeof(EigenschaftProbenErgebnis), typeof(WürfelControl));
 
         public string Ergebnis
         {
@@ -184,7 +176,7 @@ namespace MeisterGeister.View.General
             // Event werfen
             if (WürfelGeändert != null)
             {
-                WürfelGeändert(ergebnis, ProbenErgebnis);
+                WürfelGeändert(ergebnis);
             }
         }
 
@@ -195,5 +187,5 @@ namespace MeisterGeister.View.General
 
     }
 
-    public delegate void WürfelGeändertEventHandler(uint ergebnis, EigenschaftProbenErgebnis probenErgebnis);
+    public delegate void WürfelGeändertEventHandler(uint ergebnis);
 }

@@ -68,7 +68,7 @@
                             <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Zauber für weitere Aktionen."/></TextBlock>
                         </Image.ToolTip>
                     </Image>
-                    <DataGrid Grid.Column="1" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
+                    <DataGrid Grid.Column="1" Name="_dataGridHeldZauber" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
                         ItemsSource="{Binding ZauberListe}" SelectedItem="{Binding SelectedHeldZauber}">
                     <DataGrid.ContextMenu>
                         <ContextMenu Opened="ContextMenuZauber_Opened">
