@@ -480,6 +480,9 @@
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Proben\ProbenView.xaml.cs">
+      <DependentUpon>ProbenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Zauberzeichen\ZauberzeichenView.xaml.cs">
       <DependentUpon>ZauberzeichenView.xaml</DependentUpon>
     </Compile>
@@ -756,6 +759,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Kampf\KampfInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Proben\ProbenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

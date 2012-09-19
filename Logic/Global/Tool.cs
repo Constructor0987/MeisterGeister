@@ -30,6 +30,14 @@ namespace MeisterGeister
                 Name = "Proben",
                 Icon = "Icons/Wuerfel/w20.png",
                 MenuGruppe = "Wege des Meisters",
+                ViewType = typeof(View.Proben.ProbenView)
+            });
+            // TODO MT: Löschen, wenn Proben-Tool umgestellt ist.
+            ToolListe.Add("ProbenAlt", new Tool()
+            {
+                Name = "ProbenAlt",
+                Icon = "Icons/Wuerfel/w20.png",
+                MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.ProbenWürfel.ProbenView)
             });
             ToolListe.Add("Kampf", new Tool()

@@ -83,6 +83,12 @@
                                     <Image Source="/Images/Icons/Wuerfel/w20.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <!-- TODO MT: Löschen, wenn Proben-Tool umgestellt ist.-->
+                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Proben-Tool (alt)" Tag="ProbenAlt" ToolTip="Proben-Tool"  >
+                                <MenuItem.Icon>
+                                    <Image Source="/Images/Icons/Wuerfel/w20.png" Margin="2" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Notizen-Tool" Tag="Notizen" ToolTip="Notizen-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/notiz.png" Margin="2" />

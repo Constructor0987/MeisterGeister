@@ -324,7 +324,7 @@ namespace MeisterGeister.View.ProbenWürfel
                 foreach (DatabaseDSADataSet.HeldRow heldRow in App.DatenDataSet.Held)
                 {
                     if (heldRow.AktiveHeldengruppe)
-                        AddHeldProbenItem(new Held(heldRow), probe, heldRow.Proben);
+                        AddHeldProbenItem(new Held(heldRow), probe, heldRow.IsProbenNull() ? true : heldRow.Proben);
                 }
                 _probenErgebnisse.Sort(new ProbenErgebnisComparer()); // Sortieren
 
@@ -403,7 +403,7 @@ namespace MeisterGeister.View.ProbenWürfel
             string art = "Übrig";
             foreach (ProbenErgebnis er in _probenErgebnisse)
             {
-                if (er.Held.HeldDataRow.Proben) // nur summieren, wenn Held geprobt werden soll
+                if (er.Held.HeldDataRow.IsProbenNull() ? true : er.Held.HeldDataRow.Proben) // nur summieren, wenn Held geprobt werden soll
                 {
                     if (er.Übrig >= 0) //nur positive Ergebnisse addieren
                     {

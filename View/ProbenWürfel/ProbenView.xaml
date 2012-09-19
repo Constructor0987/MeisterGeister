@@ -27,14 +27,15 @@
         <Style x:Key="ProbenErgebnisListStyle" TargetType="{x:Type StackPanel}">
             <Setter Property="Opacity" Value="1.0" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=Held.HeldDataRow.Proben}" Value="false">
+                <!--<DataTrigger Binding="{Binding Path=Held.HeldDataRow.Proben, FallbackValue=true, TargetNullValue=true}" Value="false">
                     <Setter Property="Opacity" Value="0.3" />
-                </DataTrigger>
+                </DataTrigger>-->
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="ProbenErgebnisListTemplate">
             <StackPanel Orientation="Horizontal">
-                <CheckBox VerticalAlignment="Center" Margin="5" IsChecked="{Binding Path=Held.HeldDataRow.Proben}" ToolTip="Held bei der Probe einbeziehen?" Checked="CheckBoxProben_UnChecked" Unchecked="CheckBoxProben_UnChecked" />
+                <!--<CheckBox VerticalAlignment="Center" Margin="5" IsChecked="{Binding Held.HeldDataRow.Proben, FallbackValue=true, TargetNullValue=true}" ToolTip="Held bei der Probe einbeziehen?" Checked="CheckBoxProben_UnChecked" Unchecked="CheckBoxProben_UnChecked" />-->
+                <CheckBox VerticalAlignment="Center" Margin="5" IsChecked="true" ToolTip="Held bei der Probe einbeziehen?" Checked="CheckBoxProben_UnChecked" Unchecked="CheckBoxProben_UnChecked" />
                 <StackPanel Orientation="Vertical" Margin="10,0" Style="{StaticResource ProbenErgebnisListStyle}" >
                     <TextBlock Text="{Binding Path=Held.Kurzname}" FontWeight="Bold"/>
                     <Grid>

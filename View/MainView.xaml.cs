@@ -136,7 +136,8 @@ namespace MeisterGeister.View
             // Event-Handler verbinden
             switch (tabName)
             {
-                case "Proben":
+                // TODO MT: Events auf neues MVVM-Proben-Tool umstellen
+                case "ProbenAlt":
                     ((ProbenWürfel.ProbenView)con).ZooBotClick += TabItemControl_ZooBotProbe;
                     break;
                 case "Kampf":
