@@ -69,9 +69,9 @@ namespace MeisterGeister_Tests
             h.GE = 15;
             Assert.GreaterOrEqual(h.InitiativeBasisOhneSonderfertigkeiten, 10, "mindestens 10 INI");
             Assert.IsTrue(kr.CheckVoraussetzungen(h), "Alle Voraussetzungen von Kampfreflexen erfüllt");
-            Assert.IsTrue(h.HatSonderfertigkeit(kr), "Hat Kampfreflexe und die Voraussetzungen");
-            Assert.IsFalse(h.HatSonderfertigkeit(kg), "Hat kein Kampfgespür");
-            Assert.IsTrue(h.HatSonderfertigkeit(auf), "Hat Aufmerksamkeit und die Voraussetzungen");
+            Assert.IsTrue(h.HatSonderfertigkeitUndVoraussetzzungen(kr), "Hat Kampfreflexe und die Voraussetzungen");
+            Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzzungen(kg), "Hat kein Kampfgespür");
+            Assert.IsTrue(h.HatSonderfertigkeitUndVoraussetzzungen(auf), "Hat Aufmerksamkeit und die Voraussetzungen");
             
             Assert.IsTrue(kg.CheckVoraussetzungen(h), "Alle Voraussetzungen von Kampfgespür erfüllt");
 
@@ -80,15 +80,15 @@ namespace MeisterGeister_Tests
             h.GE = 10;
             Assert.Less(h.InitiativeBasisOhneSonderfertigkeiten, 10, "weniger als 10 INI");
             Assert.IsFalse(kg.CheckVoraussetzungen(h), "Alle Voraussetzungen von Kampfgespür erfüllt, aber nicht die von Kampfreflexe");
-            Assert.IsFalse(h.HatSonderfertigkeit(kr), "Zu wenig INI für Kampfgespür");
-            Assert.IsFalse(h.HatSonderfertigkeit(kg), "Alle Voraussetzungen von Kampfgespür erfüllt, aber nicht die von Kampfreflexe");
+            Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzzungen(kr), "Zu wenig INI für Kampfgespür");
+            Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzzungen(kg), "Alle Voraussetzungen von Kampfgespür erfüllt, aber nicht die von Kampfreflexe");
             
             h.IN = 15;
             h.MU = 15;
             h.GE = 15;
             h.AddSonderfertigkeit(kg, null);
             Assert.GreaterOrEqual(h.InitiativeBasisOhneSonderfertigkeiten, 10, "mindestens 10 INI");
-            Assert.IsTrue(h.HatSonderfertigkeit(kg), "Hat Kampfgespür und die Voraussetzungen");
+            Assert.IsTrue(h.HatSonderfertigkeitUndVoraussetzzungen(kg), "Hat Kampfgespür und die Voraussetzungen");
         }
 
         [Test]

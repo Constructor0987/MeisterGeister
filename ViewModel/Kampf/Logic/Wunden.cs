@@ -16,6 +16,30 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             _held = held;
         }
 
+        public static Trefferzone GetTrefferZoneByPropertyName(string wundenProperty)
+        {
+            switch (wundenProperty)
+            {
+                case "WundenKopf":
+                    return Trefferzone.Kopf;
+                case "WundenBrust":
+                    return Trefferzone.Brust;
+                case "WundenArmL":
+                    return Trefferzone.ArmL;
+                case "WundenArmR":
+                    return Trefferzone.ArmR;
+                case "WundenBauch":
+                    return Trefferzone.Bauch;
+                case "WundenBeinL":
+                    return Trefferzone.BeinL;
+                case "WundenBeinR":
+                    return Trefferzone.BeinR;
+                case "Wunden":
+                default:
+                    return Trefferzone.Unlokalisiert;
+            }
+        }
+
         public int this[Trefferzone zone]
         {
             get

@@ -21,6 +21,7 @@ namespace MeisterGeister.Model
         {
             HeldGUID = Guid.NewGuid();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+            PropertyChanged += OnPropertyChanged;
             SetDefaultValues();
         }
 
@@ -29,6 +30,170 @@ namespace MeisterGeister.Model
             Name = "Alrik";
             AktiveHeldengruppe = false;
         }
+
+        #region Events und resultierende Modifikatoren
+
+        //Events auf setter, die im DB-Model stehen.
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == "LebensenergieAktuell")
+            {
+                CheckLePModifikatoren();
+            }
+            else if (args.PropertyName == "AusdauerAktuell")
+            {
+                CheckAuModifikatoren();
+            }
+            else if (args.PropertyName.StartsWith("Wunden"))
+            {
+                CheckWundenModifikatoren(args.PropertyName);
+            }
+        }
+
+        public int GetModifikatorCount<T>()
+            where T : Mod.IModifikator, new()
+        {
+            return Modifikatoren.Where(m => m is T).Count();
+        }
+
+        /// <returns>Veränderung der Modifikatorenanzahl</returns>
+        public int SetModifikatorCount(Type t, int targetCount)
+        {
+            var name = ImpromptuInterface.InvokeMemberName.Create;
+            return ImpromptuInterface.Impromptu.InvokeMember(this, name("SetModifikatorCount", new[] { t }), targetCount);
+        }
+
+        /// <returns>Veränderung der Modifikatorenanzahl</returns>
+        public int SetModifikatorCount<T>(int targetCount)
+            where T : Mod.IModifikator, new()
+        {
+            IList<Mod.IModifikator> mods = Modifikatoren.Where(m => m is T).ToList();
+            int change = 0;
+            if (targetCount < mods.Count)
+            {
+                for (int i = 0; i < mods.Count - targetCount; i++)
+                {
+                    change--;
+                    Modifikatoren.Remove(mods[i]);
+                }
+            }
+            else if (targetCount > mods.Count)
+            {
+                for (int i = mods.Count; i < targetCount; i++)
+                {
+                    change++;
+                    Modifikatoren.Add(new T());
+                }
+            }
+            return change;
+        }
+
+        private void CheckWundenModifikatoren(string wundenProperty)
+        {
+            Trefferzone zone = KampfLogic.Wunden.GetTrefferZoneByPropertyName(wundenProperty);
+            Type modTyp = Mod.WundenModifikator.TypByZone(zone);
+            int wundenzahl = ((IKämpfer)this).Wunden[zone];
+            int changes = SetModifikatorCount(modTyp, wundenzahl);
+            if (changes > 0)
+            {
+                switch (zone)
+                {
+                    case Trefferzone.Kopf:
+                        //TODO JT: dem aktuellen Kampf erzählen, dass changes * 2W6 Ini verloren gegangen sind (per Event)
+                        if (wundenzahl == 3)
+                        {
+                            //bewusstlos + blutverlust
+                            LebensenergieAktuell -= (Würfel.Wurf(6) + Würfel.Wurf(6)); //eventuell per Dialog?
+                        }
+                        break;
+                    case Trefferzone.Bauch:
+                    case Trefferzone.Brust:
+                        int zusatzschaden = 0;
+                        for (int i = 1; i <= changes; i++)
+                            zusatzschaden += Würfel.Wurf(6);
+                        LebensenergieAktuell -= zusatzschaden; //eventuell per Dialog?
+                        if (wundenzahl == 3)
+                        {
+                            //bewusstlos + blutverlust
+                        }
+                        break;
+                    case Trefferzone.ArmL:
+                    case Trefferzone.ArmR:
+                        if (wundenzahl == 3)
+                        {
+                            //arm handlungsunfähig
+                        }
+                        break;
+                    case Trefferzone.BeinL:
+                    case Trefferzone.BeinR:
+                        if (wundenzahl == 3)
+                        {
+                            //sturz, kampfunfähig
+                        }
+                        break;
+                    default: break;
+                }
+            }
+        }
+
+        private void CheckAuModifikatoren()
+        {
+            double percent = (double)AusdauerAktuell / (double)AusdauerMax;
+            int targetModCount = 0;
+            if (percent >= 1.0 / 3.0)
+                targetModCount = 0;
+            else if (percent >= 1.0 / 4.0)
+                targetModCount = 1;
+            else
+                targetModCount = 2;
+            int change = SetModifikatorCount<Mod.NiedrigeAusdauerModifikator>(targetModCount);
+            if (targetModCount == 1 && change >= 1)
+            {
+                //+ 1 Erschöpfung
+            }
+
+
+            if (AusdauerAktuell <= 0)
+            {
+                if (!(Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0))
+                {
+                    Modifikatoren.Add(new Mod.AusdauerKampfunfähigModifikator());
+                    //+ 1W6 Erschöpfung
+                }
+            }
+            else
+            {
+                Modifikatoren.RemoveAll(m => m is Mod.AusdauerKampfunfähigModifikator);
+            }
+        }
+
+        private void CheckLePModifikatoren()
+        {
+            double percent = (double)LebensenergieAktuell / (double)LebensenergieMax;
+            int targetModCount = 0;
+            if (percent >= 0.5)
+                targetModCount = 0;
+            else if (percent >= 1.0 / 3.0)
+                targetModCount = 1;
+            else if (percent >= 1.0 / 4.0)
+                targetModCount = 2;
+            else
+                targetModCount = 3;
+
+            SetModifikatorCount<Mod.NiedrigeLebensenergieModifikator>(targetModCount);
+
+            if (LebensenergieAktuell <= 5)
+            {
+                if (!(Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0))
+                    Modifikatoren.Add(new Mod.LebensenergieKampfunfähigModifikator());
+            }
+            else
+            {
+                Modifikatoren.RemoveAll(m => m is Mod.LebensenergieKampfunfähigModifikator);
+            }
+        }
+
+        #endregion
 
         [DependentProperty("Name")]
         public string Kurzname
@@ -352,7 +517,7 @@ namespace MeisterGeister.Model
             get
             {
                 return HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) || HatVorNachteil(VorNachteil.GeweihtAngrosch) || HatVorNachteil(VorNachteil.Sacerdos) || 
-                    HatSonderfertigkeit(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeit(Sonderfertigkeit.KontaktZumGroßenGeist) || HatSonderfertigkeit(Sonderfertigkeit.SpätweiheDunkleZeiten);
+                    HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.KontaktZumGroßenGeist) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheDunkleZeiten);
             }
         }
 
@@ -410,7 +575,7 @@ namespace MeisterGeister.Model
             get
             {
                 int basis = BaseMU + BaseIN + BaseCH;
-                if (HatSonderfertigkeit(Sonderfertigkeit.GefäßDerSterne))
+                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.GefäßDerSterne))
                     basis += BaseCH;
                 return (int)Math.Round(basis / 2.0, 0, MidpointRounding.AwayFromZero);
             }
@@ -569,9 +734,9 @@ namespace MeisterGeister.Model
                 int ini = InitiativeBasisOhneSonderfertigkeiten;
 
                 // Sonderfertigkeiten
-                if (HatSonderfertigkeit(Sonderfertigkeit.Kampfreflexe) && Behinderung <= 4)
+                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.Kampfreflexe) && Behinderung <= 4)
                     ini += 4;
-                if (HatSonderfertigkeit(Sonderfertigkeit.Kampfgespür))
+                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.Kampfgespür))
                     ini += 2;
 
                 return ini;
@@ -595,7 +760,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                if (HatSonderfertigkeit(Sonderfertigkeit.Klingentänzer) && Behinderung <= 2)
+                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.Klingentänzer) && Behinderung <= 2)
                 {
                     return WürfelEnum._2W6;
                 }
@@ -784,6 +949,17 @@ namespace MeisterGeister.Model
                 r.ForEach(w => w = Talent.GetSpezialisierungName(talentName, w));
             }
             return null;
+        }
+
+        public void AddBasisTalente()
+        {
+            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis").ToList())
+            {
+                if (t.TalentgruppeID != 1)
+                    AddTalent(t, 0);
+                else
+                    AddTalent(t, 0, 0, 0);
+            }
         }
 
         #endregion
@@ -1032,10 +1208,37 @@ namespace MeisterGeister.Model
             return s;
         }
 
+
+        /// <summary>
+        /// Hat die Sonderfertigkeit.
+        /// </summary>
+        public bool HatSonderfertigkeit(Sonderfertigkeit s)
+        {
+            return Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit == s).Count() > 0;
+        }
+
+        /// <summary>
+        /// Hat die Sonderfertigkeit mit bestimmtem Wert.
+        /// </summary>
+        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert)
+        {
+            IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit.Name == sonderfertigkeit);
+            if (hso.Count() == 0)
+                return false;
+            foreach (Held_Sonderfertigkeit hs in hso)
+            {
+                //Wert prüfen
+                if (wert != null && (hs.Sonderfertigkeit.HatWert ?? false) && hs.Wert != wert)
+                    continue;
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Hat die Sonderfertigkeit inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeit(Sonderfertigkeit s)
+        public bool HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit s)
         {
             if (Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit == s).Count() > 0)
                 return s.CheckVoraussetzungen(this);
@@ -1045,7 +1248,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit mit bestimmtem Wert inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert)
+        public bool HatSonderfertigkeitUndVoraussetzzungen(string sonderfertigkeit, string wert)
         {
             IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit.Name == sonderfertigkeit);
             if(hso.Count() == 0)
@@ -1065,9 +1268,9 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeit(string sonderfertigkeit)
+        public bool HatSonderfertigkeitUndVoraussetzzungen(string sonderfertigkeit)
         {
-            return HatSonderfertigkeit(sonderfertigkeit, null);
+            return HatSonderfertigkeitUndVoraussetzzungen(sonderfertigkeit, null);
         }
 
         /// <summary>
@@ -1184,11 +1387,11 @@ namespace MeisterGeister.Model
         {
             get {
                 int ausweichen = ParadeBasis;
-                if (HatSonderfertigkeit("Ausweichen I"))
+                if (HatSonderfertigkeitUndVoraussetzzungen("Ausweichen I"))
                     ausweichen += 3;
-                if (HatSonderfertigkeit("Ausweichen II"))
+                if (HatSonderfertigkeitUndVoraussetzzungen("Ausweichen II"))
                     ausweichen += 3;
-                if (HatSonderfertigkeit("Ausweichen III"))
+                if (HatSonderfertigkeitUndVoraussetzzungen("Ausweichen III"))
                     ausweichen += 3;
                 ausweichen += (Math.Max(Talentwert("Akrobatik") - 9, 0) / 3);
                 ausweichen -= Behinderung;
@@ -1267,11 +1470,11 @@ namespace MeisterGeister.Model
             set {
                 _kampfstil = value;
                 //TODO JT: Sicherstellen, dass auch zwei Waffen geführt werden
-                if (_kampfstil == KampfLogic.Kampfstil.BeidhändigerKampf && HatSonderfertigkeit("Beidhändiger Kampf II"))
+                if (_kampfstil == KampfLogic.Kampfstil.BeidhändigerKampf && HatSonderfertigkeitUndVoraussetzzungen("Beidhändiger Kampf II"))
                     Aktionen = 3;
-                else if (_kampfstil == KampfLogic.Kampfstil.Schildkampf && HatSonderfertigkeit("Schildkampf II"))
+                else if (_kampfstil == KampfLogic.Kampfstil.Schildkampf && HatSonderfertigkeitUndVoraussetzzungen("Schildkampf II"))
                     Aktionen = 3;
-                else if (_kampfstil == KampfLogic.Kampfstil.Parierwaffenstil && HatSonderfertigkeit("Parierwaffen II") || HatSonderfertigkeit("Tod von Links"))
+                else if (_kampfstil == KampfLogic.Kampfstil.Parierwaffenstil && HatSonderfertigkeitUndVoraussetzzungen("Parierwaffen II") || HatSonderfertigkeitUndVoraussetzzungen("Tod von Links"))
                     Aktionen = 3;
                 else
                     Aktionen = 2;
@@ -1297,9 +1500,15 @@ namespace MeisterGeister.Model
             get { return null; }
         }
 
+        private Wunden kämpferWunden = null;
         IWunden IKämpfer.Wunden
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                if (kämpferWunden == null)
+                    kämpferWunden = new KampfLogic.Wunden((Model.Held)this);
+                return kämpferWunden;
+            }
         }
 
         public IList<IWaffe> Angriffswaffen
@@ -1355,16 +1564,6 @@ namespace MeisterGeister.Model
             return Name;
         }
 
-        public void AddBasisTalente()
-        {
-            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis").ToList())
-            {
-                if(t.TalentgruppeID != 1)
-                    AddTalent(t, 0);
-                else
-                    AddTalent(t, 0, 0, 0);
-            }
-        }
 
     }
 }

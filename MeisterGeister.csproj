@@ -380,7 +380,9 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IEndetMit.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModEigenschaft.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModProbe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\NiedrigeEnergieModifikatoren.cs" />
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
     <Compile Include="ViewModel\NscGenerator\Person.cs">
       <SubType>Code</SubType>

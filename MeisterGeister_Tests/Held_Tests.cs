@@ -9,6 +9,7 @@ using MeisterGeister.Model;
 using MeisterGeister.Model.Service;
 
 using MeisterGeister.ViewModel.Kampf.Logic;
+using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
 namespace MeisterGeister_Tests
 {
@@ -117,13 +118,14 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(",Kurzname,Name", firedEvents);
             h.Name = "Toaster";
             Assert.AreEqual(",Kurzname,Name,Kurzname,Name", firedEvents);
+            h.PropertyChanged -= OnPropertyChanged;
         }
 
         [Test]
         public void HatXTests()
         {
             Held h = new Held();
-            Assert.IsFalse(h.HatSonderfertigkeit(new Sonderfertigkeit()));
+            Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzzungen(new Sonderfertigkeit()));
             Assert.IsFalse(h.HatVorNachteil(new VorNachteil()));
         }
 
@@ -144,6 +146,55 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(h.RSKopf, ((IKämpfer)h).RS[Trefferzone.Kopf]);
             ((IKämpfer)h).RS[Trefferzone.Gesamt] = 3;
             Assert.AreEqual(((IKämpfer)h).RS[Trefferzone.Kopf], h.RSKopf);
+        }
+
+        [Test]
+        public void EnergieModifikatorTests()
+        {
+            testHeld1.LebensenergieAktuell = testHeld1.LebensenergieMax;
+            testHeld1.Modifikatoren.Clear();
+            Assert.Greater(testHeld1.LebensenergieAktuell, 10, "Mehr als 10 LeP");
+            Assert.AreEqual(0, testHeld1.Modifikatoren.Count, "Keine Modifikatoren");
+            int gs = testHeld1.Geschwindigkeit;
+            Assert.Greater(gs, 1);
+            testHeld1.LebensenergieAktuell = (int)Math.Round(testHeld1.LebensenergieMax * 1.0 / 2.0) - 1;
+            Assert.AreEqual(1, testHeld1.Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count() , "Ein Modifikator");
+            Assert.Less(testHeld1.Geschwindigkeit, gs);
+            testHeld1.LebensenergieAktuell = testHeld1.LebensenergieMax;
+            Assert.AreEqual(0, testHeld1.Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count(), "Kein Modifikator");
+            testHeld1.LebensenergieAktuell = (int)Math.Round(testHeld1.LebensenergieMax * 1.0 / 3.0) - 1;
+            Assert.AreEqual(2, testHeld1.Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count(), "Zwei Modifikatoren");
+            testHeld1.LebensenergieAktuell = (int)Math.Round(testHeld1.LebensenergieMax * 1.0 / 4.0) - 1;
+            Assert.AreEqual(3, testHeld1.Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count(), "Drei Modifikatoren");
+            testHeld1.LebensenergieAktuell = 5;
+            Assert.AreEqual(1, testHeld1.Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count(), "Kampfunfähig");
+            Assert.AreEqual(1, testHeld1.Geschwindigkeit);
+            testHeld1.LebensenergieAktuell = testHeld1.LebensenergieMax;
+            
+            testHeld1.AusdauerAktuell = testHeld1.AusdauerMax;
+            Assert.AreEqual(0, testHeld1.Modifikatoren.Count, "Keine Modifikatoren");
+            testHeld1.AusdauerAktuell = (int)Math.Round(testHeld1.AusdauerMax * 1.0 / 3.0) - 1;
+            Assert.AreEqual(1, testHeld1.Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count(), "Ein Modifikator");
+            testHeld1.AusdauerAktuell = (int)Math.Round(testHeld1.AusdauerMax * 1.0 / 4.0) - 1;
+            Assert.AreEqual(2, testHeld1.Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count(), "Zwei Modifikatoren");
+            testHeld1.AusdauerAktuell = 0;
+            Assert.AreEqual(1, testHeld1.Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count(), "Kampfunfähig");
+
+            testHeld1.LebensenergieAktuell = testHeld1.LebensenergieMax;
+            testHeld1.AusdauerAktuell = testHeld1.AusdauerMax;
+        }
+
+        [Test]
+        public void WundenModifikatorTests()
+        {
+            testHeld1.LebensenergieAktuell = testHeld1.LebensenergieMax;
+            testHeld1.AusdauerAktuell = testHeld1.AusdauerMax;
+            testHeld1.Wunden = 0;
+            ((IKämpfer)testHeld1).Wunden[Trefferzone.Bauch] = 1;
+            Assert.Less(testHeld1.LebensenergieAktuell, testHeld1.LebensenergieMax, "LeP-Verlust duch Bauchwunde");
+            Assert.AreEqual(1, testHeld1.GetModifikatorCount<Mod.WundenBauchModifikator>());
+            ((IKämpfer)testHeld1).Wunden[Trefferzone.Bauch] = 0;
+            Assert.AreEqual(0, testHeld1.GetModifikatorCount<Mod.WundenBauchModifikator>());
         }
     }
 }

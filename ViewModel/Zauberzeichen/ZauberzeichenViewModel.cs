@@ -503,7 +503,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         {
             if (SelectedHeld != null)
             {
-                if (SelectedHeld.HatSonderfertigkeit("Spontanzeichen (Arkanoglyphen)")) IsEnabledSpontanzeichenKreise = true;
+                if (SelectedHeld.HatSonderfertigkeitUndVoraussetzzungen("Spontanzeichen (Arkanoglyphen)")) IsEnabledSpontanzeichenKreise = true;
                 else IsEnabledSpontanzeichenKreise = false;
             }
             CheckedBestimmteArtKreise = false;
@@ -532,7 +532,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         {
             if (SelectedHeld != null)
             {
-                if (SelectedHeld.HatSonderfertigkeit("Spontanzeichen (Runenkunde)")) IsEnabledSpontanzeichenRunen = true;
+                if (SelectedHeld.HatSonderfertigkeitUndVoraussetzzungen("Spontanzeichen (Runenkunde)")) IsEnabledSpontanzeichenRunen = true;
                 else IsEnabledSpontanzeichenRunen = false;
             }
             CheckedSpezialisierungRunen = false;
@@ -552,7 +552,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         {
             if (SelectedHeld != null)
             {
-                if (SelectedHeld.HatSonderfertigkeit("Spontanzeichen (Arkanoglyphen)")) IsEnabledSpontanzeichenZauberzeichen = true;
+                if (SelectedHeld.HatSonderfertigkeitUndVoraussetzzungen("Spontanzeichen (Arkanoglyphen)")) IsEnabledSpontanzeichenZauberzeichen = true;
                 else IsEnabledSpontanzeichenZauberzeichen = false;
             }
             CheckedKraftquellenspeisungZauberzeichen = false;
@@ -888,21 +888,21 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         private void checkZusatzzeichen(Held held)
         {
             //Zauberzeichen
-            IsEnabledSatinavsSiegelListeZauberzeichen = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Satinavs Siegel");
-            IsEnabledVerkleinerungListeZauberzeichen = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Verkleinerung");
-            IsEnabledTarnungZauberzeichen = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Tarnung");
-            IsEnabledSchutzsiegelZauberzeichen = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Schutzsiegel");
-            IsEnabledPotenzierungZauberzeichen = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Potenzierung");
-            IsEnabledMagiewiderstandZauberzeichen=held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Magiewiderstand");
-            IsEnabledKraftquellenspeisungZauberzeichen=held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Kraftquellenspeisung");
-            IsEnabledZielbeschränkungZauberzeichen = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Zielbeschränkung");
+            IsEnabledSatinavsSiegelListeZauberzeichen = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Satinavs Siegel");
+            IsEnabledVerkleinerungListeZauberzeichen = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Verkleinerung");
+            IsEnabledTarnungZauberzeichen = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Tarnung");
+            IsEnabledSchutzsiegelZauberzeichen = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Schutzsiegel");
+            IsEnabledPotenzierungZauberzeichen = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Potenzierung");
+            IsEnabledMagiewiderstandZauberzeichen=held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Magiewiderstand");
+            IsEnabledKraftquellenspeisungZauberzeichen=held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Kraftquellenspeisung");
+            IsEnabledZielbeschränkungZauberzeichen = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Zielbeschränkung");
             //Runen
             //Kreise
-            IsEnabledSatinavsSiegelListeKreise = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Satinavs Siegel");
-            IsEnabledTarnungKreise = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Tarnung");
-            IsEnabledSchutzsiegelKreise = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Schutzsiegel");
-            IsEnabledMagiewiderstandKreise = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Magiewiderstand");
-            IsEnabledKraftquellenspeisungKreise = held.HatSonderfertigkeit("Zauberzeichen: Zusatzzeichen Kraftquellenspeisung");
+            IsEnabledSatinavsSiegelListeKreise = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Satinavs Siegel");
+            IsEnabledTarnungKreise = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Tarnung");
+            IsEnabledSchutzsiegelKreise = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Schutzsiegel");
+            IsEnabledMagiewiderstandKreise = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Magiewiderstand");
+            IsEnabledKraftquellenspeisungKreise = held.HatSonderfertigkeitUndVoraussetzzungen("Zauberzeichen: Zusatzzeichen Kraftquellenspeisung");
 
         }
 
