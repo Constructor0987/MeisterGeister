@@ -373,6 +373,7 @@
     <Compile Include="ViewModel\NscGenerator\Person.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Schmiede\SchmiedeRüstungViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeFernkampfwaffeViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeNahkampfwaffeViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeSchildViewModel.cs" />
