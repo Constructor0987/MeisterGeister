@@ -96,6 +96,12 @@ namespace MeisterGeister.Model
             int changes = SetModifikatorCount(modTyp, wundenzahl);
             if (changes > 0)
             {
+                //WdS 83
+                int auschaden = 0;
+                for (int i = 1; i <= changes; i++)
+                    auschaden += Würfel.Wurf(6);
+                AusdauerAktuell -= auschaden;
+
                 switch (zone)
                 {
                     case Trefferzone.Kopf:
