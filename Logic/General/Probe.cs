@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MeisterGeister.Logic.General.INACTIVE
+namespace MeisterGeister.Logic.General
 {
     //Eigenschaften mit taw und modifikator
     public class Probe
@@ -25,12 +25,12 @@ namespace MeisterGeister.Logic.General.INACTIVE
             }
         }
 
-        int taW;
-        public int TaW
+        int fertigkeitswert;
+        public int Fertigkeitswert
         {
-            get { return taW; }
+            get { return fertigkeitswert; }
             set { 
-                taW = value;
+                fertigkeitswert = value;
                 chanceBerechnet = false;
             }
         }
@@ -70,7 +70,7 @@ namespace MeisterGeister.Logic.General.INACTIVE
         {
             ProbenErgebnis pe = new ProbenErgebnis();
             pe.Würfe = new int[Werte.Length];
-            pe.Übrig = TaW;
+            pe.Übrig = Fertigkeitswert;
             int einsen = 0, zwanzigen = 0;
             for (int i = 0; i < Werte.Length; i++)
             {
@@ -101,13 +101,13 @@ namespace MeisterGeister.Logic.General.INACTIVE
         private double ErfolgsChanceBerechnen()
         {
             if(Werte.Length==3)
-                return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], TaW - Modifikator);
+                return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], Fertigkeitswert - Modifikator);
             chanceBerechnet = true;
             if (Werte.Length == 1)
             {
                 //nicht optimal. 1 und 20 nicht betrachetet.
-                erwartungswert = Werte[0] - 10.5 + TaW - Modifikator;
-                return erfolgsschance = Math.Min( (Werte[0]-(TaW - Modifikator))/20, 1.0);
+                erwartungswert = Werte[0] - 10.5 + Fertigkeitswert - Modifikator;
+                return erfolgsschance = Math.Min( (Werte[0]-(Fertigkeitswert - Modifikator))/20, 1.0);
             }
             return erfolgsschance = erwartungswert = 0;
         }

@@ -326,7 +326,7 @@ namespace MeisterGeister.View.ProbenWürfel
                     if (heldRow.AktiveHeldengruppe)
                         AddHeldProbenItem(new Held(heldRow), probe, heldRow.IsProbenNull() ? true : heldRow.Proben);
                 }
-                _probenErgebnisse.Sort(new ProbenErgebnisComparer()); // Sortieren
+                _probenErgebnisse.Sort(new MeisterGeister.LogicAlt.General.ProbenErgebnisComparer()); // Sortieren
 
                 BerechneProbeÜbrigSumme();
 
@@ -387,7 +387,7 @@ namespace MeisterGeister.View.ProbenWürfel
                     if (!heldRow.IsAktiveHeldengruppeNull() && heldRow.AktiveHeldengruppe)
                         AddHeldProbenItem(new Held(heldRow), probe);
                 }
-                _probenErgebnisse.Sort(new ProbenErgebnisComparer()); // Sortieren
+                _probenErgebnisse.Sort(new MeisterGeister.LogicAlt.General.ProbenErgebnisComparer()); // Sortieren
 
                 _textBlockTalentProbeSumme.Text = "Unabhängige Zusammenarbeit: -\nMit fähigstem Held als Vorarbeiter: -";
 
@@ -401,7 +401,7 @@ namespace MeisterGeister.View.ProbenWürfel
         {
             int tapSum = 0, vorSum = 0, i = 1;
             string art = "Übrig";
-            foreach (ProbenErgebnis er in _probenErgebnisse)
+            foreach (MeisterGeister.LogicAlt.General.ProbenErgebnis er in _probenErgebnisse)
             {
                 if (er.Held.HeldDataRow.IsProbenNull() ? true : er.Held.HeldDataRow.Proben) // nur summieren, wenn Held geprobt werden soll
                 {
@@ -411,8 +411,8 @@ namespace MeisterGeister.View.ProbenWürfel
                         vorSum += Convert.ToInt32(Math.Round((double)er.Übrig / i, 0));
                         i++;
                     }
-                    if (er is DreierProbenErgebnis)
-                        art = ((DreierProbenErgebnis)er).PunkteArt + "*";
+                    if (er is MeisterGeister.LogicAlt.General.DreierProbenErgebnis)
+                        art = ((MeisterGeister.LogicAlt.General.DreierProbenErgebnis)er).PunkteArt + "*";
                 }
             }
             _textBlockTalentProbeSumme.Text = string.Format("Unabhängige Zusammenarbeit: {0} {1}\nMit fähigstem Held als Vorarbeiter: {2} {1}", tapSum, art, vorSum);
@@ -434,7 +434,7 @@ namespace MeisterGeister.View.ProbenWürfel
                 }
                 foreach (var w in wList)
                 {
-                    var er = new DreierProbenErgebnis { Held = held };
+                    var er = new MeisterGeister.LogicAlt.General.DreierProbenErgebnis { Held = held };
                     if (w.Aktiviert)
                     {
                         // Behinderung
@@ -463,9 +463,9 @@ namespace MeisterGeister.View.ProbenWürfel
                             er.Behinderung = be;
                             er.Wert = taw;
                             er.Mod = mod;
-                            er.E1Ergebnis = new EigenschaftProbenErgebnis(er) { Wert = e1 };
-                            er.E2Ergebnis = new EigenschaftProbenErgebnis(er) { Wert = e2 };
-                            er.E3Ergebnis = new EigenschaftProbenErgebnis(er) { Wert = e3 };
+                            er.E1Ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis(er) { Wert = e1 };
+                            er.E2Ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis(er) { Wert = e2 };
+                            er.E3Ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis(er) { Wert = e3 };
                         }
                         else
                         { // Probe würfeln
@@ -486,7 +486,7 @@ namespace MeisterGeister.View.ProbenWürfel
             }
             else if (probe is Eigenschaft)
             {
-                var ergebnis = new EigenschaftProbenErgebnis { Held = held };
+                var ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis { Held = held };
                 int e = held.Eigenschaft(((Eigenschaft)probe).Name);
                 int mod = _intBoxProbeMod.Value;
 
@@ -505,7 +505,7 @@ namespace MeisterGeister.View.ProbenWürfel
             }
         }
 
-        private readonly List<ProbenErgebnis> _probenErgebnisse = new List<ProbenErgebnis>();
+        private readonly List<MeisterGeister.LogicAlt.General.ProbenErgebnis> _probenErgebnisse = new List<MeisterGeister.LogicAlt.General.ProbenErgebnis>();
 
         private void ImageProbeWiki_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -540,7 +540,7 @@ namespace MeisterGeister.View.ProbenWürfel
             BerechneProbeÜbrigSumme();
         }
 
-        private void ProbenErgebnisAktualisieren(EigenschaftProbenErgebnis probenErgebnis)
+        private void ProbenErgebnisAktualisieren(MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis probenErgebnis)
         {
             IProbe probe = SelectedProbe();
             if (probe is Talent || probe is Zauber)
@@ -569,7 +569,7 @@ namespace MeisterGeister.View.ProbenWürfel
             }
         }
 
-        private int BerechneEffBehinderung(ProbenErgebnis probenErgebnis)
+        private int BerechneEffBehinderung(MeisterGeister.LogicAlt.General.ProbenErgebnis probenErgebnis)
         {
             IProbe probe = SelectedProbe();
             int be = 0;

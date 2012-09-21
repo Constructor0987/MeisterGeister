@@ -388,6 +388,8 @@
     <Compile Include="ViewModel\NscGenerator\Person.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Proben\ProbeControlViewModel.cs" />
+    <Compile Include="ViewModel\Proben\ProbenViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">
       <DependentUpon>AbenteuerView.xaml</DependentUpon>

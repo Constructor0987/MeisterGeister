@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Talent
+    public partial class Talent : MeisterGeister.Logic.General.Probe
     {
         public List<string> Talentspezialisierungen(Held h)
         {

@@ -1,8 +1,9 @@
 ﻿using System;
+using MeisterGeister.Logic.General;
 // Eigene Usings
 using MeisterGeister.Logic.Settings;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     public class ProbenErgebnisComparer : System.Collections.Generic.IComparer<ProbenErgebnis>
     {

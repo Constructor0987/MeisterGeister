@@ -734,7 +734,7 @@ namespace MeisterGeister.ViewModel.Kampf.LogicAlt
 
         public void Orientieren()
         {
-            ProbenErgebnis pErgebnis = new ProbenErgebnis();
+            MeisterGeister.LogicAlt.General.ProbenErgebnis pErgebnis = new MeisterGeister.LogicAlt.General.ProbenErgebnis();
             pErgebnis.Gelungen = true;
 
             if (!(HatAufmerksamkeit && HatVoraussetzungenAufmerksamkeit))

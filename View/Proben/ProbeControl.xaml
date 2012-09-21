@@ -5,22 +5,63 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
-             d:DesignHeight="76" d:DesignWidth="81">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <ViewGeneral:WürfelControl Grid.Column="1" Grid.Row="1" Height="28" Width="28" Würfel="_1W20" />
-        <ViewGeneral:WürfelControl Grid.Column="2" Grid.Row="1" Height="28" Width="28" Würfel="_1W20" />
-        <ViewGeneral:WürfelControl Grid.Column="3" Grid.Row="1" Height="28" Width="28" Würfel="_1W20" />
-    </Grid>
+             d:DesignHeight="152" d:DesignWidth="204" DataContextChanged="UserControl_DataContextChanged_1">
+    <Border Style="{DynamicResource ControlContentBorder}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Held:" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Held.Name}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Talent:" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="Pflanzensuche" />
+            </Grid>
+            <ListBox Grid.Row="2" Grid.Column="1" BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemsSource="{Binding EigenschaftWurfItemListe}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" />
+                            <ViewGeneral:IntBox Grid.Row="1" Value="{Binding Wert}" ToolTip="Eigenschafswert" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Row="2" Text="{Binding Wurf}" ToolTip="Ergebnis des Wurfs" HorizontalAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Grid.Row="2" Grid.Column="2" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}">
+                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Height="32" Width="32" />
+            </Button>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Ergebnis.Übrig}" ToolTip="Übrig behaltene Punkte" />
+        </Grid>
+    </Border>
 </UserControl>

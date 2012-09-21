@@ -2220,7 +2220,7 @@ namespace MeisterGeister.Logic.General
         
     }
 
-    public delegate ProbenErgebnis ProbeWürfeln(Wesen wesen, IProbe probe, string aktion);
+    public delegate MeisterGeister.LogicAlt.General.ProbenErgebnis ProbeWürfeln(Wesen wesen, IProbe probe, string aktion);
 
     public class DreierProbenWert
     {

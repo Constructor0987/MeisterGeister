@@ -55,14 +55,14 @@ namespace MeisterGeister.View.Kampf
             SortKämpfer();
         }
 
-        public ProbenErgebnis WesenProbeWürfeln_Event(Wesen wesen, IProbe probe, string aktion)
+        public LogicAlt.General.ProbenErgebnis WesenProbeWürfeln_Event(Wesen wesen, IProbe probe, string aktion)
         {
             int wert = 0;
             if (wesen is Held)
             {
                 wert = ((Held)wesen).Eigenschaft(probe.Name);
             }
-            ProbenErgebnis pErgebnis = new ProbenErgebnis();
+            LogicAlt.General.ProbenErgebnis pErgebnis = new LogicAlt.General.ProbenErgebnis();
             if (MessageBox.Show(string.Format("{0}: {1}-Probe ({2}).\nGelungen?", aktion, probe.Name,
                 wert), wesen.Name,
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes)
