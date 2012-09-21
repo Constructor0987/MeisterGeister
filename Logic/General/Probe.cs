@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace MeisterGeister.Logic.General
 {
     //Eigenschaften mit taw und modifikator
+    [DataContract(IsReference = true)]
     public class Probe
     {
         int[] werte;
