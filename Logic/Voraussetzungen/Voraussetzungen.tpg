@@ -167,7 +167,7 @@ Sonderfertigkeit -> SF WHITESPACE Text Wert?
 	string wert = null;
 	if($Wert != null)
 		wert = Convert.ToString($Wert);
-	return held.HatSonderfertigkeitUndVoraussetzzungen(sfName, wert);
+	return held.HatSonderfertigkeitUndVoraussetzungen(sfName, wert);
 
 };
 

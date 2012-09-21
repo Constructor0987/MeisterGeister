@@ -56,27 +56,32 @@ namespace MeisterGeister.Model
             get { throw new NotImplementedException(); }
         }
 
+        [DependentProperty("KO")]
         public int Körperkraft
         {
             get { return KO; }
         }
 
+        [DependentProperty("KO")]
         public int Gewandheit
         {
             get { return KO; }
         }
 
+        [DependentProperty("KO")]
         public int Konstitution
         {
             get { return KO; }
         }
 
         //return GS abhängig vom Modus (fliegend, am boden, galopp, etc.)
+        [DependentProperty("GS")]
         public int Geschwindigkeit
         {
             get { return GS; }
         }
 
+        [DependentProperty("LE")]
         public int LebensenergieMax
         {
             get { return LE;  }
@@ -105,6 +110,7 @@ namespace MeisterGeister.Model
             get { throw new NotImplementedException(); }
         }
 
+        [DependentProperty("AU")]
         public int AusdauerMax
         {
             get { return AU; }
@@ -132,6 +138,7 @@ namespace MeisterGeister.Model
             get { throw new NotImplementedException(); }
         }
 
+        [DependentProperty("AE")]
         public int AstralenergieMax
         {
             get { return AE; }
@@ -173,6 +180,7 @@ namespace MeisterGeister.Model
             get { return PA; }
         }
 
+        [DependentProperty("MRKörper")]
         public int MR
         {
             get { return MRKörper ?? 0; }
@@ -183,6 +191,7 @@ namespace MeisterGeister.Model
             get { return null;  }
         }
 
+        [DependentProperty("PA")]
         public int? Ausweichen
         {
             get { return ((KampfLogic.IKämpfer)this).PA; }
@@ -193,6 +202,7 @@ namespace MeisterGeister.Model
             get { return 0; }
         }
 
+        [DependentProperty("Konstitution")]
         public int Wundschwelle
         {
             get { return (int)Math.Round(Konstitution / 2.0, MidpointRounding.AwayFromZero); }

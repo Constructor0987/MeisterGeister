@@ -113,7 +113,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null && SelectedAddSonderfertigkeit != null)
             {
-                if (!SelectedHeld.HatSonderfertigkeitUndVoraussetzzungen(SelectedAddSonderfertigkeit))
+                if (!SelectedHeld.HatSonderfertigkeitUndVoraussetzungen(SelectedAddSonderfertigkeit))
                     SelectedHeld.AddSonderfertigkeit(SelectedAddSonderfertigkeit, null);
 
                 NotifyRefresh();

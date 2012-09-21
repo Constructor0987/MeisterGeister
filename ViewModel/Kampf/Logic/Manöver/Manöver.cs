@@ -102,7 +102,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             if (Ausführender is Model.Held)
             {
                 Model.Held h = Ausführender as Model.Held;
-                if (h.HatSonderfertigkeitUndVoraussetzzungen("Klingentänzer"))
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Klingentänzer"))
                     malus = (int)Math.Round(malus / 2.0, MidpointRounding.AwayFromZero);
             }
             //TODO: Das gleiche auch für Gegner in Form einer Kampfregel? Macht das Sinn? Oder brauchen Gegner auch Manöver?

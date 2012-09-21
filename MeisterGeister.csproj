@@ -262,6 +262,7 @@
     </Compile>
     <Compile Include="Model\Audio_Titel.cs" />
     <Compile Include="Model\Audio_Playlist.cs" />
+    <Compile Include="Model\Kampfregel.cs" />
     <Compile Include="Model\Notizen.cs" />
     <Compile Include="Model\Service\AudioService.cs" />
     <Compile Include="Model\Service\KampfService.cs" />

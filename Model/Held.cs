@@ -523,7 +523,7 @@ namespace MeisterGeister.Model
             get
             {
                 return HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) || HatVorNachteil(VorNachteil.GeweihtAngrosch) || HatVorNachteil(VorNachteil.Sacerdos) || 
-                    HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.KontaktZumGroßenGeist) || HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.SpätweiheDunkleZeiten);
+                    HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.KontaktZumGroßenGeist) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeiten);
             }
         }
 
@@ -581,7 +581,7 @@ namespace MeisterGeister.Model
             get
             {
                 int basis = BaseMU + BaseIN + BaseCH;
-                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.GefäßDerSterne))
+                if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.GefäßDerSterne))
                     basis += BaseCH;
                 return (int)Math.Round(basis / 2.0, 0, MidpointRounding.AwayFromZero);
             }
@@ -740,9 +740,9 @@ namespace MeisterGeister.Model
                 int ini = InitiativeBasisOhneSonderfertigkeiten;
 
                 // Sonderfertigkeiten
-                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.Kampfreflexe) && Behinderung <= 4)
+                if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Kampfreflexe) && Behinderung <= 4)
                     ini += 4;
-                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.Kampfgespür))
+                if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Kampfgespür))
                     ini += 2;
 
                 return ini;
@@ -766,7 +766,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                if (HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit.Klingentänzer) && Behinderung <= 2)
+                if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Klingentänzer) && Behinderung <= 2)
                 {
                     return WürfelEnum._2W6;
                 }
@@ -1244,7 +1244,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzzungen(Sonderfertigkeit s)
+        public bool HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit s)
         {
             if (Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit == s).Count() > 0)
                 return s.CheckVoraussetzungen(this);
@@ -1254,7 +1254,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit mit bestimmtem Wert inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzzungen(string sonderfertigkeit, string wert)
+        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, string wert)
         {
             IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit.Name == sonderfertigkeit);
             if(hso.Count() == 0)
@@ -1274,9 +1274,9 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzzungen(string sonderfertigkeit)
+        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit)
         {
-            return HatSonderfertigkeitUndVoraussetzzungen(sonderfertigkeit, null);
+            return HatSonderfertigkeitUndVoraussetzungen(sonderfertigkeit, null);
         }
 
         /// <summary>
@@ -1393,11 +1393,11 @@ namespace MeisterGeister.Model
         {
             get {
                 int ausweichen = ParadeBasis;
-                if (HatSonderfertigkeitUndVoraussetzzungen("Ausweichen I"))
+                if (HatSonderfertigkeitUndVoraussetzungen("Ausweichen I"))
                     ausweichen += 3;
-                if (HatSonderfertigkeitUndVoraussetzzungen("Ausweichen II"))
+                if (HatSonderfertigkeitUndVoraussetzungen("Ausweichen II"))
                     ausweichen += 3;
-                if (HatSonderfertigkeitUndVoraussetzzungen("Ausweichen III"))
+                if (HatSonderfertigkeitUndVoraussetzungen("Ausweichen III"))
                     ausweichen += 3;
                 ausweichen += (Math.Max(Talentwert("Akrobatik") - 9, 0) / 3);
                 ausweichen -= Behinderung;
@@ -1476,11 +1476,11 @@ namespace MeisterGeister.Model
             set {
                 _kampfstil = value;
                 //TODO JT: Sicherstellen, dass auch zwei Waffen geführt werden
-                if (_kampfstil == KampfLogic.Kampfstil.BeidhändigerKampf && HatSonderfertigkeitUndVoraussetzzungen("Beidhändiger Kampf II"))
+                if (_kampfstil == KampfLogic.Kampfstil.BeidhändigerKampf && HatSonderfertigkeitUndVoraussetzungen("Beidhändiger Kampf II"))
                     Aktionen = 3;
-                else if (_kampfstil == KampfLogic.Kampfstil.Schildkampf && HatSonderfertigkeitUndVoraussetzzungen("Schildkampf II"))
+                else if (_kampfstil == KampfLogic.Kampfstil.Schildkampf && HatSonderfertigkeitUndVoraussetzungen("Schildkampf II"))
                     Aktionen = 3;
-                else if (_kampfstil == KampfLogic.Kampfstil.Parierwaffenstil && HatSonderfertigkeitUndVoraussetzzungen("Parierwaffen II") || HatSonderfertigkeitUndVoraussetzzungen("Tod von Links"))
+                else if (_kampfstil == KampfLogic.Kampfstil.Parierwaffenstil && HatSonderfertigkeitUndVoraussetzungen("Parierwaffen II") || HatSonderfertigkeitUndVoraussetzungen("Tod von Links"))
                     Aktionen = 3;
                 else
                     Aktionen = 2;

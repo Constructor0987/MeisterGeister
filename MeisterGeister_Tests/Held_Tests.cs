@@ -125,7 +125,7 @@ namespace MeisterGeister_Tests
         public void HatXTests()
         {
             Held h = new Held();
-            Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzzungen(new Sonderfertigkeit()));
+            Assert.IsFalse(h.HatSonderfertigkeitUndVoraussetzungen(new Sonderfertigkeit()));
             Assert.IsFalse(h.HatVorNachteil(new VorNachteil()));
         }
 

@@ -65,17 +65,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     stile.Insert(stile.Count, WaffenloserKampfstil.Ringen);
                 else
                     stile.Insert(0, WaffenloserKampfstil.Ringen);
-                if (h.HatSonderfertigkeitUndVoraussetzzungen("Bornländisch"))
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Bornländisch"))
                     stile.Insert(0, WaffenloserKampfstil.Bornländisch);
-                if (h.HatSonderfertigkeitUndVoraussetzzungen("Unauer Schule"))
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Unauer Schule"))
                     stile.Insert(0, WaffenloserKampfstil.UnauerSchule);
-                if (h.HatSonderfertigkeitUndVoraussetzzungen("Hammerfaust"))
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Hammerfaust"))
                     stile.Insert(0, WaffenloserKampfstil.Hammerfaust);
-                if (h.HatSonderfertigkeitUndVoraussetzzungen("Gladiatorenstil"))
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Gladiatorenstil"))
                     stile.Insert(0, WaffenloserKampfstil.Gladiatorenstil);
-                if (h.HatSonderfertigkeitUndVoraussetzzungen("Mercanario"))
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Mercanario"))
                     stile.Insert(0, WaffenloserKampfstil.Mercanario);
-                if (h.HatSonderfertigkeitUndVoraussetzzungen("Hruruzat"))
+                if (h.HatSonderfertigkeitUndVoraussetzungen("Hruruzat"))
                     stile.Insert(0, WaffenloserKampfstil.Hruruzat);
             }
             return stile;
