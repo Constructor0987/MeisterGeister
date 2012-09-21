@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
                 {
                     case Trefferzone.Kopf:
                         //TODO JT: dem aktuellen Kampf erzählen, dass changes * 2W6 Ini verloren gegangen sind (per Event)
-                        if (wundenzahl == 3)
+                        if (wundenzahl >= 3 && wundenzahl - changes < 3)
                         {
                             //bewusstlos + blutverlust
                             LebensenergieAktuell -= (Würfel.Wurf(6) + Würfel.Wurf(6)); //eventuell per Dialog?
@@ -118,21 +118,21 @@ namespace MeisterGeister.Model
                         for (int i = 1; i <= changes; i++)
                             zusatzschaden += Würfel.Wurf(6);
                         LebensenergieAktuell -= zusatzschaden; //eventuell per Dialog?
-                        if (wundenzahl == 3)
+                        if (wundenzahl == 3 && wundenzahl - changes < 3)
                         {
                             //bewusstlos + blutverlust
                         }
                         break;
                     case Trefferzone.ArmL:
                     case Trefferzone.ArmR:
-                        if (wundenzahl == 3)
+                        if (wundenzahl == 3 && wundenzahl - changes < 3)
                         {
                             //arm handlungsunfähig
                         }
                         break;
                     case Trefferzone.BeinL:
                     case Trefferzone.BeinR:
-                        if (wundenzahl == 3)
+                        if (wundenzahl == 3 && wundenzahl - changes < 3)
                         {
                             //sturz, kampfunfähig
                         }
