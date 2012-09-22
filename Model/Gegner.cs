@@ -63,7 +63,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("KO")]
-        public int Gewandheit
+        public int Gewandtheit
         {
             get { return KO; }
         }

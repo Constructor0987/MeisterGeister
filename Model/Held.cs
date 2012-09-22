@@ -240,7 +240,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("GE")]
-        public int Gewandheit
+        public int Gewandtheit
         {
             get
             {
@@ -272,6 +272,42 @@ namespace MeisterGeister.Model
                 if (Modifikatoren != null)
                     Modifikatoren.FindAll(m => m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
                 return e;
+            }
+        }
+
+        public int GetEigenschaftWert(string eigenschaft)
+        {
+            switch (eigenschaft)
+            {
+                case "MU":
+                case "Mut":
+                    return Mut;
+                case "KL":
+                case "Klugheit":
+                    return Klugheit;
+                case "IN":
+                case "Intuition":
+                    return Intuition;
+                case "CH":
+                case "Charisma":
+                    return Charisma;
+                case "FF":
+                case "Fingerfertigkeit":
+                    return Fingerfertigkeit;
+                case "GE":
+                case "Gewandtheit":
+                    return Gewandtheit;
+                case "KO":
+                case "Konstitution":
+                    return Konstitution;
+                case "KK":
+                case "Körperkraft":
+                    return Körperkraft;
+                case "SO":
+                case "Sozialstatus":
+                    return (int)SO;
+                default:
+                    return 0;
             }
         }
         #endregion
