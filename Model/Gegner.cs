@@ -281,11 +281,6 @@ namespace MeisterGeister.Model
             set { }
         }
 
-        public List<KampfLogic.Modifikatoren.IModifikator> Modifikatoren
-        {
-            get { return new List<KampfLogic.Modifikatoren.IModifikator>(); }
-        }
-
         public List<KampfLogic.Manöver.Manöver> Manöver
         {
             get { throw new NotImplementedException(); }

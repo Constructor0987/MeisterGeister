@@ -10,6 +10,7 @@ using MeisterGeister.Model.Service;
 
 using MeisterGeister.ViewModel.Kampf.Logic;
 using Global = MeisterGeister.Global;
+using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 
 namespace MeisterGeister_Tests
 {
@@ -105,8 +106,46 @@ namespace MeisterGeister_Tests
 
             kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.BeidhändigerKampf;
             Assert.AreEqual(3, gero.Aktionen);
-            
             Assert.AreEqual(3, zant.Aktionen);
+
+            kampf.NeueKampfrunde();
+            //Jeder macht seine Aktion-Reaktion-Zuteilung
+            zant.Abwehraktionen = 1;
+            zant.Angriffsaktionen = 2;
+            gero.Angriffsaktionen = 3;
+            gero.Abwehraktionen = 0;
+            Assert.AreEqual(gero.Aktionen, gero.Angriffsaktionen + gero.Abwehraktionen);
+            //nun werden aktionen geplant, diese phase beginnt automatisch mit der ersten geplanten aktion.
+            //der kampf sollte dann eventuell prüfen, ob auch alle kämpfer korrekte angaben zur umwandlung gemacht haben.
+            ManöverInfo[] mInfos = {
+                                       new ManöverInfo(kampf.Kämpfer[gero], new Attacke(gero), 0),
+                                       new ManöverInfo(kampf.Kämpfer[zant], new Attacke(zant), 0),
+                                       new ManöverInfo(kampf.Kämpfer[gero], new Attacke(gero), -4),
+                                       new ManöverInfo(kampf.Kämpfer[gero], new Attacke(gero), -8),
+                                       new ManöverInfo(kampf.Kämpfer[zant], new Attacke(zant), -8)
+                                   }; 
+            kampf.InitiativListe.Add(mInfos[1]);
+            Assert.IsFalse(kampf.UmwandelnMöglich, "ab jetzt sind die Aktion-Reaktion-Zuteilungen gesperrt");
+            //ausser man hat Aufmerksamkeit oder Kampfgespür
+            //auch wenn der zant aufmerksamkeit hat, ist er nun geperrt, da seine erste aktion durch ist.
+            kampf.InitiativListe.Add(mInfos[4]);
+            kampf.InitiativListe.Add(mInfos[0]);
+            kampf.InitiativListe.Add(mInfos[2]);
+            kampf.InitiativListe.Add(mInfos[3]);
+            //Ini-Liste ist korrekt sortiert
+            for(int i=0; i<mInfos.Length; i++)
+                Assert.AreEqual(mInfos[i], kampf.InitiativListe[i], "Ini-Liste ist korrekt sortiert");
+
+            //zur ausführung.
+            ManöverInfo mi = null;
+            //kampf sollte hier wieder prüfen, ob ein kämpfer überhaupt keine aktionen angesagt hat und das eventuell melden
+            while((mi = kampf.Next()) != null)
+            {
+                Console.WriteLine(String.Format("In INI-Phase {0} führt {2} ein(e) {1} aus. Das dauert {3} Aktionen.", mi.Initiative, mi.Manöver.Name, mi.Manöver.Ausführender, mi.Manöver.Dauer));
+                mi.Ausgeführt = true;
+            }
+            
+            
         }
     }
 }

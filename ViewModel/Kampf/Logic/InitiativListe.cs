@@ -39,11 +39,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return KämpferInfo.InitiativeBasis; }
         }
 
+        private Manöver.Manöver manöver;
+        public Manöver.Manöver Manöver
+        {
+            get { return manöver; }
+            private set { manöver = value; }
+        }
+
         public ManöverInfo(KämpferInfo ki, Manöver.Manöver m, int inimod)
         {
             KämpferInfo = ki;
-            InitiativeMod = inimod;
             ki.PropertyChanged += OnKämpferInfoChanged;
+            InitiativeMod = inimod;
+            Manöver = m;
+            Ausgeführt = false;
+        }
+
+        public bool Ausgeführt
+        {
+            get;
+            set; //private set; //sollte von einem Manöver-Event OnAusführung gesetzt werden
         }
 
         private void OnKämpferInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
@@ -95,11 +110,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         #region Add and Remove
-        public new void Add(ManöverInfo ki)
+        public new void Add(ManöverInfo mi)
         {
-            base.Add(ki);
-            ki.PropertyChanged += OnManöverInfoChanged;
-            OnChanged("List");
+            //hier werden alle KeineAktion-Manöver des Kämpfers entfernt. man könnte auch für jede mögliche Aktion ein KeineAktion-Manöver anlegen, dann müsste man hier wieder anpassen.
+            foreach (ManöverInfo minfo in this.Where(m => m.KämpferInfo == mi.KämpferInfo && m.Manöver is Manöver.KeineAktion).ToList())
+                Remove(minfo);
+            base.Add(mi);
+            mi.PropertyChanged += OnManöverInfoChanged;
+            OnCollectionChanged(CollectionChangeAction.Add, mi);
             Sort();
         }
 
@@ -124,14 +142,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             mi.PropertyChanged -= OnManöverInfoChanged;
             base.Remove(mi);
-            OnChanged("List");
+            OnCollectionChanged(CollectionChangeAction.Remove, mi);
         }
 
         public new void RemoveAt(int index)
         {
+            var mi = this[index];
             this[index].PropertyChanged -= OnManöverInfoChanged;
             base.RemoveAt(index);
-            OnChanged("List");
+            OnCollectionChanged(CollectionChangeAction.Remove, mi);
         }
 
         public new void RemoveAll(Predicate<ManöverInfo> match)
@@ -144,14 +163,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             throw new NotImplementedException();
         }
 
+        public void Remove(KämpferInfo ki)
+        {
+            Remove(ki.Kämpfer);
+        }
+
         public void Remove(IKämpfer k)
         {
             foreach (ManöverInfo mi in this[k])
             {
                 mi.PropertyChanged -= OnManöverInfoChanged;
                 base.Remove(mi);
+                OnCollectionChanged(CollectionChangeAction.Remove, mi);
             }
-            OnChanged("List");
         }
         #endregion
 
@@ -203,5 +227,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         #endregion
+
+        private void OnCollectionChanged(CollectionChangeAction action, object element)
+        {
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(this, new CollectionChangeEventArgs(action, element));
+            }
+        }
+
+        public event CollectionChangeEventHandler CollectionChanged;
     }
 }

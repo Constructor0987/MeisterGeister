@@ -23,5 +23,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             get { return "Angriffsaktion"; }
         }
+
+        protected override void OnAktion()
+        {
+            //Wenn Waffe schwerer als KK*10 Unzen
+            // Ausführender.AusdauerAktuell--;
+            //Wenn BE / 3 > 0
+            // Ausführender.AusdauerAktuell-= BE/3;
+            base.OnAktion();
+        }
     }
 }

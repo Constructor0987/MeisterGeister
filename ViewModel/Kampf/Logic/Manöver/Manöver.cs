@@ -3,11 +3,33 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+
+using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class Manöver
     {
+        protected static Object syncRoot;
+        protected static volatile List<Type> _manöverListe = null;
+        public static List<Type> ManöverListe
+        {
+            get {
+                if (Manöver._manöverListe == null) {
+                    lock (Manöver.syncRoot) {
+                        if (Manöver._manöverListe == null)
+                        {
+                            Assembly ass = Assembly.GetAssembly(typeof(Manöver));
+                            Manöver._manöverListe = ass.GetTypes().Where(t => t.IsSubclassOf(typeof(Manöver))).ToList(); ;
+                        }
+                    }
+                }
+                return Manöver._manöverListe;
+            }
+        }
+
         protected Manöver(IKämpfer ausführender)
             : this(ausführender, new Dictionary<IWaffe, IKämpfer>(1))
         {
@@ -30,6 +52,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             get { return "Manöver"; }
         }
+
+        /// <summary>
+        /// Dauer des Manövers
+        /// </summary>
+        /// hiermit bin ich noch sehr unzufrieden. wie mache ich denn sowas wie ALLE aktionen und Reaktionen oder freie aktionen
+        public virtual int Dauer
+        {
+            get { return 1; }
+        }
+
         /*
          * ausführender, ziele, variable erschwernis (aufgeteilt in ansage und grunderschwernis,
          * so dass man den aufschlag bei misslingen für die nächste aktion erstellen kann)
@@ -88,6 +120,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         /// <param name="ziel"></param>
         public virtual void Erfolg(IKämpfer ziel)
         {
+            OnAktion();
         }
 
         //und eine für den misserfolg
@@ -105,12 +138,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 if (h.HatSonderfertigkeitUndVoraussetzungen("Klingentänzer"))
                     malus = (int)Math.Round(malus / 2.0, MidpointRounding.AwayFromZero);
             }
-            //TODO: Das gleiche auch für Gegner in Form einer Kampfregel? Macht das Sinn? Oder brauchen Gegner auch Manöver?
+            //TODO: Das gleiche auch für Gegner in Form einer Kampfregel?
             if (malus > 0)
             {
                 //TODO JT: Klasse MisslungenModifikator anlegen
                 //Ausführender.Modifikatoren.Add(new MisslungenModifikator(malus));
             }
+            OnAktion();
+        }
+
+        //sollte man sowas als Event machen?
+        protected virtual void OnAktion()
+        {
+            if (Dauer >= 1) //.Wert > 0 && Dauer.Einheit != Zeiteinheit.FreieAktion && Dauer.Einheit != Zeiteinheit.Keine)
+                Ausführender.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
         }
     }
 }
