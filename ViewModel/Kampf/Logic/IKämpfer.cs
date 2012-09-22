@@ -20,7 +20,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         //Notwendige Eigenschaften
         int Körperkraft { get; }
-        int Gewandheit { get; }
+        int Gewandtheit { get; }
         int Konstitution { get; }
         int Geschwindigkeit { get; }
 
