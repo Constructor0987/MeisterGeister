@@ -25,16 +25,11 @@ namespace MeisterGeister.View.Proben
         public ProbeControl()
         {
             InitializeComponent();
-            DataContext = new VM.ProbeControlViewModel();
+            VM = new VM.ProbeControlViewModel();
+            DataContext = VM;
         }
 
-        private void UserControl_DataContextChanged_1(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && DataContext != null)
-                (DataContext as VM.ProbeControlViewModel).Refresh();
-        }
-
-        //private VM.ProbeControlViewModel VM { get; set; }
+        private VM.ProbeControlViewModel VM { get; set; }
 
 
         //public VM.ProbeControlViewModel VM
@@ -49,7 +44,7 @@ namespace MeisterGeister.View.Proben
         //private static void OnViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         //{
         //    ProbeControl control = (ProbeControl)d;
-        //    control.DataContext = control.VM;
+        //    //control.DataContext = control.VM;
         //    //(e.NewValue as VM.ProbeControlViewModel).Gewürfelt += control.ProbeControl_Gewürfelt;
         //}
 
@@ -68,20 +63,21 @@ namespace MeisterGeister.View.Proben
         //    //(e.NewValue as Probe).Gewürfelt += control.ProbeControl_Gewürfelt;
         //}
 
-        //public Model.Held Held
-        //{
-        //    get { return (Model.Held)GetValue(HeldProperty); }
-        //    set { SetValue(HeldProperty, value); }
-        //}
-        //public static readonly DependencyProperty HeldProperty = DependencyProperty.Register(
-        //  "Held", typeof(Model.Held), typeof(ProbeControl),
-        //        new FrameworkPropertyMetadata(new Model.Held(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHeldChanged)));
+        
+        public Model.Held Held
+        {
+            get { return (Model.Held)GetValue(HeldProperty); }
+            set { SetValue(HeldProperty, value); }
+        }
+        public static readonly DependencyProperty HeldProperty = DependencyProperty.Register(
+          "Held", typeof(Model.Held), typeof(ProbeControl),
+                new FrameworkPropertyMetadata(new Model.Held(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnHeldChanged)));
 
-        //private static void OnHeldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    ProbeControl control = (ProbeControl)d;
-        //    control.VM.Held = control.Held;// e.NewValue as Model.Held;
-        //}
+        private static void OnHeldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ProbeControl control = (ProbeControl)d;
+            control.VM.Held = control.Held;// e.NewValue as Model.Held;
+        }
 
 
         //private void ProbeControl_Gewürfelt(object sender, EventArgs e)

@@ -45,6 +45,57 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        private Probe _probe = null;
+        [DependentProperty("Probenname")]
+        public Probe Probe
+        {
+            get { return _probe; }
+            set
+            {
+                _probe = value;
+
+                // Wertanzahl setzen
+                if (Probe is Model.Talent || Probe is Model.Zauber)
+                {
+                    WertCount = 3;
+                    if (Probe is Model.Talent)
+                    {
+                        EigenschaftWurfItemListe[0].Name = (Probe as Model.Talent).Eigenschaft1;
+                        EigenschaftWurfItemListe[1].Name = (Probe as Model.Talent).Eigenschaft2;
+                        EigenschaftWurfItemListe[2].Name = (Probe as Model.Talent).Eigenschaft3;
+                        if (Held != null)
+                        {
+                            EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft1);
+                            EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft2);
+                            EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft3);
+                        }
+                    }
+                    // TODO MT: Zauber und Eigenschaften ergänzen und in Untermethoden auslagern
+                }
+                else
+                    WertCount = 1;
+
+                OnChanged("Probe");
+            }
+        }
+
+        public string Probenname
+        {
+            get 
+            {
+                if (Probe == null)
+                    return string.Empty;
+                if (Probe is Model.Talent)
+                    return (Probe as Model.Talent).Talentname;
+                else if (Probe is Model.Zauber)
+                    return (Probe as Model.Zauber).Name;
+                // TODO MT: GetEigenschaftWert muss noch von Probe ableiten
+                //else if (Probe is GetEigenschaftWert) 
+                //    return (Probe as GetEigenschaftWert).Name;
+                return string.Empty; 
+            }
+        }
+
         [DependentProperty("ProbeItemListe")]
         public int WertCount
         {
@@ -80,7 +131,9 @@ namespace MeisterGeister.ViewModel.Proben
         public ProbeControlViewModel()
         {
             // TODO MT: Testdaten
-            WertCount = MeisterGeister.Logic.General.Würfel.Wurf(4);
+            // Test: Zufällige Anzahl von Werten
+            //WertCount = MeisterGeister.Logic.General.Würfel.Wurf(4);
+            WertCount = 3;
             //ProbeItems = new List<ProbeItem>() { 
             //    new ProbeItem() { Wert = 18, Name = "MU" },
             //    new ProbeItem() { Wert = 8, Name = "KL"}, 
@@ -131,13 +184,13 @@ namespace MeisterGeister.ViewModel.Proben
     {
         private string _name = string.Empty;
         /// <summary>
-        /// Der Name der Eigenschaft, auf die geworfen wird.
+        /// Der Name der GetEigenschaftWert, auf die geworfen wird.
         /// </summary>
         public string Name { get { return _name; } set { _name = value; OnChanged("Name"); } }
 
         private int _wert = 0;
         /// <summary>
-        /// Der Wert der Eigenschaft.
+        /// Der Wert der GetEigenschaftWert.
         /// </summary>
         public int Wert { get { return _wert; } set { _wert = value; OnChanged("Wert"); } }
 

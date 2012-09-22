@@ -27,8 +27,8 @@ namespace MeisterGeister.ViewModel.Proben
             get { return Global.ContextHeld.HeldenGruppeListe; }
         }
 
-        private List<ProbeItem> _probeItemListe = new List<ProbeItem>();
-        public List<ProbeItem> ProbeItemListe
+        private ObservableCollection<ProbeControlViewModel> _probeItemListe = new ObservableCollection<ProbeControlViewModel>();
+        public ObservableCollection<ProbeControlViewModel> ProbeItemListe
         {
             get { return _probeItemListe; }
             set
@@ -51,15 +51,21 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 ProbeControlViewModel vm = new ProbeControlViewModel()
                 {
-                    Held = item
+                    Held = item,
+                    Probe = talent
                 };
 
-                ProbeItemListe.Add(new ProbeItem() {
-                    //Held = HeldListe.FirstOrDefault(),
-                    //Probe = talent, 
-                    VM = vm
-                });
+                ProbeItemListe.Add(vm);
+
+                //ProbeItemListe.Add(new ProbeItem() {
+                //    //Held = HeldListe.FirstOrDefault(),
+                //    //Probe = talent, 
+                //    VM = vm
+                //});
             }
+
+            ProbeItemListe.Add(new ProbeControlViewModel() {Held = HeldListe[0], Probe = new Probe()});
+
             OnChanged("ProbeItemListe");
 
             onWürfeln = new Base.CommandBase(Würfeln, null);
@@ -74,7 +80,7 @@ namespace MeisterGeister.ViewModel.Proben
             // Alle Proben neu würfeln
             foreach (var item in ProbeItemListe)
             {
-                item.VM.Würfeln(null);
+                item.Würfeln(null);
             }
         }
 

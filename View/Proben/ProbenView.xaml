@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
              d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}">
     <Grid>
@@ -13,16 +14,17 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="133*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <!--<Proben:ProbeControl Margin="5" />-->
-            <Proben:ProbeControl Margin="5" DataContext="{Binding ProbeItemListe[0].VM}" />
+            <Proben:ProbeControl Margin="5" DataContext="{Binding ProbeItemListe[0]}" />
             <Proben:ProbeControl Margin="5" />
             <Button Content="Alle Würfeln" Margin="20" Command="{Binding OnWürfeln}" />
         </StackPanel>
-        <!--<Proben:ProbeControl Grid.Row="0" Grid.Column="1" Gewürfelt="ProbeControl_Gewürfelt_1"  />-->
+        
         <Expander Grid.Column="1" Grid.Row="1" IsExpanded="True">
             <Expander.Header>
                 <TextBlock Text="Proben" Style="{DynamicResource TextTitel}" />
@@ -39,10 +41,9 @@
                         <DataTemplate>
                             <Border Margin="5">
                                 <StackPanel>
-                                    <!--<Proben:ProbeControl Held="{Binding Held}" Probe="{Binding Probe}" />-->
-                                    <Proben:ProbeControl DataContext="{Binding VM}" />
-                                    <TextBlock Text="{Binding VM.Held}" />
-                                    <TextBlock Text="{Binding VM.Ergebnis.Übrig}" />
+                                    <Proben:ProbeControl DataContext="{Binding}" />
+                                    <TextBlock Text="{Binding Held}" />
+                                    <TextBlock Text="{Binding Ergebnis.Übrig}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -51,10 +52,11 @@
             </Border>
         </Expander>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Margin="10" VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="10" VerticalAlignment="Top">
             <TextBlock Text=""/>
             <TextBlock Text="Proben" Margin="5,0,10,0" />
             <TextBlock Text="" ToolTip=""/>
         </StackPanel>
+        
     </Grid>
 </UserControl>
