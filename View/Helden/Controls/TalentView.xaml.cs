@@ -29,6 +29,7 @@ namespace MeisterGeister.View.Helden.Controls
             this.DataContext = new VM.TalentViewModel();
 		}
         #endregion
+        #region 
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
             try
             {
@@ -40,13 +41,11 @@ namespace MeisterGeister.View.Helden.Controls
             if (DataContext as VM.Logic.IChangeListener != null)
                 (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
 		}
-
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (DataContext as VM.Logic.IChangeListener != null)
                 (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
         }
-
         private void RefreshHeld() {
             // Talente-Sortierung aktualisieren
             //if (_dataGridHeldTalente.Items is System.Windows.Data.CollectionView) {
@@ -59,7 +58,6 @@ namespace MeisterGeister.View.Helden.Controls
             //    }
             //}
         }
-
 
         private Model.Talent SelectedTalentRow {
             get;
@@ -154,5 +152,29 @@ namespace MeisterGeister.View.Helden.Controls
             if (e.Key == Key.Enter)
                 InsertTalent();
         }
-	}
+#endregion
+        #region Methoden
+        private void CloseAllExpanderTalente() {
+            expGesellschaft.IsExpanded = false;
+            expHandwerk.IsExpanded = false;
+            expKampf.IsExpanded = false;
+            expKoerper.IsExpanded = false;
+            expNatur.IsExpanded = false;
+            expSprache.IsExpanded = false;
+            expWissen.IsExpanded = false;
+        }
+        #endregion
+        #region UI
+        
+        private void brdKlicked(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            int idxTalent = ((sender as Border).Parent as StackPanel).Children.IndexOf(sender as Border);
+            CloseAllExpanderTalente();
+
+            //TODO DW: Reset, wenn alle Talente abgebildet werden
+            if (idxTalent < 7) {
+                (spHeldTalent.Children[idxTalent] as Expander).IsExpanded = true;
+            }
+        }
+        #endregion
+    }
 }
