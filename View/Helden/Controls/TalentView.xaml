@@ -22,7 +22,151 @@
                 <TextBlock Text="{Binding Talentname}" FontWeight="Bold" HorizontalAlignment="Left"/>
             </Border>
         </DataTemplate>
+		<Storyboard x:Key="OnMouseEnter1">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="image">
+				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleX)" Storyboard.TargetName="image">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleY)" Storyboard.TargetName="image">
+				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="image">
+				<EasingPointKeyFrame KeyTime="0" Value="1,0.5"/>
+				<EasingPointKeyFrame KeyTime="0:0:0.3" Value="1,0.5"/>
+			</PointAnimationUsingKeyFrames>
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-10"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave1">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+				<EasingThicknessKeyFrame KeyTime="0" Value="-10"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseEnter2">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-10"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave2">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+				<SplineThicknessKeyFrame KeyTime="0" Value="-10"/>
+				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseEnter3">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-10"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave3">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+				<SplineThicknessKeyFrame KeyTime="0" Value="-10"/>
+				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseEnter4">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-10"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave4">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+				<SplineThicknessKeyFrame KeyTime="0" Value="-10"/>
+				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseEnter5">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
+				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-10"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave5">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
+				<SplineThicknessKeyFrame KeyTime="0" Value="-10"/>
+				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseEnter6">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image5">
+				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-10"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave6">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image5">
+				<SplineThicknessKeyFrame KeyTime="0" Value="-10"/>
+				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseEnter7">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image6">
+				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-10"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave7">
+			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image6">
+				<SplineThicknessKeyFrame KeyTime="0" Value="-10"/>
+				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</ThicknessAnimationUsingKeyFrames>
+		</Storyboard>
     </UserControl.Resources>
+	<UserControl.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border">
+			<BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border1">
+			<BeginStoryboard x:Name="OnMouseEnter2_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter2}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border1">
+			<BeginStoryboard x:Name="OnMouseLeave2_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave2}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border2">
+			<BeginStoryboard x:Name="OnMouseEnter3_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter3}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border2">
+			<BeginStoryboard x:Name="OnMouseLeave3_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave3}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border3">
+			<BeginStoryboard x:Name="OnMouseEnter4_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter4}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border3">
+			<BeginStoryboard x:Name="OnMouseLeave4_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave4}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border">
+			<BeginStoryboard x:Name="OnMouseLeave1_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave1}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border6">
+			<BeginStoryboard Storyboard="{StaticResource OnMouseEnter5}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border6">
+			<BeginStoryboard x:Name="OnMouseLeave5_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave5}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border5">
+			<BeginStoryboard x:Name="OnMouseLeave6_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter6}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border5">
+			<BeginStoryboard x:Name="OnMouseLeave6_BeginStoryboard1" Storyboard="{StaticResource OnMouseLeave6}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border4">
+			<BeginStoryboard x:Name="OnMouseEnter7_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter7}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border4">
+			<BeginStoryboard x:Name="OnMouseLeave7_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave7}"/>
+		</EventTrigger>
+	</UserControl.Triggers>
     <Grid x:Name="LayoutRoot">
 
         <Grid>
@@ -36,31 +180,40 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="1" Grid.Column="1">
                 <StackPanel>
-                    <Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Kampftalente" MouseLeftButtonDown="brdKlicked">
-                    	<Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png"/>
+                    <Border x:Name="border" Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Kampftalente" MouseLeftButtonDown="brdKlicked">
+                    	<Image x:Name="image" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5">
+                    		<Image.RenderTransform>
+                    			<TransformGroup>
+                    				<ScaleTransform/>
+                    				<SkewTransform/>
+                    				<RotateTransform/>
+                    				<TranslateTransform/>
+                    			</TransformGroup>
+                    		</Image.RenderTransform>
+                    	</Image>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Körpertalente" MouseLeftButtonDown="brdKlicked">
-						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
+					<Border x:Name="border1" Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Körpertalente" MouseLeftButtonDown="brdKlicked">
+						<Image x:Name="image1" Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Gesellschaftstalente" MouseLeftButtonDown="brdKlicked">
-						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/helden_kopieren.png"/>
+					<Border x:Name="border2" Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Gesellschaftstalente" MouseLeftButtonDown="brdKlicked">
+						<Image x:Name="image2" Source="/DSA%20MeisterGeister;component/Images/Icons/helden_kopieren.png"/>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Naturtalente" MouseLeftButtonDown="brdKlicked">
-						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png"/>
+					<Border x:Name="border3" Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Naturtalente" MouseLeftButtonDown="brdKlicked">
+						<Image x:Name="image3" Source="/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png"/>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Wissenstalente" MouseLeftButtonDown="brdKlicked">
-						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png"/>
+					<Border x:Name="border6" Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Wissenstalente" MouseLeftButtonDown="brdKlicked">
+						<Image x:Name="image4" Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png"/>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Sprachtalente" MouseLeftButtonDown="brdKlicked">
-						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png"/>
+					<Border x:Name="border5" Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Sprachtalente" MouseLeftButtonDown="brdKlicked">
+						<Image x:Name="image5" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png"/>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Handwerkstalente" MouseLeftButtonDown="brdKlicked">
-						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/schmiede.png"/>
+					<Border x:Name="border4" Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Handwerkstalente" MouseLeftButtonDown="brdKlicked">
+						<Image x:Name="image6" Source="/DSA%20MeisterGeister;component/Images/Icons/schmiede.png"/>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Zaubertalente" MouseLeftButtonDown="brdKlicked">
+					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Zaubertalente" MouseLeftButtonDown="brdKlicked" IsEnabled="False">
 						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/zauberzeichen.png"/>
                     </Border>
-					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Karmatalente" MouseLeftButtonDown="brdKlicked">
+					<Border Style="{DynamicResource ControlContentBorder}" Width="50" Height="50" ToolTipService.ToolTip="Karmatalente" MouseLeftButtonDown="brdKlicked" IsEnabled="False">
 						<Image Source="/DSA%20MeisterGeister;component/Images/Icons/hesinde.png"/>
                     </Border>
                 </StackPanel>
