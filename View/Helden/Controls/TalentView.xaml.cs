@@ -15,34 +15,28 @@ using VM = MeisterGeister.ViewModel.Helden;
 using MeisterGeister.View.Kampf;
 
 
-namespace MeisterGeister.View.Helden.Controls
-{
-	/// <summary>
-	/// Interaktionslogik für TalentView.xaml
-	/// </summary>
-	public partial class TalentView : UserControl {
-        
+namespace MeisterGeister.View.Helden.Controls {
+    /// <summary>
+    /// Interaktionslogik für TalentView.xaml
+    /// </summary>
+    public partial class TalentView : UserControl {
+
         #region//KONSTRUKTOR
-        public TalentView()
-		{
-			this.InitializeComponent();
+        public TalentView() {
+            this.InitializeComponent();
             this.DataContext = new VM.TalentViewModel();
-		}
+        }
         #endregion
-        #region 
+        #region
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-            try
-            {
+            try {
                 (this.DataContext as VM.TalentViewModel).Init();
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
             }
             if (DataContext as VM.Logic.IChangeListener != null)
                 (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
-		}
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
+        }
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e) {
             if (DataContext as VM.Logic.IChangeListener != null)
                 (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
         }
@@ -152,7 +146,7 @@ namespace MeisterGeister.View.Helden.Controls
             if (e.Key == Key.Enter)
                 InsertTalent();
         }
-#endregion
+        #endregion
         #region Methoden
         private void CloseAllExpanderTalente() {
             expGesellschaft.IsExpanded = false;
@@ -162,18 +156,16 @@ namespace MeisterGeister.View.Helden.Controls
             expNatur.IsExpanded = false;
             expSprache.IsExpanded = false;
             expWissen.IsExpanded = false;
+            expRituale.IsExpanded = false;
+            expLiturgie.IsExpanded = false;
+            expGaben.IsExpanded = false;
         }
         #endregion
         #region UI
-        
         private void brdKlicked(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             int idxTalent = ((sender as Border).Parent as StackPanel).Children.IndexOf(sender as Border);
             CloseAllExpanderTalente();
-
-            //TODO DW: Reset, wenn alle Talente abgebildet werden
-            if (idxTalent < 7) {
-                (spHeldTalent.Children[idxTalent] as Expander).IsExpanded = true;
-            }
+            (spHeldTalent.Children[idxTalent] as Expander).IsExpanded = true;
         }
         #endregion
     }

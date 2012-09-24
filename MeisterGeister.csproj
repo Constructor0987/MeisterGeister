@@ -1086,6 +1086,7 @@
     <Resource Include="Daten\Helden\Demohelden\Ottojarld der Runenmeister.xml" />
     <Resource Include="Daten\Helden\Demohelden\Sybia Aylasuni.xml" />
     <Resource Include="Daten\Helden\Demohelden\Xebragral Sohn des Xormannal.xml" />
+    <Resource Include="Images\Icons\sprache.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

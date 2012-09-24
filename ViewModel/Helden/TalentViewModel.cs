@@ -11,9 +11,11 @@ using System.Collections.ObjectModel;
 namespace MeisterGeister.ViewModel.Helden {
     public class TalentViewModel : Base.ViewModelBase, Logic.IChangeListener {
         #region //FELDER
-        //Logic        
         private bool listenToChangeEvents = true;
-        //Listen
+        public Base.CommandBase onAddTalent;
+        public Base.CommandBase onRemoveTalent;
+        private M.Held selectedHeld;
+        private M.Talent talentAuswahl;        
         private List<Model.Talent> talentAuswahlListe = new List<Model.Talent>();
         private ObservableCollection<TalentListeItem> kampfTalentListe = new ObservableCollection<TalentListeItem>();
         private ObservableCollection<TalentListeItem> koerperTalentListe = new ObservableCollection<TalentListeItem>();
@@ -22,19 +24,9 @@ namespace MeisterGeister.ViewModel.Helden {
         private ObservableCollection<TalentListeItem> wissenTalentListe = new ObservableCollection<TalentListeItem>();
         private ObservableCollection<TalentListeItem> spracheTalentListe = new ObservableCollection<TalentListeItem>();
         private ObservableCollection<TalentListeItem> handwerkTalentListe = new ObservableCollection<TalentListeItem>();
-        //Selection
-        private M.Held selectedHeld;
-        private M.Talent talentAuswahl;
-        private TalentListeItem kampfTalent = new TalentListeItem();
-        private TalentListeItem koerperTalent = new TalentListeItem();
-        private TalentListeItem gesellschaftTalent = new TalentListeItem();
-        private TalentListeItem naturTalent = new TalentListeItem();
-        private TalentListeItem wissenTalent = new TalentListeItem();
-        private TalentListeItem spracheTalent = new TalentListeItem();
-        private TalentListeItem handwerkTalent = new TalentListeItem();
-        //Command
-        public Base.CommandBase onAddTalent;
-        public Base.CommandBase onRemoveTalent;        
+        private ObservableCollection<TalentListeItem> gabenTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> ritualeTalentListe = new ObservableCollection<TalentListeItem>();
+        private ObservableCollection<TalentListeItem> liturgienTalentListe = new ObservableCollection<TalentListeItem>();                
         #endregion
         #region //EIGENSCHAFTEN
         //Logic
@@ -89,33 +81,43 @@ namespace MeisterGeister.ViewModel.Helden {
                 if (value != null) { handwerkTalentListe = value; OnChanged("HandwerkTalentListe"); }
             }
         }
+        public ObservableCollection<TalentListeItem> GabenTalentListe {
+            get { return gabenTalentListe; }
+            set {
+                if (value != null) { gabenTalentListe = value; OnChanged("GabenTalentListe "); }
+            }
+        }
+        public ObservableCollection<TalentListeItem> RitualeTalentListe {
+            get { return ritualeTalentListe; }
+            set {
+                if (value != null) { ritualeTalentListe = value; OnChanged("RitualeTalentListe"); }
+            }
+        }
+        public ObservableCollection<TalentListeItem> LiturgienTalentListe {
+            get { return liturgienTalentListe; }
+            set {
+                if (value != null) { liturgienTalentListe = value; OnChanged("LiturgienTalentListe"); }
+            }
+        }
         //Selection
         public Model.Held SelectedHeld { get { return selectedHeld; } set { selectedHeld = value; OnChanged("SelectedHeld"); } }
-        public M.Talent TalentAuswahl { get { return talentAuswahl; } set { talentAuswahl = value; OnChanged("TalentAuswahl"); } }
-        public TalentListeItem KampfTalent { get { return kampfTalent; } set { kampfTalent = value; OnChanged("KampfTalent"); } }
-        public TalentListeItem KoerperTalent { get { return koerperTalent; } set { koerperTalent = value; OnChanged("KoerperTalent"); } }
-        public TalentListeItem GesellschaftTalent { get { return gesellschaftTalent; } set { gesellschaftTalent = value; OnChanged("GesellschaftTalent"); } }
-        public TalentListeItem NaturTalent { get { return naturTalent; } set { naturTalent = value; OnChanged("NaturTalent"); } }
-        public TalentListeItem WissenTalent { get { return wissenTalent; } set { wissenTalent = value; OnChanged("WissenTalent"); } }
-        public TalentListeItem SpracheTalent { get { return spracheTalent; } set { spracheTalent = value; OnChanged("SpracheTalent"); } }
-        public TalentListeItem HandwerkTalent { get { return handwerkTalent; } set { handwerkTalent = value; OnChanged("HandwerkTalent"); } }
-        //Command
+        public M.Talent TalentAuswahl { get { return talentAuswahl; } set { talentAuswahl = value; OnChanged("TalentAuswahl"); } }        
         public Base.CommandBase OnAddTalent_Click { get { return onAddTalent; } }
         public Base.CommandBase OnRemoveTalent_Click { get { return onRemoveTalent; } }
         #endregion
         #region //KONSTRUKTOR
         public TalentViewModel() {
             onAddTalent = new Base.CommandBase(AddTalent, null);
-            //onRemoveTalent = new Base.CommandBase(, null);            
+            onRemoveTalent = new Base.CommandBase(RemoveTalent, null);
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
             SelectedHeld = Global.SelectedHeld;
         }
         #endregion
         #region //METHODEN
-        public void Init() {                               
-                if (Global.SelectedHeld != null) {
-                    SelectedHeldChanged();
-                }         
+        public void Init() {
+            if (Global.SelectedHeld != null) {
+                SelectedHeldChanged();
+            }
         }
         private void ReInit() {
             KampftalentListe.Clear();
@@ -125,10 +127,12 @@ namespace MeisterGeister.ViewModel.Helden {
             WissenTalentListe.Clear();
             SpracheTalentListe.Clear();
             HandwerkTalentListe.Clear();
+            GabenTalentListe.Clear();
+            RitualeTalentListe.Clear();
+            LiturgienTalentListe.Clear();
         }
         #endregion
         #region //EVENTS
-        //Global
         void SelectedHeldChanged() {
             if (!ListenToChangeEvents)
                 return;
@@ -138,46 +142,87 @@ namespace MeisterGeister.ViewModel.Helden {
                 foreach (var item in SelectedHeld.Held_Talent) {
                     switch (Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault().TalentgruppeID) {
                         case 1:
-                            KampftalentListe.Add(new TalentListeItem() {
+                            TalentListeItem tmpKampf = new TalentListeItem() {
                                 HeldTalent = item,
-                                Talent = Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault()
-                            });
+                                Talent = item.Talent
+                            };
+                            tmpKampf.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            KampftalentListe.Add(tmpKampf);
                             break;
                         case 2:
-                            KoerperTalentListe.Add(new TalentListeItem() {
+                            TalentListeItem tmpKoerper = new TalentListeItem() {
                                 HeldTalent = item,
-                                Talent = Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault()
-                            });
+                                Talent = item.Talent
+                            };
+                            tmpKoerper.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            KoerperTalentListe.Add(tmpKoerper);
                             break;
                         case 3:
-                            GesellschaftTalentListe.Add(new TalentListeItem() {
+                            TalentListeItem tmpGesellschaft = new TalentListeItem() {
                                 HeldTalent = item,
-                                Talent = Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault()
-                            });
+                                Talent = item.Talent
+                            };
+                            tmpGesellschaft.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            GesellschaftTalentListe.Add(tmpGesellschaft);
                             break;
                         case 4:
-                            NaturTalentListe.Add(new TalentListeItem() {
+                            TalentListeItem tmpNatur = new TalentListeItem() {
                                 HeldTalent = item,
-                                Talent = Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault()
-                            });
+                                Talent = item.Talent
+                            };
+                            tmpNatur.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            NaturTalentListe.Add(tmpNatur);
                             break;
                         case 5:
-                            WissenTalentListe.Add(new TalentListeItem() {
+                            TalentListeItem tmpWissen = new TalentListeItem() {
                                 HeldTalent = item,
-                                Talent = Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault()
-                            });
+                                Talent = item.Talent
+                            };
+                            tmpWissen.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            WissenTalentListe.Add(tmpWissen);
                             break;
                         case 6:
-                            HandwerkTalentListe.Add(new TalentListeItem() {
+                            TalentListeItem tmpHandwerk = new TalentListeItem() {
                                 HeldTalent = item,
-                                Talent = Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault()
-                            });
+                                Talent = item.Talent
+                            };
+                            tmpHandwerk.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            HandwerkTalentListe.Add(tmpHandwerk);
                             break;
-                        case 7:
-                            SpracheTalentListe.Add(new TalentListeItem() {
+                        case 7:                            
+                            TalentListeItem tmpSprache = new TalentListeItem() {
                                 HeldTalent = item,
-                                Talent = Global.ContextTalent.TalentListe.Where(val => val.Talentname == item.Talentname).FirstOrDefault()
-                            });
+                                Talent = item.Talent
+                            };
+                            tmpSprache.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            SpracheTalentListe.Add(tmpSprache);
+                            break;
+                        case 8:
+                            //Meta ID = 10
+                            break;
+                        case 9:
+                            TalentListeItem tmpGaben = new TalentListeItem() {
+                                HeldTalent = item,
+                                Talent = item.Talent
+                            };
+                            tmpGaben.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            GabenTalentListe.Add(tmpGaben);
+                            break;
+                        case 10:
+                            TalentListeItem tmpRitual = new TalentListeItem() {
+                                HeldTalent = item,
+                                Talent = item.Talent
+                            };
+                            tmpRitual.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            RitualeTalentListe.Add(tmpRitual);
+                            break;
+                        case 11:
+                            TalentListeItem tmpLiturgie = new TalentListeItem() {
+                                HeldTalent = item,
+                                Talent = item.Talent
+                            };
+                            tmpLiturgie.RemoveItem += (s, e) => { RemoveTalent(s); };
+                            LiturgienTalentListe.Add(tmpLiturgie);
                             break;
                         default:
                             break;
@@ -185,11 +230,10 @@ namespace MeisterGeister.ViewModel.Helden {
                 }
                 //Load Talentauswahl VS HeldTalentListe
                 if (SelectedHeld != null) {
-                    TalentauswahlListe = Global.ContextTalent.TalentListe.Where(item => SelectedHeld.Held_Talent.Where(t => t.Talent == item).Count() <= 0).OrderBy(item => item.Talentname).ToList();
-                }           
+                    TalentauswahlListe = Global.ContextTalent.TalentListe.Where(item => SelectedHeld.Held_Talent.Where(t => t.Talent == item).Count() <= 0 && item.TalentgruppeID != 8).OrderBy(item => item.Talentname).ToList();
+                }
             }
-        }
-        //UI
+        }        
         private void AddTalent(object obj) {
             if (TalentAuswahl != null) {
                 M.Held_Talent newTalent = new M.Held_Talent() {
@@ -204,26 +248,43 @@ namespace MeisterGeister.ViewModel.Helden {
                 SelectedHeld.Held_Talent.Add(newTalent);
                 SelectedHeldChanged();
                 TalentauswahlListe.Remove(TalentAuswahl);
-                TalentAuswahl = null;                
+                TalentAuswahl = null;
             }
-        }        
+        }
+        void RemoveTalent(object sender) {
+            if (sender != null) {
+                SelectedHeld.Held_Talent.Remove((sender as TalentListeItem).HeldTalent);
+                SelectedHeldChanged();
+                TalentauswahlListe.Add((sender as TalentListeItem).Talent);
+                TalentAuswahl = null;
+            }
+        }
         #endregion
-
-
-        
     }
     #region SUBKLASSEN
     public class TalentListeItem : Base.ViewModelBase {
         #region //FELDER
+        private Base.CommandBase onRemove;
         #endregion
         #region //EIGENSCHAFTEN
+        public string TaW { get; set; }
         public Model.Talent Talent { get; set; }
         public Model.Held_Talent HeldTalent { get; set; }
-        public string TaW { get; set; }
+        public Base.CommandBase OnRemove { get { return onRemove; } }
         #endregion
         #region //KONSTRUKTOR
+        public TalentListeItem() {
+            onRemove = new Base.CommandBase(Remove, null);
+        }
         #endregion
         #region //EVENTS
+        public event EventHandler RemoveItem;
+        void Remove(object sender) {
+            if (RemoveItem != null) {
+                RemoveItem(this, new EventArgs());
+            }
+
+        }
         #endregion
     }
     #endregion
