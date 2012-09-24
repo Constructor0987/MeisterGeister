@@ -1374,8 +1374,13 @@ namespace MeisterGeister.View.AudioPlayer {
                     ListBoxItem lbitem = new ListBoxItem();
                     lbitem.Name = "titel" + i;
                     lbitem.Tag = playlistliste[i].Audio_PlaylistGUID;
+                    if (lbitem.Content == null || 
+                        playlistliste[i].Name != lbitem.Content.ToString() && lbBackground.SelectedIndex == pos + 1)
+                        lbBackground.SelectedIndex = -1;
+                    
                     lbitem.Content = playlistliste[i].Name;
-                    if (lbBackground.Items.Count <= i)
+                    
+                    if (pos+1 > lbBackground.Items.Count)
                         lbBackground.Items.Add(lbitem);
                     else
                     {
@@ -2014,6 +2019,10 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             else
             {
+                Int16 objGruppe = GetObjGruppe(tcKlang.SelectedIndex);
+                if (objGruppe == -1)
+                    return;
+                int posObjGruppe = GetPosObjGruppe(objGruppe);
                 if (tcKlang.SelectedIndex >= 0)
                 {
                     if (tcKlang.SelectedItem.GetType().ToString().EndsWith("TabItemControl"))
@@ -2022,7 +2031,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         s = ((TabItem)tcKlang.SelectedItem).Header.ToString();
                     
                     List<Audio_Playlist> playlistliste = Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(s)).ToList();
-                    if (playlistliste.Count == 1)
+                    if (playlistliste.Count == 1 && _GrpObjecte[posObjGruppe]._listZeile.Count > 0)
                     {
                         List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(playlistliste[0]);
                         AktKlangPlaylist = playlistliste[0];
@@ -2033,10 +2042,6 @@ namespace MeisterGeister.View.AudioPlayer {
                             rbIstKlangPlaylist.IsChecked = true;
                         tboxPlaylistName.Text = AktKlangPlaylist.Name;
                         
-                        Int16 objGruppe = GetObjGruppe(tcKlang.SelectedIndex);
-                        if (objGruppe == -1)
-                            return;
-                        int posObjGruppe = GetPosObjGruppe(objGruppe);
                         if (titelliste.Count > 0)
                         {
 
@@ -2094,6 +2099,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             return;
                         _GrpObjecte[posObjGruppe].maxsongparallel = 0;*/
                         tboxklangsongparallel.TextChanged += new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
+                      //  AktKlangPlaylist = null;
                     }
                 }
                 int i = 0;
@@ -2170,9 +2176,18 @@ namespace MeisterGeister.View.AudioPlayer {
             tabItem.Name = "tiKlang" + objGruppe;
 
             string NeuePlaylist = "NeuePlayliste" + (tcKlang.Items.Count - 2);
-
             int ver = 0;
-            while (Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(NeuePlaylist)).ToList().Count != 0)
+            string [] str_tiHeader = new string[tcKlang.Items.Count-2];
+            for (int i = 0; i < tcKlang.Items.Count - 2; i++)
+            {
+                if (i == 0)
+                    str_tiHeader[i] = ((TabItem)tcKlang.Items[i]).Header.ToString();
+                else
+                    str_tiHeader[i] = ((TabItemControl)tcKlang.Items[i])._textBlockTitel.Text;
+            }
+
+            while (Global.ContextAudio.PlaylistListe.Where(t => t.Name.Equals(NeuePlaylist)).ToList().Count != 0 ||
+                str_tiHeader.Contains(NeuePlaylist))
             {
                 NeuePlaylist = "NeuePlayliste" + (tcKlang.Items.Count - 2) + "-" + ver;
                 ver++;
@@ -2263,6 +2278,10 @@ namespace MeisterGeister.View.AudioPlayer {
             lbKlang.SelectionChanged -= new SelectionChangedEventHandler(lbKlang_SelectionChanged);
             lbKlang.SelectedIndex = -1;
             lbKlang.SelectionChanged += new SelectionChangedEventHandler(lbKlang_SelectionChanged);
+
+            tboxPlaylistName.Text = NeuePlaylist;
+            ZeigeKlangSongsParallel(false);
+            rbIstMusikPlaylist.IsChecked = true;
 
             if (tcKlang.Items.Count == 10)
                 tiPlus.Visibility = Visibility.Hidden;
