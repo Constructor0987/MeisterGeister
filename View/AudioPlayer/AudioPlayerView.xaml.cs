@@ -536,8 +536,8 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             else
             {
-                btnBGAbspielen.IsEnabled = false;
-                lbhintergrundtitellist.Items.Clear();
+       //         btnBGAbspielen.IsEnabled = false;
+       //         lbhintergrundtitellist.Items.Clear();
             }
         }
 
@@ -1374,8 +1374,9 @@ namespace MeisterGeister.View.AudioPlayer {
                     ListBoxItem lbitem = new ListBoxItem();
                     lbitem.Name = "titel" + i;
                     lbitem.Tag = playlistliste[i].Audio_PlaylistGUID;
-                    if (lbitem.Content == null || 
-                        playlistliste[i].Name != lbitem.Content.ToString() && lbBackground.SelectedIndex == pos + 1)
+                    List<Audio_Titel> s = Global.ContextAudio.LoadTitelByPlaylist(playlistliste[i]).ToList();
+                    if (s.Count == 1 && lbBackground.SelectedIndex != -1 &&
+                        s != lbBackground.Items[lbBackground.SelectedIndex])
                         lbBackground.SelectedIndex = -1;
                     
                     lbitem.Content = playlistliste[i].Name;
