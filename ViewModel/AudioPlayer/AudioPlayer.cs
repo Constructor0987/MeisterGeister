@@ -82,12 +82,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         }
 
-        private Base.CommandBase _onAddTitel;
+      /*  private Base.CommandBase _onAddTitel;
         public Base.CommandBase OnAddTitel
         {
             get { return _onAddTitel; }
-			set { _onAddTitel = value;}
-        }
+        }*/
 
         /// <summary>
         /// Neuer Titel vom FileChooser aus. Wird zur aktuellen Playlist hinzugefügt.

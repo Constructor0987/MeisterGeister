@@ -75,7 +75,8 @@ namespace MeisterGeister {
             object sqlCompactVersion = "-";
             sqlCompactVersion = Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v4.0", "Version", "-");
             string sqlCompactVersionNeeded = "4.0.8"; //4.0.8482.1 oder 4.0.8876.1
-            if (sqlCompactVersion == null || !sqlCompactVersion.ToString().StartsWith(sqlCompactVersionNeeded)) {
+            if (sqlCompactVersion == null || !sqlCompactVersion.ToString().StartsWith(sqlCompactVersionNeeded))
+            {
                 string msg = "Es ist keine, eine falsche oder eine beschädigte Microsoft SQL Server Compact Edition installiert.\n"
                     + "Installiert:\t" + sqlCompactVersion
                     + "\nBenötigt:\t\t" + sqlCompactVersionNeeded + "\n\nDie benötigte Edition kann unter folgendem Link heruntergeladen werden:\n\n"

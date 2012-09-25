@@ -1510,5 +1510,17 @@ namespace MeisterGeister.Properties {
                 return ResourceManager.GetString("UpdateTo_V0056_3", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die UPDATE Fernkampfwaffe SET Laden=12 WHERE FernkampfwaffeGUID=&apos;00000000-0000-0000-0002-000000000003&apos;;
+        ///UPDATE Fernkampfwaffe SET Laden=4 WHERE FernkampfwaffeGUID=&apos;00000000-0000-0000-0002-000000000004&apos;;
+        ///INSERT INTO [Ausrüstung] ([AusrüstungGUID],[Name],[Preis],[Gewicht],[Verbreitung],[Literatur],[Setting],[Bemerkung]) VALUES (&apos;00000000-0000-0000-0002-000000000046&apos;,&apos;Arbalette (Bolzen)&apos;,0,200,&apos;(4) ZWE, HOR, ALM&apos;,&apos;Aventurisches Arsenal 41 /  WdS 127&apos;,&apos;Aventurien&apos;,NULL);
+        ///INSERT INTO [Ausrüstung] ([AusrüstungGUID [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string UpdateTo_V0057_1 {
+            get {
+                return ResourceManager.GetString("UpdateTo_V0057_1", resourceCulture);
+            }
+        }
     }
 }

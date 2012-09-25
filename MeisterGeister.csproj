@@ -391,6 +391,10 @@
     </Compile>
     <Compile Include="ViewModel\Proben\ProbeControlViewModel.cs" />
     <Compile Include="ViewModel\Proben\ProbenViewModel.cs" />
+    <Compile Include="ViewModel\Schmiede\SchmiedeRüstungViewModel.cs" />
+    <Compile Include="ViewModel\Schmiede\SchmiedeFernkampfwaffeViewModel.cs" />
+    <Compile Include="ViewModel\Schmiede\SchmiedeNahkampfwaffeViewModel.cs" />
+    <Compile Include="ViewModel\Schmiede\SchmiedeSchildViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">
       <DependentUpon>AbenteuerView.xaml</DependentUpon>
@@ -491,6 +495,15 @@
     </Compile>
     <Compile Include="View\Proben\ProbenView.xaml.cs">
       <DependentUpon>ProbenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Schmiede\SchmiedeFernkampfwaffeView.xaml.cs">
+      <DependentUpon>SchmiedeFernkampfwaffeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Schmiede\SchmiedeNahkampfwaffeView.xaml.cs">
+      <DependentUpon>SchmiedeNahkampfwaffeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Schmiede\SchmiedeSchildView.xaml.cs">
+      <DependentUpon>SchmiedeSchildView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Zauberzeichen\ZauberzeichenView.xaml.cs">
       <DependentUpon>ZauberzeichenView.xaml</DependentUpon>
@@ -776,6 +789,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Proben\ProbenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Schmiede\SchmiedeFernkampfwaffeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Schmiede\SchmiedeNahkampfwaffeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Schmiede\SchmiedeSchildView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1087,6 +1112,11 @@
     <Resource Include="Daten\Helden\Demohelden\Sybia Aylasuni.xml" />
     <Resource Include="Daten\Helden\Demohelden\Xebragral Sohn des Xormannal.xml" />
     <Resource Include="Images\Icons\sprache.png" />
+    <Resource Include="Images\Icons\General\audioadd.png" />
+    <Resource Include="Images\Icons\General\pause.png" />
+    <Resource Include="Images\Icons\General\play.png" />
+    <Resource Include="Images\Icons\General\play_next.png" />
+    <Resource Include="Images\Icons\General\play_stop.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
