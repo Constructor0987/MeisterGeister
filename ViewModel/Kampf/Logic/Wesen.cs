@@ -39,7 +39,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             int change = 0;
             if (targetCount < mods.Count)
             {
-                for (int i = 0; i < mods.Count - targetCount; i++)
+                for (int i = 0; mods.Count > 0 && i < mods.Count - targetCount; i++)
                 {
                     change--;
                     Modifikatoren.Remove(mods[i]);
