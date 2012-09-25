@@ -28,7 +28,7 @@ namespace MeisterGeister.Logic.General
         }
 
         int fertigkeitswert;
-        public int Fertigkeitswert
+        virtual public int Fertigkeitswert
         {
             get { return fertigkeitswert; }
             set { 

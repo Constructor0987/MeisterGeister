@@ -27,15 +27,43 @@ namespace MeisterGeister.ViewModel.Proben
             get { return Global.ContextHeld.HeldenGruppeListe; }
         }
 
-        private ObservableCollection<ProbeControlViewModel> _probeItemListe = new ObservableCollection<ProbeControlViewModel>();
-        public ObservableCollection<ProbeControlViewModel> ProbeItemListe
+        private ObservableCollection<ProbeControlViewModel> _probeErgebnisListe = new ObservableCollection<ProbeControlViewModel>();
+        public ObservableCollection<ProbeControlViewModel> ProbeErgebnisListe
         {
-            get { return _probeItemListe; }
+            get { return _probeErgebnisListe; }
             set
             {
-                _probeItemListe = value;
-                OnChanged("ProbeItemListe");
+                _probeErgebnisListe = value;
+                OnChanged("ProbeErgebnisListe");
             }
+        }
+
+        Probe _selectedProbe = null;
+        public Probe SelectedProbe
+        {
+            get { return _selectedProbe; }
+            set 
+            { 
+                _selectedProbe = value;
+
+                foreach (var item in ProbeErgebnisListe)
+                {
+                    if (item.Held != null)
+                        item.Probe = item.Held.Held_Talent.Where(t => t.Talent == value).FirstOrDefault();
+                    else
+                        item.Probe = value;
+                }
+
+                OnChanged("SelectedProbe"); 
+            }
+        }
+
+        // Listen
+        List<Probe> _probeListe = new List<Probe>();
+        public List<Probe> ProbeListe
+        {
+            get { return _probeListe; }
+            set { _probeListe = value; OnChanged("ProbeListe"); }
         }
 
         #endregion
@@ -44,23 +72,32 @@ namespace MeisterGeister.ViewModel.Proben
 
         public ProbenViewModel()
         {
-            // Talentauswahl zum Testen
-            Model.Talent talent = Global.ContextTalent.TalentListe.Where(t => t.Talentname == "Sinnenschärfe").FirstOrDefault();
+            RefreshProbeListe();
+            RefreshProbeErgebnisListe();
+
+            onWürfeln = new Base.CommandBase(Würfeln, null);
+        }
+
+        private void RefreshProbeErgebnisListe()
+        {
+            ProbeErgebnisListe.Clear();
 
             foreach (var item in HeldListe)
             {
                 ProbeControlViewModel vm = new ProbeControlViewModel()
                 {
                     Held = item,
-                    Probe = talent
+                    Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault()
                 };
 
-                ProbeItemListe.Add(vm);
+                ProbeErgebnisListe.Add(vm);
             }
+        }
 
-            OnChanged("ProbeItemListe");
-
-            onWürfeln = new Base.CommandBase(Würfeln, null);
+        private void RefreshProbeListe()
+        {
+            // Talente hinzufügen
+            ProbeListe.AddRange(Global.ContextTalent.TalentListe.OrderBy(t => t.Name));
         }
 
         #endregion
@@ -70,7 +107,7 @@ namespace MeisterGeister.ViewModel.Proben
         private void Würfeln(object obj)
         {
             // Alle Proben neu würfeln
-            foreach (var item in ProbeItemListe)
+            foreach (var item in ProbeErgebnisListe)
             {
                 item.Würfeln(null);
             }
@@ -87,7 +124,7 @@ namespace MeisterGeister.ViewModel.Proben
 
     #region //---- SUBKLASSEN ----
 
-    public class ProbeItem : Base.ViewModelBase
+    public class ProbeErgebnisItem : Base.ViewModelBase
     {
         private Model.Held _held = null;
         public Model.Held Held 

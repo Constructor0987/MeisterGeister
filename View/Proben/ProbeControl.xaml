@@ -6,7 +6,37 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
              d:DesignHeight="152" d:DesignWidth="204" Loaded="UserControl_Loaded_1">
-    <Border Style="{DynamicResource ControlContentBorder}">
+    <UserControl.Resources>
+        <Style x:Key="BoderContent" TargetType="{x:Type Border}">
+            <Setter Property="Effect" Value="{DynamicResource LightBloom}" />
+            <Setter Property="Background" Value="#389E804D"/>
+            <Setter Property="BorderBrush" Value="#FFBEB3A3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Opacity" Value="0.8" />
+            <Setter Property="Margin" Value="0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Ergebnis.Ergebnis}" Value="GELUNGEN">
+                    <Setter Property="Background" Value="LightGreen" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Ergebnis.Ergebnis}" Value="GLÜCKLICH">
+                    <Setter Property="Background" Value="GreenYellow" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Ergebnis.Ergebnis}" Value="MEISTERHAFT">
+                    <Setter Property="Background" Value="Green" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Ergebnis.Ergebnis}" Value="MISSLUNGEN">
+                    <Setter Property="Background" Value="LightCoral" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Ergebnis.Ergebnis}" Value="PATZER">
+                    <Setter Property="Background" Value="Firebrick" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Ergebnis.Ergebnis}" Value="FATALER_PATZER">
+                    <Setter Property="Background" Value="Red" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border Style="{DynamicResource BoderContent}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -34,11 +64,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Held:" />
-                <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding Held.Kurzname}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" MaxWidth="100" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding Held.Kurzname}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Talent:" />
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Probenname}" />
-                <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Probe.Fertigkeitswert}" Margin="10,0,0,0" />
-                <TextBlock Grid.Row="1" Grid.Column="4" Text="TaW" Margin="5,0,0,0" />
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="TaW" Margin="10,0,0,0" />
+                <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding Probe.Fertigkeitswert}" Margin="5,0,0,0" />
             </Grid>
             <ListBox Grid.Row="2" Grid.Column="1" BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemsSource="{Binding EigenschaftWurfItemListe}">
@@ -66,6 +96,7 @@
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Height="32" Width="32" />
             </Button>
             <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Ergebnis.Übrig}" ToolTip="Übrig behaltene Punkte" />
+            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Ergebnis.Ergebnis}" />
         </Grid>
     </Border>
 </UserControl>

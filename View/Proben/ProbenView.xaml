@@ -8,30 +8,36 @@
              d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="25"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!--<Proben:ProbeControl Margin="5" />-->
-            <Proben:ProbeControl Margin="5" DataContext="{Binding ProbeItemListe[0]}" />
-            <Proben:ProbeControl Margin="5" Held="{Binding ProbeItemListe[0].Held}" />
-            <Button Content="Alle Würfeln" Margin="20" Command="{Binding OnWürfeln}" />
-        </StackPanel>
-        
-        <Expander Grid.Column="1" Grid.Row="1" IsExpanded="True">
+
+        <Border Grid.Row="0" Grid.Column="0" Margin="5,5,5,0" Style="{DynamicResource ControlContentBorder}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl" />
+                <Button Grid.Column="2" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
+                </Button>
+            </Grid>
+        </Border>
+
+        <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
             <Expander.Header>
                 <TextBlock Text="Proben" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
                 <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemsSource="{Binding ProbeItemListe}">
+                 ItemsSource="{Binding ProbeErgebnisListe}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
@@ -50,7 +56,7 @@
             </Border>
         </Expander>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="10" VerticalAlignment="Top">
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
             <TextBlock Text=""/>
             <TextBlock Text="Proben" Margin="5,0,10,0" />
             <TextBlock Text="" ToolTip=""/>

@@ -8,6 +8,13 @@ namespace MeisterGeister.Model
 {
     public partial class Talent : MeisterGeister.Logic.General.Probe
     {
+        // Mapping zur Property "Talentname"
+        public string Name
+        {
+            get { return Talentname; }
+            set { Talentname = value; }
+        }
+
         public List<string> Talentspezialisierungen(Held h)
         {
             //TODO ??: bei GUID Umstellung statt Sonderfertigkeit.Name evtl auf GUID prüfen
