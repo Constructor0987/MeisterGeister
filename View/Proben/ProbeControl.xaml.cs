@@ -25,11 +25,21 @@ namespace MeisterGeister.View.Proben
         public ProbeControl()
         {
             InitializeComponent();
-            VM = new VM.ProbeControlViewModel();
-            DataContext = VM;
         }
 
-        private VM.ProbeControlViewModel VM { get; set; }
+        private VM.ProbeControlViewModel VM 
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.ProbeControlViewModel))
+                    return null;
+                return DataContext as VM.ProbeControlViewModel;
+            }
+            set
+            {
+                DataContext = value;
+            }
+        }
 
 
         //public VM.ProbeControlViewModel VM
@@ -76,7 +86,17 @@ namespace MeisterGeister.View.Proben
         private static void OnHeldChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ProbeControl control = (ProbeControl)d;
-            control.VM.Held = control.Held;// e.NewValue as Model.Held;
+            if (control.VM == null)
+                control.VM = new VM.ProbeControlViewModel();
+            if (e.NewValue is Model.Held)
+                control.VM.Held = e.NewValue as Model.Held;
+        }
+
+        private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            // Neues ViewModel erzeugen, falls keins vorhanden
+            if (VM == null)
+                VM = new VM.ProbeControlViewModel();
         }
 
 

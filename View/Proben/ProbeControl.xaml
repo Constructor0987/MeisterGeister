@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
-             d:DesignHeight="152" d:DesignWidth="204"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+             d:DesignHeight="152" d:DesignWidth="204" Loaded="UserControl_Loaded_1">
     <Border Style="{DynamicResource ControlContentBorder}">
         <Grid>
             <Grid.RowDefinitions>

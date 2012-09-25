@@ -21,7 +21,7 @@
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <!--<Proben:ProbeControl Margin="5" />-->
             <Proben:ProbeControl Margin="5" DataContext="{Binding ProbeItemListe[0]}" />
-            <Proben:ProbeControl Margin="5" />
+            <Proben:ProbeControl Margin="5" Held="{Binding ProbeItemListe[0].Held}" />
             <Button Content="Alle Würfeln" Margin="20" Command="{Binding OnWürfeln}" />
         </StackPanel>
         
@@ -41,7 +41,7 @@
                         <DataTemplate>
                             <Border Margin="5">
                                 <StackPanel>
-                                    <Proben:ProbeControl DataContext="{Binding}" />
+                                    <Proben:ProbeControl />
                                     <TextBlock Text="{Binding Held}" />
                                     <TextBlock Text="{Binding Ergebnis.Übrig}" />
                                 </StackPanel>
