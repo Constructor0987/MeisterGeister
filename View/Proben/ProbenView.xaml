@@ -42,8 +42,6 @@
                             <Border Margin="5">
                                 <StackPanel>
                                     <Proben:ProbeControl />
-                                    <TextBlock Text="{Binding Held}" />
-                                    <TextBlock Text="{Binding Ergebnis.Übrig}" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

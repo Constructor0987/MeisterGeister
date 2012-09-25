@@ -56,15 +56,7 @@ namespace MeisterGeister.ViewModel.Proben
                 };
 
                 ProbeItemListe.Add(vm);
-
-                //ProbeItemListe.Add(new ProbeItem() {
-                //    //Held = HeldListe.FirstOrDefault(),
-                //    //Probe = talent, 
-                //    VM = vm
-                //});
             }
-
-            ProbeItemListe.Add(new ProbeControlViewModel() {Held = HeldListe[0], Probe = new Probe()});
 
             OnChanged("ProbeItemListe");
 

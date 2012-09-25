@@ -31,12 +31,14 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Held:" />
-                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Held.Name}" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding Held.Kurzname}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" MaxWidth="100" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Talent:" />
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Probenname}" />
-                <TextBlock Grid.Row="1" Grid.Column="3" Text="TaW" Margin="10,0,0,0" />
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding Probe.Fertigkeitswert}" Margin="10,0,0,0" />
+                <TextBlock Grid.Row="1" Grid.Column="4" Text="TaW" Margin="5,0,0,0" />
             </Grid>
             <ListBox Grid.Row="2" Grid.Column="1" BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemsSource="{Binding EigenschaftWurfItemListe}">

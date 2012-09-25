@@ -65,9 +65,13 @@ namespace MeisterGeister.ViewModel.Proben
                         EigenschaftWurfItemListe[2].Name = (Probe as Model.Talent).Eigenschaft3;
                         if (Held != null)
                         {
+                            // Eigenschaften setzen
                             EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft1);
                             EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft2);
                             EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft3);
+
+                            // TaW setzen
+                            Probe.Fertigkeitswert = Held.Talentwert(Probe as Model.Talent);
                         }
                     }
                     // TODO MT: Zauber und Eigenschaften ergänzen und in Untermethoden auslagern
@@ -130,14 +134,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         public ProbeControlViewModel()
         {
-            // TODO MT: Testdaten
-            // Test: Zufällige Anzahl von Werten
-            //WertCount = MeisterGeister.Logic.General.Würfel.Wurf(4);
             WertCount = 3;
-            //ProbeItems = new List<ProbeItem>() { 
-            //    new ProbeItem() { Wert = 18, Name = "MU" },
-            //    new ProbeItem() { Wert = 8, Name = "KL"}, 
-            //    new ProbeItem() { Wert = 20, Name = "GE"}};
 
             onWürfeln = new Base.CommandBase(Würfeln, null);
         }
