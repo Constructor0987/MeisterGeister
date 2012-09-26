@@ -28,7 +28,14 @@
 		</Style>
 		<DataTemplate x:Key="HeldListTemplate">
 			<StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical">
-                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}"  ToolTip="{Binding HeldGUID}" />
+                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}">
+                    <TextBlock.ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Eindeutige Held-ID:" FontStyle="Italic" />
+                            <TextBlock Text="{Binding HeldGUID}" />
+                        </StackPanel>
+                    </TextBlock.ToolTip>
+                </TextBlock>
 			</StackPanel>
 		</DataTemplate>
 	</UserControl.Resources>
