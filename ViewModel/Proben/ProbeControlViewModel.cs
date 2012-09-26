@@ -31,6 +31,7 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 _ergebnis = value;
                 OnChanged("Ergebnis");
+                OnChanged("ErgebnisImagePath");
             }
         }
 
@@ -58,52 +59,39 @@ namespace MeisterGeister.ViewModel.Proben
                     WertCount = _probe.Werte.Length;
                 }
 
-                // Wertanzahl setzen
-                //if (Probe is Model.Talent || Probe is Model.Held_Talent
-                //    || Probe is Model.Zauber || Probe is Model.Held_Zauber)
-                //{
-                //    WertCount = 3;
-                //    if (Probe is Model.Talent)
-                //    {
-                //        EigenschaftWurfItemListe[0].Name = (Probe as Model.Talent).Eigenschaft1;
-                //        EigenschaftWurfItemListe[1].Name = (Probe as Model.Talent).Eigenschaft2;
-                //        EigenschaftWurfItemListe[2].Name = (Probe as Model.Talent).Eigenschaft3;
-                //        if (Held != null)
-                //        {
-                //            // Eigenschaften setzen
-                //            EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft1);
-                //            EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft2);
-                //            EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft3);
-
-                //            // TaW setzen
-                //            Probe.Fertigkeitswert = 0;
-                //        }
-                //    }
-                //    else if (Probe is Model.Held_Talent)
-                //    {
-                //        EigenschaftWurfItemListe[0].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft1;
-                //        EigenschaftWurfItemListe[1].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft2;
-                //        EigenschaftWurfItemListe[2].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft3;
-                //        if (Held != null)
-                //        {
-                //            // Eigenschaften setzen
-                //            EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft1);
-                //            EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft2);
-                //            EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft3);
-
-                //            // TaW setzen
-                //            Probe.Fertigkeitswert = (Probe as Model.Held_Talent).TaW ?? 0;
-                //        }
-                //    }
-
-                //    // TODO MT: Zauber und Eigenschaften ergänzen und in Untermethoden auslagern
-                //}
-                //else
-                //    WertCount = 1;
-
                 OnChanged("Probe");
                 OnChanged("Probenname");
                 OnChanged("EigenschaftWurfItemListe");
+            }
+        }
+
+        public string ErgebnisImagePath
+        {
+            get
+            {
+                if (Ergebnis != null)
+                {
+                    switch (Ergebnis.Ergebnis)
+                    {
+                        case ErgebnisTyp.KEIN_ERGEBNIS:
+                            break;
+                        case ErgebnisTyp.MISSLUNGEN:
+                            return "/DSA MeisterGeister;component/Images/Icons/General/entf_01.png";
+                        case ErgebnisTyp.PATZER:
+                            return "/DSA MeisterGeister;component/Images/Icons/Wetter/gewitter.png";
+                        case ErgebnisTyp.FATALER_PATZER:
+                            return "/DSA MeisterGeister;component/Images/Icons/tot.png";
+                        case ErgebnisTyp.GELUNGEN:
+                            return "/DSA MeisterGeister;component/Images/Icons/General/ok.png";
+                        case ErgebnisTyp.GLÜCKLICH:
+                            return "/DSA MeisterGeister;component/Images/Icons/General/neu.png";
+                        case ErgebnisTyp.MEISTERHAFT:
+                            return "/DSA MeisterGeister;component/Images/Icons/Wetter/sonne.png";
+                        default:
+                            break;
+                    }
+                }
+                return "/DSA MeisterGeister;component/Images/Icons/General/question.png";
             }
         }
 
@@ -150,6 +138,8 @@ namespace MeisterGeister.ViewModel.Proben
         {
             get 
             {
+                // TODO MT: Für Zauber und Eigenschaften erweitern
+
                 Model.Talent talent = null;
                 if (Probe is Model.Talent)
                     talent = Probe as Model.Talent;

@@ -710,6 +710,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="SampleData\ProbeControlViewModelSampleData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Abenteuer\AbenteuerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

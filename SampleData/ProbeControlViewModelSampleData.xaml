@@ -1,0 +1,15 @@
+﻿<MeisterGeister_ViewModel_Proben:ProbeControlViewModel
+xmlns:MeisterGeister_ViewModel_Proben="clr-namespace:MeisterGeister.ViewModel.Proben" 
+xmlns:MeisterGeister_Model="clr-namespace:MeisterGeister.Model" 
+xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <MeisterGeister_ViewModel_Proben:ProbeControlViewModel.Held>
+        <MeisterGeister_Model:Held Name="Alrik Trummer, der Dorfschläger vom Dienst" />
+    </MeisterGeister_ViewModel_Proben:ProbeControlViewModel.Held>
+    <MeisterGeister_ViewModel_Proben:ProbeControlViewModel.Probe>
+        <MeisterGeister_Model:Held_Talent>
+            <MeisterGeister_Model:Held_Talent.Talent>
+                <MeisterGeister_Model:Talent Talentname="Sinnenschärfe" Eigenschaft1="MU" Eigenschaft2="GE" Eigenschaft3="IN" />
+            </MeisterGeister_Model:Held_Talent.Talent>
+        </MeisterGeister_Model:Held_Talent>
+    </MeisterGeister_ViewModel_Proben:ProbeControlViewModel.Probe>
+</MeisterGeister_ViewModel_Proben:ProbeControlViewModel>

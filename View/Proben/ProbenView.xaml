@@ -51,7 +51,7 @@
                         <DataTemplate>
                             <Border Margin="5">
                                 <StackPanel>
-                                    <Proben:ProbeControl />
+                                    <Proben:ProbeControl Width="180" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
