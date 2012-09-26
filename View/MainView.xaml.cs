@@ -146,7 +146,7 @@ namespace MeisterGeister.View
                 case "Helden":
                     // TODO ??: ProbeWürfeln Event
                     //((Helden.HeldenView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
-                    ((Helden.HeldenView)con).HeldChanged += TabItemControl_RefreshHeld;
+                    //((Helden.HeldenView)con).HeldChanged += TabItemControl_RefreshHeld;
                     break;
                 case "Kalender":
                     ((Kalender.KalenderView)con).DatumAktuellChanged += TabItemControl_RefreshDatumAktuell;

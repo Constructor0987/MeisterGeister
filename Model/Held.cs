@@ -446,15 +446,63 @@ namespace MeisterGeister.Model
             }
         }
 
-        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        [DependentProperty("LebensenergieAktuell"), DependentProperty("LebensenergieMax"), DependentProperty("KO")]
         public string LebensenergieStatus
         {
-            get { return "TODO..."; }
+            get
+            {
+                if (LebensenergieAktuell < KO * -1)
+                    return "Tot";
+                else if (LebensenergieAktuell <= 0)
+                    return "Bewusstlos";
+                else if (LebensenergieAktuell <= 5)
+                    return "Kampfunfähig";
+                else if (LebensenergieAktuell < LebensenergieMax / 4)
+                    return "< 1/4";
+                else if (LebensenergieAktuell < LebensenergieMax / 3)
+                    return "< 1/3";
+                else if (LebensenergieAktuell < LebensenergieMax / 2)
+                    return "< 1/2";
+                return string.Empty;
+            }
         }
-        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+
         public string LebensenergieStatusDetails
         {
-            get { return "TODO..."; }
+            get
+            {
+                string info = string.Empty;
+                if (LebensenergieAktuell < KO * -1)
+                    info = "Tot";
+                else if (LebensenergieAktuell <= 0)
+                {
+                    info = "Bewusstlos";
+                    info += Environment.NewLine + string.Format("tot in W6 x KO ({0}) Kampfrunden ({0} bis {1} KR = {2} bis {3} sec)",
+                        KO, 6 * KO, 3 * KO, 18 * KO);
+                }
+                else if (LebensenergieAktuell <= 5)
+                {
+                    info = "Kampfunfähig";
+                    info += Environment.NewLine + "keine Aktionen möglich, außer mit GS 1 bewegen";
+                }
+                else if (LebensenergieAktuell < LebensenergieMax / 4)
+                {
+                    info = "< 1/4";
+                    info += Environment.NewLine + "Optional: Eigenschaftsproben +3; Talent-/Zauberproben +9; GS -3";
+                }
+                else if (LebensenergieAktuell < LebensenergieMax / 3)
+                {
+                    info = "< 1/3";
+                    info += Environment.NewLine + "Optional: Eigenschaftsproben +2; Talent-/Zauberproben +6; GS -2";
+                }
+                else if (LebensenergieAktuell < LebensenergieMax / 2)
+                {
+                    info = "< 1/2";
+                    info += Environment.NewLine + "Optional: Eigenschaftsproben +1; Talent-/Zauberproben +3; GS -1";
+                }
+                info += Environment.NewLine + "(\"Auswirkungen niedriger Lebensenergie\" siehe WdS 56f.)";
+                return info;
+            }
         }
 
         #endregion
@@ -503,15 +551,44 @@ namespace MeisterGeister.Model
             }
         }
 
-        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+        [DependentProperty("AusdauerAktuell"), DependentProperty("AusdauerMax")]
         public string AusdauerStatus
         {
-            get { return "TODO..."; }
+            get
+            {
+                if (AusdauerAktuell <= 0)
+                    return "Kampfunfähig";
+                else if (AusdauerAktuell < AusdauerMax / 4)
+                    return "< 1/4";
+                else if (AusdauerAktuell < AusdauerMax / 3)
+                    return "< 1/3";
+                return string.Empty;
+            }
         }
-        // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
+
         public string AusdauerStatusDetails
         {
-            get { return "TODO..."; }
+            get
+            {
+                string info = string.Empty;
+                if (AusdauerAktuell <= 0)
+                {
+                    info = "Kampfunfähig";
+                    info += Environment.NewLine + "keine Aktionen möglich, außer Atem Holen";
+                }
+                else if (AusdauerAktuell < AusdauerMax / 4)
+                {
+                    info = "< 1/4";
+                    info += Environment.NewLine + "Optional: Eigenschaftsproben +2; Talent-/Zauberproben +6";
+                }
+                else if (AusdauerAktuell < AusdauerMax / 3)
+                {
+                    info = "< 1/3";
+                    info += Environment.NewLine + "Optional: Eigenschaftsproben +1; Talent-/Zauberproben +3";
+                }
+                info += Environment.NewLine + "(\"Auswirkungen niedriger Ausdauer\" siehe WdS 83)";
+                return info;
+            }
         }
 
         #endregion
@@ -527,6 +604,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KE_Aktuell")]
         public int KarmaenergieAktuell
         {
             get
@@ -539,6 +617,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KE_Mod")]
         public int KarmaenergieMod
         {
             get {
@@ -553,6 +632,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KarmaenergieMod")]
         public int KarmaenergieMax
         {
             get
@@ -576,6 +656,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("BaseMU"), DependentProperty("BaseIN"), DependentProperty("BaseCH")]
         public int AstralenergieBasis
         {
             get
@@ -587,6 +668,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("AE_Aktuell")]
         public int AstralenergieAktuell
         {
             get
@@ -599,6 +681,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("AE_Mod")]
         public int AstralenergieMod
         {
             get
@@ -612,6 +695,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("AstralenergieBasis"), DependentProperty("AstralenergieMod")]
         public int AstralenergieMax
         {
             get

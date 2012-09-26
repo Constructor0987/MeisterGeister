@@ -10,7 +10,11 @@ namespace MeisterGeister.ViewModel.Helden
     {
         #region //---- COMMANDS ----
 
-        
+        private Base.CommandBase onMaxEnergie;
+        public Base.CommandBase OnMaxEnergie
+        {
+            get { return onMaxEnergie; }
+        }
 
         #endregion
 
@@ -45,6 +49,8 @@ namespace MeisterGeister.ViewModel.Helden
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+
+            onMaxEnergie = new Base.CommandBase(SetEnergieMax, null);
         }
 
         #endregion
@@ -60,6 +66,30 @@ namespace MeisterGeister.ViewModel.Helden
         {
             OnChanged("SelectedHeld");
             OnChanged("HinweisMagieKarmaVisibility");
+        }
+
+        private void SetEnergieMax(object energieTyp)
+        {
+            if (energieTyp is MeisterGeister.View.General.EnergieEnum)
+            {
+                switch ((MeisterGeister.View.General.EnergieEnum)energieTyp)
+                {
+                    case MeisterGeister.View.General.EnergieEnum.Lebensenergie:
+                        SelectedHeld.LebensenergieAktuell = SelectedHeld.LebensenergieMax;
+                        break;
+                    case MeisterGeister.View.General.EnergieEnum.Ausdauer:
+                        SelectedHeld.AusdauerAktuell = SelectedHeld.AusdauerMax;
+                        break;
+                    case MeisterGeister.View.General.EnergieEnum.Astralenergie:
+                        SelectedHeld.AstralenergieAktuell = SelectedHeld.AstralenergieMax;
+                        break;
+                    case MeisterGeister.View.General.EnergieEnum.Karmaenergie:
+                        SelectedHeld.KarmaenergieAktuell = SelectedHeld.KarmaenergieMax;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion

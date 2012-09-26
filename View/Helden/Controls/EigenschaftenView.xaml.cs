@@ -48,26 +48,5 @@ namespace MeisterGeister.View.Helden.Controls
             if (DataContext as VM.Logic.IChangeListener != null)
                 (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
         }
-
-        private void ButtonMax_Click(object sender, RoutedEventArgs e)
-        {
-            switch (((System.Windows.Controls.Button)sender).Tag.ToString())
-            {
-                case "LE":
-                    _intBoxLeAktuell.Value = Convert.ToInt32(_textBlockLebensenergieMax.Text);
-                    break;
-                case "AU":
-                    _intBoxAuAktuell.Value = Convert.ToInt32(_textBlockAusdauerMax.Text);
-                    break;
-                case "AE":
-                    _intBoxAeAktuell.Value = Convert.ToInt32(_textBlockAstralenergieMax.Text);
-                    break;
-                case "KE":
-                    _intBoxKeAktuell.Value = Convert.ToInt32(_textBlockKarmaenergieMax.Text);
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 }

@@ -32,24 +32,6 @@ namespace MeisterGeister.View.Helden
             this.DataContext = new VM.HeldenViewModel(); 
         }
 
-        public event System.ComponentModel.PropertyChangedEventHandler HeldChanged;
-
-        //void SelectedHeld_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "This")
-        //    {
-        //        // TODO MT: In EigenschaftenView integrieren
-        //        //_energieControlAstralenergie.SetEnergie();
-        //        //_energieControlAusdauer.SetEnergie();
-        //        //_energieControlKarmaenergie.SetEnergie();
-        //        //_energieControlLebensenergie.SetEnergie();
-
-        //        // Changed Event weitergeben
-        //        if (HeldChanged != null)
-        //            HeldChanged(sender, e);
-        //    }
-        //}
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             //ListBoxHelden_SelectionChanged(sender, null);
