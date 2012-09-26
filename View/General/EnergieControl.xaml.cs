@@ -133,7 +133,8 @@ namespace MeisterGeister.View.General
             EnergieControl energieControl = (EnergieControl)d;
             energieControl.SetEnergie();
             // Event registrieren zur Aktualisierung der Anzeige, wenn sich die Energiestände ändern
-            energieControl.SelectedKämpfer.PropertyChanged += energieControl.SelectedKämpfer_PropertyChanged;
+            if (energieControl.SelectedKämpfer != null)
+                energieControl.SelectedKämpfer.PropertyChanged += energieControl.SelectedKämpfer_PropertyChanged;
         }
 
         private void SelectedKämpfer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
