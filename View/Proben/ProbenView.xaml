@@ -25,6 +25,10 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl" />
+                
+                <!-- Test -->
+                <Button Grid.Column="1" Content="Proben-Test" Height="44" Width="100" Click="Button_Click_1" />
+                
                 <Button Grid.Column="2" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
                 </Button>
@@ -57,9 +61,7 @@
         </Expander>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
-            <TextBlock Text=""/>
-            <TextBlock Text="Proben" Margin="5,0,10,0" />
-            <TextBlock Text="" ToolTip=""/>
+            <TextBlock Text="{Binding GruppenErgebnis}"/>
         </StackPanel>
         
     </Grid>

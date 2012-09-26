@@ -7,70 +7,72 @@ namespace MeisterGeister.Logic.General
     [DataContract(IsReference = true)]
     public class Probe
     {
-        int[] werte;
-        public int[] Werte
+        protected int[] _werte;
+        virtual public int[] Werte
         {
-            get { return werte; }
+            get { return _werte; }
             set { 
-                werte = value;
-                chanceBerechnet = false;
+                _werte = value;
+                _chanceBerechnet = false;
             }
         }
 
-        int modifikator;
+        private int _modifikator;
         public int Modifikator
         {
-            get { return modifikator; }
+            get { return _modifikator; }
             set { 
-                modifikator = value;
-                chanceBerechnet = false;
+                _modifikator = value;
+                _chanceBerechnet = false;
             }
         }
 
-        int fertigkeitswert;
+        private int _fertigkeitswert;
         virtual public int Fertigkeitswert
         {
-            get { return fertigkeitswert; }
+            get { return _fertigkeitswert; }
             set { 
-                fertigkeitswert = value;
-                chanceBerechnet = false;
+                _fertigkeitswert = value;
+                _chanceBerechnet = false;
             }
         }
 
         public double Erfolgsschance {
             get
             {
-                if (!chanceBerechnet)
+                if (!_chanceBerechnet)
                     ErfolgsChanceBerechnen();
-                return erfolgsschance;
+                return _erfolgsschance;
             }
         }
         public double Erwartungswert
         {
             get
             {
-                if (!chanceBerechnet)
+                if (!_chanceBerechnet)
                     ErfolgsChanceBerechnen();
-                return erwartungswert;
+                return _erwartungswert;
             }
         }
-        private ProbenErgebnis ergebnis = null;
+        private ProbenErgebnis _ergebnis = null;
         ProbenErgebnis Ergebnis {
             get
             {
-                if (ergebnis == null)
-                    ergebnis = Würfeln();
-                return ergebnis;
+                if (_ergebnis == null)
+                    _ergebnis = Würfeln();
+                return _ergebnis;
             }
             set
             {
-                ergebnis = value;
+                _ergebnis = value;
             }
         }
 
         public ProbenErgebnis Würfeln()
         {
             ProbenErgebnis pe = new ProbenErgebnis();
+            if (Werte == null)
+                Werte = new int[0];
             pe.Würfe = new int[Werte.Length];
             pe.Übrig = Fertigkeitswert;
             int einsen = 0, zwanzigen = 0;
@@ -93,25 +95,27 @@ namespace MeisterGeister.Logic.General
                 pe.Ergebnis = ErgebnisTyp.PATZER;
             else if (pe.Übrig >= 0)
                 pe.Ergebnis = ErgebnisTyp.GELUNGEN;
+            else if (pe.Übrig < 0)
+                pe.Ergebnis = ErgebnisTyp.MISSLUNGEN;
             return pe;
         }
 
-        private double erfolgsschance = 0;
-        private double erwartungswert = 0;
-        private bool chanceBerechnet = false;
+        private double _erfolgsschance = 0;
+        private double _erwartungswert = 0;
+        protected bool _chanceBerechnet = false;
 
         private double ErfolgsChanceBerechnen()
         {
             if(Werte.Length==3)
                 return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], Fertigkeitswert - Modifikator);
-            chanceBerechnet = true;
+            _chanceBerechnet = true;
             if (Werte.Length == 1)
             {
                 //nicht optimal. 1 und 20 nicht betrachetet.
-                erwartungswert = Werte[0] - 10.5 + Fertigkeitswert - Modifikator;
-                return erfolgsschance = Math.Min( (Werte[0]-(Fertigkeitswert - Modifikator))/20, 1.0);
+                _erwartungswert = Werte[0] - 10.5 + Fertigkeitswert - Modifikator;
+                return _erfolgsschance = Math.Min( (Werte[0]-(Fertigkeitswert - Modifikator))/20, 1.0);
             }
-            return erfolgsschance = erwartungswert = 0;
+            return _erfolgsschance = _erwartungswert = 0;
         }
 
         private double ErfolgsChanceBerechnen(int e1, int e2, int e3, int taw)
@@ -149,10 +153,10 @@ namespace MeisterGeister.Logic.General
                     }
                 }
             }
-            erfolgsschance = (1d / 8000d * (success));
-            erwartungswert = tapsum / success;
-            chanceBerechnet = true;
-            return erfolgsschance;
+            _erfolgsschance = (1d / 8000d * (success));
+            _erwartungswert = tapsum / success;
+            _chanceBerechnet = true;
+            return _erfolgsschance;
         }
 
         private static bool CheckMeisterhaft(int w1, int w2, int w3)

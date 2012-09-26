@@ -53,7 +53,15 @@
                         <Label Grid.Column="5" Grid.Row="0" Margin="3" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" />
                         <Label Grid.ColumnSpan="2" Grid.Row="1" Margin="5,3,0,3" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedHeld.MU}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="2" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Mut}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Mut}" TextAlignment="Center" VerticalAlignment="Center">
+                            <!--Test für Modifikator-Anzeige-->
+                            <!-- TODO: Modifikator-Anzeige-->
+                            <TextBlock.ToolTip>
+                                <ListBox ItemsSource="{Binding SelectedHeld.Modifikatoren}">
+                                </ListBox>
+                                
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="0" Grid.Row="2" Margin="3" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding SelectedHeld.KL}" VerticalAlignment="Center" />
                         <TextBlock Grid.Column="2" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Klugheit}" TextAlignment="Center" VerticalAlignment="Center" />

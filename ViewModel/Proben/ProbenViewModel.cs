@@ -45,16 +45,32 @@ namespace MeisterGeister.ViewModel.Proben
             set 
             { 
                 _selectedProbe = value;
+                RefreshProbeErgebnisListe();
+                OnChanged("SelectedProbe");
+            }
+        }
 
-                foreach (var item in ProbeErgebnisListe)
+        public string GruppenErgebnis
+        {
+            get
+            {
+                int tapSum = 0, vorSum = 0, i = 1;
+                string art = "Übrig";
+                foreach (ProbeControlViewModel er in ProbeErgebnisListe)
                 {
-                    if (item.Held != null)
-                        item.Probe = item.Held.Held_Talent.Where(t => t.Talent == value).FirstOrDefault();
-                    else
-                        item.Probe = value;
+                    if (er.Ergebnis.Übrig >= 0) //nur positive Ergebnisse addieren
+                    {
+                        tapSum += er.Ergebnis.Übrig;
+                        vorSum += Convert.ToInt32(Math.Round((double)er.Ergebnis.Übrig / i, 0));
+                        i++;
+                    }
                 }
+                if (SelectedProbe is Model.Talent)
+                    art = "TaP*";
+                else if (SelectedProbe is Model.Zauber)
+                    art = "ZfP*";
 
-                OnChanged("SelectedProbe"); 
+                return string.Format("Unabhängige Zusammenarbeit: {0} {1}\nMit fähigstem Held als Vorarbeiter: {2} {1}", tapSum, art, vorSum);
             }
         }
 
@@ -78,6 +94,10 @@ namespace MeisterGeister.ViewModel.Proben
             onWürfeln = new Base.CommandBase(Würfeln, null);
         }
 
+        #endregion
+
+        #region //---- INSTANZMETHODEN ----
+
         private void RefreshProbeErgebnisListe()
         {
             ProbeErgebnisListe.Clear();
@@ -90,7 +110,11 @@ namespace MeisterGeister.ViewModel.Proben
                     Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault()
                 };
 
-                ProbeErgebnisListe.Add(vm);
+                vm.Gewürfelt += ProbeControlGewürfelt;
+
+                // nur einfügen, wenn der Held die Fähigkeit besitzt
+                if (vm.Probe != null)
+                    ProbeErgebnisListe.Add(vm);
             }
         }
 
@@ -100,24 +124,23 @@ namespace MeisterGeister.ViewModel.Proben
             ProbeListe.AddRange(Global.ContextTalent.TalentListe.OrderBy(t => t.Name));
         }
 
-        #endregion
-
-        #region //---- INSTANZMETHODEN ----
-
         private void Würfeln(object obj)
         {
             // Alle Proben neu würfeln
             foreach (var item in ProbeErgebnisListe)
-            {
                 item.Würfeln(null);
-            }
+            
+            OnChanged("GruppenErgebnis");
         }
 
         #endregion
 
         #region //---- EVENTS ----
 
-        
+        void ProbeControlGewürfelt(object sender, EventArgs e)
+        {
+            OnChanged("GruppenErgebnis");
+        }
 
         #endregion
     }

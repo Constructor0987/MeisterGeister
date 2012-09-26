@@ -53,51 +53,57 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 _probe = value;
 
-                // Wertanzahl setzen
-                if (Probe is Model.Talent || Probe is Model.Held_Talent
-                    || Probe is Model.Zauber || Probe is Model.Held_Zauber)
+                if (_probe != null)
                 {
-                    WertCount = 3;
-                    if (Probe is Model.Talent)
-                    {
-                        EigenschaftWurfItemListe[0].Name = (Probe as Model.Talent).Eigenschaft1;
-                        EigenschaftWurfItemListe[1].Name = (Probe as Model.Talent).Eigenschaft2;
-                        EigenschaftWurfItemListe[2].Name = (Probe as Model.Talent).Eigenschaft3;
-                        if (Held != null)
-                        {
-                            // Eigenschaften setzen
-                            EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft1);
-                            EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft2);
-                            EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft3);
-
-                            // TaW setzen
-                            Probe.Fertigkeitswert = 0;
-                        }
-                    }
-                    else if (Probe is Model.Held_Talent)
-                    {
-                        EigenschaftWurfItemListe[0].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft1;
-                        EigenschaftWurfItemListe[1].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft2;
-                        EigenschaftWurfItemListe[2].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft3;
-                        if (Held != null)
-                        {
-                            // Eigenschaften setzen
-                            EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft1);
-                            EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft2);
-                            EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft3);
-
-                            // TaW setzen
-                            Probe.Fertigkeitswert = (Probe as Model.Held_Talent).TaW ?? 0;
-                        }
-                    }
-
-                    // TODO MT: Zauber und Eigenschaften ergänzen und in Untermethoden auslagern
+                    WertCount = _probe.Werte.Length;
                 }
-                else
-                    WertCount = 1;
+
+                // Wertanzahl setzen
+                //if (Probe is Model.Talent || Probe is Model.Held_Talent
+                //    || Probe is Model.Zauber || Probe is Model.Held_Zauber)
+                //{
+                //    WertCount = 3;
+                //    if (Probe is Model.Talent)
+                //    {
+                //        EigenschaftWurfItemListe[0].Name = (Probe as Model.Talent).Eigenschaft1;
+                //        EigenschaftWurfItemListe[1].Name = (Probe as Model.Talent).Eigenschaft2;
+                //        EigenschaftWurfItemListe[2].Name = (Probe as Model.Talent).Eigenschaft3;
+                //        if (Held != null)
+                //        {
+                //            // Eigenschaften setzen
+                //            EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft1);
+                //            EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft2);
+                //            EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Talent).Eigenschaft3);
+
+                //            // TaW setzen
+                //            Probe.Fertigkeitswert = 0;
+                //        }
+                //    }
+                //    else if (Probe is Model.Held_Talent)
+                //    {
+                //        EigenschaftWurfItemListe[0].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft1;
+                //        EigenschaftWurfItemListe[1].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft2;
+                //        EigenschaftWurfItemListe[2].Name = (Probe as Model.Held_Talent).Talent.Eigenschaft3;
+                //        if (Held != null)
+                //        {
+                //            // Eigenschaften setzen
+                //            EigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft1);
+                //            EigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft2);
+                //            EigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert((Probe as Model.Held_Talent).Talent.Eigenschaft3);
+
+                //            // TaW setzen
+                //            Probe.Fertigkeitswert = (Probe as Model.Held_Talent).TaW ?? 0;
+                //        }
+                //    }
+
+                //    // TODO MT: Zauber und Eigenschaften ergänzen und in Untermethoden auslagern
+                //}
+                //else
+                //    WertCount = 1;
 
                 OnChanged("Probe");
                 OnChanged("Probenname");
+                OnChanged("EigenschaftWurfItemListe");
             }
         }
 
@@ -142,7 +148,32 @@ namespace MeisterGeister.ViewModel.Proben
         private List<EigenschaftWurfItem> _eigenschaftWurfItemListe = new List<EigenschaftWurfItem>();
         public List<EigenschaftWurfItem> EigenschaftWurfItemListe
         {
-            get { return _eigenschaftWurfItemListe; }
+            get 
+            {
+                Model.Talent talent = null;
+                if (Probe is Model.Talent)
+                    talent = Probe as Model.Talent;
+                else if (Probe is Model.Held_Talent)
+                    talent = (Probe as Model.Held_Talent).Talent;
+
+                if (talent != null && _eigenschaftWurfItemListe.Count >= 3)
+                {
+                    // Eigenschaftsnamen setzen
+                    _eigenschaftWurfItemListe[0].Name = talent.Eigenschaft1;
+                    _eigenschaftWurfItemListe[1].Name = talent.Eigenschaft2;
+                    _eigenschaftWurfItemListe[2].Name = talent.Eigenschaft3;
+
+                    if (Held != null)
+                    {
+                        // Eigenschaftswerte setzen
+                        _eigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert(talent.Eigenschaft1);
+                        _eigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert(talent.Eigenschaft2);
+                        _eigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert(talent.Eigenschaft3);
+                    }
+                }
+
+                return _eigenschaftWurfItemListe; 
+            }
             set
             {
                 _eigenschaftWurfItemListe = value;

@@ -42,22 +42,6 @@ namespace MeisterGeister.View.Proben
         }
 
 
-        //public VM.ProbeControlViewModel VM
-        //{
-        //    get { return (VM.ProbeControlViewModel)GetValue(VmProperty); }
-        //    set { SetValue(VmProperty, value); }
-        //}
-        //public static readonly DependencyProperty VmProperty = DependencyProperty.Register(
-        //  "VM", typeof(VM.ProbeControlViewModel), typeof(ProbeControl),
-        //        new FrameworkPropertyMetadata(new VM.ProbeControlViewModel(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnViewModelChanged)));
-
-        //private static void OnViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    ProbeControl control = (ProbeControl)d;
-        //    //control.DataContext = control.VM;
-        //    //(e.NewValue as VM.ProbeControlViewModel).Gewürfelt += control.ProbeControl_Gewürfelt;
-        //}
-
         //public Probe Probe
         //{
         //    get { return (Probe)GetValue(ProbeProperty); }
