@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {

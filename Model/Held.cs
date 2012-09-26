@@ -10,6 +10,7 @@ using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using System.ComponentModel;
 using DependentProperty = MeisterGeister.Model.Extensions.DependentProperty;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.Model
 {
@@ -44,66 +45,6 @@ namespace MeisterGeister.Model
             {
                 CheckAuModifikatoren();
             }
-            else if (args.PropertyName.StartsWith("Wunden"))
-            {
-                CheckWundenModifikatoren(args.PropertyName);
-            }
-        }
-
-        
-
-        private void CheckWundenModifikatoren(string wundenProperty)
-        {
-            Trefferzone zone = KampfLogic.Wunden.GetTrefferZoneByPropertyName(wundenProperty);
-            Type modTyp = Mod.WundenModifikator.TypByZone(zone);
-            int wundenzahl = ((IKämpfer)this).Wunden[zone];
-            int changes = SetModifikatorCount(modTyp, wundenzahl);
-            if (changes > 0)
-            {
-                //WdS 83
-                int auschaden = 0;
-                for (int i = 1; i <= changes; i++)
-                    auschaden += Würfel.Wurf(6);
-                AusdauerAktuell -= auschaden;
-
-                switch (zone)
-                {
-                    case Trefferzone.Kopf:
-                        //TODO JT: dem aktuellen Kampf erzählen, dass changes * 2W6 Ini verloren gegangen sind (per Event)
-                        if (wundenzahl >= 3 && wundenzahl - changes < 3)
-                        {
-                            //bewusstlos + blutverlust
-                            LebensenergieAktuell -= (Würfel.Wurf(6) + Würfel.Wurf(6)); //eventuell per Dialog?
-                        }
-                        break;
-                    case Trefferzone.Bauch:
-                    case Trefferzone.Brust:
-                        int zusatzschaden = 0;
-                        for (int i = 1; i <= changes; i++)
-                            zusatzschaden += Würfel.Wurf(6);
-                        LebensenergieAktuell -= zusatzschaden; //eventuell per Dialog?
-                        if (wundenzahl == 3 && wundenzahl - changes < 3)
-                        {
-                            //bewusstlos + blutverlust
-                        }
-                        break;
-                    case Trefferzone.ArmL:
-                    case Trefferzone.ArmR:
-                        if (wundenzahl == 3 && wundenzahl - changes < 3)
-                        {
-                            //arm handlungsunfähig
-                        }
-                        break;
-                    case Trefferzone.BeinL:
-                    case Trefferzone.BeinR:
-                        if (wundenzahl == 3 && wundenzahl - changes < 3)
-                        {
-                            //sturz, kampfunfähig
-                        }
-                        break;
-                    default: break;
-                }
-            }
         }
 
         private void CheckAuModifikatoren()
@@ -121,7 +62,6 @@ namespace MeisterGeister.Model
             {
                 //+ 1 Erschöpfung
             }
-
 
             if (AusdauerAktuell <= 0)
             {
@@ -152,7 +92,7 @@ namespace MeisterGeister.Model
 
             SetModifikatorCount<Mod.NiedrigeLebensenergieModifikator>(targetModCount);
 
-            if (LebensenergieAktuell <= 5)
+            if (!HatVorNachteil("Eisern") && !HatVorNachteil("Zäher Hund") && LebensenergieAktuell <= 5 || LebensenergieAktuell <= 0)
             {
                 if (!(Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0))
                     Modifikatoren.Add(new Mod.LebensenergieKampfunfähigModifikator());
@@ -180,97 +120,105 @@ namespace MeisterGeister.Model
 
         #region Eigenschaften
         [DependentProperty("MU")]
+        [DependsOnModifikator(typeof(Mod.IModMU))]
         public int Mut
         {
             get
             {
                 int mu = MU ?? 8;
                 if(Modifikatoren!=null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMU).Select(m => (Mod.IModMU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mu = m.ApplyMUMod(mu));
+                    Modifikatoren.Where(m => m is Mod.IModMU).Select(m => (Mod.IModMU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mu = m.ApplyMUMod(mu));
                 return mu;
             }
         }
 
         [DependentProperty("KL")]
+        [DependsOnModifikator(typeof(Mod.IModKL))]
         public int Klugheit
         {
             get
             {
                 int e = KL ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModKL).Select(m => (Mod.IModKL)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKLMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModKL).Select(m => (Mod.IModKL)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKLMod(e));
                 return e;
             }
         }
 
         [DependentProperty("IN")]
+        [DependsOnModifikator(typeof(Mod.IModIN))]
         public int Intuition
         {
             get
             {
                 int e = IN ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModIN).Select(m => (Mod.IModIN)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyINMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModIN).Select(m => (Mod.IModIN)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyINMod(e));
                 return e;
             }
         }
 
         [DependentProperty("CH")]
+        [DependsOnModifikator(typeof(Mod.IModCH))]
         public int Charisma
         {
             get
             {
                 int e = CH ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModCH).Select(m => (Mod.IModCH)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyCHMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModCH).Select(m => (Mod.IModCH)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyCHMod(e));
                 return e;
             }
         }
 
         [DependentProperty("FF")]
+        [DependsOnModifikator(typeof(Mod.IModFF))]
         public int Fingerfertigkeit
         {
             get
             {
                 int e = FF ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModFF).Select(m => (Mod.IModFF)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyFFMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModFF).Select(m => (Mod.IModFF)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyFFMod(e));
                 return e;
             }
         }
 
         [DependentProperty("GE")]
+        [DependsOnModifikator(typeof(Mod.IModGE))]
         public int Gewandtheit
         {
             get
             {
                 int e = GE ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModGE).Select(m => (Mod.IModGE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyGEMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModGE).Select(m => (Mod.IModGE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyGEMod(e));
                 return e;
             }
         }
 
         [DependentProperty("KO")]
+        [DependsOnModifikator(typeof(Mod.IModKO))]
         public int Konstitution
         {
             get
             {
                 int e = KO ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModKO).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModKO).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
                 return e;
             }
         }
 
         [DependentProperty("KK")]
+        [DependsOnModifikator(typeof(Mod.IModKK))]
         public int Körperkraft
         {
             get
             {
                 int e = KK ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
                 return e;
             }
         }
@@ -305,7 +253,7 @@ namespace MeisterGeister.Model
                     return Körperkraft;
                 case "SO":
                 case "Sozialstatus":
-                    return (int)SO;
+                    return SO ?? 0;
                 default:
                     return 0;
             }
@@ -314,90 +262,98 @@ namespace MeisterGeister.Model
 
         #region BaseEigenschaften / Für die Berechnung von abgeleiteten Werten
         [DependentProperty("MU")]
+        [DependsOnModifikator(typeof(Mod.IModMU))]
         public int BaseMU
         {
             get
             {
                 int mu = MU ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModMU).Select(m => (Mod.IModMU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mu = m.ApplyMUMod(mu));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModMU).Select(m => (Mod.IModMU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mu = m.ApplyMUMod(mu));
                 return mu;
             }
         }
         [DependentProperty("KL")]
+        [DependsOnModifikator(typeof(Mod.IModKL))]
         public int BaseKL
         {
             get
             {
                 int e = KL ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKL).Select(m => (Mod.IModKL)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKLMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKL).Select(m => (Mod.IModKL)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKLMod(e));
                 return e;
             }
         }
         [DependentProperty("IN")]
+        [DependsOnModifikator(typeof(Mod.IModIN))]
         public int BaseIN
         {
             get
             {
                 int e = IN ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModIN).Select(m => (Mod.IModIN)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyINMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModIN).Select(m => (Mod.IModIN)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyINMod(e));
                 return e;
             }
         }
         [DependentProperty("CH")]
+        [DependsOnModifikator(typeof(Mod.IModCH))]
         public int BaseCH
         {
             get
             {
                 int e = CH ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModCH).Select(m => (Mod.IModCH)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyCHMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModCH).Select(m => (Mod.IModCH)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyCHMod(e));
                 return e;
             }
         }
         [DependentProperty("FF")]
+        [DependsOnModifikator(typeof(Mod.IModFF))]
         public int BaseFF
         {
             get
             {
                 int e = FF ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModFF).Select(m => (Mod.IModFF)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyFFMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModFF).Select(m => (Mod.IModFF)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyFFMod(e));
                 return e;
             }
         }
         [DependentProperty("GE")]
+        [DependsOnModifikator(typeof(Mod.IModGE))]
         public int BaseGE
         {
             get
             {
                 int e = GE ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModGE).Select(m => (Mod.IModGE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyGEMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModGE).Select(m => (Mod.IModGE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyGEMod(e));
                 return e;
             }
         }
         [DependentProperty("KO")]
+        [DependsOnModifikator(typeof(Mod.IModKO))]
         public int BaseKO
         {
             get
             {
                 int e = KO ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKO).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKO).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
                 return e;
             }
         }
         [DependentProperty("KK")]
+        [DependsOnModifikator(typeof(Mod.IModKK))]
         public int BaseKK
         {
             get
             {
                 int e = KK ?? 8;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
                 return e;
             }
         }
@@ -441,7 +397,7 @@ namespace MeisterGeister.Model
             {
                 int le = LebensenergieBasis + LebensenergieMod;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModLE).Select(m => (Mod.IModLE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => le = m.ApplyLEMod(le));
+                    Modifikatoren.Where(m => m is Mod.IModLE).Select(m => (Mod.IModLE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => le = m.ApplyLEMod(le));
                 return le;
             }
         }
@@ -540,13 +496,14 @@ namespace MeisterGeister.Model
             }
         }
         [DependentProperty("AusdauerBasis"), DependentProperty("AusdauerMod")]
+        [DependsOnModifikator(typeof(Mod.IModAU))]
         public int AusdauerMax
         {
             get
             {
                 int e = AusdauerBasis + AusdauerMod;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModAU).Select(m => (Mod.IModAU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAUMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModAU).Select(m => (Mod.IModAU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAUMod(e));
                 return e;
             }
         }
@@ -632,6 +589,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependsOnModifikator(typeof(Mod.IModKE))]
         [DependentProperty("KarmaenergieMod")]
         public int KarmaenergieMax
         {
@@ -639,7 +597,7 @@ namespace MeisterGeister.Model
             {
                 int e = KarmaenergieMod;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModKE).Select(m => (Mod.IModKE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKEMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModKE).Select(m => (Mod.IModKE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKEMod(e));
                 return e;
             }
         }
@@ -695,6 +653,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependsOnModifikator(typeof(Mod.IModAE))]
         [DependentProperty("AstralenergieBasis"), DependentProperty("AstralenergieMod")]
         public int AstralenergieMax
         {
@@ -705,7 +664,7 @@ namespace MeisterGeister.Model
                 {
                     int e = AstralenergieBasis + AstralenergieMod;
                     if (Modifikatoren != null)
-                        Modifikatoren.FindAll(m => m is Mod.IModAE).Select(m => (Mod.IModAE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAEMod(e));
+                        Modifikatoren.Where(m => m is Mod.IModAE).Select(m => (Mod.IModAE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAEMod(e));
                     return e;
                 }
                 return 0;
@@ -739,6 +698,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
+        [DependsOnModifikator(typeof(Mod.IModMR))]
         public int Magieresistenz
         {
             get
@@ -746,7 +706,7 @@ namespace MeisterGeister.Model
                 //TODO ??: Aurapanzer etc.
                 int e = MagieresistenzBasis + MagieresistenzMod;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModMR).Select(m => (Mod.IModMR)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyMRMod(e));
+                    Modifikatoren.Where(m => m is Mod.IModMR).Select(m => (Mod.IModMR)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyMRMod(e));
                 return e;
             }
         }
@@ -862,7 +822,7 @@ namespace MeisterGeister.Model
 
         #region Attacke/Parade
 
-        [DependentProperty("MU"), DependentProperty("GE"), DependentProperty("KK")]
+        [DependentProperty("BaseMU"), DependentProperty("BaseGE"), DependentProperty("BaseKK")]
         public int AttackeBasis
         {
             get
@@ -871,7 +831,7 @@ namespace MeisterGeister.Model
             }
         }
 
-        [DependentProperty("IN"), DependentProperty("GE"), DependentProperty("KK")]
+        [DependentProperty("BaseIN"), DependentProperty("BaseGE"), DependentProperty("BaseKK")]
         public int ParadeBasis
         {
             get
@@ -892,7 +852,7 @@ namespace MeisterGeister.Model
 
         #region Fernkampf
 
-        [DependentProperty("IN"), DependentProperty("FF"), DependentProperty("KK")]
+        [DependentProperty("BaseIN"), DependentProperty("BaseFF"), DependentProperty("BaseKK")]
         public int FernkampfBasis
         {
             get
@@ -960,7 +920,7 @@ namespace MeisterGeister.Model
             int taw = ht.TaW ?? 0;
             if (Modifikatoren != null)
             {
-                List <Mod.IModTalentwert> l = Modifikatoren.FindAll(m => m is Mod.IModTalentwert).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
+                List<Mod.IModTalentwert> l = Modifikatoren.Where(m => m is Mod.IModTalentwert).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
                 foreach(Mod.IModTalentwert m in l)
                 {
                     int tawneu = m.ApplyTalentwertMod(taw);
@@ -1395,6 +1355,7 @@ namespace MeisterGeister.Model
             set { BE = value; }
         }
 
+        [DependsOnModifikator(typeof(Mod.IModGS))]
         public int Geschwindigkeit
         {
             get {
@@ -1412,7 +1373,7 @@ namespace MeisterGeister.Model
                 else if (BaseGE <= 10)
                     gs--;
                 if (Modifikatoren != null)
-                    Modifikatoren.FindAll(m => m is Mod.IModGS).Select(m => (Mod.IModGS)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => gs = m.ApplyGSMod(gs));
+                    Modifikatoren.Where(m => m is Mod.IModGS).Select(m => (Mod.IModGS)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => gs = m.ApplyGSMod(gs));
                 return gs; 
             }
         }
@@ -1585,13 +1546,21 @@ namespace MeisterGeister.Model
         }
 
         private Wunden kämpferWunden = null;
-        IWunden IKämpfer.Wunden
+        public IWunden WundenByZone
         {
             get
             {
                 if (kämpferWunden == null)
                     kämpferWunden = new KampfLogic.Wunden((Model.Held)this);
                 return kämpferWunden;
+            }
+        }
+        
+        IWunden IKämpfer.Wunden
+        {
+            get
+            {
+                return WundenByZone;
             }
         }
 

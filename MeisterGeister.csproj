@@ -153,6 +153,7 @@
     <Compile Include="Daten\DatabaseTools.cs" />
     <Compile Include="Daten\DatabaseUpdate.cs" />
     <Compile Include="Daten\SqlCeUpgrade.cs" />
+    <Compile Include="Logic\Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\Eigenschaft.cs" />
     <Compile Include="Logic\General\Eigenschaften.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Parade.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Abwehraktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Manöver.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\DependsOnModifikatorAttribute.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IEndetMit.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModEigenschaft.cs" />

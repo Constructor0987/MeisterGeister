@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 // Eigene Usings
 using LogicAlt = MeisterGeister.ViewModel.Kampf.LogicAlt;
+using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -73,7 +74,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         Kampfstil Kampfstil { get; set; }
         WaffenloserKampfstil WaffenloserKampfstil { get; set; }
 
-        List<Modifikatoren.IModifikator> Modifikatoren { get; }
+        ObservableCollection<Modifikatoren.IModifikator> Modifikatoren { get; }
 
         //Umwandlung von Aktionen und Reaktionen muss noch modeliert werden,
         //mögliche überlegung ist eine manöverliste, welche den  Regelkomformen und den nicht Regelkomformen Modus abdeckt, hiermit wird auch die Umwandlug von Aktionen/Reaktionen mit 

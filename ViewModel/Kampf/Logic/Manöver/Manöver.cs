@@ -7,6 +7,7 @@ using System.Reflection;
 
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.General;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {

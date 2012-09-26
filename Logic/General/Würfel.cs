@@ -37,6 +37,15 @@ namespace MeisterGeister.Logic.General
             return (int)pt.Eval(random);
         }
 
+        public static int Wurf(int seiten, int anzahl)
+        {
+            //TODO hier einen Dialog starten?
+            int result = 0;
+            for (int i = 1; i <= anzahl; i++)
+                result += RandomNumberGenerator.RandomInt(1, seiten);
+            return result;
+        }
+
         public static int Wurf(int seiten)
         {
             return RandomNumberGenerator.RandomInt(1, seiten);

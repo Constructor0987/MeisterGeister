@@ -3,17 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using MeisterGeister.Logic.Extensions;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     [DataContract(IsReference=true)]
-    public class Wesen 
+    public class Wesen
     {
-        private List<Mod.IModifikator> _modifikatoren = new List<Mod.IModifikator>();
-        public List<Mod.IModifikator> Modifikatoren
+        #region ModifikatorChanged Event
+        public Wesen()
+        {
+            Modifikatoren.CollectionChanged += OnModifikatorenChanged;
+            ModifikatorenChanged += DependsOnModifikator.OnModifikatorenChanged;
+        }
+
+        private event NotifyCollectionChangedEventHandler ModifikatorenChanged;
+        private void OnModifikatorenChanged(object o, NotifyCollectionChangedEventArgs args)
+        {
+            if (ModifikatorenChanged != null)
+                ModifikatorenChanged(this, args);
+        }
+        #endregion
+
+        private ObservableCollection<Mod.IModifikator> _modifikatoren = new ObservableCollection<Mod.IModifikator>();
+        public ObservableCollection<Mod.IModifikator> Modifikatoren
         {
             get { return _modifikatoren; }
         }
