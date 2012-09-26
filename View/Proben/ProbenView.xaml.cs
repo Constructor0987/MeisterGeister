@@ -30,6 +30,7 @@ namespace MeisterGeister.View.Proben
             DataContext = new VM.ProbenViewModel();
         }
 
+        // TODO MT: Testmethode entfernen
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             // einfache Probe

@@ -21,8 +21,6 @@ namespace MeisterGeister.ViewModel.Proben
 
         #region //---- EIGENSCHAFTEN & FELDER ----
 
-        //public ProbeControlViewModel Self { get { return this; } set { return; } }
-
         private ProbenErgebnis _ergebnis = new ProbenErgebnis();
         public ProbenErgebnis Ergebnis
         {
@@ -126,7 +124,11 @@ namespace MeisterGeister.ViewModel.Proben
 
                 var list = new List<EigenschaftWurfItem>(value);
                 for (int i = 0; i < value; i++)
-                    list.Add(new EigenschaftWurfItem());
+                {
+                    var item = new EigenschaftWurfItem();
+                    item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
+                    list.Add(item);
+                }
                 EigenschaftWurfItemListe = list;
 
                 OnChanged("WertCount");
@@ -194,10 +196,6 @@ namespace MeisterGeister.ViewModel.Proben
 
         public void Würfeln(object obj)
         {
-            //Probe p = new Probe();
-            //p.Werte = new int[EigenschaftWurfItemListe.Count];
-            
-
             if (Probe != null)
             {
                 for (int i = 0; i < Probe.Werte.Length; i++)
@@ -206,8 +204,16 @@ namespace MeisterGeister.ViewModel.Proben
                 Ergebnis = Probe.Würfeln();
 
                 for (int i = 0; i < Ergebnis.Würfe.Length; i++)
+                {
+                    EigenschaftWurfItemListe[i].PropertyChanged -= EigenschaftWurfItem_PropertyChanged;
                     EigenschaftWurfItemListe[i].Wurf = Ergebnis.Würfe[i];
+                    EigenschaftWurfItemListe[i].PropertyChanged += EigenschaftWurfItem_PropertyChanged;
+                }
             }
+
+            // Sound abspielen
+            if (Würfel.SoundAbspielen)
+                MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             // Event werfen
             if (Gewürfelt != null)
@@ -217,6 +223,23 @@ namespace MeisterGeister.ViewModel.Proben
         #endregion
 
         #region //---- EVENTS ----
+
+        private void EigenschaftWurfItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Wurf")
+            {
+                if (sender is EigenschaftWurfItem)
+                {
+                    if (Probe != null)
+                    {
+                        for (int i = 0; i < Ergebnis.Würfe.Length; i++)
+                            Ergebnis.Würfe[i] = EigenschaftWurfItemListe[i].Wurf;
+
+                        Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
+                    }
+                }
+            }
+        }
 
         public event EventHandler Gewürfelt;
 

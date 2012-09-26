@@ -129,7 +129,11 @@ namespace MeisterGeister.ViewModel.Proben
             // Alle Proben neu würfeln
             foreach (var item in ProbeErgebnisListe)
                 item.Würfeln(null);
-            
+
+            // Sound abspielen
+            if (Würfel.SoundAbspielen)
+                MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
+
             OnChanged("GruppenErgebnis");
         }
 

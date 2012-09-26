@@ -41,6 +41,8 @@ namespace MeisterGeister.View.Proben
             }
         }
 
+        // TODO MT: Erfolgswahrscheinlichkeit hinzufügen
+
 
         //public Probe Probe
         //{

@@ -37,6 +37,34 @@ namespace MeisterGeister.Logic.General
             }
         }
 
+        public string WertText
+        {
+            get
+            {
+                if (this is Model.Talent
+                    || this is Model.Held_Talent)
+                    return "TaW";
+                else if (this is Model.Zauber
+                    || this is Model.Held_Zauber)
+                    return "ZfW";
+                return "Wert";
+            }
+        }
+
+        public string PunkteText
+        {
+            get
+            {
+                if (this is Model.Talent
+                    || this is Model.Held_Talent)
+                    return "TaP";
+                else if (this is Model.Zauber
+                    || this is Model.Held_Zauber)
+                    return "ZfP";
+                return "Punkte";
+            }
+        }
+
         public double Erfolgsschance {
             get
             {
@@ -55,7 +83,7 @@ namespace MeisterGeister.Logic.General
             }
         }
         private ProbenErgebnis _ergebnis = null;
-        ProbenErgebnis Ergebnis {
+        public ProbenErgebnis Ergebnis {
             get
             {
                 if (_ergebnis == null)
@@ -70,15 +98,35 @@ namespace MeisterGeister.Logic.General
 
         public ProbenErgebnis Würfeln()
         {
+            // TODO MT: SpezielleErfahrungSpeichern
+
             ProbenErgebnis pe = new ProbenErgebnis();
             if (Werte == null)
                 Werte = new int[0];
             pe.Würfe = new int[Werte.Length];
+
+            for (int i = 0; i < Werte.Length; i++)
+            {
+                pe.Würfe[i] = Würfel.Wurf(20);
+            }
+
+            ProbenErgebnisBerechnen(pe);
+
+            Ergebnis = pe; // Speichert das Probenergebnis
+            return pe;
+        }
+
+        /// <summary>
+        /// Berechnet das Probenergebnis auf Basis der Würfe in 'pe'.
+        /// </summary>
+        /// <param name="pe"></param>
+        /// <returns></returns>
+        public ProbenErgebnis ProbenErgebnisBerechnen(ProbenErgebnis pe)
+        {
             pe.Übrig = Fertigkeitswert;
             int einsen = 0, zwanzigen = 0;
             for (int i = 0; i < Werte.Length; i++)
             {
-                pe.Würfe[i] = Würfel.Wurf(20);
                 pe.Übrig -= Math.Max(0, pe.Würfe[i] - Werte[i]);
                 if (pe.Würfe[i] == 1)
                     einsen++;
