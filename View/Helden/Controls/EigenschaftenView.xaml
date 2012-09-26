@@ -3,13 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="660"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
+        <DataTemplate x:Key="ModifikatorListeItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                <TextBlock Grid.Column="1" Text="{Binding Mod.Name}" />
+                <TextBlock Grid.Column="2" Text="{Binding Wert}" Margin="10,0,0,0" />
+                <TextBlock Grid.Column="3" Text="{Binding Mod.Literatur, StringFormat='(\{0\})'}" Margin="10,0,0,0" />
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <StackPanel>
@@ -54,37 +66,134 @@
                         <Label Grid.ColumnSpan="2" Grid.Row="1" Margin="5,3,0,3" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedHeld.MU}" VerticalAlignment="Center" />
                         <TextBlock Grid.Column="2" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Mut}" TextAlignment="Center" VerticalAlignment="Center">
-                            <!--Test für Modifikator-Anzeige-->
-                            <!-- TODO: Modifikator-Anzeige-->
                             <TextBlock.ToolTip>
-                                <ListBox ItemsSource="{Binding SelectedHeld.Modifikatoren}">
-                                </ListBox>
-                                
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.MU, StringFormat='MU-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeMU}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Mut, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
                             </TextBlock.ToolTip>
                         </TextBlock>
                         <Label Grid.Column="0" Grid.Row="2" Margin="3" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding SelectedHeld.KL}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="2" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Klugheit}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Klugheit}" TextAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.KL, StringFormat='KL-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeKL}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Klugheit, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="0" Grid.Row="3" Margin="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" Value="{Binding SelectedHeld.IN}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="2" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Intuition}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Intuition}" TextAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.IN, StringFormat='IN-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeIN}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Intuition, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="0" Grid.Row="4" Margin="3" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Charisma" Value="{Binding SelectedHeld.CH}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="2" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Charisma}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="2" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Charisma}" TextAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.CH, StringFormat='CH-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeCH}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Charisma, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="3" Grid.Row="1" Margin="3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="4" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" Value="{Binding SelectedHeld.FF}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="5" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Fingerfertigkeit}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="5" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Fingerfertigkeit}" TextAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.FF, StringFormat='FF-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeFF}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Fingerfertigkeit, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="3" Grid.Row="2" Margin="3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="4" Grid.Row="2" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Gewandtheit" Value="{Binding SelectedHeld.GE}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="5" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Gewandtheit}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="5" Grid.Row="2" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Gewandtheit}" TextAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.GE, StringFormat='GE-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeGE}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Gewandtheit, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="3" Grid.Row="3" Margin="3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="4" Grid.Row="3" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Konstitution" Value="{Binding SelectedHeld.KO}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="5" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Konstitution}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="5" Grid.Row="3" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Konstitution}" TextAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.KO, StringFormat='KO-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeKO}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Konstitution, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="3" Grid.Row="4" Margin="3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <ViewGeneral:IntBox Grid.Column="4" Grid.Row="4" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Körperkraft" Value="{Binding SelectedHeld.KK}" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="5" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Körperkraft}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="5" Grid.Row="4" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" Text="{Binding SelectedHeld.Körperkraft}" TextAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding SelectedHeld.KK, StringFormat='KK-Basiswert: \{0\}'}" HorizontalAlignment="Left" Margin="15,0,0,5" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <ListBox ItemsSource="{Binding ModifikatorenListeKK}" ItemTemplate="{StaticResource ModifikatorListeItemTemplate}" Background="Transparent" BorderBrush="Transparent" />
+                                    <Separator Margin="0,5,0,5" />
+                                    <StackPanel Orientation="Horizontal" Margin="2,0,0,0">
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
+                                        <TextBlock Text="{Binding SelectedHeld.Körperkraft, StringFormat='Aktueller Wert: \{0\}'}" HorizontalAlignment="Left" FontWeight="Bold" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <Label Grid.Column="7" Grid.Row="1" Margin="3" Content="INI-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                        <TextBlock Grid.Column="9" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockInitiativeBasis" Text="{Binding SelectedHeld.InitiativeBasis}" TextAlignment="Center" ToolTip="Initiative-Basiswert" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="9" Grid.Row="1" Height="23" Margin="6,2,2,2" Padding="2" Width="55" HorizontalAlignment="Center" x:Name="_textBlockInitiativeBasis" Text="{Binding SelectedHeld.InitiativeBasis}" TextAlignment="Center" VerticalAlignment="Center">
+                        </TextBlock>
                         <ViewGeneral:IntBox Grid.Column="8" Grid.Row="1" Margin="3,3,0,3" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Initiative-Modifikator durch Rasse/Kultur/Profession" Value="{Binding SelectedHeld.InitiativeModGen}" VerticalAlignment="Center" />
                         <Label Grid.Column="8" Grid.Row="0" Margin="3" Content="Mod" HorizontalAlignment="Center" VerticalAlignment="Center" />
                         <Label Grid.Column="9" Grid.Row="0" Margin="3" Content="Wert" HorizontalAlignment="Center" VerticalAlignment="Center" />
