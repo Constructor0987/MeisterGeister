@@ -212,7 +212,7 @@ namespace MeisterGeister.ViewModel.Proben
             }
 
             // Sound abspielen
-            if (Würfel.SoundAbspielen)
+            if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             // Event werfen

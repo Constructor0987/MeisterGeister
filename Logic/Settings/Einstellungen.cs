@@ -101,6 +101,18 @@ namespace MeisterGeister.Logic.Settings
             }
         }
 
+        public static bool WuerfelSoundAbspielen
+        {
+            get
+            {
+                return GetOrCreateEinstellung<bool>("WuerfelSoundAbspielen", false);
+            }
+            set
+            {
+                SetEinstellung<bool>("WuerfelSoundAbspielen", value);
+            }
+        }
+
         public static int SelectedTab
         {
             get

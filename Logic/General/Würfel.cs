@@ -51,29 +51,6 @@ namespace MeisterGeister.Logic.General
             return RandomNumberGenerator.RandomInt(1, seiten);
         }
 
-        public static event EventHandler SoundAbspielenChanged;
-
-        public static bool SoundAbspielen
-        {
-            get 
-            {
-                if (App.DatenDataSet == null)
-                    return false;
-                var row = App.DatenDataSet.Einstellungen.FindByName("WuerfelSoundAbspielen");
-                if (row == null || row.IsWertBoolNull())
-                    return false;
-                return row.WertBool;
-            }
-            set 
-            {
-                var row = App.DatenDataSet.Einstellungen.FindByName("WuerfelSoundAbspielen");
-                if (row != null)
-                    row.WertBool = value;
-                if (SoundAbspielenChanged != null)
-                    SoundAbspielenChanged(null, null);
-            }
-        }
-
         /// <summary>
         /// Erzeugt einen Würfel mit einer bestimmten Seitenzahl.
         /// </summary>

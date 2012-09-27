@@ -50,6 +50,17 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        int _mod = 0;
+        public int Mod
+        {
+            get { return _mod; }
+            set
+            {
+                _mod = value;
+                OnChanged("Mod");
+            }
+        }
+
         public string GruppenErgebnis
         {
             get
@@ -131,7 +142,7 @@ namespace MeisterGeister.ViewModel.Proben
                 item.Würfeln(null);
 
             // Sound abspielen
-            if (Würfel.SoundAbspielen)
+            if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             OnChanged("GruppenErgebnis");
