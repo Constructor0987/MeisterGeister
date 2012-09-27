@@ -44,7 +44,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
                 case Trefferzone.Unlokalisiert:
                 case Trefferzone.Gesamt:
                 default:
-                    return typeof(WundenKopfModifikator);
+                    return typeof(WundenModifikator);
             }
         }
 

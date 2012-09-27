@@ -65,6 +65,7 @@ namespace <#=code.EscapeNamespace(namespaceName)#>
 <#
         WriteLazyLoadingEnabled(container);
 #>
+		this.ObjectMaterialized += OnObjectMaterialized;
     }
 
     public <#=code.Escape(container)#>(string connectionString)
@@ -73,6 +74,7 @@ namespace <#=code.EscapeNamespace(namespaceName)#>
 <#
         WriteLazyLoadingEnabled(container);
 #>
+		this.ObjectMaterialized += OnObjectMaterialized;
     }
 
     public <#=code.Escape(container)#>(string connectionString, bool noproxy, bool nolazyloading)
@@ -87,6 +89,7 @@ namespace <#=code.EscapeNamespace(namespaceName)#>
 <#
         WriteLazyLoadingEnabled(container);
 #>
+		this.ObjectMaterialized += OnObjectMaterialized;
 		}
     }
 
@@ -96,9 +99,18 @@ namespace <#=code.EscapeNamespace(namespaceName)#>
 <#
         WriteLazyLoadingEnabled(container);
 #>
+		this.ObjectMaterialized += OnObjectMaterialized;
     }
 
     #endregion
+
+	#region Events
+	private void OnObjectMaterialized(object sender, ObjectMaterializedEventArgs e)
+    {
+        if(e.Entity != null && e.Entity is Extensions.IInitializable)
+            ((Extensions.IInitializable)e.Entity).Initialize();
+    }
+	#endregion
 
 <#
         region.Begin("ObjectSet Properties", 2);

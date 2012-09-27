@@ -24,12 +24,14 @@ namespace MeisterGeister.Model
             : base(ConnectionString, ContainerName)
         {
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
         }
     
         public DatabaseDSAEntities(string connectionString)
             : base(connectionString, ContainerName)
         {
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
         }
     
         public DatabaseDSAEntities(string connectionString, bool noproxy, bool nolazyloading)
@@ -42,6 +44,7 @@ namespace MeisterGeister.Model
     		else
     		{
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
     		}
         }
     
@@ -49,9 +52,18 @@ namespace MeisterGeister.Model
             : base(connection, ContainerName)
         {
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
         }
     
         #endregion
+    
+    	#region Events
+    	private void OnObjectMaterialized(object sender, ObjectMaterializedEventArgs e)
+        {
+            if(e.Entity != null && e.Entity is Extensions.IInitializable)
+                ((Extensions.IInitializable)e.Entity).Initialize();
+        }
+    	#endregion
     
         #region ObjectSet Properties
     

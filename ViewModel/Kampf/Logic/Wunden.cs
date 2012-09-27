@@ -17,6 +17,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Wunden(Model.Held held)
         {
             _held = held;
+            UpdateWundenModifikatoren();
         }
 
         public static Trefferzone GetTrefferZoneByPropertyName(string wundenProperty)
@@ -48,6 +49,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (neu > alt)
                 return Würfel.Wurf(6, neu - alt); //WdS 83
             return 0;
+        }
+
+        public void UpdateWundenModifikatoren()
+        {
+            Type modTyp = Mod.WundenModifikator.TypByZone(Trefferzone.Kopf);
+            _held.SetModifikatorCount(modTyp, this[Trefferzone.Kopf]);
+            for (int i = (int)Trefferzone.Rücken; i <= (int)Trefferzone.Unlokalisiert; i++)
+            {
+                Trefferzone zone = (Trefferzone)i;
+                modTyp = Mod.WundenModifikator.TypByZone(zone);
+                _held.SetModifikatorCount(modTyp, this[zone]);
+            }
         }
 
         public int this[Trefferzone zone]

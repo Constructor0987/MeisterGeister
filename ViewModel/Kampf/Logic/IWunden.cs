@@ -2,5 +2,6 @@
 {
     public interface IWunden : ITrefferzonenIndexer<int>
     {
+        void UpdateWundenModifikatoren();
     }
 }

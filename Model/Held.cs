@@ -15,9 +15,8 @@ using MeisterGeister.Logic.Extensions;
 namespace MeisterGeister.Model
 {
     // Man kann Superklassen hinzufügen. Es sollten jedoch nicht die gleichen Eigenschaften, wie in der Datenbankklasse existieren.
-    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer
+    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable
     {
-
         public Held()
         {
             HeldGUID = Guid.NewGuid();
@@ -31,6 +30,18 @@ namespace MeisterGeister.Model
             Name = "Alrik";
             AktiveHeldengruppe = false;
         }
+
+        #region IInitializable
+        private bool _isInitialized = false;
+        public void Initialize()
+        {
+            if (_isInitialized)
+                return;
+            kämpferWunden = new KampfLogic.Wunden((Model.Held)this);
+            //WundenByZone.UpdateWundenModifikatoren(); // das würde es zweimal durchlaufen
+            _isInitialized = true;
+        }
+        #endregion
 
         #region Events und resultierende Modifikatoren
 
