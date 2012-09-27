@@ -232,6 +232,8 @@ namespace MeisterGeister.ViewModel.Proben
                 {
                     if (Probe != null)
                     {
+                        if (Ergebnis.Würfe == null)
+                            Ergebnis.Würfe = new int[this.WertCount];
                         for (int i = 0; i < Ergebnis.Würfe.Length; i++)
                             Ergebnis.Würfe[i] = EigenschaftWurfItemListe[i].Wurf;
 
