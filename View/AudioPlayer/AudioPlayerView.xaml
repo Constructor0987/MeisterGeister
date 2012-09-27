@@ -11,7 +11,6 @@
     d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}">
 
     <UserControl.Resources>
-
         <DataTemplate x:Key="TestTemplate">
             <Border BorderBrush="#FFBEB3A3" Effect="{StaticResource LightBloom}" BorderThickness="1">
                 <Grid>
@@ -102,7 +101,7 @@
         </Grid.RowDefinitions>
 
         <Border Background="{StaticResource BackgroundPergamentQuer}" BorderBrush="Silver" BorderThickness="1" Name="brdHintergrundOption" Grid.ColumnSpan="1" Grid.Column="1">
-            <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnHintergrundGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" />
+            <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" />
         </Border>
         <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2">
             <TabItem Header="Hintergrund" Name="tiHintergrund" Loaded="tiHintergrund_Loaded" GotFocus="tiHintergrund_GotFocus">
@@ -255,7 +254,7 @@
                                                 <ColumnDefinition Width="72" />
                                                 
                                             </Grid.ColumnDefinitions>
-                                            <ToggleButton Grid.Column="1" Height="21" HorizontalAlignment="Stretch" Margin="0,15,0,0" Name="btnKlangStop0" VerticalAlignment="Bottom" Width="21" Click="btnKlangStop0_Click" ClickMode="Press" IsEnabled="True" IsChecked="False" ToolTip="Pausiert alle Klänge in der Registerkarte" IsTabStop="False" Focusable="False">
+                                            <ToggleButton Grid.Column="1" Height="21" HorizontalAlignment="Stretch" Margin="0,15,0,0" Name="btnKlangPause0" Click="btnKlangPause0_Click" VerticalAlignment="Bottom" Width="21" ClickMode="Press" IsEnabled="True" IsChecked="False" ToolTip="Pausiert alle Klänge in der Registerkarte" IsTabStop="False" Focusable="False">
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pause.png" Name="btnKlangStopImg0" />
                                             </ToggleButton>
                                             
@@ -309,7 +308,7 @@
                                                     
                                                 </Grid.ColumnDefinitions>
 
-                                                <Image Name="imgTrash0_X" Height="16" Margin="0,0,0,4" Stretch="Fill" Grid.Column="1"  Width="16" VerticalAlignment="Bottom" Tag="0" MouseUp="imgTrash0_0_MouseUp" HorizontalAlignment="Left" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" />
+                                                <Image Name="imgTrash0_X" Height="16" Margin="0,0,0,4" Stretch="Fill" Grid.Column="1"  Width="16" VerticalAlignment="Bottom" Tag="0" MouseUp="imgTrash0_0_MouseUp" HorizontalAlignment="Left" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" />
                                                 <ProgressBar Name="pbarTitel0_X" Height="18" Margin="15,0,0,3" Grid.Column="2" VerticalAlignment="Bottom" Grid.ColumnSpan="1" />
                                                 <CheckBox Name="chkTitel0_X" Content="chkTitel0" Height="20" Margin="0,2,0,0" Grid.Column="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" IsChecked="False" Click="chkTitel0_0_Click" />
                                                 <Label Name="lblDauer0_X" Content="-:--" Grid.Column="3" Height="14" Margin="5,3,0,6" Padding="0" HorizontalContentAlignment="Center" />
@@ -434,7 +433,7 @@
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="72" />
                                             </Grid.ColumnDefinitions>
-                                            <ToggleButton Grid.Column="1" Height="21" HorizontalAlignment="Stretch" Margin="0,15,0,0" Name="btnKlangStopX" VerticalAlignment="Bottom" Width="21" Click="btnKlangStop0_Click" ClickMode="Press" IsEnabled="True" IsChecked="False" ToolTip="Pausiert alle Klänge in der Registerkarte" IsTabStop="False" Focusable="False">
+                                            <ToggleButton Grid.Column="1" Height="21" HorizontalAlignment="Stretch" Margin="0,15,0,0" Name="btnKlangPauseX" VerticalAlignment="Bottom" Width="21" Click="btnKlangPause0_Click" ClickMode="Press" IsEnabled="True" IsChecked="False" ToolTip="Pausiert alle Klänge in der Registerkarte" IsTabStop="False" Focusable="False">
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pause.png" Name="btnKlangStopImgX" />
                                             </ToggleButton>
 
@@ -454,10 +453,10 @@
                                             <Button Content="-" Grid.Column="7" Grid.Row="1" Height="22" Margin="0,0,30,1" Name="btnTopVolMaxMinusX" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge verringern" />
                                             <Button Content="+" Grid.Column="7" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,0,1" Name="btnTopVolMaxPlusX" VerticalAlignment="Bottom" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge erhöhen" />
                                             <Label Content="Zwischenpause [ms]" Grid.Column="8" Height="17" HorizontalAlignment="Stretch" Margin="0,0,4,0" Name="lblTopPauseX" Padding="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" Width="123" Grid.Row="1" />
-                                            <Button Content="&lt;&lt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" Name="btnTopPauseMinX" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 0%" />
-                                            <Button Content="&lt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Left" Margin="23,0,0,1" Name="btnTopPauseDownX" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge verringern" />
-                                            <Button Content="&gt;&gt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" Name="btnTopPauseMaxX" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 100%" />
-                                            <Button Content="&gt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" Name="btnTopPauseUpX" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" />
+                                            <Button Content="&lt;&lt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" Name="btnTopPauseMinX" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 0%" Tag="-10000" />
+                                            <Button Content="&lt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Left" Margin="23,0,0,1" Name="btnTopPauseDownX" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge verringern" Tag="-200" />
+                                            <Button Content="&gt;&gt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" Name="btnTopPauseMaxX" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 100%" Tag="10000" />
+                                            <Button Content="&gt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" Name="btnTopPauseUpX" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Tag="200" />
                                             <CheckBox Height="14" Margin="0,2,0,5" Name="chkbxTopPauseChangeX" VerticalAlignment="Bottom" Width="14" Grid.Column="10" Grid.Row="1" HorizontalAlignment="Center" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" Tag="0" />
                                             <Label Content="Pause Range [ms]" Grid.Column="11" Grid.ColumnSpan="2" Height="17" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Name="lblTopPauseRangeX" Padding="0" VerticalAlignment="Top" Grid.RowSpan="2" Margin="24,0,2,0" Grid.Row="1" />
                                             <Button Content="-" Height="22" Margin="0,0,30,1" Name="btnTopPauseMinMinusX" VerticalAlignment="Bottom" Grid.Column="11" Grid.Row="1" HorizontalAlignment="Right" Width="22" ToolTip="Minimale Pausenzeit aller variierbaren Klänge verringern" />
