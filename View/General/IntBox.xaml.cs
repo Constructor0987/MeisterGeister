@@ -83,6 +83,30 @@ namespace MeisterGeister.View.General
         public static DependencyProperty ShowButtonsProperty = DependencyProperty.Register("ShowButtons", typeof(bool), typeof(IntBox),
                 new PropertyMetadata(false));
 
+        new public Brush Foreground
+        {
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+        new public static DependencyProperty ForegroundProperty = DependencyProperty.Register("Foreground", typeof(Brush), typeof(IntBox),
+                new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnCurrentForegroundChanged),
+                    new CoerceValueCallback(OnCoerceForeground)));
+
+        private static object OnCoerceForeground(DependencyObject d, Object baseValue)
+        {
+            IntBox box = (IntBox)d;
+
+            if ((Brush)baseValue == box._textBoxInt.Background)
+                return box._textBoxInt.Foreground;
+            return baseValue;
+        }
+
+        private static void OnCurrentForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            IntBox box = (IntBox)d;
+            box._textBoxInt.Foreground = (Brush)e.NewValue;
+        }
+
         public int Value
         {
             get { return (int)GetValue(ValueProperty); }
@@ -103,19 +127,6 @@ namespace MeisterGeister.View.General
             return baseValue;
         }
 
-        private void MarkRed(bool mark)
-        {
-            if (mark)
-                _textBoxInt.Foreground = Brushes.Red;
-            else
-            {
-                if (WeissAufSchwarz)
-                    _textBoxInt.Foreground = Brushes.White;
-                else
-                    _textBoxInt.Foreground = Brushes.Black;
-            }
-        }
-
         private static void OnCurrentValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             IntBox box = (IntBox)d;
@@ -129,6 +140,18 @@ namespace MeisterGeister.View.General
                 box.NumValueChanged(box);
         }
 
+        private void MarkRed(bool mark)
+        {
+            if (mark)
+                _textBoxInt.Foreground = Brushes.Red;
+            else
+            {
+                if (WeissAufSchwarz)
+                    _textBoxInt.Foreground = Brushes.White;
+                else
+                    _textBoxInt.Foreground = Brushes.Black;
+            }
+        }
 
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
