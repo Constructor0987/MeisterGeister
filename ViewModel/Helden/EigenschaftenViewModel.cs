@@ -82,132 +82,49 @@ namespace MeisterGeister.ViewModel.Helden
         {
             get 
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.KL ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModKL).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModKL)item).ApplyKLMod(eigenschaft);
-                    li.Add(new { 
-                        Mod = item, 
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModKL), SelectedHeld.KL ?? 8, SelectedHeld.Modifikatoren);
             }
         }
         public List<dynamic> ModifikatorenListeCH
         {
             get
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.CH ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModCH).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModCH)item).ApplyCHMod(eigenschaft);
-                    li.Add(new
-                    {
-                        Mod = item,
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModCH), SelectedHeld.CH ?? 8, SelectedHeld.Modifikatoren);
             }
         }
         public List<dynamic> ModifikatorenListeIN
         {
             get
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.IN ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModIN).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModIN)item).ApplyINMod(eigenschaft);
-                    li.Add(new
-                    {
-                        Mod = item,
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModIN), SelectedHeld.IN ?? 8, SelectedHeld.Modifikatoren);
             }
         }
         public List<dynamic> ModifikatorenListeFF
         {
             get
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.FF ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModFF).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModFF)item).ApplyFFMod(eigenschaft);
-                    li.Add(new
-                    {
-                        Mod = item,
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModFF), SelectedHeld.FF ?? 8, SelectedHeld.Modifikatoren);
             }
         }
         public List<dynamic> ModifikatorenListeGE
         {
             get
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.GE ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModGE).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModGE)item).ApplyGEMod(eigenschaft);
-                    li.Add(new
-                    {
-                        Mod = item,
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModGE), SelectedHeld.GE ?? 8, SelectedHeld.Modifikatoren);
             }
         }
         public List<dynamic> ModifikatorenListeKO
         {
             get
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.KO ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModKO).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModKO)item).ApplyKOMod(eigenschaft);
-                    li.Add(new
-                    {
-                        Mod = item,
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModKO), SelectedHeld.KO ?? 8, SelectedHeld.Modifikatoren);
             }
         }
         public List<dynamic> ModifikatorenListeKK
         {
             get
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.KK ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModKK).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModKK)item).ApplyKKMod(eigenschaft);
-                    li.Add(new
-                    {
-                        Mod = item,
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModKK), SelectedHeld.KK ?? 8, SelectedHeld.Modifikatoren);
             }
         }
 
