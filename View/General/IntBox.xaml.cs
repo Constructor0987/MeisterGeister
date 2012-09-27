@@ -187,8 +187,14 @@ namespace MeisterGeister.View.General
             if (e.Key == Key.Enter)
             {
                 // Focus entfernen, um eine Aktualiserung zu erzwingen
-                _textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
+                if (!_textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right)))
+                    _textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
+        }
+
+        private void _textBoxInt_GotFocus(object sender, RoutedEventArgs e)
+        {
+            _textBoxInt.SelectAll();
         }
 
         private void _textBoxInt_LostFocus(object sender, RoutedEventArgs e)
