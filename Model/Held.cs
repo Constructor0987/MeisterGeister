@@ -847,7 +847,7 @@ namespace MeisterGeister.Model
         #region Attacke/Parade
 
         [DependentProperty("BaseMU"), DependentProperty("BaseGE"), DependentProperty("BaseKK")]
-        public int AttackeBasis
+        public int AttackeBasisOhneMod
         {
             get
             {
@@ -855,12 +855,38 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("AttackeBasisOhneMod")]
+        [DependsOnModifikator(typeof(Mod.IModATBasis))]
+        public int AttackeBasis
+        {
+            get
+            {
+                int v = AttackeBasisOhneMod;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModATBasis).Select(m => (Mod.IModATBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATBasisMod(v));
+                return v;
+            }
+        }
+
         [DependentProperty("BaseIN"), DependentProperty("BaseGE"), DependentProperty("BaseKK")]
-        public int ParadeBasis
+        public int ParadeBasisOhneMod
         {
             get
             {
                 return (int)Math.Round((BaseIN + BaseGE + BaseKK) / 5.0, 0, MidpointRounding.AwayFromZero);
+            }
+        }
+
+        [DependentProperty("ParadeBasisOhneMod")]
+        [DependsOnModifikator(typeof(Mod.IModPABasis))]
+        public int ParadeBasis
+        {
+            get
+            {
+                int v = ParadeBasisOhneMod;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModPABasis).Select(m => (Mod.IModPABasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPABasisMod(v));
+                return v;
             }
         }
 
@@ -877,11 +903,24 @@ namespace MeisterGeister.Model
         #region Fernkampf
 
         [DependentProperty("BaseIN"), DependentProperty("BaseFF"), DependentProperty("BaseKK")]
-        public int FernkampfBasis
+        public int FernkampfBasisOhneMod
         {
             get
             {
                 return (int)Math.Round((BaseIN + BaseFF + BaseKK) / 5.0, 0, MidpointRounding.AwayFromZero);
+            }
+        }
+
+        [DependentProperty("FernkampfBasisOhneMod")]
+        [DependsOnModifikator(typeof(Mod.IModPABasis))]
+        public int FernkampfBasis
+        {
+            get
+            {
+                int v = FernkampfBasisOhneMod;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModFKBasis).Select(m => (Mod.IModFKBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyFKBasisMod(v));
+                return v;
             }
         }
 
@@ -1379,10 +1418,11 @@ namespace MeisterGeister.Model
             set { BE = value; }
         }
 
-        [DependsOnModifikator(typeof(Mod.IModGS))]
-        public int Geschwindigkeit
+        [DependentProperty("BaseGE")]
+        public int GeschwindigkeitOhneMod
         {
-            get {
+            get
+            {
                 int gs = 8;
                 if (HatVorNachteil("Flink"))
                     gs++;
@@ -1396,6 +1436,16 @@ namespace MeisterGeister.Model
                     gs++;
                 else if (BaseGE <= 10)
                     gs--;
+                return gs;
+            }
+        }
+
+        [DependentProperty("GeschwindigkeitOhneMod")]
+        [DependsOnModifikator(typeof(Mod.IModGS))]
+        public int Geschwindigkeit
+        {
+            get {
+                int gs = GeschwindigkeitOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModGS).Select(m => (Mod.IModGS)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => gs = m.ApplyGSMod(gs));
                 return gs; 
