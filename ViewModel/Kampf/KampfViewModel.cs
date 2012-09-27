@@ -23,14 +23,14 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             private Held _held;
             private Waffe _waffe;
-            private Gegner_Angriff _gegner_angriff;
+            private GegnerBase_Angriff _gegner_angriff;
 
             public KämpferNahkampfwaffe(Held held, Waffe waffe)
             {
                 _held = held; _waffe = waffe;
             }
-            
-            public KämpferNahkampfwaffe(Gegner_Angriff ga)
+
+            public KämpferNahkampfwaffe(GegnerBase_Angriff ga)
             {
                 _gegner_angriff = ga;
             }
@@ -120,14 +120,14 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             private Held _held;
             private Model.Fernkampfwaffe _waffe;
-            private Gegner_Angriff _gegner_angriff;
+            private GegnerBase_Angriff _gegner_angriff;
 
             public KämpferFernkampfwaffe(Held held, Model.Fernkampfwaffe waffe)
             {
                 _held = held; _waffe = waffe;
             }
 
-            public KämpferFernkampfwaffe(Gegner_Angriff ga)
+            public KämpferFernkampfwaffe(GegnerBase_Angriff ga)
             {
                 _gegner_angriff = ga;
             }

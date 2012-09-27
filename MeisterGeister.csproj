@@ -202,9 +202,6 @@
     <Compile Include="Model\Ausrüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Bestiarium_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Einstellungen_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -217,13 +214,16 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gegner.cs" />
-    <Compile Include="Model\Gegner_Angriff.cs" />
-    <Compile Include="Model\Gegner_Angriff_Poco.cs">
+    <Compile Include="Model\GegnerBase_Angriff_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Gegner_Kampfregel_Poco.cs">
+    <Compile Include="Model\GegnerBase_Kampfregel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GegnerBase_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GegnerBase_Angriff.cs" />
     <Compile Include="Model\Gegner_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -267,6 +267,7 @@
     <Compile Include="Model\Audio_Titel.cs" />
     <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Kampfregel.cs" />
+    <Compile Include="Model\GegnerBase.cs" />
     <Compile Include="Model\Notizen.cs" />
     <Compile Include="Model\Service\AudioService.cs" />
     <Compile Include="Model\Service\KampfService.cs" />
@@ -367,6 +368,7 @@
     <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Distanzklasse.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IGegnerBase.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWaffe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWaffeMitTPKK.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Kampf.cs" />

@@ -72,7 +72,7 @@ namespace MeisterGeister_Tests
             string exportPfad = "Daten\\Gegner\\Export";
             if (!Directory.Exists(exportPfad))
                 Directory.CreateDirectory(exportPfad);
-            Gegner g1 = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").First();
+            GegnerBase g1 = Global.ContextKampf.Liste<GegnerBase>().Where(g => g.Name == "Zant").First();
             Assert.IsNotNull(g1);
             string fileName = Path.Combine(exportPfad, Path.ChangeExtension(g1.Name, "xml"));
             g1.Export(fileName);

@@ -78,10 +78,10 @@ namespace MeisterGeister.Model.Service
                 from a in Context.Zauberzeichen where !a.ZauberzeichenGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
                 from a in Context.Held_Inventar select a,
                 from a in Context.Inventar select a,
-                from a in Context.Gegner where !a.GegnerGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
+                from a in Context.GegnerBase where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
                 from a in Context.Kampfregel where !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
-                from a in Context.Gegner_Angriff where !a.GegnerGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
-                from a in Context.Gegner_Kampfregel where !a.GegnerGUID.StringConvert().StartsWith("00000000-0000-0000-000") || !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-000")  select a,
+                from a in Context.GegnerBase_Angriff where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
+                from a in Context.GegnerBase_Kampfregel where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-000") || !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-000")  select a,
                 //später mit Guid:
                 from a in Context.Held_Sonderfertigkeit select a,
                 from a in Context.Sonderfertigkeit where a.SonderfertigkeitID > 1107 select a,
@@ -429,16 +429,16 @@ namespace MeisterGeister.Model.Service
         /// Aktualisert den Gegner und alle an ihn angehängten Zuordnungstabellen. Stammdaten bleiben unangestastet.
         /// Bisher nur additiv. Es wird momentan nichts gelöscht.
         /// </summary>
-        public bool InsertOrUpdateGegner(Gegner gegner)
+        public bool InsertOrUpdateGegner(GegnerBase gegner)
         {
             // Mögliche erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
             // So kann man z.B. einen Guid/ID-Filter realisieren um userdaten von stammdaten zu trennen bzw stammdaten nciht zu überschreiben
             try
             {
                 Context.AttachObjectGraph(gegner,
-                    h => h.Gegner_Angriff,
-                    h => h.Gegner_Kampfregel,
-                    h => h.Gegner_Kampfregel.First().Kampfregel
+                    h => h.GegnerBase_Angriff,
+                    h => h.GegnerBase_Kampfregel,
+                    h => h.GegnerBase_Kampfregel.First().Kampfregel
                 );
                 Save();
                 return true;
@@ -454,10 +454,10 @@ namespace MeisterGeister.Model.Service
         public void ExportGegner(Guid gegnerGuid, string pfad)
         {
             //Userdaten geladen
-            Gegner gegner = Context.Gegner.Where(h => h.GegnerGUID == gegnerGuid).First();
+            GegnerBase gegner = Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
             if (gegner != null)
             {
-                SerializeObject<Gegner>(pfad, gegner);
+                SerializeObject<GegnerBase>(pfad, gegner);
             }
         }
 
@@ -467,23 +467,23 @@ namespace MeisterGeister.Model.Service
         public Guid ImportGegner(string pfad)
         {
             //Userdaten geladen
-            Gegner gegner = DeserializeObjectFromFile<Gegner>(pfad);
+            GegnerBase gegner = DeserializeObjectFromFile<GegnerBase>(pfad);
             if (gegner != null)
             {
                 if (InsertOrUpdateGegner(gegner))
-                    return gegner.GegnerGUID;
+                    return gegner.GegnerBaseGUID;
             }
             return Guid.Empty;
         }
 
         public Guid CloneGegner(Guid gegnerGuid, Guid newGuid)
         {
-            Gegner gegner = Context.Gegner.Where(h => h.GegnerGUID == gegnerGuid).First();
+            GegnerBase gegner = Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
             if (gegner != null)
             {
-                string xml = SerializeObject<Gegner>(gegner);
-                xml = xml.Replace(String.Format("<GegnerGUID>{0}</GegnerGUID>", gegnerGuid), String.Format("<GegnerGUID>{0}</GegnerGUID>", newGuid));
-                Gegner newGegner = DeserializeObject<Gegner>(xml);
+                string xml = SerializeObject<GegnerBase>(gegner);
+                xml = xml.Replace(String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", gegnerGuid), String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", newGuid));
+                GegnerBase newGegner = DeserializeObject<GegnerBase>(xml);
                 if (InsertOrUpdateGegner(newGegner))
                     return newGuid;
             }

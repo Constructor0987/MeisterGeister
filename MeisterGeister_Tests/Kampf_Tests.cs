@@ -25,8 +25,14 @@ namespace MeisterGeister_Tests
             if(Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").Count() == 0)
                 Held.Import("Daten\\Helden\\Gero Kalai von Rodaschquell.xml");
             //Gegner importieren
-            if(Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").Count() == 0)
-                Gegner.Import("Daten\\Gegner\\Zant.xml");
+            if (Global.ContextKampf.Liste<GegnerBase>().Where(g => g.Name == "Zant").Count() == 0)
+                GegnerBase.Import("Daten\\Gegner\\Zant.xml");
+            Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();
+            if (zant == null)
+            {
+                GegnerBase zantBase = Global.ContextHeld.Liste<GegnerBase>().Where(g => g.Name == "Zant").First();
+                zant = Global.ContextHeld.CreateGegnerInstance(zantBase);
+            }
         }
 
         [TestFixtureTearDown]
@@ -66,9 +72,9 @@ namespace MeisterGeister_Tests
         [Test]
         public void INITests()
         {
-            Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").First();
+            Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();
             Assert.IsNotNull(zant);
-            Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").First();
+            Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
             Assert.IsNotNull(gero);
             //einen Kampf anlegen
             Kampf kampf = new Kampf();
@@ -91,9 +97,9 @@ namespace MeisterGeister_Tests
         [Test]
         public void ManöverTests()
         {
-            Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").First();
+            Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();
             Assert.IsNotNull(zant);
-            Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").First();
+            Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
             Assert.IsNotNull(gero);
             //einen Kampf anlegen
             Kampf kampf = new Kampf();

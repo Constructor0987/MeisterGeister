@@ -7,30 +7,18 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Gegner : KampfLogic.Wesen, KampfLogic.IKämpfer
+    public partial class Gegner : KampfLogic.Wesen, KampfLogic.IKämpfer, KampfLogic.IGegnerBase, Extensions.IInitializable
     {
         public Gegner()
         {
             GegnerGUID = Guid.NewGuid();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+        }
+
+        #region IInitializable
+        public void Initialize()
+        {
             Angriffsaktionen = Aktionen - Abwehraktionen;
-        }
-
-        #region Import Export
-        public static Gegner Import(string pfad, bool batch = false)
-        {
-            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            Guid gegnerGuid = serialization.ImportGegner(pfad);
-            if (gegnerGuid == Guid.Empty)
-                return null;
-            Global.ContextKampf.UpdateList<Gegner>();
-            return Global.ContextKampf.Liste<Gegner>().Where(g => g.GegnerGUID == gegnerGuid).First();
-        }
-
-        public void Export(string pfad, bool batch = false)
-        {
-            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            serialization.ExportGegner(GegnerGUID, pfad);
         }
         #endregion
 
@@ -208,7 +196,7 @@ namespace MeisterGeister.Model
             get { return (int)Math.Round(Konstitution / 2.0, MidpointRounding.AwayFromZero); }
         }
 
-        public KampfLogic.IWunden Wunden
+        KampfLogic.IWunden KampfLogic.IKämpfer.Wunden
         {
             get { throw new NotImplementedException(); }
         }
@@ -288,7 +276,7 @@ namespace MeisterGeister.Model
 
         public IList<KampfLogic.IWaffe> Angriffswaffen
         {
-            get { return Gegner_Angriff.Select(ga => (KampfLogic.IWaffe)ga).ToList(); }
+            get { return GegnerBase.GegnerBase_Angriff.Select(ga => (KampfLogic.IWaffe)ga).ToList(); }
         }
         #endregion
 
@@ -296,6 +284,248 @@ namespace MeisterGeister.Model
         {
             return Name;
         }
+
+        #region IGegnerBase
+        public int INIBasis
+        {
+            get
+            {
+                return GegnerBase.INIBasis;
+            }
+        }
+
+        public string INIZufall
+        {
+            get
+            {
+                return GegnerBase.INIZufall;
+            }
+        }
+
+        public int Aktionen
+        {
+            get
+            {
+                return GegnerBase.Aktionen;
+            }
+        }
+
+        public int PA
+        {
+            get
+            {
+                return GegnerBase.PA;
+            }
+        }
+
+        public int LE
+        {
+            get
+            {
+                return GegnerBase.LE;
+            }
+        }
+
+        public int AU
+        {
+            get
+            {
+                return GegnerBase.AU;
+            }
+        }
+
+        public int AE
+        {
+            get
+            {
+                return GegnerBase.AE;
+            }
+        }
+
+        public int KE
+        {
+            get
+            {
+                return GegnerBase.KE;
+            }
+        }
+
+        public int KO
+        {
+            get
+            {
+                return GegnerBase.KO;
+            }
+        }
+
+        public int MRGeist
+        {
+            get
+            {
+                return GegnerBase.MRGeist;
+            }
+        }
+
+        public int? MRKörper
+        {
+            get
+            {
+                return GegnerBase.MRKörper;
+            }
+        }
+
+        public int GS
+        {
+            get
+            {
+                return GegnerBase.GS;
+            }
+        }
+
+        public int? GS2
+        {
+            get
+            {
+                return GegnerBase.GS2;
+            }
+        }
+
+        public int? GS3
+        {
+            get
+            {
+                return GegnerBase.GS3;
+            }
+        }
+
+        public int RSKopf
+        {
+            get
+            {
+                return GegnerBase.RSKopf;
+            }
+        }
+
+        public int RSBrust
+        {
+            get
+            {
+                return GegnerBase.RSBrust;
+            }
+        }
+
+        public int RSRücken
+        {
+            get
+            {
+                return GegnerBase.RSRücken;
+            }
+        }
+
+        public int RSArmL
+        {
+            get
+            {
+                return GegnerBase.RSArmL;
+            }
+        }
+
+        public int RSArmR
+        {
+            get
+            {
+                return GegnerBase.RSArmR;
+            }
+        }
+
+        public int RSBauch
+        {
+            get
+            {
+                return GegnerBase.RSBauch;
+            }
+        }
+
+        public int RSBeinL
+        {
+            get
+            {
+                return GegnerBase.RSBeinL;
+            }
+        }
+
+        public int RSBeinR
+        {
+            get
+            {
+                return GegnerBase.RSBeinR;
+            }
+        }
+
+        public int? GW
+        {
+            get
+            {
+                return GegnerBase.GW;
+            }
+        }
+
+        public int? Jagd
+        {
+            get
+            {
+                return GegnerBase.Jagd;
+            }
+        }
+
+        public int? Beschwörung
+        {
+            get
+            {
+                return GegnerBase.Beschwörung;
+            }
+        }
+
+        public int? Kontrolle
+        {
+            get
+            {
+                return GegnerBase.Kontrolle;
+            }
+        }
+
+        public int? Beschwörungskosten
+        {
+            get
+            {
+                return GegnerBase.Beschwörungskosten;
+            }
+        }
+
+        public string Tags
+        {
+            get
+            {
+                return GegnerBase.Tags;
+            }
+        }
+
+        public string Literatur
+        {
+            get
+            {
+                return GegnerBase.Literatur;
+            }
+        }
+
+        public string Setting
+        {
+            get
+            {
+                return GegnerBase.Setting;
+            }
+        }
+        #endregion
 
     }
 }

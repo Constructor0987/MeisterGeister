@@ -6,7 +6,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Gegner_Angriff : IWaffe, IFernkampfwaffe, INahkampfwaffe
+    public partial class GegnerBase_Angriff : IWaffe, IFernkampfwaffe, INahkampfwaffe
     {
         #region IWaffe
         public int TPKKBonus

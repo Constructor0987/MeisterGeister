@@ -18,7 +18,7 @@ using System.ComponentModel;
 namespace MeisterGeister.Model
 {
     [DataContract(IsReference=true)]
-    public partial class Gegner_Angriff : INotifyPropertyChanged
+    public partial class GegnerBase_Angriff : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
@@ -35,23 +35,23 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid GegnerGUID
+        public virtual System.Guid GegnerBaseGUID
         {
-            get { return _gegnerGUID; }
+            get { return _gegnerBaseGUID; }
             set
             {
-                if (_gegnerGUID != value)
+                if (_gegnerBaseGUID != value)
                 {
-                    if (Gegner != null && Gegner.GegnerGUID != value)
+                    if (GegnerBase != null && GegnerBase.GegnerBaseGUID != value)
                     {
-                        Gegner = null;
+                        GegnerBase = null;
                     }
-                    _gegnerGUID = value;
+                    _gegnerBaseGUID = value;
                 }
             }
     
         }
-        private System.Guid _gegnerGUID;
+        private System.Guid _gegnerBaseGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Name
@@ -161,41 +161,41 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
-        public virtual Gegner Gegner
+        public virtual GegnerBase GegnerBase
         {
-            get { return _gegner; }
+            get { return _gegnerBase; }
             set
             {
-                if (!ReferenceEquals(_gegner, value))
+                if (!ReferenceEquals(_gegnerBase, value))
                 {
-                    var previousValue = _gegner;
-                    _gegner = value;
-                    FixupGegner(previousValue);
+                    var previousValue = _gegnerBase;
+                    _gegnerBase = value;
+                    FixupGegnerBase(previousValue);
                 }
             }
         }
-        private Gegner _gegner;
+        private GegnerBase _gegnerBase;
 
         #endregion
         #region Association Fixup
     
-        private void FixupGegner(Gegner previousValue)
+        private void FixupGegnerBase(GegnerBase previousValue)
         {
-    		OnChanged("Gegner");
-            if (previousValue != null && previousValue.Gegner_Angriff.Contains(this))
+    		OnChanged("GegnerBase");
+            if (previousValue != null && previousValue.GegnerBase_Angriff.Contains(this))
             {
-                previousValue.Gegner_Angriff.Remove(this);
+                previousValue.GegnerBase_Angriff.Remove(this);
             }
     
-            if (Gegner != null)
+            if (GegnerBase != null)
             {
-                if (!Gegner.Gegner_Angriff.Contains(this))
+                if (!GegnerBase.GegnerBase_Angriff.Contains(this))
                 {
-                    Gegner.Gegner_Angriff.Add(this);
+                    GegnerBase.GegnerBase_Angriff.Add(this);
                 }
-                if (GegnerGUID != Gegner.GegnerGUID)
+                if (GegnerBaseGUID != GegnerBase.GegnerBaseGUID)
                 {
-                    GegnerGUID = Gegner.GegnerGUID;
+                    GegnerBaseGUID = GegnerBase.GegnerBaseGUID;
                 }
             }
         }

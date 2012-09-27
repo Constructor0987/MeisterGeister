@@ -182,5 +182,21 @@ namespace MeisterGeister.Model.Service {
             return Context.Einstellungen.Where(e => e.Name.ToLower().StartsWith(name)).ToList();
         }
         #endregion
+
+        #region Kampf und Gegner
+        
+        public Gegner CreateGegnerInstance(GegnerBase gegnerBase)
+        {
+            Gegner g = New<Gegner>();
+            g.GegnerBaseGUID = gegnerBase.GegnerBaseGUID;
+            g.GegnerBase = gegnerBase;
+            g.Name = gegnerBase.Name;
+            g.Bild = gegnerBase.Bild;
+            g.Bemerkung = gegnerBase.Bemerkung;
+            Insert<Gegner>(g);
+            return g;
+        }
+
+        #endregion
     }
 }

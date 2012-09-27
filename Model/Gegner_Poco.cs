@@ -48,6 +48,25 @@ namespace MeisterGeister.Model
         private System.Guid _gegnerGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual System.Guid GegnerBaseGUID
+        {
+            get { return _gegnerBaseGUID; }
+            set
+            {
+                if (_gegnerBaseGUID != value)
+                {
+                    if (GegnerBase != null && GegnerBase.GegnerBaseGUID != value)
+                    {
+                        GegnerBase = null;
+                    }
+                    _gegnerBaseGUID = value;
+                }
+            }
+    
+        }
+        private System.Guid _gegnerBaseGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual string Name
         {
             get { return _name; }
@@ -74,368 +93,160 @@ namespace MeisterGeister.Model
         private string _bild;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int INIBasis
+        public virtual int LEAktuell
         {
-            get { return _iNIBasis; }
+            get { return _lEAktuell; }
             set
     		{ 
-    			_iNIBasis = value;
-    			OnChanged("INIBasis");
+    			_lEAktuell = value;
+    			OnChanged("LEAktuell");
     		}
     
         }
-        private int _iNIBasis;
+        private int _lEAktuell;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string INIZufall
+        public virtual int AUAktuell
         {
-            get { return _iNIZufall; }
+            get { return _aUAktuell; }
             set
     		{ 
-    			_iNIZufall = value;
-    			OnChanged("INIZufall");
+    			_aUAktuell = value;
+    			OnChanged("AUAktuell");
     		}
     
         }
-        private string _iNIZufall;
+        private int _aUAktuell;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int Aktionen
+        public virtual int AEAktuell
         {
-            get { return _aktionen; }
+            get { return _aEAktuell; }
             set
     		{ 
-    			_aktionen = value;
-    			OnChanged("Aktionen");
+    			_aEAktuell = value;
+    			OnChanged("AEAktuell");
     		}
     
         }
-        private int _aktionen;
+        private int _aEAktuell;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int PA
+        public virtual int KEAktuell
         {
-            get { return _pA; }
+            get { return _kEAktuell; }
             set
     		{ 
-    			_pA = value;
-    			OnChanged("PA");
+    			_kEAktuell = value;
+    			OnChanged("KEAktuell");
     		}
     
         }
-        private int _pA;
+        private int _kEAktuell;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int LE
+        public virtual int Wunden
         {
-            get { return _lE; }
+            get { return _wunden; }
             set
     		{ 
-    			_lE = value;
-    			OnChanged("LE");
+    			_wunden = value;
+    			OnChanged("Wunden");
     		}
     
         }
-        private int _lE;
+        private int _wunden;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int AU
+        public virtual int WundenKopf
         {
-            get { return _aU; }
+            get { return _wundenKopf; }
             set
     		{ 
-    			_aU = value;
-    			OnChanged("AU");
+    			_wundenKopf = value;
+    			OnChanged("WundenKopf");
     		}
     
         }
-        private int _aU;
+        private int _wundenKopf;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int AE
+        public virtual int WundenBrust
         {
-            get { return _aE; }
+            get { return _wundenBrust; }
             set
     		{ 
-    			_aE = value;
-    			OnChanged("AE");
+    			_wundenBrust = value;
+    			OnChanged("WundenBrust");
     		}
     
         }
-        private int _aE;
+        private int _wundenBrust;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int KE
+        public virtual int WundenArmL
         {
-            get { return _kE; }
+            get { return _wundenArmL; }
             set
     		{ 
-    			_kE = value;
-    			OnChanged("KE");
+    			_wundenArmL = value;
+    			OnChanged("WundenArmL");
     		}
     
         }
-        private int _kE;
+        private int _wundenArmL;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int KO
+        public virtual int WundenArmR
         {
-            get { return _kO; }
+            get { return _wundenArmR; }
             set
     		{ 
-    			_kO = value;
-    			OnChanged("KO");
+    			_wundenArmR = value;
+    			OnChanged("WundenArmR");
     		}
     
         }
-        private int _kO;
+        private int _wundenArmR;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int MRGeist
+        public virtual int WundenBauch
         {
-            get { return _mRGeist; }
+            get { return _wundenBauch; }
             set
     		{ 
-    			_mRGeist = value;
-    			OnChanged("MRGeist");
+    			_wundenBauch = value;
+    			OnChanged("WundenBauch");
     		}
     
         }
-        private int _mRGeist;
+        private int _wundenBauch;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> MRKörper
+        public virtual int WundenBeinL
         {
-            get { return _mRKörper; }
+            get { return _wundenBeinL; }
             set
     		{ 
-    			_mRKörper = value;
-    			OnChanged("MRKörper");
+    			_wundenBeinL = value;
+    			OnChanged("WundenBeinL");
     		}
     
         }
-        private Nullable<int> _mRKörper;
+        private int _wundenBeinL;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int GS
+        public virtual int WundenBeinR
         {
-            get { return _gS; }
+            get { return _wundenBeinR; }
             set
     		{ 
-    			_gS = value;
-    			OnChanged("GS");
+    			_wundenBeinR = value;
+    			OnChanged("WundenBeinR");
     		}
     
         }
-        private int _gS;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> GS2
-        {
-            get { return _gS2; }
-            set
-    		{ 
-    			_gS2 = value;
-    			OnChanged("GS2");
-    		}
-    
-        }
-        private Nullable<int> _gS2;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> GS3
-        {
-            get { return _gS3; }
-            set
-    		{ 
-    			_gS3 = value;
-    			OnChanged("GS3");
-    		}
-    
-        }
-        private Nullable<int> _gS3;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSKopf
-        {
-            get { return _rSKopf; }
-            set
-    		{ 
-    			_rSKopf = value;
-    			OnChanged("RSKopf");
-    		}
-    
-        }
-        private int _rSKopf;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSBrust
-        {
-            get { return _rSBrust; }
-            set
-    		{ 
-    			_rSBrust = value;
-    			OnChanged("RSBrust");
-    		}
-    
-        }
-        private int _rSBrust;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSRücken
-        {
-            get { return _rSRücken; }
-            set
-    		{ 
-    			_rSRücken = value;
-    			OnChanged("RSRücken");
-    		}
-    
-        }
-        private int _rSRücken;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSArmL
-        {
-            get { return _rSArmL; }
-            set
-    		{ 
-    			_rSArmL = value;
-    			OnChanged("RSArmL");
-    		}
-    
-        }
-        private int _rSArmL;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSArmR
-        {
-            get { return _rSArmR; }
-            set
-    		{ 
-    			_rSArmR = value;
-    			OnChanged("RSArmR");
-    		}
-    
-        }
-        private int _rSArmR;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSBauch
-        {
-            get { return _rSBauch; }
-            set
-    		{ 
-    			_rSBauch = value;
-    			OnChanged("RSBauch");
-    		}
-    
-        }
-        private int _rSBauch;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSBeinL
-        {
-            get { return _rSBeinL; }
-            set
-    		{ 
-    			_rSBeinL = value;
-    			OnChanged("RSBeinL");
-    		}
-    
-        }
-        private int _rSBeinL;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual int RSBeinR
-        {
-            get { return _rSBeinR; }
-            set
-    		{ 
-    			_rSBeinR = value;
-    			OnChanged("RSBeinR");
-    		}
-    
-        }
-        private int _rSBeinR;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> GW
-        {
-            get { return _gW; }
-            set
-    		{ 
-    			_gW = value;
-    			OnChanged("GW");
-    		}
-    
-        }
-        private Nullable<int> _gW;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Jagd
-        {
-            get { return _jagd; }
-            set
-    		{ 
-    			_jagd = value;
-    			OnChanged("Jagd");
-    		}
-    
-        }
-        private Nullable<int> _jagd;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Beschwörung
-        {
-            get { return _beschwörung; }
-            set
-    		{ 
-    			_beschwörung = value;
-    			OnChanged("Beschwörung");
-    		}
-    
-        }
-        private Nullable<int> _beschwörung;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Kontrolle
-        {
-            get { return _kontrolle; }
-            set
-    		{ 
-    			_kontrolle = value;
-    			OnChanged("Kontrolle");
-    		}
-    
-        }
-        private Nullable<int> _kontrolle;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<int> Beschwörungskosten
-        {
-            get { return _beschwörungskosten; }
-            set
-    		{ 
-    			_beschwörungskosten = value;
-    			OnChanged("Beschwörungskosten");
-    		}
-    
-        }
-        private Nullable<int> _beschwörungskosten;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Tags
-        {
-            get { return _tags; }
-            set
-    		{ 
-    			_tags = value;
-    			OnChanged("Tags");
-    		}
-    
-        }
-        private string _tags;
+        private int _wundenBeinR;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Bemerkung
@@ -449,147 +260,46 @@ namespace MeisterGeister.Model
     
         }
         private string _bemerkung;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Literatur
-        {
-            get { return _literatur; }
-            set
-    		{ 
-    			_literatur = value;
-    			OnChanged("Literatur");
-    		}
-    
-        }
-        private string _literatur;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Setting
-        {
-            get { return _setting; }
-            set
-    		{ 
-    			_setting = value;
-    			OnChanged("Setting");
-    		}
-    
-        }
-        private string _setting;
 
         #endregion
         #region Navigation Properties
     
     	[DataMember]
-        public virtual ICollection<Gegner_Angriff> Gegner_Angriff
+        public virtual GegnerBase GegnerBase
         {
-            get
-            {
-                if (_gegner_Angriff == null)
-                {
-                    var newCollection = new FixupCollection<Gegner_Angriff>();
-                    newCollection.CollectionChanged += FixupGegner_Angriff;
-                    _gegner_Angriff = newCollection;
-                }
-                return _gegner_Angriff;
-            }
+            get { return _gegnerBase; }
             set
             {
-                if (!ReferenceEquals(_gegner_Angriff, value))
+                if (!ReferenceEquals(_gegnerBase, value))
                 {
-                    var previousValue = _gegner_Angriff as FixupCollection<Gegner_Angriff>;
-                    if (previousValue != null)
-                    {
-                        previousValue.CollectionChanged -= FixupGegner_Angriff;
-                    }
-                    _gegner_Angriff = value;
-                    var newValue = value as FixupCollection<Gegner_Angriff>;
-                    if (newValue != null)
-                    {
-                        newValue.CollectionChanged += FixupGegner_Angriff;
-                    }
+                    var previousValue = _gegnerBase;
+                    _gegnerBase = value;
+                    FixupGegnerBase(previousValue);
                 }
             }
         }
-        private ICollection<Gegner_Angriff> _gegner_Angriff;
-    
-    	[DataMember]
-        public virtual ICollection<Gegner_Kampfregel> Gegner_Kampfregel
-        {
-            get
-            {
-                if (_gegner_Kampfregel == null)
-                {
-                    var newCollection = new FixupCollection<Gegner_Kampfregel>();
-                    newCollection.CollectionChanged += FixupGegner_Kampfregel;
-                    _gegner_Kampfregel = newCollection;
-                }
-                return _gegner_Kampfregel;
-            }
-            set
-            {
-                if (!ReferenceEquals(_gegner_Kampfregel, value))
-                {
-                    var previousValue = _gegner_Kampfregel as FixupCollection<Gegner_Kampfregel>;
-                    if (previousValue != null)
-                    {
-                        previousValue.CollectionChanged -= FixupGegner_Kampfregel;
-                    }
-                    _gegner_Kampfregel = value;
-                    var newValue = value as FixupCollection<Gegner_Kampfregel>;
-                    if (newValue != null)
-                    {
-                        newValue.CollectionChanged += FixupGegner_Kampfregel;
-                    }
-                }
-            }
-        }
-        private ICollection<Gegner_Kampfregel> _gegner_Kampfregel;
+        private GegnerBase _gegnerBase;
 
         #endregion
         #region Association Fixup
     
-        private void FixupGegner_Angriff(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupGegnerBase(GegnerBase previousValue)
         {
-    		OnChanged("Gegner_Angriff");
-            if (e.NewItems != null)
+    		OnChanged("GegnerBase");
+            if (previousValue != null && previousValue.Gegner.Contains(this))
             {
-                foreach (Gegner_Angriff item in e.NewItems)
-                {
-                    item.Gegner = this;
-                }
+                previousValue.Gegner.Remove(this);
             }
     
-            if (e.OldItems != null)
+            if (GegnerBase != null)
             {
-                foreach (Gegner_Angriff item in e.OldItems)
+                if (!GegnerBase.Gegner.Contains(this))
                 {
-                    if (ReferenceEquals(item.Gegner, this))
-                    {
-                        item.Gegner = null;
-                    }
+                    GegnerBase.Gegner.Add(this);
                 }
-            }
-        }
-    
-        private void FixupGegner_Kampfregel(object sender, NotifyCollectionChangedEventArgs e)
-        {
-    		OnChanged("Gegner_Kampfregel");
-            if (e.NewItems != null)
-            {
-                foreach (Gegner_Kampfregel item in e.NewItems)
+                if (GegnerBaseGUID != GegnerBase.GegnerBaseGUID)
                 {
-                    item.Gegner = this;
-                }
-            }
-    
-            if (e.OldItems != null)
-            {
-                foreach (Gegner_Kampfregel item in e.OldItems)
-                {
-                    if (ReferenceEquals(item.Gegner, this))
-                    {
-                        item.Gegner = null;
-                    }
+                    GegnerBaseGUID = GegnerBase.GegnerBaseGUID;
                 }
             }
         }
