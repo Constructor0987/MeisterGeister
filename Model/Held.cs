@@ -787,7 +787,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("INI_Mod"), DependentProperty("MU"), DependentProperty("IN"), DependentProperty("GE")]
-        public int InitiativeBasis
+        public int InitiativeBasisOhneMod
         {
             get
             {
@@ -800,6 +800,19 @@ namespace MeisterGeister.Model
                 if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Kampfgespür))
                     ini += 2;
 
+                return ini;
+            }
+        }
+
+        [DependentProperty("InitiativeBasisOhneMod")]
+        [DependsOnModifikator(typeof(Mod.IModINIBasis))]
+        public int InitiativeBasis
+        {
+            get
+            {
+                int ini = InitiativeBasisOhneMod;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModINIBasis).Select(m => (Mod.IModINIBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => ini = m.ApplyINIBasisMod(ini));
                 return ini;
             }
         }

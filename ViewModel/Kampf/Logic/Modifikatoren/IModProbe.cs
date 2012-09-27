@@ -7,6 +7,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 {
     public interface IModProbe : IModifikator { }
 
+    /// <summary>
+    /// Modifikator für alle Dreier-Proben.
+    /// </summary>
     public interface IModAlleProben : IModProbe
     {
         int ApplyAlleProbenMod(int wert);
@@ -30,7 +33,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     /// </summary>
     public interface IModZauberprobe : IModProbe
     {
-        string Talentname { get; }
+        string Zaubername { get; }
         int ApplyZauberprobeMod(int wert);
     }
 }

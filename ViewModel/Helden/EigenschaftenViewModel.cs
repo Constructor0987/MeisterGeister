@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Model.Extensions;
 
+using System.Reflection;
+using ImpromptuInterface;
+
 namespace MeisterGeister.ViewModel.Helden
 {
     public class EigenschaftenViewModel : Base.ViewModelBase, Logic.IChangeListener
@@ -41,23 +44,38 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
+        private int Apply(Kampf.Logic.Modifikatoren.IModifikator mod, Type typ, int wert)
+        {
+            if (!typeof(Kampf.Logic.Modifikatoren.IModifikator).IsAssignableFrom(typ) || !typ.IsInstanceOfType(mod) )
+                return wert;
+            foreach (MethodInfo mi in typ.GetMethods())
+                if (mi.Name.StartsWith("Apply"))
+                    return Impromptu.InvokeMember(mod, mi.Name, wert);
+            return wert;
+        }
+
+        public List<dynamic> ModifikatorenListe(Type modTyp, int startWert, ICollection<Kampf.Logic.Modifikatoren.IModifikator> mods)
+        {
+            if (!typeof(Kampf.Logic.Modifikatoren.IModifikator).IsAssignableFrom(modTyp))
+                throw new ArgumentException("modTyp muss von IModifikator erben.");
+            List<dynamic> li = new List<dynamic>();
+            foreach (var item in mods.Where(m => modTyp.IsInstanceOfType(m)).OrderBy(m => m.Erstellt).ToList())
+            {
+                startWert =  Apply(item, modTyp, startWert);
+                li.Add(new
+                {
+                    Mod = item,
+                    Wert = startWert
+                });
+            }
+            return li;
+        }
+
         public List<dynamic> ModifikatorenListeMU
         {
             get
             {
-                List<dynamic> li = new List<dynamic>();
-                int eigenschaft = SelectedHeld.MU ?? 8;
-                foreach (var item in SelectedHeld.Modifikatoren.Where(m => m is Kampf.Logic.Modifikatoren.IModMU).OrderBy(m => m.Erstellt).ToList())
-                {
-                    eigenschaft = ((Kampf.Logic.Modifikatoren.IModMU)item).ApplyMUMod(eigenschaft);
-                    li.Add(new
-                    {
-                        Mod = item,
-                        Wert = eigenschaft
-                    });
-                }
-
-                return li;
+                return ModifikatorenListe(typeof(Kampf.Logic.Modifikatoren.IModMU), SelectedHeld.MU ?? 8, SelectedHeld.Modifikatoren);
             }
         }
         public List<dynamic> ModifikatorenListeKL
