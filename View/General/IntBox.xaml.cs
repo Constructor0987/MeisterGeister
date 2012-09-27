@@ -186,16 +186,45 @@ namespace MeisterGeister.View.General
         {
             if (e.Key == Key.Enter)
             {
-                // Focus kurz entfernen, um eine aktualiserung zu erzwingen
-                _textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-                _textBoxInt.Focus();
+                // Focus entfernen, um eine Aktualiserung zu erzwingen
+                _textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
             }
         }
 
         private void _textBoxInt_LostFocus(object sender, RoutedEventArgs e)
         {
-            int i = 0;
-            if (Int32.TryParse((sender as TextBox).Text, out i))
+            int i = 0; int tmp = 0;
+            string input = (sender as TextBox).Text.Trim();
+            if (input.Contains('+'))
+            {
+                string[] operanden = input.Split('+');
+                foreach (var item in operanden)
+                {
+                    i = 0;
+                    if (Int32.TryParse(item, out i))
+                        tmp += i;
+                }
+                input = tmp.ToString();
+            }
+            else if (input.Contains('-'))
+            {
+                string[] operanden = input.Split('-');
+                if (operanden.Length >= 1)
+                {
+                    if (Int32.TryParse(operanden[0], out i))
+                        tmp = i;
+                }
+                for (int j = 1; j < operanden.Length; j++ )
+                {
+                    i = 0;
+                    if (Int32.TryParse(operanden[j], out i))
+                        tmp -= i;
+                }
+                input = tmp.ToString();
+            }
+
+            i = 0;
+            if (Int32.TryParse(input, out i))
             {
                 if (i < MinValue)
                     i = MinValue;
