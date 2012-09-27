@@ -129,6 +129,102 @@ namespace MeisterGeister.Model
             }
         }
 
+        #region Modifikatorlisten
+
+        public List<dynamic> ModifikatorenListeMU
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModMU), MU);
+            }
+        }
+        public List<dynamic> ModifikatorenListeKL
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModKL), KL);
+            }
+        }
+        public List<dynamic> ModifikatorenListeCH
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModCH), CH);
+            }
+        }
+        public List<dynamic> ModifikatorenListeIN
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModIN), IN);
+            }
+        }
+        public List<dynamic> ModifikatorenListeFF
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModFF), FF);
+            }
+        }
+        public List<dynamic> ModifikatorenListeGE
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModGE), GE);
+            }
+        }
+        public List<dynamic> ModifikatorenListeKO
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModKO), KO);
+            }
+        }
+        public List<dynamic> ModifikatorenListeKK
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModKK), KK);
+            }
+        }
+        public List<dynamic> ModifikatorenListeINIbasis
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModINIBasis), InitiativeBasisOhneMod);
+            }
+        }
+        public List<dynamic> ModifikatorenListeATbasis
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
+            }
+        }
+        public List<dynamic> ModifikatorenListePAbasis
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
+            }
+        }
+        public List<dynamic> ModifikatorenListeFKbasis
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModFKBasis), FernkampfBasisOhneMod);
+            }
+        }
+        public List<dynamic> ModifikatorenListeMR
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModMR), Magieresistenz);
+            }
+        }
+
+        #endregion
+
         #region Eigenschaften
         [DependentProperty("MU")]
         [DependsOnModifikator(typeof(Mod.IModMU))]
@@ -709,13 +805,22 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
+        public int MagieresistenzOhneMod
+        {
+            get
+            {
+                return MagieresistenzBasis + MagieresistenzMod;
+            }
+        }
+
+        [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
         [DependsOnModifikator(typeof(Mod.IModMR))]
         public int Magieresistenz
         {
             get
             {
                 //TODO ??: Aurapanzer etc.
-                int e = MagieresistenzBasis + MagieresistenzMod;
+                int e = MagieresistenzOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMR).Select(m => (Mod.IModMR)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyMRMod(e));
                 return e;
