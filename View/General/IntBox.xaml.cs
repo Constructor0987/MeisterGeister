@@ -95,9 +95,7 @@ namespace MeisterGeister.View.General
         private static object OnCoerceValue(DependencyObject d, Object baseValue)
         {
             IntBox box = (IntBox)d;
-            if (box.MarkPlusValue)
-                box.MarkRed((int)baseValue > 0);
-            
+
             if ((int)baseValue < box.MinValue)
                 return box.MinValue;
             else if ((int)baseValue > box.MaxValue)
@@ -121,6 +119,12 @@ namespace MeisterGeister.View.General
         private static void OnCurrentValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             IntBox box = (IntBox)d;
+
+            if (box.MarkPlusValue)
+                box.MarkRed((int)box.Value > 0);
+
+            box._textBoxInt.Text = box.Value.ToString();
+
             if (box.NumValueChanged != null)
                 box.NumValueChanged(box);
         }
@@ -128,12 +132,14 @@ namespace MeisterGeister.View.General
 
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
-            Value++;
+            if (Value < MaxValue)
+                Value++;
         }
 
         private void ButtonMinus_Click(object sender, RoutedEventArgs e)
         {
-            Value--;
+            if (Value > MinValue)
+                Value--;
         }
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -141,9 +147,15 @@ namespace MeisterGeister.View.General
             if (!NoMouseWheel)
             {
                 if (e.Delta < 0)
-                    Value--;
+                {
+                    if (Value > MinValue)
+                        Value--;
+                }
                 else
-                    Value++;
+                {
+                    if (Value < MaxValue)
+                        Value++;
+                }
             }
         }
 
@@ -155,6 +167,22 @@ namespace MeisterGeister.View.General
                 _textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
                 _textBoxInt.Focus();
             }
+        }
+
+        private void _textBoxInt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
+            if (Int32.TryParse((sender as TextBox).Text, out i))
+            {
+                if (i < MinValue)
+                    i = MinValue;
+                else if (i > MaxValue)
+                    i = MaxValue;
+                Value = i;
+            }
+
+            // Wert zurück in TextBox schreiben, falls Value korrigiert wurde
+            (sender as TextBox).Text = Value.ToString();
         }
     }
 }
