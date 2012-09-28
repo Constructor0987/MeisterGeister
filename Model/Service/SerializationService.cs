@@ -461,13 +461,17 @@ namespace MeisterGeister.Model.Service
             }
         }
 
-        /// <summary>
-        /// Mit überschreiben.
-        /// </summary>
         public Guid ImportGegner(string pfad)
+        {
+            return ImportGegner(pfad, Guid.Empty);
+        }
+
+        public Guid ImportGegner(string pfad, Guid newGuid)
         {
             //Userdaten geladen
             GegnerBase gegner = DeserializeObjectFromFile<GegnerBase>(pfad);
+            if (newGuid != Guid.Empty)
+                gegner = ReplaceGuid(gegner, newGuid);
             if (gegner != null)
             {
                 if (InsertOrUpdateGegner(gegner))
@@ -481,13 +485,19 @@ namespace MeisterGeister.Model.Service
             GegnerBase gegner = Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
             if (gegner != null)
             {
-                string xml = SerializeObject<GegnerBase>(gegner);
-                xml = xml.Replace(String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", gegnerGuid), String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", newGuid));
-                GegnerBase newGegner = DeserializeObject<GegnerBase>(xml);
+                GegnerBase newGegner = ReplaceGuid(gegner, newGuid);
                 if (InsertOrUpdateGegner(newGegner))
                     return newGuid;
             }
             return Guid.Empty;
+        }
+
+        private static GegnerBase ReplaceGuid(GegnerBase gegner, Guid newGuid)
+        {
+            string xml = SerializeObject<GegnerBase>(gegner);
+            xml = xml.Replace(String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", gegner.GegnerBaseGUID), String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", newGuid));
+            GegnerBase newHeld = DeserializeObject<GegnerBase>(xml);
+            return newHeld;
         }
         #endregion
 
