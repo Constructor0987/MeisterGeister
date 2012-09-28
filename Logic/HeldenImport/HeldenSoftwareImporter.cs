@@ -940,7 +940,7 @@ namespace MeisterGeister.Logic.HeldenImport
             {
                 fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
                 sr = new System.IO.StreamReader(fs);
-                for (int i = 1; i <= 6 && !sr.EndOfStream; i++)
+                for (int i = 1; i <= 7 && !sr.EndOfStream; i++)
                 {
                     string line = sr.ReadLine();
                     if (line.Contains("helden.xsd"))
