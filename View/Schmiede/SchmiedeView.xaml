@@ -21,6 +21,12 @@
             <Button Click="ButtonSchmiede_Click" Tag="Schild" ToolTip="Schmiede: Schild" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2" />
             </Button>
+            <Button Click="ButtonSchmiede_Click" Tag="Rüstung" ToolTip="Schmiede: Rüstung" VerticalAlignment="Center" Height="50">
+                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/ruestung.png" Margin="2" />
+            </Button>
+            <Button Click="ButtonSchmiede_Click" Tag="Geschoss" ToolTip="Schmiede: Geschoss" VerticalAlignment="Center" Height="50">
+                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/munition.png" Margin="2" />
+            </Button>
         </StackPanel>
         <TabControl x:Name="_tabControlSchmiede" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" d:IsHidden="True" />
     </StackPanel>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Schmiede.Logic
 {
-    class Nahkampfwaffenverbesserung
+    public class Nahkampfwaffenverbesserung
     {
         #region //---- EIGENSCHAFTEN ----
         public String Name { set; get; }
@@ -43,7 +43,7 @@ namespace MeisterGeister.ViewModel.Schmiede.Logic
         #endregion
     }
 
-    class Materialien : System.Collections.Generic.List<Nahkampfwaffenverbesserung>
+    public class Materialien : System.Collections.Generic.List<Nahkampfwaffenverbesserung>
     {
         public Materialien()
         {
@@ -81,7 +81,7 @@ namespace MeisterGeister.ViewModel.Schmiede.Logic
         }
     }
 
-    class Techniken : System.Collections.Generic.List<Nahkampfwaffenverbesserung>
+    public class Techniken : System.Collections.Generic.List<Nahkampfwaffenverbesserung>
     {
         public Techniken()
         {

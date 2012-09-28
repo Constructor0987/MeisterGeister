@@ -11,7 +11,7 @@ using MeisterGeister.ViewModel.Schmiede.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    class SchmiedeNahkampfwaffeViewModel : Base.ViewModelBase
+    public class SchmiedeNahkampfwaffeViewModel : Base.ViewModelBase
     {
 
         #region //---- FELDER ----

@@ -10,7 +10,7 @@ using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    class SchmiedeRüstungViewModel : Base.ViewModelBase
+    public class SchmiedeRüstungViewModel : Base.ViewModelBase
     {
 
         #region //---- FELDER ----

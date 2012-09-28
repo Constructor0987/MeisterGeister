@@ -19,11 +19,11 @@ using System.Diagnostics;
 namespace MeisterGeister.View.Schmiede
 {
     /// <summary>
-    /// Interaktionslogik für SchmiedeFernkampfwaffeView.xaml
+    /// Interaktionslogik für SchmiedeGeschossView.xaml
     /// </summary>
-    public partial class SchmiedeFernkampfwaffeView : UserControl
+    public partial class SchmiedeGeschossView : UserControl
     {
-        public SchmiedeFernkampfwaffeView()
+        public SchmiedeGeschossView()
         {
             InitializeComponent();
         }
@@ -31,13 +31,13 @@ namespace MeisterGeister.View.Schmiede
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
         /// </summary>
-        public VM.SchmiedeFernkampfwaffeViewModel VM
+        public VM.SchmiedeGeschossViewModel VM
         {
             get
             {
-                if (DataContext == null || !(DataContext is VM.SchmiedeFernkampfwaffeViewModel))
+                if (DataContext == null || !(DataContext is VM.SchmiedeGeschossViewModel))
                     return null;
-                return DataContext as VM.SchmiedeFernkampfwaffeViewModel;
+                return DataContext as VM.SchmiedeGeschossViewModel;
             }
             set { DataContext = value; }
         }
