@@ -19,11 +19,11 @@ using System.Diagnostics;
 namespace MeisterGeister.View.Schmiede
 {
     /// <summary>
-    /// Interaktionslogik für SchmiedeSchildView.xaml
+    /// Interaktionslogik für SchmiedeRüstungView.xaml
     /// </summary>
-    public partial class SchmiedeSchildView : UserControl
+    public partial class SchmiedeRüstungView : UserControl
     {
-        public SchmiedeSchildView()
+        public SchmiedeRüstungView()
         {
             InitializeComponent();
         }
@@ -31,13 +31,13 @@ namespace MeisterGeister.View.Schmiede
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
         /// </summary>
-        public VM.SchmiedeSchildViewModel VM
+        public VM.SchmiedeRüstungViewModel VM
         {
             get
             {
-                if (DataContext == null || !(DataContext is VM.SchmiedeSchildViewModel))
+                if (DataContext == null || !(DataContext is VM.SchmiedeRüstungViewModel))
                     return null;
-                return DataContext as VM.SchmiedeSchildViewModel;
+                return DataContext as VM.SchmiedeRüstungViewModel;
             }
             set { DataContext = value; }
         }

@@ -373,6 +373,7 @@
     <Compile Include="ViewModel\NscGenerator\Person.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Schmiede\SchmiedeGeschossViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeRüstungViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeFernkampfwaffeViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeNahkampfwaffeViewModel.cs" />
@@ -453,11 +454,17 @@
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Schmiede\SchmiedeGeschossView.xaml.cs">
+      <DependentUpon>SchmiedeGeschossView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Schmiede\SchmiedeFernkampfwaffeView.xaml.cs">
       <DependentUpon>SchmiedeFernkampfwaffeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Schmiede\SchmiedeNahkampfwaffeView.xaml.cs">
       <DependentUpon>SchmiedeNahkampfwaffeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Schmiede\SchmiedeRüstungView.xaml.cs">
+      <DependentUpon>SchmiedeRüstungView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Schmiede\SchmiedeSchildView.xaml.cs">
       <DependentUpon>SchmiedeSchildView.xaml</DependentUpon>
@@ -721,11 +728,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Schmiede\SchmiedeGeschossView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Schmiede\SchmiedeFernkampfwaffeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Schmiede\SchmiedeNahkampfwaffeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Schmiede\SchmiedeRüstungView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

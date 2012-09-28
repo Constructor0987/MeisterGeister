@@ -166,6 +166,18 @@ namespace MeisterGeister.View.Schmiede
                 Icon = "/DSA%20MeisterGeister;component/Images/Icons/schild.png",
                 ViewType = typeof(View.Schmiede.SchmiedeSchildView)
             });
+            SchmiedeListe.Add("Rüstung", new Schmiede()
+            {
+                Name = "Rüstung",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/ruestung.png",
+                ViewType = typeof(View.Schmiede.SchmiedeRüstungView)
+            });
+            SchmiedeListe.Add("Geschoss", new Schmiede()
+            {
+                Name = "Geschoss",
+                Icon = "/DSA%20MeisterGeister;component/Images/Icons/munition.png",
+                ViewType = typeof(View.Schmiede.SchmiedeGeschossView)
+            });
         }
 
         /// <summary>
