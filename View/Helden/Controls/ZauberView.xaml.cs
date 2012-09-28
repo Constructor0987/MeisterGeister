@@ -24,18 +24,32 @@ namespace MeisterGeister.View.Helden.Controls
         public ZauberView()
         {
             InitializeComponent();
-            this.DataContext = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+            VM = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.ZauberViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.ZauberViewModel))
+                    return null;
+                return DataContext as VM.ZauberViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
 
         private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)

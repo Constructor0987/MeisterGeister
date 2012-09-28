@@ -25,25 +25,39 @@ namespace MeisterGeister.View.Helden.Controls
         public VorNachteileView()
         {
             InitializeComponent();
-            this.DataContext = new VM.VorNachteileViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+            VM = new VM.VorNachteileViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.VorNachteileViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.VorNachteileViewModel))
+                    return null;
+                return DataContext as VM.VorNachteileViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                (this.DataContext as VM.VorNachteileViewModel).Init();
+                VM.Init();
             }
             catch (Exception)
             {
             }
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
 
         private void ContextMenuVorNachteile_Opened(object sender, RoutedEventArgs e)

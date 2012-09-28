@@ -27,26 +27,40 @@ namespace MeisterGeister.View.Helden.Controls
             InitializeComponent();
 
             //VM an View Registrieren
-            this.DataContext = new VM.EigenschaftenViewModel();
+            VM = new VM.EigenschaftenViewModel();
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.EigenschaftenViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.EigenschaftenViewModel))
+                    return null;
+                return DataContext as VM.EigenschaftenViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                (this.DataContext as VM.EigenschaftenViewModel).Init();
+                VM.Init();
             }
             catch (Exception)
             {
             }
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
     }
 }

@@ -24,21 +24,35 @@ namespace MeisterGeister.View.Helden.Controls {
         #region//KONSTRUKTOR
         public TalentView() {
             this.InitializeComponent();
-            this.DataContext = new VM.TalentViewModel();
+            VM = new VM.TalentViewModel();
         }
         #endregion
         #region
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.TalentViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.TalentViewModel))
+                    return null;
+                return DataContext as VM.TalentViewModel;
+            }
+            set { DataContext = value; }
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e) {
             try {
-                (this.DataContext as VM.TalentViewModel).Init();
+                VM.Init();
             } catch (Exception) {
             }
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e) {
-            if (DataContext as VM.Logic.IChangeListener != null)
-                (this.DataContext as VM.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
         private void RefreshHeld() {
             // Talente-Sortierung aktualisieren

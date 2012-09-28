@@ -29,7 +29,21 @@ namespace MeisterGeister.View.Helden
             InitializeComponent();
 
             //VM an View Registrieren
-            this.DataContext = new VM.HeldenViewModel(); 
+            VM = new VM.HeldenViewModel(); 
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.HeldenViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.HeldenViewModel))
+                    return null;
+                return DataContext as VM.HeldenViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

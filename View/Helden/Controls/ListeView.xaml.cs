@@ -29,7 +29,21 @@ namespace MeisterGeister.View.Helden.Controls
             _buttonExportDemo.Visibility = System.Windows.Visibility.Collapsed;
 #endif
             //VM an View Registrieren
-            this.DataContext = new VM.ListeViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
+            VM = new VM.ListeViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.ListeViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.ListeViewModel))
+                    return null;
+                return DataContext as VM.ListeViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private void ButtonHeldNeu_Click(object sender, RoutedEventArgs e)
@@ -53,7 +67,7 @@ namespace MeisterGeister.View.Helden.Controls
                     }
                     try
                     {
-                        Held importHeld = (this.DataContext as VM.ListeViewModel).ImportHeld(file);
+                        Held importHeld = VM.ImportHeld(file);
                     }
                     catch (Exception ex)
                     {

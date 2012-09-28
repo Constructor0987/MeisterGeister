@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 // Eigene Usings
-using VM = MeisterGeister.ViewModel;
+using VM = MeisterGeister.ViewModel.Basar;
 using MeisterGeister.View.Windows;
 // Weitere Usings
 
@@ -28,11 +28,25 @@ namespace MeisterGeister.View.Basar
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.BasarViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.BasarViewModel))
+                    return null;
+                return DataContext as VM.BasarViewModel;
+            }
+            set { DataContext = value; }
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                (this.DataContext as VM.Basar.BasarViewModel).LoadDaten();
+                VM.LoadDaten();
             }
             catch (Exception ex) 
             {

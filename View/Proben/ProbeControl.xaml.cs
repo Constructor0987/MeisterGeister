@@ -27,7 +27,10 @@ namespace MeisterGeister.View.Proben
             InitializeComponent();
         }
 
-        private VM.ProbeControlViewModel VM 
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.ProbeControlViewModel VM 
         {
             get
             {
@@ -35,10 +38,7 @@ namespace MeisterGeister.View.Proben
                     return null;
                 return DataContext as VM.ProbeControlViewModel;
             }
-            set
-            {
-                DataContext = value;
-            }
+            set { DataContext = value; }
         }
 
         // TODO MT: Erfolgswahrscheinlichkeit hinzufügen

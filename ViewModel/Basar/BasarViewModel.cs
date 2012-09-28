@@ -10,7 +10,7 @@ using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Basar
 {
-    class BasarViewModel : Base.ViewModelBase
+    public class BasarViewModel : Base.ViewModelBase
     {
         #region //---- FELDER ----
 

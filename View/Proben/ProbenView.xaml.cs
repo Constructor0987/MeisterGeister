@@ -27,7 +27,21 @@ namespace MeisterGeister.View.Proben
         {
             InitializeComponent();
 
-            DataContext = new VM.ProbenViewModel();
+            VM = new VM.ProbenViewModel();
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.ProbenViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.ProbenViewModel))
+                    return null;
+                return DataContext as VM.ProbenViewModel;
+            }
+            set { DataContext = value; }
         }
 
         // TODO MT: Testmethode entfernen

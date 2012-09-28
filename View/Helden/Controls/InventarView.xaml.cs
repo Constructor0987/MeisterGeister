@@ -16,24 +16,44 @@ using VM = MeisterGeister.ViewModel.Inventar;
 //Weitere Usings
 using System.Diagnostics;
 
-namespace MeisterGeister.View.Helden.Controls {
-    public partial class InventarView : UserControl {
+namespace MeisterGeister.View.Helden.Controls
+{
+    public partial class InventarView : UserControl
+    {
 
-        public InventarView() {
-                InitializeComponent();                
+        public InventarView()
+        {
+            InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e) {
-            try {
-                (this.DataContext as VM.Inventar).LoadDaten();
-            } catch (Exception) { }
-            if (DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener != null)
-                (this.DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.Inventar VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.Inventar))
+                    return null;
+                return DataContext as VM.Inventar;
+            }
+            set { DataContext = value; }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                VM.LoadDaten();
+            }
+            catch (Exception) { }
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener != null)
-                (this.DataContext as MeisterGeister.ViewModel.Helden.Logic.IChangeListener).ListenToChangeEvents = IsVisible;
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
 
     }
