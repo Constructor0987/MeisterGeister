@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 //Eigene Usings
-using VM = MeisterGeister.ViewModel;
+using VM = MeisterGeister.ViewModel.Schmiede;
 //Weitere Usings
 using System.Diagnostics;
 
@@ -28,11 +28,25 @@ namespace MeisterGeister.View.Schmiede
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.SchmiedeSchildViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.SchmiedeSchildViewModel))
+                    return null;
+                return DataContext as VM.SchmiedeSchildViewModel;
+            }
+            set { DataContext = value; }
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                (this.DataContext as VM.Schmiede.SchmiedeSchildViewModel).LoadDaten();
+                VM.LoadDaten();
             }
             catch (Exception) { }
         }
