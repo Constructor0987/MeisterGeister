@@ -48,14 +48,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (!typeof(Mod.IModifikator).IsAssignableFrom(modTyp))
                 throw new ArgumentException("modTyp muss von IModifikator erben.");
             List<dynamic> li = new List<dynamic>();
+            int? wertTmp = startWert;
             foreach (var item in mods.Where(m => modTyp.IsInstanceOfType(m)).OrderBy(m => m.Erstellt).ToList())
             {
                 startWert = Apply(item, modTyp, startWert);
                 li.Add(new
                 {
                     Mod = item,
-                    Wert = startWert
+                    Wert = startWert,
+                    IsWertGesenkt = startWert < wertTmp,
+                    IsWertGesteigert = startWert > wertTmp
                 });
+                wertTmp = startWert;
             }
             return li;
         }

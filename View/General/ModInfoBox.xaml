@@ -29,7 +29,20 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="10" />
-                <DataGridTextColumn Binding="{Binding Wert}" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Wert}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsWertGesenkt}" Value="true" >
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsWertGesteigert}" Value="true" >
+                                    <Setter Property="Foreground" Value="Green"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTemplateColumn Width="10" />
                 <DataGridTextColumn Binding="{Binding Mod.Literatur, StringFormat='(\{0\})'}" IsReadOnly="True" />
             </DataGrid.Columns>
