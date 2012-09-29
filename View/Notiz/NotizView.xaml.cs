@@ -52,7 +52,7 @@ namespace MeisterGeister.View.Notiz
             try
             {
                 // Notizen in Datenbank speichern
-                Global.ContextNotizen.Save();
+                Global.ContextNotizen.SaveNotizen();
             }
             catch (Exception) { }
         }

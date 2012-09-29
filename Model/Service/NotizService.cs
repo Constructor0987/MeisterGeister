@@ -44,11 +44,13 @@ namespace MeisterGeister.Model.Service
         /// Wandelt alle FlowDocumente der Notizen in Strings um und speichert alles in die Datenbank.
         /// </summary>
         /// <returns></returns>
-        public override int Save()
+        public void SaveNotizen()
         {
             foreach (var item in NotizListe)
+            {
                 item.ParseFlowDoumentToText();
-            return Context.SaveChanges();
+                Global.ContextNotizen.Update<Model.Notizen>(item);
+            }
         }
 
         #endregion
