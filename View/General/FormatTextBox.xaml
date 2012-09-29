@@ -345,13 +345,13 @@
                         </Border>
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal" FocusManager.IsFocusScope="True">
-                                <Button x:Name="btnCut" ToolTip="Ausschneiden"  TabIndex="13" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Cut">
+                                <Button x:Name="btnCut" ToolTip="Ausschneiden"  TabIndex="13" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Cut" ToolTipService.ShowOnDisabled="True">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/cut.png" Stretch="Fill" />
                                 </Button>
-                                <Button x:Name="btnCopy" ToolTip="Kopieren"  TabIndex="14" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Copy">
+                                <Button x:Name="btnCopy" ToolTip="Kopieren"  TabIndex="14" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Copy" ToolTipService.ShowOnDisabled="True">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/copy.png" Stretch="Fill" />
                                 </Button>
-                                <Button x:Name="btnPaste" ToolTip="Einfügen"  TabIndex="15" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Paste">
+                                <Button x:Name="btnPaste" ToolTip="Einfügen"  TabIndex="15" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Paste" ToolTipService.ShowOnDisabled="True">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/paste.png" Stretch="Fill" />
                                 </Button>
                             </StackPanel>
