@@ -131,6 +131,7 @@ namespace MeisterGeister.Model
 
         #region Modifikatorlisten
 
+        [DependsOnModifikator(typeof(Mod.IModMU))]
         public List<dynamic> ModifikatorenListeMU
         {
             get
@@ -138,6 +139,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModMU), MU);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModKL))]
         public List<dynamic> ModifikatorenListeKL
         {
             get
@@ -145,6 +147,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModKL), KL);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModCH))]
         public List<dynamic> ModifikatorenListeCH
         {
             get
@@ -152,6 +155,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModCH), CH);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModIN))]
         public List<dynamic> ModifikatorenListeIN
         {
             get
@@ -159,6 +163,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModIN), IN);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModFF))]
         public List<dynamic> ModifikatorenListeFF
         {
             get
@@ -166,6 +171,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModFF), FF);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModGE))]
         public List<dynamic> ModifikatorenListeGE
         {
             get
@@ -173,6 +179,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModGE), GE);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModKO))]
         public List<dynamic> ModifikatorenListeKO
         {
             get
@@ -180,6 +187,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModKO), KO);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModKK))]
         public List<dynamic> ModifikatorenListeKK
         {
             get
@@ -187,6 +195,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModKK), KK);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModINIBasis))]
         public List<dynamic> ModifikatorenListeINIbasis
         {
             get
@@ -194,6 +203,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModINIBasis), InitiativeBasisOhneMod);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModATBasis))]
         public List<dynamic> ModifikatorenListeATbasis
         {
             get
@@ -201,6 +211,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModPABasis))]
         public List<dynamic> ModifikatorenListePAbasis
         {
             get
@@ -208,6 +219,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModFKBasis))]
         public List<dynamic> ModifikatorenListeFKbasis
         {
             get
@@ -215,6 +227,7 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModFKBasis), FernkampfBasisOhneMod);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModMR))]
         public List<dynamic> ModifikatorenListeMR
         {
             get
