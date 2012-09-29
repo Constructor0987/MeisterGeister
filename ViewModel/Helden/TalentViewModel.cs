@@ -267,7 +267,6 @@ namespace MeisterGeister.ViewModel.Helden {
         private Base.CommandBase onRemove;
         #endregion
         #region //EIGENSCHAFTEN
-        public string TaW { get; set; }
         public Model.Talent Talent { get; set; }
         public Model.Held_Talent HeldTalent { get; set; }
         public Base.CommandBase OnRemove { get { return onRemove; } }
