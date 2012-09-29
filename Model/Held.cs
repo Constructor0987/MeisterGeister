@@ -330,6 +330,8 @@ namespace MeisterGeister.Model
             }
         }
 
+        
+
         public int GetEigenschaftWert(string eigenschaft)
         {
             switch (eigenschaft)

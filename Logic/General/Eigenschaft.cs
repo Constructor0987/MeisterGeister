@@ -1,6 +1,7 @@
 ﻿using System;
+using MeisterGeister.Logic.General;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     public class Eigenschaft : IProbe
     {

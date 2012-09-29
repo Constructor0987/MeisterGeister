@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 // Eigene Usings
 using VM = MeisterGeister.ViewModel;
-using KampfLogic=MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.View.Arena
 {
@@ -33,7 +33,7 @@ namespace MeisterGeister.View.Arena
 
         private ScrollViewer _arenaSV;
 
-        public ArenaWindow(KampfLogic.Kampf kampf)
+        public ArenaWindow(MeisterGeister.ViewModel.Kampf.Logic.Kampf kampf)
         {
             InitializeComponent();
 

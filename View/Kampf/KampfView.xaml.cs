@@ -9,6 +9,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.View.Arena;
 using MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -638,7 +639,10 @@ namespace MeisterGeister.View.Kampf
 
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
-            ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? _kampf : null);
+            // TODO ??: Neue Kampf-Klasse verwenden
+            // hier wird ein leerer Kampf übergeben, bis das neue Model verwendet wird
+            ViewModel.Kampf.Logic.Kampf k = new ViewModel.Kampf.Logic.Kampf();
+            ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
             arenaWindow.Width = 1200;
             arenaWindow.Height = 800;
             arenaWindow.Show();

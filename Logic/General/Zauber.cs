@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.Kalender;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     public class Zauber : IDreierProbe
     {

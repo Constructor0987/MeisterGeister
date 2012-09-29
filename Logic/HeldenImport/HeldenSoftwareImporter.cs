@@ -7,6 +7,7 @@ using System.Xml;
 // Eigene Usings
 //using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Logic.HeldenImport
 {
@@ -787,7 +788,7 @@ namespace MeisterGeister.Logic.HeldenImport
                     || vorNachteilName.StartsWith("Miserable Eigenschaft"))) // Herausragende/Miserable Eigenschaft
                 {
                     string eigenschaft = vorNachteilName.Split(':')[1].Trim();
-                    string eigenschaftKürzel = Logic.General.Eigenschaften.GetKürzel(eigenschaft);
+                    string eigenschaftKürzel = Eigenschaft.GetAbkürzung(eigenschaft);
                     if (vorNachteilName.StartsWith("Herausragende Eigenschaft"))
                         added = AddVorNachteil(vorNachteilName.Replace("Herausragende Eigenschaft: ", "Herausragende Eigenschaft (")
                             .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString, _held);

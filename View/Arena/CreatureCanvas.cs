@@ -11,7 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Globalization;
 // Eigene Usings
 using MeisterGeister.Logic.General;
-using MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.View.Arena
 {
@@ -19,7 +19,7 @@ namespace MeisterGeister.View.Arena
 
     public class CreatureCanvas : Canvas {
 
-        private Wesen _creature;
+        private IKämpfer _creature;
         private ArenaViewer _arenaViewer;
 
         private Image _portrait;
@@ -32,11 +32,11 @@ namespace MeisterGeister.View.Arena
 
         private Point _lastDragBegunPoint = new Point(0,0);
 
-        public CreatureCanvas(Wesen wesen, ArenaViewer arenaViewer) {
+        public CreatureCanvas(IKämpfer wesen, ArenaViewer arenaViewer) {
             _creature = wesen;
             _arenaViewer = arenaViewer;
 
-            _color = wesen is Held ? ArenaViewer.DEFAULT_HERO_COLOR : ArenaViewer.DEFAULT_ENEMY_COLOR;
+            _color = wesen is Model.Held ? ArenaViewer.DEFAULT_HERO_COLOR : ArenaViewer.DEFAULT_ENEMY_COLOR;
             
             MouseDragElementBehavior dragBehavior = new MouseDragElementBehavior();
             dragBehavior.Attach(this);
@@ -115,11 +115,11 @@ namespace MeisterGeister.View.Arena
         private void setPortrait() {
 
             Image portrait = null;
-            if (_creature is Held){
-                 portrait = _arenaViewer.GetHeldPortrait(((Held)_creature).HeldDataRow.HeldGUID);
+            if (_creature is Model.Held){
+                 portrait = _arenaViewer.GetHeldPortrait(((Model.Held)_creature).HeldGUID);
           
-            } else if (_creature is Gegner){
-                portrait = _arenaViewer.GetGegnerPortrait(((Gegner)_creature).Name);            
+            } else if (_creature is Model.Gegner){
+                portrait = _arenaViewer.GetGegnerPortrait(((Model.Gegner)_creature).Name);            
             }
 
             if (portrait != null) {
@@ -174,7 +174,7 @@ namespace MeisterGeister.View.Arena
             set { _color = value ;}
         }
 
-        public Wesen Creature { 
+        public IKämpfer Creature { 
             get { return _creature; } 
         }
 
@@ -255,7 +255,7 @@ namespace MeisterGeister.View.Arena
 
         public void AddTextLayer() {
             
-            if (_creature is Gegner) {
+            if (_creature is Model.Gegner) {
 
                 if (Children.Contains(_textLayer))
                     Children.Remove(_textLayer);
@@ -274,7 +274,7 @@ namespace MeisterGeister.View.Arena
                 DrawingVisual drawingVisual = new DrawingVisual();
                 DrawingContext drawingContext = drawingVisual.RenderOpen();
 
-                FormattedText gegnerIndex = new FormattedText(_arenaViewer.Arena.GetEnemyIndex((Gegner)_creature) + "",
+                FormattedText gegnerIndex = new FormattedText(_arenaViewer.Arena.GetEnemyIndex((Model.Gegner)_creature) + "",
                     new CultureInfo("de-de"),
                     FlowDirection.LeftToRight,
                     new Typeface(new FontFamily("Verdana"), FontStyles.Normal, FontWeights.Normal, new FontStretch()),

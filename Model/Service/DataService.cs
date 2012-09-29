@@ -32,6 +32,12 @@ namespace MeisterGeister.Model.Service {
             return tmp;
         }
 
+        public Held LoadHeldByGUID(Guid id)
+        {
+            var tmp = Context.Held.Where(held => held.HeldGUID == id).FirstOrDefault();
+            return tmp;
+        }
+
         /// <summary>
         /// Case-insensitiv.
         /// </summary>

@@ -10,8 +10,8 @@ using System.Data;
 using System.Windows.Media.Imaging;
 // Eigene Usings
 using MeisterGeister.Logic.General;
-using MeisterGeister.ViewModel.Kampf.LogicAlt;
 using VM = MeisterGeister.ViewModel;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.View.Arena
 {
@@ -153,7 +153,7 @@ namespace MeisterGeister.View.Arena
                 CreatureNameIdPair pair = (CreatureNameIdPair)_heroAdder.SelectedItem;
 
                 if (pair != null && !_arenaViewer.Arena.ContainsHeldWidthId(pair.Id)) {
-                    Held held = new Held(pair.Id);
+                    Model.Held held = Global.ContextHeld.LoadHeldByGUID(pair.Id);
                     _arenaViewer.Arena.AddHeld(held, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                     _arenaViewer.DrawArena();
                     _heroAdder.SelectedIndex = 0;
@@ -168,7 +168,7 @@ namespace MeisterGeister.View.Arena
                 CreatureNameIdPair pair = (CreatureNameIdPair)_enemyAdder.SelectedItem;
 
                 if (pair != null) {
-                    Gegner gegner = new Gegner(pair.Name, 0, 0);
+                    Model.Gegner gegner = new Model.Gegner() { Name = pair.Name };
                     _arenaViewer.Arena.AddGegner(gegner, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                     _arenaViewer.DrawArena();
                     _enemyAdder.SelectedIndex = 0;
@@ -202,20 +202,21 @@ namespace MeisterGeister.View.Arena
 
         private void OnCreatureRemoved(object sender, ArenaViewer.CreatureEventArgs args) {
 
-            if (args.CC.Creature is Held) {
-                Held held = (Held)args.CC.Creature;
-                _heroAdder.Items.Add(new CreatureNameIdPair(held.Name, held.Id));              
+            if (args.CC.Creature is Model.Held) {
+                Model.Held held = (Model.Held)args.CC.Creature;
+                _heroAdder.Items.Add(new CreatureNameIdPair(held.Name, held.HeldGUID));              
             }
         }
 
-        public void OnArenaPopulated(MeisterGeister.ViewModel.Kampf.LogicAlt.Kampf kampf)
+        public void OnArenaPopulated(MeisterGeister.ViewModel.Kampf.Logic.Kampf kampf)
         {
 
             List<Guid> heldIds = new List<Guid>();
             
-            foreach (IKämpfer kämpfer in kampf.KämpferListe) {
-                if (kämpfer is Held) {
-                    heldIds.Add(((Held)kämpfer).HeldDataRow.HeldGUID);        
+            foreach (KämpferInfo kämpferInfo in kampf.Kämpfer) {
+                if (kämpferInfo.Kämpfer is Model.Held)
+                {
+                    heldIds.Add(((Model.Held)kämpferInfo.Kämpfer).HeldGUID);        
                 }
             }
 

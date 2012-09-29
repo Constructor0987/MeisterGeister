@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using MeisterGeister.Daten;
 // Eigene Usings
 using MeisterGeister.Logic.General;
+using MeisterGeister.LogicAlt.General;
 using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.View.ArtGen
@@ -49,6 +50,7 @@ namespace MeisterGeister.View.ArtGen
 
         private ArtefaktGenerator.ArtGenControl PlugInControl = null;
 
+        // TODO ??: Umstellen auf neues Model
         public void SetHeldWerte()
         {
             DatabaseDSADataSet.HeldRow heldRow = null;
@@ -80,6 +82,7 @@ namespace MeisterGeister.View.ArtGen
             bool sfRingkunde = false;
             bool sfAuxiliator = h.HatSonderfertigkeit("Auxiliator");
             uint tawArcanovi = 0;
+
             List<DreierProbenWert> liZauber = h.Zauberwert(new Zauber("Arcanovi Artefakt (Spruchspeicher)"));
             if (liZauber.Count > 0)
                 tawArcanovi = Convert.ToUInt32(liZauber[0].Wert);

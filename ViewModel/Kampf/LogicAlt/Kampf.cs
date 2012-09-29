@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 // Eigene Usings
 using MeisterGeister.Logic.General;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.ViewModel.Kampf.LogicAlt
 {

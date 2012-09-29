@@ -3,7 +3,7 @@ using System.Windows.Documents;
 using System.IO;
 using MeisterGeister.Logic.Kalender;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     public class Talent : IDreierProbe
     {

@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.ViewModel.Kampf.LogicAlt;
 using Logic = MeisterGeister.Logic;
+using MeisterGeister.Logic.General;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     /// <summary>
     /// Beschreibt einen Helden.

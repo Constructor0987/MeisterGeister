@@ -3,6 +3,7 @@ using System.ComponentModel;
 // Eigene Usings
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.ViewModel.Kampf.LogicAlt
 {

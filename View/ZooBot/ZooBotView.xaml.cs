@@ -16,6 +16,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Daten;
 using MeisterGeister.View.Windows;
 using MeisterGeister.Logic.Kalender;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.View.ZooBot
 {
@@ -63,6 +64,7 @@ namespace MeisterGeister.View.ZooBot
 
         private MeisterGeister.View.ZooBot.Hauptfenster PlugInControl = null;
 
+        // TODO ??: Überführung ins neue Model
         public void SetHeldWerte(string talentname = "")
         {
 

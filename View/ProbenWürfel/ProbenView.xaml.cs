@@ -10,6 +10,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.View.General;
 using MeisterGeister.View;
 using MeisterGeister.View.Windows;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.View.ProbenWürfel
 {
