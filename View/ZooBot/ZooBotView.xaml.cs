@@ -29,8 +29,6 @@ namespace MeisterGeister.View.ZooBot
         {
             InitializeComponent();
 
-            _comboBoxHeld.ItemsSource = App.DatenDataSet.Held.Select("AktiveHeldengruppe = true", "Name ASC");
-
             try
             {
                 MeisterGeister.View.ZooBot.Hauptfenster pluInControl = new MeisterGeister.View.ZooBot.Hauptfenster();
@@ -62,25 +60,35 @@ namespace MeisterGeister.View.ZooBot
             _comboBoxHeld.SelectedIndex = -1;
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Reload();
+        }
+
+        public void Reload()
+        {
+            _comboBoxHeld.ItemsSource = Global.ContextHeld.HeldenGruppeListe;
+        }
+
         private MeisterGeister.View.ZooBot.Hauptfenster PlugInControl = null;
 
         // TODO ??: Überführung ins neue Model
         public void SetHeldWerte(string talentname = "")
         {
 
-            DatabaseDSADataSet.HeldRow heldRow = null;
+            Model.Held h = null;
             if (_comboBoxHeld.SelectedItem != null)
-                heldRow = (DatabaseDSADataSet.HeldRow)_comboBoxHeld.SelectedItem;
-
-            Held h = new Held(heldRow);
+                h = (Model.Held)_comboBoxHeld.SelectedItem;
+            else
+                h = new Model.Held();
 
             // Fernkampfwert
             string fernkampfwaffeString = _comboBoxFernkampfwaffe.SelectedValue.ToString();
-            int fernkampfwaffe = h.Talentwert(fernkampfwaffeString).Wert;
+            int fernkampfwaffe = h.Talentwert(fernkampfwaffeString);
 
             // Sonderfertigkeiten
-            bool scharfschütze = (h.SonderfertigkeitRow(string.Format("Scharfschütze ({0})", fernkampfwaffeString)) != null);
-            bool meisterschütze = (h.SonderfertigkeitRow(string.Format("Meisterschütze ({0})", fernkampfwaffeString)) != null);
+            bool scharfschütze = h.HatSonderfertigkeit(string.Format("Scharfschütze ({0})", fernkampfwaffeString));
+            bool meisterschütze = h.HatSonderfertigkeit(string.Format("Meisterschütze ({0})", fernkampfwaffeString));
 
             string suchmonat = (Datum.Aktuell.Monat == Monat.NamenloseTage ? "Namenlose Tage" : Datum.Aktuell.MonatString());
             int reiter = SelectTab(talentname);
@@ -91,13 +99,14 @@ namespace MeisterGeister.View.ZooBot
                 try
                 {
                     PlugInControl.MeisterGeisterInterface(
-                            Math.Max(0, h.MU), Math.Max(0, h.IN), Math.Max(0, h.KL), Math.Max(0, h.FF), Math.Max(0, h.GE), Math.Max(0, h.KK),
-                            Math.Max(0, h.Talentwert("Ackerbau").Wert), Math.Max(0, h.Talentwert("Fährtensuchen").Wert),
-                            Math.Max(0, h.Talentwert("Fallenstellen").Wert), Math.Max(0, fernkampfwaffe),
-                            Math.Max(0, h.Talentwert("Fischen/Angeln").Wert), Math.Max(0, h.Talentwert("Pflanzenkunde").Wert),
-                            Math.Max(0, h.Talentwert("Schleichen").Wert), Math.Max(0, h.Talentwert("Sich Verstecken").Wert),
-                            Math.Max(0, h.Talentwert("Sinnenschärfe").Wert), Math.Max(0, h.Talentwert("Tierkunde").Wert),
-                            Math.Max(0, h.Talentwert("Wildnisleben").Wert), scharfschütze, meisterschütze,
+                            Math.Max(0, h.Mut), Math.Max(0, h.Intuition), Math.Max(0, h.Klugheit), 
+                            Math.Max(0, h.Fingerfertigkeit), Math.Max(0, h.Gewandtheit), Math.Max(0, h.Körperkraft),
+                            Math.Max(0, h.Talentwert("Ackerbau")), Math.Max(0, h.Talentwert("Fährtensuchen")),
+                            Math.Max(0, h.Talentwert("Fallenstellen")), Math.Max(0, fernkampfwaffe),
+                            Math.Max(0, h.Talentwert("Fischen/Angeln")), Math.Max(0, h.Talentwert("Pflanzenkunde")),
+                            Math.Max(0, h.Talentwert("Schleichen")), Math.Max(0, h.Talentwert("Sich Verstecken")),
+                            Math.Max(0, h.Talentwert("Sinnenschärfe")), Math.Max(0, h.Talentwert("Tierkunde")),
+                            Math.Max(0, h.Talentwert("Wildnisleben")), scharfschütze, meisterschütze,
                             suchmonat, reiter);
                 }
                 catch (Exception ex)
@@ -114,7 +123,8 @@ namespace MeisterGeister.View.ZooBot
         private int SelectTab(string talent)
         {
             _lastTalent = talent;
-
+            if (talent == string.Empty)
+                return PlugInControl.AktiverReiter;
             if (talent == "Kräuter Suchen")
                 return 0;
             else if (talent.StartsWith("Nahrung Sammeln"))
