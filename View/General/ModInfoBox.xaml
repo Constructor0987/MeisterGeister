@@ -9,10 +9,12 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,0,0,5">
             <TextBlock Text="{Binding ElementName=_modInfoBox, Path=WertName, StringFormat='\{0\}:'}" />
             <TextBlock Text="{Binding ElementName=_modInfoBox, Path=StartWert}" Margin="20,0,0,0" />
+            <TextBlock Text="{Binding ElementName=_modInfoBox, Path=ModListe.Count, StringFormat='(Modifikatoren: \{0\})', FallbackValue=''}" Margin="20,0,0,0" />
         </StackPanel>
         <Separator Margin="0,5,0,5" />
         <DataGrid ItemsSource="{Binding ElementName=_modInfoBox, Path=ModListe}" AutoGenerateColumns="False" RowBackground="Transparent" 
-                  Background="Transparent" BorderBrush="Transparent" GridLinesVisibility="None" HeadersVisibility="None">
+                  Background="Transparent" BorderBrush="Transparent" GridLinesVisibility="None" HeadersVisibility="None" 
+                  CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
