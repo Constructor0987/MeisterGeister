@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
+using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
 namespace MeisterGeister.ViewModel.Helden.Logic
 {
@@ -59,6 +60,44 @@ namespace MeisterGeister.ViewModel.Helden.Logic
                     return item.Key;
             }
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Gibt den Modifikator-Typ zu einer Eigenschaft zurück.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static Type GetModType(string name)
+        {
+            switch (name)
+            {
+                case "MU":
+                case "Mut":
+                    return typeof(Mod.IModMU);
+                case "KL":
+                case "Klugheit":
+                    return typeof(Mod.IModKL);
+                case "IN":
+                case "Intuition":
+                    return typeof(Mod.IModIN);
+                case "CH":
+                case "Charisma":
+                    return typeof(Mod.IModCH);
+                case "FF":
+                case "Fingerfertigkeit":
+                    return typeof(Mod.IModFF);
+                case "GE":
+                case "Gewandtheit":
+                    return typeof(Mod.IModGE);
+                case "KO":
+                case "Konstitution":
+                    return typeof(Mod.IModKO);
+                case "KK":
+                case "Körperkraft":
+                    return typeof(Mod.IModKK);
+                default:
+                    return null;
+            }
         }
 
         #endregion //---- STATIC ----

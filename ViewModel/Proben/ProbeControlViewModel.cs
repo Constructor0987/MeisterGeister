@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.ViewModel.Proben
 {
@@ -40,6 +41,8 @@ namespace MeisterGeister.ViewModel.Proben
             set
             {
                 _held = value;
+                foreach (var item in EigenschaftWurfItemListe)
+                    item.Held = value;
                 OnChanged("Held");
             }
         }
@@ -141,6 +144,9 @@ namespace MeisterGeister.ViewModel.Proben
             get 
             {
                 // TODO MT: Für Zauber und Eigenschaften erweitern
+
+                foreach (var item in _eigenschaftWurfItemListe)
+                    item.Held = Held;
 
                 Model.Talent talent = null;
                 if (Probe is Model.Talent)
@@ -254,13 +260,13 @@ namespace MeisterGeister.ViewModel.Proben
     {
         private string _name = string.Empty;
         /// <summary>
-        /// Der Name der GetEigenschaftWert, auf die geworfen wird.
+        /// Der Name der Eigenschaft, auf die geworfen wird.
         /// </summary>
         public string Name { get { return _name; } set { _name = value; OnChanged("Name"); } }
 
         private int _wert = 0;
         /// <summary>
-        /// Der Wert der GetEigenschaftWert.
+        /// Der Wert der Eigenschaft.
         /// </summary>
         public int Wert { get { return _wert; } set { _wert = value; OnChanged("Wert"); } }
 
@@ -269,6 +275,33 @@ namespace MeisterGeister.ViewModel.Proben
         /// Das Würfelergebnis des Wurfes.
         /// </summary>
         public int Wurf { get { return _wurf; } set { _wurf = value; OnChanged("Wurf"); } }
+
+        private Model.Held _held = null;
+        public Model.Held Held 
+        { 
+            get { return _held; }
+            set { _held = value; OnChanged("Held"); OnChanged("StartWert"); OnChanged("ModList"); } 
+        }
+
+        public int StartWert
+        {
+            get 
+            {
+                if (Held == null)
+                    return Wert;
+                return Held.GetEigenschaftWert(Name, true);
+            }
+        }
+
+        public List<dynamic> ModList
+        {
+            get
+            {
+                if (Held == null)
+                    return new List<dynamic>();
+                return Held.ModifikatorenListe(Eigenschaft.GetModType(Name), StartWert);
+            }
+        }
     }
 
     #endregion

@@ -77,7 +77,12 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="24" />
-                            <ViewGeneral:IntBox Grid.Row="1" Value="{Binding Wert}" ToolTip="Eigenschafswert" HorizontalAlignment="Center" MinWidth="24" NoBackground="True" />
+                            <ViewGeneral:IntBox Grid.Row="1" Value="{Binding Wert}" HorizontalAlignment="Center" MinWidth="24" NoBackground="True">
+                                <ViewGeneral:IntBox.ToolTip>
+                                    <ViewGeneral:ModInfoBox ModListe="{Binding ModList}" WertName="{Binding Name}" 
+                                                        StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
+                                </ViewGeneral:IntBox.ToolTip>
+                            </ViewGeneral:IntBox>
                             <Border Grid.Row="2" Width="24" Height="24" ToolTip="Ergebnis des Wurfs">
                                 <Border.Background>
                                     <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank.png" />

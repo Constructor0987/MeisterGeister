@@ -343,36 +343,40 @@ namespace MeisterGeister.Model
             }
         }
 
-        
-
-        public int GetEigenschaftWert(string eigenschaft)
+        /// <summary>
+        /// Gibt den Eigenschaftswert zurück.
+        /// </summary>
+        /// <param name="eigenschaft">Name oder Abkürzung der gewünschten Eigenschaft.</param>
+        /// <param name="ohneMod">'True' falls der unmodifizierte Wert gewünscht ist.</param>
+        /// <returns>Eigenschaftswert.</returns>
+        public int GetEigenschaftWert(string eigenschaft, bool ohneMod = false)
         {
             switch (eigenschaft)
             {
                 case "MU":
                 case "Mut":
-                    return Mut;
+                    return ohneMod ? MU ?? 0 : Mut;
                 case "KL":
                 case "Klugheit":
-                    return Klugheit;
+                    return ohneMod ? KL ?? 0 : Klugheit;
                 case "IN":
                 case "Intuition":
-                    return Intuition;
+                    return ohneMod ? IN ?? 0 : Intuition;
                 case "CH":
                 case "Charisma":
-                    return Charisma;
+                    return ohneMod ? CH ?? 0 : Charisma;
                 case "FF":
                 case "Fingerfertigkeit":
-                    return Fingerfertigkeit;
+                    return ohneMod ? FF ?? 0 : Fingerfertigkeit;
                 case "GE":
                 case "Gewandtheit":
-                    return Gewandtheit;
+                    return ohneMod ? GE ?? 0 : Gewandtheit;
                 case "KO":
                 case "Konstitution":
-                    return Konstitution;
+                    return ohneMod ? KO ?? 0 : Konstitution;
                 case "KK":
                 case "Körperkraft":
-                    return Körperkraft;
+                    return ohneMod ? KK ?? 0 : Körperkraft;
                 case "SO":
                 case "Sozialstatus":
                     return SO ?? 0;
