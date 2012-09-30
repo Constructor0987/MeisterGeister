@@ -13,9 +13,9 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
 {
     //TODO MP: Export nach Notiztool
     //TODO MP: Verknüpfung mit Kalender Datum
-    class ZauberzeichenViewModel : Base.ViewModelBase
+    public class ZauberzeichenViewModel : Base.ViewModelBase
     {
-        
+
         //TODO MP: AbrichtenTool
 
         #region //---- FELDER ----
@@ -24,7 +24,6 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         //Booleans
         private bool IsLoaded;
         //Listen
-        private List<Model.Held> _heldListe; 
         private List<string> _satinavsSiegelListe = new List<string>(new string[] { "kein Siegel", "Monat", "Quartal", "WSWende" });
         private List<string> _verkleinerungListe = new List<string>(new string[] { "keine Verkleinerung", "1/2", "1/4", "1/8" });
         private List<string> _größenZeichenträgerListe = new List<string>(new string[] { "Schrank / 1xRadius", "Kutsche / 2xRadius", "Schiff / 4xRadius", "Burg / 8xRadius", "Berg / 16xRadius" });
@@ -34,7 +33,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         //Werte
         private TabItem _tabValue;
         private int _wertRitualkenntnis;
-        #endregion        
+        #endregion
 
         #region //-Zauberzeichen-
         //interne Variablen
@@ -98,7 +97,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         //Commands
         private Base.CommandBase _onBauZauberzeichen;
         private Base.CommandBase _onAktivierungZauberzeichen;
-        #endregion        
+        #endregion
 
         #region //-Runen--
         //interne Felder
@@ -142,8 +141,8 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         //Commands
         private CommandBase _onBauRunen;
         private CommandBase _onAktivierungRunen;
-        #endregion     
-   
+        #endregion
+
         #region //-Kreise-
         //interne Felder
         private int grundkomplexitätKreise;
@@ -177,22 +176,22 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         //Rückgaben
         private int _wertZirkelstärkeKreise;
         private string _wertGrößeKreisKreise;
-        private  int _wertKomplexitätKreise;
-        private  int _wertArtefaktkontrolleKreise;
-        private  int _wertTaPKreise;
-        private  string _wertHerstellungsdauerKreise;
-        private  string _wertWirkungsdauerKreise;
-        private  int _wertErleichterungRkKreise;
-        private  string _wertAktivierungsdauerKreise;
-        private  int _wertAktivierungskostenKreise;
-        private  string _wertErkennenKreise;
-        private  int _WertHandwerkKreise;
-        private  int _wertHerstellungszeitKreise;
+        private int _wertKomplexitätKreise;
+        private int _wertArtefaktkontrolleKreise;
+        private int _wertTaPKreise;
+        private string _wertHerstellungsdauerKreise;
+        private string _wertWirkungsdauerKreise;
+        private int _wertErleichterungRkKreise;
+        private string _wertAktivierungsdauerKreise;
+        private int _wertAktivierungskostenKreise;
+        private string _wertErkennenKreise;
+        private int _WertHandwerkKreise;
+        private int _wertHerstellungszeitKreise;
         private int _wertRkPKreise;
         private int _wertErleichterungTaKreise;
-        private  int _wertFormKreise;
-        private  int _wertFarbeKreise;
-        private  int _wertAffinitätKreise;
+        private int _wertFormKreise;
+        private int _wertFarbeKreise;
+        private int _wertAffinitätKreise;
         private int _wertAktivierungKreise;
         private int _wertQualitätKreise;
         private string _wertMerkmaleKreise;
@@ -212,11 +211,32 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         #region //---- EIGENSCHAFTEN ----
 
         #region //-Allgemein-
-        
+
         //Listen
-        public List<Model.Held> HeldListe { get { return _heldListe; } set { _heldListe = value; OnChanged("HeldListe"); } }
+        public List<Model.Held> HeldListe
+        {
+            get { return Global.ContextHeld.LoadHeldenGruppeWithZauberzeichen(); }
+        }
         //Selections
-        public Model.Held SelectedHeld { get { return _selectedHeld; } set { _selectedHeld = value; OnChanged("SelectedHeld"); resetKreise(); resetRunen(); resetZauberzeichen(); checkZusatzzeichen(value); WertRitualkenntnis = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value); WertRkWErschafferKreise = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value); WertRkWErschafferRunen = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value); WertRkWErschafferZauberzeichen = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value); TalentListeZauberzeichen = Global.ContextHeld.LoadZauberzeichenTalenteByHeld(value); TalentListeKreise = Global.ContextHeld.LoadZauberzeichenTalenteByHeld(value); TalentListeRunen = Global.ContextHeld.LoadRunenTalenteByHeld(value); ZauberzeichenListe = Global.ContextHeld.LoadZauberzeichenByHeld(value); KreiseListe = Global.ContextHeld.LoadKreiseByHeld(value); RunenListe = Global.ContextHeld.LoadRunenByHeld(value); } }
+        public Model.Held SelectedHeld { get { return _selectedHeld; } 
+            set 
+            { 
+                _selectedHeld = value;
+                OnChanged("SelectedHeld");
+                resetKreise(); resetRunen(); resetZauberzeichen();
+                checkZusatzzeichen(value);
+                WertRitualkenntnis = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value);
+                WertRkWErschafferKreise = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value);
+                WertRkWErschafferRunen = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value);
+                WertRkWErschafferZauberzeichen = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value);
+                TalentListeZauberzeichen = Global.ContextHeld.LoadZauberzeichenTalenteByHeld(value);
+                TalentListeKreise = Global.ContextHeld.LoadZauberzeichenTalenteByHeld(value);
+                TalentListeRunen = Global.ContextHeld.LoadRunenTalenteByHeld(value);
+                ZauberzeichenListe = Global.ContextHeld.LoadZauberzeichenByHeld(value);
+                KreiseListe = Global.ContextHeld.LoadKreiseByHeld(value);
+                RunenListe = Global.ContextHeld.LoadRunenByHeld(value); 
+            } 
+        }
         //Werte
         public TabItem TabItem { get { return _tabValue; } set { _tabValue = value; OnChanged("TabValue"); } }
         public int WertRitualkenntnis
@@ -232,18 +252,18 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             }
         }
         #endregion
-        
+
         #region //-Zauberzeichen-
         //Enables 
         public bool IsEnabledSpontanzeichenZauberzeichen { get { return _isEnabledSpontanzeichenZauberzeichen; } set { _isEnabledSpontanzeichenZauberzeichen = value; OnChanged("IsEnabledSpontanzeichenZauberzeichen"); } }
         public bool IsEnabledSatinavsSiegelListeZauberzeichen { get { return _isEnabledSatinavsSiegelListeZauberzeichen; } set { _isEnabledSatinavsSiegelListeZauberzeichen = value; OnChanged("IsEnabledSatinavsSiegelListeZauberzeichen"); } }
-        public bool IsEnabledPotenzierungZauberzeichen { get { return _isEnabledPotenzierungZauberzeichen; } set { _isEnabledPotenzierungZauberzeichen = value; OnChanged("IsEnabledPotenzierungZauberzeichen"); } }       
-        public bool IsEnabledKraftquellenspeisungZauberzeichen { get { return _isEnabledKraftquellenspeisungZauberzeichen; } set {_isEnabledKraftquellenspeisungZauberzeichen = value; OnChanged("IsEnabledKraftquellenspeisungZauberzeichen"); } }       
-        public bool IsEnabledMagiewiderstandZauberzeichen { get { return _isEnabledMagiewiderstandZauberzeichen; } set {_isEnabledMagiewiderstandZauberzeichen = value; OnChanged("IsEnabledMagiewiderstandZauberzeichen"); } }       
-        public bool IsEnabledSchutzsiegelZauberzeichen { get { return _isEnabledSchutzsiegelZauberzeichen; } set {_isEnabledSchutzsiegelZauberzeichen = value; OnChanged("IsEnabledSchutzsiegelZauberzeichen"); } }       
-        public bool IsEnabledTarnungZauberzeichen { get { return _isEnabledTarnungZauberzeichen; } set {_isEnabledTarnungZauberzeichen = value; OnChanged("IsEnabledTarnungZauberzeichen"); } }
+        public bool IsEnabledPotenzierungZauberzeichen { get { return _isEnabledPotenzierungZauberzeichen; } set { _isEnabledPotenzierungZauberzeichen = value; OnChanged("IsEnabledPotenzierungZauberzeichen"); } }
+        public bool IsEnabledKraftquellenspeisungZauberzeichen { get { return _isEnabledKraftquellenspeisungZauberzeichen; } set { _isEnabledKraftquellenspeisungZauberzeichen = value; OnChanged("IsEnabledKraftquellenspeisungZauberzeichen"); } }
+        public bool IsEnabledMagiewiderstandZauberzeichen { get { return _isEnabledMagiewiderstandZauberzeichen; } set { _isEnabledMagiewiderstandZauberzeichen = value; OnChanged("IsEnabledMagiewiderstandZauberzeichen"); } }
+        public bool IsEnabledSchutzsiegelZauberzeichen { get { return _isEnabledSchutzsiegelZauberzeichen; } set { _isEnabledSchutzsiegelZauberzeichen = value; OnChanged("IsEnabledSchutzsiegelZauberzeichen"); } }
+        public bool IsEnabledTarnungZauberzeichen { get { return _isEnabledTarnungZauberzeichen; } set { _isEnabledTarnungZauberzeichen = value; OnChanged("IsEnabledTarnungZauberzeichen"); } }
         public bool IsEnabledZielbeschränkungZauberzeichen { get { return _isEnabledZielbeschränkungZauberzeichen; } set { _isEnabledZielbeschränkungZauberzeichen = value; OnChanged("IsEnabledZielbeschränkungZauberzeichen"); } }
-        public bool IsEnabledVerkleinerungListeZauberzeichen { get { return _isEnabledVerkleinerungListeZauberzeichen; } set { _isEnabledVerkleinerungListeZauberzeichen = value; OnChanged("IsEnabledVerkleinerungListeZauberzeichen"); } }       
+        public bool IsEnabledVerkleinerungListeZauberzeichen { get { return _isEnabledVerkleinerungListeZauberzeichen; } set { _isEnabledVerkleinerungListeZauberzeichen = value; OnChanged("IsEnabledVerkleinerungListeZauberzeichen"); } }
         //Listen
         public List<Model.Zauberzeichen> ZauberzeichenListe { get { return _zauberzeichenListe; } set { _zauberzeichenListe = value; OnChanged("ZauberzeichenListe"); } }
         public List<string> GrößenZeichenträgerListeZauberzeichen { get { return _größenZeichenträgerListe; } set { _größenZeichenträgerListe = value; OnChanged("GrößenZeichenträgerListeZauberzeichen"); } }
@@ -251,16 +271,16 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public List<string> VerkleinerungListeZauberzeichen { get { return _verkleinerungListe; } set { _verkleinerungListe = value; OnChanged("VerkleinerungListeZauberzeichen"); } }
         public List<Talent> TalentListeZauberzeichen { get { return _talentListeZauberzeichen; } set { _talentListeZauberzeichen = value; OnChanged("TalentListeZauberzeichen"); } }
         public List<string> ZusatzzeichenListeZauberzeichen { get { return _zusatzzeichenListeZauberzeichen; } set { _zusatzzeichenListeZauberzeichen = value; OnChanged("ZusatzzeichenListeZauberzeichen"); } }
-        public List<string> WerkzeugListeZauberzeichen { get { return _werkzeugListe; } set { _werkzeugListe = value; OnChanged("WerkzeugListeZauberzeichen"); } }       
+        public List<string> WerkzeugListeZauberzeichen { get { return _werkzeugListe; } set { _werkzeugListe = value; OnChanged("WerkzeugListeZauberzeichen"); } }
         //Selections
         public string SelectedSatinavsSiegelZauberzeichen { get { return _selectedSatinavsSiegelZauberzeichen; } set { _selectedSatinavsSiegelZauberzeichen = value; OnChanged("SelectedSatinavsSiegelZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); } }
         public string SelectedGrößeZeichenträgerZauberzeichen { get { return _selectedGrößeZeichenträgerZauberzeichen; } set { _selectedGrößeZeichenträgerZauberzeichen = value; OnChanged("SelectedGrößeZeichenträgerZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); setWirkungsradiusZauberzeichen(); } }
         public string SelectedVerkleinerungZauberzeichen { get { return _selectedVerkleinerungZauberzeichen; } set { _selectedVerkleinerungZauberzeichen = value; OnChanged("SelectedVerkleinerungZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); } }
         public Model.Zauberzeichen SelectedZauberzeichen { get { return _selectedZauberzeichen; } set { _selectedZauberzeichen = value; OnChanged("SelectedZauberzeichen"); resetZauberzeichen(); if (value != null) { WertMerkmaleZauberzeichen = value.Merkmal; WertKomplexitätZauberzeichen = value.Komplexität; grundkomplexitätZauberzeichen = value.Komplexität; } else { WertMerkmaleZauberzeichen = null; WertKomplexitätZauberzeichen = 0; grundkomplexitätZauberzeichen = 0; }; setWirkungsradiusZauberzeichen(); berechneAbhängigkeitenZauberzeichen(); } }
         public Talent SelectedTalentZauberzeichen { get { return _selectedTalentZauberzeichen; } set { _selectedTalentZauberzeichen = value; OnChanged("SelectedTalentZauberzeichen"); WertHandwerkZauberzeichen = SelectedHeld.Talentwert(value); } }
-        public string SelectedWerkzeugZauberzeichen { get { return _selectedWerkzeugZauberzeichen; } set { _selectedWerkzeugZauberzeichen = value; OnChanged("SelectedWerkzeugZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); } }       
+        public string SelectedWerkzeugZauberzeichen { get { return _selectedWerkzeugZauberzeichen; } set { _selectedWerkzeugZauberzeichen = value; OnChanged("SelectedWerkzeugZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); } }
         //Checkboxen
-        public bool CheckedSpontanzeichenZauberzeichen { get { return _checkedSpontanzeichenZauberzeichen; } set { _checkedSpontanzeichenZauberzeichen = value; OnChanged("CheckedSpontanzeichenZauberzeichen"); if (value) SelectedSatinavsSiegelZauberzeichen = SatinavsSiegelListeZauberzeichen[0]; IsEnabledSatinavsSiegelListeZauberzeichen = !value;  berechneAbhängigkeitenZauberzeichen(); } }
+        public bool CheckedSpontanzeichenZauberzeichen { get { return _checkedSpontanzeichenZauberzeichen; } set { _checkedSpontanzeichenZauberzeichen = value; OnChanged("CheckedSpontanzeichenZauberzeichen"); if (value) SelectedSatinavsSiegelZauberzeichen = SatinavsSiegelListeZauberzeichen[0]; IsEnabledSatinavsSiegelListeZauberzeichen = !value; berechneAbhängigkeitenZauberzeichen(); } }
         public bool CheckedKraftquellenspeisungZauberzeichen { get { return _checkedKraftquellenspeisungZauberzeichen; } set { _checkedKraftquellenspeisungZauberzeichen = value; OnChanged("CheckedKraftquellenspeisungZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); } }
         public bool CheckedMagiewiderstandZauberzeichen { get { return _checkedMagiewiderstandZauberzeichen; } set { _checkedMagiewiderstandZauberzeichen = value; OnChanged("CheckedMagiewiderstandZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); } }
         public bool CheckedSchutzsiegelZauberzeichen { get { return _checkedSchutzsiegelZauberzeichen; } set { _checkedSchutzsiegelZauberzeichen = value; OnChanged("CheckedSchutzsiegelZauberzeichen"); berechneAbhängigkeitenZauberzeichen(); } }
@@ -290,7 +310,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public string WertWirkungsradiusZauberzeichen { get { return _wertWirkungsradiusZauberzeichen; } set { _wertWirkungsradiusZauberzeichen = value; OnChanged("WertWirkungsradiusZauberzeichen"); } }
         public string WertNameZauberzeichen { get { return _wertNameZauberzeichen; } set { _wertNameZauberzeichen = value; OnChanged("WertNameZauberzeichen"); } }
         public int WertRkWErschafferZauberzeichen { get { return _wertRkWErschafferZauberzeichen; } set { _wertRkWErschafferZauberzeichen = value; OnChanged("WertRkWErschafferZauberzeichen"); } }
- 
+
         public int WertHerstellungszeitZauberzeichen
         {
             get { return _wertHerstellungszeitZauberzeichen; }
@@ -382,7 +402,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public string WertWirkungsradiusRunen { get { return _wertWirkungsradiusRunen; } set { _wertWirkungsradiusRunen = value; OnChanged("WertWirkungsradiusRunen"); } }
         public string WertNameRunen { get { return _wertNameRunen; } set { _wertNameRunen = value; OnChanged("WertNameRunen"); } }
         public int WertRkWErschafferRunen { get { return _wertRkWErschafferRunen; } set { _wertRkWErschafferRunen = value; OnChanged("WertRkWErschafferRunen"); } }
-        public string WertGrößeRunen { get { return _wertGrößeRunen; } set { _wertGrößeRunen = value; OnChanged("WertGrößeRunen"); } }  
+        public string WertGrößeRunen { get { return _wertGrößeRunen; } set { _wertGrößeRunen = value; OnChanged("WertGrößeRunen"); } }
         //Checkboxen 
         public bool CheckedSpontanzeichenRunen { get { return _checkedSpontanzeichenRunen; } set { _checkedSpontanzeichenRunen = value; OnChanged("CheckedSpontanzeichenRunen"); berechneAbhängigkeitenRunen(); } }
         public bool CheckedSpezialisierungRunen { get { return _checkedSpezialisierungRunen; } set { _checkedSpezialisierungRunen = value; OnChanged("CheckedSpezialisierungRunen"); if (value) WertHandwerkRunen = WertHandwerkRunen + 2; else WertHandwerkRunen = WertHandwerkRunen - 2; } }
@@ -408,7 +428,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public bool IsEnabledSchutzsiegelKreise { get { return _isEnabledSchutzsiegelKreise; } set { _isEnabledSchutzsiegelKreise = value; OnChanged("IsEnabledSchutzsiegelKreise"); } }
         public bool IsEnabledTarnungKreise { get { return _isEnabledTarnungKreise; } set { _isEnabledTarnungKreise = value; OnChanged("IsEnabledTarnungKreise"); } }
         //Listen
-        public List<Model.Zauberzeichen> KreiseListe { get { return _kreiseListe; } set { _kreiseListe = value; OnChanged("KreiseListe");  } }
+        public List<Model.Zauberzeichen> KreiseListe { get { return _kreiseListe; } set { _kreiseListe = value; OnChanged("KreiseListe"); } }
         public List<string> SatinavsSiegelListeKreise { get { return _satinavsSiegelListe; } set { _satinavsSiegelListe = value; OnChanged("SatinavsSiegelListeKreise"); } }
         public List<Talent> TalentListeKreise { get { return _talentListeKreise; } set { _talentListeKreise = value; OnChanged("TalentListeKreise"); } }
         public List<string> ZusatzzeichenListeKreise { get { return _zusatzzeichenListeKreise; } set { _zusatzzeichenListeKreise = value; OnChanged("ZusatzzeichenListeKreise"); } }
@@ -419,7 +439,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public string SelectedSatinavsSiegelKreise { get { return _selectedSatinavsSiegelKreise; } set { _selectedSatinavsSiegelKreise = value; OnChanged("SelectedSatinavsSiegelKreise"); berechneAbhängigkeitenKreise(); } }
         public string SelectedWerkzeugKreise { get { return _selectedWerkzeugKreise; } set { _selectedWerkzeugKreise = value; OnChanged("SelectedWerkzeugKreise"); berechneAbhängigkeitenKreise(); } }
         //Werte
-        public int WertZirkelstärkeKreise { get { return _wertZirkelstärkeKreise; } set { _wertZirkelstärkeKreise = value; OnChanged("WertZirkelstärkeKreise"); } } 
+        public int WertZirkelstärkeKreise { get { return _wertZirkelstärkeKreise; } set { _wertZirkelstärkeKreise = value; OnChanged("WertZirkelstärkeKreise"); } }
         public int WertKomplexitätKreise { get { return _wertKomplexitätKreise; } set { _wertKomplexitätKreise = value; OnChanged("WertKomplexitätKreise"); } }
         public int WertArtefaktkontrolleKreise { get { return _wertArtefaktkontrolleKreise; } set { _wertArtefaktkontrolleKreise = value; OnChanged("WertArtefaktkontrolleKreise"); } }
         public int WertTaPKreise { get { return _wertTaPKreise; } set { _wertTaPKreise = value; OnChanged("WertTaPKreise"); berechneAbhängigkeitenKreise(); } }
@@ -444,14 +464,14 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public string WertNameKreise { get { return _wertNameKreise; } set { _wertNameKreise = value; OnChanged("WertNameKreise"); } }
         public int WertRkWErschafferKreise { get { return _wertRkWErschafferKreise; } set { _wertRkWErschafferKreise = value; OnChanged("WertRkWErschafferKreise"); } }
         //Checkboxen
-        public bool CheckedSpontanzeichenKreise { get { return _checkedSpontanzeichenKreise; } set { _checkedSpontanzeichenKreise = value; OnChanged("CheckedSpontanzeichenKreise"); if (value) SelectedSatinavsSiegelKreise = SatinavsSiegelListeKreise[0]; IsEnabledSatinavsSiegelListeKreise = !value;  berechneAbhängigkeitenKreise(); } }
-        public bool CheckedSpezialisierungKreise { get { return _checkedSpezialisierungKreise; } set { _checkedSpezialisierungKreise = value; OnChanged("CheckedSpezialisierungKreise"); if (value) WertHandwerkKreise = WertHandwerkKreise + 2; else WertHandwerkKreise = WertHandwerkKreise - 2; } }  
+        public bool CheckedSpontanzeichenKreise { get { return _checkedSpontanzeichenKreise; } set { _checkedSpontanzeichenKreise = value; OnChanged("CheckedSpontanzeichenKreise"); if (value) SelectedSatinavsSiegelKreise = SatinavsSiegelListeKreise[0]; IsEnabledSatinavsSiegelListeKreise = !value; berechneAbhängigkeitenKreise(); } }
+        public bool CheckedSpezialisierungKreise { get { return _checkedSpezialisierungKreise; } set { _checkedSpezialisierungKreise = value; OnChanged("CheckedSpezialisierungKreise"); if (value) WertHandwerkKreise = WertHandwerkKreise + 2; else WertHandwerkKreise = WertHandwerkKreise - 2; } }
         public bool CheckedKraftquellenspeisungKreise { get { return _checkedKraftquellenspeisungKreise; } set { _checkedKraftquellenspeisungKreise = value; OnChanged("CheckedKraftquellenspeisungKreise"); berechneAbhängigkeitenKreise(); } }
         public bool CheckedMagiewiderstandKreise { get { return _checkedMagiewiderstandKreise; } set { _checkedMagiewiderstandKreise = value; OnChanged("CheckedMagiewiderstandKreise"); berechneAbhängigkeitenKreise(); } }
         public bool CheckedSchutzsiegelKreise { get { return _checkedSchutzsiegelKreise; } set { _checkedSchutzsiegelKreise = value; OnChanged("CheckedSchutzsiegelKreise"); berechneAbhängigkeitenKreise(); } }
         public bool CheckedTarnungKreise { get { return _checkedTarnungKreise; } set { _checkedTarnungKreise = value; OnChanged("CheckedTarnungKreise"); berechneAbhängigkeitenKreise(); } }
         public bool CheckedBestimmteArtKreise { get { return _checkedBestimmteArtKreise; } set { _checkedBestimmteArtKreise = value; OnChanged("CheckedBestimmteArtKreise"); if (!value) CheckedSpezifscheArtKreise = value; IsEnabledSpezArtKreise = value; if (value) WertZirkelstärkeKreise += 3; else WertZirkelstärkeKreise -= 3; } }
-        public bool CheckedSpezifscheArtKreise { get { return _checkedSpezifscheArtKreise; } set { _checkedSpezifscheArtKreise = value; OnChanged("CheckedSpezifscheArtKreise"); if (value) WertZirkelstärkeKreise += 3; else WertZirkelstärkeKreise -=3; } }
+        public bool CheckedSpezifscheArtKreise { get { return _checkedSpezifscheArtKreise; } set { _checkedSpezifscheArtKreise = value; OnChanged("CheckedSpezifscheArtKreise"); if (value) WertZirkelstärkeKreise += 3; else WertZirkelstärkeKreise -= 3; } }
         //Commands
         public Base.CommandBase OnBauKreise
         {
@@ -478,25 +498,31 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             _onBauRunen = new Base.CommandBase(BauRunen, null);
             _onAktivierungRunen = new Base.CommandBase(AktivierungRunen, null);
             _onBauKreise = new Base.CommandBase(BauKreise, null);
-            _onAktivierungKreise = new Base.CommandBase(AktivierungKreise, null);            
+            _onAktivierungKreise = new Base.CommandBase(AktivierungKreise, null);
 
+            Init();
         }
 
         #endregion
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        public void Init()
         {
             if (IsLoaded == false)
             {
-                //Nur Helden mit entsprechender Sonderfertigkeit
-                HeldListe = Global.ContextHeld.LoadHeldenGruppeWithZauberzeichen();
                 resetZauberzeichen();
                 resetRunen();
                 resetKreise();
+                Refresh();
                 IsLoaded = true;
             }
+        }
+
+        public void Refresh()
+        {
+            //Nur Helden mit entsprechender Sonderfertigkeit
+            OnChanged("HeldListe");
         }
 
         private void resetKreise()
@@ -544,7 +570,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             WertTaPRunen = 0;
             WertAffinitätRunen = 0;
             WertHandwerkRunen = 0;
-            WertGrößeRunen = 0+" Finger";
+            WertGrößeRunen = 0 + " Finger";
             SelectedWerkzeugRunen = WerkzeugListeRunen[0];
         }
 
@@ -562,7 +588,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             CheckedSpezialisierungZauberzeichen = false;
             CheckedSpontanzeichenZauberzeichen = false;
             CheckedTarnungZauberzeichen = false;
-            CheckedZielbeschränkungZauberzeichen = false;           
+            CheckedZielbeschränkungZauberzeichen = false;
             WertFarbeZauberzeichen = 0;
             WertFormZauberzeichen = 0;
             WertAktivierungZauberzeichen = 0;
@@ -591,14 +617,14 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             //Berechne Erleichterung TaP
             switch (SelectedWerkzeugZauberzeichen)
             {
-                case "normal": WertErleichterungTaZauberzeichen  = 0; break;
+                case "normal": WertErleichterungTaZauberzeichen = 0; break;
                 case "beschädigt": WertErleichterungTaZauberzeichen = +3; break;
                 case "hochwertig": WertErleichterungTaZauberzeichen = -3; break;
                 case "aussergew. hochwertig": WertErleichterungTaZauberzeichen = -7; break;
                 default: WertErleichterungTaZauberzeichen = 0; break;
-            }           
+            }
             //Berechne Erleichterung RkP
-            WertErleichterungRkZauberzeichen=-WertFarbeZauberzeichen-WertFormZauberzeichen-WertAktivierungZauberzeichen;
+            WertErleichterungRkZauberzeichen = -WertFarbeZauberzeichen - WertFormZauberzeichen - WertAktivierungZauberzeichen;
             //Berechne Erkennen            
             WertErkennenZauberzeichen = "+" + WertQualitätZauberzeichen * 2 + " (+" + WertQualitätZauberzeichen + ")";
             //Berechne Anzahl aufgrund von Größe des Zeichenträgers
@@ -643,7 +669,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             WertKomplexitätZauberzeichen = komp;
             //Berechne Kosten
             double modi = 1.0 - (((double)WertAffinitätZauberzeichen / 100) + (WertFormZauberzeichen != 0 ? 10 / 3 * (double)WertFormZauberzeichen / 100 : 0.0));
-            WertAktivierungskostenZauberzeichen = (int)Math.Round(((double)komp*  3) * modi, MidpointRounding.AwayFromZero);
+            WertAktivierungskostenZauberzeichen = (int)Math.Round(((double)komp * 3) * modi, MidpointRounding.AwayFromZero);
             //Berechne Herstellungszeit
             double herstellung = (double)komp * 2 / 3;
             for (int i = 0; i < WertHerstellungszeitZauberzeichen; i++)
@@ -651,10 +677,10 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 herstellung *= 0.5;
             }
             if (CheckedSpontanzeichenZauberzeichen) WertHerstellungsdauerZauberzeichen = decimal.Round((decimal)(herstellung), 2, MidpointRounding.AwayFromZero) + " SR";
-            else WertHerstellungsdauerZauberzeichen = decimal.Round( (decimal)(herstellung * 2),2,MidpointRounding.AwayFromZero) + " Stunden";
+            else WertHerstellungsdauerZauberzeichen = decimal.Round((decimal)(herstellung * 2), 2, MidpointRounding.AwayFromZero) + " Stunden";
             //Berechne Aktivierungszeit
-            if (CheckedSpontanzeichenZauberzeichen) WertAktivierungsdauerZauberzeichen = decimal.Round((decimal)((double)komp / 3 ), 2, MidpointRounding.AwayFromZero) + " SR";
-            else WertAktivierungsdauerZauberzeichen =  decimal.Round( (decimal)((double)komp / 3 *2),2,MidpointRounding.AwayFromZero)+ " Stunden";
+            if (CheckedSpontanzeichenZauberzeichen) WertAktivierungsdauerZauberzeichen = decimal.Round((decimal)((double)komp / 3), 2, MidpointRounding.AwayFromZero) + " SR";
+            else WertAktivierungsdauerZauberzeichen = decimal.Round((decimal)((double)komp / 3 * 2), 2, MidpointRounding.AwayFromZero) + " Stunden";
             //Berechne Größe
             if (CheckedPotenzierungZauberzeichen)
             {
@@ -664,28 +690,28 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                         {
                             case "1/2": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 3) * 10 / 50 / 2)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                             case "1/4": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 4) * 10 / 50 / 4)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
-                            case "1/8": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 5) *10 / 8)), 2, MidpointRounding.AwayFromZero) + " Finger"; break;
-                            default: WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 2) * 10/50)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            case "1/8": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 5) * 10 / 8)), 2, MidpointRounding.AwayFromZero) + " Finger"; break;
+                            default: WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 2) * 10 / 50)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                         }; break;
                     case "Schiff / 4xRadius": switch (SelectedVerkleinerungZauberzeichen)
                         {
                             case "1/2": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 5) * 25 / 50 / 2)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                             case "1/4": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 6) * 25 / 50 / 4)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                             case "1/8": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 8) * 25 / 8)), 2, MidpointRounding.AwayFromZero) + " Finger"; break;
-                            default: WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 4) * 25/50)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            default: WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 4) * 25 / 50)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                         }; break;
                     case "Burg / 8xRadius": switch (SelectedVerkleinerungZauberzeichen)
                         {
-                            case "1/2": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 7)  / 2)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
-                            case "1/4": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 8)  / 4)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
-                            case "1/8": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 9) *5 / 8)), 2, MidpointRounding.AwayFromZero) + " Spann"; break;
-                            default: WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 6) )), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            case "1/2": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 7) / 2)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            case "1/4": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 8) / 4)), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            case "1/8": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 9) * 5 / 8)), 2, MidpointRounding.AwayFromZero) + " Spann"; break;
+                            default: WertGrößeZauberzeichen = decimal.Round((decimal)(((double)(komp - 6))), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                         }; break;
                     case "Berg / 16xRadius": switch (SelectedVerkleinerungZauberzeichen)
                         {
-                            case "1/2": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)komp - 9) * 5 / 2),2,MidpointRounding.AwayFromZero) + " Schritt"; break;
-                            case "1/4": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)komp - 10) * 5 / 4),2,MidpointRounding.AwayFromZero) + " Schritt"; break;
-                            case "1/8": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)komp - 11) * 5 / 8),2,MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            case "1/2": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)komp - 9) * 5 / 2), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            case "1/4": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)komp - 10) * 5 / 4), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
+                            case "1/8": WertGrößeZauberzeichen = decimal.Round((decimal)(((double)komp - 11) * 5 / 8), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                             default: WertGrößeZauberzeichen = decimal.Round((decimal)(((double)komp - 8) * 5), 2, MidpointRounding.AwayFromZero) + " Schritt"; break;
                         }; break;
                     default: switch (SelectedVerkleinerungZauberzeichen)
@@ -706,7 +732,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     case "1/8": WertGrößeZauberzeichen = (komp - 3) / 2 + " Halbfinger"; break;
                     default: WertGrößeZauberzeichen = komp * 2 + " Finger"; break;
                 };
-            }           
+            }
             //berechne Artefaktkontrolle
             WertArtefaktkontrolleZauberzeichen = 1;
             //berechne Wirkungsdauer
@@ -732,13 +758,13 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             }
             switch (SelectedVerkleinerungZauberzeichen)
             {
-                case "1/2": 
-                case "1/4": 
+                case "1/2":
+                case "1/4":
                 case "1/8": zusatzzeichen.Add("Verkleinerung"); break;
                 default: break;
             };
             if (CheckedPotenzierungZauberzeichen)
-            {                
+            {
                 switch (SelectedGrößeZeichenträgerZauberzeichen)
                 {
                     case "Kutsche / 2xRadius": zusatzzeichen.Add("Potenzierung (Kutsche / 2xRadius)"); break;
@@ -751,7 +777,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             if (CheckedKraftquellenspeisungZauberzeichen) zusatzzeichen.Add("Kraftquellenspeisung");
             if (CheckedMagiewiderstandZauberzeichen) zusatzzeichen.Add("Magiewiderstand");
             if (CheckedSchutzsiegelZauberzeichen) zusatzzeichen.Add("Schutzsiegel");
-            if (CheckedTarnungZauberzeichen) zusatzzeichen.Add("Tarnung"); 
+            if (CheckedTarnungZauberzeichen) zusatzzeichen.Add("Tarnung");
             if (CheckedZielbeschränkungZauberzeichen) zusatzzeichen.Add("Zielbeschränkung");
             ZusatzzeichenListeZauberzeichen = zusatzzeichen;
         }
@@ -774,7 +800,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 default: WertErleichterungTaRunen = 0; break;
             }
             //Berechne Erleichterung RkP
-            WertErleichterungRkRunen = - WertFormRunen - WertAktivierungRunen;
+            WertErleichterungRkRunen = -WertFormRunen - WertAktivierungRunen;
             //Berechne Erkennen            
             WertErkennenRunen = "+" + WertQualitätRunen * 2 + " (+" + WertQualitätRunen + ")";
             //berechne Komplexität
@@ -802,7 +828,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             else
             {
                 WertWirkungsdauerRunen = "bis Sommersonnenwende";
-            }  
+            }
             //update Zusatzzeichenliste
         }
 
@@ -817,12 +843,12 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             //Berechne Erleichterung TaP
             switch (SelectedWerkzeugKreise)
             {
-                case "normal": WertErleichterungTaKreise  = 0; break;
+                case "normal": WertErleichterungTaKreise = 0; break;
                 case "beschädigt": WertErleichterungTaKreise = +3; break;
                 case "hochwertig": WertErleichterungTaKreise = -3; break;
                 case "aussergew. hochwertig": WertErleichterungTaKreise = -7; break;
                 default: WertErleichterungTaKreise = 0; break;
-            }    
+            }
             //Berechne Erleichterung RkP
             WertErleichterungRkKreise = -WertFarbeKreise - WertFormKreise - WertAktivierungKreise;
             //Berechne Erkennen            
@@ -868,15 +894,15 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     case "WSWende": WertWirkungsdauerKreise = "bis Wintersonnenwende"; break;
                     default: WertWirkungsdauerKreise = WertRitualkenntnis / 2 + " Tage"; break;
                 }
-            }  
+            }
             //update Zusatzzeichenliste
             List<string> zusatzzeichen = new List<string>();
             switch (SelectedSatinavsSiegelKreise)
             {
-                case "Monat": 
+                case "Monat":
                 case "Quartal":
                 case "WSWende": zusatzzeichen.Add("Satinavs Siegel"); break;
-                default:  break;
+                default: break;
             }
             if (CheckedKraftquellenspeisungKreise) zusatzzeichen.Add("Kraftquellenspeisung");
             if (CheckedMagiewiderstandKreise) zusatzzeichen.Add("Magiewiderstand");
@@ -887,14 +913,16 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
 
         private void checkZusatzzeichen(Held held)
         {
+            if (held == null)
+                return;
             //Zauberzeichen
             IsEnabledSatinavsSiegelListeZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Satinavs Siegel");
             IsEnabledVerkleinerungListeZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Verkleinerung");
             IsEnabledTarnungZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Tarnung");
             IsEnabledSchutzsiegelZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Schutzsiegel");
             IsEnabledPotenzierungZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Potenzierung");
-            IsEnabledMagiewiderstandZauberzeichen=held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Magiewiderstand");
-            IsEnabledKraftquellenspeisungZauberzeichen=held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Kraftquellenspeisung");
+            IsEnabledMagiewiderstandZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Magiewiderstand");
+            IsEnabledKraftquellenspeisungZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Kraftquellenspeisung");
             IsEnabledZielbeschränkungZauberzeichen = held.HatSonderfertigkeitUndVoraussetzungen("Zauberzeichen: Zusatzzeichen Zielbeschränkung");
             //Runen
             //Kreise
@@ -924,7 +952,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                     WertWirkungsradiusZauberzeichen = radius + " Schritt";
                     if (SelectedZauberzeichen.Name == "Zähne des Feuers") WertWirkungsradiusZauberzeichen = radius + " Schritt Tiefe";
                 }
-                else WertWirkungsradiusZauberzeichen = 0+" Schritt";
+                else WertWirkungsradiusZauberzeichen = 0 + " Schritt";
             }
         }
         private void setWirkungsradiusRunen()
