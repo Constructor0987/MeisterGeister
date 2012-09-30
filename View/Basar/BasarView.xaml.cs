@@ -44,15 +44,8 @@ namespace MeisterGeister.View.Basar
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                VM.LoadDaten();
-            }
-            catch (Exception ex) 
-            {
-                MsgWindow errWin = new MsgWindow("Basar-Tool", "Beim Laden des Basar-Tools ist ein Fehler aufgetreten.", ex);
-                errWin.ShowDialog();
-            }
+            if (VM != null)
+                VM.Refresh();
         }
 
     }
