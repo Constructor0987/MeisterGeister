@@ -65,5 +65,11 @@ namespace MeisterGeister.View.Proben
             ProbenErgebnis e5 = p5.Würfeln();
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (VM != null)
+                VM.Refresh();
+        }
+
     }
 }

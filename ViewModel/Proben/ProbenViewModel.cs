@@ -99,15 +99,21 @@ namespace MeisterGeister.ViewModel.Proben
 
         public ProbenViewModel()
         {
-            RefreshProbeListe();
-            RefreshProbeErgebnisListe();
-
             onWürfeln = new Base.CommandBase(Würfeln, null);
+
+            Refresh();
+            RefreshProbeErgebnisListe();
         }
 
         #endregion
 
         #region //---- INSTANZMETHODEN ----
+
+        public void Refresh()
+        {
+            OnChanged("HeldListe");
+            RefreshProbeListe();
+        }
 
         private void RefreshProbeErgebnisListe()
         {

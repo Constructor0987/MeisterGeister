@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}">
+             d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}" Loaded="UserControl_Loaded">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.ColumnDefinitions>
