@@ -1236,6 +1236,28 @@ namespace MeisterGeister.Model
         }
 
         /// <summary>
+        /// Der ZfW eines Zaubers.
+        /// </summary>
+        public int Zauberfertigkeitswert(string zauberName, bool nurPositiv = false)
+        {
+            Model.Held_Zauber hz = Held_Zauber.Where(h => h.Zauber.Name == zauberName).FirstOrDefault();
+            if (hz == null)
+                return 0;
+            int zfw = hz.ZfW ?? 0;
+            if (Modifikatoren != null)
+            {
+                List<Mod.IModZauberwert> l = Modifikatoren.Where(m => m is Mod.IModZauberwert).Select(m => (Mod.IModZauberwert)m).OrderBy(m => m.Erstellt).ToList();
+                foreach (Mod.IModZauberwert m in l)
+                {
+                    int zfwneu = m.ApplyZauberwertMod(zfw);
+                    if (!nurPositiv || zfwneu > zfw)
+                        zfw = zfwneu;
+                }
+            }
+            return zfw;
+        }
+
+        /// <summary>
         /// Die Zauber, die der Held noch wählen kann.
         /// </summary>
         public List<Zauber> ZauberWählbar
@@ -1453,7 +1475,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit mit bestimmtem Wert.
         /// </summary>
-        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert)
+        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert = null)
         {
             IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit.Name == sonderfertigkeit);
             if (hso.Count() == 0)
