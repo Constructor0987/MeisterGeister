@@ -24,9 +24,14 @@ namespace MeisterGeister.ViewModel.Schmiede
         const string TALENTFERNKAMPFBOGEN = "Bogen";
         const string TALENTFERNKAMPFARMBRUST = "Armbrust";
         const string FILTERDEAKTIVIEREN = "Alle";
+        static Guid MUNITIONGUIDJAGDPFEIL = new Guid("f48e5df6-71ca-4e66-b8b2-096ffd45c09e");
+        static Guid MUNITIONGUIDJAGDBOLZEN = new Guid("00000000-0000-0000-0000-123456789012");
+        
 
         //Felder
         private int _anzahl;
+
+        private double _munitionspreis;
 
         private int _probePunkte;
         private int _probeErschwernisSpitze;
@@ -34,11 +39,11 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         private int _tawSchmied;
         private int _tawSchmiedMod;
-        private int _probeDauerNApprox;
+        private double _probeDauerNApprox;
 
         private int _tawSchmiedSpitze;
         private int _tawSchmiedModSpitze;
-        private int _probeDauerNApproxSpitze;
+        private double _probeDauerNApproxSpitze;
         
         //Listen + SelectedItems
         private Model.Fernkampfwaffe _selectedFernkampfwaffe;
@@ -64,6 +69,16 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == _anzahl) return;
                 _anzahl = value;
                 OnChanged("Anzahl");
+            }
+        }
+
+        public double Munitionspreis
+        {
+            get { return _munitionspreis; }
+            private set
+            {
+                _munitionspreis = value;
+                OnChanged("Munitionspreis");
             }
         }
 
@@ -97,7 +112,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             }
         }
 
-        public int ProbeDauerNApprox
+        public double ProbeDauerNApprox
         {
             get { return _probeDauerNApprox; }
             private set
@@ -136,7 +151,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             }
         }
 
-        public int ProbeDauerNApproxSpitze
+        public double ProbeDauerNApproxSpitze
         {
             get { return _probeDauerNApproxSpitze; }
             private set
@@ -185,8 +200,8 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == null) return;
                 _selectedFernkampfwaffe = value;
                 OnChanged("SelectedFernkampfwaffe");
-                //BerechneGeschoss();
-                //SelectedMunition = MunitionListe.First();
+                MunitionListe = Global.ContextFernkampfwaffe.Liste<Model.Munition>().Where(m => m.Art == _selectedFernkampfwaffe.Munitionsart).ToList();
+                SelectedMunition = MunitionListe.First();
             }
         }
 
@@ -217,7 +232,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == null) return;
                 _selectedMunition = value;
                 OnChanged("SelectedMunition");
-                //BerechneGeschoss();
+                BerechneGeschoss();
             }
         }
 
@@ -262,6 +277,8 @@ namespace MeisterGeister.ViewModel.Schmiede
         {
             TawSchmied = 12;
             TawSchmiedSpitze = 12;
+            ProbeErschwernisSpitze = 0;
+            ProbeErschwernis = 0;
         }
 
         #endregion
@@ -275,6 +292,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && (t.Talentname == TALENTFERNKAMPFBOGEN || t.Talentname == TALENTFERNKAMPFARMBRUST) && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
             OnChanged("FernkampfwaffeTalentListe");
             FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => (w.Munitionsart == MUNITIONSTYPBOLZEN || w.Munitionsart == MUNITIONSTYPPFEIL) &&  !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
+            MunitionListe.AddRange(Global.ContextFernkampfwaffe.Liste<Model.Munition>().Where(m => (m.Art == MUNITIONSTYPBOLZEN || m.Art==MUNITIONSTYPPFEIL)));
             OnChanged("FernkampfwaffeListe");
             OnChanged("MunitionListe");
         }
@@ -286,23 +304,24 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (tapStern > TawSchmied) tapStern = TawSchmied;
             tapStern /= 2;
             if (tapStern < 1) tapStern = 1;
-            tapStern = (ProbePunkte / (8 * tapStern));
-            ProbeDauerNApprox = (tapStern > 0) ? tapStern : 1; 
+            double dauerInHalbenStunden = Math.Ceiling((double)ProbePunkte / tapStern);
+            ProbeDauerNApprox = (dauerInHalbenStunden > 0) ? dauerInHalbenStunden/2 : 1; 
             // Spitze
             tapStern = TawSchmiedSpitze - TawSchmiedModSpitze - ProbeErschwernisSpitze;
             if (tapStern > TawSchmiedSpitze) tapStern = TawSchmiedSpitze;
             tapStern /= 2;
             if (tapStern < 1) tapStern = 1;
-            tapStern = (ProbePunkte / (8 * tapStern));
-            ProbeDauerNApproxSpitze = (tapStern > 0) ? tapStern : 1; 
+            dauerInHalbenStunden = Math.Ceiling((double)ProbePunkte / tapStern);
+            ProbeDauerNApproxSpitze = (dauerInHalbenStunden > 0) ? dauerInHalbenStunden/2 : 1; 
         }
 
         private void BerechneGeschoss()
         {
-            ProbeErschwernisSpitze = 0;
-            ProbeErschwernis = 0;
             if (_selectedMunition == null || _selectedFernkampfwaffe == null) return;
             ProbePunkte = (int)Math.Round(((_selectedFernkampfwaffe.TPWürfelAnzahl.HasValue ? _selectedFernkampfwaffe.TPWürfelAnzahl.Value : 0) * (int)Math.Round(((_selectedFernkampfwaffe.TPWürfel.HasValue ? _selectedFernkampfwaffe.TPWürfel.Value : 0) + 1) / 2.0) + (_selectedFernkampfwaffe.TPBonus.HasValue ? _selectedFernkampfwaffe.TPBonus.Value : 0))/3.0);
+            ProbeErschwernisSpitze = (_selectedMunition.MunitionGUID.CompareTo(MUNITIONGUIDJAGDBOLZEN)==0 || _selectedMunition.MunitionGUID.CompareTo(MUNITIONGUIDJAGDPFEIL)==0) ? 0 : 4;
+            Munitionspreis = _selectedFernkampfwaffe.Munitionspreis.HasValue ? _selectedFernkampfwaffe.Munitionspreis.Value * _selectedMunition.Preismodifikator : 0;
+            BerechneNicwinscheApproximation();
         }
         #endregion
 
