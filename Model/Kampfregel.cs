@@ -10,6 +10,8 @@ namespace MeisterGeister.Model
         public Kampfregel()
         {
             KampfregelGUID = Guid.NewGuid();
+            Name = "Neue Kampfregel";
+            Manöver = false;
         }
 
         public bool Usergenerated

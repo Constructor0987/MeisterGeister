@@ -5,6 +5,8 @@ using System.Text;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Kampf.Logic;
 
+using System.ComponentModel;
+
 namespace MeisterGeister.ViewModel.Kampf
 {
     public class GegnerViewModel : Base.ViewModelBase
@@ -27,13 +29,14 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        #region Properties
+        #region Bindable Properties
 
         private GegnerBase selectedGegnerBase;
         public GegnerBase SelectedGegnerBase
         {
             get { return selectedGegnerBase; }
-            set { 
+            set {
+                SaveGegner();
                 selectedGegnerBase = value;
                 OnChanged("SelectedGegnerBase");
             }
@@ -50,6 +53,28 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private Kampfregel selectedKampfregel;
+        public Kampfregel SelectedKampfregel
+        {
+            get { return selectedKampfregel; }
+            set
+            {
+                selectedKampfregel = value;
+                OnChanged("SelectedKampfregel");
+            }
+        }
+
+        private List<GegnerBase> kampfregelListe;
+        public List<GegnerBase> KampfregelListe
+        {
+            get { return kampfregelListe; }
+            set
+            {
+                kampfregelListe = value;
+                OnChanged("KampfregelListe");
+            }
+        }
+
         private Kampfregel selectedAddKampfregel;
         public Kampfregel SelectedAddKampfregel
         {
@@ -59,9 +84,199 @@ namespace MeisterGeister.ViewModel.Kampf
                 OnChanged("SelectedAddKampfregel");
             }
         }
+
+        private GegnerBase_Kampfregel selectedGegnerKampfregel;
+        public GegnerBase_Kampfregel SelectedGegnerKampfregel
+        {
+            get { return selectedGegnerKampfregel; }
+            set { selectedGegnerKampfregel = value; OnChanged("SelectedGegnerKampfregel"); }
+        }
+
+        private GegnerBase_Angriff selectedAngriff;
+        public GegnerBase_Angriff SelectedAngriff
+        {
+            get { return selectedAngriff; }
+            set { 
+                selectedAngriff = value;
+                OnChanged("SelectedAngriff");
+            }
+        }
+
+        private string angriffAddName;
+        public string AngriffAddName
+        {
+            get { return angriffAddName; }
+            set { angriffAddName = value; }
+        }
+
         #endregion
 
-        #region Import/Export/New
+        #region Gegner_Angriff Add and Delete Commands
+        private Base.CommandBase onNewAngriff = null;
+        public Base.CommandBase OnNewAngriff
+        {
+            get
+            {
+                if (onNewAngriff == null)
+                    onNewAngriff = new Base.CommandBase(NewGegnerBase, null);
+                return onNewAngriff;
+            }
+        }
+
+        private void NewAngriff(object sender)
+        {
+            if (SelectedGegnerBase == null)
+                return;
+            if (AngriffAddName == null || AngriffAddName == String.Empty || SelectedGegnerBase.GegnerBase_Angriff.Where(g => g.Name == AngriffAddName).Count() > 0)
+            {
+                PopUp("Der Name für einen neuen Angriff darf weder leer noch bereits verwendet sein.");
+                return;
+            }
+            GegnerBase_Angriff ga = Global.ContextHeld.New<GegnerBase_Angriff>();
+            ga.Name = AngriffAddName;
+            ga.GegnerBaseGUID = SelectedGegnerBase.GegnerBaseGUID;
+            ga.GegnerBase = SelectedGegnerBase;
+            SelectedGegnerBase.GegnerBase_Angriff.Add(ga);
+            SaveGegner();
+            //Aktualisieren
+            OnChanged("SelectedGegnerBase");
+        }
+
+        private Base.CommandBase onDeleteAngriff = null;
+        public Base.CommandBase OnDeleteAngriff
+        {
+            get
+            {
+                if (onDeleteAngriff == null)
+                    onDeleteAngriff = new Base.CommandBase(DeleteAngriff, null);
+                return onDeleteAngriff;
+            }
+        }
+
+        private void DeleteAngriff(object sender)
+        {
+            GegnerBase_Angriff h = SelectedAngriff;
+            if (h != null && SelectedGegnerBase != null)
+            {
+                if (Confirm("Angriff löschen", string.Format("Sind Sie sicher, dass Sie den Angriff '{0}' löschen möchten?", h.Name))
+                    )//&& Global.ContextHeld.Delete<GegnerBase_Angriff>(h))
+                {
+                    SelectedGegnerBase.GegnerBase_Angriff.Remove(h);
+                    SaveGegner();
+                    OnChanged("SelectedGegnerBase");
+                }
+            }
+        }
+        #endregion
+
+        #region Kampfregel Commands
+
+        private Base.CommandBase onNewKampfregel = null;
+        public Base.CommandBase OnNewKampfregel
+        {
+            get
+            {
+                if (onNewKampfregel == null)
+                    onNewKampfregel = new Base.CommandBase(NewKampfregel, null);
+                return onNewKampfregel;
+            }
+        }
+
+        private void NewKampfregel(object sender)
+        {
+            Kampfregel kr = Global.ContextHeld.New<Kampfregel>();
+            Global.ContextHeld.Insert<Kampfregel>(kr);
+            //Aktualisieren
+            OnChanged("KampfregelListe");
+            SelectedKampfregel = kr;
+        }
+
+        private Base.CommandBase onAddGegnerKampfregel = null;
+        public Base.CommandBase OnAddGegnerKampfregel
+        {
+            get
+            {
+                if (onAddGegnerKampfregel == null)
+                    onAddGegnerKampfregel = new Base.CommandBase(AddGegnerKampfregel, null);
+                return onAddGegnerKampfregel;
+            }
+        }
+
+        private void AddGegnerKampfregel(object sender)
+        {
+            if (SelectedAddKampfregel == null || SelectedGegnerBase == null)
+                return;
+            GegnerBase_Kampfregel gk = SelectedGegnerBase.GegnerBase_Kampfregel.Where(_gk => _gk.KampfregelGUID == SelectedAddKampfregel.KampfregelGUID).FirstOrDefault();
+            if (gk == null)
+            {
+                gk = Global.ContextHeld.New<GegnerBase_Kampfregel>();
+                gk.KampfregelGUID = SelectedAddKampfregel.KampfregelGUID;
+                gk.Kampfregel = SelectedAddKampfregel;
+                gk.GegnerBaseGUID = SelectedGegnerBase.GegnerBaseGUID;
+                gk.GegnerBase = SelectedGegnerBase;
+                SelectedGegnerBase.GegnerBase_Kampfregel.Add(gk);
+                SaveGegner();
+                OnChanged("SelectedGegnerBase"); //Aktualisieren
+            }
+            //Aktualisieren
+            SelectedGegnerKampfregel = gk;
+        }
+
+        private Base.CommandBase onDeleteKampfregel = null;
+        public Base.CommandBase OnDeleteKampfregel
+        {
+            get
+            {
+                if (onDeleteKampfregel == null)
+                    onDeleteKampfregel = new Base.CommandBase(DeleteKampfregel, null);
+                return onDeleteKampfregel;
+            }
+        }
+
+        private void DeleteKampfregel(object sender)
+        {
+            Kampfregel h = SelectedKampfregel;
+            if (h != null && h.Usergenerated)
+            {
+                if (Confirm("Kampfregel löschen", string.Format("Sind Sie sicher, dass Sie die Kampfregel '{0}' löschen möchten?", h.Name))
+                    )//&& Global.ContextHeld.Delete<GegnerBase_Angriff>(h))
+                {
+                    Global.ContextHeld.Delete<Kampfregel>(h);
+                    OnChanged("KampfregelListe");
+                    OnChanged("SelectedGegnerBase");
+                }
+            }
+        }
+
+        private Base.CommandBase onDeleteGegnerKampfregel = null;
+        public Base.CommandBase OnDeleteGegnerKampfregel
+        {
+            get
+            {
+                if (onDeleteGegnerKampfregel == null)
+                    onDeleteGegnerKampfregel = new Base.CommandBase(DeleteGegnerKampfregel, null);
+                return onDeleteGegnerKampfregel;
+            }
+        }
+
+        private void DeleteGegnerKampfregel(object sender)
+        {
+            if (SelectedGegnerKampfregel == null || SelectedGegnerBase == null)
+                return;
+            GegnerBase_Kampfregel h = SelectedGegnerKampfregel;
+            if (Confirm("Kampfregelzuweisung löschen", string.Format("Sind Sie sicher, dass Sie die Kampfregel '{0}' vom Gegner entfernen möchten?", SelectedGegnerKampfregel.Kampfregel.Name))
+                    )//&& Global.ContextHeld.Delete<GegnerBase_Angriff>(h))
+            {
+                SelectedGegnerBase.GegnerBase_Kampfregel.Remove(SelectedGegnerKampfregel);
+                SaveGegner();
+                //Global.ContextHeld.Delete<GegnerBase_Kampfregel>(SelectedGegnerKampfregel);
+                OnChanged("SelectedGegnerBase");
+            }
+        }
+
+        #endregion
+
+        #region Gegner Import/Export/New/Delete
 
         private Base.CommandBase onNewGegnerBase = null;
         public Base.CommandBase OnNewGegnerBase
@@ -81,6 +296,7 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 //Liste aktualisieren
                 LoadDaten();
+                SelectedGegnerBase = h;
             }
         }
 
@@ -226,7 +442,27 @@ namespace MeisterGeister.ViewModel.Kampf
                 LoadDaten();
             }
         }
-        #endregion 
+        #endregion
+
+        #region Events
+        public void OnAngriffChanged(object sender, PropertyChangedEventArgs args)
+        {
+            //TODO JT: Wann speichere ich den Gegner und die Daten?
+        }
+
+        public void OnGegnerKampfregelTPChanged(object sender, PropertyChangedEventArgs args)
+        {
+            //TODO JT: Wann speichere ich den Gegner und die Daten?
+        }
+        #endregion
+
+        #region private Methoden
+        private void SaveGegner()
+        {
+            if (SelectedGegnerBase != null)
+                Global.ContextHeld.Update<GegnerBase>(SelectedGegnerBase);
+        }
+        #endregion
     }
 
 }
