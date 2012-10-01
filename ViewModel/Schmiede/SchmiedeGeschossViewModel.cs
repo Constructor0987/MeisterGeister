@@ -287,7 +287,6 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public void LoadDaten()
         {
-            // TODO FK: Belagerungswaffen rausnehmen
             FernkampfwaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
             FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && (t.Talentname == TALENTFERNKAMPFBOGEN || t.Talentname == TALENTFERNKAMPFARMBRUST) && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
             OnChanged("FernkampfwaffeTalentListe");

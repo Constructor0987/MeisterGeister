@@ -16,9 +16,8 @@ namespace MeisterGeister.ViewModel.Schmiede
         #region //---- FELDER ----
 
         //Intern: Zeichenketten für DB-Abfragen
-        const string UIDBUCKLER = "";
-        const string UIDBUCKLERVOLLMETAL = "";
-        // TODO FK: Buckler,.. über UIDS
+        const string GUIDBUCKLER = "00000000-0000-0000-0003-000000000009";
+        const string GUIDBUCKLERVOLLMETAL = "00000000-0000-0000-0003-000000000010";
 
         //Felder
         private int _probePunkte;
@@ -126,7 +125,7 @@ namespace MeisterGeister.ViewModel.Schmiede
         public void LoadDaten()
         {
             // Schilde - keine Parierwaffen
-            SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => (w.Typ == "S" || w.Name == "Buckler" || w.Name == "Großer (Vollmetall-) Buckler") && !SchildListe.Contains(w)).OrderBy(w => w.Name));
+            SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => (w.Typ == "S" || w.SchildGUID.ToString().CompareTo(GUIDBUCKLER)==0 || w.SchildGUID.ToString().CompareTo(GUIDBUCKLERVOLLMETAL)==0) && !SchildListe.Contains(w)).OrderBy(w => w.Name));
             SchildListe = SchildListe;
             OnChanged("SchildListe");
         }
