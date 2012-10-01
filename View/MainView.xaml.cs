@@ -21,6 +21,10 @@ using System.Windows.Media.Animation;
 namespace MeisterGeister.View
 {
 
+    /// <summary>
+    /// Erweiterungsmethode, die ein UI-Element zwingt, sich neu zu zeichnen.
+    /// Wird benutzt, um eine IsBusy-Anzeige zu realisieren.
+    /// </summary>
     public static class ExtensionMethods
     {
         private static Action EmptyDelegate = delegate() { };
@@ -37,6 +41,19 @@ namespace MeisterGeister.View
     /// </summary>
     public partial class MainView : Window
     {
+
+        #region // ---- IS BUSY ----
+
+        /// <summary>
+        /// Steuert, ob die Anwendung gerade beschäftigt ist. Es wird ein Busy-Overlay angezeigt.
+        /// </summary>
+        public bool IsBusy
+        {
+            get { return _busyBorder.Visibility == System.Windows.Visibility.Visible ? true : false; }
+            set { _busyBorder.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; _busyBorder.Refresh(); }
+        }
+
+        #endregion // ---- IS BUSY ----
 
         #region //FELDER
 
@@ -82,13 +99,6 @@ namespace MeisterGeister.View
             _labelVersion.Content += " Intern";
 #endif
         }
-
-        public bool IsBusy
-        {
-            get { return _busyBorder.Visibility == System.Windows.Visibility.Visible ? true : false; }
-            set { _busyBorder.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; _busyBorder.Refresh(); }
-        }
-
 
         private static Dictionary<string, MenuItem> MenuPunkte = new Dictionary<string, MenuItem>(5);
 
