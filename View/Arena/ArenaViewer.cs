@@ -12,7 +12,7 @@ using System.Globalization;
 using MeisterGeister.Logic.General;
 using VM = MeisterGeister.ViewModel;
 using MeisterGeister.ViewModel.Arena.Logic;
-using MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.View.Arena
 {
@@ -38,8 +38,8 @@ namespace MeisterGeister.View.Arena
         private Canvas _fxLayer;
         private Canvas _hindernisLayer;
 
-        private Dictionary<Wesen, CreatureCanvas> _creatureHasCreatureCanvas;
-        private HashSet<Wesen> _creaturesShowingCircles;
+        private Dictionary<IKämpfer, CreatureCanvas> _creatureHasCreatureCanvas;
+        private HashSet<IKämpfer> _creaturesShowingCircles;
         private Dictionary<Guid, Image> _heldIdHasPortrait;
         private Dictionary<string, Image> _gegnerNameHasPortrait;
 
@@ -56,8 +56,8 @@ namespace MeisterGeister.View.Arena
         public ArenaViewer(int pixelsPerMeterInit) {
             _zoomFactor = 1.0;
             _pixelsPerMeterInit = Math.Min(Math.Max(pixelsPerMeterInit, MIN_PIXELS_PER_METER), MAX_PIXELS_PER_METER);
-            _creaturesShowingCircles = new HashSet<Wesen>();
-            _creatureHasCreatureCanvas = new Dictionary<Wesen, CreatureCanvas>();
+            _creaturesShowingCircles = new HashSet<IKämpfer>();
+            _creatureHasCreatureCanvas = new Dictionary<IKämpfer, CreatureCanvas>();
             _heldIdHasPortrait = new Dictionary<Guid, Image>();
             _gegnerNameHasPortrait = new Dictionary<string, Image>();
             MouseLeftButtonDown += OnLeftMouseButtonDown;
@@ -137,18 +137,18 @@ namespace MeisterGeister.View.Arena
             _creatureLayer.Width = _bGLayer.Width;
             _creatureLayer.Height = _bGLayer.Height;
 
-            foreach (Held hero in _arena.Heroes) {
+            foreach (Model.Held hero in _arena.Heroes) {
                 DrawCreature(hero, _arena.Positions[hero]);
             }
 
-            foreach (Gegner enemy in _arena.Enemies) {
+            foreach (Model.Gegner enemy in _arena.Enemies) {
                 DrawCreature(enemy, _arena.Positions[enemy]);
             }
 
             Children.Add(_creatureLayer);
         }
 
-        private void drawMovementCircles(Wesen creature) {
+        private void drawMovementCircles(IKämpfer creature) {
 
             int GS = DEFAULT_HELD_GS;
 
@@ -179,7 +179,7 @@ namespace MeisterGeister.View.Arena
 
         }
 
-        private void DrawCreature(Wesen creature, Point position) {
+        private void DrawCreature(IKämpfer creature, Point position) {
 
             CreatureCanvas cc = new CreatureCanvas(creature, this);
 
@@ -189,7 +189,7 @@ namespace MeisterGeister.View.Arena
             Canvas.SetLeft(cc, (position.X - wWidth / 2) * PixelsPerMeter);
             Canvas.SetTop(cc, (position.Y - wHeight / 2) * PixelsPerMeter);
 
-            if (creature is Gegner)
+            if (creature is Model.Gegner)
                 cc.AddTextLayer();
 
             _creatureLayer.Children.Add(cc);
@@ -225,15 +225,15 @@ namespace MeisterGeister.View.Arena
         }
 
         private void drawCircles() {
-            HashSet<Wesen> newCreaturesShowingCircles = new HashSet<Wesen>();
+            HashSet<IKämpfer> newCreaturesShowingCircles = new HashSet<IKämpfer>();
 
-            foreach (Wesen w in _creaturesShowingCircles)
+            foreach (IKämpfer w in _creaturesShowingCircles)
                 if (_arena.Contains(w))
                     newCreaturesShowingCircles.Add(w);
 
             _creaturesShowingCircles = newCreaturesShowingCircles;
 
-            foreach (Wesen w in _creaturesShowingCircles)
+            foreach (IKämpfer w in _creaturesShowingCircles)
                 drawMovementCircles(w);
         }
 
@@ -258,7 +258,7 @@ namespace MeisterGeister.View.Arena
             set { _zoomFactor = value; }
         }
 
-        public void SwitchShowCircles(Wesen c) {
+        public void SwitchShowCircles(IKämpfer c) {
             if (_creaturesShowingCircles.Contains(c))
                 _creaturesShowingCircles.Remove(c);
             else

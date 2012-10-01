@@ -37,27 +37,18 @@ namespace MeisterGeister.Logic.General
             return (int)pt.Eval(random);
         }
 
-        public static event EventHandler SoundAbspielenChanged;
-
-        public static bool SoundAbspielen
+        public static int Wurf(int seiten, int anzahl)
         {
-            get 
-            {
-                if (App.DatenDataSet == null)
-                    return false;
-                var row = App.DatenDataSet.Einstellungen.FindByName("WuerfelSoundAbspielen");
-                if (row == null || row.IsWertBoolNull())
-                    return false;
-                return row.WertBool;
-            }
-            set 
-            {
-                var row = App.DatenDataSet.Einstellungen.FindByName("WuerfelSoundAbspielen");
-                if (row != null)
-                    row.WertBool = value;
-                if (SoundAbspielenChanged != null)
-                    SoundAbspielenChanged(null, null);
-            }
+            //TODO hier einen Dialog starten?
+            int result = 0;
+            for (int i = 1; i <= anzahl; i++)
+                result += RandomNumberGenerator.RandomInt(1, seiten);
+            return result;
+        }
+
+        public static int Wurf(int seiten)
+        {
+            return RandomNumberGenerator.RandomInt(1, seiten);
         }
 
         /// <summary>

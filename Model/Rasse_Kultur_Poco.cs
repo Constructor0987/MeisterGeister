@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -79,7 +79,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_unüblich = value;
-    			NotifyPropertyChanged("Unüblich");
+    			OnChanged("Unüblich");
     		}
     
         }
@@ -125,7 +125,7 @@ namespace MeisterGeister.Model
     
         private void FixupKultur(Kultur previousValue)
         {
-    		NotifyPropertyChanged("Kultur");
+    		OnChanged("Kultur");
             if (previousValue != null && previousValue.Rasse_Kultur.Contains(this))
             {
                 previousValue.Rasse_Kultur.Remove(this);
@@ -146,7 +146,7 @@ namespace MeisterGeister.Model
     
         private void FixupRasse(Rasse previousValue)
         {
-    		NotifyPropertyChanged("Rasse");
+    		OnChanged("Rasse");
             if (previousValue != null && previousValue.Rasse_Kultur.Contains(this))
             {
                 previousValue.Rasse_Kultur.Remove(this);

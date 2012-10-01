@@ -24,12 +24,14 @@ namespace MeisterGeister.Model
             : base(ConnectionString, ContainerName)
         {
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
         }
     
         public DatabaseDSAEntities(string connectionString)
             : base(connectionString, ContainerName)
         {
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
         }
     
         public DatabaseDSAEntities(string connectionString, bool noproxy, bool nolazyloading)
@@ -42,6 +44,7 @@ namespace MeisterGeister.Model
     		else
     		{
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
     		}
         }
     
@@ -49,9 +52,18 @@ namespace MeisterGeister.Model
             : base(connection, ContainerName)
         {
             this.ContextOptions.LazyLoadingEnabled = true;
+    		this.ObjectMaterialized += OnObjectMaterialized;
         }
     
         #endregion
+    
+    	#region Events
+    	private void OnObjectMaterialized(object sender, ObjectMaterializedEventArgs e)
+        {
+            if(e.Entity != null && e.Entity is Extensions.IInitializable)
+                ((Extensions.IInitializable)e.Entity).Initialize();
+        }
+    	#endregion
     
         #region ObjectSet Properties
     
@@ -79,17 +91,29 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Abenteuer_Verweis> _abenteuer_Verweis;
     
+        public ObjectSet<Audio_Playlist> Audio_Playlist
+        {
+            get { return _audio_Playlist  ?? (_audio_Playlist = CreateObjectSet<Audio_Playlist>("Audio_Playlist")); }
+        }
+        private ObjectSet<Audio_Playlist> _audio_Playlist;
+    
+        public ObjectSet<Audio_Playlist_Titel> Audio_Playlist_Titel
+        {
+            get { return _audio_Playlist_Titel  ?? (_audio_Playlist_Titel = CreateObjectSet<Audio_Playlist_Titel>("Audio_Playlist_Titel")); }
+        }
+        private ObjectSet<Audio_Playlist_Titel> _audio_Playlist_Titel;
+    
+        public ObjectSet<Audio_Titel> Audio_Titel
+        {
+            get { return _audio_Titel  ?? (_audio_Titel = CreateObjectSet<Audio_Titel>("Audio_Titel")); }
+        }
+        private ObjectSet<Audio_Titel> _audio_Titel;
+    
         public ObjectSet<Ausrüstung> Ausrüstung
         {
             get { return _ausrüstung  ?? (_ausrüstung = CreateObjectSet<Ausrüstung>("Ausrüstung")); }
         }
         private ObjectSet<Ausrüstung> _ausrüstung;
-    
-        public ObjectSet<Bestiarium> Bestiarium
-        {
-            get { return _bestiarium  ?? (_bestiarium = CreateObjectSet<Bestiarium>("Bestiarium")); }
-        }
-        private ObjectSet<Bestiarium> _bestiarium;
     
         public ObjectSet<Einstellungen> Einstellungen
         {
@@ -115,17 +139,23 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Gegner> _gegner;
     
-        public ObjectSet<Gegner_Angriff> Gegner_Angriff
+        public ObjectSet<GegnerBase> GegnerBase
         {
-            get { return _gegner_Angriff  ?? (_gegner_Angriff = CreateObjectSet<Gegner_Angriff>("Gegner_Angriff")); }
+            get { return _gegnerBase  ?? (_gegnerBase = CreateObjectSet<GegnerBase>("GegnerBase")); }
         }
-        private ObjectSet<Gegner_Angriff> _gegner_Angriff;
+        private ObjectSet<GegnerBase> _gegnerBase;
     
-        public ObjectSet<Gegner_Kampfregel> Gegner_Kampfregel
+        public ObjectSet<GegnerBase_Angriff> GegnerBase_Angriff
         {
-            get { return _gegner_Kampfregel  ?? (_gegner_Kampfregel = CreateObjectSet<Gegner_Kampfregel>("Gegner_Kampfregel")); }
+            get { return _gegnerBase_Angriff  ?? (_gegnerBase_Angriff = CreateObjectSet<GegnerBase_Angriff>("GegnerBase_Angriff")); }
         }
-        private ObjectSet<Gegner_Kampfregel> _gegner_Kampfregel;
+        private ObjectSet<GegnerBase_Angriff> _gegnerBase_Angriff;
+    
+        public ObjectSet<GegnerBase_Kampfregel> GegnerBase_Kampfregel
+        {
+            get { return _gegnerBase_Kampfregel  ?? (_gegnerBase_Kampfregel = CreateObjectSet<GegnerBase_Kampfregel>("GegnerBase_Kampfregel")); }
+        }
+        private ObjectSet<GegnerBase_Kampfregel> _gegnerBase_Kampfregel;
     
         public ObjectSet<Handelsgut> Handelsgut
         {
@@ -324,24 +354,6 @@ namespace MeisterGeister.Model
             get { return _zauberzeichen  ?? (_zauberzeichen = CreateObjectSet<Zauberzeichen>("Zauberzeichen")); }
         }
         private ObjectSet<Zauberzeichen> _zauberzeichen;
-    
-        public ObjectSet<Audio_Playlist> Audio_Playlist
-        {
-            get { return _audio_Playlist  ?? (_audio_Playlist = CreateObjectSet<Audio_Playlist>("Audio_Playlist")); }
-        }
-        private ObjectSet<Audio_Playlist> _audio_Playlist;
-    
-        public ObjectSet<Audio_Playlist_Titel> Audio_Playlist_Titel
-        {
-            get { return _audio_Playlist_Titel  ?? (_audio_Playlist_Titel = CreateObjectSet<Audio_Playlist_Titel>("Audio_Playlist_Titel")); }
-        }
-        private ObjectSet<Audio_Playlist_Titel> _audio_Playlist_Titel;
-    
-        public ObjectSet<Audio_Titel> Audio_Titel
-        {
-            get { return _audio_Titel  ?? (_audio_Titel = CreateObjectSet<Audio_Titel>("Audio_Titel")); }
-        }
-        private ObjectSet<Audio_Titel> _audio_Titel;
 
         #endregion
         #region ObjectSet Getter
@@ -355,10 +367,14 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Abenteuer_Szene;
     		if(typeof(T) == typeof(Abenteuer_Verweis))
     				return (ObjectSet<T>)(Object)Abenteuer_Verweis;
+    		if(typeof(T) == typeof(Audio_Playlist))
+    				return (ObjectSet<T>)(Object)Audio_Playlist;
+    		if(typeof(T) == typeof(Audio_Playlist_Titel))
+    				return (ObjectSet<T>)(Object)Audio_Playlist_Titel;
+    		if(typeof(T) == typeof(Audio_Titel))
+    				return (ObjectSet<T>)(Object)Audio_Titel;
     		if(typeof(T) == typeof(Ausrüstung))
     				return (ObjectSet<T>)(Object)Ausrüstung;
-    		if(typeof(T) == typeof(Bestiarium))
-    				return (ObjectSet<T>)(Object)Bestiarium;
     		if(typeof(T) == typeof(Einstellungen))
     				return (ObjectSet<T>)(Object)Einstellungen;
     		if(typeof(T) == typeof(Farbe))
@@ -367,10 +383,12 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Fernkampfwaffe;
     		if(typeof(T) == typeof(Gegner))
     				return (ObjectSet<T>)(Object)Gegner;
-    		if(typeof(T) == typeof(Gegner_Angriff))
-    				return (ObjectSet<T>)(Object)Gegner_Angriff;
-    		if(typeof(T) == typeof(Gegner_Kampfregel))
-    				return (ObjectSet<T>)(Object)Gegner_Kampfregel;
+    		if(typeof(T) == typeof(GegnerBase))
+    				return (ObjectSet<T>)(Object)GegnerBase;
+    		if(typeof(T) == typeof(GegnerBase_Angriff))
+    				return (ObjectSet<T>)(Object)GegnerBase_Angriff;
+    		if(typeof(T) == typeof(GegnerBase_Kampfregel))
+    				return (ObjectSet<T>)(Object)GegnerBase_Kampfregel;
     		if(typeof(T) == typeof(Handelsgut))
     				return (ObjectSet<T>)(Object)Handelsgut;
     		if(typeof(T) == typeof(Held))
@@ -437,12 +455,6 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Zauber;
     		if(typeof(T) == typeof(Zauberzeichen))
     				return (ObjectSet<T>)(Object)Zauberzeichen;
-    		if(typeof(T) == typeof(Audio_Playlist))
-    				return (ObjectSet<T>)(Object)Audio_Playlist;
-    		if(typeof(T) == typeof(Audio_Playlist_Titel))
-    				return (ObjectSet<T>)(Object)Audio_Playlist_Titel;
-    		if(typeof(T) == typeof(Audio_Titel))
-    				return (ObjectSet<T>)(Object)Audio_Titel;
     		return null;
     	}
     	

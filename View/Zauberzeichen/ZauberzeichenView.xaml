@@ -22,9 +22,6 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Held">
                             <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
                             <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                                <ComboBox.Background>
-                                    <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                                </ComboBox.Background>
                                 <ComboBox.ToolTip>
                                     <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die eine passende Sonderfertigkeit (z.B. Zauberzeichen) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                                 </ComboBox.ToolTip>

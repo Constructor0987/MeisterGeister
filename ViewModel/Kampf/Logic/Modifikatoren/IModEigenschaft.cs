@@ -33,6 +33,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     {
         int ApplyFFMod(int wert);
     }
+    public interface IModFFArmL : IModFF { }
+    public interface IModFFArmR : IModFF { }
 
     public interface IModGE : IModEigenschaft
     {
@@ -48,6 +50,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     {
         int ApplyKKMod(int wert);
     }
+
+    public interface IModKKArmL : IModKK {}
+    public interface IModKKArmR : IModKK {}
+
     #endregion
 
     #region Abgeleitete Eigenschaften
@@ -100,6 +106,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     {
         int ApplyATMod(int wert);
     }
+    public interface IModATArmL : IModAT {}
+    public interface IModATArmR : IModAT {}
 
     public interface IModPABasis : IModEigenschaft
     {
@@ -110,6 +118,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     {
         int ApplyPAMod(int wert);
     }
+    public interface IModPAArmL : IModPA {}
+    public interface IModPAArmR : IModPA {}
 
     public interface IModFKBasis : IModEigenschaft
     {

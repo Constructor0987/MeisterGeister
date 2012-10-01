@@ -28,17 +28,24 @@ namespace MeisterGeister.View.Zauberzeichen
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.ZauberzeichenViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.ZauberzeichenViewModel))
+                    return null;
+                return DataContext as VM.ZauberzeichenViewModel;
+            }
+            set { DataContext = value; }
+        }
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                (this.DataContext as VM.ZauberzeichenViewModel).LoadDaten();
-            }
-            catch (Exception ex)
-            {
-                View.Windows.MsgWindow errWin = new View.Windows.MsgWindow("Zauberzeichen-Tool", "Beim Laden des Zauberzeichen-Tools ist ein Fehler aufgetreten.", ex);
-                errWin.ShowDialog();
-            }
+            if (VM != null)
+                VM.Refresh();
         }
     }
 }

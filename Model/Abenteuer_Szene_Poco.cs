@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_szeneGUID = value;
-    			NotifyPropertyChanged("SzeneGUID");
+    			OnChanged("SzeneGUID");
     		}
     
         }
@@ -73,7 +73,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -202,7 +202,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer(Abenteuer previousValue)
         {
-    		NotifyPropertyChanged("Abenteuer");
+    		OnChanged("Abenteuer");
             if (previousValue != null && previousValue.Abenteuer_Szene.Contains(this))
             {
                 previousValue.Abenteuer_Szene.Remove(this);
@@ -223,7 +223,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Ereignis(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Abenteuer_Ereignis");
+    		OnChanged("Abenteuer_Ereignis");
             if (e.NewItems != null)
             {
                 foreach (Abenteuer_Ereignis item in e.NewItems)
@@ -246,7 +246,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Verweis(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Abenteuer_Verweis");
+    		OnChanged("Abenteuer_Verweis");
             if (e.NewItems != null)
             {
                 foreach (Abenteuer_Verweis item in e.NewItems)
@@ -269,7 +269,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Verweis1(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Abenteuer_Verweis1");
+    		OnChanged("Abenteuer_Verweis1");
             if (e.NewItems != null)
             {
                 foreach (Abenteuer_Verweis item in e.NewItems)

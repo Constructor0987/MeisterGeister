@@ -13,7 +13,7 @@ namespace MeisterGeister
         #region //CONTEXTE
 
         public static Service.AudioService ContextAudio;
-        public static Service.HeldService ContextHeld;
+        public static Service.DataService ContextHeld;
         public static Service.InventarService ContextInventar;
         public static Service.KampfService ContextKampf;
         //TODO ??: aus der Schmiede die Referenz entfernen, dann löschen
@@ -27,6 +27,8 @@ namespace MeisterGeister
         public static Service.NamenService ContextNamen;
         public static Service.RegelnService ContextRegeln;
         public static Service.NotizService ContextNotizen;
+        public static Service.VorNachteilService ContextVorNachteil;
+        public static Service.ZauberService ContextZauber;
 
         // MenuLink
         public static Service.MenuLinkService _contextMenuLink;
@@ -47,33 +49,58 @@ namespace MeisterGeister
         #region //FELDER
 
         private static Model.Held _selectedHeld;
-        private static Guid _selectedHeldGUID;
 
         #endregion
 
         #region //EIGENSCHAFTSMETHODEN
+        public static bool IsInitialized
+        {
+            get;
+            private set;
+        }
 
+        /// <summary>
+        /// Ruft den aktuell ausgewählten Helden ab, oder legt ihn fest.
+        /// </summary>
         public static Model.Held SelectedHeld
         {
             get { return _selectedHeld; }
             set
-            {
-                HeldSelectionChanging(null, new EventArgs() );
+            {                                    
+                // Falls der gleiche Held erneut gesetzt werden soll
+                // -> abbrechen, da keine Änderung erfolgt
+                if (_selectedHeld == value)
+                    return;
+                
+                // Event vor der Held-Änderung werfen
+                if (HeldSelectionChanging != null)
+                    HeldSelectionChanging(null, new EventArgs());
+
+                // neuen Helden setzen und Änderungen in DB speichern
                 _selectedHeld = value;
-                if (HeldSelectionChanged != null)
+                if (_selectedHeld != null)
                 {
-                    HeldSelectionChanged(null, new EventArgs());
+                    Global.ContextHeld.Update<Model.Held>(SelectedHeld);
+                    Logic.Settings.Einstellungen.SelectedHeld = value.HeldGUID.ToString();
                 }
+                else
+                    Logic.Settings.Einstellungen.SelectedHeld = null;
+
+                // Event nach der Held-Änderung werfen
+                if (HeldSelectionChanged != null)
+                    HeldSelectionChanged(null, new EventArgs());
             }
         }
+
+        /// <summary>
+        /// Ruft die GUID des aktuell ausgewählten Helden ab, oder legt ihn über die GUID fest.
+        /// </summary>
         public static Guid SelectedHeldGUID
         {
-            get { return _selectedHeldGUID; }
+            get { return SelectedHeld == null ? Guid.Empty : SelectedHeld.HeldGUID; }
             set
             {
-                _selectedHeldGUID = value;
-
-                SelectedHeld = ContextHeld.HeldenListe.Where(h => h.HeldGUID == value).FirstOrDefault();
+                SelectedHeld = ContextHeld.Liste<Held>().Where(h => h.HeldGUID == value).FirstOrDefault();
             }
         }
 
@@ -83,7 +110,7 @@ namespace MeisterGeister
 
         static Global()
         {
-
+            IsInitialized = false;
         }
 
         #endregion
@@ -96,7 +123,7 @@ namespace MeisterGeister
         public static void Init()
         {
             ContextAudio = new Service.AudioService();
-            ContextHeld = new Service.HeldService();
+            ContextHeld = new Service.DataService();
             ContextInventar = new Service.InventarService();
             ContextKampf = new Service.KampfService();
             //TODO ??: Services besser gruppieren
@@ -106,11 +133,36 @@ namespace MeisterGeister
             ContextRüstung = new Service.RüstungService();
 
             ContextTalent = new Service.TalentService();
+            ContextVorNachteil = new Service.VorNachteilService();
             ContextHandelsgut = new Service.HandelsgutService();
             ContextNsc = new Service.NscService();
             ContextNamen = new Service.NamenService();
             ContextRegeln = new Service.RegelnService();
             ContextNotizen = new Service.NotizService();
+            ContextZauber = new Service.ZauberService();
+
+            IsInitialized = true;
+
+            if (Logic.Settings.Einstellungen.SelectedHeld != null)
+            {
+                Guid heldguid;
+                if (Guid.TryParse(Logic.Settings.Einstellungen.SelectedHeld, out heldguid))
+                    SelectedHeldGUID = heldguid;
+            }
+        }
+
+        /// <summary>
+        /// Versetzt die Anwendung in einen "Beschäftig-Status" bzw. entfernt diesen Status.
+        /// Das Hauptfenster zeigt dabei ein Busy-Overlay.
+        /// </summary>
+        /// <param name="isBusy">'True' falls Anwendung gerade arbeitet.</param>
+        public static void SetIsBusy(bool isBusy)
+        {
+            if (App.Current.MainWindow != null
+                && App.Current.MainWindow is View.MainView)
+            {
+                (App.Current.MainWindow as View.MainView).IsBusy = isBusy;
+            }
         }
 
         #endregion

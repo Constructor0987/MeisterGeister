@@ -1,6 +1,7 @@
 ﻿using System;
+using MeisterGeister.Logic.General;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     public class Eigenschaft : IProbe
     {
@@ -21,9 +22,9 @@ namespace MeisterGeister.Logic.General
             get { return Name; }
         }
 
-        public static EigenschaftProbenErgebnis Probe(int wert, Held held = null, int mod = 0, uint wErgebnis = 0u)
+        public static MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis Probe(int wert, Held held = null, int mod = 0, uint wErgebnis = 0u)
         {
-            var ergebnis = new EigenschaftProbenErgebnis {Wert = wert, Held = held};
+            var ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis { Wert = wert, Held = held };
 
             if (wErgebnis == 0)
             {
@@ -49,7 +50,7 @@ namespace MeisterGeister.Logic.General
             return ergebnis;
         }
 
-        public static void Probe(ref EigenschaftProbenErgebnis probe, int mod = 0, uint wErgebnis = 0u)
+        public static void Probe(ref MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis probe, int mod = 0, uint wErgebnis = 0u)
         {
             if (probe != null)
             {

@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_audio_PlaylistGUID = value;
-    			NotifyPropertyChanged("Audio_PlaylistGUID");
+    			OnChanged("Audio_PlaylistGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_hintergrundmusik = value;
-    			NotifyPropertyChanged("Hintergrundmusik");
+    			OnChanged("Hintergrundmusik");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_maxSongsParallel = value;
-    			NotifyPropertyChanged("MaxSongsParallel");
+    			OnChanged("MaxSongsParallel");
     		}
     
         }
@@ -127,7 +127,7 @@ namespace MeisterGeister.Model
     
         private void FixupAudio_Playlist_Titel(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Audio_Playlist_Titel");
+    		OnChanged("Audio_Playlist_Titel");
             if (e.NewItems != null)
             {
                 foreach (Audio_Playlist_Titel item in e.NewItems)

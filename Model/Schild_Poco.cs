@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -60,7 +60,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_größe = value;
-    			NotifyPropertyChanged("Größe");
+    			OnChanged("Größe");
     		}
     
         }
@@ -73,7 +73,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_typ = value;
-    			NotifyPropertyChanged("Typ");
+    			OnChanged("Typ");
     		}
     
         }
@@ -86,7 +86,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_wMAT = value;
-    			NotifyPropertyChanged("WMAT");
+    			OnChanged("WMAT");
     		}
     
         }
@@ -99,7 +99,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_wMPA = value;
-    			NotifyPropertyChanged("WMPA");
+    			OnChanged("WMPA");
     		}
     
         }
@@ -112,7 +112,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_iNI = value;
-    			NotifyPropertyChanged("INI");
+    			OnChanged("INI");
     		}
     
         }
@@ -125,7 +125,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bF = value;
-    			NotifyPropertyChanged("BF");
+    			OnChanged("BF");
     		}
     
         }
@@ -155,7 +155,7 @@ namespace MeisterGeister.Model
     
         private void FixupAusrüstung(Ausrüstung previousValue)
         {
-    		NotifyPropertyChanged("Ausrüstung");
+    		OnChanged("Ausrüstung");
             if (previousValue != null && ReferenceEquals(previousValue.Schild, this))
             {
                 previousValue.Schild = null;

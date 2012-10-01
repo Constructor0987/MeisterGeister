@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_abenteuerGUID = value;
-    			NotifyPropertyChanged("AbenteuerGUID");
+    			OnChanged("AbenteuerGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -101,7 +101,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Szene(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Abenteuer_Szene");
+    		OnChanged("Abenteuer_Szene");
             if (e.NewItems != null)
             {
                 foreach (Abenteuer_Szene item in e.NewItems)

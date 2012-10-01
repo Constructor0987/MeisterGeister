@@ -89,7 +89,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Daten\Gegner\Zant.xml" />
+    <Content Include="Daten\Gegner\Zant.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Daten\Helden\Ascalarion Mondfeuer.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

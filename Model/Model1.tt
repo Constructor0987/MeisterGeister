@@ -50,7 +50,7 @@ foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e =>
 #>
 	public event PropertyChangedEventHandler PropertyChanged;
 	
-	public void NotifyPropertyChanged(String info)
+	public void OnChanged(String info)
     {
         if (PropertyChanged != null)
         {
@@ -171,7 +171,7 @@ foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e =>
         <#=code.SpaceAfter(Accessibility.ForSetter(edmProperty))#>set
 		{ 
 			<#=code.FieldName(edmProperty)#> = value;
-			<#=implementINotifyPropertyChanged?"NotifyPropertyChanged(\"" + code.Escape(edmProperty) + "\");":String.Empty#>
+			<#=implementINotifyPropertyChanged?"OnChanged(\"" + code.Escape(edmProperty) + "\");":String.Empty#>
 		}
 <#
 			
@@ -358,7 +358,7 @@ foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e =>
 
     private void Fixup<#=navProperty.Name#>(<#=code.Escape(navProperty.ToEndMember.GetEntityType())#> previousValue<#= skipKeysArgument #>)
     {
-		<#=implementINotifyPropertyChanged?"NotifyPropertyChanged(\"" + navProperty.Name + "\");":String.Empty#>
+		<#=implementINotifyPropertyChanged?"OnChanged(\"" + navProperty.Name + "\");":String.Empty#>
 <#
         if (inverse != null)
         {
@@ -577,7 +577,7 @@ foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e =>
 
     private void Fixup<#=navProperty.Name#>(object sender, NotifyCollectionChangedEventArgs e)
     {
-		<#=implementINotifyPropertyChanged?"NotifyPropertyChanged(\"" + navProperty.Name + "\");":String.Empty#>
+		<#=implementINotifyPropertyChanged?"OnChanged(\"" + navProperty.Name + "\");":String.Empty#>
         if (e.NewItems != null)
         {
             foreach (<#=code.Escape(navProperty.ToEndMember.GetEntityType())#> item in e.NewItems)

@@ -3,6 +3,7 @@ using System.ComponentModel;
 // Eigene Usings
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.ViewModel.Kampf.LogicAlt
 {
@@ -734,7 +735,7 @@ namespace MeisterGeister.ViewModel.Kampf.LogicAlt
 
         public void Orientieren()
         {
-            ProbenErgebnis pErgebnis = new ProbenErgebnis();
+            MeisterGeister.LogicAlt.General.ProbenErgebnis pErgebnis = new MeisterGeister.LogicAlt.General.ProbenErgebnis();
             pErgebnis.Gelungen = true;
 
             if (!(HatAufmerksamkeit && HatVoraussetzungenAufmerksamkeit))

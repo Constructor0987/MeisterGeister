@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_talentname = value;
-    			NotifyPropertyChanged("Talentname");
+    			OnChanged("Talentname");
     		}
     
         }
@@ -81,7 +81,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_eigenschaft1 = value;
-    			NotifyPropertyChanged("Eigenschaft1");
+    			OnChanged("Eigenschaft1");
     		}
     
         }
@@ -94,7 +94,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_eigenschaft2 = value;
-    			NotifyPropertyChanged("Eigenschaft2");
+    			OnChanged("Eigenschaft2");
     		}
     
         }
@@ -107,7 +107,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_eigenschaft3 = value;
-    			NotifyPropertyChanged("Eigenschaft3");
+    			OnChanged("Eigenschaft3");
     		}
     
         }
@@ -120,7 +120,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_talenttyp = value;
-    			NotifyPropertyChanged("Talenttyp");
+    			OnChanged("Talenttyp");
     		}
     
         }
@@ -133,7 +133,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_eBE = value;
-    			NotifyPropertyChanged("eBE");
+    			OnChanged("eBE");
     		}
     
         }
@@ -146,7 +146,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_spezialisierungen = value;
-    			NotifyPropertyChanged("Spezialisierungen");
+    			OnChanged("Spezialisierungen");
     		}
     
         }
@@ -159,7 +159,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_voraussetzungen = value;
-    			NotifyPropertyChanged("Voraussetzungen");
+    			OnChanged("Voraussetzungen");
     		}
     
         }
@@ -172,7 +172,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_steigerung = value;
-    			NotifyPropertyChanged("Steigerung");
+    			OnChanged("Steigerung");
     		}
     
         }
@@ -185,7 +185,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_wikiLink = value;
-    			NotifyPropertyChanged("WikiLink");
+    			OnChanged("WikiLink");
     		}
     
         }
@@ -198,7 +198,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_untergruppe = value;
-    			NotifyPropertyChanged("Untergruppe");
+    			OnChanged("Untergruppe");
     		}
     
         }
@@ -211,7 +211,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_setting = value;
-    			NotifyPropertyChanged("Setting");
+    			OnChanged("Setting");
     		}
     
         }
@@ -224,7 +224,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -388,7 +388,7 @@ namespace MeisterGeister.Model
     
         private void FixupTalentgruppe(Talentgruppe previousValue)
         {
-    		NotifyPropertyChanged("Talentgruppe");
+    		OnChanged("Talentgruppe");
             if (previousValue != null && previousValue.Talent.Contains(this))
             {
                 previousValue.Talent.Remove(this);
@@ -413,7 +413,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_Ausrüstung(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_Ausrüstung");
+    		OnChanged("Held_Ausrüstung");
             if (e.NewItems != null)
             {
                 foreach (Held_Ausrüstung item in e.NewItems)
@@ -436,7 +436,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_Talent(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_Talent");
+    		OnChanged("Held_Talent");
             if (e.NewItems != null)
             {
                 foreach (Held_Talent item in e.NewItems)
@@ -459,7 +459,7 @@ namespace MeisterGeister.Model
     
         private void FixupFernkampfwaffe(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Fernkampfwaffe");
+    		OnChanged("Fernkampfwaffe");
             if (e.NewItems != null)
             {
                 foreach (Fernkampfwaffe item in e.NewItems)
@@ -485,7 +485,7 @@ namespace MeisterGeister.Model
     
         private void FixupWaffe(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Waffe");
+    		OnChanged("Waffe");
             if (e.NewItems != null)
             {
                 foreach (Waffe item in e.NewItems)

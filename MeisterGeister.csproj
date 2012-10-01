@@ -24,7 +24,7 @@
     <SccProvider>
     </SccProvider>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ExpressionBlendVersion>4.0.20621.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
     <Utf8Output>true</Utf8Output>
     <PublishUrl>publish\setup\</PublishUrl>
     <Install>true</Install>
@@ -60,7 +60,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;INTERN</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -153,6 +153,7 @@
     <Compile Include="Daten\DatabaseTools.cs" />
     <Compile Include="Daten\DatabaseUpdate.cs" />
     <Compile Include="Daten\SqlCeUpgrade.cs" />
+    <Compile Include="Logic\Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\Eigenschaft.cs" />
     <Compile Include="Logic\General\Eigenschaften.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Logic\General\HeldWaffeWert.cs" />
     <Compile Include="Logic\General\IProbe.cs" />
     <Compile Include="Logic\General\Literatur.cs" />
+    <Compile Include="Logic\General\Probe.cs" />
     <Compile Include="Logic\General\ProbenErgebnis.cs" />
     <Compile Include="Logic\General\RandomNumberGenerator.cs" />
     <Compile Include="Logic\General\Repräsentationen.cs" />
@@ -200,13 +202,11 @@
     <Compile Include="Model\Ausrüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Bestiarium_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Einstellungen_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Extensions\DependentPropertyAttribute.cs" />
+    <Compile Include="Model\Extensions\IInitializable.cs" />
     <Compile Include="Model\Farbe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -214,13 +214,16 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gegner.cs" />
-    <Compile Include="Model\Gegner_Angriff.cs" />
-    <Compile Include="Model\Gegner_Angriff_Poco.cs">
+    <Compile Include="Model\GegnerBase_Angriff_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Gegner_Kampfregel_Poco.cs">
+    <Compile Include="Model\GegnerBase_Kampfregel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GegnerBase_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GegnerBase_Angriff.cs" />
     <Compile Include="Model\Gegner_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -242,15 +245,19 @@
     <Compile Include="Model\Held_Sonderfertigkeit_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Held_Talent.cs" />
     <Compile Include="Model\Held_Talent_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Held_VorNachteil.cs" />
     <Compile Include="Model\Held_VorNachteil_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Held_Zauber.cs" />
     <Compile Include="Model\Held_Zauber_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Inventar.cs" />
     <Compile Include="Model\Inventar_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -259,10 +266,14 @@
     </Compile>
     <Compile Include="Model\Audio_Titel.cs" />
     <Compile Include="Model\Audio_Playlist.cs" />
+    <Compile Include="Model\Kampfregel.cs" />
+    <Compile Include="Model\GegnerBase.cs" />
     <Compile Include="Model\Notizen.cs" />
     <Compile Include="Model\Service\AudioService.cs" />
     <Compile Include="Model\Service\KampfService.cs" />
     <Compile Include="Model\Service\NotizService.cs" />
+    <Compile Include="Model\Service\VorNachteilService.cs" />
+    <Compile Include="Model\Service\ZauberService.cs" />
     <Compile Include="Model\Talent.cs" />
     <Compile Include="Model\Trageort_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -343,13 +354,23 @@
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
-    <Compile Include="ViewModel\Helden\Controls\ViewModelHeldAllgemein.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
-    <Compile Include="ViewModel\Inventar\Logic\IAusrüstung.cs">
+    <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
+    <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
+    <Compile Include="ViewModel\Helden\Logic\IChangeListener.cs" />
+    <Compile Include="ViewModel\Helden\SonderfertigkeitenViewModel.cs" />
+    <Compile Include="ViewModel\Helden\TalentViewModel.cs" />
+    <Compile Include="ViewModel\Helden\ListeViewModel.cs" />
+    <Compile Include="ViewModel\Helden\AllgemeinViewModel.cs" />
+    <Compile Include="ViewModel\Helden\VorNachteileViewModel.cs" />
+    <Compile Include="ViewModel\Helden\Logic\IAusrüstung.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
+    <Compile Include="ViewModel\Kampf\GegnerViewModel.cs" />
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Distanzklasse.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IGegnerBase.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWaffe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWaffeMitTPKK.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Kampf.cs" />
@@ -364,15 +385,21 @@
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Parade.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Abwehraktion.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Manöver.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\DependsOnModifikatorAttribute.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IEndetMit.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModEigenschaft.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModProbe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\PABonusDurchHoheIni.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\NiedrigeEnergieModifikatoren.cs" />
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
     <Compile Include="ViewModel\NscGenerator\Person.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Proben\ProbeControlViewModel.cs" />
+    <Compile Include="ViewModel\Proben\ProbenViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeGeschossViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeRüstungViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeFernkampfwaffeViewModel.cs" />
@@ -445,14 +472,45 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Helden\Controls\ViewHeldAllgemein.xaml.cs">
-      <DependentUpon>ViewHeldAllgemein.xaml</DependentUpon>
+    <Compile Include="View\General\ModInfoBox.xaml.cs">
+      <DependentUpon>ModInfoBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Inventar\Trageort.xaml.cs">
+    <Compile Include="View\General\ViewHelper.cs" />
+    <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">
+      <DependentUpon>AllgemeinView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\EigenschaftenView.xaml.cs">
+      <DependentUpon>EigenschaftenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\ListeView.xaml.cs">
+      <DependentUpon>ListeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\SonderfertigkeitenView.xaml.cs">
+      <DependentUpon>SonderfertigkeitenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\TalentView.xaml.cs">
+      <DependentUpon>TalentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\Trageort.xaml.cs">
       <DependentUpon>Trageort.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\VorNachteileView.xaml.cs">
+      <DependentUpon>VorNachteileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Helden\Controls\ZauberView.xaml.cs">
+      <DependentUpon>ZauberView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Kampf\Controls\GegnerView.xaml.cs">
+      <DependentUpon>GegnerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Proben\ProbeControl.xaml.cs">
+      <DependentUpon>ProbeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Proben\ProbenView.xaml.cs">
+      <DependentUpon>ProbenView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Schmiede\SchmiedeGeschossView.xaml.cs">
       <DependentUpon>SchmiedeGeschossView.xaml</DependentUpon>
@@ -628,7 +686,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Service\HandelsgutService.cs" />
-    <Compile Include="Model\Service\HeldService.cs" />
+    <Compile Include="Model\Service\DataService.cs" />
     <Compile Include="Model\Service\Base\ServiceBase.cs" />
     <Compile Include="Model\Service\TalentService.cs" />
     <Compile Include="Model\Service\WaffeService.cs" />
@@ -642,14 +700,14 @@
     <Compile Include="ViewModel\NscGenerator\NscGeneratorViewModel.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeViewModel.cs" />
-    <Compile Include="ViewModel\Inventar\Inventar.cs" />
+    <Compile Include="ViewModel\Helden\InventarViewModel.cs" />
     <Compile Include="View\Schmiede\SchmiedeView.xaml.cs">
       <DependentUpon>SchmiedeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NscGenerator\NscGeneratorView.xaml.cs">
       <DependentUpon>NscGeneratorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Inventar\InventarView.xaml.cs">
+    <Compile Include="View\Helden\Controls\InventarView.xaml.cs">
       <DependentUpon>InventarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ZooBot\Hauptfenster.cs">
@@ -668,13 +726,13 @@
     <Compile Include="View\ZooBot\Wuerfeleingabe.designer.cs">
       <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </Compile>
-    <Page Include="SampleData\HeldenViewModelSampleData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="SampleData\KampfViewModelSampleData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SampleData\ProbeControlViewModelSampleData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Abenteuer\AbenteuerView.xaml">
       <SubType>Designer</SubType>
@@ -716,15 +774,55 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Helden\Controls\ViewHeldAllgemein.xaml">
+    <Page Include="View\General\ModInfoBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\Controls\AllgemeinView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Inventar\Trageort.xaml">
+    <Page Include="View\Helden\Controls\EigenschaftenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\Controls\ListeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\SonderfertigkeitenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\Controls\TalentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\Trageort.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\VorNachteileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Helden\Controls\ZauberView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Controls\GegnerView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Kampf\KampfInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Proben\ProbeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Proben\ProbenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -880,7 +978,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Inventar\InventarView.xaml">
+    <Page Include="View\Helden\Controls\InventarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1045,6 +1143,17 @@
     <Resource Include="Images\Icons\helden_add.png" />
     <Resource Include="Images\Icons\kämpfer_entf.png" />
     <Resource Include="Images\Logos\Ares_Logo.png" />
+    <Resource Include="Daten\Helden\Demohelden\Ascalarion Mondfeuer.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Bärfried Tannhauser.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Hartmann von Falkenstein.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Horatio di Camino.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Megrim bren Skrayana, Die Dämonenmeisterin.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Merlin der Zauberzeichenmeister.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Mirshan Yakubansunya.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Ottojarld der Runenmeister.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Sybia Aylasuni.xml" />
+    <Resource Include="Daten\Helden\Demohelden\Xebragral Sohn des Xormannal.xml" />
+    <Resource Include="Images\Icons\sprache.png" />
     <Resource Include="Images\Icons\General\audioadd.png" />
     <Resource Include="Images\Icons\General\pause.png" />
     <Resource Include="Images\Icons\General\play.png" />
@@ -1152,19 +1261,14 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
-      <Visible>False</Visible>
-      <ProductName>SQL Server Compact 3.5 SP2</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.4.0">
       <Visible>False</Visible>
-      <ProductName>SQL Server Compact 4.0</ProductName>
+      <ProductName>SQL Server Compact 4.0 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
       <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
+      <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -1176,23 +1280,28 @@
   </ItemGroup>
   <ItemGroup>
     <DesignData Include="SampleData\BasarViewModelSampleData.xaml" />
-    <DesignData Include="SampleData\InventarSampleData.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(TargetDir)Daten"
 copy "$(ProjectDir)Daten\DatabaseDSA.sdf" "$(TargetDir)Daten\DatabaseDSA_Standard.sdf"
+mkdir "$(TargetDir)Daten\Helden"
+mkdir "$(TargetDir)Daten\Helden\Demohelden"
+copy "$(ProjectDir)Daten\Helden\Demohelden\*.xml" "$(TargetDir)Daten\Helden\Demohelden\"
 
 if not $(ConfigurationName) == Debug (
    rmdir /s /q "$(ProjectDir)publish\$(TargetName)"
    mkdir "$(ProjectDir)publish\$(TargetName)"
    mkdir "$(ProjectDir)publish\$(TargetName)\Daten"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Daten\Helden"
+   mkdir "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden"
    mkdir "$(ProjectDir)publish\$(TargetName)\Audio"
    mkdir "$(ProjectDir)publish\$(TargetName)\License"
    mkdir "$(ProjectDir)publish\$(TargetName)\de"
    copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)README.txt" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Daten\DatabaseDSA_Standard.sdf" "$(ProjectDir)publish\$(TargetName)\Daten"
+   copy  "$(TargetDir)Daten\Helden\Demohelden\*.xml" "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden\"
    copy "$(TargetDir)DG-Suche.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Interactions.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Effects.dll" "$(ProjectDir)publish\$(TargetName)"

@@ -43,6 +43,12 @@ namespace MeisterGeister.Model.Service {
             return tmp;
         }
 
+        public VorNachteil LoadVorNachteilByName(string aName)
+        {
+            var tmp = Context.VorNachteil.Where(s => s.Name == aName).FirstOrDefault();
+            return tmp;
+        }
+
         #endregion
 
 

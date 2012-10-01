@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_nameID = value;
-    			NotifyPropertyChanged("NameID");
+    			OnChanged("NameID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name1 = value;
-    			NotifyPropertyChanged("Name1");
+    			OnChanged("Name1");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_herkunft = value;
-    			NotifyPropertyChanged("Herkunft");
+    			OnChanged("Herkunft");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_art = value;
-    			NotifyPropertyChanged("Art");
+    			OnChanged("Art");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bedeutung = value;
-    			NotifyPropertyChanged("Bedeutung");
+    			OnChanged("Bedeutung");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_geschlecht = value;
-    			NotifyPropertyChanged("Geschlecht");
+    			OnChanged("Geschlecht");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_keineVorsilbe = value;
-    			NotifyPropertyChanged("KeineVorsilbe");
+    			OnChanged("KeineVorsilbe");
     		}
     
         }
@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_keineNachsilbe = value;
-    			NotifyPropertyChanged("KeineNachsilbe");
+    			OnChanged("KeineNachsilbe");
     		}
     
         }

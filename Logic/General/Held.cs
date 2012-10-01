@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.ViewModel.Kampf.LogicAlt;
 using Logic = MeisterGeister.Logic;
+using MeisterGeister.Logic.General;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     /// <summary>
     /// Beschreibt einen Helden.
@@ -2102,8 +2103,8 @@ namespace MeisterGeister.Logic.General
             ds.ReadXml(pfad);
             if (ds.Tables.Contains("helden") && ds.Tables.Contains("held"))
             { // Helden-Software Format
-                var heldConverter = new Logic.HeldenImport.HeldenSoftwareImporter(dsExport, this, pfad);
-                heldConverter.ImportHeldenSoftwareFile();
+                //var heldConverter = new Logic.HeldenImport.HeldenSoftwareImporter(dsExport, this, pfad);
+                //heldConverter.ImportHeldenSoftwareFile();
                 dsExport.EndInit();
             }
             else
@@ -2171,7 +2172,7 @@ namespace MeisterGeister.Logic.General
             System.Collections.Generic.List<Held> heldList = new System.Collections.Generic.List<Held>();
             foreach (DatabaseDSADataSet.HeldRow heldRow in App.DatenDataSet.Held)
             {
-                if (heldRow.AktiveHeldengruppe)
+                if (!heldRow.IsAktiveHeldengruppeNull() && heldRow.AktiveHeldengruppe)
                     heldList.Add(new Held(heldRow));
             }
             return heldList;
@@ -2220,7 +2221,7 @@ namespace MeisterGeister.Logic.General
         
     }
 
-    public delegate ProbenErgebnis ProbeWürfeln(Wesen wesen, IProbe probe, string aktion);
+    public delegate MeisterGeister.LogicAlt.General.ProbenErgebnis ProbeWürfeln(Wesen wesen, IProbe probe, string aktion);
 
     public class DreierProbenWert
     {

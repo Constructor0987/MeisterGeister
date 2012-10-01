@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_verweisGUID = value;
-    			NotifyPropertyChanged("VerweisGUID");
+    			OnChanged("VerweisGUID");
     		}
     
         }
@@ -229,7 +229,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Ereignis(Abenteuer_Ereignis previousValue)
         {
-    		NotifyPropertyChanged("Abenteuer_Ereignis");
+    		OnChanged("Abenteuer_Ereignis");
             if (previousValue != null && previousValue.Abenteuer_Verweis.Contains(this))
             {
                 previousValue.Abenteuer_Verweis.Remove(this);
@@ -254,7 +254,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Ereignis1(Abenteuer_Ereignis previousValue)
         {
-    		NotifyPropertyChanged("Abenteuer_Ereignis1");
+    		OnChanged("Abenteuer_Ereignis1");
             if (previousValue != null && previousValue.Abenteuer_Verweis1.Contains(this))
             {
                 previousValue.Abenteuer_Verweis1.Remove(this);
@@ -279,7 +279,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Szene(Abenteuer_Szene previousValue)
         {
-    		NotifyPropertyChanged("Abenteuer_Szene");
+    		OnChanged("Abenteuer_Szene");
             if (previousValue != null && previousValue.Abenteuer_Verweis.Contains(this))
             {
                 previousValue.Abenteuer_Verweis.Remove(this);
@@ -300,7 +300,7 @@ namespace MeisterGeister.Model
     
         private void FixupAbenteuer_Szene1(Abenteuer_Szene previousValue)
         {
-    		NotifyPropertyChanged("Abenteuer_Szene1");
+    		OnChanged("Abenteuer_Szene1");
             if (previousValue != null && previousValue.Abenteuer_Verweis1.Contains(this))
             {
                 previousValue.Abenteuer_Verweis1.Remove(this);

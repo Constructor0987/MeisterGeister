@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_handelsgutGUID = value;
-    			NotifyPropertyChanged("HandelsgutGUID");
+    			OnChanged("HandelsgutGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_preis = value;
-    			NotifyPropertyChanged("Preis");
+    			OnChanged("Preis");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_gewicht = value;
-    			NotifyPropertyChanged("Gewicht");
+    			OnChanged("Gewicht");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_mE = value;
-    			NotifyPropertyChanged("ME");
+    			OnChanged("ME");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kategorie = value;
-    			NotifyPropertyChanged("Kategorie");
+    			OnChanged("Kategorie");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tags = value;
-    			NotifyPropertyChanged("Tags");
+    			OnChanged("Tags");
     		}
     
         }
@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -145,7 +145,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }

@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_versionsNummer = value;
-    			NotifyPropertyChanged("VersionsNummer");
+    			OnChanged("VersionsNummer");
     		}
     
         }

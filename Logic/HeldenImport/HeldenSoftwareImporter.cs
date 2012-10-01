@@ -5,7 +5,9 @@ using System.Text;
 using MeisterGeister.Daten;
 using System.Xml;
 // Eigene Usings
-using MeisterGeister.Logic.General;
+//using MeisterGeister.Logic.General;
+using MeisterGeister.Model;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Logic.HeldenImport
 {
@@ -14,12 +16,9 @@ namespace MeisterGeister.Logic.HeldenImport
     /// </summary>
     public class HeldenSoftwareImporter
     {
-        public HeldenSoftwareImporter(DatabaseDSADataSet dsExport, Held held, string pfad)
+        #region Mappings
+        static HeldenSoftwareImporter()
         {
-            _dsExport = dsExport;
-            _held = held;
-            _importPfad = pfad;
-
             // Talent-Mapping
             SetTalentMapping();
 
@@ -31,214 +30,233 @@ namespace MeisterGeister.Logic.HeldenImport
 
             // Sonderfertigkeit-Mapping
             SetSonderfertigkeitenMapping();
+            
+            // Gegenstand-Mapping
+            SetGegenstandMapping();
         }
 
-        private void SetSonderfertigkeitenMapping()
+        private static System.Collections.Generic.Dictionary<string, string> _talentMapping = new Dictionary<string, string>();
+        private static System.Collections.Generic.Dictionary<string, string> _zauberMapping = new Dictionary<string, string>();
+        private static System.Collections.Generic.Dictionary<string, string> _vorNachteilMapping = new Dictionary<string, string>();
+        private static System.Collections.Generic.Dictionary<string, string> _sonderfertigkeitMapping = new Dictionary<string, string>();
+        private static System.Collections.Generic.Dictionary<string, string> _gegenstandMapping = new Dictionary<string, string>();
+
+        private static void SetGegenstandMapping()
         {
-            _sonderfertigkeitMapping.Add("Akklimatisierung: Hitze", "Akklimatisierung (Hitze)");
-            _sonderfertigkeitMapping.Add("Akklimatisierung: Kälte", "Akklimatisierung (Kälte)");
-            _sonderfertigkeitMapping.Add("Apport", "Objektritual: Apport");
-            _sonderfertigkeitMapping.Add("Bannschwert", "Objektritual: Bannschwert");
-            _sonderfertigkeitMapping.Add("Kulturkunde (Andergast/Nostria)", "Kulturkunde (Andergast und Nostria)");
-            _sonderfertigkeitMapping.Add("Kulturkunde (Stammesachaz)", "Kulturkunde (Stammes-Achaz)");
-            _sonderfertigkeitMapping.Add("Merkmalskenntnis: Dämonisch", "Merkmalskenntnis (Dämonisch (gesamt))");
-            _sonderfertigkeitMapping.Add("Merkmalskenntnis: Elementar", "Merkmalskenntnis (Elementar (gesamt))");
-            _sonderfertigkeitMapping.Add("Stabzauber: Fackel", "Stabzauber: Ewige Flamme");
-            _sonderfertigkeitMapping.Add("Stabzauber: Seil", "Stabzauber: Seil des Adepten");
-            _sonderfertigkeitMapping.Add("Repräsentation: Achaz", "Repräsentation (Achaz-Kristallomantisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Borbaradianer", "Repräsentation (Borbaradianisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Druide", "Repräsentation (Druidisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Elf", "Repräsentation (Elfisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Geode", "Repräsentation (Geodisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Hexe", "Repräsentation (Hexisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Magier", "Repräsentation (Gildenmagisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Scharlatan", "Repräsentation (Scharlatanisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Schelm", "Repräsentation (Schelmisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Alhanisch", "Repräsentation (Alhanisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Druidisch-Geodisch", "Repräsentation (Druidisch-Geodisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Grolmisch", "Repräsentation (Grolmisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Güldenländisch", "Repräsentation (Güldenländisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Kophtanisch", "Repräsentation (Kophtanisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Mudramulisch", "Repräsentation (Mudramulisch)");
-            _sonderfertigkeitMapping.Add("Repräsentation: Satuarisch", "Repräsentation (Satuarisch)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Gildenmagie", "Ritualkenntnis (Gildenmagie)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Kristallomantie", "Ritualkenntnis (Kristallomantie)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Scharlatan", "Ritualkenntnis (Scharlatanerie)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Alchimist", "Ritualkenntnis (Alchimie)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Hexe", "Ritualkenntnis (Hexenmagie)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Geode", "Ritualkenntnis (Geoden)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Druide", "Ritualkenntnis (Druiden)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Derwisch", "Ritualkenntnis (Derwische)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Zaubertänzer", "Ritualkenntnis (Zaubertänze)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Zaubertänzer (novadische Sharisad)", "Ritualkenntnis (Zaubertänze)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Zaubertänzer (tulamische Sharisad)", "Ritualkenntnis (Zaubertänze)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Zaubertänzer (Majuna)", "Ritualkenntnis (Zaubertänze)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Zaubertänzer (Hazaqi)", "Ritualkenntnis (Zaubertänze)");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Zibilja", "Ritualkenntnis (Zibilja)");
-            _sonderfertigkeitMapping.Add("Keulenritual: Apport der Keule", "Objektritual: Apport");
-            _sonderfertigkeitMapping.Add("Kristallkraft bündeln", "Kristallomantisches Ritual: Kristallkraft Bündeln");
-            _sonderfertigkeitMapping.Add("Zaubertanz: El Vanidad (Tanz der Bilder)", "Zaubertanz: Tanz der Bilder");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Heschinjas Blick (Tanz der Wahrheit)", "Zaubertanz: Tanz der Wahrheit");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Hesindes Macht (Tanz der Erlösung)", "Zaubertanz: Tanz der Erlösung");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Khablas Verlockung (Tanz der Liebe)", "Zaubertanz: Tanz der Liebe");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Marhibos Hand (Tanz der Erlösung)", "Zaubertanz: Tanz der Erlösung");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Nahemas Traum (Tanz ohne Ende)", "Zaubertanz: Tanz ohne Ende");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Orhimas Tanz (Tanz der Weisheit)", "Zaubertanz: Tanz der Weisheit");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Pavonearse (Tanz der Ermutigung)", "Zaubertanz: Tanz der Ermutigung");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Peraines Liebe (Tanz der Freude)", "Zaubertanz: Tanz der Freude");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Perhinas Segen (Tanz der Freude)", "Zaubertanz: Tanz der Freude");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Phexens Geschmeide (Tanz der Bilder)", "Zaubertanz: Tanz der Bilder");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Rahjarra (Tanz der Liebe)", "Zaubertanz: Tanz der Liebe");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Rhondaras Forderung (Tanz der Ermutigung)", "Zaubertanz: Tanz der Ermutigung");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Rondras Mut (Tanz der Ermutigung)", "Zaubertanz: Tanz der Ermutigung");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Satinavs Gabe (Tanz ohne Ende)", "Zaubertanz: Tanz ohne Ende");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Shimijas Rausch (Tanz der Bilder)", "Zaubertanz: Tanz der Bilder");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Suenyo (Tanz ohne Ende)", "Zaubertanz: Tanz ohne Ende");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Tanz für Rastullah (Tanz der Unantastbarkeit)", "Zaubertanz: Tanz der Unantastbarkeit");
-            _sonderfertigkeitMapping.Add("Zaubertanz: Zarpada (Tanz der Erlösung)", "Zaubertanz: Tanz der Erlösung");
-            _sonderfertigkeitMapping.Add("Ritualkenntnis: Runenzauberei", "Runenkunde");
-            _sonderfertigkeitMapping.Add("Meisterliche Zauberkontrolle", "Meisterliche Zauberkontrolle I");
-            _sonderfertigkeitMapping.Add("Zauberzeichen: Satinavs Siegel", "Zauberzeichen: Zusatzzeichen Satinavs Siegel");
-            _sonderfertigkeitMapping.Add("Zauberzeichen: Schutzsiegel", "Zauberzeichen: Zusatzzeichen Schutzsiegel");
-            _sonderfertigkeitMapping.Add("Zauberzeichen: Bannkreis gegen Chimären", "Zauberzeichen: Bann- und Schutzkreis gegen Chimären");
-            _sonderfertigkeitMapping.Add("Zauberzeichen: Bannkreis gegen Traumgänger", "Zauberzeichen: Schutzkreis gegen Traumgänger");
-            _sonderfertigkeitMapping.Add("Schlangenszepters: Bindung", "Schlangenszepter: Bindung");
-            _sonderfertigkeitMapping.Add("Schlangenszepters: Ruf der fliegenden Schlange", "Schlangenszepter: Ruf der fliegenden Schlange");
-            _sonderfertigkeitMapping.Add("Ritual: Brazoragh Ghorkai", "Schamanenritual: Brazoragh Ghorkai - Brazoraghs Hieb");
-            _sonderfertigkeitMapping.Add("Ritual: Ergochai Tairachi", "Schamanenritual: Ergochai Tairachi -Tairachs Sklaven");
-            _sonderfertigkeitMapping.Add("Ritual: Khurkachai Tairachi", "Schamanenritual: Khurkachai Tairachi -Tairachs Krieger");
-            _sonderfertigkeitMapping.Add("Ritual: M'char Utrak Rikaii", "Schamanenritual: M'char Utrak Rikaii - Rikais Alchimie");
-            _sonderfertigkeitMapping.Add("Liturgie: Phexens Kunstverstand (Blick für das Handwerk)", "Liturgie: Phexens Kunstverstand");
-            _sonderfertigkeitMapping.Add("Liturgie: Angroschs Zorn (Waliburias Wehr)", "Liturgie: Waliburias Wehr");
-            _sonderfertigkeitMapping.Add("Liturgie: Des Herren Goldener Mittag (Weisung des Himmels)", "Liturgie: Weisung des Himmels");
-            _sonderfertigkeitMapping.Add("Liturgie: Wort der Wahrheit (Heiliger Befehl)", "Liturgie: Heiliger Befehl");
-            _sonderfertigkeitMapping.Add("Liturgie: Lug und Trug (Unverstellter Blick)", "Liturgie: Lug und Trug");
-            _sonderfertigkeitMapping.Add("Liturgie: Rahjas Erquickung (Schlaf des Gesegneten)", "Liturgie: Schlaf des Gesegneten");
+            _gegenstandMapping.Add("linkhand (kling.br.)", "linkhand mit klingenbrecher");
+            _gegenstandMapping.Add("linkhand und klingenbrecher", "linkhand mit klingenbrecher");
+            _gegenstandMapping.Add("hartholzharnisch", "maraskanischer hartholzharnisch");
+            _gegenstandMapping.Add("gambeson", "gambeson/wattierter waffenrock");
+            _gegenstandMapping.Add("wattierter waffenrock", "gambeson/wattierter waffenrock");
+            _gegenstandMapping.Add("fuhrmannsmantel", "fellumhang/fuhrmannsmantel");
+            _gegenstandMapping.Add("fellumhang", "fellumhang/fuhrmannsmantel");
+            _gegenstandMapping.Add("bart", "bart/halsberge");
+            _gegenstandMapping.Add("halsberge", "bart/halsberge");
+            _gegenstandMapping.Add("beintaschen", "beintaschen/schürze");
+            _gegenstandMapping.Add("schürze", "beintaschen/schürze");
+            _gegenstandMapping.Add("lederweste", "lederweste/pelzweste");
+            _gegenstandMapping.Add("pelzweste", "lederweste/pelzweste");
+            _gegenstandMapping.Add("stechhelm", "stechhelm/visierhelm");
+            _gegenstandMapping.Add("visierhelm", "stechhelm/visierhelm");
+            _gegenstandMapping.Add("wattiertes unterzeug", "wattiertes unterzeug/wattierte unterkleidung");
+            _gegenstandMapping.Add("wattierte unterkleidung", "wattiertes unterzeug/wattierte unterkleidung");
         }
 
-        private void SetVorNachteilMapping()
+        private static void SetSonderfertigkeitenMapping()
         {
-            _vorNachteilMapping.Add("Adlige Abstammung", "Adlig (Adlige Abstammung)");
-            _vorNachteilMapping.Add("Adliges Erbe", "Adlig (Adliges Erbe)");
-            _vorNachteilMapping.Add("Amtsadel", "Adlig (Amtsadel)");
-            _vorNachteilMapping.Add("Astrale Regeneration 1", "Astrale Regeneration I");
-            _vorNachteilMapping.Add("Astrale Regeneration 2", "Astrale Regeneration II");
-            _vorNachteilMapping.Add("Astrale Regeneration 3", "Astrale Regeneration III");
-            _vorNachteilMapping.Add("Begabung für [Merkmal] Dämonisch", "Begabung für Merkmal (Dämonisch (gesamt))");
-            _vorNachteilMapping.Add("Begabung für [Merkmal] Elementar", "Begabung für Merkmal (Elementar (gesamt))");
-            _vorNachteilMapping.Add("Begabung für [Talent]", "Begabung für Talent");
-            _vorNachteilMapping.Add("Begabung für [Ritual]", "Begabung für Ritual");
-            _vorNachteilMapping.Add("Begabung für [Zauber]", "Begabung für Zauber");
-            _vorNachteilMapping.Add("Schnelle Heilung 1", "Schnelle Heilung I");
-            _vorNachteilMapping.Add("Schnelle Heilung 2", "Schnelle Heilung II");
-            _vorNachteilMapping.Add("Schnelle Heilung 3", "Schnelle Heilung III");
-            _vorNachteilMapping.Add("Gutaussehend", "Gut Aussehend");
-            _vorNachteilMapping.Add("Unfähigkeit für [Talentgruppe] Körperlich", "Unfähigkeit für Talentgruppe (Körper)");
-            _vorNachteilMapping.Add("Unfähigkeit für [Talent]", "Unfähigkeit für Talent");
-            _vorNachteilMapping.Add("Herausragender Sinn Gehör", "Herausragender Sinn (Gehör)");
-            _vorNachteilMapping.Add("Herausragender Sinn Geruchssinn", "Herausragender Sinn (Geruchssinn)");
-            _vorNachteilMapping.Add("Herausragender Sinn Sicht", "Herausragender Sinn (Sicht)");
-            _vorNachteilMapping.Add("Herausragender Sinn Tastsinn", "Herausragender Sinn (Tastsinn)");
-            _vorNachteilMapping.Add("Magiedilletant", "Magiedilettant");
-            _vorNachteilMapping.Add("Titularadel", "Adlig (Amtsadel)");
-            _vorNachteilMapping.Add("Wolfskind intuitiv", "Wolfskind (intuitiv)");
-            _vorNachteilMapping.Add("Wolfskind wissentlich", "Wolfskind (wissentlich)");
-            _vorNachteilMapping.Add("Schlafstörungen 1", "Schlafstörungen I");
-            _vorNachteilMapping.Add("Schlafstörungen 2", "Schlafstörungen II");
-            _vorNachteilMapping.Add("Krankhafte Nekromantie", "Nekromantismus");
-            _vorNachteilMapping.Add("Gesucht 1", "Gesucht I");
-            _vorNachteilMapping.Add("Gesucht 2", "Gesucht II");
-            _vorNachteilMapping.Add("Gesucht 3", "Gesucht III");
-            _vorNachteilMapping.Add("Unbewusster Viertelzauberer ", "Viertelzauberer (unbewusst)");
-            _vorNachteilMapping.Add("Eingeschränkter Sinn Gehör", "Eingeschränkter Sinn (schwerhörig)");
-            _vorNachteilMapping.Add("Eingeschränkter Sinn Geruchssinn", "Eingeschränkter Sinn (Geruchssinn)");
-            _vorNachteilMapping.Add("Eingeschränkter Sinn Sicht", "Eingeschränkter Sinn (kurzsichtig)");
-            _vorNachteilMapping.Add("Eingeschränkter Sinn Tastsinn", "Eingeschränkter Sinn (Tastsinn)");
-            _vorNachteilMapping.Add("Tolpatsch", "Tollpatsch");
+            _sonderfertigkeitMapping.Add("akklimatisierung: hitze", "akklimatisierung (hitze)");
+            _sonderfertigkeitMapping.Add("akklimatisierung: kälte", "akklimatisierung (kälte)");
+            _sonderfertigkeitMapping.Add("apport", "objektritual: apport");
+            _sonderfertigkeitMapping.Add("bannschwert", "objektritual: bannschwert");
+            _sonderfertigkeitMapping.Add("kulturkunde (andergast/nostria)", "kulturkunde (andergast und nostria)");
+            _sonderfertigkeitMapping.Add("kulturkunde (stammesachaz)", "kulturkunde (stammes-achaz)");
+            _sonderfertigkeitMapping.Add("merkmalskenntnis: dämonisch", "merkmalskenntnis (dämonisch (gesamt))");
+            _sonderfertigkeitMapping.Add("merkmalskenntnis: elementar", "merkmalskenntnis (elementar (gesamt))");
+            _sonderfertigkeitMapping.Add("stabzauber: fackel", "stabzauber: ewige flamme");
+            _sonderfertigkeitMapping.Add("stabzauber: seil", "stabzauber: seil des adepten");
+            _sonderfertigkeitMapping.Add("repräsentation: achaz", "repräsentation (achaz-kristallomantisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: borbaradianer", "repräsentation (borbaradianisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: druide", "repräsentation (druidisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: elf", "repräsentation (elfisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: geode", "repräsentation (geodisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: hexe", "repräsentation (hexisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: magier", "repräsentation (gildenmagisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: scharlatan", "repräsentation (scharlatanisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: schelm", "repräsentation (schelmisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: alhanisch", "repräsentation (alhanisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: druidisch-geodisch", "repräsentation (druidisch-geodisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: grolmisch", "repräsentation (grolmisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: güldenländisch", "repräsentation (güldenländisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: kophtanisch", "repräsentation (kophtanisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: mudramulisch", "repräsentation (mudramulisch)");
+            _sonderfertigkeitMapping.Add("repräsentation: satuarisch", "repräsentation (satuarisch)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: gildenmagie", "ritualkenntnis (gildenmagie)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: kristallomantie", "ritualkenntnis (kristallomantie)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: scharlatan", "ritualkenntnis (scharlatanerie)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: alchimist", "ritualkenntnis (alchimie)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: hexe", "ritualkenntnis (hexenmagie)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: geode", "ritualkenntnis (geoden)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: druide", "ritualkenntnis (druiden)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: derwisch", "ritualkenntnis (derwische)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: zaubertänzer", "ritualkenntnis (zaubertänze)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: zaubertänzer (novadische sharisad)", "ritualkenntnis (zaubertänze)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: zaubertänzer (tulamische sharisad)", "ritualkenntnis (zaubertänze)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: zaubertänzer (majuna)", "ritualkenntnis (zaubertänze)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: zaubertänzer (hazaqi)", "ritualkenntnis (zaubertänze)");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: zibilja", "ritualkenntnis (zibilja)");
+            _sonderfertigkeitMapping.Add("keulenritual: apport der keule", "objektritual: apport");
+            _sonderfertigkeitMapping.Add("kristallkraft bündeln", "kristallomantisches ritual: kristallkraft bündeln");
+            _sonderfertigkeitMapping.Add("zaubertanz: el vanidad (tanz der ilder)", "zaubertanz: tanz der bilder");
+            _sonderfertigkeitMapping.Add("zaubertanz: heschinjas blick (tanz der wahrheit)", "zaubertanz: tanz der wahrheit");
+            _sonderfertigkeitMapping.Add("zaubertanz: hesindes macht (tanz der erlösung)", "zaubertanz: tanz der erlösung");
+            _sonderfertigkeitMapping.Add("zaubertanz: khablas verlockung (tanz der liebe)", "zaubertanz: tanz der liebe");
+            _sonderfertigkeitMapping.Add("zaubertanz: marhibos hand (tanz der erlösung)", "zaubertanz: tanz der erlösung");
+            _sonderfertigkeitMapping.Add("zaubertanz: nahemas traum (tanz ohne ende)", "zaubertanz: tanz ohne ende");
+            _sonderfertigkeitMapping.Add("zaubertanz: orhimas tanz (tanz der weisheit)", "zaubertanz: tanz der weisheit");
+            _sonderfertigkeitMapping.Add("zaubertanz: pavonearse (tanz der ermutigung)", "zaubertanz: tanz der ermutigung");
+            _sonderfertigkeitMapping.Add("zaubertanz: peraines liebe (tanz der freude)", "zaubertanz: tanz der freude");
+            _sonderfertigkeitMapping.Add("zaubertanz: perhinas segen (tanz der freude)", "zaubertanz: tanz der freude");
+            _sonderfertigkeitMapping.Add("zaubertanz: phexens geschmeide (tanz der bilder)", "zaubertanz: tanz der bilder");
+            _sonderfertigkeitMapping.Add("zaubertanz: rahjarra (tanz der liebe)", "zaubertanz: tanz der liebe");
+            _sonderfertigkeitMapping.Add("zaubertanz: rhondaras forderung (tanz der ermutigung)", "zaubertanz: tanz der ermutigung");
+            _sonderfertigkeitMapping.Add("zaubertanz: rondras mut (tanz der ermutigung)", "zaubertanz: tanz der ermutigung");
+            _sonderfertigkeitMapping.Add("zaubertanz: satinavs gabe (tanz ohne ende)", "zaubertanz: tanz ohne ende");
+            _sonderfertigkeitMapping.Add("zaubertanz: shimijas rausch (tanz der bilder)", "zaubertanz: tanz der bilder");
+            _sonderfertigkeitMapping.Add("zaubertanz: suenyo (tanz ohne ende)", "zaubertanz: tanz ohne ende");
+            _sonderfertigkeitMapping.Add("zaubertanz: tanz für rastullah (tanz der unantastbarkeit)", "zaubertanz: tanz der unantastbarkeit");
+            _sonderfertigkeitMapping.Add("zaubertanz: zarpada (tanz der erlösung)", "zaubertanz: tanz der erlösung");
+            _sonderfertigkeitMapping.Add("ritualkenntnis: runenzauberei", "runenkunde");
+            _sonderfertigkeitMapping.Add("meisterliche zauberkontrolle", "meisterliche zauberkontrolle i");
+            _sonderfertigkeitMapping.Add("zauberzeichen: satinavs siegel", "zauberzeichen: zusatzzeichen satinavs siegel");
+            _sonderfertigkeitMapping.Add("zauberzeichen: schutzsiegel", "zauberzeichen: zusatzzeichen schutzsiegel");
+            _sonderfertigkeitMapping.Add("zauberzeichen: bannkreis gegen chimären", "zauberzeichen: bann- und schutzkreis gegen chimären");
+            _sonderfertigkeitMapping.Add("zauberzeichen: bannkreis gegen traumgänger", "zauberzeichen: schutzkreis gegen traumgänger");
+            _sonderfertigkeitMapping.Add("schlangenszepters: bindung", "schlangenszepter: bindung");
+            _sonderfertigkeitMapping.Add("schlangenszepters: ruf der fliegenden schlange", "schlangenszepter: ruf der fliegenden schlange");
+            _sonderfertigkeitMapping.Add("ritual: brazoragh ghorkai", "schamanenritual: brazoragh ghorkai - brazoraghs hieb");
+            _sonderfertigkeitMapping.Add("ritual: ergochai tairachi", "schamanenritual: ergochai tairachi -tairachs sklaven");
+            _sonderfertigkeitMapping.Add("ritual: khurkachai tairachi", "schamanenritual: khurkachai tairachi -tairachs krieger");
+            _sonderfertigkeitMapping.Add("ritual: m'char utrak rikaii", "schamanenritual: m'char utrak rikaii - rikais alchimie");
+            _sonderfertigkeitMapping.Add("liturgie: phexens kunstverstand (blick für das handwerk)", "liturgie: phexens kunstverstand");
+            _sonderfertigkeitMapping.Add("liturgie: angroschs zorn (waliburias wehr)", "liturgie: waliburias wehr");
+            _sonderfertigkeitMapping.Add("liturgie: des herren goldener mittag (weisung des himmels)", "liturgie: weisung des himmels");
+            _sonderfertigkeitMapping.Add("liturgie: wort der wahrheit (heiliger befehl)", "liturgie: heiliger befehl");
+            _sonderfertigkeitMapping.Add("liturgie: lug und trug (unverstellter blick)", "liturgie: lug und trug");
+            _sonderfertigkeitMapping.Add("liturgie: rahjas erquickung (schlaf des gesegneten)", "liturgie: schlaf des gesegneten");
         }
 
-        private void SetZauberMapping()
+        private static void SetVorNachteilMapping()
         {
-            _zauberMapping.Add("Analys Arkanstruktur", "Analys Arcanstruktur");
-            _zauberMapping.Add("Aquafaxius Wasserstrahl", "Aquafaxius");
-            _zauberMapping.Add("Archofaxius Erzstrahl", "Archofaxius");
-            _zauberMapping.Add("Arcanovi Artefakt", "Arcanovi Artefakt (Spruchspeicher)");
-            _zauberMapping.Add("Brenne toter Stoff!", "Brenne, toter Stoff!");
-            _zauberMapping.Add("Chronoautos Zeitenfahrt", "Chrononautos Zeitenfahrt");
-            _zauberMapping.Add("Eigenschaft wiederherstellen", "Eigenschaften wiederherstellen");
-            _zauberMapping.Add("Frigifaxius Eisstrahl", "Frigifaxius");
-            _zauberMapping.Add("Frigisphaero Eisball", "Frigosphaero");
-            _zauberMapping.Add("Gletscherwand", "Wand aus Eis (Gletscherwand)");
-            _zauberMapping.Add("Humofaxius Humusstrahl", "Humofaxius");
-            _zauberMapping.Add("Karnifilio Raserei", "Karnifilo Raserei");
-            _zauberMapping.Add("Orcanofaxius Luftstrahl", "Orcanofaxius");
-            _zauberMapping.Add("Orcanosphaero Orkanball", "Orcanosphaero");
-            _zauberMapping.Add("Orkanwand", "Wand aus Luft (Orkanwand)");
-            _zauberMapping.Add("Planastrale Anderswelt", "Planastrale Anderwelt");
-            _zauberMapping.Add("Unsichtbare Jäger", "Unsichtbarer Jäger");
-            _zauberMapping.Add("Weiße Mähn und goldener Huf", "Weiße Mähn'' und gold''ner Huf");
-            _zauberMapping.Add("Aquasphaero Wasserball", "Aquasphaero");
-            _zauberMapping.Add("Archosphaero Erzball", "Archosphaero");
-            _zauberMapping.Add("Humosphaero Humusball", "Humosphaero");
+            _vorNachteilMapping.Add("adlige abstammung", "adlig (adlige abstammung)");
+            _vorNachteilMapping.Add("adliges erbe", "adlig (adliges erbe)");
+            _vorNachteilMapping.Add("amtsadel", "adlig (amtsadel)");
+            _vorNachteilMapping.Add("astrale regeneration 1", "astrale regeneration i");
+            _vorNachteilMapping.Add("astrale regeneration 2", "astrale regeneration ii");
+            _vorNachteilMapping.Add("astrale regeneration 3", "astrale regeneration iii");
+            _vorNachteilMapping.Add("begabung für [merkmal] dämonisch", "begabung für merkmal (dämonisch (gesamt))");
+            _vorNachteilMapping.Add("begabung für [merkmal] elementar", "begabung für merkmal (elementar (gesamt))");
+            _vorNachteilMapping.Add("begabung für [talent]", "begabung für talent");
+            _vorNachteilMapping.Add("begabung für [ritual]", "begabung für ritual");
+            _vorNachteilMapping.Add("begabung für [zauber]", "begabung für zauber");
+            _vorNachteilMapping.Add("schnelle heilung 1", "schnelle heilung i");
+            _vorNachteilMapping.Add("schnelle heilung 2", "schnelle heilung ii");
+            _vorNachteilMapping.Add("schnelle heilung 3", "schnelle heilung iii");
+            _vorNachteilMapping.Add("gutaussehend", "gut aussehend");
+            _vorNachteilMapping.Add("unfähigkeit für [talentgruppe] körperlich", "unfähigkeit für talentgruppe (körper)");
+            _vorNachteilMapping.Add("unfähigkeit für [talent]", "unfähigkeit für talent");
+            _vorNachteilMapping.Add("herausragender sinn gehör", "herausragender sinn (gehör)");
+            _vorNachteilMapping.Add("herausragender sinn geruchssinn", "herausragender sinn (geruchssinn)");
+            _vorNachteilMapping.Add("herausragender sinn sicht", "herausragender sinn (sicht)");
+            _vorNachteilMapping.Add("herausragender sinn tastsinn", "herausragender sinn (tastsinn)");
+            _vorNachteilMapping.Add("magiedilletant", "magiedilettant");
+            _vorNachteilMapping.Add("titularadel", "adlig (amtsadel)");
+            _vorNachteilMapping.Add("wolfskind intuitiv", "wolfskind (intuitiv)");
+            _vorNachteilMapping.Add("wolfskind wissentlich", "wolfskind (wissentlich)");
+            _vorNachteilMapping.Add("schlafstörungen 1", "schlafstörungen i");
+            _vorNachteilMapping.Add("schlafstörungen 2", "schlafstörungen ii");
+            _vorNachteilMapping.Add("krankhafte nekromantie", "nekromantismus");
+            _vorNachteilMapping.Add("gesucht 1", "gesucht i");
+            _vorNachteilMapping.Add("gesucht 2", "gesucht ii");
+            _vorNachteilMapping.Add("gesucht 3", "gesucht iii");
+            _vorNachteilMapping.Add("unbewusster viertelzauberer ", "viertelzauberer (unbewusst)");
+            _vorNachteilMapping.Add("eingeschränkter sinn gehör", "eingeschränkter sinn (schwerhörig)");
+            _vorNachteilMapping.Add("eingeschränkter sinn geruchssinn", "eingeschränkter sinn (geruchssinn)");
+            _vorNachteilMapping.Add("eingeschränkter sinn sicht", "eingeschränkter sinn (kurzsichtig)");
+            _vorNachteilMapping.Add("eingeschränkter sinn tastsinn", "eingeschränkter sinn (tastsinn)");
+            _vorNachteilMapping.Add("tolpatsch", "tollpatsch");
         }
 
-        private void SetTalentMapping()
+        private static void SetZauberMapping()
         {
-            _talentMapping.Add("Zweihandhiebwaffen", "Zweihand-Hiebwaffen");
-            _talentMapping.Add("Fallen stellen", "Fallenstellen");
-            _talentMapping.Add("Geografie", "Geographie");
-            _talentMapping.Add("Götter und Kulte", "Götter/Kulte");
-            _talentMapping.Add("Sagen und Legenden", "Sagen/Legenden");
-            _talentMapping.Add("Heilkunde: Gift", "Heilkunde Gift");
-            _talentMapping.Add("Heilkunde: Krankheiten", "Heilkunde Krankheiten");
-            _talentMapping.Add("Heilkunde: Seele", "Heilkunde Seele");
-            _talentMapping.Add("Heilkunde: Wunden", "Heilkunde Wunden");
-            _talentMapping.Add("Kartografie", "Kartographie");
-            _talentMapping.Add("Sprachen Kennen (Alt-Imperial/Aureliani)", "Sprachen Kennen (Aureliani)");
-            _talentMapping.Add("Sprachen Kennen (Urtulamidya)", "Sprachen Kennen (Ur-Tulamidya)");
-            _talentMapping.Add("Lesen/Schreiben ((Alt-)Imperiale Zeichen)", "Lesen/Schreiben (Imperiale Zeichen)");
-            _talentMapping.Add("Lesen/Schreiben (Altes Amulashtra)", "Lesen/Schreiben (Amulashtra)");
-            _talentMapping.Add("Lesen/Schreiben (Chrmk)", "Lesen/Schreiben (Chrmk/Zelemja)");
-            _talentMapping.Add("Lesen/Schreiben (Chuchas)", "Lesen/Schreiben (Chuchas/Yash-Hualay-Glyphen)");
-            _talentMapping.Add("Lesen/Schreiben (Gimaril-Glyphen)", "Lesen/Schreiben (Gimaril)");
-            _talentMapping.Add("Lesen/Schreiben (Urtulamidya)", "Lesen/Schreiben (Ur-Tulamidya)");
-            _talentMapping.Add("Ritualkenntnis: Gildenmagie", "Ritualkenntnis (Gildenmagie)");
-            _talentMapping.Add("Ritualkenntnis: Kristallomantie", "Ritualkenntnis (Kristallomantie)");
-            _talentMapping.Add("Ritualkenntnis: Scharlatan", "Ritualkenntnis (Scharlatanerie)");
-            _talentMapping.Add("Ritualkenntnis: Alchimist", "Ritualkenntnis (Alchimie)");
-            _talentMapping.Add("Ritualkenntnis: Hexe", "Ritualkenntnis (Hexenmagie)");
-            _talentMapping.Add("Ritualkenntnis: Geode", "Ritualkenntnis (Geoden)");
-            _talentMapping.Add("Ritualkenntnis: Druide", "Ritualkenntnis (Druiden)");
-            _talentMapping.Add("Ritualkenntnis: Derwisch", "Ritualkenntnis (Derwische)");
-            _talentMapping.Add("Ritualkenntnis: Durro-Dûn", "Ritualkenntnis (Durro-Dûn)");
-            _talentMapping.Add("Ritualkenntnis: Zaubertänzer", "Ritualkenntnis (Zaubertänze)");
-            _talentMapping.Add("Ritualkenntnis: Zaubertänzer (novadische Sharisad)", "Ritualkenntnis (Zaubertänze)");
-            _talentMapping.Add("Ritualkenntnis: Zaubertänzer (tulamische Sharisad)", "Ritualkenntnis (Zaubertänze)");
-            _talentMapping.Add("Ritualkenntnis: Zaubertänzer (Majuna)", "Ritualkenntnis (Zaubertänze)");
-            _talentMapping.Add("Ritualkenntnis: Zaubertänzer (Hazaqi)", "Ritualkenntnis (Zaubertänze)");
-            _talentMapping.Add("Ritualkenntnis: Zibilja", "Ritualkenntnis (Zibilja)");
-            _talentMapping.Add("Ritualkenntnis: Runenzauberei", "Ritualkenntnis (Runenzauberei)");
-            _talentMapping.Add("Ritualkenntnis: Güldenländisch", "Ritualkenntnis (Güldenländisch)");
-            _talentMapping.Add("Ritualkenntnis: Alhanisch", "Ritualkenntnis (Alhanisch)");
-            _talentMapping.Add("Ritualkenntnis: Kophtanisch", "Ritualkenntnis (Kophtanisch)");
-            _talentMapping.Add("Ritualkenntnis: Mudramulisch", "Ritualkenntnis (Mudramulisch)");
-            _talentMapping.Add("Ritualkenntnis: Satuarisch", "Ritualkenntnis (Satuarisch)");
-            _talentMapping.Add("Ritualkenntnis: Tapasuul", "Ritualkenntnis (Tapasuul)");
-            _talentMapping.Add("Brettspiel", "Brett-/Kartenspiel");
+            _zauberMapping.Add("analys arkanstruktur", "analys arcanstruktur");
+            _zauberMapping.Add("aquafaxius wasserstrahl", "aquafaxius");
+            _zauberMapping.Add("archofaxius erzstrahl", "archofaxius");
+            _zauberMapping.Add("arcanovi artefakt", "arcanovi artefakt (spruchspeicher)");
+            _zauberMapping.Add("brenne toter stoff!", "brenne, toter stoff!");
+            _zauberMapping.Add("chronoautos zeitenfahrt", "chrononautos zeitenfahrt");
+            _zauberMapping.Add("eigenschaft wiederherstellen", "eigenschaften wiederherstellen");
+            _zauberMapping.Add("frigifaxius eisstrahl", "frigifaxius");
+            _zauberMapping.Add("frigisphaero eisball", "frigosphaero");
+            _zauberMapping.Add("gletscherwand", "wand aus eis (gletscherwand)");
+            _zauberMapping.Add("humofaxius humusstrahl", "humofaxius");
+            _zauberMapping.Add("karnifilio raserei", "karnifilo raserei");
+            _zauberMapping.Add("orcanofaxius luftstrahl", "orcanofaxius");
+            _zauberMapping.Add("orcanosphaero orkanball", "orcanosphaero");
+            _zauberMapping.Add("orkanwand", "wand aus luft (orkanwand)");
+            _zauberMapping.Add("planastrale anderswelt", "planastrale anderwelt");
+            _zauberMapping.Add("unsichtbare jäger", "unsichtbarer jäger");
+            _zauberMapping.Add("weiße mähn und goldener huf", "weiße mähn'' und gold''ner huf");
+            _zauberMapping.Add("aquasphaero wasserball", "aquasphaero");
+            _zauberMapping.Add("archosphaero erzball", "archosphaero");
+            _zauberMapping.Add("humosphaero humusball", "humosphaero");
         }
 
-        private string _importPfad = string.Empty;
-        private DatabaseDSADataSet _dsExport;
-        private Held _held;
-
-        private System.Collections.Generic.Dictionary<string, string> _talentMapping = new Dictionary<string, string>();
-        private System.Collections.Generic.Dictionary<string, string> _zauberMapping = new Dictionary<string, string>();
-        private System.Collections.Generic.Dictionary<string, string> _vorNachteilMapping = new Dictionary<string, string>();
-        private System.Collections.Generic.Dictionary<string, string> _sonderfertigkeitMapping = new Dictionary<string, string>();
-
-        private System.Collections.Generic.List<string> _importLog = new List<string>();
-
-        private XmlDocument _xmlDoc = new XmlDocument();
+        private static void SetTalentMapping()
+        {
+            _talentMapping.Add("zweihandhiebwaffen", "zweihand-hiebwaffen");
+            _talentMapping.Add("fallen stellen", "fallenstellen");
+            _talentMapping.Add("geografie", "geographie");
+            _talentMapping.Add("götter und kulte", "götter/kulte");
+            _talentMapping.Add("sagen und legenden", "sagen/legenden");
+            _talentMapping.Add("sich verstecken", "sich verstecken");
+            _talentMapping.Add("heilkunde: gift", "heilkunde gift");
+            _talentMapping.Add("heilkunde: krankheiten", "heilkunde krankheiten");
+            _talentMapping.Add("heilkunde: seele", "heilkunde seele");
+            _talentMapping.Add("heilkunde: wunden", "heilkunde wunden");
+            _talentMapping.Add("kartografie", "kartographie");
+            _talentMapping.Add("sprachen kennen (alt-imperial/aureliani)", "sprachen kennen (aureliani)");
+            _talentMapping.Add("sprachen kennen (urtulamidya)", "sprachen kennen (ur-tulamidya)");
+            _talentMapping.Add("lesen/schreiben ((alt-)imperiale zeichen)", "lesen/schreiben (imperiale zeichen)");
+            _talentMapping.Add("lesen/schreiben (altes amulashtra)", "lesen/schreiben (amulashtra)");
+            _talentMapping.Add("lesen/schreiben (chrmk)", "lesen/schreiben (chrmk/zelemja)");
+            _talentMapping.Add("lesen/schreiben (chuchas)", "lesen/schreiben (chuchas/yash-hualay-glyphen)");
+            _talentMapping.Add("lesen/schreiben (gimaril-glyphen)", "lesen/schreiben (gimaril)");
+            _talentMapping.Add("lesen/schreiben (urtulamidya)", "lesen/schreiben (ur-tulamidya)");
+            _talentMapping.Add("ritualkenntnis: gildenmagie", "ritualkenntnis (gildenmagie)");
+            _talentMapping.Add("ritualkenntnis: kristallomantie", "ritualkenntnis (kristallomantie)");
+            _talentMapping.Add("ritualkenntnis: scharlatan", "ritualkenntnis (scharlatanerie)");
+            _talentMapping.Add("ritualkenntnis: alchimist", "ritualkenntnis (alchimie)");
+            _talentMapping.Add("ritualkenntnis: hexe", "ritualkenntnis (hexenmagie)");
+            _talentMapping.Add("ritualkenntnis: geode", "ritualkenntnis (geoden)");
+            _talentMapping.Add("ritualkenntnis: druide", "ritualkenntnis (druiden)");
+            _talentMapping.Add("ritualkenntnis: derwisch", "ritualkenntnis (derwische)");
+            _talentMapping.Add("ritualkenntnis: durro-dûn", "ritualkenntnis (durro-dûn)");
+            _talentMapping.Add("ritualkenntnis: zaubertänzer", "ritualkenntnis (zaubertänze)");
+            _talentMapping.Add("ritualkenntnis: zaubertänzer (novadische sharisad)", "ritualkenntnis (zaubertänze)");
+            _talentMapping.Add("ritualkenntnis: zaubertänzer (tulamische sharisad)", "ritualkenntnis (zaubertänze)");
+            _talentMapping.Add("ritualkenntnis: zaubertänzer (majuna)", "ritualkenntnis (zaubertänze)");
+            _talentMapping.Add("ritualkenntnis: zaubertänzer (hazaqi)", "ritualkenntnis (zaubertänze)");
+            _talentMapping.Add("ritualkenntnis: zibilja", "ritualkenntnis (zibilja)");
+            _talentMapping.Add("ritualkenntnis: runenzauberei", "ritualkenntnis (runenzauberei)");
+            _talentMapping.Add("ritualkenntnis: güldenländisch", "ritualkenntnis (güldenländisch)");
+            _talentMapping.Add("ritualkenntnis: alhanisch", "ritualkenntnis (alhanisch)");
+            _talentMapping.Add("ritualkenntnis: kophtanisch", "ritualkenntnis (kophtanisch)");
+            _talentMapping.Add("ritualkenntnis: mudramulisch", "ritualkenntnis (mudramulisch)");
+            _talentMapping.Add("ritualkenntnis: satuarisch", "ritualkenntnis (satuarisch)");
+            _talentMapping.Add("ritualkenntnis: tapasuul", "ritualkenntnis (tapasuul)");
+            _talentMapping.Add("brettspiel", "brett-/kartenspiel");
+        }
+        #endregion
 
         /// <summary>
         /// Konvertiert den key von Heldensoftware in eine Guid, die den key erhält.
@@ -267,26 +285,38 @@ namespace MeisterGeister.Logic.HeldenImport
             return s;
         }
 
-        public void ImportHeldenSoftwareFile()
+        public static void ImportHeldenSoftwareFile(string _importPfad)
         {
-            _importLog.Clear();
+            ImportHeldenSoftwareFile(_importPfad, Guid.Empty);
+        }
+
+        public static Held ImportHeldenSoftwareFile(string _importPfad, Guid newGuid)
+        {
+            System.Collections.Generic.List<string> _importLog = new List<string>();
+            XmlDocument _xmlDoc = new XmlDocument();
             _xmlDoc.Load(_importPfad);
 
-            var rowHeld = _dsExport.Held.NewHeldRow();
-
+            string name = null;
+            Guid heldGuid = Guid.Empty;
             var held = _xmlDoc.GetElementsByTagName("held");
             if (held.Count == 1)
             {
                 // Name
-                rowHeld.Name = held[0].Attributes["name"].Value.Trim();
+                name = held[0].Attributes["name"].Value.Trim();
                 if (held[0].Attributes["key"] != null)
                 {
                     string key = held[0].Attributes["key"].Value.Trim();
-                    _held.HeldDataRow.HeldGUID = KeyToGuid(key);
+                    heldGuid = KeyToGuid(key);
                 }
             }
             else // keine oder mehrere Helden in Datei
-                return;
+                return null;
+
+            Held _held = new Held();
+            if (newGuid != Guid.Empty)
+                heldGuid = newGuid;
+            _held.HeldGUID = heldGuid;
+            _held.Name = name;
 
             // Rasse
             XmlNodeList rassen = _xmlDoc.SelectNodes("helden/held/basis/rasse");
@@ -295,11 +325,11 @@ namespace MeisterGeister.Logic.HeldenImport
 
             foreach (XmlNode rasse in rassen)
             {
-                if (rowHeld.IsRasseNull())
-                    rowHeld.Rasse = string.Empty;
-                if (rowHeld.Rasse != string.Empty)
-                    rowHeld.Rasse += ", ";
-                rowHeld.Rasse += rasse.Attributes["string"].Value;
+                if (_held.Rasse == null)
+                    _held.Rasse = string.Empty;
+                if (_held.Rasse != string.Empty)
+                    _held.Rasse += ", ";
+                _held.Rasse += rasse.Attributes["string"].Value;
             }
             // Kultur
             XmlNodeList kulturen = _xmlDoc.SelectNodes("helden/held/basis/kultur");
@@ -308,11 +338,11 @@ namespace MeisterGeister.Logic.HeldenImport
 
             foreach (XmlNode kultur in kulturen)
             {
-                if (rowHeld.IsKulturNull())
-                    rowHeld.Kultur = string.Empty;
-                if (rowHeld.Kultur != string.Empty)
-                    rowHeld.Kultur += ", ";
-                rowHeld.Kultur += kultur.Attributes["string"].Value;
+                if (_held.Kultur == null)
+                    _held.Kultur = string.Empty;
+                if (_held.Kultur != string.Empty)
+                    _held.Kultur += ", ";
+                _held.Kultur += kultur.Attributes["string"].Value;
             }
             // Profession
             XmlNodeList professionen = _xmlDoc.SelectNodes("helden/held/basis/ausbildungen/ausbildung");
@@ -321,13 +351,13 @@ namespace MeisterGeister.Logic.HeldenImport
 
             foreach (XmlNode prof in professionen)
             {
-                if (rowHeld.IsProfessionNull())
-                    rowHeld.Profession = string.Empty;
-                if (rowHeld.Profession != string.Empty)
-                    rowHeld.Profession += " / ";
-                rowHeld.Profession += prof.Attributes["string"].Value;
+                if (_held.Profession == null)
+                    _held.Profession = string.Empty;
+                if (_held.Profession != string.Empty)
+                    _held.Profession += " / ";
+                _held.Profession += prof.Attributes["string"].Value;
                 if (professionen.Count > 1)
-                    rowHeld.Profession += " (" + prof.Attributes["art"].Value + ")";
+                    _held.Profession += " (" + prof.Attributes["art"].Value + ")";
             }
 
             // Bild
@@ -337,7 +367,7 @@ namespace MeisterGeister.Logic.HeldenImport
 
             if (bild != null)
             {
-                rowHeld.BildLink = bild.Attributes["value"].Value;
+                _held.BildLink = bild.Attributes["value"].Value;
             }
 
             // Eigenschaften
@@ -363,71 +393,82 @@ namespace MeisterGeister.Logic.HeldenImport
                 switch (eigenschaft.Attributes["name"].Value)
                 {
                     case "Mut":
-                        rowHeld.MU = wert + mod;
+                        _held.MU = wert + mod;
                         break;
                     case "Klugheit":
-                        rowHeld.KL = wert + mod;
+                        _held.KL = wert + mod;
                         break;
                     case "Intuition":
-                        rowHeld.IN = wert + mod;
+                        _held.IN = wert + mod;
                         break;
                     case "Charisma":
-                        rowHeld.CH = wert + mod;
+                        _held.CH = wert + mod;
                         break;
                     case "Fingerfertigkeit":
-                        rowHeld.FF = wert + mod;
+                        _held.FF = wert + mod;
                         break;
                     case "Gewandtheit":
-                        rowHeld.GE = wert + mod;
+                        _held.GE = wert + mod;
                         break;
                     case "Konstitution":
-                        rowHeld.KO = wert + mod;
+                        _held.KO = wert + mod;
                         break;
                     case "Körperkraft":
-                        rowHeld.KK = wert + mod;
+                        _held.KK = wert + mod;
                         break;
                     case "Sozialstatus":
-                        rowHeld.SO = wert + mod;
+                        _held.SO = wert + mod;
                         break;
                     case "Lebensenergie":
-                        rowHeld.LE_Mod = wert + mod;
+                        _held.LE_Mod = wert + mod;
                         break;
                     case "Ausdauer":
-                        rowHeld.AU_Mod = wert + mod;
+                        _held.AU_Mod = wert + mod;
                         break;
                     case "Astralenergie":
-                        rowHeld.AE_Mod = wert + mod;
+                        _held.AE_Mod = wert + mod;
                         break;
                     case "Karmaenergie":
-                        rowHeld.KE_Mod = wert + mod;
+                        _held.KE_Mod = wert + mod;
                         break;
                     case "Magieresistenz":
-                        rowHeld.MR_Mod = wert + mod;
+                        _held.MR_Mod = wert + mod;
                         break;
                     default:
                         break;
                 }
             }
-            _dsExport.Held.AddHeldRow(rowHeld);
-            _dsExport.Held[0].HeldGUID = _held.Id;
 
             // Vor-/Nachteile
-            ImportVorNachteile();
+            ImportVorNachteile(_xmlDoc, _held, _importLog);
 
             // Sonderfertigkeiten
-            ImportSonderfertigkeiten();
+            ImportSonderfertigkeiten(_xmlDoc, _held, _importLog);
 
             // Talente
-            ImportTalente();
+            ImportTalente(_xmlDoc, _held, _importLog);
 
             // Zauber
-            ImportZauber();
+            ImportZauber(_xmlDoc, _held, _importLog);
+
+            // Inventar
+            ImportInventar(_xmlDoc, _held, _importLog);
+
+            Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
+            if (!serializer.InsertOrUpdateHeld(_held))
+            {
+                //FEHLER! Held konnte nicht in die Datenbank eingefügt werden.
+                throw new Exception("Held konnte nicht in die Datenbank eingefügt werden.");
+            }
+            Global.ContextHeld.UpdateList<Held>();
 
             // Import-Log erzeugen
-            ShowLogWindow();
+            ShowLogWindow(_importPfad, _importLog);
+
+            return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
 
-        private void ImportZauber()
+        private static void ImportZauber(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
         {
             int wert;
             string zauberName = string.Empty;
@@ -452,7 +493,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 if (zauber.Attributes["repraesentation"] != null)
                 {
                     rep = zauber.Attributes["repraesentation"].Value;
-                    rep = Repräsentationen.GetKürzel(Repräsentationen.GetName(rep));
+                    rep = Logic.General.Repräsentationen.GetKürzel(Logic.General.Repräsentationen.GetName(rep));
                 }
                 if (zauber.Attributes["variante"] != null && zauber.Attributes["variante"].Value != string.Empty)
                 {
@@ -463,33 +504,36 @@ namespace MeisterGeister.Logic.HeldenImport
                         zauberName += " (" + variante + ")";
                 }
 
-                var z = App.DatenDataSet.Zauber.Select("Name LIKE '" + zauberName + "%'");
-                if (z == null || z.Length == 0)
+
+                Zauber z = Global.ContextHeld.LoadZauberByName(zauberName);
+                if (z == null)
                 { // Zauber wurde nicht gefunden, evtl. Konvertierung möglich
-                    if (_zauberMapping.ContainsKey(zauberName))
+                    if (_zauberMapping.ContainsKey(zauberName.ToLowerInvariant()))
                     {
-                        z = App.DatenDataSet.Zauber.Select("Name LIKE '" + _zauberMapping[zauberName] + "%'");
+                        z = Global.ContextHeld.LoadZauberByName(_zauberMapping[zauberName.ToLowerInvariant()]);
                     }
                     else
                         added = false;
                 }
 
-                if (z != null && z.Length > 0)
+                if (z != null)
                 {
-                    MeisterGeister.Daten.DatabaseDSADataSet.ZauberRow zRow = (MeisterGeister.Daten.DatabaseDSADataSet.ZauberRow)z[0];
-                    if (_dsExport.Held_Zauber.FindByHeldGUIDZauberIDRepräsentation(_dsExport.Held[0].HeldGUID, zRow.ZauberID, rep) == null)
-                    {
-                        _dsExport.Held_Zauber.AddHeld_ZauberRow(_dsExport.Held[0], zRow, wert, rep, bemerkung, zRow.Name);
-                        added = true;
-                    }
+                    Held_Zauber hz = new Held_Zauber();
+                    hz.HeldGUID = _held.HeldGUID;
+                    hz.ZauberID = z.ZauberID;
+                    hz.Repräsentation = rep;
+                    hz.ZfW = wert;
+                    hz.Bemerkung = bemerkung;
+                    _held.Held_Zauber.Add(hz);
+                    added = true;
                 }
 
                 if (!added) // Import nicht möglich
-                    AddImportLog(ImportTypen.Zauber, string.Format("{0} [{1}]", zauberName, rep), wert);
+                    AddImportLog(ImportTypen.Zauber, string.Format("{0} [{1}]", zauberName, rep), wert, _importLog);
             }
         }
 
-        private void ImportTalente()
+        private static void ImportTalente(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
         {
             int wert;
             int atZuteilung = 0;
@@ -550,20 +594,32 @@ namespace MeisterGeister.Logic.HeldenImport
                 else
                     wert = 0;
 
-                var t = App.DatenDataSet.Talent.FindByTalentname(talentName);
+                Talent t = Global.ContextHeld.LoadTalentByName(talentName);
                 if (t != null)
                 {
-                    _dsExport.Held_Talent.AddHeld_TalentRow(t, wert, _dsExport.Held[0], null, atZuteilung, paZuteilung, t.TalentgruppeID);
+                    Held_Talent ht = new Held_Talent();
+                    ht.HeldGUID = _held.HeldGUID;
+                    ht.Talentname = t.Talentname;
+                    ht.TaW = wert;
+                    ht.ZuteilungAT = atZuteilung;
+                    ht.ZuteilungPA = paZuteilung;
+                    _held.Held_Talent.Add(ht);
                     added = true;
                 }
                 else
                 { // Talent wurde nicht gefunden, evtl. Konvertierung möglich
-                    if (_talentMapping.ContainsKey(talentName))
+                    if (_talentMapping.ContainsKey(talentName.ToLowerInvariant()))
                     {
-                        t = App.DatenDataSet.Talent.FindByTalentname(_talentMapping[talentName]);
+                        t = Global.ContextHeld.LoadTalentByName(_talentMapping[talentName.ToLowerInvariant()]);
                         if (t != null)
                         {
-                            _dsExport.Held_Talent.AddHeld_TalentRow(t, wert, _dsExport.Held[0], null, 0, 0, t.TalentgruppeID);
+                            Held_Talent ht = new Held_Talent();
+                            ht.HeldGUID = _held.HeldGUID;
+                            ht.Talentname = t.Talentname;
+                            ht.TaW = wert;
+                            ht.ZuteilungAT = atZuteilung;
+                            ht.ZuteilungPA = paZuteilung;
+                            _held.Held_Talent.Add(ht);
                             added = true;
                         }
                         else
@@ -573,11 +629,11 @@ namespace MeisterGeister.Logic.HeldenImport
                         added = false;
                 }
                 if (!added) // Import nicht möglich
-                    AddImportLog(ImportTypen.Talent, talentName, wert);
+                    AddImportLog(ImportTypen.Talent, talentName, wert, _importLog);
             }
         }
 
-        private void ImportSonderfertigkeiten()
+        private static void ImportSonderfertigkeiten(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
         {
             string sfName = string.Empty;
             string wertString = string.Empty;
@@ -616,12 +672,12 @@ namespace MeisterGeister.Logic.HeldenImport
                     foreach (XmlNode s in subNodes)
                     {
                         string sfNameNeu = string.Format("{0} ({1})", sfName, s.Attributes["name"].Value);
-                        if (_sonderfertigkeitMapping.ContainsKey(sfNameNeu))
-                            sfNameNeu = _sonderfertigkeitMapping[sfNameNeu];
+                        if (_sonderfertigkeitMapping.ContainsKey(sfNameNeu.ToLowerInvariant()))
+                            sfNameNeu = _sonderfertigkeitMapping[sfNameNeu.ToLowerInvariant()];
 
-                        added = AddSonderfertigkeit(sfNameNeu, wertString);
+                        added = AddSonderfertigkeit(sfNameNeu, wertString, _held);
                         if (!added) // Import nicht mögliche
-                            AddImportLog(ImportTypen.Sonderfertigkeit, sfName, s.Attributes["name"].Value);
+                            AddImportLog(ImportTypen.Sonderfertigkeit, sfName, s.Attributes["name"].Value, _importLog);
                     }
                     continue;
                 }
@@ -636,58 +692,58 @@ namespace MeisterGeister.Logic.HeldenImport
                     XmlNodeList subNodes = _xmlDoc.SelectNodes(string.Format("{2}[contains(@name,'{0}')]/{1}", sfName, sub, sfXpath));
                     foreach (XmlNode s in subNodes)
                     {
-                        added = AddSonderfertigkeit(sfName, s.Attributes["name"].Value);
+                        added = AddSonderfertigkeit(sfName, s.Attributes["name"].Value, _held);
                         if (!added) // Import nicht mögliche
-                            AddImportLog(ImportTypen.Sonderfertigkeit, sfName, s.Attributes["name"].Value);
+                            AddImportLog(ImportTypen.Sonderfertigkeit, sfName, s.Attributes["name"].Value, _importLog);
                     }
                     continue;
                 }
                 // Talentspezialisierung
                 if (!added && sfName.StartsWith("Talentspezialisierung"))
-                    added = AddSonderfertigkeit("Talentspezialisierung", sfName.Replace("Talentspezialisierung ", null));
+                    added = AddSonderfertigkeit("Talentspezialisierung", sfName.Replace("Talentspezialisierung ", null), _held);
                 // Zauberspezialisierung
                 if (!added && sfName.StartsWith("Zauberspezialisierung"))
-                    added = AddSonderfertigkeit("Zauberspezialisierung", sfName.Replace("Zauberspezialisierung ", null));
+                    added = AddSonderfertigkeit("Zauberspezialisierung", sfName.Replace("Zauberspezialisierung ", null), _held);
                 // Ritualkenntnis (Schamanentradition)
                 if (!added && sfName.StartsWith("Ritualkenntnis"))
-                    added = AddSonderfertigkeit(sfName.Replace("Ritualkenntnis: ", "Ritualkenntnis (") + ")", wertString);
+                    added = AddSonderfertigkeit(sfName.Replace("Ritualkenntnis: ", "Ritualkenntnis (") + ")", wertString, _held);
                 // Waffenlose Kampftechniken
                 if (!added && sfName.StartsWith("Waffenloser Kampfstil"))
-                    added = AddSonderfertigkeit(sfName.Replace("Waffenloser Kampfstil: ", "Waffenlose Kampftechnik (") + ")", wertString);
+                    added = AddSonderfertigkeit(sfName.Replace("Waffenloser Kampfstil: ", "Waffenlose Kampftechnik (") + ")", wertString, _held);
                 if (!added && sfName.StartsWith("Merkmalskenntnis"))
-                    added = AddSonderfertigkeit(sfName.Replace("Merkmalskenntnis: ", "Merkmalskenntnis (") + ")", wertString); // Merkmalskenntnis
+                    added = AddSonderfertigkeit(sfName.Replace("Merkmalskenntnis: ", "Merkmalskenntnis (") + ")", wertString, _held); // Merkmalskenntnis
                 if (!added && sfName.StartsWith("Gabe des Odûn"))
-                    added = AddSonderfertigkeit(sfName.Replace("Gabe des Odûn", "Odûn-Gabe"), wertString); // Odûn-Gabe
+                    added = AddSonderfertigkeit(sfName.Replace("Gabe des Odûn", "Odûn-Gabe"), wertString, _held); // Odûn-Gabe
                 if (!added && sfName.StartsWith("Ritual:"))
-                    added = AddSonderfertigkeit(sfName.Replace("Ritual:", "Schamanenritual:"), wertString); // Schamanenritual
+                    added = AddSonderfertigkeit(sfName.Replace("Ritual:", "Schamanenritual:"), wertString, _held); // Schamanenritual
                 if (!added)
-                    added = AddSonderfertigkeit(sfName, wertString);
+                    added = AddSonderfertigkeit(sfName, wertString, _held);
                 if (!added)
-                    added = AddSonderfertigkeit(string.Format("Waffenloses Manöver ({0})", sfName), wertString); // Waffenlose Manöver
+                    added = AddSonderfertigkeit(string.Format("Waffenloses Manöver ({0})", sfName), wertString, _held); // Waffenlose Manöver
                 if (!added)
-                    added = AddSonderfertigkeit(string.Format("Geländekunde ({0})", sfName), wertString); // Geländekunden
+                    added = AddSonderfertigkeit(string.Format("Geländekunde ({0})", sfName), wertString, _held); // Geländekunden
 
                 if (!added)
                 {
-                    if (_sonderfertigkeitMapping.ContainsKey(sfName))
-                        added = AddSonderfertigkeit(_sonderfertigkeitMapping[sfName], wertString);
+                    if (_sonderfertigkeitMapping.ContainsKey(sfName.ToLowerInvariant()))
+                        added = AddSonderfertigkeit(_sonderfertigkeitMapping[sfName.ToLowerInvariant()], wertString, _held);
                 }
                 // Sonderfertigkeit wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
                 if (!added)
-                    added = AddSonderfertigkeit(sfName + " " + wertString, null);
+                    added = AddSonderfertigkeit(sfName + " " + wertString, null, _held);
                 // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
                 if (!added)
                 {
-                    if (_sonderfertigkeitMapping.ContainsKey(sfName + " " + wertString))
-                        added = AddSonderfertigkeit(_sonderfertigkeitMapping[sfName + " " + wertString], null);
+                    if (_sonderfertigkeitMapping.ContainsKey((sfName + " " + wertString).ToLowerInvariant()))
+                        added = AddSonderfertigkeit(_sonderfertigkeitMapping[(sfName + " " + wertString).ToLowerInvariant()], null, _held);
                 }
 
                 if (!added) // Import nicht mögliche
-                    AddImportLog(ImportTypen.Sonderfertigkeit, sfName, wertString);
+                    AddImportLog(ImportTypen.Sonderfertigkeit, sfName, wertString, _importLog);
             }
         }
 
-        private void ImportVorNachteile()
+        private static void ImportVorNachteile(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
         {
             string vorNachteilName = string.Empty;
             string wertString = string.Empty;
@@ -711,98 +767,113 @@ namespace MeisterGeister.Logic.HeldenImport
                 bool added = false;
 
                 if (!added && vorNachteilName == "Begabung für [Merkmal]")
-                    added = AddVorNachteil(string.Format("Begabung für Merkmal ({0})", wertString), null); // Begabung für Merkmal
+                    added = AddVorNachteil(string.Format("Begabung für Merkmal ({0})", wertString), null, _held); // Begabung für Merkmal
                 else if (!added && vorNachteilName == "Begabung für [Talentgruppe]")
-                    added = AddVorNachteil(string.Format("Begabung für Talentgruppe ({0})", (wertString == "Körperlich" ? "Körper" : wertString)), null); // Begabung für Talentgruppe
+                    added = AddVorNachteil(string.Format("Begabung für Talentgruppe ({0})", (wertString == "Körperlich" ? "Körper" : wertString)), null, _held); // Begabung für Talentgruppe
                 else if (!added && vorNachteilName == "Unfähigkeit für [Merkmal]")
-                    added = AddVorNachteil(string.Format("Unfähigkeit für Merkmal ({0})", wertString), null); // Unfähigkeit für Merkmal
+                    added = AddVorNachteil(string.Format("Unfähigkeit für Merkmal ({0})", wertString), null, _held); // Unfähigkeit für Merkmal
                 else if (!added && vorNachteilName == "Unfähigkeit für [Talentgruppe]")
-                    added = AddVorNachteil(string.Format("Unfähigkeit für Talentgruppe ({0})", wertString), null); // Unfähigkeit für Talentgruppe
+                    added = AddVorNachteil(string.Format("Unfähigkeit für Talentgruppe ({0})", wertString), null, _held); // Unfähigkeit für Talentgruppe
                 else if (!added && vorNachteilName.StartsWith("Angst vor")) // Angst vor...
                 {
                     string[] angstVorTeile = vorNachteilName.Split(' ');
                     string angstVor = angstVorTeile[2] + string.Format(" ({0})", wertString);
-                    added = AddVorNachteil("Angst vor", angstVor);
+                    added = AddVorNachteil("Angst vor", angstVor, _held);
                 }
                 else if (!added && vorNachteilName == "Vorurteile (stark)") // Vorurteile (stark)...
-                    added = AddVorNachteil("Vorurteile", string.Format("stark ({0})", vorNachteil.Attributes["value"].Value));
+                    added = AddVorNachteil("Vorurteile", string.Format("stark ({0})", vorNachteil.Attributes["value"].Value), _held);
                 else if (!added && vorNachteilName.StartsWith("Moralkodex")) // Moralkodex
-                    added = AddVorNachteil("Moralkodex Kirche", vorNachteilName.Replace("Moralkodex [", null).TrimEnd(']'));
+                    added = AddVorNachteil("Moralkodex Kirche", vorNachteilName.Replace("Moralkodex [", null).TrimEnd(']'), _held);
                 else if (!added && (vorNachteilName.StartsWith("Herausragende Eigenschaft")
                     || vorNachteilName.StartsWith("Miserable Eigenschaft"))) // Herausragende/Miserable Eigenschaft
                 {
                     string eigenschaft = vorNachteilName.Split(':')[1].Trim();
-                    string eigenschaftKürzel = Eigenschaften.GetKürzel(eigenschaft);
+                    string eigenschaftKürzel = Eigenschaft.GetAbkürzung(eigenschaft);
                     if (vorNachteilName.StartsWith("Herausragende Eigenschaft"))
                         added = AddVorNachteil(vorNachteilName.Replace("Herausragende Eigenschaft: ", "Herausragende Eigenschaft (")
-                            .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString);
+                            .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString, _held);
                     else
                         added = AddVorNachteil(vorNachteilName.Replace("Miserable Eigenschaft: ", "Miserable Eigenschaft (")
-                            .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString);
+                            .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString, _held);
                 }
 
                 if (!added)
-                    added = AddVorNachteil(vorNachteilName, wertString);
+                    added = AddVorNachteil(vorNachteilName, wertString, _held);
 
                 // Vor-/Nachteil wurde nicht gefunden, evtl. Mapping möglich
                 if (!added)
                 {
-                    if (_vorNachteilMapping.ContainsKey(vorNachteilName))
-                        added = AddVorNachteil(_vorNachteilMapping[vorNachteilName], wertString);
+                    if (_vorNachteilMapping.ContainsKey(vorNachteilName.ToLowerInvariant()))
+                        added = AddVorNachteil(_vorNachteilMapping[vorNachteilName.ToLowerInvariant()], wertString, _held);
                 }
                 // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
                 if (!added)
-                    added = AddVorNachteil(vorNachteilName + " " + wertString, null);
+                    added = AddVorNachteil(vorNachteilName + " " + wertString, null, _held);
                 // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
                 if (!added)
                 {
-                    if (_vorNachteilMapping.ContainsKey(vorNachteilName + " " + wertString))
-                        added = AddVorNachteil(_vorNachteilMapping[vorNachteilName + " " + wertString], null);
+                    if (_vorNachteilMapping.ContainsKey((vorNachteilName + " " + wertString).ToLowerInvariant()))
+                        added = AddVorNachteil(_vorNachteilMapping[(vorNachteilName + " " + wertString).ToLowerInvariant()], null, _held);
                 }
 
                 if (!added) // Import nicht möglich
-                    AddImportLog(ImportTypen.VorNachteil, vorNachteilName, wertString);
+                    AddImportLog(ImportTypen.VorNachteil, vorNachteilName, wertString, _importLog);
             }
         }
 
-        private bool AddVorNachteil(string vorNachteilName, string wertString)
+        private static bool AddVorNachteil(string vorNachteilName, string wertString, Held _held)
         {
-            var sf = App.DatenDataSet.VorNachteil.Select("Name = '" + vorNachteilName.Replace("'", "''") + "'");
-            if (sf != null && sf.Length > 0)
+            VorNachteil vn = Global.ContextHeld.LoadVorNachteilByName(vorNachteilName);
+            if (vn != null)
             {
-                var vorNachteilRow = App.DatenDataSet.VorNachteil.FindByVorNachteilID(Convert.ToInt32(sf[0]["VorNachteilID"]));
-                var vorNachteilHeldRow = _dsExport.Held_VorNachteil.FindByHeldGUIDVorNachteilID(_held.Id, vorNachteilRow.VorNachteilID);
-                if (vorNachteilHeldRow == null)
-                    _dsExport.Held_VorNachteil.AddHeld_VorNachteilRow(_dsExport.Held[0], vorNachteilRow, wertString, vorNachteilRow.Name, vorNachteilRow.Typ);
+                Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilID == vn.VorNachteilID).FirstOrDefault();
+                if (hvn == null)
+                {
+                    hvn = new Held_VorNachteil();
+                    hvn.HeldGUID = _held.HeldGUID;
+                    hvn.VorNachteilID = vn.VorNachteilID;
+                    hvn.Wert = wertString;
+                    _held.Held_VorNachteil.Add(hvn);
+                }
                 else // Vor-Nachteil bereits vorhanden
                 {
-                    if ((vorNachteilHeldRow.Wert + ", " + wertString).Length > App.DatenDataSet.Held_VorNachteil.WertColumn.MaxLength)
+                    if ((hvn.Wert + ", " + wertString).Length > 255)
                         return false;
-                    vorNachteilHeldRow.Wert += ", " + wertString;
+                    hvn.Wert += ", " + wertString;
                 }
                 return true;
             }
             return false;
         }
 
-        private bool AddSonderfertigkeit(string sfName, string wertString = null)
+        private static bool AddSonderfertigkeit(string sfName, Held _held)
         {
-            var sf = App.DatenDataSet.Sonderfertigkeit.Select("Name = '" + sfName.Replace("'", "''") + "'");
-            if (sf != null && sf.Length > 0)
+            return AddSonderfertigkeit(sfName, null, _held);
+        }
+        private static bool AddSonderfertigkeit(string sfName, string wertString, Held _held)
+        {
+            Sonderfertigkeit sf = Global.ContextHeld.LoadSonderfertigkeitByName(sfName);
+            if (sf != null)
             {
-                var sfRow = App.DatenDataSet.Sonderfertigkeit.FindBySonderfertigkeitID(Convert.ToInt32(sf[0]["SonderfertigkeitID"]));
-                var sfHeldRow = _dsExport.Held_Sonderfertigkeit.FindByHeldGUIDSonderfertigkeitID(_held.Id, sfRow.SonderfertigkeitID);
-                if (sfHeldRow == null)
-                    _dsExport.Held_Sonderfertigkeit.AddHeld_SonderfertigkeitRow(_dsExport.Held[0], sfRow, wertString, string.Empty, string.Empty);
-                else // Sonderfertigkeit bereits vorhanden
+                Held_Sonderfertigkeit hs = null;
+                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitID == sf.SonderfertigkeitID).FirstOrDefault();
+                if (hs == null)
                 {
-                    if (sfHeldRow.IsWertNull())
-                        sfHeldRow.Wert = wertString;
+                    hs = new Held_Sonderfertigkeit();
+                    hs.HeldGUID = _held.HeldGUID;
+                    hs.SonderfertigkeitID = sf.SonderfertigkeitID;
+                    hs.Wert = wertString;
+                    _held.Held_Sonderfertigkeit.Add(hs);
+                }
+                else //Sonderfertigkeit bereits vorhanden
+                {
+                    if (hs.Wert == null || hs.Wert == String.Empty)
+                        hs.Wert = wertString;
                     else
                     {
-                        if ((sfHeldRow.Wert + ", " + wertString).Length > App.DatenDataSet.Held_Sonderfertigkeit.WertColumn.MaxLength)
+                        if ((hs.Wert + ", " + wertString).Length > 1200)
                             return false;
-                        sfHeldRow.Wert += ", " + wertString;
+                        hs.Wert += ", " + wertString;
                     }
                 }
                 return true;
@@ -810,7 +881,7 @@ namespace MeisterGeister.Logic.HeldenImport
             return false;
         }
 
-        private void AddImportLog(ImportTypen typ, string name, object wert)
+        private static void AddImportLog(ImportTypen typ, string name, object wert, System.Collections.Generic.List<string> _importLog)
         {
             string typString = string.Empty;
             string hinweis = string.Empty;
@@ -828,6 +899,9 @@ namespace MeisterGeister.Logic.HeldenImport
                 case ImportTypen.Zauber:
                     typString = "Zauber: ";
                     break;
+                case ImportTypen.Gegenstand:
+                    typString = "Gegenstand: ";
+                    break;
                 default:
                     break;
             }
@@ -835,7 +909,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _importLog.Add(string.Format("{0}{1} {2} {3}", typString, name, wert, hinweis));
         }
 
-        private void ShowLogWindow()
+        private static void ShowLogWindow(string _importPfad, System.Collections.Generic.List<string> _importLog)
         {
             if (_importLog.Count > 0)
             {
@@ -849,13 +923,203 @@ namespace MeisterGeister.Logic.HeldenImport
                 System.Windows.Controls.TextBox txtLog = new System.Windows.Controls.TextBox();
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
-                txtLog.Text = _importPfad 
-                    + "\n\nEinige Werte konnten nicht importiert werden. Wenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, sende bitte die Helden-XML-Datei an 'info@meistergeister.org' oder melde das Problem im Forum (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
+                txtLog.Text = _importPfad
+                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet werden, konnten denen in unserer Datenbank nicht zugeordnet wereden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, sende bitte die Helden-XML-Datei an 'info@meistergeister.org' oder melde das Problem im Forum (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;
                 gui.Content = txtLog;
                 gui.Show();
+            }
+        }
+
+        public static bool IsHeldenSoftwareFile(string xmlFile)
+        {
+            System.IO.FileStream fs = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                sr = new System.IO.StreamReader(fs);
+                for (int i = 1; i <= 7 && !sr.EndOfStream; i++)
+                {
+                    string line = sr.ReadLine();
+                    if (line.Contains("helden.xsd"))
+                        return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (sr != null)
+                    sr.Close();
+                if (fs != null)
+                    fs.Close();
+            }
+            return false;
+        }
+
+        public static Guid GetGuidFromFile(string xmlFile)
+        {
+            string key = GetKeyFromFile(xmlFile);
+            if (key == null)
+                return Guid.Empty;
+            return KeyToGuid(key);
+        }
+
+        public static string GetKeyFromFile(string xmlFile)
+        {
+            System.IO.FileStream fs = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                sr = new System.IO.StreamReader(fs);
+                for (int i = 1; i <= 6 && !sr.EndOfStream; i++)
+                {
+                    string line = sr.ReadLine();
+                    if (line != null && line.Contains("<held "))
+                    {
+                        System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex("key=\"(\\w+)\"");
+                        System.Text.RegularExpressions.Match match = re.Match(line);
+                        return match.Groups[1].Value;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (sr != null)
+                    sr.Close();
+                if (fs != null)
+                    fs.Close();
+            }
+            return null;
+        }
+
+        private static void ImportInventar(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
+        {
+            string name = string.Empty;
+            double gewicht = 0.0;
+            double preis = 0.0;
+            int anzahl = 0;
+            string vtXpath = "helden/held/gegenstand";
+            XmlNodeList gegenstaende = _xmlDoc.SelectNodes(vtXpath);
+
+            foreach (XmlNode gegenstand in gegenstaende)
+            {
+                name = gegenstand.Attributes["name"].Value.Trim();
+                if (!Int32.TryParse(gegenstand.Attributes["anzahl"].Value.Trim(), out anzahl))
+                    anzahl = 1;
+                if (gegenstand.HasChildNodes)
+                    foreach (XmlNode gchild in gegenstand.ChildNodes)
+                    {
+                        if (gchild.Name == "modallgemein")
+                        {
+                            foreach (XmlNode mchild in gegenstand.ChildNodes)
+                            {
+                                if (mchild.Name == "name")
+                                {
+                                    name = mchild.Attributes["value"].Value.Trim();
+                                }
+                                else if (mchild.Name == "preis")
+                                {
+                                    Double.TryParse(mchild.Attributes["value"].Value.Trim(), out preis);
+                                }
+                                else if (mchild.Name == "gewicht")
+                                {
+                                    Double.TryParse(mchild.Attributes["value"].Value.Trim(), out gewicht);
+                                }
+                            }
+                        }
+                    }
+
+                bool isnew = false;
+                Ausrüstung a = null;
+                Inventar i = null;
+
+                if(_gegenstandMapping.ContainsKey(name.ToLowerInvariant()))
+                    name = _gegenstandMapping[name.ToLowerInvariant()];
+                //alles durchsuchen
+                a = Global.ContextHeld.Liste<Ausrüstung>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+                if (i == null && a == null)
+                {
+                    i = Global.ContextHeld.Liste<Inventar>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+                }
+                if(i == null && a == null)
+                {
+                    Handelsgut h = Global.ContextHeld.Liste<Handelsgut>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+                    if (h != null)
+                    {
+                        i = new Inventar();
+                        i.Name = h.Name;
+                        i.Tags = h.Tags;
+                        i.Preis = h.Preis;
+                        i.ME = h.ME;
+                        i.Literatur = h.Literatur;
+                        i.Kategorie = h.Kategorie;
+                        i.HandelsgutGUID = h.HandelsgutGUID;
+                        i.Gewicht = h.Gewicht;
+                        i.Bemerkung = h.Bemerkung;
+                        isnew = true;
+                    }
+                }
+                //wenn nichts gefunden, dann einen Gegenstand im inventar neu erstellen
+                if (a==null && i==null)
+                {
+                    i = new Inventar();
+                    i.Name = name;
+                    i.Gewicht = gewicht;
+                    i.Kategorie = "Import";
+                    //TODO JT: Einheit automatisch bestimmen
+                    i.Preis = String.Format("{0}S", preis/100.0);
+                    isnew = true;
+                    //gegenstand wurde nicht erkannt und wurde im Inventar hinzugefügt
+                    AddImportLog(ImportTypen.Gegenstand, name, null, _importLog);
+                }
+                //sonst in held_Ausrüstung oder Held_inventar hinzufügen, bzw anzahl erhöhen.
+                if (i != null)
+                {
+                    Held_Inventar hi = _held.Held_Inventar.Where(hhi => hhi.InventarGUID == i.InventarGUID).FirstOrDefault();
+                    if (hi == null)
+                    {
+                        hi = new Held_Inventar();
+                        hi.HeldGUID = _held.HeldGUID;
+                        hi.InventarGUID = i.InventarGUID;
+                        hi.Anzahl = anzahl;
+                        hi.Angelegt = false;
+                        hi.Ort = "Rucksack";
+                        if(isnew)
+                            hi.Inventar = i;
+                        _held.Held_Inventar.Add(hi);
+                    }
+                    else
+                        hi.Anzahl += anzahl;
+                }
+                else if (a != null)
+                {
+                    Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
+                    if (ha == null)
+                    {
+                        ha = new Held_Ausrüstung();
+                        ha.AusrüstungGUID = a.AusrüstungGUID;
+                        ha.HeldGUID = _held.HeldGUID;
+                        ha.Angelegt = false;
+                        ha.Anzahl = anzahl;
+                        ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
+                        _held.Held_Ausrüstung.Add(ha);
+                    }
+                    else
+                    {
+                        ha.Anzahl += anzahl;
+                    }
+                }
             }
         }
     }
@@ -865,6 +1129,7 @@ namespace MeisterGeister.Logic.HeldenImport
         VorNachteil,
         Sonderfertigkeit,
         Talent,
-        Zauber
+        Zauber,
+        Gegenstand
     }
 }

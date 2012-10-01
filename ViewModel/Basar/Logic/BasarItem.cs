@@ -101,7 +101,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
                 if (_rabattAufschlag == value)
                     return;
                 _rabattAufschlag = value;
-                NotifyPropertyChanged("RabattAufschlag");
+                OnChanged("RabattAufschlag");
             }
         }
 
@@ -113,7 +113,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
                 if (_anzahl == value || value < 0.0)
                     return;
                 _anzahl = value;
-                NotifyPropertyChanged("Anzahl");
+                OnChanged("Anzahl");
             }
         }
 
@@ -200,7 +200,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged(String info)
+        private void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {

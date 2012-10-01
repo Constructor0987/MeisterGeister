@@ -7,7 +7,7 @@ using System.Windows.Media;
 // Eigene Usings
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel.Arena.Logic;
-using MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.ViewModel.Arena
 {
@@ -17,29 +17,29 @@ namespace MeisterGeister.ViewModel.Arena
         private int _width;     //in meters!
         private int _height;    //in meters!
 
-        private HashSet<Held> _helden;
-        private HashSet<Gegner> _gegner;
+        private HashSet<Model.Held> _helden;
+        private HashSet<Model.Gegner> _gegner;
         private HashSet<ArenaHindernisAbstract> _hindernisse;
 
-        private Dictionary<Wesen, Point> _positionen;
-        private Dictionary<Wesen, double> _viewingDirections;    //in radian measure from "north" clockwise
-        private Dictionary<Gegner, int> _gegnerIndex;
+        private Dictionary<IKämpfer, Point> _positionen;
+        private Dictionary<IKämpfer, double> _viewingDirections;    //in radian measure from "north" clockwise
+        private Dictionary<Model.Gegner, int> _gegnerIndex;
         private int _nextEnemyIndex = 1;
 
         public Arena(int width, int height) {
             _width = width;
             _height = height;
 
-            _helden = new HashSet<Held>();
-            _gegner = new HashSet<Gegner>();
+            _helden = new HashSet<Model.Held>();
+            _gegner = new HashSet<Model.Gegner>();
             _hindernisse = new HashSet<ArenaHindernisAbstract>();
-            _positionen = new Dictionary<Wesen, Point>();
-            _viewingDirections = new Dictionary<Wesen, double>();
-            _gegnerIndex = new Dictionary<Gegner, int>();
+            _positionen = new Dictionary<IKämpfer, Point>();
+            _viewingDirections = new Dictionary<IKämpfer, double>();
+            _gegnerIndex = new Dictionary<Model.Gegner, int>();
 
         }
 
-        public int GetEnemyIndex(Gegner e) {
+        public int GetEnemyIndex(Model.Gegner e) {
             return _gegnerIndex[e];
         }
 
@@ -52,12 +52,12 @@ namespace MeisterGeister.ViewModel.Arena
         }
 
 
-        public void AddHeld(Held held, Point pos) {
+        public void AddHeld(Model.Held held, Point pos) {
             _helden.Add(held);
             _positionen.Add(held, pos);
             _viewingDirections.Add(held, 0.0);
         }
-        public void AddGegner(Gegner gegner, Point pos)
+        public void AddGegner(Model.Gegner gegner, Point pos)
         {
             _gegner.Add(gegner);
             _positionen.Add(gegner, pos);
@@ -66,29 +66,31 @@ namespace MeisterGeister.ViewModel.Arena
             _nextEnemyIndex++;
         }
 
-        public void RemoveCreature(Wesen creature)
+        public void RemoveCreature(IKämpfer creature)
         {
-            if (creature is Held)
-                _helden.Remove((Held)creature);
-            else if (creature is Gegner)
-                _gegner.Remove((Gegner)creature);
+            if (creature is Model.Held)
+                _helden.Remove((Model.Held)creature);
+            else if (creature is Model.Gegner)
+                _gegner.Remove((Model.Gegner)creature);
 
             _positionen.Remove(creature);
         }
 
-        public HashSet<Held> Heroes {
+        public HashSet<Model.Held> Heroes
+        {
             get { return _helden; }
         }
 
-        public HashSet<Gegner> Enemies {
+        public HashSet<Model.Gegner> Enemies
+        {
             get { return _gegner; }
         }
 
-        public Dictionary<Wesen, Point> Positions {
+        public Dictionary<IKämpfer, Point> Positions {
             get { return _positionen; }
         }
 
-        public Boolean Contains(Wesen c) {
+        public Boolean Contains(IKämpfer c) {
             return _gegner.Contains(c) || _helden.Contains(c);
         }
 
@@ -97,20 +99,24 @@ namespace MeisterGeister.ViewModel.Arena
         }
 
         public Boolean ContainsHeldWidthId(Guid heldId) {
-            foreach (Held held in _helden) {
-                if (held.Id == heldId)
+            foreach (Model.Held held in _helden)
+            {
+                if (held.HeldGUID == heldId)
                     return true;
             }
             return false;
         }
 
-        public void Populate(MeisterGeister.ViewModel.Kampf.LogicAlt.Kampf kampf) {
-            foreach (IKämpfer kämpfer in kampf.KämpferListe) {
-                if (kämpfer is Held) {
-                    AddHeld((Held)kämpfer, new Point(10, 10));
+        public void Populate(MeisterGeister.ViewModel.Kampf.Logic.Kampf kampf)
+        {
+            foreach (KämpferInfo kämpferInfo in kampf.Kämpfer) {
+                if (kämpferInfo.Kämpfer is Model.Held)
+                {
+                    AddHeld((Model.Held)kämpferInfo.Kämpfer, new Point(10, 10));
                 }
-                else if (kämpfer is Gegner) {
-                    AddGegner((Gegner)kämpfer, new Point(10, 10));
+                else if (kämpferInfo.Kämpfer is Model.Gegner)
+                {
+                    AddGegner((Model.Gegner)kämpferInfo.Kämpfer, new Point(10, 10));
                 }
             }
         }

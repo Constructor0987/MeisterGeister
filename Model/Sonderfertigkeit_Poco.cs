@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_sonderfertigkeitID = value;
-    			NotifyPropertyChanged("SonderfertigkeitID");
+    			OnChanged("SonderfertigkeitID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_hatWert = value;
-    			NotifyPropertyChanged("HatWert");
+    			OnChanged("HatWert");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_typ = value;
-    			NotifyPropertyChanged("Typ");
+    			OnChanged("Typ");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_setting = value;
-    			NotifyPropertyChanged("Setting");
+    			OnChanged("Setting");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_vorraussetzungen = value;
-    			NotifyPropertyChanged("Vorraussetzungen");
+    			OnChanged("Vorraussetzungen");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -199,7 +199,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_Sonderfertigkeit(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_Sonderfertigkeit");
+    		OnChanged("Held_Sonderfertigkeit");
             if (e.NewItems != null)
             {
                 foreach (Held_Sonderfertigkeit item in e.NewItems)
@@ -222,7 +222,7 @@ namespace MeisterGeister.Model
     
         private void FixupZauberzeichen(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Zauberzeichen");
+    		OnChanged("Zauberzeichen");
             if (e.NewItems != null)
             {
                 foreach (Zauberzeichen item in e.NewItems)

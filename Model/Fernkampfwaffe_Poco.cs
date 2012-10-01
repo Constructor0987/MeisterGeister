@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -60,7 +60,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_munitionspreis = value;
-    			NotifyPropertyChanged("Munitionspreis");
+    			OnChanged("Munitionspreis");
     		}
     
         }
@@ -73,7 +73,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_munitionsgewicht = value;
-    			NotifyPropertyChanged("Munitionsgewicht");
+    			OnChanged("Munitionsgewicht");
     		}
     
         }
@@ -86,7 +86,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_munitionsart = value;
-    			NotifyPropertyChanged("Munitionsart");
+    			OnChanged("Munitionsart");
     		}
     
         }
@@ -99,7 +99,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_improvisiert = value;
-    			NotifyPropertyChanged("Improvisiert");
+    			OnChanged("Improvisiert");
     		}
     
         }
@@ -112,7 +112,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPWürfel = value;
-    			NotifyPropertyChanged("TPWürfel");
+    			OnChanged("TPWürfel");
     		}
     
         }
@@ -125,7 +125,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPWürfelAnzahl = value;
-    			NotifyPropertyChanged("TPWürfelAnzahl");
+    			OnChanged("TPWürfelAnzahl");
     		}
     
         }
@@ -138,7 +138,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPBonus = value;
-    			NotifyPropertyChanged("TPBonus");
+    			OnChanged("TPBonus");
     		}
     
         }
@@ -151,7 +151,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_ausdauerSchaden = value;
-    			NotifyPropertyChanged("AusdauerSchaden");
+    			OnChanged("AusdauerSchaden");
     		}
     
         }
@@ -164,7 +164,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPKKSchwelle = value;
-    			NotifyPropertyChanged("TPKKSchwelle");
+    			OnChanged("TPKKSchwelle");
     		}
     
         }
@@ -177,7 +177,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPKKSchritt = value;
-    			NotifyPropertyChanged("TPKKSchritt");
+    			OnChanged("TPKKSchritt");
     		}
     
         }
@@ -190,7 +190,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_verwundend = value;
-    			NotifyPropertyChanged("Verwundend");
+    			OnChanged("Verwundend");
     		}
     
         }
@@ -203,7 +203,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rWSehrNah = value;
-    			NotifyPropertyChanged("RWSehrNah");
+    			OnChanged("RWSehrNah");
     		}
     
         }
@@ -216,7 +216,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rWNah = value;
-    			NotifyPropertyChanged("RWNah");
+    			OnChanged("RWNah");
     		}
     
         }
@@ -229,7 +229,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rWMittel = value;
-    			NotifyPropertyChanged("RWMittel");
+    			OnChanged("RWMittel");
     		}
     
         }
@@ -242,7 +242,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rWWeit = value;
-    			NotifyPropertyChanged("RWWeit");
+    			OnChanged("RWWeit");
     		}
     
         }
@@ -255,7 +255,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rWSehrWeit = value;
-    			NotifyPropertyChanged("RWSehrWeit");
+    			OnChanged("RWSehrWeit");
     		}
     
         }
@@ -268,7 +268,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPSehrNah = value;
-    			NotifyPropertyChanged("TPSehrNah");
+    			OnChanged("TPSehrNah");
     		}
     
         }
@@ -281,7 +281,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPNah = value;
-    			NotifyPropertyChanged("TPNah");
+    			OnChanged("TPNah");
     		}
     
         }
@@ -294,7 +294,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPMittel = value;
-    			NotifyPropertyChanged("TPMittel");
+    			OnChanged("TPMittel");
     		}
     
         }
@@ -307,7 +307,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPWeit = value;
-    			NotifyPropertyChanged("TPWeit");
+    			OnChanged("TPWeit");
     		}
     
         }
@@ -320,7 +320,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_tPSehrWeit = value;
-    			NotifyPropertyChanged("TPSehrWeit");
+    			OnChanged("TPSehrWeit");
     		}
     
         }
@@ -333,7 +333,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_laden = value;
-    			NotifyPropertyChanged("Laden");
+    			OnChanged("Laden");
     		}
     
         }
@@ -429,7 +429,7 @@ namespace MeisterGeister.Model
     
         private void FixupAusrüstung(Ausrüstung previousValue)
         {
-    		NotifyPropertyChanged("Ausrüstung");
+    		OnChanged("Ausrüstung");
             if (previousValue != null && ReferenceEquals(previousValue.Fernkampfwaffe, this))
             {
                 previousValue.Fernkampfwaffe = null;
@@ -447,7 +447,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_Munition(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_Munition");
+    		OnChanged("Held_Munition");
             if (e.NewItems != null)
             {
                 foreach (Held_Munition item in e.NewItems)
@@ -470,7 +470,7 @@ namespace MeisterGeister.Model
     
         private void FixupTalent(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Talent");
+    		OnChanged("Talent");
             if (e.NewItems != null)
             {
                 foreach (Talent item in e.NewItems)

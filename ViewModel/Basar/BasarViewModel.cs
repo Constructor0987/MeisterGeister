@@ -10,7 +10,7 @@ using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Basar
 {
-    class BasarViewModel : Base.ViewModelBase
+    public class BasarViewModel : Base.ViewModelBase
     {
         #region //---- FELDER ----
 
@@ -22,7 +22,6 @@ namespace MeisterGeister.ViewModel.Basar
         private Model.Held _selectedHeld;
 
         // Listen
-        private List<Model.Held> _heldListe;
         private List<Model.Handelsgut> _handelsgutListe;
         private List<Model.Waffe> _waffeListe;
         private List<Model.Fernkampfwaffe> _fernkampfwaffeListe;
@@ -37,8 +36,6 @@ namespace MeisterGeister.ViewModel.Basar
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
-
-
 
         public double RabattAufschlag
         {
@@ -114,12 +111,7 @@ namespace MeisterGeister.ViewModel.Basar
 
         public List<Model.Held> HeldListe
         {
-            get { return _heldListe; }
-            set
-            {
-                _heldListe = value;
-                OnChanged("HeldListe");
-            }
+            get { return Global.ContextHeld.HeldenGruppeListe; }
         }
 
         public List<Model.Handelsgut> HandelsgutListe
@@ -209,20 +201,26 @@ namespace MeisterGeister.ViewModel.Basar
             _onGoToBugForum = new Base.CommandBase(GoToBugForum, null);
 
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+
+            Init();
         }
 
         #endregion
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        public void Refresh()
+        {
+            OnChanged("HeldListe");
+        }
+
+        public void Init()
         {
             HandelsgutListe = Global.ContextHandelsgut.HandelsgüterListe;
             WaffeListe = Global.ContextWaffe.WaffeListe;
             FernkampfwaffeListe = Global.ContextFernkampfwaffe.FernkampfwaffeListe;
             SchildListe = Global.ContextSchild.SchildListe;
             RüstungListe = Global.ContextRüstung.RüstungListe;
-            HeldListe = Global.ContextHeld.HeldenGruppeListe;
 
             // Globale Listen der unterschiedlichen Handelsgütern in eine Gesamt-Liste zusammenführen
             List<BasarItem> itemList = new List<BasarItem>();
@@ -249,6 +247,8 @@ namespace MeisterGeister.ViewModel.Basar
 
             BasarItemListe = itemList;
             FilteredBasarItemListe = BasarItemListe.OrderBy(n => n.Name).ToList();
+
+            Refresh();
         }
 
         /// <summary>

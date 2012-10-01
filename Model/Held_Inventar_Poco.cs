@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -60,7 +60,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_angelegt = value;
-    			NotifyPropertyChanged("Angelegt");
+    			OnChanged("Angelegt");
     		}
     
         }
@@ -73,7 +73,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_ort = value;
-    			NotifyPropertyChanged("Ort");
+    			OnChanged("Ort");
     		}
     
         }
@@ -105,7 +105,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_anzahl = value;
-    			NotifyPropertyChanged("Anzahl");
+    			OnChanged("Anzahl");
     		}
     
         }
@@ -151,7 +151,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld(Held previousValue)
         {
-    		NotifyPropertyChanged("Held");
+    		OnChanged("Held");
             if (previousValue != null && previousValue.Held_Inventar.Contains(this))
             {
                 previousValue.Held_Inventar.Remove(this);
@@ -172,7 +172,7 @@ namespace MeisterGeister.Model
     
         private void FixupInventar(Inventar previousValue)
         {
-    		NotifyPropertyChanged("Inventar");
+    		OnChanged("Inventar");
             if (previousValue != null && previousValue.Held_Inventar.Contains(this))
             {
                 previousValue.Held_Inventar.Remove(this);

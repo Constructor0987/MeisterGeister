@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kampfregelGUID = value;
-    			NotifyPropertyChanged("KampfregelGUID");
+    			OnChanged("KampfregelGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_manöver = value;
-    			NotifyPropertyChanged("Manöver");
+    			OnChanged("Manöver");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bemerkung = value;
-    			NotifyPropertyChanged("Bemerkung");
+    			OnChanged("Bemerkung");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -103,47 +103,47 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
-        public virtual ICollection<Gegner_Kampfregel> Gegner_Kampfregel
+        public virtual ICollection<GegnerBase_Kampfregel> GegnerBase_Kampfregel
         {
             get
             {
-                if (_gegner_Kampfregel == null)
+                if (_gegnerBase_Kampfregel == null)
                 {
-                    var newCollection = new FixupCollection<Gegner_Kampfregel>();
-                    newCollection.CollectionChanged += FixupGegner_Kampfregel;
-                    _gegner_Kampfregel = newCollection;
+                    var newCollection = new FixupCollection<GegnerBase_Kampfregel>();
+                    newCollection.CollectionChanged += FixupGegnerBase_Kampfregel;
+                    _gegnerBase_Kampfregel = newCollection;
                 }
-                return _gegner_Kampfregel;
+                return _gegnerBase_Kampfregel;
             }
             set
             {
-                if (!ReferenceEquals(_gegner_Kampfregel, value))
+                if (!ReferenceEquals(_gegnerBase_Kampfregel, value))
                 {
-                    var previousValue = _gegner_Kampfregel as FixupCollection<Gegner_Kampfregel>;
+                    var previousValue = _gegnerBase_Kampfregel as FixupCollection<GegnerBase_Kampfregel>;
                     if (previousValue != null)
                     {
-                        previousValue.CollectionChanged -= FixupGegner_Kampfregel;
+                        previousValue.CollectionChanged -= FixupGegnerBase_Kampfregel;
                     }
-                    _gegner_Kampfregel = value;
-                    var newValue = value as FixupCollection<Gegner_Kampfregel>;
+                    _gegnerBase_Kampfregel = value;
+                    var newValue = value as FixupCollection<GegnerBase_Kampfregel>;
                     if (newValue != null)
                     {
-                        newValue.CollectionChanged += FixupGegner_Kampfregel;
+                        newValue.CollectionChanged += FixupGegnerBase_Kampfregel;
                     }
                 }
             }
         }
-        private ICollection<Gegner_Kampfregel> _gegner_Kampfregel;
+        private ICollection<GegnerBase_Kampfregel> _gegnerBase_Kampfregel;
 
         #endregion
         #region Association Fixup
     
-        private void FixupGegner_Kampfregel(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupGegnerBase_Kampfregel(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Gegner_Kampfregel");
+    		OnChanged("GegnerBase_Kampfregel");
             if (e.NewItems != null)
             {
-                foreach (Gegner_Kampfregel item in e.NewItems)
+                foreach (GegnerBase_Kampfregel item in e.NewItems)
                 {
                     item.Kampfregel = this;
                 }
@@ -151,7 +151,7 @@ namespace MeisterGeister.Model
     
             if (e.OldItems != null)
             {
-                foreach (Gegner_Kampfregel item in e.OldItems)
+                foreach (GegnerBase_Kampfregel item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Kampfregel, this))
                     {

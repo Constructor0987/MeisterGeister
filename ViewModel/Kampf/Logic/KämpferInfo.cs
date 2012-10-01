@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -27,11 +28,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 _initiative = value;
-                int bonus = (int)Math.Floor((_initiative - 10) / 10.0);
+                int bonus = Math.Max((int)Math.Floor((_initiative - 10) / 10.0), 0);
                 Kämpfer.FreieAktionen = 2 + bonus;
-                //Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
-                //TODO JT: PABonusDurchHoheIni(bonus) anlegen , wenn bonus > 0;
-                NotifyPropertyChanged("Initiative");
+                Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
+                if (bonus > 0)
+                    Kämpfer.Modifikatoren.Add(new Mod.PABonusDurchHoheIni(bonus));
+                //TODO JT: Wenn INI < 0 -> Kämpfer verliert eine (Angriffs)Aktion
+                OnChanged("Initiative");
             }
         }
         public int InitiativeBasis
@@ -57,7 +60,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(String info)
+        public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -104,8 +107,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             base.Add(ki);
             _kämpfer_kämpferinfo.Add(ki.Kämpfer, ki);
             ki.PropertyChanged += OnKämpferInfoChanged;
-            NotifyPropertyChanged("List");
             Sort();
+            OnCollectionChanged(CollectionChangeAction.Add, ki);
         }
 
         public void Add(IKämpfer k)
@@ -124,14 +127,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             ki.PropertyChanged -= OnKämpferInfoChanged;
             base.Remove(ki);
-            NotifyPropertyChanged("List");
+            OnCollectionChanged(CollectionChangeAction.Remove, ki);
         }
 
         public new void RemoveAt(int index)
         {
+            var removed = this[index];
             this[index].PropertyChanged -= OnKämpferInfoChanged;
             base.RemoveAt(index);
-            NotifyPropertyChanged("List");
+            OnCollectionChanged(CollectionChangeAction.Remove, removed);
         }
 
         public new void RemoveAll(Predicate<KämpferInfo> match)
@@ -159,7 +163,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void Sort()
         {
             base.Sort(CompareInitiative);
-            NotifyPropertyChanged("Sort");
+            OnChanged("Sort");
         }
 
         /// <summary>
@@ -189,7 +193,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(String info)
+        public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -198,5 +202,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         #endregion
+
+        private void OnCollectionChanged(CollectionChangeAction action, object element)
+        {
+            if (CollectionChanged != null)
+            {
+                CollectionChanged(this, new CollectionChangeEventArgs(action, element));
+            }
+        }
+
+        public event CollectionChangeEventHandler CollectionChanged;
     }
 }

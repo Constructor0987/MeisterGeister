@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Daten;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     public class HeldKampfTalent
     {

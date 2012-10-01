@@ -37,7 +37,7 @@ namespace MeisterGeister.Model.Extensions
                         {
                             try
                             {
-                                Impromptu.InvokeMemberAction(o, "NotifyPropertyChanged", pi.Name);
+                                Impromptu.InvokeMemberAction(o, "OnChanged", pi.Name);
                                 //Impromptu.InvokeMemberAction(o, "PropertyChanged", o, new PropertyChangedEventArgs(pi.Name)); //geht so leider nicht, das wäre noch eleganter
                                 methodnames.Add(pi.Name);
                             }
@@ -53,7 +53,7 @@ namespace MeisterGeister.Model.Extensions
             else
             {
                 foreach(string method in cache[args.PropertyName])
-                    Impromptu.InvokeMemberAction(o, "NotifyPropertyChanged", method);
+                    Impromptu.InvokeMemberAction(o, "OnChanged", method);
             }
         }
     }

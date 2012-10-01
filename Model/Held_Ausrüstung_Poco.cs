@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -68,7 +68,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_angelegt = value;
-    			NotifyPropertyChanged("Angelegt");
+    			OnChanged("Angelegt");
     		}
     
         }
@@ -135,7 +135,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_anzahl = value;
-    			NotifyPropertyChanged("Anzahl");
+    			OnChanged("Anzahl");
     		}
     
         }
@@ -148,7 +148,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_bF = value;
-    			NotifyPropertyChanged("BF");
+    			OnChanged("BF");
     		}
     
         }
@@ -255,7 +255,7 @@ namespace MeisterGeister.Model
     
         private void FixupAusrüstung(Ausrüstung previousValue)
         {
-    		NotifyPropertyChanged("Ausrüstung");
+    		OnChanged("Ausrüstung");
             if (previousValue != null && previousValue.Held_Ausrüstung.Contains(this))
             {
                 previousValue.Held_Ausrüstung.Remove(this);
@@ -276,7 +276,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld(Held previousValue)
         {
-    		NotifyPropertyChanged("Held");
+    		OnChanged("Held");
             if (previousValue != null && previousValue.Held_Ausrüstung.Contains(this))
             {
                 previousValue.Held_Ausrüstung.Remove(this);
@@ -297,7 +297,7 @@ namespace MeisterGeister.Model
     
         private void FixupTalent(Talent previousValue)
         {
-    		NotifyPropertyChanged("Talent");
+    		OnChanged("Talent");
             if (previousValue != null && previousValue.Held_Ausrüstung.Contains(this))
             {
                 previousValue.Held_Ausrüstung.Remove(this);
@@ -322,7 +322,7 @@ namespace MeisterGeister.Model
     
         private void FixupTrageort(Trageort previousValue)
         {
-    		NotifyPropertyChanged("Trageort");
+    		OnChanged("Trageort");
             if (previousValue != null && previousValue.Held_Ausrüstung.Contains(this))
             {
                 previousValue.Held_Ausrüstung.Remove(this);

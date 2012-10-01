@@ -6,7 +6,7 @@
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ZooBot="clr-namespace:MeisterGeister.View.ZooBot"
              mc:Ignorable="d" 
-             d:DesignHeight="377" d:DesignWidth="765">
+             d:DesignHeight="377" d:DesignWidth="765" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />

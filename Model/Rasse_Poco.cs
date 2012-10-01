@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_rasseGUID = value;
-    			NotifyPropertyChanged("RasseGUID");
+    			OnChanged("RasseGUID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_variante = value;
-    			NotifyPropertyChanged("Variante");
+    			OnChanged("Variante");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_unspielbar = value;
-    			NotifyPropertyChanged("Unspielbar");
+    			OnChanged("Unspielbar");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_gP = value;
-    			NotifyPropertyChanged("GP");
+    			OnChanged("GP");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_größe = value;
-    			NotifyPropertyChanged("Größe");
+    			OnChanged("Größe");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_größeMod = value;
-    			NotifyPropertyChanged("GrößeMod");
+    			OnChanged("GrößeMod");
     		}
     
         }
@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_gewicht = value;
-    			NotifyPropertyChanged("Gewicht");
+    			OnChanged("Gewicht");
     		}
     
         }
@@ -145,7 +145,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_mUMod = value;
-    			NotifyPropertyChanged("MUMod");
+    			OnChanged("MUMod");
     		}
     
         }
@@ -158,7 +158,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kLMod = value;
-    			NotifyPropertyChanged("KLMod");
+    			OnChanged("KLMod");
     		}
     
         }
@@ -171,7 +171,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_iNMod = value;
-    			NotifyPropertyChanged("INMod");
+    			OnChanged("INMod");
     		}
     
         }
@@ -184,7 +184,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_cHMod = value;
-    			NotifyPropertyChanged("CHMod");
+    			OnChanged("CHMod");
     		}
     
         }
@@ -197,7 +197,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_fFMod = value;
-    			NotifyPropertyChanged("FFMod");
+    			OnChanged("FFMod");
     		}
     
         }
@@ -210,7 +210,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_gEMod = value;
-    			NotifyPropertyChanged("GEMod");
+    			OnChanged("GEMod");
     		}
     
         }
@@ -223,7 +223,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kOMod = value;
-    			NotifyPropertyChanged("KOMod");
+    			OnChanged("KOMod");
     		}
     
         }
@@ -236,7 +236,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kKMod = value;
-    			NotifyPropertyChanged("KKMod");
+    			OnChanged("KKMod");
     		}
     
         }
@@ -249,7 +249,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_lEMod = value;
-    			NotifyPropertyChanged("LEMod");
+    			OnChanged("LEMod");
     		}
     
         }
@@ -262,7 +262,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_aUMod = value;
-    			NotifyPropertyChanged("AUMod");
+    			OnChanged("AUMod");
     		}
     
         }
@@ -275,7 +275,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_aEMod = value;
-    			NotifyPropertyChanged("AEMod");
+    			OnChanged("AEMod");
     		}
     
         }
@@ -288,7 +288,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_mRMod = value;
-    			NotifyPropertyChanged("MRMod");
+    			OnChanged("MRMod");
     		}
     
         }
@@ -301,7 +301,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_iNIMod = value;
-    			NotifyPropertyChanged("INIMod");
+    			OnChanged("INIMod");
     		}
     
         }
@@ -314,7 +314,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_literatur = value;
-    			NotifyPropertyChanged("Literatur");
+    			OnChanged("Literatur");
     		}
     
         }
@@ -327,7 +327,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_setting = value;
-    			NotifyPropertyChanged("Setting");
+    			OnChanged("Setting");
     		}
     
         }
@@ -407,7 +407,7 @@ namespace MeisterGeister.Model
     
         private void FixupRasse_Farbe(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Rasse_Farbe");
+    		OnChanged("Rasse_Farbe");
             if (e.NewItems != null)
             {
                 foreach (Rasse_Farbe item in e.NewItems)
@@ -430,7 +430,7 @@ namespace MeisterGeister.Model
     
         private void FixupRasse_Kultur(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Rasse_Kultur");
+    		OnChanged("Rasse_Kultur");
             if (e.NewItems != null)
             {
                 foreach (Rasse_Kultur item in e.NewItems)

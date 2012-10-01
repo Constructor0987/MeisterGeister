@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using MeisterGeister.Logic.General;
+using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     /// <summary>
@@ -14,6 +17,50 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public Wunden(Model.Held held)
         {
             _held = held;
+            UpdateWundenModifikatoren();
+        }
+
+        public static Trefferzone GetTrefferZoneByPropertyName(string wundenProperty)
+        {
+            switch (wundenProperty)
+            {
+                case "WundenKopf":
+                    return Trefferzone.Kopf;
+                case "WundenBrust":
+                    return Trefferzone.Brust;
+                case "WundenArmL":
+                    return Trefferzone.ArmL;
+                case "WundenArmR":
+                    return Trefferzone.ArmR;
+                case "WundenBauch":
+                    return Trefferzone.Bauch;
+                case "WundenBeinL":
+                    return Trefferzone.BeinL;
+                case "WundenBeinR":
+                    return Trefferzone.BeinR;
+                case "Wunden":
+                default:
+                    return Trefferzone.Unlokalisiert;
+            }
+        }
+
+        private int AusdauerSchaden(int alt, int neu)
+        {
+            if (neu > alt)
+                return Würfel.Wurf(6, neu - alt); //WdS 83
+            return 0;
+        }
+
+        public void UpdateWundenModifikatoren()
+        {
+            Type modTyp = Mod.WundenModifikator.TypByZone(Trefferzone.Kopf);
+            _held.SetModifikatorCount(modTyp, this[Trefferzone.Kopf]);
+            for (int i = (int)Trefferzone.Rücken; i <= (int)Trefferzone.Unlokalisiert; i++)
+            {
+                Trefferzone zone = (Trefferzone)i;
+                modTyp = Mod.WundenModifikator.TypByZone(zone);
+                _held.SetModifikatorCount(modTyp, this[zone]);
+            }
         }
 
         public int this[Trefferzone zone]
@@ -48,36 +95,97 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             set
             {
+                if (value < 0)
+                    value = 0;
+                if (value == this[zone])
+                    return;
+                Type modTyp = Mod.WundenModifikator.TypByZone(zone);
+                int changes = _held.SetModifikatorCount(modTyp, value);
+
+                _held.AusdauerAktuell -= AusdauerSchaden(this[zone], value); //WdS 83
+
+                bool mehrAlsDreiWunden = (this[zone] < 3 && value >= 3);
+
                 switch (zone)
                 {
                     case Trefferzone.Kopf:
+                        if (value > _held.WundenKopf)
+                        {
+                            if (mehrAlsDreiWunden)
+                            {
+                                //bewusstlos + blutverlust
+                                _held.LebensenergieAktuell -= Würfel.Wurf(6, 2); //eventuell per Dialog?
+                            }
+                        }
                         _held.WundenKopf = value;
                         break;
                     case Trefferzone.Rücken:
                     case Trefferzone.Brust:
+                        if (value > _held.WundenBrust)
+                        {
+                            _held.LebensenergieAktuell -= Würfel.Wurf(6, value - _held.WundenBrust ?? 0);
+                            if (mehrAlsDreiWunden)
+                            {
+                                //bewusstlos + blutverlust
+                            }
+                        }
                         _held.WundenBrust = value;
                         break;
                     case Trefferzone.ArmL:
+                        if (value > _held.WundenArmL)
+                        {
+                            if (mehrAlsDreiWunden)
+                            {
+                                //arm handlungsunfähig
+                            }
+                        }
                         _held.WundenArmL = value;
                         break;
                     case Trefferzone.ArmR:
+                        if (value > _held.WundenArmR)
+                        {
+                            if (mehrAlsDreiWunden)
+                            {
+                                //arm handlungsunfähig
+                            }
+                        }
                         _held.WundenArmR = value;
                         break;
                     case Trefferzone.Bauch:
+                        if (value > _held.WundenBauch)
+                        {
+                            _held.LebensenergieAktuell -= Würfel.Wurf(6, value - _held.WundenBrust ?? 0);
+                            if (mehrAlsDreiWunden)
+                            {
+                                //bewusstlos + blutverlust
+                            }
+                        }
                         _held.WundenBauch = value;
                         break;
                     case Trefferzone.BeinL:
+                        if (value > _held.WundenBeinL)
+                        {
+                            if (mehrAlsDreiWunden)
+                            {
+                                //sturz, kampfunfähig
+                            }
+                        }
                         _held.WundenBeinL = value;
                         break;
                     case Trefferzone.BeinR:
+                        if (value > _held.WundenBeinR)
+                        {
+                            if (mehrAlsDreiWunden)
+                            {
+                                //sturz, kampfunfähig
+                            }
+                        }
                         _held.WundenBeinR = value;
-                        break;
-                    case Trefferzone.Unlokalisiert:
-                        _held.Wunden = value;
                         break;
                     case Trefferzone.Zufall:
                         this[TrefferzonenHelper.ZufallsZone()] = value;
                         break;
+                    case Trefferzone.Unlokalisiert:
                     case Trefferzone.Gesamt:
                     default:
                         _held.Wunden = value;

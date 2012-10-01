@@ -22,7 +22,7 @@ namespace MeisterGeister.Model.Service
     /// </summary>
     public class SerializationService
     {
-        private static DatabaseDSAEntities serializationContext = new DatabaseDSAEntities(ServiceBase.ConnectionString, true, true);
+        private static DatabaseDSAEntities serializationContext = null;
 
         public static DatabaseDSAEntities Context
         {
@@ -32,9 +32,32 @@ namespace MeisterGeister.Model.Service
             }
         }
 
-        public SerializationService()
+        private static SerializationService instance = null;
+
+        private SerializationService()
         {
+            serializationContext = new DatabaseDSAEntities(ServiceBase.ConnectionString, true, true);
             LoadAllUserData();
+        }
+
+        public static SerializationService GetInstance()
+        {
+            return GetInstance(false);
+        }
+
+        public static SerializationService GetInstance(bool forceNew)
+        {
+            if (instance == null || forceNew)
+                instance = new SerializationService();
+            return instance;
+        }
+
+        public static void DestroyInstance()
+        {
+            if(serializationContext!=null)
+                serializationContext.Dispose();
+            serializationContext = null;
+            instance = null;
         }
 
         /// <summary>
@@ -55,10 +78,10 @@ namespace MeisterGeister.Model.Service
                 from a in Context.Zauberzeichen where !a.ZauberzeichenGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
                 from a in Context.Held_Inventar select a,
                 from a in Context.Inventar select a,
-                from a in Context.Gegner where !a.GegnerGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
+                from a in Context.GegnerBase where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
                 from a in Context.Kampfregel where !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
-                from a in Context.Gegner_Angriff where !a.GegnerGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
-                from a in Context.Gegner_Kampfregel where !a.GegnerGUID.StringConvert().StartsWith("00000000-0000-0000-000") || !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-000")  select a,
+                from a in Context.GegnerBase_Angriff where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
+                from a in Context.GegnerBase_Kampfregel where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-000") || !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-000")  select a,
                 //später mit Guid:
                 from a in Context.Held_Sonderfertigkeit select a,
                 from a in Context.Sonderfertigkeit where a.SonderfertigkeitID > 1107 select a,
@@ -74,6 +97,7 @@ namespace MeisterGeister.Model.Service
                 results = q.ToList();
         }
 
+        #region Insert/Update/Delete/Save/New/Discard
         public virtual bool Insert<T>(T aModelObject) where T : class
         {
             try
@@ -154,60 +178,6 @@ namespace MeisterGeister.Model.Service
             }
         }
 
-        //Block deaktiviert, weil die neue Funktion LoadAllUserdata da ist.
-        ///// <summary>
-        ///// Die HeldenListe nur mit den Zuordnungstabellen und dem Inventar - ohne Stammdaten.
-        ///// </summary>
-        //public List<Held> HeldenListe()
-        //{
-        //    return HeldenListe(false);
-        //}
-
-        ///// <summary>
-        ///// Die HeldenListe, entweder nur mit den Zuordnungstabellen, oder auch mit allen Stammdaten.
-        ///// </summary>
-        //public List<Held> HeldenListe(bool mitAllenStammdaten)
-        //{
-        //    if(mitAllenStammdaten)
-        //        return Context.GetObjectSet<Held>()
-        //        .Include("Held_Talent")
-        //        .Include("Held_Sonderfertigkeit")
-        //        .Include("Held_VorNachteil")
-        //        .Include("Held_Fernkampfwaffe")
-        //        .Include("Held_Inventar")
-        //        .Include("Held_Rüstung")
-        //        .Include("Held_Schild")
-        //        .Include("Held_Waffe")
-        //        .Include("Held_Zauber")
-
-        //        .Include("Held_Talent.Talent")
-        //        .Include("Held_Sonderfertigkeit.Sonderfertigkeit")
-        //        .Include("Held_VorNachteil.VorNachteil")
-        //        .Include("Held_Fernkampfwaffe.Fernkampfwaffe")
-        //        .Include("Held_Inventar.Inventar")
-        //        .Include("Held_Rüstung.Rüstung")
-        //        .Include("Held_Schild.Schild")
-        //        .Include("Held_Waffe.Waffe")
-        //        .Include("Held_Zauber.Zauber")
-
-        //        .ToList<Held>();
-        //    //nur die Konnektoren und das Inventar
-        //    return Context.GetObjectSet<Held>()
-        //        .Include("Held_Talent")
-        //        .Include("Held_Sonderfertigkeit")
-        //        .Include("Held_VorNachteil")
-        //        .Include("Held_Fernkampfwaffe")
-        //        .Include("Held_Inventar")
-        //        .Include("Held_Rüstung")
-        //        .Include("Held_Schild")
-        //        .Include("Held_Waffe")
-        //        .Include("Held_Zauber")
-
-        //        .Include("Held_Inventar.Inventar")
-
-        //        .ToList<Held>();
-        //}
-
         public T New<T>() where T : class
         {
             return Context.CreateObject<T>();
@@ -218,6 +188,13 @@ namespace MeisterGeister.Model.Service
             return Context.SaveChanges();
         }
 
+        public virtual void DiscardChanges()
+        {
+            Context.DiscardChanges();
+        }
+        #endregion
+
+        #region De-/Serialize
         public static T DeserializeObject<T>(Stream stream) where T : class
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), null, int.MaxValue, false, true, null, new ProxyDataContractResolver());
@@ -274,19 +251,57 @@ namespace MeisterGeister.Model.Service
                 stream.Close();
             }
         }
+        #endregion
+
+        #region ObjectState
+        public virtual System.Data.EntityState GetEntityState(object entity)
+        {
+            return Context.ObjectStateManager.GetObjectStateEntry(entity).State;
+        }
+
+        public virtual IEnumerable<ObjectStateEntry> GetObjectStateEntriesWithEntityState<T>(System.Data.EntityState state)
+        {
+            return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T);
+        }
+
+        public virtual IEnumerable<T> GetObjectsWithEntityState<T>(System.Data.EntityState state)
+        {
+            return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T).Select(os => (T)os.Entity);
+        }
+
+        public virtual IDictionary<object, System.Data.EntityState> GetChangedEntities()
+        {
+            IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified);
+            IDictionary<object, System.Data.EntityState> ret = new Dictionary<object, System.Data.EntityState>();
+            foreach (ObjectStateEntry os in objectStates)
+                ret.Add(os.Entity, os.State);
+            return ret;
+        }
+
+        public virtual IDictionary<T, System.Data.EntityState> GetChangedEntities<T>() where T : class
+        {
+            IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified).Where(os => os.Entity is T);
+            IDictionary<T, System.Data.EntityState> ret = new Dictionary<T, System.Data.EntityState>();
+            foreach (ObjectStateEntry os in objectStates)
+                ret.Add(os.Entity as T, os.State);
+            return ret;
+        }
+        #endregion
 
         #region Held
         /// <summary>
         /// Aktualisert den Held und alle an ihn angehängten Zuordnungstabellen sowie das Inventar. Stammdaten bleiben unangestastet.
-        /// Bisher nur additiv. Es wird momentan nichts gelöscht.
         /// </summary>
         public bool InsertOrUpdateHeld(Held held)
         {
-            // Mögliche erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
-            // So kann man z.B. einen Guid/ID-Filter realisieren um userdaten von stammdaten zu trennen bzw stammdaten nciht zu überschreiben
+            // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
+            // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
+#if !DEBUG
             try
             {
-                Context.AttachObjectGraph(held,
+#endif
+                DeleteHeldData(held);
+                Held output = Context.AttachObjectGraph(held,
                     h => h.Held_Inventar,
                     h => h.Held_Inventar.First().Inventar,
                     h => h.Held_Ausrüstung,
@@ -296,14 +311,42 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_Zauber
                 );
                 Save(); //TODO ??: Besser wäre ein check, ob was überschrieben wird und ein Aufruf, des Save aus dem UI
-                return true;
-            }
+                return output!=null;
+#if !DEBUG
+        }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
-                Debug.WriteLine(e.InnerException);
-                return false;
+                throw e;
+                //Debug.WriteLine(e.Message);
+                //Debug.WriteLine(e.InnerException);
+                //return false;
             }
+#endif
+        }
+
+        public Guid CloneHeld(Guid heldGuid)
+        {
+            return CloneHeld(heldGuid, Guid.NewGuid());
+        }
+
+        private static Held ReplaceGuid(Held held, Guid newGuid)
+        {
+            string xml = SerializeObject<Held>(held);
+            xml = xml.Replace(String.Format("<HeldGUID>{0}</HeldGUID>", held.HeldGUID), String.Format("<HeldGUID>{0}</HeldGUID>", newGuid));
+            Held newHeld = DeserializeObject<Held>(xml);
+            return newHeld;
+        }
+
+        public Guid CloneHeld(Guid heldGuid, Guid newGuid)
+        {
+            Held held = Context.Held.Where(h => h.HeldGUID == heldGuid).First();
+            if (held != null)
+            {
+                Held newHeld = ReplaceGuid(held, newGuid);
+                if (InsertOrUpdateHeld(newHeld))
+                    return newHeld.HeldGUID;
+            }
+            return Guid.Empty;
         }
 
         public void ExportHeld(Guid heldGuid, string pfad)
@@ -316,37 +359,86 @@ namespace MeisterGeister.Model.Service
             }
         }
 
+
         /// <summary>
-        /// Mit überschreiben.
+        /// Importiert einen Helden aus einer XML-Datei. Bestehende Daten werden überschrieben.
         /// </summary>
+        /// <param name="pfad">Xml-Datei</param>
         public Guid ImportHeld(string pfad)
         {
-            //Userdaten geladen
-            Held held = DeserializeObjectFromFile<Held>(pfad);
-            if (held != null)
-            {
-                if(InsertOrUpdateHeld(held))
-                    return held.HeldGUID;
-            }
+            return ImportHeld(pfad, Guid.Empty);
+        }
+        
+        /// <summary>
+        /// Importiert einen Helden aus einer XML-Datei.
+        /// </summary>
+        /// <param name="pfad">Xml-Datei</param>
+        /// <param name="newGuid">Wenn Guid.Empty, dann wird überschrieben, sonst wird eine Kopie mit der neuen Guid importiert.</param>
+        /// <returns>Guid des importierten Helden oder Guid.Empty</returns>
+        public Guid ImportHeld(string pfad, Guid newGuid)
+        {
+                //Userdaten geladen
+                Held held = DeserializeObjectFromFile<Held>(pfad);;
+                if (newGuid != Guid.Empty)
+                    held = ReplaceGuid(held, newGuid);
+                if (held != null)
+                {
+                    if (InsertOrUpdateHeld(held))
+                        return held.HeldGUID;
+                }
             return Guid.Empty;
+        }
+
+        /// <summary>
+        /// Markiert alle an den Helden angehängten Informationen zum Löschen. Lediglich der Held selbst bleibt.
+        /// </summary>
+        /// <param name="h"></param>
+        /// <returns></returns>
+        public bool DeleteHeldData(Held h)
+        {
+            if(h==null)
+                return false;
+            if (Context.Held.Where(a => a.HeldGUID == h.HeldGUID).Count() == 0)
+                return true;
+            List<object> toDelete = new List<object>();
+
+            toDelete.AddRange(Context.Held_Ausrüstung.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Inventar.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Munition.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Sonderfertigkeit.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Talent.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_VorNachteil.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Held_Zauber.Where(a => a.HeldGUID == h.HeldGUID).AsEnumerable<object>());
+
+            try
+            {
+                foreach (object o in toDelete)
+                    Context.DeleteObject(o);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
         #endregion
 
         #region Gegner
         /// <summary>
-        /// Aktualisert den Held und alle an ihn angehängten Zuordnungstabellen sowie das Inventar. Stammdaten bleiben unangestastet.
+        /// Aktualisert den Gegner und alle an ihn angehängten Zuordnungstabellen. Stammdaten bleiben unangestastet.
         /// Bisher nur additiv. Es wird momentan nichts gelöscht.
         /// </summary>
-        public bool InsertOrUpdateGegner(Gegner gegner)
+        public bool InsertOrUpdateGegner(GegnerBase gegner)
         {
             // Mögliche erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
             // So kann man z.B. einen Guid/ID-Filter realisieren um userdaten von stammdaten zu trennen bzw stammdaten nciht zu überschreiben
             try
             {
                 Context.AttachObjectGraph(gegner,
-                    h => h.Gegner_Angriff,
-                    h => h.Gegner_Kampfregel,
-                    h => h.Gegner_Kampfregel.First().Kampfregel
+                    h => h.GegnerBase_Angriff,
+                    h => h.GegnerBase_Kampfregel,
+                    h => h.GegnerBase_Kampfregel.First().Kampfregel
                 );
                 Save();
                 return true;
@@ -362,27 +454,80 @@ namespace MeisterGeister.Model.Service
         public void ExportGegner(Guid gegnerGuid, string pfad)
         {
             //Userdaten geladen
-            Gegner gegner = Context.Gegner.Where(h => h.GegnerGUID == gegnerGuid).First();
+            GegnerBase gegner = Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
             if (gegner != null)
             {
-                SerializeObject<Gegner>(pfad, gegner);
+                SerializeObject<GegnerBase>(pfad, gegner);
             }
         }
 
-        /// <summary>
-        /// Mit überschreiben.
-        /// </summary>
         public Guid ImportGegner(string pfad)
         {
+            return ImportGegner(pfad, Guid.Empty);
+        }
+
+        public Guid ImportGegner(string pfad, Guid newGuid)
+        {
             //Userdaten geladen
-            Gegner gegner = DeserializeObjectFromFile<Gegner>(pfad);
+            GegnerBase gegner = DeserializeObjectFromFile<GegnerBase>(pfad);
+            if (newGuid != Guid.Empty)
+                gegner = ReplaceGuid(gegner, newGuid);
             if (gegner != null)
             {
                 if (InsertOrUpdateGegner(gegner))
-                    return gegner.GegnerGUID;
+                    return gegner.GegnerBaseGUID;
             }
             return Guid.Empty;
         }
+
+        public Guid CloneGegner(Guid gegnerGuid, Guid newGuid)
+        {
+            GegnerBase gegner = Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
+            if (gegner != null)
+            {
+                GegnerBase newGegner = ReplaceGuid(gegner, newGuid);
+                if (InsertOrUpdateGegner(newGegner))
+                    return newGuid;
+            }
+            return Guid.Empty;
+        }
+
+        private static GegnerBase ReplaceGuid(GegnerBase gegner, Guid newGuid)
+        {
+            string xml = SerializeObject<GegnerBase>(gegner);
+            xml = xml.Replace(String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", gegner.GegnerBaseGUID), String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", newGuid));
+            GegnerBase newHeld = DeserializeObject<GegnerBase>(xml);
+            return newHeld;
+        }
         #endregion
+
+        public static bool IsMeistergeisterFile(string xmlFile)
+        {
+            System.IO.FileStream fs = null;
+            System.IO.StreamReader sr = null;
+            try
+            {
+                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                sr = new System.IO.StreamReader(fs);
+                char[] buffer = new char[400];
+                sr.Read(buffer, 0, 400);
+                string line = new string(buffer);
+                if (line.Contains("MeisterGeister.Model"))
+                    return true;
+                
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                if (sr != null)
+                    sr.Close();
+                if (fs != null)
+                    fs.Close();
+            }
+            return false;
+        }
     }
 }

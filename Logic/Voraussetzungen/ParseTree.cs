@@ -325,7 +325,7 @@ namespace MeisterGeister.Logic.Voraussetzungen
         	string wert = null;
         	if(this.GetValue(tree, TokenType.Wert, 0, paramlist) != null)
         		wert = Convert.ToString(this.GetValue(tree, TokenType.Wert, 0, paramlist));
-        	return held.HatSonderfertigkeit(sfName, wert);
+        	return held.HatSonderfertigkeitUndVoraussetzungen(sfName, wert);
         }
 
         protected virtual object EvalVorteil(ParseTree tree, params object[] paramlist)

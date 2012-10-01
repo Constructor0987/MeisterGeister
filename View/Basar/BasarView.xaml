@@ -70,11 +70,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Margin="0" Orientation="Horizontal" ToolTip="Einkaufender Held">
             <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-            <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                <ComboBox.Background>
-                    <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                </ComboBox.Background>
-            </ComboBox>
+            <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
             <TextBlock Margin="5,10" Padding="4" Text="{Binding Path=HeldTalentwerte}">
                 <TextBlock.Background>
                     <SolidColorBrush Color="DarkGray" Opacity="0.5" />

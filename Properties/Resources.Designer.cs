@@ -1522,5 +1522,32 @@ namespace MeisterGeister.Properties {
                 return ResourceManager.GetString("UpdateTo_V0057_1", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DROP TABLE Gegner_Kampfregel
+        ///GO
+        ///DROP TABLE Gegner_Angriff
+        ///GO
+        ///DROP TABLE Gegner
+        ///GO
+        ///
+        ///CREATE TABLE [GegnerBase] (
+        ///	[GegnerBaseGUID] uniqueidentifier NOT NULL DEFAULT newid(), 
+        ///	[Name] nvarchar(100) NOT NULL, 
+        ///	[Bild] nvarchar(500), 
+        ///	[INIBasis] int NOT NULL DEFAULT 0, 
+        ///	[INIZufall] nvarchar(10) NOT NULL DEFAULT &apos;1W6&apos;, 
+        ///	[Aktionen] int NOT NULL DEFAULT 2, 
+        ///	[PA] int NOT NULL DEFAULT 0, 
+        ///	[LE] int NOT NULL DEFAULT 0, 
+        ///	[AU] int NOT NULL DEFAULT 0, 
+        ///	[AE] int NOT NULL DEFAULT 0, 
+        ///	[KE] int NOT N [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string UpdateTo_V0057_2_GO {
+            get {
+                return ResourceManager.GetString("UpdateTo_V0057_2_GO", resourceCulture);
+            }
+        }
     }
 }

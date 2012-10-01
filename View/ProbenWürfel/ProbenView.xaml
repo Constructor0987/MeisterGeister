@@ -27,14 +27,15 @@
         <Style x:Key="ProbenErgebnisListStyle" TargetType="{x:Type StackPanel}">
             <Setter Property="Opacity" Value="1.0" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=Held.HeldDataRow.Proben}" Value="false">
+                <!--<DataTrigger Binding="{Binding Path=Held.HeldDataRow.Proben, FallbackValue=true, TargetNullValue=true}" Value="false">
                     <Setter Property="Opacity" Value="0.3" />
-                </DataTrigger>
+                </DataTrigger>-->
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="ProbenErgebnisListTemplate">
             <StackPanel Orientation="Horizontal">
-                <CheckBox VerticalAlignment="Center" Margin="5" IsChecked="{Binding Path=Held.HeldDataRow.Proben}" ToolTip="Held bei der Probe einbeziehen?" Checked="CheckBoxProben_UnChecked" Unchecked="CheckBoxProben_UnChecked" />
+                <!--<CheckBox VerticalAlignment="Center" Margin="5" IsChecked="{Binding Held.HeldDataRow.Proben, FallbackValue=true, TargetNullValue=true}" ToolTip="Held bei der Probe einbeziehen?" Checked="CheckBoxProben_UnChecked" Unchecked="CheckBoxProben_UnChecked" />-->
+                <CheckBox VerticalAlignment="Center" Margin="5" IsChecked="true" ToolTip="Held bei der Probe einbeziehen?" Checked="CheckBoxProben_UnChecked" Unchecked="CheckBoxProben_UnChecked" />
                 <StackPanel Orientation="Vertical" Margin="10,0" Style="{StaticResource ProbenErgebnisListStyle}" >
                     <TextBlock Text="{Binding Path=Held.Kurzname}" FontWeight="Bold"/>
                     <Grid>
@@ -52,10 +53,10 @@
                             <TextBlock Text="{Binding Path=TextHinweis}" Margin="2,2,0,0" FontWeight="Bold" TextAlignment="Center" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <ViewGeneral:WürfelControl ProbenErgebnis="{Binding Path=E1Ergebnis}" Ergebnis="{Binding Path=E1Ergebnis.Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenTalentListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
-                            <ViewGeneral:WürfelControl ProbenErgebnis="{Binding Path=E2Ergebnis}" Ergebnis="{Binding Path=E2Ergebnis.Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenTalentListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
-                            <ViewGeneral:WürfelControl ProbenErgebnis="{Binding Path=E3Ergebnis}" Ergebnis="{Binding Path=E3Ergebnis.Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenTalentListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
-                            <ViewGeneral:WürfelControl x:Name="_würfelControlEigenschaft" ProbenErgebnis="{Binding}" Ergebnis="{Binding Path=Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenEigenschaftListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
+                            <ViewGeneral:WürfelControl Ergebnis="{Binding Path=E1Ergebnis.Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenTalentListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
+                            <ViewGeneral:WürfelControl Ergebnis="{Binding Path=E2Ergebnis.Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenTalentListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
+                            <ViewGeneral:WürfelControl Ergebnis="{Binding Path=E3Ergebnis.Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenTalentListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
+                            <ViewGeneral:WürfelControl x:Name="_würfelControlEigenschaft" Ergebnis="{Binding Path=Gewürfelt}" ErgebnisText="Wurf" Würfel="_1W20" Style="{StaticResource ProbenEigenschaftListItemStyle}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlEigenschaft_WürfelGeändert" />
                         </StackPanel>
                         <TextBlock Grid.Column="3" Text="{Binding Path=ErfolgsChance}" Margin="8,2,0,0" ToolTip="Wahrscheinlichkeit die Probe zu bestehen." />
                         <Image Grid.Column="4" Visibility="{Binding Path=VisibilityGelungen}" Source="/Images/Icons/General/ok.png" ToolTip="Probe gelungen." Width="24" Stretch="Uniform" />

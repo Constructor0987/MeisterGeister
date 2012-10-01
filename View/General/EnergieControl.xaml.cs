@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 // Eigene Usings
-using MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.View.General
 {
@@ -132,6 +132,18 @@ namespace MeisterGeister.View.General
         {
             EnergieControl energieControl = (EnergieControl)d;
             energieControl.SetEnergie();
+            // Event registrieren zur Aktualisierung der Anzeige, wenn sich die Energiestände ändern
+            if (energieControl.SelectedKämpfer != null)
+                energieControl.SelectedKämpfer.PropertyChanged += energieControl.SelectedKämpfer_PropertyChanged;
+        }
+
+        private void SelectedKämpfer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "LebensenergieAktuell" || e.PropertyName == "LebensenergieMax"
+                || e.PropertyName == "AusdauerAktuell" || e.PropertyName == "AusdauerMax"
+                || e.PropertyName == "AstralenergieAktuell" || e.PropertyName == "AstralenergieMax"
+                || e.PropertyName == "KarmaenergieAktuell" || e.PropertyName == "KarmaenergieMax")
+                SetEnergie();
         }
 
         public void SetEnergie()

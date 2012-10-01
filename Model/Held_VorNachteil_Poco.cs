@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -79,7 +79,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_wert = value;
-    			NotifyPropertyChanged("Wert");
+    			OnChanged("Wert");
     		}
     
         }
@@ -125,7 +125,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld(Held previousValue)
         {
-    		NotifyPropertyChanged("Held");
+    		OnChanged("Held");
             if (previousValue != null && previousValue.Held_VorNachteil.Contains(this))
             {
                 previousValue.Held_VorNachteil.Remove(this);
@@ -146,7 +146,7 @@ namespace MeisterGeister.Model
     
         private void FixupVorNachteil(VorNachteil previousValue)
         {
-    		NotifyPropertyChanged("VorNachteil");
+    		OnChanged("VorNachteil");
             if (previousValue != null && previousValue.Held_VorNachteil.Contains(this))
             {
                 previousValue.Held_VorNachteil.Remove(this);

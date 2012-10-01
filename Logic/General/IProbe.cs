@@ -1,4 +1,4 @@
-﻿namespace MeisterGeister.Logic.General
+﻿namespace MeisterGeister.LogicAlt.General
 {
     public interface IProbe
     {

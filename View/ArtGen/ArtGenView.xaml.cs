@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using MeisterGeister.Daten;
 // Eigene Usings
 using MeisterGeister.Logic.General;
+using MeisterGeister.LogicAlt.General;
 using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.View.ArtGen
@@ -26,8 +27,6 @@ namespace MeisterGeister.View.ArtGen
         public ArtGenView()
         {
             InitializeComponent();
-
-            _comboBoxHeld.ItemsSource = App.DatenDataSet.Held.Select("AktiveHeldengruppe = true", "Name ASC");
 
             // PlugIn DLL laden
             try
@@ -49,13 +48,23 @@ namespace MeisterGeister.View.ArtGen
 
         private ArtefaktGenerator.ArtGenControl PlugInControl = null;
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Reload();
+        }
+
+        public void Reload()
+        {
+            _comboBoxHeld.ItemsSource = Global.ContextHeld.HeldenGruppeListe;
+        }
+
         public void SetHeldWerte()
         {
-            DatabaseDSADataSet.HeldRow heldRow = null;
+            Model.Held h = null;
             if (_comboBoxHeld.SelectedItem != null)
-                heldRow = (DatabaseDSADataSet.HeldRow)_comboBoxHeld.SelectedItem;
-
-            Held h = new Held(heldRow);
+                h = (Model.Held)_comboBoxHeld.SelectedItem;
+            else
+                h = new Model.Held();
 
             //// wird benötigt, wenn DLL dynamisch geladen wird
             //object representation = 1;
@@ -79,31 +88,14 @@ namespace MeisterGeister.View.ArtGen
             bool sfSemipermII = h.HatSonderfertigkeit("Semipermanenz II");
             bool sfRingkunde = false;
             bool sfAuxiliator = h.HatSonderfertigkeit("Auxiliator");
-            uint tawArcanovi = 0;
-            List<DreierProbenWert> liZauber = h.Zauberwert(new Zauber("Arcanovi Artefakt (Spruchspeicher)"));
-            if (liZauber.Count > 0)
-                tawArcanovi = Convert.ToUInt32(liZauber[0].Wert);
-            uint tawArcanoviMatrix = 0;
-            liZauber = h.Zauberwert(new Zauber("Arcanovi Artefakt (Matrixgeber)"));
-            if (liZauber.Count > 0)
-                tawArcanoviMatrix = Convert.ToUInt32(liZauber[0].Wert);
-            uint tawArcanoviSemi = 0;
-            liZauber = h.Zauberwert(new Zauber("Arcanovi Artefakt (Semipermanenz)"));
-            if (liZauber.Count > 0)
-                tawArcanoviSemi = Convert.ToUInt32(liZauber[0].Wert);
-            uint tawOdem = 0;
-            liZauber = h.Zauberwert(new Zauber("Odem Arcanum"));
-            if (liZauber.Count > 0)
-                tawOdem = Convert.ToUInt32(liZauber[0].Wert);
-            uint tawAnalys = 0;
-            liZauber = h.Zauberwert(new Zauber("Analys Arcanstruktur"));
-            if (liZauber.Count > 0)
-                tawAnalys = Convert.ToUInt32(liZauber[0].Wert);
-            uint tawDestructibo = 0;
-            liZauber = h.Zauberwert(new Zauber("Destructibo Arcanitas"));
-            if (liZauber.Count > 0)
-                tawDestructibo = Convert.ToUInt32(liZauber[0].Wert);
-            uint tawMagiekunde = Convert.ToUInt32(h.Talentwert("Magiekunde").Wert);
+
+            uint tawArcanovi = Convert.ToUInt32(h.Zauberfertigkeitswert("Arcanovi Artefakt (Spruchspeicher)"));
+            uint tawArcanoviMatrix = Convert.ToUInt32(h.Zauberfertigkeitswert("Arcanovi Artefakt (Matrixgeber)"));
+            uint tawArcanoviSemi = Convert.ToUInt32(h.Zauberfertigkeitswert("Arcanovi Artefakt (Semipermanenz)"));
+            uint tawOdem = Convert.ToUInt32(h.Zauberfertigkeitswert("Odem Arcanum"));
+            uint tawAnalys = Convert.ToUInt32(h.Zauberfertigkeitswert("Analys Arcanstruktur"));
+            uint tawDestructibo = Convert.ToUInt32(h.Zauberfertigkeitswert("Destructibo Arcanitas"));
+            uint tawMagiekunde = Convert.ToUInt32(h.Talentwert("Magiekunde"));
             
             // Übergabe an ArtefaktGenerator
             PlugInControl.plugInHero(h.Name, representation, sfKraftkontrolle, sfVielfacheLadung, sfStapeleffekt, sfHypervehemenz, sfMatrixgeber, sfSemipermI, 

@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -79,7 +79,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_aktiv = value;
-    			NotifyPropertyChanged("Aktiv");
+    			OnChanged("Aktiv");
     		}
     
         }
@@ -92,7 +92,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_volume = value;
-    			NotifyPropertyChanged("Volume");
+    			OnChanged("Volume");
     		}
     
         }
@@ -105,7 +105,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_volumeChange = value;
-    			NotifyPropertyChanged("VolumeChange");
+    			OnChanged("VolumeChange");
     		}
     
         }
@@ -118,7 +118,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_volumeMin = value;
-    			NotifyPropertyChanged("VolumeMin");
+    			OnChanged("VolumeMin");
     		}
     
         }
@@ -131,7 +131,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_volumeMax = value;
-    			NotifyPropertyChanged("VolumeMax");
+    			OnChanged("VolumeMax");
     		}
     
         }
@@ -144,7 +144,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_pause = value;
-    			NotifyPropertyChanged("Pause");
+    			OnChanged("Pause");
     		}
     
         }
@@ -157,7 +157,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_pauseChange = value;
-    			NotifyPropertyChanged("PauseChange");
+    			OnChanged("PauseChange");
     		}
     
         }
@@ -170,7 +170,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_pauseMin = value;
-    			NotifyPropertyChanged("PauseMin");
+    			OnChanged("PauseMin");
     		}
     
         }
@@ -183,7 +183,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_pauseMax = value;
-    			NotifyPropertyChanged("PauseMax");
+    			OnChanged("PauseMax");
     		}
     
         }
@@ -229,7 +229,7 @@ namespace MeisterGeister.Model
     
         private void FixupAudio_Playlist(Audio_Playlist previousValue)
         {
-    		NotifyPropertyChanged("Audio_Playlist");
+    		OnChanged("Audio_Playlist");
             if (previousValue != null && previousValue.Audio_Playlist_Titel.Contains(this))
             {
                 previousValue.Audio_Playlist_Titel.Remove(this);
@@ -250,7 +250,7 @@ namespace MeisterGeister.Model
     
         private void FixupAudio_Titel(Audio_Titel previousValue)
         {
-    		NotifyPropertyChanged("Audio_Titel");
+    		OnChanged("Audio_Titel");
             if (previousValue != null && previousValue.Audio_Playlist_Titel.Contains(this))
             {
                 previousValue.Audio_Playlist_Titel.Remove(this);

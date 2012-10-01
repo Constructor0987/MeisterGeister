@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_nscMerkmalId = value;
-    			NotifyPropertyChanged("NscMerkmalId");
+    			OnChanged("NscMerkmalId");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_kategorie = value;
-    			NotifyPropertyChanged("Kategorie");
+    			OnChanged("Kategorie");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_merkmal = value;
-    			NotifyPropertyChanged("Merkmal");
+    			OnChanged("Merkmal");
     		}
     
         }

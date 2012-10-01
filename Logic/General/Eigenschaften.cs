@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     /// <summary>
     /// Beschreibt eine Liste von Eigenschaften.

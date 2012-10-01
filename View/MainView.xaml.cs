@@ -21,12 +21,39 @@ using System.Windows.Media.Animation;
 namespace MeisterGeister.View
 {
 
+    /// <summary>
+    /// Erweiterungsmethode, die ein UI-Element zwingt, sich neu zu zeichnen.
+    /// Wird benutzt, um eine IsBusy-Anzeige zu realisieren.
+    /// </summary>
+    public static class ExtensionMethods
+    {
+        private static Action EmptyDelegate = delegate() { };
+
+        public static void Refresh(this UIElement uiElement)
+        {
+            uiElement.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, EmptyDelegate);
+        }
+    }
+
     // TODO ??: MVVM konform umbauen!    
     /// <summary>
     /// Interaktionslogik für MainView.xaml
     /// </summary>
     public partial class MainView : Window
     {
+
+        #region // ---- IS BUSY ----
+
+        /// <summary>
+        /// Steuert, ob die Anwendung gerade beschäftigt ist. Es wird ein Busy-Overlay angezeigt.
+        /// </summary>
+        public bool IsBusy
+        {
+            get { return _busyBorder.Visibility == System.Windows.Visibility.Visible ? true : false; }
+            set { _busyBorder.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; _busyBorder.Refresh(); }
+        }
+
+        #endregion // ---- IS BUSY ----
 
         #region //FELDER
 
@@ -47,7 +74,7 @@ namespace MeisterGeister.View
             foreach (string tab in tabs)
                 StarteTab(tab);
 
-            if (_tabControlMain.Items.Count > 0)
+            if (_tabControlMain.Items.Count > 0 && Einstellungen.SelectedTab >=0 && Einstellungen.SelectedTab < _tabControlMain.Items.Count)
                 _tabControlMain.SelectedIndex = Einstellungen.SelectedTab;
 
             _tabControlMain.SelectionChanged += _tabControlMain_SelectionChanged;
@@ -136,15 +163,17 @@ namespace MeisterGeister.View
             // Event-Handler verbinden
             switch (tabName)
             {
-                case "Proben":
+                // TODO MT: Events auf neues MVVM-Proben-Tool umstellen
+                case "ProbenAlt":
                     ((ProbenWürfel.ProbenView)con).ZooBotClick += TabItemControl_ZooBotProbe;
                     break;
                 case "Kampf":
                     ((Kampf.KampfView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
                     break;
                 case "Helden":
-                    ((Helden.HeldenView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
-                    ((Helden.HeldenView)con).HeldChanged += TabItemControl_RefreshHeld;
+                    // TODO ??: ProbeWürfeln Event
+                    //((Helden.HeldenView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
+                    //((Helden.HeldenView)con).HeldChanged += TabItemControl_RefreshHeld;
                     break;
                 case "Kalender":
                     ((Kalender.KalenderView)con).DatumAktuellChanged += TabItemControl_RefreshDatumAktuell;

@@ -130,6 +130,12 @@ namespace MeisterGeister.View.ZooBot
             }
 
         }
+
+        public int AktiverReiter
+        {
+            get { return this.Registerkontrolle.SelectedIndex; }
+            set { this.Registerkontrolle.SelectedIndex = value; }
+        }
         #endregion
 
         #region Methoden zum Testen

@@ -14,14 +14,14 @@
           <EntitySet Name="Audio_Playlist_Titel" EntityType="DatabaseDSAModel.Store.Audio_Playlist_Titel" store:Type="Tables" />
           <EntitySet Name="Audio_Titel" EntityType="DatabaseDSAModel.Store.Audio_Titel" store:Type="Tables" />
           <EntitySet Name="Ausrüstung" EntityType="DatabaseDSAModel.Store.Ausrüstung" store:Type="Tables" />
-          <EntitySet Name="Bestiarium" EntityType="DatabaseDSAModel.Store.Bestiarium" store:Type="Tables" />
           <EntitySet Name="Einstellungen" EntityType="DatabaseDSAModel.Store.Einstellungen" store:Type="Tables" />
           <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Store.Farbe" store:Type="Tables" />
           <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe" store:Type="Tables" />
           <EntitySet Name="Fernkampfwaffe_Talent" EntityType="DatabaseDSAModel.Store.Fernkampfwaffe_Talent" store:Type="Tables" />
           <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Store.Gegner" store:Type="Tables" />
-          <EntitySet Name="Gegner_Angriff" EntityType="DatabaseDSAModel.Store.Gegner_Angriff" store:Type="Tables" />
-          <EntitySet Name="Gegner_Kampfregel" EntityType="DatabaseDSAModel.Store.Gegner_Kampfregel" store:Type="Tables" />
+          <EntitySet Name="GegnerBase" EntityType="DatabaseDSAModel.Store.GegnerBase" store:Type="Tables" />
+          <EntitySet Name="GegnerBase_Angriff" EntityType="DatabaseDSAModel.Store.GegnerBase_Angriff" store:Type="Tables" />
+          <EntitySet Name="GegnerBase_Kampfregel" EntityType="DatabaseDSAModel.Store.GegnerBase_Kampfregel" store:Type="Tables" />
           <EntitySet Name="Handelsgut" EntityType="DatabaseDSAModel.Store.Handelsgut" store:Type="Tables" />
           <EntitySet Name="Held" EntityType="DatabaseDSAModel.Store.Held" store:Type="Tables" />
           <EntitySet Name="Held_Ausrüstung" EntityType="DatabaseDSAModel.Store.Held_Ausrüstung" store:Type="Tables" />
@@ -100,17 +100,21 @@
             <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
             <End Role="Fernkampfwaffe_Talent" EntitySet="Fernkampfwaffe_Talent" />
           </AssociationSet>
-          <AssociationSet Name="fk_GegnerAngriff_Gegner" Association="DatabaseDSAModel.Store.fk_GegnerAngriff_Gegner">
+          <AssociationSet Name="fk_Gegner_GegnerBase" Association="DatabaseDSAModel.Store.fk_Gegner_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
             <End Role="Gegner" EntitySet="Gegner" />
-            <End Role="Gegner_Angriff" EntitySet="Gegner_Angriff" />
           </AssociationSet>
-          <AssociationSet Name="fk_GegnerKampfregel_Gegner" Association="DatabaseDSAModel.Store.fk_GegnerKampfregel_Gegner">
-            <End Role="Gegner" EntitySet="Gegner" />
-            <End Role="Gegner_Kampfregel" EntitySet="Gegner_Kampfregel" />
+          <AssociationSet Name="fk_GegnerBaseAngriff_GegnerBase" Association="DatabaseDSAModel.Store.fk_GegnerBaseAngriff_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
+            <End Role="GegnerBase_Angriff" EntitySet="GegnerBase_Angriff" />
           </AssociationSet>
-          <AssociationSet Name="fk_GegnerKampfregel_Kampfregel" Association="DatabaseDSAModel.Store.fk_GegnerKampfregel_Kampfregel">
+          <AssociationSet Name="fk_GegnerBaseKampfregel_GegnerBase" Association="DatabaseDSAModel.Store.fk_GegnerBaseKampfregel_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
+            <End Role="GegnerBase_Kampfregel" EntitySet="GegnerBase_Kampfregel" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GegnerBaseKampfregel_Kampfregel" Association="DatabaseDSAModel.Store.fk_GegnerBaseKampfregel_Kampfregel">
             <End Role="Kampfregel" EntitySet="Kampfregel" />
-            <End Role="Gegner_Kampfregel" EntitySet="Gegner_Kampfregel" />
+            <End Role="GegnerBase_Kampfregel" EntitySet="GegnerBase_Kampfregel" />
           </AssociationSet>
           <AssociationSet Name="fk_HeldAusrüstung_Ausrüstung" Association="DatabaseDSAModel.Store.fk_HeldAusrüstung_Ausrüstung">
             <End Role="Ausrüstung" EntitySet="Ausrüstung" />
@@ -309,34 +313,6 @@
           <Property Name="Setting" Type="nvarchar" MaxLength="100" />
           <Property Name="Bemerkung" Type="ntext" />
         </EntityType>
-        <EntityType Name="Bestiarium">
-          <Key>
-            <PropertyRef Name="BestiariumID" />
-          </Key>
-          <Property Name="BestiariumID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
-          <Property Name="INI_Basis" Type="int" />
-          <Property Name="INI_Zufall" Type="nvarchar" MaxLength="5" />
-          <Property Name="Kampfwerte" Type="nvarchar" MaxLength="250" />
-          <Property Name="PA" Type="int" />
-          <Property Name="LE" Type="int" />
-          <Property Name="RS" Type="int" />
-          <Property Name="GS" Type="nvarchar" MaxLength="10" />
-          <Property Name="AU" Type="nvarchar" MaxLength="10" />
-          <Property Name="MR" Type="nvarchar" MaxLength="10" />
-          <Property Name="KO" Type="int" />
-          <Property Name="Besonderheiten" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Sonderfertigkeiten" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Quelle" Type="nvarchar" MaxLength="100" />
-          <Property Name="RSKopf" Type="int" />
-          <Property Name="RSBrust" Type="int" />
-          <Property Name="RSRücken" Type="int" />
-          <Property Name="RSArmL" Type="int" />
-          <Property Name="RSArmR" Type="int" />
-          <Property Name="RSBauch" Type="int" />
-          <Property Name="RSBeinL" Type="int" />
-          <Property Name="RSBeinR" Type="int" />
-        </EntityType>
         <EntityType Name="Einstellungen">
           <Key>
             <PropertyRef Name="Name" />
@@ -395,6 +371,28 @@
             <PropertyRef Name="GegnerGUID" />
           </Key>
           <Property Name="GegnerGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Bild" Type="nvarchar" MaxLength="500" />
+          <Property Name="LEAktuell" Type="int" Nullable="false" />
+          <Property Name="AUAktuell" Type="int" Nullable="false" />
+          <Property Name="AEAktuell" Type="int" Nullable="false" />
+          <Property Name="KEAktuell" Type="int" Nullable="false" />
+          <Property Name="Wunden" Type="int" Nullable="false" />
+          <Property Name="WundenKopf" Type="int" Nullable="false" />
+          <Property Name="WundenBrust" Type="int" Nullable="false" />
+          <Property Name="WundenArmL" Type="int" Nullable="false" />
+          <Property Name="WundenArmR" Type="int" Nullable="false" />
+          <Property Name="WundenBauch" Type="int" Nullable="false" />
+          <Property Name="WundenBeinL" Type="int" Nullable="false" />
+          <Property Name="WundenBeinR" Type="int" Nullable="false" />
+          <Property Name="Bemerkung" Type="ntext" />
+        </EntityType>
+        <EntityType Name="GegnerBase">
+          <Key>
+            <PropertyRef Name="GegnerBaseGUID" />
+          </Key>
+          <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Bild" Type="nvarchar" MaxLength="500" />
           <Property Name="INIBasis" Type="int" Nullable="false" />
@@ -429,12 +427,12 @@
           <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
           <Property Name="Setting" Type="nvarchar" MaxLength="100" />
         </EntityType>
-        <EntityType Name="Gegner_Angriff">
+        <EntityType Name="GegnerBase_Angriff">
           <Key>
-            <PropertyRef Name="GegnerGUID" />
+            <PropertyRef Name="GegnerBaseGUID" />
             <PropertyRef Name="Name" />
           </Key>
-          <Property Name="GegnerGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="TPWürfel" Type="int" Nullable="false" />
           <Property Name="TPWürfelAnzahl" Type="int" Nullable="false" />
@@ -444,12 +442,12 @@
           <Property Name="Reichweite" Type="int" />
           <Property Name="Bemerkung" Type="ntext" />
         </EntityType>
-        <EntityType Name="Gegner_Kampfregel">
+        <EntityType Name="GegnerBase_Kampfregel">
           <Key>
-            <PropertyRef Name="GegnerGUID" />
+            <PropertyRef Name="GegnerBaseGUID" />
             <PropertyRef Name="KampfregelGUID" />
           </Key>
-          <Property Name="GegnerGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GegnerBaseGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="KampfregelGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Erschwernis" Type="int" Nullable="false" />
           <Property Name="TP" Type="nvarchar" MaxLength="10" />
@@ -1073,44 +1071,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_GegnerAngriff_Gegner">
-          <End Role="Gegner" Type="DatabaseDSAModel.Store.Gegner" Multiplicity="1">
+        <Association Name="fk_Gegner_GegnerBase">
+          <End Role="GegnerBase" Type="DatabaseDSAModel.Store.GegnerBase" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Gegner_Angriff" Type="DatabaseDSAModel.Store.Gegner_Angriff" Multiplicity="*" />
+          <End Role="Gegner" Type="DatabaseDSAModel.Store.Gegner" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Gegner">
-              <PropertyRef Name="GegnerGUID" />
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Principal>
-            <Dependent Role="Gegner_Angriff">
-              <PropertyRef Name="GegnerGUID" />
+            <Dependent Role="Gegner">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_GegnerKampfregel_Gegner">
-          <End Role="Gegner" Type="DatabaseDSAModel.Store.Gegner" Multiplicity="1">
+        <Association Name="fk_GegnerBaseAngriff_GegnerBase">
+          <End Role="GegnerBase" Type="DatabaseDSAModel.Store.GegnerBase" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Gegner_Kampfregel" Type="DatabaseDSAModel.Store.Gegner_Kampfregel" Multiplicity="*" />
+          <End Role="GegnerBase_Angriff" Type="DatabaseDSAModel.Store.GegnerBase_Angriff" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Gegner">
-              <PropertyRef Name="GegnerGUID" />
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Principal>
-            <Dependent Role="Gegner_Kampfregel">
-              <PropertyRef Name="GegnerGUID" />
+            <Dependent Role="GegnerBase_Angriff">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_GegnerKampfregel_Kampfregel">
+        <Association Name="fk_GegnerBaseKampfregel_GegnerBase">
+          <End Role="GegnerBase" Type="DatabaseDSAModel.Store.GegnerBase" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="GegnerBase_Kampfregel" Type="DatabaseDSAModel.Store.GegnerBase_Kampfregel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Principal>
+            <Dependent Role="GegnerBase_Kampfregel">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GegnerBaseKampfregel_Kampfregel">
           <End Role="Kampfregel" Type="DatabaseDSAModel.Store.Kampfregel" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Gegner_Kampfregel" Type="DatabaseDSAModel.Store.Gegner_Kampfregel" Multiplicity="*" />
+          <End Role="GegnerBase_Kampfregel" Type="DatabaseDSAModel.Store.GegnerBase_Kampfregel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Kampfregel">
               <PropertyRef Name="KampfregelGUID" />
             </Principal>
-            <Dependent Role="Gegner_Kampfregel">
+            <Dependent Role="GegnerBase_Kampfregel">
               <PropertyRef Name="KampfregelGUID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1517,16 +1529,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      <Function Name="upper"
-          Aggregate="false"
-          BuiltIn="true"
-          NiladicFunction="false"
-          IsComposable="true"
-          ParameterTypeSemantics="AllowImplicitConversion"
-          ReturnType="nvarchar">
-             <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
-            </Function>
-    </Schema></edmx:StorageModels>
+        <Function Name="upper"
+            Aggregate="false"
+            BuiltIn="true"
+            NiladicFunction="false"
+            IsComposable="true"
+            ParameterTypeSemantics="AllowImplicitConversion"
+            ReturnType="nvarchar">
+          <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
+        </Function>
+      </Schema>
+  </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseDSAModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -1535,14 +1548,17 @@
           <EntitySet Name="Abenteuer_Ereignis" EntityType="DatabaseDSAModel.Abenteuer_Ereignis" />
           <EntitySet Name="Abenteuer_Szene" EntityType="DatabaseDSAModel.Abenteuer_Szene" />
           <EntitySet Name="Abenteuer_Verweis" EntityType="DatabaseDSAModel.Abenteuer_Verweis" />
+          <EntitySet Name="Audio_Playlist" EntityType="DatabaseDSAModel.Audio_Playlist" />
+          <EntitySet Name="Audio_Playlist_Titel" EntityType="DatabaseDSAModel.Audio_Playlist_Titel" />
+          <EntitySet Name="Audio_Titel" EntityType="DatabaseDSAModel.Audio_Titel" />
           <EntitySet Name="Ausrüstung" EntityType="DatabaseDSAModel.Ausrüstung" />
-          <EntitySet Name="Bestiarium" EntityType="DatabaseDSAModel.Bestiarium" />
           <EntitySet Name="Einstellungen" EntityType="DatabaseDSAModel.Einstellungen" />
           <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Farbe" />
           <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Fernkampfwaffe" />
           <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Gegner" />
-          <EntitySet Name="Gegner_Angriff" EntityType="DatabaseDSAModel.Gegner_Angriff" />
-          <EntitySet Name="Gegner_Kampfregel" EntityType="DatabaseDSAModel.Gegner_Kampfregel" />
+          <EntitySet Name="GegnerBase" EntityType="DatabaseDSAModel.GegnerBase" />
+          <EntitySet Name="GegnerBase_Angriff" EntityType="DatabaseDSAModel.GegnerBase_Angriff" />
+          <EntitySet Name="GegnerBase_Kampfregel" EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" />
           <EntitySet Name="Handelsgut" EntityType="DatabaseDSAModel.Handelsgut" />
           <EntitySet Name="Held" EntityType="DatabaseDSAModel.Held" />
           <EntitySet Name="Held_Ausrüstung" EntityType="DatabaseDSAModel.Held_Ausrüstung" />
@@ -1600,6 +1616,14 @@
             <End Role="Abenteuer_Szene" EntitySet="Abenteuer_Szene" />
             <End Role="Abenteuer_Verweis" EntitySet="Abenteuer_Verweis" />
           </AssociationSet>
+          <AssociationSet Name="fk_Audio_Playlist_Titel_Playlist" Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist">
+            <End Role="Audio_Playlist" EntitySet="Audio_Playlist" />
+            <End Role="Audio_Playlist_Titel" EntitySet="Audio_Playlist_Titel" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Audio_Playlist_Titel_Titel" Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel">
+            <End Role="Audio_Titel" EntitySet="Audio_Titel" />
+            <End Role="Audio_Playlist_Titel" EntitySet="Audio_Playlist_Titel" />
+          </AssociationSet>
           <AssociationSet Name="fk_Fernkampfwaffe_Ausrüstung" Association="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung">
             <End Role="Ausrüstung" EntitySet="Ausrüstung" />
             <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
@@ -1628,17 +1652,21 @@
             <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
             <End Role="Held_Munition" EntitySet="Held_Munition" />
           </AssociationSet>
-          <AssociationSet Name="fk_GegnerAngriff_Gegner" Association="DatabaseDSAModel.fk_GegnerAngriff_Gegner">
+          <AssociationSet Name="fk_Gegner_GegnerBase" Association="DatabaseDSAModel.fk_Gegner_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
             <End Role="Gegner" EntitySet="Gegner" />
-            <End Role="Gegner_Angriff" EntitySet="Gegner_Angriff" />
           </AssociationSet>
-          <AssociationSet Name="fk_GegnerKampfregel_Gegner" Association="DatabaseDSAModel.fk_GegnerKampfregel_Gegner">
-            <End Role="Gegner" EntitySet="Gegner" />
-            <End Role="Gegner_Kampfregel" EntitySet="Gegner_Kampfregel" />
+          <AssociationSet Name="fk_GegnerBaseAngriff_GegnerBase" Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
+            <End Role="GegnerBase_Angriff" EntitySet="GegnerBase_Angriff" />
           </AssociationSet>
-          <AssociationSet Name="fk_GegnerKampfregel_Kampfregel" Association="DatabaseDSAModel.fk_GegnerKampfregel_Kampfregel">
+          <AssociationSet Name="fk_GegnerBaseKampfregel_GegnerBase" Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
+            <End Role="GegnerBase_Kampfregel" EntitySet="GegnerBase_Kampfregel" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GegnerBaseKampfregel_Kampfregel" Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel">
             <End Role="Kampfregel" EntitySet="Kampfregel" />
-            <End Role="Gegner_Kampfregel" EntitySet="Gegner_Kampfregel" />
+            <End Role="GegnerBase_Kampfregel" EntitySet="GegnerBase_Kampfregel" />
           </AssociationSet>
           <AssociationSet Name="fk_HeldAusrüstung_Held" Association="DatabaseDSAModel.fk_HeldAusrüstung_Held">
             <End Role="Held" EntitySet="Held" />
@@ -1732,17 +1760,6 @@
             <End Role="Talent" EntitySet="Talent" />
             <End Role="Waffe" EntitySet="Waffe" />
           </AssociationSet>
-          <EntitySet Name="Audio_Playlist" EntityType="DatabaseDSAModel.Audio_Playlist" />
-          <EntitySet Name="Audio_Playlist_Titel" EntityType="DatabaseDSAModel.Audio_Playlist_Titel" />
-          <EntitySet Name="Audio_Titel" EntityType="DatabaseDSAModel.Audio_Titel" />
-          <AssociationSet Name="fk_Audio_Playlist_Titel_Playlist" Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist">
-            <End Role="Audio_Playlist" EntitySet="Audio_Playlist" />
-            <End Role="Audio_Playlist_Titel" EntitySet="Audio_Playlist_Titel" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Audio_Playlist_Titel_Titel" Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel">
-            <End Role="Audio_Titel" EntitySet="Audio_Titel" />
-            <End Role="Audio_Playlist_Titel" EntitySet="Audio_Playlist_Titel" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Abenteuer">
           <Key>
@@ -1789,6 +1806,44 @@
           <NavigationProperty Name="Abenteuer_Szene" Relationship="DatabaseDSAModel.fk_AbenteuerVerweis_NachSzene" FromRole="Abenteuer_Verweis" ToRole="Abenteuer_Szene" />
           <NavigationProperty Name="Abenteuer_Szene1" Relationship="DatabaseDSAModel.fk_AbenteuerVerweis_VonSzene" FromRole="Abenteuer_Verweis" ToRole="Abenteuer_Szene" />
         </EntityType>
+        <EntityType Name="Audio_Playlist">
+          <Key>
+            <PropertyRef Name="Audio_PlaylistGUID" />
+          </Key>
+          <Property Type="Guid" Name="Audio_PlaylistGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Hintergrundmusik" Nullable="false" />
+          <Property Type="Int32" Name="MaxSongsParallel" Nullable="false" />
+          <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
+        </EntityType>
+        <EntityType Name="Audio_Playlist_Titel">
+          <Key>
+            <PropertyRef Name="Audio_PlaylistGUID" />
+            <PropertyRef Name="Audio_TitelGUID" />
+          </Key>
+          <Property Type="Guid" Name="Audio_PlaylistGUID" Nullable="false" />
+          <Property Type="Guid" Name="Audio_TitelGUID" Nullable="false" />
+          <Property Type="Boolean" Name="Aktiv" Nullable="false" />
+          <Property Type="Int32" Name="Volume" Nullable="false" />
+          <Property Type="Boolean" Name="VolumeChange" Nullable="false" />
+          <Property Type="Int32" Name="VolumeMin" Nullable="false" />
+          <Property Type="Int32" Name="VolumeMax" Nullable="false" />
+          <Property Type="Int64" Name="Pause" Nullable="false" />
+          <Property Type="Boolean" Name="PauseChange" Nullable="false" />
+          <Property Type="Int64" Name="PauseMin" Nullable="false" />
+          <Property Type="Int64" Name="PauseMax" Nullable="false" />
+          <NavigationProperty Name="Audio_Playlist" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist_Titel" ToRole="Audio_Playlist" />
+          <NavigationProperty Name="Audio_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" FromRole="Audio_Playlist_Titel" ToRole="Audio_Titel" />
+        </EntityType>
+        <EntityType Name="Audio_Titel">
+          <Key>
+            <PropertyRef Name="Audio_TitelGUID" />
+          </Key>
+          <Property Type="Guid" Name="Audio_TitelGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Pfad" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" FromRole="Audio_Titel" ToRole="Audio_Playlist_Titel" />
+        </EntityType>
         <EntityType Name="Ausrüstung">
           <Key>
             <PropertyRef Name="AusrüstungGUID" />
@@ -1806,34 +1861,6 @@
           <NavigationProperty Name="Rüstung" Relationship="DatabaseDSAModel.fk_Rüstung_Ausrüstung" FromRole="Ausrüstung" ToRole="Rüstung" />
           <NavigationProperty Name="Schild" Relationship="DatabaseDSAModel.fk_Schild_Ausrüstung" FromRole="Ausrüstung" ToRole="Schild" />
           <NavigationProperty Name="Waffe" Relationship="DatabaseDSAModel.fk_Waffe_Ausrüstung" FromRole="Ausrüstung" ToRole="Waffe" />
-        </EntityType>
-        <EntityType Name="Bestiarium">
-          <Key>
-            <PropertyRef Name="BestiariumID" />
-          </Key>
-          <Property Type="Int32" Name="BestiariumID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="INI_Basis" />
-          <Property Type="String" Name="INI_Zufall" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Kampfwerte" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="PA" />
-          <Property Type="Int32" Name="LE" />
-          <Property Type="Int32" Name="RS" />
-          <Property Type="String" Name="GS" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="AU" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="MR" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="KO" />
-          <Property Type="String" Name="Besonderheiten" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Sonderfertigkeiten" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Quelle" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="RSKopf" />
-          <Property Type="Int32" Name="RSBrust" />
-          <Property Type="Int32" Name="RSRücken" />
-          <Property Type="Int32" Name="RSArmL" />
-          <Property Type="Int32" Name="RSArmR" />
-          <Property Type="Int32" Name="RSBauch" />
-          <Property Type="Int32" Name="RSBeinL" />
-          <Property Type="Int32" Name="RSBeinR" />
         </EntityType>
         <EntityType Name="Einstellungen">
           <Key>
@@ -1889,6 +1916,29 @@
             <PropertyRef Name="GegnerGUID" />
           </Key>
           <Property Type="Guid" Name="GegnerGUID" Nullable="false" />
+          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bild" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="LEAktuell" Nullable="false" />
+          <Property Type="Int32" Name="AUAktuell" Nullable="false" />
+          <Property Type="Int32" Name="AEAktuell" Nullable="false" />
+          <Property Type="Int32" Name="KEAktuell" Nullable="false" />
+          <Property Type="Int32" Name="Wunden" Nullable="false" />
+          <Property Type="Int32" Name="WundenKopf" Nullable="false" />
+          <Property Type="Int32" Name="WundenBrust" Nullable="false" />
+          <Property Type="Int32" Name="WundenArmL" Nullable="false" />
+          <Property Type="Int32" Name="WundenArmR" Nullable="false" />
+          <Property Type="Int32" Name="WundenBauch" Nullable="false" />
+          <Property Type="Int32" Name="WundenBeinL" Nullable="false" />
+          <Property Type="Int32" Name="WundenBeinR" Nullable="false" />
+          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="Gegner" ToRole="GegnerBase" />
+        </EntityType>
+        <EntityType Name="GegnerBase">
+          <Key>
+            <PropertyRef Name="GegnerBaseGUID" />
+          </Key>
+          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Bild" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="INIBasis" Nullable="false" />
@@ -1922,15 +1972,16 @@
           <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Setting" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Gegner_Angriff" Relationship="DatabaseDSAModel.fk_GegnerAngriff_Gegner" FromRole="Gegner" ToRole="Gegner_Angriff" />
-          <NavigationProperty Name="Gegner_Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerKampfregel_Gegner" FromRole="Gegner" ToRole="Gegner_Kampfregel" />
+          <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="GegnerBase" ToRole="Gegner" />
+          <NavigationProperty Name="GegnerBase_Angriff" Relationship="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Angriff" />
+          <NavigationProperty Name="GegnerBase_Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Kampfregel" />
         </EntityType>
-        <EntityType Name="Gegner_Angriff">
+        <EntityType Name="GegnerBase_Angriff">
           <Key>
-            <PropertyRef Name="GegnerGUID" />
+            <PropertyRef Name="GegnerBaseGUID" />
             <PropertyRef Name="Name" />
           </Key>
-          <Property Type="Guid" Name="GegnerGUID" Nullable="false" />
+          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="TPWürfel" Nullable="false" />
           <Property Type="Int32" Name="TPWürfelAnzahl" Nullable="false" />
@@ -1939,20 +1990,20 @@
           <Property Type="String" Name="DK" MaxLength="4" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Reichweite" />
           <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.fk_GegnerAngriff_Gegner" FromRole="Gegner_Angriff" ToRole="Gegner" />
+          <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" FromRole="GegnerBase_Angriff" ToRole="GegnerBase" />
         </EntityType>
-        <EntityType Name="Gegner_Kampfregel">
+        <EntityType Name="GegnerBase_Kampfregel">
           <Key>
-            <PropertyRef Name="GegnerGUID" />
+            <PropertyRef Name="GegnerBaseGUID" />
             <PropertyRef Name="KampfregelGUID" />
           </Key>
-          <Property Type="Guid" Name="GegnerGUID" Nullable="false" />
+          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
           <Property Type="Guid" Name="KampfregelGUID" Nullable="false" />
           <Property Type="Int32" Name="Erschwernis" Nullable="false" />
           <Property Type="String" Name="TP" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.fk_GegnerKampfregel_Gegner" FromRole="Gegner_Kampfregel" ToRole="Gegner" />
-          <NavigationProperty Name="Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerKampfregel_Kampfregel" FromRole="Gegner_Kampfregel" ToRole="Kampfregel" />
+          <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" FromRole="GegnerBase_Kampfregel" ToRole="GegnerBase" />
+          <NavigationProperty Name="Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" FromRole="GegnerBase_Kampfregel" ToRole="Kampfregel" />
         </EntityType>
         <EntityType Name="Handelsgut">
           <Key>
@@ -2149,7 +2200,7 @@
           <Property Type="Boolean" Name="Manöver" Nullable="false" />
           <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Gegner_Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerKampfregel_Kampfregel" FromRole="Kampfregel" ToRole="Gegner_Kampfregel" />
+          <NavigationProperty Name="GegnerBase_Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" FromRole="Kampfregel" ToRole="GegnerBase_Kampfregel" />
         </EntityType>
         <EntityType Name="Kultur">
           <Key>
@@ -2368,12 +2419,12 @@
           <Property Type="String" Name="WikiLink" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Untergruppe" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Setting" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Talent" FromRole="Talent" ToRole="Held_Ausrüstung" />
           <NavigationProperty Name="Held_Talent" Relationship="DatabaseDSAModel.Talent_FK" FromRole="Talent" ToRole="Held_Talent" />
           <NavigationProperty Name="Talentgruppe" Relationship="DatabaseDSAModel.Gruppe" FromRole="Talent" ToRole="Talentgruppe" />
           <NavigationProperty Name="Fernkampfwaffe" Relationship="DatabaseDSAModel.Fernkampfwaffe_Talent" FromRole="Talent" ToRole="Fernkampfwaffe" />
           <NavigationProperty Name="Waffe" Relationship="DatabaseDSAModel.Waffe_Talent" FromRole="Talent" ToRole="Waffe" />
-          <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Talentgruppe">
           <Key>
@@ -2447,9 +2498,9 @@
           <Property Type="String" Name="Komplex" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Repräsentationen" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Merkmale" MaxLength="300" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Held_Zauber" Relationship="DatabaseDSAModel.Zauber_FK" FromRole="Zauber" ToRole="Held_Zauber" />
           <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Setting" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Held_Zauber" Relationship="DatabaseDSAModel.Zauber_FK" FromRole="Zauber" ToRole="Held_Zauber" />
         </EntityType>
         <EntityType Name="Zauberzeichen">
           <Key>
@@ -2542,6 +2593,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Audio_Playlist_Titel_Playlist">
+          <End Type="DatabaseDSAModel.Audio_Playlist" Role="Audio_Playlist" Multiplicity="1" />
+          <End Type="DatabaseDSAModel.Audio_Playlist_Titel" Role="Audio_Playlist_Titel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Audio_Playlist">
+              <PropertyRef Name="Audio_PlaylistGUID" />
+            </Principal>
+            <Dependent Role="Audio_Playlist_Titel">
+              <PropertyRef Name="Audio_PlaylistGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Audio_Playlist_Titel_Titel">
+          <End Type="DatabaseDSAModel.Audio_Titel" Role="Audio_Titel" Multiplicity="1" />
+          <End Type="DatabaseDSAModel.Audio_Playlist_Titel" Role="Audio_Playlist_Titel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Audio_Titel">
+              <PropertyRef Name="Audio_TitelGUID" />
+            </Principal>
+            <Dependent Role="Audio_Playlist_Titel">
+              <PropertyRef Name="Audio_TitelGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Fernkampfwaffe_Ausrüstung">
           <End Type="DatabaseDSAModel.Ausrüstung" Role="Ausrüstung" Multiplicity="1" />
           <End Type="DatabaseDSAModel.Fernkampfwaffe" Role="Fernkampfwaffe" Multiplicity="0..1" />
@@ -2626,38 +2701,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_GegnerAngriff_Gegner">
-          <End Type="DatabaseDSAModel.Gegner" Role="Gegner" Multiplicity="1" />
-          <End Type="DatabaseDSAModel.Gegner_Angriff" Role="Gegner_Angriff" Multiplicity="*" />
+        <Association Name="fk_Gegner_GegnerBase">
+          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1" />
+          <End Type="DatabaseDSAModel.Gegner" Role="Gegner" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Gegner">
-              <PropertyRef Name="GegnerGUID" />
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Principal>
-            <Dependent Role="Gegner_Angriff">
-              <PropertyRef Name="GegnerGUID" />
+            <Dependent Role="Gegner">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_GegnerKampfregel_Gegner">
-          <End Type="DatabaseDSAModel.Gegner" Role="Gegner" Multiplicity="1" />
-          <End Type="DatabaseDSAModel.Gegner_Kampfregel" Role="Gegner_Kampfregel" Multiplicity="*" />
+        <Association Name="fk_GegnerBaseAngriff_GegnerBase">
+          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1" />
+          <End Type="DatabaseDSAModel.GegnerBase_Angriff" Role="GegnerBase_Angriff" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Gegner">
-              <PropertyRef Name="GegnerGUID" />
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Principal>
-            <Dependent Role="Gegner_Kampfregel">
-              <PropertyRef Name="GegnerGUID" />
+            <Dependent Role="GegnerBase_Angriff">
+              <PropertyRef Name="GegnerBaseGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_GegnerKampfregel_Kampfregel">
+        <Association Name="fk_GegnerBaseKampfregel_GegnerBase">
+          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1" />
+          <End Type="DatabaseDSAModel.GegnerBase_Kampfregel" Role="GegnerBase_Kampfregel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Principal>
+            <Dependent Role="GegnerBase_Kampfregel">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GegnerBaseKampfregel_Kampfregel">
           <End Type="DatabaseDSAModel.Kampfregel" Role="Kampfregel" Multiplicity="1" />
-          <End Type="DatabaseDSAModel.Gegner_Kampfregel" Role="Gegner_Kampfregel" Multiplicity="*" />
+          <End Type="DatabaseDSAModel.GegnerBase_Kampfregel" Role="GegnerBase_Kampfregel" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Kampfregel">
               <PropertyRef Name="KampfregelGUID" />
             </Principal>
-            <Dependent Role="Gegner_Kampfregel">
+            <Dependent Role="GegnerBase_Kampfregel">
               <PropertyRef Name="KampfregelGUID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2922,68 +3009,6 @@
           <End Type="DatabaseDSAModel.Talent" Role="Talent" Multiplicity="*" />
           <End Type="DatabaseDSAModel.Waffe" Role="Waffe" Multiplicity="*" />
         </Association>
-        <EntityType Name="Audio_Playlist">
-          <Key>
-            <PropertyRef Name="Audio_PlaylistGUID" />
-          </Key>
-          <Property Type="Guid" Name="Audio_PlaylistGUID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="Hintergrundmusik" Nullable="false" />
-          <Property Type="Int32" Name="MaxSongsParallel" Nullable="false" />
-          <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
-        </EntityType>
-        <EntityType Name="Audio_Playlist_Titel">
-          <Key>
-            <PropertyRef Name="Audio_PlaylistGUID" />
-            <PropertyRef Name="Audio_TitelGUID" />
-          </Key>
-          <Property Type="Guid" Name="Audio_PlaylistGUID" Nullable="false" />
-          <Property Type="Guid" Name="Audio_TitelGUID" Nullable="false" />
-          <Property Type="Boolean" Name="Aktiv" Nullable="false" />
-          <Property Type="Int32" Name="Volume" Nullable="false" />
-          <Property Type="Boolean" Name="VolumeChange" Nullable="false" />
-          <Property Type="Int32" Name="VolumeMin" Nullable="false" />
-          <Property Type="Int32" Name="VolumeMax" Nullable="false" />
-          <Property Type="Int64" Name="Pause" Nullable="false" />
-          <Property Type="Boolean" Name="PauseChange" Nullable="false" />
-          <Property Type="Int64" Name="PauseMin" Nullable="false" />
-          <Property Type="Int64" Name="PauseMax" Nullable="false" />
-          <NavigationProperty Name="Audio_Playlist" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist_Titel" ToRole="Audio_Playlist" />
-          <NavigationProperty Name="Audio_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" FromRole="Audio_Playlist_Titel" ToRole="Audio_Titel" />
-        </EntityType>
-        <EntityType Name="Audio_Titel">
-          <Key>
-            <PropertyRef Name="Audio_TitelGUID" />
-          </Key>
-          <Property Type="Guid" Name="Audio_TitelGUID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Pfad" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" FromRole="Audio_Titel" ToRole="Audio_Playlist_Titel" />
-        </EntityType>
-        <Association Name="fk_Audio_Playlist_Titel_Playlist">
-          <End Type="DatabaseDSAModel.Audio_Playlist" Role="Audio_Playlist" Multiplicity="1" />
-          <End Type="DatabaseDSAModel.Audio_Playlist_Titel" Role="Audio_Playlist_Titel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Audio_Playlist">
-              <PropertyRef Name="Audio_PlaylistGUID" />
-            </Principal>
-            <Dependent Role="Audio_Playlist_Titel">
-              <PropertyRef Name="Audio_PlaylistGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Audio_Playlist_Titel_Titel">
-          <End Type="DatabaseDSAModel.Audio_Titel" Role="Audio_Titel" Multiplicity="1" />
-          <End Type="DatabaseDSAModel.Audio_Playlist_Titel" Role="Audio_Playlist_Titel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Audio_Titel">
-              <PropertyRef Name="Audio_TitelGUID" />
-            </Principal>
-            <Dependent Role="Audio_Playlist_Titel">
-              <PropertyRef Name="Audio_TitelGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3027,6 +3052,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Audio_Playlist">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Audio_Playlist">
+              <MappingFragment StoreEntitySet="Audio_Playlist">
+                <ScalarProperty Name="MaxSongsParallel" ColumnName="MaxSongsParallel" />
+                <ScalarProperty Name="Hintergrundmusik" ColumnName="Hintergrundmusik" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Audio_PlaylistGUID" ColumnName="Audio_PlaylistGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Audio_Playlist_Titel">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Audio_Playlist_Titel">
+              <MappingFragment StoreEntitySet="Audio_Playlist_Titel">
+                <ScalarProperty Name="PauseMax" ColumnName="PauseMax" />
+                <ScalarProperty Name="PauseMin" ColumnName="PauseMin" />
+                <ScalarProperty Name="PauseChange" ColumnName="PauseChange" />
+                <ScalarProperty Name="Pause" ColumnName="Pause" />
+                <ScalarProperty Name="VolumeMax" ColumnName="VolumeMax" />
+                <ScalarProperty Name="VolumeMin" ColumnName="VolumeMin" />
+                <ScalarProperty Name="VolumeChange" ColumnName="VolumeChange" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="Aktiv" ColumnName="Aktiv" />
+                <ScalarProperty Name="Audio_TitelGUID" ColumnName="Audio_TitelGUID" />
+                <ScalarProperty Name="Audio_PlaylistGUID" ColumnName="Audio_PlaylistGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Audio_Titel">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Audio_Titel">
+              <MappingFragment StoreEntitySet="Audio_Titel">
+                <ScalarProperty Name="Pfad" ColumnName="Pfad" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Audio_TitelGUID" ColumnName="Audio_TitelGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Ausrüstung">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Ausrüstung">
               <MappingFragment StoreEntitySet="Ausrüstung">
@@ -3038,35 +3099,6 @@
                 <ScalarProperty Name="Preis" ColumnName="Preis" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="AusrüstungGUID" ColumnName="AusrüstungGUID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Bestiarium">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.Bestiarium">
-              <MappingFragment StoreEntitySet="Bestiarium">
-                <ScalarProperty Name="RSBeinR" ColumnName="RSBeinR" />
-                <ScalarProperty Name="RSBeinL" ColumnName="RSBeinL" />
-                <ScalarProperty Name="RSBauch" ColumnName="RSBauch" />
-                <ScalarProperty Name="RSArmR" ColumnName="RSArmR" />
-                <ScalarProperty Name="RSArmL" ColumnName="RSArmL" />
-                <ScalarProperty Name="RSRücken" ColumnName="RSRücken" />
-                <ScalarProperty Name="RSBrust" ColumnName="RSBrust" />
-                <ScalarProperty Name="RSKopf" ColumnName="RSKopf" />
-                <ScalarProperty Name="Quelle" ColumnName="Quelle" />
-                <ScalarProperty Name="Sonderfertigkeiten" ColumnName="Sonderfertigkeiten" />
-                <ScalarProperty Name="Besonderheiten" ColumnName="Besonderheiten" />
-                <ScalarProperty Name="KO" ColumnName="KO" />
-                <ScalarProperty Name="MR" ColumnName="MR" />
-                <ScalarProperty Name="AU" ColumnName="AU" />
-                <ScalarProperty Name="GS" ColumnName="GS" />
-                <ScalarProperty Name="RS" ColumnName="RS" />
-                <ScalarProperty Name="LE" ColumnName="LE" />
-                <ScalarProperty Name="PA" ColumnName="PA" />
-                <ScalarProperty Name="Kampfwerte" ColumnName="Kampfwerte" />
-                <ScalarProperty Name="INI_Zufall" ColumnName="INI_Zufall" />
-                <ScalarProperty Name="INI_Basis" ColumnName="INI_Basis" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="BestiariumID" ColumnName="BestiariumID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3121,6 +3153,29 @@
           <EntitySetMapping Name="Gegner">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Gegner">
               <MappingFragment StoreEntitySet="Gegner">
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="WundenBeinR" ColumnName="WundenBeinR" />
+                <ScalarProperty Name="WundenBeinL" ColumnName="WundenBeinL" />
+                <ScalarProperty Name="WundenBauch" ColumnName="WundenBauch" />
+                <ScalarProperty Name="WundenArmR" ColumnName="WundenArmR" />
+                <ScalarProperty Name="WundenArmL" ColumnName="WundenArmL" />
+                <ScalarProperty Name="WundenBrust" ColumnName="WundenBrust" />
+                <ScalarProperty Name="WundenKopf" ColumnName="WundenKopf" />
+                <ScalarProperty Name="Wunden" ColumnName="Wunden" />
+                <ScalarProperty Name="KEAktuell" ColumnName="KEAktuell" />
+                <ScalarProperty Name="AEAktuell" ColumnName="AEAktuell" />
+                <ScalarProperty Name="AUAktuell" ColumnName="AUAktuell" />
+                <ScalarProperty Name="LEAktuell" ColumnName="LEAktuell" />
+                <ScalarProperty Name="Bild" ColumnName="Bild" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
+                <ScalarProperty Name="GegnerGUID" ColumnName="GegnerGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GegnerBase">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.GegnerBase">
+              <MappingFragment StoreEntitySet="GegnerBase">
                 <ScalarProperty Name="Setting" ColumnName="Setting" />
                 <ScalarProperty Name="Literatur" ColumnName="Literatur" />
                 <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
@@ -3154,13 +3209,13 @@
                 <ScalarProperty Name="INIBasis" ColumnName="INIBasis" />
                 <ScalarProperty Name="Bild" ColumnName="Bild" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GegnerGUID" ColumnName="GegnerGUID" />
+                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Gegner_Angriff">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.Gegner_Angriff">
-              <MappingFragment StoreEntitySet="Gegner_Angriff">
+          <EntitySetMapping Name="GegnerBase_Angriff">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.GegnerBase_Angriff">
+              <MappingFragment StoreEntitySet="GegnerBase_Angriff">
                 <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
                 <ScalarProperty Name="Reichweite" ColumnName="Reichweite" />
                 <ScalarProperty Name="DK" ColumnName="DK" />
@@ -3169,18 +3224,18 @@
                 <ScalarProperty Name="TPWürfelAnzahl" ColumnName="TPWürfelAnzahl" />
                 <ScalarProperty Name="TPWürfel" ColumnName="TPWürfel" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GegnerGUID" ColumnName="GegnerGUID" />
+                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Gegner_Kampfregel">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.Gegner_Kampfregel">
-              <MappingFragment StoreEntitySet="Gegner_Kampfregel">
+          <EntitySetMapping Name="GegnerBase_Kampfregel">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.GegnerBase_Kampfregel">
+              <MappingFragment StoreEntitySet="GegnerBase_Kampfregel">
                 <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
                 <ScalarProperty Name="TP" ColumnName="TP" />
                 <ScalarProperty Name="Erschwernis" ColumnName="Erschwernis" />
                 <ScalarProperty Name="KampfregelGUID" ColumnName="KampfregelGUID" />
-                <ScalarProperty Name="GegnerGUID" ColumnName="GegnerGUID" />
+                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3680,42 +3735,6 @@
               <ScalarProperty Name="Talentname" ColumnName="Talentname" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Audio_Playlist">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.Audio_Playlist">
-              <MappingFragment StoreEntitySet="Audio_Playlist">
-                <ScalarProperty Name="MaxSongsParallel" ColumnName="MaxSongsParallel" />
-                <ScalarProperty Name="Hintergrundmusik" ColumnName="Hintergrundmusik" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Audio_PlaylistGUID" ColumnName="Audio_PlaylistGUID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Audio_Playlist_Titel">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.Audio_Playlist_Titel">
-              <MappingFragment StoreEntitySet="Audio_Playlist_Titel">
-                <ScalarProperty Name="PauseMax" ColumnName="PauseMax" />
-                <ScalarProperty Name="PauseMin" ColumnName="PauseMin" />
-                <ScalarProperty Name="PauseChange" ColumnName="PauseChange" />
-                <ScalarProperty Name="Pause" ColumnName="Pause" />
-                <ScalarProperty Name="VolumeMax" ColumnName="VolumeMax" />
-                <ScalarProperty Name="VolumeMin" ColumnName="VolumeMin" />
-                <ScalarProperty Name="VolumeChange" ColumnName="VolumeChange" />
-                <ScalarProperty Name="Volume" ColumnName="Volume" />
-                <ScalarProperty Name="Aktiv" ColumnName="Aktiv" />
-                <ScalarProperty Name="Audio_TitelGUID" ColumnName="Audio_TitelGUID" />
-                <ScalarProperty Name="Audio_PlaylistGUID" ColumnName="Audio_PlaylistGUID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Audio_Titel">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.Audio_Titel">
-              <MappingFragment StoreEntitySet="Audio_Titel">
-                <ScalarProperty Name="Pfad" ColumnName="Pfad" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Audio_TitelGUID" ColumnName="Audio_TitelGUID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3742,15 +3761,18 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="13.25" PointY="4" Height="2.1725878906249818" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="11" PointY="3.875" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="15.5" PointY="3.625" Height="2.7494921874999818" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="16.75" PointY="8.5" Height="1.980286458333353" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="19" PointY="7.75" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="16.75" PointY="22.625" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="22" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Bestiarium" Width="1.5" PointX="14.75" PointY="17.5" Height="5.4417122395833246" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellungen" Width="1.5" PointX="11.75" PointY="15.5" Height="1.9802864583333246" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="9.75" PointY="24.625" Height="1.5956835937499818" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellungen" Width="1.5" PointX="8.75" PointY="7.5" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="8.75" PointY="36.625" Height="1.5956835937499818" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="0.75" PointY="0.75" Height="6.0186165364583246" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="14.75" PointY="7.875" Height="7.9416308593749818" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Angriff" Width="1.5" PointX="17" PointY="10.375" Height="2.9417936197916674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner_Kampfregel" Width="1.5" PointX="20" PointY="10.75" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="16.75" PointY="14.5" Height="2.7494921874999818" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="14" PointY="9.625" Height="4.4802050781249818" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="11.75" PointY="9.625" Height="8.1339322916666674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="14" PointY="14.875" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="17" PointY="12.5" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="8.75" PointY="10.5" Height="2.7494921874999818" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="9.75" Height="11.210755208333353" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="3" PointY="13.75" Height="3.134095052083353" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="6" PointY="14.125" Height="2.3648893229166674" />
@@ -3760,28 +3782,28 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="6" PointY="17.375" Height="1.9802864583333246" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="9" PointY="14.125" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="3.75" PointY="21.75" Height="3.134095052083353" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="17.75" PointY="6.75" Height="2.1725878906249818" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="8.75" PointY="7.75" Height="5.2494108072916674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="11" PointY="9.625" Height="1.5956835937499818" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="16.75" PointY="18.5" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="14.75" PointY="18.625" Height="2.1725878906249818" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="8.75" PointY="19.75" Height="5.2494108072916674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="11" PointY="21.625" Height="1.5956835937499818" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="16.75" PointY="16.5" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="0.75" PointY="35" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="17.75" PointY="3.5" Height="2.5571907552083246" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="5.75" PointY="20.5" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="16.75" PointY="19.5" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="2.75" PointY="3.5" Height="1.5956835937499818" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="9.75" PointY="17.5" Height="5.8263151041666674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="12" PointY="19.375" Height="2.1725878906249818" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="12" PointY="12.375" Height="1.9802864583333246" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Regeln" Width="1.5" PointX="18.75" PointY="14.5" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="8.75" PointY="29.5" Height="5.8263151041666674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="11" PointY="31.375" Height="2.172587890624996" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="11" PointY="24.375" Height="1.980286458333353" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Regeln" Width="1.5" PointX="5.75" PointY="20.5" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="3.75" PointY="30" Height="4.287903645833353" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="3.75" PointY="35" Height="2.557190755208353" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="3.75" PointY="6" Height="2.7494921874999818" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="26.25" Height="4.480205078125" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="31.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="38.375" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="10.75" PointY="7.5" Height="1.4033821614583246" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="26.25" Height="4.6725065104166674" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="31.75" Height="1.7879850260416106" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="38.375" Height="1.7879850260416106" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="10.75" PointY="7.5" Height="1.403382161458353" />
         <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="3.75" PointY="26" Height="2.7494921874999818" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="6.75" PointY="24.5" Height="4.0956022135416674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="6.75" PointY="6.875" Height="2.9417936197916656" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="6.75" PointY="6.75" Height="3.134095052083353" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="6" PointY="1.5" Height="3.710999348958353" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" >
           <ConnectorPoint PointX="10.25" PointY="5.0478417968749909" />
@@ -3810,6 +3832,15 @@
           <ConnectorPoint PointX="15.125" PointY="6.7494921874999818" />
           <ConnectorPoint PointX="15.5" PointY="6.3744921874999818" />
         </AssociationConnector>
+        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" >
+          <ConnectorPoint PointX="18.25" PointY="9.4901432291666765" />
+          <ConnectorPoint PointX="19" PointY="9.4901432291666765" />
+        </AssociationConnector>
+        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" >
+          <ConnectorPoint PointX="18.25" PointY="23.518992513020834" />
+          <ConnectorPoint PointX="19.75" PointY="23.518992513020834" />
+          <ConnectorPoint PointX="19.75" PointY="11.268697916666667" />
+        </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" >
           <ConnectorPoint PointX="1.5011528461538464" PointY="22" />
           <ConnectorPoint PointX="1.1261528461538468" PointY="21.625" />
@@ -3825,39 +3856,43 @@
           <ConnectorPoint PointX="2.5" PointY="21.210755208333353" />
           <ConnectorPoint PointX="2.5" PointY="15.317047526041677" />
           <ConnectorPoint PointX="2.6666666666666665" PointY="15.317047526041677" />
-          <ConnectorPoint PointX="2.8333333333333335" PointY="15.317047526041677" />
+          <ConnectorPoint PointX="2.8958333333333335" PointY="15.317047526041677" />
           <ConnectorPoint PointX="3" PointY="15.317047526041677" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_Rüstung_Ausrüstung" >
           <ConnectorPoint PointX="3" PointY="25.462158455128204" />
-          <ConnectorPoint PointX="3.40625" PointY="25.868408455128204" />
-          <ConnectorPoint PointX="3.40625" PointY="32.143951822916677" />
-          <ConnectorPoint PointX="3.4166666666666665" PointY="32.143951822916677" />
-          <ConnectorPoint PointX="3.5833333333333335" PointY="32.143951822916677" />
+          <ConnectorPoint PointX="3.0660744349011213" PointY="25.528232890029326" />
+          <ConnectorPoint PointX="3.1839255650988791" PointY="25.646084020227082" />
+          <ConnectorPoint PointX="3.3785744349011213" PointY="25.840732890029326" />
+          <ConnectorPoint PointX="3.4964255650988791" PointY="25.958584020227082" />
+          <ConnectorPoint PointX="3.53125" PointY="25.993408455128204" />
+          <ConnectorPoint PointX="3.53125" PointY="32.143951822916677" />
           <ConnectorPoint PointX="3.75" PointY="32.143951822916677" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_Schild_Ausrüstung" >
           <ConnectorPoint PointX="2.9757692307692309" PointY="25.518697916666667" />
+          <ConnectorPoint PointX="3.0660744349011213" PointY="25.609003120798558" />
+          <ConnectorPoint PointX="3.1839255650988791" PointY="25.726854250996315" />
           <ConnectorPoint PointX="3.375" PointY="25.917928685897436" />
           <ConnectorPoint PointX="3.375" PointY="36.278595377604177" />
-          <ConnectorPoint PointX="3.4166666666666665" PointY="36.278595377604177" />
-          <ConnectorPoint PointX="3.5833333333333335" PointY="36.278595377604177" />
           <ConnectorPoint PointX="3.75" PointY="36.278595377604177" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_Waffe_Ausrüstung" >
           <ConnectorPoint PointX="3" PointY="25.173124253605785" />
-          <ConnectorPoint PointX="3.1666666666666665" PointY="25.173124253605785" />
+          <ConnectorPoint PointX="3.0416666666666665" PointY="25.173124253605785" />
           <ConnectorPoint PointX="3.3333333333333335" PointY="25.173124253605785" />
-          <ConnectorPoint PointX="3.4166666666666665" PointY="25.173124253605785" />
-          <ConnectorPoint PointX="3.6770833333333335" PointY="25.173124253605785" />
+          <ConnectorPoint PointX="3.3541666666666665" PointY="25.173124253605785" />
+          <ConnectorPoint PointX="3.5208333333333335" PointY="25.173124253605785" />
+          <ConnectorPoint PointX="3.5260416666666665" PointY="25.173124253605785" />
+          <ConnectorPoint PointX="3.6927083333333335" PointY="25.173124253605785" />
           <ConnectorPoint PointX="4.416666666666667" PointY="25.173124253605785" />
           <ConnectorPoint PointX="4.583333333333333" PointY="25.173124253605785" />
           <ConnectorPoint PointX="6.75" PointY="25.173124253605785" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" >
-          <ConnectorPoint PointX="11.25" PointY="25.422841796874991" />
-          <ConnectorPoint PointX="12.75" PointY="25.422841796874991" />
-          <ConnectorPoint PointX="12.75" PointY="21.547587890624982" />
+          <ConnectorPoint PointX="10.25" PointY="37.422841796874991" />
+          <ConnectorPoint PointX="11.75" PointY="37.422841796874991" />
+          <ConnectorPoint PointX="11.75" PointY="33.547587890624996" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" >
           <ConnectorPoint PointX="2.25" PointY="6.7686165364583246" />
@@ -3865,26 +3900,27 @@
           <ConnectorPoint PointX="2.625" PointY="11.278595377604162" />
           <ConnectorPoint PointX="3" PointY="11.278595377604162" />
         </AssociationConnector>
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerAngriff_Gegner" >
-          <ConnectorPoint PointX="16.25" PointY="11.845896809895834" />
-          <ConnectorPoint PointX="17" PointY="11.845896809895834" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" >
+          <ConnectorPoint PointX="13.25" PointY="11.865102539062491" />
+          <ConnectorPoint PointX="14" PointY="11.865102539062491" />
         </AssociationConnector>
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerKampfregel_Gegner" >
-          <ConnectorPoint PointX="16.25" PointY="13.908396809895834" />
-          <ConnectorPoint PointX="20.90625" PointY="13.908396809895834" />
-          <ConnectorPoint PointX="20.90625" PointY="13.114889322916667" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" >
+          <ConnectorPoint PointX="13.25" PointY="16.316966145833334" />
+          <ConnectorPoint PointX="14" PointY="16.316966145833334" />
         </AssociationConnector>
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerKampfregel_Kampfregel" >
-          <ConnectorPoint PointX="19.25" PointY="7.8362939453124909" />
-          <ConnectorPoint PointX="20.75" PointY="7.8362939453124909" />
-          <ConnectorPoint PointX="20.75" PointY="10.75" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" >
+          <ConnectorPoint PointX="13.25" PointY="14.516297200520825" />
+          <ConnectorPoint PointX="17" PointY="14.516297200520825" />
+        </AssociationConnector>
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" >
+          <ConnectorPoint PointX="15.90625" PointY="18.625" />
+          <ConnectorPoint PointX="15.90625" PointY="14.72184576171874" />
+          <ConnectorPoint PointX="17" PointY="14.72184576171874" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Held" >
           <ConnectorPoint PointX="2.25" PointY="14.471023763020838" />
-          <ConnectorPoint PointX="2.4791666666666665" PointY="14.471023763020838" />
-          <ConnectorPoint PointX="2.6458333333333335" PointY="14.471023763020838" />
           <ConnectorPoint PointX="2.6666666666666665" PointY="14.471023763020838" />
-          <ConnectorPoint PointX="2.8333333333333335" PointY="14.471023763020838" />
+          <ConnectorPoint PointX="2.8958333333333335" PointY="14.471023763020838" />
           <ConnectorPoint PointX="3" PointY="14.471023763020838" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Held" >
@@ -3905,19 +3941,21 @@
         <AssociationConnector Association="DatabaseDSAModel.Held_FK" >
           <ConnectorPoint PointX="2.25" PointY="19.41054581119792" />
           <ConnectorPoint PointX="2.4166666666666665" PointY="19.41054581119792" />
-          <ConnectorPoint PointX="2.7708333333333335" PointY="19.41054581119792" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="19.41054581119792" />
+          <ConnectorPoint PointX="2.7291666666666665" PointY="19.41054581119792" />
+          <ConnectorPoint PointX="2.9583333333333335" PointY="19.41054581119792" />
           <ConnectorPoint PointX="3" PointY="19.41054581119792" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_HeldFK" >
           <ConnectorPoint PointX="2.25" PointY="12.987488606770825" />
-          <ConnectorPoint PointX="2.4791666666666665" PointY="12.987488606770825" />
-          <ConnectorPoint PointX="2.6458333333333335" PointY="12.987488606770825" />
+          <ConnectorPoint PointX="2.7291666666666665" PointY="12.987488606770825" />
+          <ConnectorPoint PointX="2.8958333333333335" PointY="12.987488606770825" />
           <ConnectorPoint PointX="6" PointY="12.987488606770825" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_HeldFK" >
           <ConnectorPoint PointX="2.25" PointY="17.65625" />
-          <ConnectorPoint PointX="2.4166666666666665" PointY="17.65625" />
-          <ConnectorPoint PointX="2.8333333333333335" PointY="17.65625" />
+          <ConnectorPoint PointX="2.4166666666666665" PointY="17.656249999999996" />
+          <ConnectorPoint PointX="2.9583333333333335" PointY="17.65625" />
           <ConnectorPoint PointX="4.666666666666667" PointY="17.65625" />
           <ConnectorPoint PointX="4.833333333333333" PointY="17.65625" />
           <ConnectorPoint PointX="6" PointY="17.65625" />
@@ -3925,31 +3963,35 @@
         <AssociationConnector Association="DatabaseDSAModel.Held_Zauber_HeldFK" >
           <ConnectorPoint PointX="2.25" PointY="17.129547526041677" />
           <ConnectorPoint PointX="2.4166666666666665" PointY="17.129547526041677" />
-          <ConnectorPoint PointX="2.8333333333333335" PointY="17.129547526041677" />
+          <ConnectorPoint PointX="2.8958333333333335" PointY="17.129547526041677" />
           <ConnectorPoint PointX="3.6666666666666665" PointY="17.129547526041677" />
           <ConnectorPoint PointX="3.8333333333333335" PointY="17.129547526041677" />
           <ConnectorPoint PointX="4.666666666666667" PointY="17.129547526041677" />
           <ConnectorPoint PointX="4.833333333333333" PointY="17.129547526041677" />
-          <ConnectorPoint PointX="9.34375" PointY="17.129547526041677" />
-          <ConnectorPoint PointX="9.34375" PointY="16.489889322916667" />
+          <ConnectorPoint PointX="10.40625" PointY="17.129547526041677" />
+          <ConnectorPoint PointX="10.40625" PointY="16.489889322916667" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Talent" >
           <ConnectorPoint PointX="2.25" PointY="26.25" />
           <ConnectorPoint PointX="2.25" PointY="25.768697916666667" />
+          <ConnectorPoint PointX="3.0416666666666665" PointY="25.768697916666667" />
+          <ConnectorPoint PointX="3.2083333333333335" PointY="25.768697916666667" />
           <ConnectorPoint PointX="3.25" PointY="25.768697916666667" />
           <ConnectorPoint PointX="3.25" PointY="21.460755208333353" />
+          <ConnectorPoint PointX="3.2083333333333335" PointY="21.460755208333353" />
+          <ConnectorPoint PointX="3.0416666666666665" PointY="21.460755208333353" />
           <ConnectorPoint PointX="2.625" PointY="21.460755208333353" />
-          <ConnectorPoint PointX="2.625" PointY="15.317047526041677" />
-          <ConnectorPoint PointX="2.6666666666666665" PointY="15.317047526041677" />
-          <ConnectorPoint PointX="2.8333333333333335" PointY="15.317047526041677" />
-          <ConnectorPoint PointX="3" PointY="15.317047526041677" />
+          <ConnectorPoint PointX="2.625" PointY="16.13182328906251" />
+          <ConnectorPoint PointX="2.6666666666666665" PointY="16.13182328906251" />
+          <ConnectorPoint PointX="2.8958333333333335" PointY="16.13182328906251" />
+          <ConnectorPoint PointX="3" PointY="16.13182328906251" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_TrageortGUID" >
-          <ConnectorPoint PointX="2.25" PointY="39.268992513020834" />
-          <ConnectorPoint PointX="3.5" PointY="39.268992513020834" />
-          <ConnectorPoint PointX="3.5" PointY="20.807190755208325" />
-          <ConnectorPoint PointX="2.6875" PointY="20.807190755208325" />
-          <ConnectorPoint PointX="2.6875" PointY="17.259095052083353" />
+          <ConnectorPoint PointX="2.25" PointY="39.268992513020805" />
+          <ConnectorPoint PointX="3.125" PointY="39.268992513020805" />
+          <ConnectorPoint PointX="3.125" PointY="20.807190755208325" />
+          <ConnectorPoint PointX="2.875" PointY="20.807190755208325" />
+          <ConnectorPoint PointX="2.875" PointY="17.259095052083353" />
           <ConnectorPoint PointX="3.75" PointY="17.259095052083353" />
           <ConnectorPoint PointX="3.75" PointY="16.884095052083353" />
         </AssociationConnector>
@@ -3962,13 +4004,15 @@
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Munition" >
           <ConnectorPoint PointX="2.25" PointY="35.639298188802087" />
-          <ConnectorPoint PointX="3.2916666666666665" PointY="35.639298188802087" />
-          <ConnectorPoint PointX="3.4583333333333335" PointY="35.639298188802087" />
-          <ConnectorPoint PointX="3.5" PointY="35.639298188802087" />
-          <ConnectorPoint PointX="3.5" PointY="20.822815755208325" />
-          <ConnectorPoint PointX="2.5625" PointY="20.822815755208325" />
-          <ConnectorPoint PointX="2.5625" PointY="12.869690755208325" />
-          <ConnectorPoint PointX="3.75" PointY="12.869690755208325" />
+          <ConnectorPoint PointX="3.0416666666666665" PointY="35.639298188802087" />
+          <ConnectorPoint PointX="3.2083333333333335" PointY="35.639298188802087" />
+          <ConnectorPoint PointX="3.4375" PointY="35.639298188802087" />
+          <ConnectorPoint PointX="3.4375" PointY="21.057190755208325" />
+          <ConnectorPoint PointX="3.2083333333333335" PointY="21.057190755208325" />
+          <ConnectorPoint PointX="3.0416666666666665" PointY="21.057190755208325" />
+          <ConnectorPoint PointX="2.8125" PointY="21.057190755208325" />
+          <ConnectorPoint PointX="2.8125" PointY="12.807190755208325" />
+          <ConnectorPoint PointX="3.75" PointY="12.807190755208325" />
           <ConnectorPoint PointX="3.75" PointY="12.557190755208325" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK" >
@@ -3977,11 +4021,13 @@
           <ConnectorPoint PointX="6" PointY="12.772337180989581" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Talent_FK" >
-          <ConnectorPoint PointX="3" PointY="29.499808320312468" />
-          <ConnectorPoint PointX="3.2916666666666665" PointY="29.499808320312468" />
-          <ConnectorPoint PointX="3.5833333333333335" PointY="29.499808320312468" />
-          <ConnectorPoint PointX="3.59375" PointY="29.499808320312468" />
-          <ConnectorPoint PointX="3.59375" PointY="20.557190755208325" />
+          <ConnectorPoint PointX="3" PointY="29.374746093749991" />
+          <ConnectorPoint PointX="3.0416666666666665" PointY="29.374746093749991" />
+          <ConnectorPoint PointX="3.2083333333333335" PointY="29.374746093749991" />
+          <ConnectorPoint PointX="3.2916666666666665" PointY="29.374746093749991" />
+          <ConnectorPoint PointX="3.5208333333333335" PointY="29.374746093749991" />
+          <ConnectorPoint PointX="3.609375" PointY="29.374746093749991" />
+          <ConnectorPoint PointX="3.609375" PointY="20.557190755208325" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" >
           <ConnectorPoint PointX="4.5" PointY="26" />
@@ -3991,30 +4037,27 @@
           <ConnectorPoint PointX="6" PointY="18.537020229166657" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Zauber_FK" >
-          <ConnectorPoint PointX="8.25" PointY="7.28125" />
-          <ConnectorPoint PointX="10.40625" PointY="7.28125" />
+          <ConnectorPoint PointX="8.25" PointY="7.09375" />
+          <ConnectorPoint PointX="10.40625" PointY="7.09375" />
           <ConnectorPoint PointX="10.40625" PointY="14.125" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_KulturName_Kultur" >
-          <ConnectorPoint PointX="10.25" PointY="10.422841796874991" />
-          <ConnectorPoint PointX="10.322916666666666" PointY="10.422841796874991" />
-          <ConnectorPoint PointX="10.489583333333334" PointY="10.422841796874991" />
-          <ConnectorPoint PointX="11" PointY="10.422841796874991" />
+          <ConnectorPoint PointX="10.25" PointY="22.422841796874991" />
+          <ConnectorPoint PointX="11" PointY="22.422841796874991" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Kultur" >
-          <ConnectorPoint PointX="10.25" PointY="12.687205403645834" />
-          <ConnectorPoint PointX="10.322916666666666" PointY="12.687205403645834" />
-          <ConnectorPoint PointX="10.489583333333334" PointY="12.687205403645834" />
-          <ConnectorPoint PointX="12" PointY="12.687205403645834" />
+          <ConnectorPoint PointX="10.25" PointY="24.687205403645834" />
+          <ConnectorPoint PointX="11" PointY="24.687205403645834" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Rasse" >
-          <ConnectorPoint PointX="11.25" PointY="20.461293945312491" />
-          <ConnectorPoint PointX="12" PointY="20.461293945312491" />
+          <ConnectorPoint PointX="10.25" PointY="32.4612939453125" />
+          <ConnectorPoint PointX="11" PointY="32.4612939453125" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Rasse" >
-          <ConnectorPoint PointX="10.90625" PointY="17.5" />
-          <ConnectorPoint PointX="10.90625" PointY="13.562205403645834" />
-          <ConnectorPoint PointX="12" PointY="13.562205403645834" />
+          <ConnectorPoint PointX="10.25" PointY="29.5" />
+          <ConnectorPoint PointX="10.625" PointY="29.125" />
+          <ConnectorPoint PointX="10.625" PointY="25.552497930989588" />
+          <ConnectorPoint PointX="11" PointY="25.552497930989588" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.FK_Zauberzeichen_Sonderfertigkeit" >
           <ConnectorPoint PointX="4.78125" PointY="6" />
@@ -4023,33 +4066,23 @@
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Gruppe" >
           <ConnectorPoint PointX="2.25" PointY="31.75" />
-          <ConnectorPoint PointX="2.25" PointY="30.730205078125" />
+          <ConnectorPoint PointX="2.25" PointY="30.922506510416667" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" >
           <ConnectorPoint PointX="1.5011528461538464" PointY="26.25" />
           <ConnectorPoint PointX="1.1261528461538468" PointY="25.875" />
           <ConnectorPoint PointX="0.5" PointY="25.875" />
-          <ConnectorPoint PointX="0.5" PointY="7.0186165364583255" />
-          <ConnectorPoint PointX="0.75" PointY="6.7686165364583255" />
+          <ConnectorPoint PointX="0.5" PointY="7.0440001518429405" />
+          <ConnectorPoint PointX="0.77538361538461587" PointY="6.7686165364583246" />
         </AssociationConnector>
         <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" >
-          <ConnectorPoint PointX="3" PointY="29.124647753906231" />
-          <ConnectorPoint PointX="3.2916666666666665" PointY="29.124647753906231" />
-          <ConnectorPoint PointX="3.6770833333333335" PointY="29.124647753906231" />
-          <ConnectorPoint PointX="7.5" PointY="29.124647753906231" />
+          <ConnectorPoint PointX="3" PointY="29.062116640624936" />
+          <ConnectorPoint PointX="3.0416666666666665" PointY="29.062116640624936" />
+          <ConnectorPoint PointX="3.2083333333333335" PointY="29.062116640624936" />
+          <ConnectorPoint PointX="3.2916666666666665" PointY="29.062116640624936" />
+          <ConnectorPoint PointX="3.6927083333333335" PointY="29.062116640624936" />
+          <ConnectorPoint PointX="7.5" PointY="29.062116640624936" />
           <ConnectorPoint PointX="7.5" PointY="28.595602213541667" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="19.75" PointY="18.75" Height="1.980286458333353" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="22" PointY="18" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="19.75" PointY="21.875" Height="1.7879850260416674" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" >
-          <ConnectorPoint PointX="21.25" PointY="19.740143229166677" />
-          <ConnectorPoint PointX="22" PointY="19.740143229166677" />
-        </AssociationConnector>
-        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" >
-          <ConnectorPoint PointX="21.25" PointY="22.768992513020834" />
-          <ConnectorPoint PointX="22.75" PointY="22.768992513020834" />
-          <ConnectorPoint PointX="22.75" PointY="21.518697916666667" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

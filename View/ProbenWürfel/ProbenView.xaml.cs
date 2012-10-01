@@ -10,6 +10,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.View.General;
 using MeisterGeister.View;
 using MeisterGeister.View.Windows;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.View.ProbenWürfel
 {
@@ -33,11 +34,11 @@ namespace MeisterGeister.View.ProbenWürfel
 
             _checkBoxSoundAbspielen.Checked -= CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked -= CheckBoxSoundAbspielen_Changed;
-            _checkBoxSoundAbspielen.IsChecked = Würfel.SoundAbspielen;
+            _checkBoxSoundAbspielen.IsChecked = MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen;
             _checkBoxSoundAbspielen.Checked += CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked += CheckBoxSoundAbspielen_Changed;
 
-            Würfel.SoundAbspielenChanged += WürfelSoundAbspielen_Changed;
+            //Würfel.SoundAbspielenChanged += WürfelSoundAbspielen_Changed;
 
             if (App.DatenDataSet != null && App.DatenDataSet.Einstellungen != null)
             {
@@ -66,7 +67,7 @@ namespace MeisterGeister.View.ProbenWürfel
         {
             _checkBoxSoundAbspielen.Checked -= CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked -= CheckBoxSoundAbspielen_Changed;
-            _checkBoxSoundAbspielen.IsChecked = Würfel.SoundAbspielen;
+            _checkBoxSoundAbspielen.IsChecked = MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen;
             _checkBoxSoundAbspielen.Checked += CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked += CheckBoxSoundAbspielen_Changed;
         }
@@ -298,7 +299,7 @@ namespace MeisterGeister.View.ProbenWürfel
         private void ButtonProbenWürfeln_Click(object sender, RoutedEventArgs e)
         {
             ProbeWürfeln();
-            if (Würfel.SoundAbspielen)
+            if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
             {
                 try
                 {
@@ -324,9 +325,9 @@ namespace MeisterGeister.View.ProbenWürfel
                 foreach (DatabaseDSADataSet.HeldRow heldRow in App.DatenDataSet.Held)
                 {
                     if (heldRow.AktiveHeldengruppe)
-                        AddHeldProbenItem(new Held(heldRow), probe, heldRow.Proben);
+                        AddHeldProbenItem(new Held(heldRow), probe, heldRow.IsProbenNull() ? true : heldRow.Proben);
                 }
-                _probenErgebnisse.Sort(new ProbenErgebnisComparer()); // Sortieren
+                _probenErgebnisse.Sort(new MeisterGeister.LogicAlt.General.ProbenErgebnisComparer()); // Sortieren
 
                 BerechneProbeÜbrigSumme();
 
@@ -384,10 +385,10 @@ namespace MeisterGeister.View.ProbenWürfel
                 _probenErgebnisse.Clear();
                 foreach (DatabaseDSADataSet.HeldRow heldRow in App.DatenDataSet.Held)
                 {
-                    if (heldRow.AktiveHeldengruppe)
+                    if (!heldRow.IsAktiveHeldengruppeNull() && heldRow.AktiveHeldengruppe)
                         AddHeldProbenItem(new Held(heldRow), probe);
                 }
-                _probenErgebnisse.Sort(new ProbenErgebnisComparer()); // Sortieren
+                _probenErgebnisse.Sort(new MeisterGeister.LogicAlt.General.ProbenErgebnisComparer()); // Sortieren
 
                 _textBlockTalentProbeSumme.Text = "Unabhängige Zusammenarbeit: -\nMit fähigstem Held als Vorarbeiter: -";
 
@@ -401,9 +402,9 @@ namespace MeisterGeister.View.ProbenWürfel
         {
             int tapSum = 0, vorSum = 0, i = 1;
             string art = "Übrig";
-            foreach (ProbenErgebnis er in _probenErgebnisse)
+            foreach (MeisterGeister.LogicAlt.General.ProbenErgebnis er in _probenErgebnisse)
             {
-                if (er.Held.HeldDataRow.Proben) // nur summieren, wenn Held geprobt werden soll
+                if (er.Held.HeldDataRow.IsProbenNull() ? true : er.Held.HeldDataRow.Proben) // nur summieren, wenn Held geprobt werden soll
                 {
                     if (er.Übrig >= 0) //nur positive Ergebnisse addieren
                     {
@@ -411,8 +412,8 @@ namespace MeisterGeister.View.ProbenWürfel
                         vorSum += Convert.ToInt32(Math.Round((double)er.Übrig / i, 0));
                         i++;
                     }
-                    if (er is DreierProbenErgebnis)
-                        art = ((DreierProbenErgebnis)er).PunkteArt + "*";
+                    if (er is MeisterGeister.LogicAlt.General.DreierProbenErgebnis)
+                        art = ((MeisterGeister.LogicAlt.General.DreierProbenErgebnis)er).PunkteArt + "*";
                 }
             }
             _textBlockTalentProbeSumme.Text = string.Format("Unabhängige Zusammenarbeit: {0} {1}\nMit fähigstem Held als Vorarbeiter: {2} {1}", tapSum, art, vorSum);
@@ -434,7 +435,7 @@ namespace MeisterGeister.View.ProbenWürfel
                 }
                 foreach (var w in wList)
                 {
-                    var er = new DreierProbenErgebnis { Held = held };
+                    var er = new MeisterGeister.LogicAlt.General.DreierProbenErgebnis { Held = held };
                     if (w.Aktiviert)
                     {
                         // Behinderung
@@ -463,9 +464,9 @@ namespace MeisterGeister.View.ProbenWürfel
                             er.Behinderung = be;
                             er.Wert = taw;
                             er.Mod = mod;
-                            er.E1Ergebnis = new EigenschaftProbenErgebnis(er) { Wert = e1 };
-                            er.E2Ergebnis = new EigenschaftProbenErgebnis(er) { Wert = e2 };
-                            er.E3Ergebnis = new EigenschaftProbenErgebnis(er) { Wert = e3 };
+                            er.E1Ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis(er) { Wert = e1 };
+                            er.E2Ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis(er) { Wert = e2 };
+                            er.E3Ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis(er) { Wert = e3 };
                         }
                         else
                         { // Probe würfeln
@@ -486,7 +487,7 @@ namespace MeisterGeister.View.ProbenWürfel
             }
             else if (probe is Eigenschaft)
             {
-                var ergebnis = new EigenschaftProbenErgebnis { Held = held };
+                var ergebnis = new MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis { Held = held };
                 int e = held.Eigenschaft(((Eigenschaft)probe).Name);
                 int mod = _intBoxProbeMod.Value;
 
@@ -505,7 +506,7 @@ namespace MeisterGeister.View.ProbenWürfel
             }
         }
 
-        private readonly List<ProbenErgebnis> _probenErgebnisse = new List<ProbenErgebnis>();
+        private readonly List<MeisterGeister.LogicAlt.General.ProbenErgebnis> _probenErgebnisse = new List<MeisterGeister.LogicAlt.General.ProbenErgebnis>();
 
         private void ImageProbeWiki_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -532,15 +533,15 @@ namespace MeisterGeister.View.ProbenWürfel
             SetProbe();
         }
 
-        private void WürfelControlEigenschaft_WürfelGeändert(uint ergebnis, EigenschaftProbenErgebnis probenErgebnis)
+        private void WürfelControlEigenschaft_WürfelGeändert(uint ergebnis)
         {
-            probenErgebnis.Gewürfelt = ergebnis;
-            ProbenErgebnisAktualisieren(probenErgebnis);
+            //probenErgebnis.Gewürfelt = ergebnis;
+            //ProbenErgebnisAktualisieren(probenErgebnis);
             _listBoxProbenErgebnis.Items.Refresh();
             BerechneProbeÜbrigSumme();
         }
 
-        private void ProbenErgebnisAktualisieren(EigenschaftProbenErgebnis probenErgebnis)
+        private void ProbenErgebnisAktualisieren(MeisterGeister.LogicAlt.General.EigenschaftProbenErgebnis probenErgebnis)
         {
             IProbe probe = SelectedProbe();
             if (probe is Talent || probe is Zauber)
@@ -569,7 +570,7 @@ namespace MeisterGeister.View.ProbenWürfel
             }
         }
 
-        private int BerechneEffBehinderung(ProbenErgebnis probenErgebnis)
+        private int BerechneEffBehinderung(MeisterGeister.LogicAlt.General.ProbenErgebnis probenErgebnis)
         {
             IProbe probe = SelectedProbe();
             int be = 0;
@@ -651,9 +652,9 @@ namespace MeisterGeister.View.ProbenWürfel
         {
             if (IsInitialized)
             {
-                Würfel.SoundAbspielenChanged -= WürfelSoundAbspielen_Changed;
-                Würfel.SoundAbspielen = (bool)_checkBoxSoundAbspielen.IsChecked;
-                Würfel.SoundAbspielenChanged += WürfelSoundAbspielen_Changed;
+                //Würfel.SoundAbspielenChanged -= WürfelSoundAbspielen_Changed;
+                MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen = (bool)_checkBoxSoundAbspielen.IsChecked;
+                //Würfel.SoundAbspielenChanged += WürfelSoundAbspielen_Changed;
             }
         }
 

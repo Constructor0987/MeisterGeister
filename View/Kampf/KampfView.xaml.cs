@@ -9,6 +9,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.View.Arena;
 using MeisterGeister.ViewModel.Kampf.LogicAlt;
+using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -55,14 +56,14 @@ namespace MeisterGeister.View.Kampf
             SortKämpfer();
         }
 
-        public ProbenErgebnis WesenProbeWürfeln_Event(Wesen wesen, IProbe probe, string aktion)
+        public LogicAlt.General.ProbenErgebnis WesenProbeWürfeln_Event(Wesen wesen, IProbe probe, string aktion)
         {
             int wert = 0;
             if (wesen is Held)
             {
                 wert = ((Held)wesen).Eigenschaft(probe.Name);
             }
-            ProbenErgebnis pErgebnis = new ProbenErgebnis();
+            LogicAlt.General.ProbenErgebnis pErgebnis = new LogicAlt.General.ProbenErgebnis();
             if (MessageBox.Show(string.Format("{0}: {1}-Probe ({2}).\nGelungen?", aktion, probe.Name,
                 wert), wesen.Name,
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -310,7 +311,7 @@ namespace MeisterGeister.View.Kampf
             }
         }
 
-        private void WürfelControlInitiative_WürfelGeändert(uint ergebnis, EigenschaftProbenErgebnis probenErgebnis)
+        private void WürfelControlInitiative_WürfelGeändert(uint ergebnis)
         {
             _selectedKämpfer.InitiativeWurf = ergebnis;
             SortKämpfer();
@@ -638,7 +639,10 @@ namespace MeisterGeister.View.Kampf
 
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
-            ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? _kampf : null);
+            // TODO ??: Neue Kampf-Klasse verwenden
+            // hier wird ein leerer Kampf übergeben, bis das neue Model verwendet wird
+            ViewModel.Kampf.Logic.Kampf k = new ViewModel.Kampf.Logic.Kampf();
+            ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
             arenaWindow.Width = 1200;
             arenaWindow.Height = 800;
             arenaWindow.Show();
@@ -654,6 +658,7 @@ namespace MeisterGeister.View.Kampf
             KampfInfoView infoView = new KampfInfoView(_kampf);
             MainView.ShowSpielerInfo(infoView);
         }
+
     }
 
     public delegate void ProbeWürfelnEventHandler(string talentname);

@@ -19,19 +19,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         //Wert2 (ZfW - jeweils von der SubKlasse zu interpretieren)
         //Wert3 (AsP - jeweils von der SubKlasse zu interpretieren)
         //Typ wird nur zum speichern in die DB gebraucht
-        public string Name
+        public virtual string Name
         {
-            get { throw new NotImplementedException(); }
+            get { return "Modifikator"; }
         }
 
-        public string Literatur
+        public virtual string Literatur
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
         }
 
-        public DateTime Erstellt
+        private DateTime erstellt = DateTime.Now;
+        public virtual DateTime Erstellt
         {
-            get { throw new NotImplementedException(); }
+            get { return erstellt; }
         }
 
         /*

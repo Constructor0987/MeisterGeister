@@ -345,21 +345,21 @@
                         </Border>
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal" FocusManager.IsFocusScope="True">
-                                <Button x:Name="btnCut" ToolTip="Ausschneiden"  TabIndex="13" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Cut">
-                                    <Image Source="/Images/Icons/General/cut.png" Stretch="Fill" />
+                                <Button x:Name="btnCut" ToolTip="Ausschneiden"  TabIndex="13" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Cut" ToolTipService.ShowOnDisabled="True">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/cut.png" Stretch="Fill" />
                                 </Button>
-                                <Button x:Name="btnCopy" ToolTip="Kopieren"  TabIndex="14" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Copy">
-                                    <Image Source="/Images/Icons/General/copy.png" Stretch="Fill" />
+                                <Button x:Name="btnCopy" ToolTip="Kopieren"  TabIndex="14" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Copy" ToolTipService.ShowOnDisabled="True">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/copy.png" Stretch="Fill" />
                                 </Button>
-                                <Button x:Name="btnPaste" ToolTip="Einfügen"  TabIndex="15" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Paste">
-                                    <Image Source="/Images/Icons/General/paste.png" Stretch="Fill" />
+                                <Button x:Name="btnPaste" ToolTip="Einfügen"  TabIndex="15" Height="32" Width="32" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Paste" ToolTipService.ShowOnDisabled="True">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/paste.png" Stretch="Fill" />
                                 </Button>
                             </StackPanel>
                         </Border>
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="btnExport"  Click="btnExport_Click" Height="32" ToolTip="Als Textdokument speichern." Width="32">
-                                    <Image Source="/Images/Icons/General/export.png" Stretch="Fill" />
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
                                 </Button>
                             </StackPanel>
                         </Border>
@@ -369,7 +369,7 @@
                                 <Button.ToolTip>
                                     <TextBlock Width="200" Height="Auto" TextWrapping="Wrap"><Run Text="Den Spielern den Text in einem separaten Fenster zeigen."/></TextBlock>
                                 </Button.ToolTip>
-                                <Image Source="/Images/Icons/General/screen.png" />
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
                             </Button>
                             <CheckBox x:Name="_checkBoxShowSelectedText" Margin="2" VerticalContentAlignment="Center" VerticalAlignment="Center" Content="Markierung" ToolTip="Nur markierten Text im Spieler-Fenster zeigen." />
                         </StackPanel>

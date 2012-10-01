@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.Kalender;
 
-namespace MeisterGeister.Logic.General
+namespace MeisterGeister.LogicAlt.General
 {
     public class Zauber : IDreierProbe
     {
@@ -96,11 +96,11 @@ namespace MeisterGeister.Logic.General
         /// <param name="würfel2">Ergebnis des 2. Würfels</param>
         /// <param name="würfel3">Ergebnis des 3. Würfels</param>
         /// <returns></returns>
-        public static DreierProbenErgebnis Probe(int eigenschaft1, int eigenschaft2, int eigenschaft3,
+        public static MeisterGeister.LogicAlt.General.DreierProbenErgebnis Probe(int eigenschaft1, int eigenschaft2, int eigenschaft3,
             int zfw, string probeName, Held held = null, int mod = 0, uint würfel1 = 0u, uint würfel2 = 0u, uint würfel3 = 0u)
         {
             int zfwEff = zfw - mod;
-            var ergebnis = new DreierProbenErgebnis { Held = held, Wert = zfw, Mod = mod };
+            var ergebnis = new MeisterGeister.LogicAlt.General.DreierProbenErgebnis { Held = held, Wert = zfw, Mod = mod };
 
             int modEigenschaftProbe = Math.Min(zfwEff, 0) * -1;
             ergebnis.E1Ergebnis = Eigenschaft.Probe(eigenschaft1, held, modEigenschaftProbe, würfel1);
@@ -124,7 +124,7 @@ namespace MeisterGeister.Logic.General
             return ergebnis;
         }
 
-        public static void Probe(ref DreierProbenErgebnis probe, string probeName,
+        public static void Probe(ref MeisterGeister.LogicAlt.General.DreierProbenErgebnis probe, string probeName,
             Held held = null, int mod = 0, uint würfel1 = 0u, uint würfel2 = 0u, uint würfel3 = 0u)
         {
             if (probe != null)
@@ -151,7 +151,7 @@ namespace MeisterGeister.Logic.General
             }
         }
 
-        private static void SpezielleErfahrungSpeichern(string probeName, DreierProbenErgebnis ergebnis)
+        private static void SpezielleErfahrungSpeichern(string probeName, MeisterGeister.LogicAlt.General.DreierProbenErgebnis ergebnis)
         {
             // Bei Doppel1 oder Dreifach1 eine SE
             if ((int)ergebnis.PatzerGlückswurf >= 2)

@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="MeisterGeister.View.Helden.Controls.VorNachteileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             mc:Ignorable="d"
+             d:DesignHeight="299" d:DesignWidth="677" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <!-- Vor-/Nachteile -->
+        <Style x:Key="VorNachteilWertItemStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding VorNachteil.HatWert}" Value="true" />
+                        <Condition Binding="{Binding VorNachteil.WertTyp}" Value="{x:Null}" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Visibility" Value="Visible" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="VorNachteilWertNumItemStyle" TargetType="{x:Type ViewGeneral:IntBox}">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding VorNachteil.WertTyp}" Value="int">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="GroupHeaderStyleVorNachteile" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander Margin="0,5,0,0" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Style="{DynamicResource TextTitel}" Text="{Binding Content.Name, RelativeSource={RelativeSource AncestorType={x:Type GroupItem}, Mode=FindAncestor}}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                                        <Image.ToolTip>
+                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Element für weitere Aktionen."/></TextBlock>
+                                        </Image.ToolTip>
+                                    </Image>
+                                    <ItemsPresenter Grid.Column="1" />
+                                </Grid>
+                            </Border>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <CollectionViewSource x:Key="VorNachteilListeView" Source="{Binding VorNachteilListe}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="VorNachteil.Typ" />
+                <ComponentModel:SortDescription PropertyName="VorNachteil.Name" />
+            </CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="VorNachteil.Typ" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
+        <DataTemplate x:Key="VorNachteileTemplate">
+            <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#38A08350">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding VorNachteil.Name}" VerticalAlignment="Center" />
+                    <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" />
+                    <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="15,0,0,0" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" VerticalAlignment="Center" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Expander Grid.Row="0" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Vor-/Nachteilauswahl" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,0,5,0" Text="Vorteil:" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="1" Height="23" DisplayMemberPath="Name" x:Name="_comboBoxVorteil" ToolTip="Vorteil" VerticalAlignment="Center"
+                      ItemsSource="{Binding VorteilAuswahlListe}" SelectedItem="{Binding SelectedAddVorteil}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen">
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                    </Button>
+                    <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="Nachteil:" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="4" Height="23" DisplayMemberPath="Name" x:Name="_comboBoxNachteil" ToolTip="Nachteil" VerticalAlignment="Center"
+                      ItemsSource="{Binding NachteilAuswahlListe}" SelectedItem="{Binding SelectedAddNachteil}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen">
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                    </Button>
+                </Grid>
+            </Border>
+        </Expander>
+
+        <ListBox Grid.Row="1" x:Name="_listBoxHeldVorNachteile" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemsSource="{Binding Source={StaticResource VorNachteilListeView}}" ItemTemplate="{StaticResource VorNachteileTemplate}" SelectedItem="{Binding SelectedHeldVorNachteil}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleVorNachteile}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </ListBox.GroupStyle>
+            <ListBox.ContextMenu>
+                <ContextMenu Opened="ContextMenuVorNachteile_Opened">
+                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemVorNachteilWiki">
+                        <MenuItem.Icon>
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Height="28" Command="{Binding OnDeleteVorNachteil}" Header="Löschen" x:Name="_menuItemVorNachteilLöschen">
+                        <MenuItem.Icon>
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            <ListBox.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding OnDeleteVorNachteil}" />
+            </ListBox.InputBindings>
+        </ListBox>
+    </Grid>
+</UserControl>

@@ -6,8 +6,34 @@ using System.Text.RegularExpressions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Talent
+    public partial class Talent : MeisterGeister.Logic.General.Probe
     {
+        #region //---- PROBE ----
+
+        override public int[] Werte
+        {
+            get 
+            {
+                if (_werte == null)
+                    _werte = new int[3];
+                return _werte;
+            }
+            set
+            {
+                _werte = value;
+                _chanceBerechnet = false;
+            }
+        }
+
+        #endregion //---- PROBE ----
+
+        // Mapping zur Property "Talentname", zur Vereinheitlichung beim DataBinding
+        public string Name
+        {
+            get { return Talentname; }
+            set { Talentname = value; }
+        }
+
         public List<string> Talentspezialisierungen(Held h)
         {
             //TODO ??: bei GUID Umstellung statt Sonderfertigkeit.Name evtl auf GUID prüfen

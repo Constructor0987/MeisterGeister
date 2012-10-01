@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void NotifyPropertyChanged(String info)
+    	public void OnChanged(String info)
         {
             if (PropertyChanged != null)
             {
@@ -41,7 +41,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_vorNachteilID = value;
-    			NotifyPropertyChanged("VorNachteilID");
+    			OnChanged("VorNachteilID");
     		}
     
         }
@@ -54,7 +54,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_name = value;
-    			NotifyPropertyChanged("Name");
+    			OnChanged("Name");
     		}
     
         }
@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_vorteil = value;
-    			NotifyPropertyChanged("Vorteil");
+    			OnChanged("Vorteil");
     		}
     
         }
@@ -80,7 +80,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_nachteil = value;
-    			NotifyPropertyChanged("Nachteil");
+    			OnChanged("Nachteil");
     		}
     
         }
@@ -93,7 +93,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_hatWert = value;
-    			NotifyPropertyChanged("HatWert");
+    			OnChanged("HatWert");
     		}
     
         }
@@ -106,7 +106,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_wertTyp = value;
-    			NotifyPropertyChanged("WertTyp");
+    			OnChanged("WertTyp");
     		}
     
         }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_typ = value;
-    			NotifyPropertyChanged("Typ");
+    			OnChanged("Typ");
     		}
     
         }
@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			_setting = value;
-    			NotifyPropertyChanged("Setting");
+    			OnChanged("Setting");
     		}
     
         }
@@ -179,7 +179,7 @@ namespace MeisterGeister.Model
     
         private void FixupHeld_VorNachteil(object sender, NotifyCollectionChangedEventArgs e)
         {
-    		NotifyPropertyChanged("Held_VorNachteil");
+    		OnChanged("Held_VorNachteil");
             if (e.NewItems != null)
             {
                 foreach (Held_VorNachteil item in e.NewItems)

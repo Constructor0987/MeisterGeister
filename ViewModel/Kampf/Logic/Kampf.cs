@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -28,8 +29,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             Kämpfer = new KämpferInfoListe(this);
             Kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
+            Kämpfer.CollectionChanged += Kämpfer_CollectionChanged;
             InitiativListe = new InitiativListe(this);
-            InitiativListe.PropertyChanged += InitiativListe_PropertyChanged;
+            InitiativListe.CollectionChanged += InitiativListe_CollectionChanged;
             INIPhase = 0;
             Kampfrunde = 0;
         }
@@ -62,17 +64,48 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             private set { _kampfrunde = value; }
         }
 
+        private ManöverInfo aktuelleAktion;
+        public ManöverInfo AktuelleAktion
+        {
+            get { return aktuelleAktion; }
+            set { 
+                aktuelleAktion = value;
+                //OnChanged("AktuelleAktion");
+            }
+        }
+
+        public ManöverInfo Next()
+        {
+            foreach (ManöverInfo mi in InitiativListe)
+            {
+                if (!(mi.Manöver is Manöver.KeineAktion) && !mi.Ausgeführt)
+                {
+                    AktuelleAktion = mi;
+                    INIPhase = mi.Initiative;
+                    return mi;
+                }
+            }
+            NeueKampfrunde();
+            return null;
+        }
+
         public void NeueKampfrunde()
         {
+            //Alte Ansagen löschen
+            InitiativListe.Clear();
             //Modifikatoren entfernen
             foreach (KämpferInfo ki in Kämpfer)
             {
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
-                //Alte Ansagen löschen
+                InitiativListe.Add(ki, new Manöver.KeineAktion(ki.Kämpfer), 0);
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)
             }
             Kampfrunde++;
+            if (InitiativListe.Count > 0)
+                INIPhase = InitiativListe[0].Initiative;
+            else
+                INIPhase = 0;
             //im UI markieren, dass man nun bis zur ersten Aktions-Ansage umwandeln kann
             UmwandelnMöglich = true;
         }
@@ -109,19 +142,26 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void Kämpfer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == "List")
-            {
-                //INI Liste abgleichen
-            }
             if (args.PropertyName == "Sort")
             {
                 //INI Liste sortieren
+                InitiativListe.Sort();
             }
             //Anzeige neu darstellen?
         }
 
-        public void InitiativListe_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
+        public void Kämpfer_CollectionChanged(object sender, System.ComponentModel.CollectionChangeEventArgs args)
         {
+            if (args.Action == System.ComponentModel.CollectionChangeAction.Remove)
+                InitiativListe.Remove((KämpferInfo)args.Element);
+            else if (args.Action == System.ComponentModel.CollectionChangeAction.Add)
+                InitiativListe.Add((KämpferInfo)args.Element, new Manöver.KeineAktion(((KämpferInfo)args.Element).Kämpfer), 0);
+        }
+
+        public void InitiativListe_CollectionChanged(object sender, System.ComponentModel.CollectionChangeEventArgs args)
+        {
+            if (args.Action == System.ComponentModel.CollectionChangeAction.Add && !(args.Element is Manöver.KeineAktion))
+                UmwandelnMöglich = false;
         }
     }
 }
