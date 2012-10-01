@@ -151,6 +151,20 @@ namespace MeisterGeister
             }
         }
 
+        /// <summary>
+        /// Versetzt die Anwendung in einen "Beschäftig-Status" bzw. entfernt diesen Status.
+        /// Das Hauptfenster zeigt dabei ein Busy-Overlay.
+        /// </summary>
+        /// <param name="isBusy">'True' falls Anwendung gerade arbeitet.</param>
+        public static void SetIsBusy(bool isBusy)
+        {
+            if (App.Current.MainWindow != null
+                && App.Current.MainWindow is View.MainView)
+            {
+                (App.Current.MainWindow as View.MainView).IsBusy = isBusy;
+            }
+        }
+
         #endregion
 
         #region //EVENTS

@@ -364,5 +364,11 @@
                 </Border>
             </Grid>
         </Border>
+
+        <Border Name="_busyBorder" BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="Collapsed">
+            <Grid>
+                <TextBlock Margin="0" TextWrapping="Wrap" Text="Beschäftigt...Bitte warten." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26.667" FontWeight="Bold" Foreground="#7EFFFFFF"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

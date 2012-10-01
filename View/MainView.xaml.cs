@@ -21,6 +21,16 @@ using System.Windows.Media.Animation;
 namespace MeisterGeister.View
 {
 
+    public static class ExtensionMethods
+    {
+        private static Action EmptyDelegate = delegate() { };
+
+        public static void Refresh(this UIElement uiElement)
+        {
+            uiElement.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, EmptyDelegate);
+        }
+    }
+
     // TODO ??: MVVM konform umbauen!    
     /// <summary>
     /// Interaktionslogik für MainView.xaml
@@ -72,6 +82,13 @@ namespace MeisterGeister.View
             _labelVersion.Content += " Intern";
 #endif
         }
+
+        public bool IsBusy
+        {
+            get { return _busyBorder.Visibility == System.Windows.Visibility.Visible ? true : false; }
+            set { _busyBorder.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; _busyBorder.Refresh(); }
+        }
+
 
         private static Dictionary<string, MenuItem> MenuPunkte = new Dictionary<string, MenuItem>(5);
 
