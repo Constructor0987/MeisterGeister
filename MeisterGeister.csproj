@@ -509,6 +509,9 @@
     <Compile Include="View\Proben\ProbeControl.xaml.cs">
       <DependentUpon>ProbeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Proben\ProbeDialog.xaml.cs">
+      <DependentUpon>ProbeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Proben\ProbenView.xaml.cs">
       <DependentUpon>ProbenView.xaml</DependentUpon>
     </Compile>
@@ -816,6 +819,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Proben\ProbeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Proben\ProbeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

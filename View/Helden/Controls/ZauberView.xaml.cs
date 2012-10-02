@@ -52,21 +52,17 @@ namespace MeisterGeister.View.Helden.Controls
                 VM.ListenToChangeEvents = IsVisible;
         }
 
+        // TODO MT: Auf MVVM umstellen; evtl. mit CanExecute im Command
         private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)
         {
-            if (_dataGridHeldZauber.SelectedItem == null)
-            {
-                _menuItemZauberLöschen.IsEnabled = false;
-                _menuItemZauberWiki.IsEnabled = false;
-            }
-            else
-            {
-                _menuItemZauberLöschen.IsEnabled = true;
-                _menuItemZauberWiki.IsEnabled = true;
-            }
+            _menuItemZauberLöschen.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
+            _menuItemZauberWiki.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
+            _menuItemZauberGruppenProbe.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
+            _menuItemZauberProbe.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
         }
 
-        private void MenuItemZauberProben_Click(object sender, RoutedEventArgs e)
+        // TODO MT: Löschen, wenn auf neues Proben-Tool umgestellt
+        private void MenuItemZauberProbe_Click(object sender, RoutedEventArgs e)
         {
             // TODO MT: Probe würfeln
             //if (ProbeWürfeln != null)

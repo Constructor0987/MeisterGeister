@@ -72,14 +72,20 @@
                         ItemsSource="{Binding ZauberListe}" SelectedItem="{Binding SelectedHeldZauber}">
                         <DataGrid.ContextMenu>
                             <ContextMenu Opened="ContextMenuZauber_Opened">
-                                <MenuItem Height="28" Click="MenuItemZauberProben_Click" Header="Probe würfeln" x:Name="_menuItemZauberProben">
+                                <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Height="28" Command="{Binding OnWürfelProbe}" Header="Probe würfeln" x:Name="_menuItemZauberProbe">
                                     <MenuItem.Icon>
                                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
+                                <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}" Header="Gruppenprobe würfeln" x:Name="_menuItemZauberGruppenProbe">
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />

@@ -29,6 +29,18 @@ namespace MeisterGeister.ViewModel.Helden
             get { return onOpenWiki; }
         }
 
+        private Base.CommandBase onWürfelProbe;
+        public Base.CommandBase OnWürfelProbe
+        {
+            get { return onWürfelProbe; }
+        }
+
+        private Base.CommandBase onWürfelGruppenProbe;
+        public Base.CommandBase OnWürfelGruppenProbe
+        {
+            get { return onWürfelGruppenProbe; }
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
@@ -93,6 +105,8 @@ namespace MeisterGeister.ViewModel.Helden
             onDeleteZauber = new Base.CommandBase(DeleteZauber, null);
             onAddZauber = new Base.CommandBase(AddZauber, null);
             onOpenWiki = new Base.CommandBase(OpenWiki, null);
+            onWürfelProbe = new Base.CommandBase(WürfelProbe, null);
+            onWürfelGruppenProbe = new Base.CommandBase(WürfelGruppenProbe, null);
         }
 
         #endregion
@@ -147,6 +161,21 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeldZauber != null)
                 System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedHeldZauber.Zauber.Name);
+        }
+
+        private void WürfelGruppenProbe(object obj)
+        {
+            // TODO MT: Proben-Tool über zu würfelnde Probe informieren
+            // vermutlich am sinnvollsten über Events
+        }
+
+        private void WürfelProbe(object obj)
+        {
+            // TODO MT: Probe-Dialog aufrufen
+            // MVVM-konform umbauen
+
+            View.Proben.ProbeDialog dlg = new View.Proben.ProbeDialog(SelectedHeldZauber, SelectedHeld);
+            dlg.ShowDialog();
         }
 
         #endregion
