@@ -121,12 +121,15 @@ namespace MeisterGeister.ViewModel.Proben
 
             foreach (var item in HeldListe)
             {
-                ProbeControlViewModel vm = new ProbeControlViewModel()
-                {
-                    Held = item,
-                    Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault()
-                };
+                // TODO MT: Probem wenn der Held einen Zauber in mehreren Rep. hat
+                // Solange wird erstmal der Zauber mit dem höchsten ZfW ausgewählt
 
+                ProbeControlViewModel vm = new ProbeControlViewModel();
+                vm.Held = item;
+                if (SelectedProbe is Model.Talent)
+                    vm.Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+                else if (SelectedProbe is Model.Zauber)
+                    vm.Probe = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).FirstOrDefault();
                 vm.Gewürfelt += ProbeControlGewürfelt;
 
                 // nur einfügen, wenn der Held die Fähigkeit besitzt
@@ -138,7 +141,9 @@ namespace MeisterGeister.ViewModel.Proben
         private void RefreshProbeListe()
         {
             // Talente hinzufügen
-            ProbeListe.AddRange(Global.ContextTalent.TalentListe.OrderBy(t => t.Name));
+            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Talent>().OrderBy(t => t.Name));
+            // Zauber hinzufügen
+            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Zauber>().OrderBy(z => z.Name));
         }
 
         private void Würfeln(object obj)

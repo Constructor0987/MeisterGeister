@@ -56,9 +56,7 @@ namespace MeisterGeister.ViewModel.Proben
                 _probe = value;
 
                 if (_probe != null)
-                {
                     WertCount = _probe.Werte.Length;
-                }
 
                 OnChanged("Probe");
                 OnChanged("Probenname");
@@ -149,24 +147,36 @@ namespace MeisterGeister.ViewModel.Proben
                     item.Held = Held;
 
                 Model.Talent talent = null;
+                Model.Zauber zauber = null;
                 if (Probe is Model.Talent)
                     talent = Probe as Model.Talent;
                 else if (Probe is Model.Held_Talent)
                     talent = (Probe as Model.Held_Talent).Talent;
+                else if (Probe is Model.Zauber)
+                    zauber = Probe as Model.Zauber;
+                else if (Probe is Model.Held_Zauber)
+                    zauber = (Probe as Model.Held_Zauber).Zauber;
 
-                if (talent != null && _eigenschaftWurfItemListe.Count >= 3)
+                if ((talent != null || zauber != null) && _eigenschaftWurfItemListe.Count >= 3)
                 {
                     // Eigenschaftsnamen setzen
-                    _eigenschaftWurfItemListe[0].Name = talent.Eigenschaft1;
-                    _eigenschaftWurfItemListe[1].Name = talent.Eigenschaft2;
-                    _eigenschaftWurfItemListe[2].Name = talent.Eigenschaft3;
+                    string e1 = (talent != null) ? talent.Eigenschaft1
+                        : ((zauber != null) ? zauber.Eigenschaft1 : string.Empty);
+                    string e2 = (talent != null) ? talent.Eigenschaft2
+                        : ((zauber != null) ? zauber.Eigenschaft2 : string.Empty);
+                    string e3 = (talent != null) ? talent.Eigenschaft3
+                        : ((zauber != null) ? zauber.Eigenschaft3 : string.Empty);
+
+                    _eigenschaftWurfItemListe[0].Name = e1;
+                    _eigenschaftWurfItemListe[1].Name = e2;
+                    _eigenschaftWurfItemListe[2].Name = e3;
 
                     if (Held != null)
                     {
                         // Eigenschaftswerte setzen
-                        _eigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert(talent.Eigenschaft1);
-                        _eigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert(talent.Eigenschaft2);
-                        _eigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert(talent.Eigenschaft3);
+                        _eigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert(e1);
+                        _eigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert(e2);
+                        _eigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert(e3);
                     }
                 }
 

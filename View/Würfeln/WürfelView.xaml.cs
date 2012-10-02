@@ -16,14 +16,14 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.View.General;
 using MeisterGeister.View.Windows;
 
-namespace MeisterGeister.View.ProbenWürfel
+namespace MeisterGeister.View.Würfeln
 {
     /// <summary>
-    /// Interaktionslogik für WürfelbecherView.xaml
+    /// Interaktionslogik für WürfelView.xaml
     /// </summary>
-    public partial class WürfelbecherView : UserControl
+    public partial class WürfelView : UserControl
     {
-        public WürfelbecherView()
+        public WürfelView()
         {
             InitializeComponent();
 

@@ -569,8 +569,8 @@
     <Compile Include="View\General\WikiLinkControl.xaml.cs">
       <DependentUpon>WikiLinkControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ProbenWürfel\WürfelbecherView.xaml.cs">
-      <DependentUpon>WürfelbecherView.xaml</DependentUpon>
+    <Compile Include="View\Würfeln\WürfelView.xaml.cs">
+      <DependentUpon>WürfelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Arena\ArenaWindow.xaml.cs">
       <DependentUpon>ArenaWindow.xaml</DependentUpon>
@@ -654,9 +654,6 @@
     <Compile Include="ViewModel\Kampf\LogicAlt\KampfAktion.cs" />
     <Compile Include="ViewModel\Kampf\LogicAlt\KampfAktionListe.cs" />
     <Compile Include="ViewModel\Kampf\LogicAlt\KämpferList.cs" />
-    <Compile Include="View\ProbenWürfel\ProbenView.xaml.cs">
-      <DependentUpon>ProbenView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\General\WürfelControl.xaml.cs">
       <DependentUpon>WürfelControl.xaml</DependentUpon>
     </Compile>
@@ -886,10 +883,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ProbenWürfel\ProbenView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\General\TabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -906,7 +899,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ProbenWürfel\WürfelbecherView.xaml">
+    <Page Include="View\Würfeln\WürfelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

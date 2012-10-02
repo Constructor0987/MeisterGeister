@@ -164,8 +164,8 @@ namespace MeisterGeister.View
             switch (tabName)
             {
                 // TODO MT: Events auf neues MVVM-Proben-Tool umstellen
-                case "ProbenAlt":
-                    ((ProbenWürfel.ProbenView)con).ZooBotClick += TabItemControl_ZooBotProbe;
+                case "Proben":
+                    //((Proben.ProbenView)con).ZooBotClick += TabItemControl_ZooBotProbe;
                     break;
                 case "Kampf":
                     ((Kampf.KampfView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
@@ -198,6 +198,7 @@ namespace MeisterGeister.View
             }
         }
 
+        // TODO MT: ProbeWürfeln Umstellen auf neues ProbeTool
         private void TabItemControl_ProbeWürfeln(string talentname)
         {
             bool probenTab = false;
@@ -205,11 +206,11 @@ namespace MeisterGeister.View
             {
                 if (tab is TabItem)
                 {
-                    if (((TabItem)tab).Content is ProbenWürfel.ProbenView)
+                    if (((TabItem)tab).Content is Proben.ProbenView)
                     {
                         probenTab = true;
                         _tabControlMain.SelectedItem = tab;
-                        ((ProbenWürfel.ProbenView)((TabItem)tab).Content).ProbeWürfeln(talentname);
+                        //((Proben.ProbenView)((TabItem)tab).Content).ProbeWürfeln(talentname);
                     }
                 }
             }

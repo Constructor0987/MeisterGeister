@@ -32,14 +32,6 @@ namespace MeisterGeister
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Proben.ProbenView)
             });
-            // TODO MT: Löschen, wenn Proben-Tool umgestellt ist.
-            ToolListe.Add("ProbenAlt", new Tool()
-            {
-                Name = "ProbenAlt",
-                Icon = "Icons/Wuerfel/w20.png",
-                MenuGruppe = "Wege des Meisters",
-                ViewType = typeof(View.ProbenWürfel.ProbenView)
-            });
             ToolListe.Add("Kampf", new Tool()
             {
                 Name = "Kampf",
@@ -80,7 +72,7 @@ namespace MeisterGeister
                 Name = "Würfel",
                 Icon = "Icons/wuerfelbecher.png",
                 MenuGruppe = "Wege des Meisters",
-                ViewType = typeof(View.ProbenWürfel.WürfelbecherView)
+                ViewType = typeof(View.Würfeln.WürfelView)
             });
             ToolListe.Add("SpielerInfo", new Tool()
             {
