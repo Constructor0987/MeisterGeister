@@ -31,6 +31,21 @@ namespace MeisterGeister.View.Proben
             _probeControl.VM = new ViewModel.Proben.ProbeControlViewModel();
             _probeControl.VM.Probe = probe;
             _probeControl.VM.Held = held;
+            _probeControl.VM.Würfeln();
+        }
+
+        public ProbenErgebnis Ergebnis
+        {
+            get
+            {
+                return _probeControl.VM == null ? new ProbenErgebnis()
+                    : _probeControl.VM.Ergebnis;
+            }
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
         }
     }
 }

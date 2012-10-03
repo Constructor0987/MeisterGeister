@@ -150,7 +150,7 @@ namespace MeisterGeister.ViewModel.Proben
         {
             // Alle Proben neu würfeln
             foreach (var item in ProbeErgebnisListe)
-                item.Würfeln(null);
+                item.Würfeln();
 
             // Sound abspielen
             if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)

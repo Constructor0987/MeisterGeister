@@ -210,7 +210,7 @@ namespace MeisterGeister.ViewModel.Proben
             OnChanged("Ergebnis");
         }
 
-        public void Würfeln(object obj)
+        public void Würfeln(object obj = null)
         {
             if (Probe != null)
             {
