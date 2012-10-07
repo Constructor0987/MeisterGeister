@@ -96,8 +96,8 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- KONSTRUKTOR ----
 
-        public ZauberViewModel(Action<string> popup, Func<string, string, bool> confirm, Action<string, Exception> showError)
-            : base(popup, confirm, showError)
+        public ZauberViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
+            : base(popup, confirm, showProbeDialog, showError)
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
@@ -171,11 +171,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void WürfelProbe(object obj)
         {
-            // TODO MT: Probe-Dialog aufrufen
-            // MVVM-konform umbauen
-
-            View.Proben.ProbeDialog dlg = new View.Proben.ProbeDialog(SelectedHeldZauber, SelectedHeld);
-            dlg.ShowDialog();
+            ShowProbeDialog(SelectedHeldZauber, SelectedHeld);
         }
 
         #endregion

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-
 using System.Windows.Forms;
+using MeisterGeister.Logic.General;
 using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.View.General
@@ -82,6 +82,14 @@ namespace MeisterGeister.View.General
                 return objDialog.FileName;
             }
             return null;
+        }
+
+        public static ProbenErgebnis ShowProbeDialog(Probe probe, Model.Held held)
+        {
+            View.Proben.ProbeDialog dlg = new View.Proben.ProbeDialog(probe, held);
+            dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+            dlg.ShowDialog();
+            return dlg.Ergebnis;
         }
 
     }

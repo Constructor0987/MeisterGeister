@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Proben="clr-namespace:MeisterGeister.View.Proben"
         Title="Probe" Height="276" Width="300" Icon="/DSA MeisterGeister;component/Images/Icons/wuerfelbecher.png"
-        Background="{DynamicResource Background1}">
+        Background="{DynamicResource Background1}" Topmost="True" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />

@@ -24,7 +24,7 @@ namespace MeisterGeister.View.Helden.Controls
         public ZauberView()
         {
             InitializeComponent();
-            VM = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+            VM = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowProbeDialog, View.General.ViewHelper.ShowError);
         }
 
         /// <summary>
