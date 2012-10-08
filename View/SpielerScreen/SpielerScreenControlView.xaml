@@ -54,19 +54,19 @@
                 <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/pinsel.png" />
-                        <TextBlock Text="Bild öffnen" Margin="3,0" />
+                        <TextBlock Text="Bild öffnen" Margin="3,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <Button Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Top" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/General/oeffnen.png" />
-                        <TextBlock Text="Ordner öffnen" Margin="3,0" />
+                        <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <Button Height="23" HorizontalAlignment="Left" Margin="229,0,0,0" VerticalAlignment="Top" Click="ButtonBildZeigen_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/General/screen.png" />
-                        <TextBlock Text="Zeige Spielern" Margin="3,0" />
+                        <TextBlock Text="Zeige Spielern" Margin="3,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <CheckBox Grid.Column="0" Grid.Row="0" Margin="345,0,0,0" Name="_checkBoxMax" Content="Maximieren" VerticalAlignment="Center" VerticalContentAlignment="Center">
