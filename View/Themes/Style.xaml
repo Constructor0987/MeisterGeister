@@ -189,45 +189,71 @@
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
 
-    <DropShadowEffect x:Key="LightBloom" BlurRadius="8" Direction="315" Color="#02FFFFFF" Opacity="100" RenderingBias="Performance" ShadowDepth="0" />
-    
-    <!-- ControlStyle -->
-	<Style TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
-        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="1"/>
-        <Setter Property="Template">
+    <DropShadowEffect x:Key="LightBloom" BlurRadius="8" Direction="315" Color="#02FFFFFF" Opacity="100" RenderingBias="Performance" ShadowDepth="0" />   
+    <Style TargetType="{x:Type Button}">    		        
+		<Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Microsoft_Windows_Themes:ButtonChrome x:Name="Chrome" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RenderDefaulted="{TemplateBinding IsDefaulted}" SnapsToDevicePixels="true">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <!--<ContentPresenter.Effect>
-                                <DropShadowEffect Color="Black" ShadowDepth="5" BlurRadius="40" Direction="300" />
-                            </ContentPresenter.Effect>-->
-                        </ContentPresenter>
-                    </Microsoft_Windows_Themes:ButtonChrome>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="#ADADAD"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
+                <ControlTemplate TargetType="Button">
+                    <Grid Margin="{TemplateBinding Margin}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                        		<VisualState x:Name="Normal">
+                        			<Storyboard>
+                        				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
+                        					<EasingColorKeyFrame KeyTime="0" Value="#00855C00"/>
+                        				</ColorAnimationUsingKeyFrames>
+                        			</Storyboard>
+                        		</VisualState>
+                        		<VisualState x:Name="MouseOver">
+                        			<Storyboard>
+                        				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
+                        					<EasingColorKeyFrame KeyTime="0" Value="#66FFFFFF"/>
+                        				</ColorAnimationUsingKeyFrames>
+                        			</Storyboard>
+                        		</VisualState>
+                        		<VisualState x:Name="Pressed">
+                        			<Storyboard>
+                        				<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="border1">
+                        					<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                        				</ThicknessAnimationUsingKeyFrames>
+                        				<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)" Storyboard.TargetName="border">
+                        					<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                        				</ThicknessAnimationUsingKeyFrames>
+                        				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
+                        					<EasingColorKeyFrame KeyTime="0" Value="#66000000"/>
+                        				</ColorAnimationUsingKeyFrames>
+                        			</Storyboard>
+                        		</VisualState>
+                        		<VisualState x:Name="Disabled">
+                        			<Storyboard>
+                        				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
+                        					<EasingColorKeyFrame KeyTime="0" Value="#99000000"/>
+                        				</ColorAnimationUsingKeyFrames>
+                        			</Storyboard>
+                        		</VisualState>
+                        	</VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Unfocused"/>
+                                <VisualState x:Name="Focused"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ValidationStates">
+                                <VisualState x:Name="Valid"/>
+                                <VisualState x:Name="InvalidFocused"/>
+                                <VisualState x:Name="InvalidUnfocused"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="border1" Background="{TemplateBinding Background}" CornerRadius="8" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="Black" BorderThickness="0"/>
+						<Border Background="#66855C00"  CornerRadius="8"/>
+                        <Border x:Name="border" CornerRadius="8" Background="#00855C00"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-	
-	<Style TargetType="{x:Type ComboBoxItem}">
+    
+
+    <Style TargetType="{x:Type ComboBoxItem}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="3,0,3,0"/>
