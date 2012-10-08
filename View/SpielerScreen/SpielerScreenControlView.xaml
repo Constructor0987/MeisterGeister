@@ -51,19 +51,19 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Button Height="23" HorizontalAlignment="Left" Margin="6,6,0,6" VerticalAlignment="Top" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
+                <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/pinsel.png" />
                         <TextBlock Text="Bild öffnen" Margin="3,0" />
                     </StackPanel>
                 </Button>
-                <Button Height="23" HorizontalAlignment="Left" Margin="96,6,0,0" VerticalAlignment="Top" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
+                <Button Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Top" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/General/oeffnen.png" />
                         <TextBlock Text="Ordner öffnen" Margin="3,0" />
                     </StackPanel>
                 </Button>
-                <Button Height="23" HorizontalAlignment="Left" Margin="229,6,0,0" VerticalAlignment="Top" Click="ButtonBildZeigen_Click">
+                <Button Height="23" HorizontalAlignment="Left" Margin="229,0,0,0" VerticalAlignment="Top" Click="ButtonBildZeigen_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/General/screen.png" />
                         <TextBlock Text="Zeige Spielern" Margin="3,0" />

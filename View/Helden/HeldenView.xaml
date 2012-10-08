@@ -94,7 +94,11 @@
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Held:ListeView Margin="5"/>
+        <Held:ListeView Margin="5" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+        	<Held:ListeView.Background>
+        		<ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Texturen/pergament.png"/>
+        	</Held:ListeView.Background>
+        </Held:ListeView>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

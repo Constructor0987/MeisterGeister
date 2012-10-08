@@ -2,14 +2,13 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 	xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
-	xmlns:my="clr-namespace:MeisterGeister.Daten">
+	xmlns:my="clr-namespace:MeisterGeister.Daten" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
 
     <!-- CombplexTpye -->
     <my:DatabaseDSADataSet x:Key="DatenDataSet" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
 
     <!-- EasyTpye -->
-    <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
     <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#8C8E94"/>
     <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="#F3F3F3" Offset="0"/>
@@ -31,8 +30,6 @@
             <RotateTransform  CenterX="0.5" CenterY="0.5" Angle="90" />
         </ImageBrush.RelativeTransform>
     </ImageBrush>
-
-    <!-- TargetStyle -->
     <Style x:Key="ButtonFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -42,12 +39,17 @@
             </Setter.Value>
         </Setter>
     </Style>        
-
+	<Style TargetType="{x:Type ListBoxItem}" >
+		<Setter Property="Template" Value="{DynamicResource ListBoxItemControlTemplate1}"/>
+		<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>        
+	</Style>
     <Style x:Key="ListBoxItemStretch" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Padding" Value="2,0,0,0"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>        
+		<Setter Property="VerticalContentAlignment" Value="Center"/>        
+        <!--<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>        -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -189,26 +191,49 @@
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
 
-    <DropShadowEffect x:Key="LightBloom" BlurRadius="8" Direction="315" Color="#02FFFFFF" Opacity="100" RenderingBias="Performance" ShadowDepth="0" />   
-    <Style TargetType="{x:Type Button}">    		        
-		<Setter Property="Template">
+    <DropShadowEffect x:Key="LightBloom" BlurRadius="8" Direction="315" Color="#02FFFFFF" Opacity="100" RenderingBias="Performance" ShadowDepth="0" />       
+	<Style TargetType="{x:Type Button}">    		        				
+		<Setter Property="Background" Value="Transparent" />		
+		<Setter Property="BorderThickness" Value="0" />		
+		<Setter Property="Template">			
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid Margin="{TemplateBinding Margin}">
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                         		<VisualState x:Name="Normal">
-                        			<Storyboard>
-                        				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
-                        					<EasingColorKeyFrame KeyTime="0" Value="#00855C00"/>
-                        				</ColorAnimationUsingKeyFrames>
-                        			</Storyboard>
-                        		</VisualState>
+                            		<Storyboard>
+                            			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="border1">
+                            				<DiscreteObjectKeyFrame KeyTime="0">
+                            					<DiscreteObjectKeyFrame.Value>
+                            						<CornerRadius>3</CornerRadius>
+                            					</DiscreteObjectKeyFrame.Value>
+                            				</DiscreteObjectKeyFrame>
+                            			</ObjectAnimationUsingKeyFrames>
+                            		</Storyboard>
+                            	</VisualState>
                         		<VisualState x:Name="MouseOver">
                         			<Storyboard>
                         				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
-                        					<EasingColorKeyFrame KeyTime="0" Value="#66FFFFFF"/>
+                        					<EasingColorKeyFrame KeyTime="0" Value="#99DACAAF"/>
                         				</ColorAnimationUsingKeyFrames>
+                        				<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)" Storyboard.TargetName="border">
+                        					<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                        				</ThicknessAnimationUsingKeyFrames>
+                        				<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="border">
+                        					<DiscreteObjectKeyFrame KeyTime="0">
+                        						<DiscreteObjectKeyFrame.Value>
+                        							<CornerRadius>3</CornerRadius>
+                        						</DiscreteObjectKeyFrame.Value>
+                        					</DiscreteObjectKeyFrame>
+                        				</ObjectAnimationUsingKeyFrames>
+                        				<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="border1">
+                        					<DiscreteObjectKeyFrame KeyTime="0">
+                        						<DiscreteObjectKeyFrame.Value>
+                        							<CornerRadius>3</CornerRadius>
+                        						</DiscreteObjectKeyFrame.Value>
+                        					</DiscreteObjectKeyFrame>
+                        				</ObjectAnimationUsingKeyFrames>
                         			</Storyboard>
                         		</VisualState>
                         		<VisualState x:Name="Pressed">
@@ -220,17 +245,25 @@
                         					<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
                         				</ThicknessAnimationUsingKeyFrames>
                         				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
-                        					<EasingColorKeyFrame KeyTime="0" Value="#66000000"/>
+                        					<EasingColorKeyFrame KeyTime="0" Value="#33000000"/>
                         				</ColorAnimationUsingKeyFrames>
+                        				<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="border">
+                        					<DiscreteObjectKeyFrame KeyTime="0">
+                        						<DiscreteObjectKeyFrame.Value>
+                        							<CornerRadius>3</CornerRadius>
+                        						</DiscreteObjectKeyFrame.Value>
+                        					</DiscreteObjectKeyFrame>
+                        				</ObjectAnimationUsingKeyFrames>
+                        				<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="border1">
+                        					<DiscreteObjectKeyFrame KeyTime="0">
+                        						<DiscreteObjectKeyFrame.Value>
+                        							<CornerRadius>3</CornerRadius>
+                        						</DiscreteObjectKeyFrame.Value>
+                        					</DiscreteObjectKeyFrame>
+                        				</ObjectAnimationUsingKeyFrames>
                         			</Storyboard>
                         		</VisualState>
-                        		<VisualState x:Name="Disabled">
-                        			<Storyboard>
-                        				<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="border">
-                        					<EasingColorKeyFrame KeyTime="0" Value="#99000000"/>
-                        				</ColorAnimationUsingKeyFrames>
-                        			</Storyboard>
-                        		</VisualState>
+                        		<VisualState x:Name="Disabled"/>
                         	</VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Unfocused"/>
@@ -242,10 +275,9 @@
                                 <VisualState x:Name="InvalidUnfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="border1" Background="{TemplateBinding Background}" CornerRadius="8" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="Black" BorderThickness="0"/>
-						<Border Background="#66855C00"  CornerRadius="8"/>
-                        <Border x:Name="border" CornerRadius="8" Background="#00855C00"/>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}" />
+                        <Border x:Name="border1" Background="{TemplateBinding Background}" CornerRadius="3" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                        <Border x:Name="border" CornerRadius="3" Background="#00000000" BorderBrush="{x:Null}"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}" Content="{TemplateBinding Content}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -619,5 +651,118 @@
     <Style TargetType="{x:Type ComboBox}">
         <Setter Property="Background" Value="Transparent" />
     </Style>
+    <ControlTemplate x:Key="ListBoxItemControlTemplate1" TargetType="{x:Type ListBoxItem}">
+    	<Grid>
+    		<VisualStateManager.VisualStateGroups>
+    			<VisualStateGroup x:Name="CommonStates">
+    				<VisualState x:Name="Normal"/>
+    				<VisualState x:Name="MouseOver">
+    					<Storyboard>
+    						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="Bd">
+    							<DiscreteObjectKeyFrame KeyTime="0">
+    								<DiscreteObjectKeyFrame.Value>
+    									<CornerRadius>0</CornerRadius>
+    								</DiscreteObjectKeyFrame.Value>
+    							</DiscreteObjectKeyFrame>
+    						</ObjectAnimationUsingKeyFrames>
+    					</Storyboard>
+    				</VisualState>
+    				<VisualState x:Name="Disabled"/>
+    			</VisualStateGroup>
+    			<VisualStateGroup x:Name="SelectionStates">
+    				<VisualState x:Name="Unselected"/>
+    				<VisualState x:Name="Selected">
+    					<Storyboard>
+    						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="Bd">
+    							<DiscreteObjectKeyFrame KeyTime="0">
+    								<DiscreteObjectKeyFrame.Value>
+    									<CornerRadius>0</CornerRadius>
+    								</DiscreteObjectKeyFrame.Value>
+    							</DiscreteObjectKeyFrame>
+    						</ObjectAnimationUsingKeyFrames>
+    					</Storyboard>
+    				</VisualState>
+    				<VisualState x:Name="SelectedUnfocused">
+    					<Storyboard>
+    						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.CornerRadius)" Storyboard.TargetName="Bd">
+    							<DiscreteObjectKeyFrame KeyTime="0">
+    								<DiscreteObjectKeyFrame.Value>
+    									<CornerRadius>0</CornerRadius>
+    								</DiscreteObjectKeyFrame.Value>
+    							</DiscreteObjectKeyFrame>
+    						</ObjectAnimationUsingKeyFrames>
+    					</Storyboard>
+    				</VisualState>
+    			</VisualStateGroup>
+    			<VisualStateGroup x:Name="FocusStates">
+    				<VisualState x:Name="Unfocused"/>
+    				<VisualState x:Name="Focused"/>
+    			</VisualStateGroup>
+    			<VisualStateGroup x:Name="ValidationStates">
+    				<VisualState x:Name="Valid"/>
+    				<VisualState x:Name="InvalidFocused"/>
+    				<VisualState x:Name="InvalidUnfocused"/>
+    			</VisualStateGroup>
+    		</VisualStateManager.VisualStateGroups>
+			<Grid VerticalAlignment="Center">
+				<ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="3,0,0,3"/>
+			</Grid>
+    		<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" CornerRadius="0,0,0,0">
+    			<Border.Effect>
+    				<DropShadowEffect/>
+    			</Border.Effect>
+    		</Border>
+    	</Grid>
+    	<ControlTemplate.Triggers>
+    		<MultiTrigger>
+    			<MultiTrigger.Conditions>
+    				<Condition Property="IsMouseOver" Value="True"/>
+    			</MultiTrigger.Conditions>
+    			<Setter Property="Background" TargetName="Bd" Value="#33A06D00"/>
+    			<Setter Property="BorderBrush" TargetName="Bd" Value="#A8847044"/>
+    		</MultiTrigger>
+    		<MultiTrigger>
+    			<MultiTrigger.Conditions>
+    				<Condition Property="Selector.IsSelectionActive" Value="False"/>
+    				<Condition Property="IsSelected" Value="True"/>
+    			</MultiTrigger.Conditions>
+    			<Setter Property="Background" TargetName="Bd" Value="#19C68953"/>
+    			<Setter Property="BorderBrush" TargetName="Bd" Value="#A8847044"/>				
+    		</MultiTrigger>
+    		<MultiTrigger>
+    			<MultiTrigger.Conditions>
+    				<Condition Property="Selector.IsSelectionActive" Value="True"/>
+    				<Condition Property="IsSelected" Value="True"/>
+    			</MultiTrigger.Conditions>
+    			<Setter Property="Background" TargetName="Bd" Value="#3DC68953"/>
+    			<Setter Property="BorderBrush" TargetName="Bd" Value="#A8847044"/>				
+    		</MultiTrigger>
+    		<Trigger Property="IsEnabled" Value="False">
+    			<Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+    		</Trigger>
+    	</ControlTemplate.Triggers>
+    </ControlTemplate>
+	<ControlTemplate x:Key="ListBoxControlTemplate" TargetType="{x:Type ListBox}">    	
+		<Grid>
+			<VisualStateManager.VisualStateGroups>
+				<VisualStateGroup x:Name="ValidationStates">
+					<VisualState x:Name="Valid"/>
+					<VisualState x:Name="InvalidFocused"/>
+					<VisualState x:Name="InvalidUnfocused"/>
+				</VisualStateGroup>
+			</VisualStateManager.VisualStateGroups>
+			<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="True" d:LayoutOverrides="Width, Height">
+				<ScrollViewer Focusable="False" Padding="{TemplateBinding Padding}">
+					<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+				</ScrollViewer>
+			</Border>			
+		</Grid>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Background" TargetName="Bd" Value="White"/>
+				<Setter Property="BorderBrush" TargetName="Bd" Value="#FFD9D9D9"/>
+			</Trigger>							
+		</ControlTemplate.Triggers>		
+	</ControlTemplate>
 
 </ResourceDictionary>

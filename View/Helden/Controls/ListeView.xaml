@@ -12,6 +12,7 @@
 
 		<Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
 			<Setter Property="FontStyle" Value="Normal" />
+			<Setter Property="VerticalAlignment" Value="Center" />
 			<Style.Triggers>
 				<DataTrigger Binding="{Binding AktiveHeldengruppe}" Value="false">
 					<Setter Property="FontStyle" Value="Italic" />
@@ -27,8 +28,8 @@
 			</Style.Triggers>
 		</Style>
 		<DataTemplate x:Key="HeldListTemplate">
-			<StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical">
-                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}">
+			<StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}" VerticalAlignment="Center">
                     <TextBlock.ToolTip>
                         <StackPanel>
                             <TextBlock Text="Eindeutige Held-ID:" FontStyle="Italic" />
@@ -37,13 +38,13 @@
                     </TextBlock.ToolTip>
                 </TextBlock>
 			</StackPanel>
-		</DataTemplate>
+		</DataTemplate>		
 	</UserControl.Resources>
 
     <Border Style="{DynamicResource ControlContentBorder}">
 		<Grid>
 			<ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
-				MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000">
+				MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000" VerticalContentAlignment="Center">
                 <ListBox.InputBindings>
                     <KeyBinding Key="Delete" Command="{Binding OnDeleteHeld}" />
                 </ListBox.InputBindings>
@@ -109,7 +110,7 @@
 					</StackPanel>
 				</Image.ToolTip>
 			</Image>
-			<Button Height="23" Margin="5,0,0,6" Width="25" Background="Lime" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
+			<Button Height="23" Margin="5,0,0,5" Width="25" Background="#6600FF00" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
 				<Button.ContextMenu>
 					<ContextMenu>
                         <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Helden eingeben.">
