@@ -190,8 +190,7 @@
         <Setter Property="BorderBrush" Value="#FFBEB3A3"/>
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
-
-    <DropShadowEffect x:Key="LightBloom" BlurRadius="8" Direction="315" Color="#02FFFFFF" Opacity="100" RenderingBias="Performance" ShadowDepth="0" />       
+    
 	<Style TargetType="{x:Type Button}">    		        				
 		<Setter Property="Background" Value="Transparent" />		
 		<Setter Property="BorderThickness" Value="0" />		
@@ -294,17 +293,14 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="border1" Background="{TemplateBinding Background}" CornerRadius="3" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
-                        <Border x:Name="border" CornerRadius="3" Background="#00000000" BorderThickness="1">
-                        	<Border.Effect>
-                        		<DropShadowEffect Color="Black" BlurRadius="5" Direction="300" ShadowDepth="3"/>
-                        	</Border.Effect>
+                        <Border x:Name="border" CornerRadius="3" Background="#00000000" BorderThickness="1">                        	
                         	<Border.BorderBrush>
                         		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        			<GradientStop Color="Black"/>
-                        			<GradientStop Color="Black" Offset="1"/>
-                        			<GradientStop Color="#FF5B5B5B" Offset="0.043"/>
-                        			<GradientStop Color="#FFA4A4A4" Offset="0.472"/>
-                        			<GradientStop Color="#FF6A6666" Offset="0.855"/>
+                        			<GradientStop Color="#4C000000"/>
+                        			<GradientStop Color="#4C000000" Offset="1"/>
+                        			<GradientStop Color="#4C5B5B5B" Offset="0.043"/>
+                        			<GradientStop Color="#4CA4A4A4" Offset="0.472"/>
+                        			<GradientStop Color="#4C6A6666" Offset="0.855"/>
                         		</LinearGradientBrush>
                         	</Border.BorderBrush>
                         </Border>
@@ -324,9 +320,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                	<Grid>
                     <Border x:Name="Bd" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Style="{DynamicResource ControlContentBorder}" BorderBrush="{x:Null}">
                         <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                    </Border>
+                    </Border>											
+					</Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
@@ -335,8 +333,8 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
+                    </ControlTemplate.Triggers>                
+				</ControlTemplate>								
             </Setter.Value>
         </Setter>
     </Style>
@@ -596,6 +594,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type DataGrid}">
+					<Grid>
 					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
 						<ScrollViewer x:Name="DG_ScrollViewer" Focusable="false" Background="{x:Null}">
 							<ScrollViewer.Template>
@@ -622,12 +621,13 @@
 											</Grid.ColumnDefinitions>
 											<ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Column="1" Maximum="{TemplateBinding ScrollableWidth}" Orientation="Horizontal" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Background="{x:Null}"/>
 										</Grid>
-									</Grid>
+									</Grid>									
 								</ControlTemplate>
 							</ScrollViewer.Template>
 							<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
 						</ScrollViewer>
 					</Border>
+					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
@@ -681,6 +681,7 @@
     
     <Style TargetType="{x:Type ComboBox}">
         <Setter Property="Background" Value="Transparent" />
+		<Setter Property="Effect" Value="{DynamicResource LightBloom}" />
     </Style>
     <ControlTemplate x:Key="ListBoxItemControlTemplate1" TargetType="{x:Type ListBoxItem}">
     	<Grid>
@@ -738,10 +739,7 @@
 			<Grid VerticalAlignment="Center">
 				<ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="3,0,0,3"/>
 			</Grid>
-    		<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" CornerRadius="0,0,0,0">
-    			<Border.Effect>
-    				<DropShadowEffect/>
-    			</Border.Effect>
+    		<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" CornerRadius="0,0,0,0">    			
     		</Border>
     	</Grid>
     	<ControlTemplate.Triggers>
@@ -774,7 +772,7 @@
     	</ControlTemplate.Triggers>
     </ControlTemplate>
 	<ControlTemplate x:Key="ListBoxControlTemplate" TargetType="{x:Type ListBox}">    	
-		<Grid>
+		<Grid>			
 			<VisualStateManager.VisualStateGroups>
 				<VisualStateGroup x:Name="ValidationStates">
 					<VisualState x:Name="Valid"/>
@@ -791,9 +789,104 @@
 		<ControlTemplate.Triggers>
 			<Trigger Property="IsEnabled" Value="False">
 				<Setter Property="Background" TargetName="Bd" Value="White"/>
-				<Setter Property="BorderBrush" TargetName="Bd" Value="#FFD9D9D9"/>
+				<Setter Property="BorderBrush" TargetName="Bd" Value="#FFD9D9D9"/>				
 			</Trigger>							
 		</ControlTemplate.Triggers>		
 	</ControlTemplate>
+	<LinearGradientBrush x:Key="TextBoxBorder" EndPoint="0,20" MappingMode="Absolute" StartPoint="0,0">
+		<GradientStop Color="#ABADB3" Offset="0.05"/>
+		<GradientStop Color="#E2E3EA" Offset="0.07"/>
+		<GradientStop Color="#E3E9EF" Offset="1"/>
+	</LinearGradientBrush>
+	<Style BasedOn="{x:Null}" TargetType="{x:Type TextBox}">
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource TextBoxBorder}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="Padding" Value="1"/>
+		<Setter Property="AllowDrop" Value="true"/>
+		<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+		<Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+		<Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type TextBox}">
+					<Grid>
+					<Microsoft_Windows_Themes:ListBoxChrome x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderFocused="{TemplateBinding IsKeyboardFocusWithin}" SnapsToDevicePixels="true">						
+						<ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+					</Microsoft_Windows_Themes:ListBoxChrome>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="SeparatorStyle" TargetType="{x:Type Separator}">
+		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+		<Setter Property="Margin" Value="0,2,0,2"/>
+		<Setter Property="Focusable" Value="false"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Separator}">
+					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Height="1" SnapsToDevicePixels="true">						
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<SolidColorBrush x:Key="CheckBoxFillNormal" Color="#F4F4F4"/>
+	<SolidColorBrush x:Key="CheckBoxStroke" Color="#8E8F8F"/>
+	<Style x:Key="EmptyCheckBoxFocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Margin="1" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="CheckRadioFocusVisual">
+		<Setter Property="Control.Template">
+			<Setter.Value>
+				<ControlTemplate>
+					<Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+		<Setter Property="Background" Value="{StaticResource CheckBoxFillNormal}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type CheckBox}">
+					<BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+						<BulletDecorator.Bullet>
+							<Microsoft_Windows_Themes:BulletChrome BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" IsChecked="{TemplateBinding IsChecked}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}">								
+							</Microsoft_Windows_Themes:BulletChrome>
+						</BulletDecorator.Bullet>
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+					</BulletDecorator>
+					<ControlTemplate.Triggers>
+						<Trigger Property="HasContent" Value="true">
+							<Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioFocusVisual}"/>
+							<Setter Property="Padding" Value="4,0,0,0"/>
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
 </ResourceDictionary>
