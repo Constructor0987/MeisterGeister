@@ -57,7 +57,7 @@
                             <DataTemplate>
                                 <Border Margin="5">
                                     <StackPanel>
-                                        <Proben:ProbeControl Orientation="Vertical" />
+                                        <Proben:ProbeControl Orientation="Horizontal" />
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
