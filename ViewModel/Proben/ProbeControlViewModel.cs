@@ -64,6 +64,20 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        private int _modifikator = 0;
+        public int Modifikator
+        {
+            get { return Probe != null ? Probe.Modifikator : _modifikator; }
+            set
+            {
+                _modifikator = value;
+                if (Probe != null)
+                    Probe.Modifikator = _modifikator;
+
+                OnChanged("Modifikator");
+            }
+        }
+
         public string ErgebnisImagePath
         {
             get

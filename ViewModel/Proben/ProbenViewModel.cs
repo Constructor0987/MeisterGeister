@@ -50,14 +50,18 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
-        int _mod = 0;
-        public int Mod
+        int _modifikator = 0;
+        public int Modifikator
         {
-            get { return _mod; }
+            get { return _modifikator; }
             set
             {
-                _mod = value;
-                OnChanged("Mod");
+                _modifikator = value;
+
+                // Modifikator an ProbeControls weiterreichen
+                foreach (ProbeControlViewModel er in ProbeErgebnisListe)
+                    er.Modifikator = _modifikator;
+                OnChanged("Modifikator");
             }
         }
 

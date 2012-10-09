@@ -28,7 +28,7 @@
 
                     <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl" />
 
-                    <ViewGeneral:IntBox Grid.Column="1" ShowButtons="True" Value="{Binding Mod}" ToolTip="Erschwernis/Erleichterung" />
+                <ViewGeneral:IntBox Grid.Column="1" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
                     
                     <Button Grid.Column="3" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
@@ -57,7 +57,7 @@
                             <DataTemplate>
                                 <Border Margin="5">
                                     <StackPanel>
-                                        <Proben:ProbeControl />
+                                        <Proben:ProbeControl Orientation="Vertical" />
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
