@@ -2,14 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Proben="clr-namespace:MeisterGeister.View.Proben"
-        Title="Probe" Height="276" Width="300" Icon="/DSA MeisterGeister;component/Images/Icons/wuerfelbecher.png"
+        Title="Probe" Height="328" Width="277" Icon="/DSA MeisterGeister;component/Images/Icons/wuerfelbecher.png"
         Background="{DynamicResource Background1}" Topmost="True" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Proben:ProbeControl x:Name="_probeControl" Grid.Row="0" Margin="25" />
+        <Proben:ProbeControl x:Name="_probeControl" Grid.Row="0" Margin="25" Orientation="Vertical" />
         <Button Grid.Row="1" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" />
     </Grid>
 </Window>

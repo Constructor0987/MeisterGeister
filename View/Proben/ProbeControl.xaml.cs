@@ -86,13 +86,13 @@ namespace MeisterGeister.View.Proben
         }
 
 
-        //private void ProbeControl_Gewürfelt(object sender, EventArgs e)
-        //{
-        //    // Event werfen
-        //    if (Gewürfelt != null)
-        //        Gewürfelt(this, new EventArgs());
-        //}
-
-        //public event EventHandler Gewürfelt;
+        public Orientation Orientation
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
+          "Orientation", typeof(Orientation), typeof(ProbeControl),
+                new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
     }
 }

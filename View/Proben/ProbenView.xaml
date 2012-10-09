@@ -7,14 +7,13 @@
              xmlns:Proben="clr-namespace:MeisterGeister.View.Proben"
              mc:Ignorable="d" 
              d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}" Loaded="UserControl_Loaded">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
@@ -58,7 +57,7 @@
                             <DataTemplate>
                                 <Border Margin="5">
                                     <StackPanel>
-                                        <Proben:ProbeControl Width="180" />
+                                        <Proben:ProbeControl />
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -72,5 +71,4 @@
             </StackPanel>
 
         </Grid>
-    </ScrollViewer>
 </UserControl>

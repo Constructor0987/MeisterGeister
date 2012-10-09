@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MeisterGeister.View.Proben.ProbeControl"
+﻿<UserControl x:Name="userControl" x:Class="MeisterGeister.View.Proben.ProbeControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Background="Transparent"
              d:DataContext="{d:DesignData /SampleData/ProbeControlViewModelSampleData.xaml}"
-             d:DesignHeight="148" d:DesignWidth="192.667" Loaded="UserControl_Loaded_1">
+             Loaded="UserControl_Loaded_1">
     <UserControl.Resources>
         <Style x:Key="BoderContent" TargetType="{x:Type Border}" BasedOn="{StaticResource ControlContentBorder}">
             <Style.Triggers>
@@ -32,23 +32,15 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border Style="{DynamicResource BoderContent}" Padding="4">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+    <Border Style="{DynamicResource BoderContent}" Padding="8,4,4,4">
+        <StackPanel Name="_layoutStackPanel" Orientation="{Binding ElementName=userControl, Mode=OneWay, Path=Orientation, FallbackValue=Horizontal}">
+            
+            <Grid Width="180" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
                     <TextBlock ToolTip="{Binding Probenname, StringFormat='/{0/}-Probe'}" TextTrimming="CharacterEllipsis">
                         <TextBlock Text="{Binding Probenname}" FontStyle="Italic" />
@@ -56,65 +48,67 @@
                     </TextBlock>
                 </StackPanel>
             </Grid>
-            <ListBox Grid.Row="1" Grid.Column="0" BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemsSource="{Binding EigenschaftWurfItemListe}" HorizontalAlignment="Left">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="Focusable" Value="False"/>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="24" />
-                            <ViewGeneral:IntBox Grid.Row="1" Value="{Binding Wert}" HorizontalAlignment="Center" MinWidth="24" NoBackground="True">
-                                <ViewGeneral:IntBox.ToolTip>
-                                    <ViewGeneral:ModInfoBox ModListe="{Binding ModList}" WertName="{Binding Name}" 
-                                                        StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
-                                </ViewGeneral:IntBox.ToolTip>
-                            </ViewGeneral:IntBox>
-                            <Border Grid.Row="2" Width="24" Height="24" ToolTip="Ergebnis des Wurfs">
-                                <Border.Background>
-                                    <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank.png" />
-                                </Border.Background>
-                                <ViewGeneral:IntBox Value="{Binding Wurf}" MinValue="1" MaxValue="20"
-                                                    HorizontalAlignment="Center" VerticalAlignment="Center" NoBackground="True" Foreground="White" />
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,2,0,0">
-                    <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" />
-                    <TextBlock Text="{Binding Probe.Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" />
-                </StackPanel>
-                <Button Grid.Row="1" Height="34" Width="34" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}" Margin="10,10,0,0" HorizontalAlignment="Left">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <ListBox BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     ItemsSource="{Binding EigenschaftWurfItemListe}" HorizontalAlignment="Left">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="24" />
+                                <ViewGeneral:IntBox Grid.Row="1" Value="{Binding Wert}" HorizontalAlignment="Center" MinWidth="24" NoBackground="True">
+                                    <ViewGeneral:IntBox.ToolTip>
+                                        <ViewGeneral:ModInfoBox ModListe="{Binding ModList}" WertName="{Binding Name}" 
+                                                            StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
+                                    </ViewGeneral:IntBox.ToolTip>
+                                </ViewGeneral:IntBox>
+                                <Border Grid.Row="2" Width="24" Height="24" ToolTip="Ergebnis des Wurfs">
+                                    <Border.Background>
+                                        <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank.png" />
+                                    </Border.Background>
+                                    <ViewGeneral:IntBox Value="{Binding Wurf}" MinValue="1" MaxValue="20"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center" NoBackground="True" Foreground="White" />
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button Height="34" Width="34" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}" Margin="10,0,15,0" HorizontalAlignment="Left">
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"  />
                 </Button>
-            </Grid>
-            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                <TextBlock ToolTip="Übrig behaltene Punkte" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Width="65" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" FontWeight="Bold"  />
+                <TextBlock Text="{Binding Probe.Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" />
+            </StackPanel>
+
+            <StackPanel Width="65" Orientation="Horizontal"  Margin="0,5,0,5" HorizontalAlignment="Left">
+                <TextBlock ToolTip="Übrig behaltene Punkte" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Run Text="{Binding Ergebnis.Übrig}" FontWeight="Bold" />
                     <Run Text="{Binding Probe.PunkteText, Mode=OneWay}" FontWeight="Bold" />
                     <Run Text="*" FontWeight="Bold" />
                 </TextBlock>
-                <Image Source="{Binding ErgebnisImagePath}" Margin="10,0,0,0" Width="22" Height="22" ToolTip="{Binding Ergebnis.Ergebnis}" VerticalAlignment="Top" />
             </StackPanel>
-        </Grid>
+
+            <Image Source="{Binding ErgebnisImagePath, FallbackValue=/DSA MeisterGeister;component/Images/Icons/General/question.png}" Margin="10,0,10,0" Width="22" Height="22" ToolTip="{Binding Ergebnis.Ergebnis}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+
+        </StackPanel>
     </Border>
 </UserControl>
