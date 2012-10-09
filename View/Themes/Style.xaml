@@ -193,7 +193,7 @@
     
 	<Style TargetType="{x:Type Button}">    		        				
 		<Setter Property="Background" Value="Transparent" />		
-		<Setter Property="BorderThickness" Value="0" />		
+		<Setter Property="BorderThickness" Value="0" />				
 		<Setter Property="Template">			
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -747,7 +747,7 @@
     			<MultiTrigger.Conditions>
     				<Condition Property="IsMouseOver" Value="True"/>
     			</MultiTrigger.Conditions>
-    			<Setter Property="Background" TargetName="Bd" Value="#33A06D00"/>
+    			<Setter Property="Background" TargetName="Bd" Value="#5DA06D00"/>
     			<Setter Property="BorderBrush" TargetName="Bd" Value="#A8847044"/>
     		</MultiTrigger>
     		<MultiTrigger>
@@ -755,7 +755,7 @@
     				<Condition Property="Selector.IsSelectionActive" Value="False"/>
     				<Condition Property="IsSelected" Value="True"/>
     			</MultiTrigger.Conditions>
-    			<Setter Property="Background" TargetName="Bd" Value="#19C68953"/>
+    			<Setter Property="Background" TargetName="Bd" Value="#5DC68953"/>
     			<Setter Property="BorderBrush" TargetName="Bd" Value="#A8847044"/>				
     		</MultiTrigger>
     		<MultiTrigger>
@@ -763,7 +763,7 @@
     				<Condition Property="Selector.IsSelectionActive" Value="True"/>
     				<Condition Property="IsSelected" Value="True"/>
     			</MultiTrigger.Conditions>
-    			<Setter Property="Background" TargetName="Bd" Value="#3DC68953"/>
+    			<Setter Property="Background" TargetName="Bd" Value="#5DC68953"/>
     			<Setter Property="BorderBrush" TargetName="Bd" Value="#A8847044"/>				
     		</MultiTrigger>
     		<Trigger Property="IsEnabled" Value="False">
