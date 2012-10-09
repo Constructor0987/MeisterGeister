@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -137,8 +138,22 @@ namespace MeisterGeister.Model
     
         }
         private string _bemerkung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Tags
+        {
+            get { return _tags; }
+            set
+    		{ 
+    			_tags = value;
+    			OnChanged("Tags");
+    		}
+    
+        }
+        private string _tags;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -239,6 +254,7 @@ namespace MeisterGeister.Model
         private Waffe _waffe;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupFernkampfwaffe(Fernkampfwaffe previousValue)
@@ -321,5 +337,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

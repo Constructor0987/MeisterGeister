@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -118,6 +119,7 @@ namespace MeisterGeister.Model
         private Nullable<int> _anzahl;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -169,6 +171,7 @@ namespace MeisterGeister.Model
         private Munition _munition;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupFernkampfwaffe(Fernkampfwaffe previousValue)
@@ -235,5 +238,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

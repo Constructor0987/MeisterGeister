@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -61,6 +62,7 @@ namespace MeisterGeister.Model
         private string _name;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -97,6 +99,7 @@ namespace MeisterGeister.Model
         private ICollection<Abenteuer_Szene> _abenteuer_Szene;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupAbenteuer_Szene(object sender, NotifyCollectionChangedEventArgs e)
@@ -123,5 +126,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

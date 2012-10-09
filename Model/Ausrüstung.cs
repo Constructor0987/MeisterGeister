@@ -14,7 +14,7 @@ namespace MeisterGeister.Model
 
         public bool Usergenerated
         {
-            get { return !AusrüstungGUID.ToString().StartsWith("00000000-0000-0000-000"); }
+            get { return !AusrüstungGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
         private List<Talent> _talente = null;

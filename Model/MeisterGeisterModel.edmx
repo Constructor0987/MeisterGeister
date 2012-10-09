@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DatabaseDSAModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <Schema Namespace="DatabaseDSAModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DatabaseDSAModelStoreContainer">
           <EntitySet Name="Abenteuer" EntityType="DatabaseDSAModel.Store.Abenteuer" store:Type="Tables" />
           <EntitySet Name="Abenteuer_Ereignis" EntityType="DatabaseDSAModel.Store.Abenteuer_Ereignis" store:Type="Tables" />
@@ -312,6 +312,7 @@
           <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
           <Property Name="Setting" Type="nvarchar" MaxLength="100" />
           <Property Name="Bemerkung" Type="ntext" />
+          <Property Name="Tags" Type="ntext" />
         </EntityType>
         <EntityType Name="Einstellungen">
           <Key>
@@ -466,6 +467,7 @@
           <Property Name="Tags" Type="nvarchar" MaxLength="1000" />
           <Property Name="Bemerkung" Type="ntext" />
           <Property Name="Literatur" Type="nvarchar" MaxLength="500" />
+          <Property Name="Setting" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Held">
           <Key>
@@ -673,10 +675,13 @@
           </Key>
           <Property Name="MunitionGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Art" Type="nvarchar" Nullable="false" MaxLength="13" />
-          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="Preismodifikator" Type="int" Nullable="false" />
-          <Property Name="Bemerkungen" Type="nvarchar" MaxLength="300" />
+          <Property Name="Bemerkungen" Type="ntext" />
           <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
+          <Property Name="Setting" Type="nvarchar" MaxLength="100" />
+          <Property Name="Probe" Type="int" Nullable="false" />
+          <Property Name="Spitze" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Name">
           <Key>
@@ -1530,16 +1535,16 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="upper"
-            Aggregate="false"
-            BuiltIn="true"
-            NiladicFunction="false"
-            IsComposable="true"
-            ParameterTypeSemantics="AllowImplicitConversion"
-            ReturnType="nvarchar">
+              Aggregate="false"
+              BuiltIn="true"
+              NiladicFunction="false"
+              IsComposable="true"
+              ParameterTypeSemantics="AllowImplicitConversion"
+              ReturnType="nvarchar">
           <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
         </Function>
       </Schema>
-  </edmx:StorageModels>
+</edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseDSAModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -1861,6 +1866,7 @@
           <NavigationProperty Name="Rüstung" Relationship="DatabaseDSAModel.fk_Rüstung_Ausrüstung" FromRole="Ausrüstung" ToRole="Rüstung" />
           <NavigationProperty Name="Schild" Relationship="DatabaseDSAModel.fk_Schild_Ausrüstung" FromRole="Ausrüstung" ToRole="Schild" />
           <NavigationProperty Name="Waffe" Relationship="DatabaseDSAModel.fk_Waffe_Ausrüstung" FromRole="Ausrüstung" ToRole="Waffe" />
+          <Property Type="String" Name="Tags" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Einstellungen">
           <Key>
@@ -2018,6 +2024,7 @@
           <Property Type="String" Name="Tags" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Literatur" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Setting" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Held">
           <Key>
@@ -2254,11 +2261,14 @@
           </Key>
           <Property Type="Guid" Name="MunitionGUID" Nullable="false" />
           <Property Type="String" Name="Art" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Preismodifikator" Nullable="false" />
-          <Property Type="String" Name="Bemerkungen" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bemerkungen" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Held_Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_Munition" FromRole="Munition" ToRole="Held_Munition" />
+          <Property Type="String" Name="Setting" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Probe" Nullable="false" />
+          <Property Type="String" Name="Spitze" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Name">
           <Key>
@@ -3091,6 +3101,7 @@
           <EntitySetMapping Name="Ausrüstung">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Ausrüstung">
               <MappingFragment StoreEntitySet="Ausrüstung">
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
                 <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
                 <ScalarProperty Name="Setting" ColumnName="Setting" />
                 <ScalarProperty Name="Literatur" ColumnName="Literatur" />
@@ -3242,6 +3253,7 @@
           <EntitySetMapping Name="Handelsgut">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Handelsgut">
               <MappingFragment StoreEntitySet="Handelsgut">
+                <ScalarProperty Name="Setting" ColumnName="Setting" />
                 <ScalarProperty Name="Literatur" ColumnName="Literatur" />
                 <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
                 <ScalarProperty Name="Tags" ColumnName="Tags" />
@@ -3456,6 +3468,9 @@
           <EntitySetMapping Name="Munition">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Munition">
               <MappingFragment StoreEntitySet="Munition">
+                <ScalarProperty Name="Spitze" ColumnName="Spitze" />
+                <ScalarProperty Name="Probe" ColumnName="Probe" />
+                <ScalarProperty Name="Setting" ColumnName="Setting" />
                 <ScalarProperty Name="Literatur" ColumnName="Literatur" />
                 <ScalarProperty Name="Bemerkungen" ColumnName="Bemerkungen" />
                 <ScalarProperty Name="Preismodifikator" ColumnName="Preismodifikator" />

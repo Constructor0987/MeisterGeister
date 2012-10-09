@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -190,6 +191,7 @@ namespace MeisterGeister.Model
         private long _pauseMax;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -225,6 +227,7 @@ namespace MeisterGeister.Model
         private Audio_Titel _audio_Titel;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupAudio_Playlist(Audio_Playlist previousValue)
@@ -270,5 +273,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

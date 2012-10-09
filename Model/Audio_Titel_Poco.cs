@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -74,6 +75,7 @@ namespace MeisterGeister.Model
         private string _pfad;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -110,6 +112,7 @@ namespace MeisterGeister.Model
         private ICollection<Audio_Playlist_Titel> _audio_Playlist_Titel;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupAudio_Playlist_Titel(object sender, NotifyCollectionChangedEventArgs e)
@@ -136,5 +139,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

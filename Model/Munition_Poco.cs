@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -111,8 +112,48 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Setting
+        {
+            get { return _setting; }
+            set
+    		{ 
+    			_setting = value;
+    			OnChanged("Setting");
+    		}
+    
+        }
+        private string _setting;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Probe
+        {
+            get { return _probe; }
+            set
+    		{ 
+    			_probe = value;
+    			OnChanged("Probe");
+    		}
+    
+        }
+        private int _probe;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Spitze
+        {
+            get { return _spitze; }
+            set
+    		{ 
+    			_spitze = value;
+    			OnChanged("Spitze");
+    		}
+    
+        }
+        private string _spitze;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -149,6 +190,7 @@ namespace MeisterGeister.Model
         private ICollection<Held_Munition> _held_Munition;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupHeld_Munition(object sender, NotifyCollectionChangedEventArgs e)
@@ -175,5 +217,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

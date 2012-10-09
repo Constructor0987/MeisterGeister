@@ -16,7 +16,7 @@ namespace MeisterGeister.Model
 
         public bool Usergenerated
         {
-            get { return !KampfregelGUID.ToString().StartsWith("00000000-0000-0000-000"); }
+            get { return !KampfregelGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
     }
 }

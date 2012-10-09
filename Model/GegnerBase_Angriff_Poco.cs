@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -158,6 +159,7 @@ namespace MeisterGeister.Model
         private string _bemerkung;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -177,6 +179,7 @@ namespace MeisterGeister.Model
         private GegnerBase _gegnerBase;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupGegnerBase(GegnerBase previousValue)
@@ -201,5 +204,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

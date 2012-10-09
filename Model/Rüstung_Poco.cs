@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -249,6 +250,7 @@ namespace MeisterGeister.Model
         private Nullable<int> _bE;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -268,6 +270,7 @@ namespace MeisterGeister.Model
         private Ausrüstung _ausrüstung;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupAusrüstung(Ausrüstung previousValue)
@@ -289,5 +292,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

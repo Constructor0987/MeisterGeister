@@ -7,7 +7,7 @@ namespace MeisterGeister.Model
 {
     public partial class VorNachteil
     {
-        private const int maxid = 361;
+        private const int maxid = 412;
         public bool Usergenerated
         {
             get { return VorNachteilID > maxid; }

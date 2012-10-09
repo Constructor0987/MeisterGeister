@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -125,6 +126,7 @@ namespace MeisterGeister.Model
         private Nullable<int> _zuteilungPA;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -160,6 +162,7 @@ namespace MeisterGeister.Model
         private Talent _talent;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupHeld(Held previousValue)
@@ -205,5 +208,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

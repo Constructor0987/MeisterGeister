@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -231,6 +232,7 @@ namespace MeisterGeister.Model
         private string _literatur;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -382,6 +384,7 @@ namespace MeisterGeister.Model
         private ICollection<Waffe> _waffe;
 
         #endregion
+
         #region Association Fixup
     
         private bool _settingFK = false;
@@ -510,5 +513,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

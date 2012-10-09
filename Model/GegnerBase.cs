@@ -14,7 +14,7 @@ namespace MeisterGeister.Model
 
         public bool Usergenerated
         {
-            get { return !GegnerBaseGUID.ToString().StartsWith("00000000-0000-0000-000"); }
+            get { return !GegnerBaseGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
         #region Import Export

@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -150,7 +151,21 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Setting
+        {
+            get { return _setting; }
+            set
+    		{ 
+    			_setting = value;
+    			OnChanged("Setting");
+    		}
+    
+        }
+        private string _setting;
 
         #endregion
+
     }
 }

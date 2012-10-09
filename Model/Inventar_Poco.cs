@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -165,6 +166,7 @@ namespace MeisterGeister.Model
         private Nullable<System.Guid> _handelsgutGUID;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -201,6 +203,7 @@ namespace MeisterGeister.Model
         private ICollection<Held_Inventar> _held_Inventar;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupHeld_Inventar(object sender, NotifyCollectionChangedEventArgs e)
@@ -227,5 +230,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

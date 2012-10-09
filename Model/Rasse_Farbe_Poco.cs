@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -99,6 +100,7 @@ namespace MeisterGeister.Model
         private int _w20;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -134,6 +136,7 @@ namespace MeisterGeister.Model
         private Rasse _rasse;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupFarbe(Farbe previousValue)
@@ -179,5 +182,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

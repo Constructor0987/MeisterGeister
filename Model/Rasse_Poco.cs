@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -334,6 +335,7 @@ namespace MeisterGeister.Model
         private string _setting;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -403,6 +405,7 @@ namespace MeisterGeister.Model
         private ICollection<Rasse_Kultur> _rasse_Kultur;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupRasse_Farbe(object sender, NotifyCollectionChangedEventArgs e)
@@ -452,5 +455,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

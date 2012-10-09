@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -86,6 +87,7 @@ namespace MeisterGeister.Model
         private string _wert;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -121,6 +123,7 @@ namespace MeisterGeister.Model
         private VorNachteil _vorNachteil;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupHeld(Held previousValue)
@@ -166,5 +169,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 57;
+        public const int DatenbankVersionAktuell = 58;
 
         /// <summary>
         /// Das zuletzt ausgeführte Update-Skript.
@@ -254,7 +254,7 @@ namespace MeisterGeister.Daten
                 if (splitWithGO)
                     statements = commands.Split(new string[] { "GO" + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 else
-                    statements = commands.Split(';');
+                    statements = commands.Split(new string[] { ";" + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 if (connection.State == System.Data.ConnectionState.Closed)
                     connection.Open();
                 foreach (string statement in statements)

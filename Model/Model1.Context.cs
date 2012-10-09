@@ -356,6 +356,7 @@ namespace MeisterGeister.Model
         private ObjectSet<Zauberzeichen> _zauberzeichen;
 
         #endregion
+
         #region ObjectSet Getter
     	public ObjectSet<T> GetObjectSet<T>() where T : class
     	{
@@ -460,5 +461,6 @@ namespace MeisterGeister.Model
     	
 
         #endregion
+
     }
 }

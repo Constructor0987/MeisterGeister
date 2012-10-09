@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -100,5 +101,6 @@ namespace MeisterGeister.Model
         private string _wertText;
 
         #endregion
+
     }
 }

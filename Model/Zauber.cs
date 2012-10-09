@@ -26,7 +26,7 @@ namespace MeisterGeister.Model
 
         #endregion //---- PROBE ----
 
-        private const int maxid = 343;
+        private const int maxid = 360;
         public bool Usergenerated
         {
             get { return ZauberID > maxid; }

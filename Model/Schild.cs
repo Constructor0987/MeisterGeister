@@ -18,7 +18,7 @@ namespace MeisterGeister.Model
 
         public bool Usergenerated
         {
-            get { return !SchildGUID.ToString().StartsWith("00000000-0000-0000-000"); }
+            get { return !SchildGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
         #region //---- IAusrüstung ----

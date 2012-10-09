@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -126,6 +127,7 @@ namespace MeisterGeister.Model
         private string _literatur;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -195,6 +197,7 @@ namespace MeisterGeister.Model
         private ICollection<Zauberzeichen> _zauberzeichen;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupHeld_Sonderfertigkeit(object sender, NotifyCollectionChangedEventArgs e)
@@ -244,5 +247,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

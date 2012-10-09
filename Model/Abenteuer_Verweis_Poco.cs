@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -156,6 +157,7 @@ namespace MeisterGeister.Model
         private Nullable<System.Guid> _nachEreignisGUID;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -223,6 +225,7 @@ namespace MeisterGeister.Model
         private Abenteuer_Szene _abenteuer_Szene1;
 
         #endregion
+
         #region Association Fixup
     
         private bool _settingFK = false;
@@ -320,5 +323,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

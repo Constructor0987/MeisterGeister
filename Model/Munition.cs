@@ -14,7 +14,7 @@ namespace MeisterGeister.Model
 
         public bool Usergenerated
         {
-            get { return !MunitionGUID.ToString().StartsWith("00000000-0000-0000-000"); }
+            get { return !MunitionGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
     }
 }

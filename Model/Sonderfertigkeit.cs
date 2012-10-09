@@ -10,7 +10,7 @@ namespace MeisterGeister.Model
 {
     public partial class Sonderfertigkeit
     {
-        private const int maxid = 1107;
+        private const int maxid = 1412;
         public bool Usergenerated
         {
             get { return SonderfertigkeitID > maxid; }

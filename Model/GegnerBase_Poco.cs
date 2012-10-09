@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -477,6 +478,7 @@ namespace MeisterGeister.Model
         private string _setting;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -579,6 +581,7 @@ namespace MeisterGeister.Model
         private ICollection<GegnerBase_Kampfregel> _gegnerBase_Kampfregel;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupGegner(object sender, NotifyCollectionChangedEventArgs e)
@@ -651,5 +654,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }

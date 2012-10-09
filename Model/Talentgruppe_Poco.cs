@@ -32,6 +32,7 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -74,6 +75,7 @@ namespace MeisterGeister.Model
         private string _kurzname;
 
         #endregion
+
         #region Navigation Properties
     
     	[DataMember]
@@ -110,6 +112,7 @@ namespace MeisterGeister.Model
         private ICollection<Talent> _talent;
 
         #endregion
+
         #region Association Fixup
     
         private void FixupTalent(object sender, NotifyCollectionChangedEventArgs e)
@@ -136,5 +139,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
     }
 }
