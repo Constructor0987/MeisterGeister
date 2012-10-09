@@ -6,10 +6,11 @@
 	mc:Ignorable="d"
 	x:Class="MeisterGeister.View.Kampf.Controls.GegnerView"
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kampf"
-	x:Name="UserControl"
-	d:DesignWidth="500" d:DesignHeight="400">
+    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+	x:Name="UserControl" Background="{DynamicResource Background1}"
+	d:DesignWidth="600" d:DesignHeight="400">
 	<UserControl.Resources>
-
+        
 		<Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
 			<Setter Property="FontStyle" Value="Normal" />
 		</Style>
@@ -29,109 +30,180 @@
 			</StackPanel>
 		</DataTemplate>
 	</UserControl.Resources>
+	<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Style="{DynamicResource ControlTitelBorder}">
+                    <TextBlock Text="Gegner" Style="{DynamicResource TextTitel}" />
+                </Border>
 
-    <Border Style="{DynamicResource ControlContentBorder}">
-		<Grid>
-			<ListBox x:Name="_listBoxGegnerBase" Margin="2,6,373,35" Padding="4" Background="Transparent" AllowDrop="True" 
-				MouseDown="ListBoxGegner_MouseDown" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000">
-                <ListBox.InputBindings>
-                    <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
-                </ListBox.InputBindings>
-                <ListBox.ContextMenu>
-					<ContextMenu Opened="ContextMenu_Opened">
-                        <MenuItem Height="28"  Command="{Binding OnNewGegnerBase}" Header="Neu" x:Name="_menuItemGegnerNeu" ToolTip="Einen neuen Gegner eingeben.">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnCloneGegnerBase}" Header="Kopieren" x:Name="_menuItemGegnerKopie" ToolTip="Gegner kopieren.">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/helden_kopieren.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-                        <MenuItem Height="28" Command="{Binding OnImportGegnerBase}" Header="Importieren" x:Name="_menuItemGegnerImport">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
-							</MenuItem.Icon>
-							<MenuItem.ToolTip>
-								<StackPanel Orientation="Vertical">
-									<TextBlock FontWeight="Bold" Text="Gegner aus Datei importiere" />
-									<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
-									<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
-                                    <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
-								</StackPanel>
-							</MenuItem.ToolTip>
-						</MenuItem>
-                        <MenuItem Height="28" Command="{Binding OnExportGegnerBase}" Header="Exportieren" x:Name="_menuItemGegnerExport">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
-							</MenuItem.Icon>
-							<MenuItem.ToolTip>
-								<StackPanel Orientation="Vertical">
-									<TextBlock FontWeight="Bold" Text="Gegner als XML-Datei exportieren" />
-									<TextBlock Foreground="Red" Text="ACHTUNG:" />
-									<TextBlock Text="Der Export/Import von Gegnern funktioniert nur zwischen MeisterGeister-Versionen derselben Versionsnummer!" />
-								</StackPanel>
-							</MenuItem.ToolTip>
-						</MenuItem>
-						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteGegnerBase}" Header="Löschen" x:Name="_menuItemGegnerLöschen" ToolTip="Gegner löschen.">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-					</ContextMenu>
-				</ListBox.ContextMenu>
-            </ListBox>
-            <TextBox x:Name="_gegnerName" HorizontalAlignment="Left" Height="23" Margin="125,10,0,0" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Name}" VerticalAlignment="Top" Width="120"/>
-			<Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-				<Image.ToolTip>
-					<StackPanel Width="200">
-						<TextBlock TextWrapping="Wrap"><Run Text="Rechtsklick für weitere Aktionen."/></TextBlock>
-						<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
-					</StackPanel>
-				</Image.ToolTip>
-			</Image>
-			<Button Height="23" Margin="5,0,0,6" Width="25" Background="Lime" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
-				<Button.ContextMenu>
-					<ContextMenu>
-                        <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Helden eingeben.">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-                        <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
-							</MenuItem.Icon>
-							<MenuItem.ToolTip>
-								<StackPanel Orientation="Vertical">
-									<TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
-									<TextBlock Foreground="Red" Text="ACHTUNG!" />
-									<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
-									<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
-									<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
-									<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
-								</StackPanel>
-							</MenuItem.ToolTip>
-						</MenuItem>
-						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
-							<MenuItem.Icon>
-								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
-							</MenuItem.Icon>
-						</MenuItem>
-					</ContextMenu>
-				</Button.ContextMenu>
-				<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
-			</Button>
-			<StackPanel Margin="36,0,0,6" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
-				<Label Height="23" Width="Auto" Content="{Binding ItemsSource.Count, ElementName=_listBoxGegner}" VerticalContentAlignment="Center" />
-				<Label Height="23" Width="Auto" Content="Gegner" VerticalContentAlignment="Center" />
-			</StackPanel>
-            
-            <!--<Button Height="22" Margin="135,0,0,7" Width="48" Command="{Binding OnExportDemoHelden}" Content="Export" HorizontalAlignment="Left" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" />-->
-		</Grid>
-	</Border>
+            <Border Grid.Row="1" Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                <ListBox x:Name="_listBoxGegnerBase" Grid.Row="0" Padding="4" Background="Transparent" AllowDrop="True" 
+				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding GegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000">
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
+                    </ListBox.InputBindings>
+                    <ListBox.ContextMenu>
+                        <ContextMenu Opened="ContextMenu_Opened">
+                            <MenuItem Height="28"  Command="{Binding OnNewGegnerBase}" Header="Neu" x:Name="_menuItemGegnerNeu" ToolTip="Einen neuen Gegner eingeben.">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Height="28" Command="{Binding OnCloneGegnerBase}" Header="Kopieren" x:Name="_menuItemGegnerKopie" ToolTip="Gegner kopieren.">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/helden_kopieren.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Height="28" Command="{Binding OnImportGegnerBase}" Header="Importieren" x:Name="_menuItemGegnerImport">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                                <MenuItem.ToolTip>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Gegner aus Datei importiere" />
+                                        <TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+                                        <TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+                                        <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+                                    </StackPanel>
+                                </MenuItem.ToolTip>
+                            </MenuItem>
+                            <MenuItem Height="28" Command="{Binding OnExportGegnerBase}" Header="Exportieren" x:Name="_menuItemGegnerExport">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                                <MenuItem.ToolTip>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Gegner als XML-Datei exportieren" />
+                                        <TextBlock Foreground="Red" Text="ACHTUNG:" />
+                                        <TextBlock Text="Der Export/Import von Gegnern funktioniert nur zwischen MeisterGeister-Versionen derselben Versionsnummer!" />
+                                    </StackPanel>
+                                </MenuItem.ToolTip>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Height="28" Command="{Binding OnDeleteGegnerBase}" Header="Löschen" x:Name="_menuItemGegnerLöschen" ToolTip="Gegner löschen.">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+                <StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal">
+                    <Button Height="23" Width="25" Click="ButtonHeldNeu_Click" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen">
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Helden eingeben.">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
+                                            <TextBlock Foreground="Red" Text="ACHTUNG!" />
+                                            <TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+                                            <TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+                                            <TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+                                            <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+                                        </StackPanel>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
+                    </Button>
+                    <Label Content="{Binding GegnerBaseListe.Count, FallbackValue=0}"/>
+                    <Label Content="Gegner" />
+                </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+<!-- TODO Grid für Gegner_Angriff-->
+        <Expander IsExpanded="True" Grid.Column="1">
+            <Expander.Header>
+                <TextBlock Text="Details" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="5,5,5,0" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <!-- Name, AE, AU, Bemerkung, Beschwörung, Beschwörungskosten, Bild, GS, GS2, GS3, GW, INIBasis, INIZufall, Jagd, KE, KO, Kontrolle, LE, Literatur, MRGeist, MRKörper, PA, RSx, Setting, Tags, Aktionen  -->
+                        <Border   Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="5" Width="80" Height="80" ToolTip="Klicken um ein Bild einzufügen..." Cursor="Hand">
+                            <Image Source="{Binding SelectedGegnerBase.Bild, FallbackValue='/DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg'}" />
+                        </Border>
+                        <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
+                        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding SelectedGegnerBase.Name}" Margin="2" />
+                        <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
+                        <TextBox Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags}" Margin="2" />
+                    </Grid>
+                    <Grid Margin="5,0,5,5" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition  />
+                        </Grid.RowDefinitions>
+                        <!-- Name, LE, AU, AE, KE, KO, INIBasis, INIZufall, MRGeist, MRKörper, PA, RSx, Aktionen, GS, GS2, GS3,  Bemerkung, Beschwörung, Beschwörungskosten, Bild, GW, Jagd, Kontrolle, Literatur, Setting, Tags  -->
+                        <Label   Grid.Row="0" Grid.Column="0" Content="LE:" />
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
+                        <Label   Grid.Row="0" Grid.Column="2" Content="AU:" />
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
+                        <Label   Grid.Row="1" Grid.Column="0" Content="AE:" />
+                        <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
+                        <Label   Grid.Row="1" Grid.Column="2" Content="KE:" />
+                        <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
+
+                        <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
+                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
+                        <Label   Grid.Row="2" Grid.Column="2" Content="INI-Zufall:" />
+                        <!-- TODO Valueconverter zum Validieren -->
+                        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding SelectedGegnerBase.INIZufall}" Margin="2" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </Expander>
+    </Grid>
 </UserControl>

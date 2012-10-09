@@ -51,6 +51,7 @@ namespace MeisterGeister.View.Helden
             //ListBoxHelden_SelectionChanged(sender, null);
         }
 
+
         //public event ProbeWürfelnEventHandler ProbeWürfeln;
         
     }
