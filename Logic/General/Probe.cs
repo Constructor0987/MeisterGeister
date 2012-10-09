@@ -123,16 +123,30 @@ namespace MeisterGeister.Logic.General
         /// <returns></returns>
         public ProbenErgebnis ProbenErgebnisBerechnen(ProbenErgebnis pe)
         {
-            pe.Übrig = Fertigkeitswert;
-            int einsen = 0, zwanzigen = 0;
+            pe.Übrig = Fertigkeitswert - Modifikator;
+            pe.Qualität = pe.Übrig;
+            int einsen = 0, zwanzigen = 0, tmpÜbrig = 0;
             for (int i = 0; i < Werte.Length; i++)
             {
-                pe.Übrig -= Math.Max(0, pe.Würfe[i] - Werte[i]);
+                // TODO MT: Probe reparieren und testen
+                tmpÜbrig = pe.Würfe[i] - Math.Min(Fertigkeitswert - Modifikator, 0) * -1 - Werte[i];
+                pe.Übrig -= tmpÜbrig;
+                pe.Qualität -= tmpÜbrig; // TODO MT: Qualität korrekt ermitteln
                 if (pe.Würfe[i] == 1)
                     einsen++;
                 else if (pe.Würfe[i] == 20)
                     zwanzigen++;
             }
+
+            pe.Übrig = Math.Min(pe.Übrig, Fertigkeitswert);
+
+            //if (Fertigkeitswert < 0 && pe.Übrig >= 0)
+            //    pe.Übrig = 1; // bei negativen Fertigkeitswert und Erleichterung kann maximal 1 Punkt übrig bleiben
+            //else if (pe.Übrig > Fertigkeitswert)
+            //    pe.Übrig = Fertigkeitswert; // man kann nicht mehr übrig haben als den Fertigkeitswert
+            if (pe.Übrig == 0)
+                pe.Übrig = 1; // man hat immer 1 Punkt übrig
+
             if (einsen >= Werte.Length)
                 pe.Ergebnis = ErgebnisTyp.MEISTERHAFT;
             else if (einsen >= Werte.Length / 2.0)

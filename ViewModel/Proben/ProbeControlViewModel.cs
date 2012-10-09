@@ -31,6 +31,7 @@ namespace MeisterGeister.ViewModel.Proben
                 _ergebnis = value;
                 OnChanged("Ergebnis");
                 OnChanged("ErgebnisImagePath");
+                NotifyEergebnisChanged();
             }
         }
 
@@ -75,6 +76,7 @@ namespace MeisterGeister.ViewModel.Proben
                     Probe.Modifikator = _modifikator;
 
                 OnChanged("Modifikator");
+                Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
             }
         }
 
@@ -245,6 +247,11 @@ namespace MeisterGeister.ViewModel.Proben
             if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
+            NotifyEergebnisChanged();
+        }
+
+        private void NotifyEergebnisChanged()
+        {
             // Event werfen
             if (Gewürfelt != null)
                 Gewürfelt(this, new EventArgs());
