@@ -110,6 +110,45 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(1, pe.Qualität, "Qualität\n" + InfoText(ht));
+
+            // Mit Erschwernis
+            // ---------------------------------------
+
+            // TaW 0    Mod +2
+            // 10(8)   10(8)  10(8)
+            // 10      10     10
+            // -2      -2     -2
+            // TaP* 0   Qualität -2
+            ht.TaW = 0; ht.Modifikator = 2;
+            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 10;
+            pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
+            Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
+            Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
+
+            // TaW 0    Mod +2
+            // 10(8)   10(8)  10(8)
+            // 10      10     8
+            // -2      -2     0
+            // TaP* 0   Qualität -2
+            ht.TaW = 0; ht.Modifikator = 2;
+            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 8;
+            pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
+            Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
+            Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
+
+            // TaW 0    Mod +2
+            // 10(8)   10(8)  10(8)
+            // 6       8      8
+            // 2       0      0
+            // TaP* 1   Qualität 0
+            ht.TaW = 0; ht.Modifikator = 2;
+            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 6; ht.Ergebnis.Würfe[1] = 8; ht.Ergebnis.Würfe[2] = 8;
+            pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
+            Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
+            Assert.AreEqual(0, pe.Qualität, "Qualität\n" + InfoText(ht));
         }
 
         private string InfoText(Held_Talent probe)
