@@ -126,9 +126,6 @@
     <Content Include="Daten\TestDBs\Bruno_DatabaseDSA.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Daten\TestDBs\DatabaseDSA_35.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Daten\TestDBs\DatabaseDSA_Test.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

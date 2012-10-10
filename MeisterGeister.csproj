@@ -1170,7 +1170,6 @@
     <Content Include="Audio\meistergeister.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Daten\DatabaseDSA_35.sdf" />
     <Resource Include="Images\Logos\MG_Icon.ico" />
     <Resource Include="Images\Logos\MG_Logo.png" />
     <Content Include="Libs\ImpromptuInterface.dll" />
@@ -1181,7 +1180,7 @@
     <Resource Include="Images\Logos\facebook.png" />
     <Resource Include="Images\Logos\twitter.png" />
     <Content Include="Libs\Microsoft.Expression.Effects.dll" />
-    <None Include="Daten\InsertHandelsgut.txt" />
+    <Resource Include="Daten\InsertHandelsgut.txt" />
     <Content Include="Libs\System.Windows.Interactivity.dll" />
     <Resource Include="Images\Texturen\papier2.jpg" />
     <Resource Include="Images\Icons\Extensions\pdf.png" />

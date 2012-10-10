@@ -134,7 +134,11 @@ namespace MeisterGeister.Daten
                 {
                     connection.Open();
                     transaction = connection.BeginTransaction();
-                    ExecuteSqlCommand(MeisterGeister.Properties.Resources.InsertHandelsgut, "InsertHandelsgut", connection, transaction, false);
+
+                    // lies die Insert-Befehle aus der Resourcen-Datei
+                    StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/InsertHandelsgut.txt", UriKind.Relative)).Stream);
+                    string inserts = reader.ReadToEnd();
+                    ExecuteSqlCommand(inserts, "InsertHandelsgut", connection, transaction, false);
                     if (transaction != null)
                         transaction.Commit();
                 }

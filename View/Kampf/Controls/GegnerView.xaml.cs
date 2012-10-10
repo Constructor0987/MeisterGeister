@@ -25,9 +25,6 @@ namespace MeisterGeister.View.Kampf.Controls
 		public GegnerView()
 		{
 			this.InitializeComponent();
-#if !(DEBUG)
-            _buttonExportDemo.Visibility = System.Windows.Visibility.Collapsed;
-#endif
             //VM an View Registrieren
             VM = new VM.GegnerViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
         }

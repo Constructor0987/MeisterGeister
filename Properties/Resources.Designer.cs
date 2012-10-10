@@ -88,17 +88,6 @@ namespace MeisterGeister.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DELETE FROM [Handelsgut];
-        ///INSERT INTO [Handelsgut] ([HandelsgutGUID],[Name],[Preis],[Gewicht],[ME],[Kategorie],[Tags],[Bemerkung],[Literatur],[Setting]) VALUES (&apos;00000000-0000-0000-002a-000000000001&apos;,&apos;Alabaster&apos;,&apos;100&apos;,40,&apos;Stein&apos;,&apos;Alchimistische Stoffe&apos;,NULL,NULL,&apos;SRD 116&apos;,NULL);
-        ///INSERT INTO [Handelsgut] ([HandelsgutGUID],[Name],[Preis],[Gewicht],[ME],[Kategorie],[Tags],[Bemerkung],[Literatur],[Setting]) VALUES (&apos;00000000-0000-0000-002a-000000000002&apos;,&apos;Alaun&apos;,&apos;200&apos;,40,&apos;Stein&apos;,&apos;Alchimistische Stoffe&apos;,NULL,NU [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
-        /// </summary>
-        internal static string InsertHandelsgut {
-            get {
-                return ResourceManager.GetString("InsertHandelsgut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ALTER TABLE Held_Talent DROP CONSTRAINT Talent_FK;
         ///ALTER TABLE Held_Talent ADD CONSTRAINT Talent_FK FOREIGN KEY (Talentname) REFERENCES Talent (Talentname) ON DELETE cascade ON UPDATE cascade; ähnelt.
         /// </summary>
@@ -1571,11 +1560,15 @@ namespace MeisterGeister.Properties {
                 return ResourceManager.GetString("UpdateTo_V0058_1_GO", resourceCulture);
             }
         }
-
-        internal static string UpdateTo_V0058_2
-        {
-            get
-            {
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die update [VorNachteil] set Vorteil=0, Nachteil=1, Typ=&apos;Nachteile&apos; where VorNachteilID Between 340 and 347;
+        ///ALTER TABLE [Ausrüstung] Add Tags ntext NULL;
+        ///DELETE FROM [Handelsgut];
+        ///ALTER TABLE [Handelsgut] alter column Name nvarchar(500) NOT NULL; ähnelt.
+        /// </summary>
+        internal static string UpdateTo_V0058_2 {
+            get {
                 return ResourceManager.GetString("UpdateTo_V0058_2", resourceCulture);
             }
         }
