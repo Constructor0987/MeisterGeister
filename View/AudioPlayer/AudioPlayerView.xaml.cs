@@ -813,9 +813,7 @@ namespace MeisterGeister.View.AudioPlayer {
             int posObjGruppe = GetPosObjGruppe(objGruppe);
             if (posObjGruppe == -1)
                 return;
-            int seite = _GrpObjecte[posObjGruppe].seite;
-                                    
-            //Array.Resize(ref standbySongs[seite], 0);
+            int seite = _GrpObjecte[posObjGruppe].seite;                                    
 
             for (UInt16 i = 0; i < _GrpObjecte[posObjGruppe]._listZeile.Count; i++) 
             {
@@ -841,15 +839,15 @@ namespace MeisterGeister.View.AudioPlayer {
                     _GrpObjecte[posObjGruppe]._listZeile[i].pbarTitel.Value = 0;
                 }
                 if (ZeileLoeschen)
-                {
-                    _GrpObjecte[posObjGruppe]._listZeile[i].grdKlangRow.Children.Remove(_GrpObjecte[posObjGruppe]._listZeile[i].imgTrash);
-                    //"grdKlangRow" + objGruppe + "_" + i)).Children.Remove((Image)StackZeile.FindName("imgTrash" + objGruppe + "_" + i));
+                {             
+                    _GrpObjecte[posObjGruppe]._listZeile[i].grdKlangRow.Children
+                        .Remove(_GrpObjecte[posObjGruppe]._listZeile[i].imgTrash);
 
-                    _GrpObjecte[posObjGruppe]._listZeile[i].grdKlangRow.Children.Remove(_GrpObjecte[posObjGruppe]._listZeile[i].spnlKlangRow);
+                    _GrpObjecte[posObjGruppe].grdKlang.Children.Remove(_GrpObjecte[posObjGruppe]._listZeile[i].spnlKlangRow);
                     if (seite == 0)
-                        _GrpObjecte[posObjGruppe]._listZeile[i].grdKlangRow.UnregisterName(_GrpObjecte[posObjGruppe]._listZeile[i].spnlKlangRow.Name);
+                        _GrpObjecte[posObjGruppe].grdKlang.UnregisterName(_GrpObjecte[posObjGruppe]._listZeile[i].spnlKlangRow.Name);
                     else
-                        this.UnregisterName(_GrpObjecte[posObjGruppe]._listZeile[i].spnlKlangRow.Name);
+                        this.UnregisterName(_GrpObjecte[posObjGruppe]._listZeile[i].spnlKlangRow.Name);                    
                 }
             }
         }
@@ -868,33 +866,22 @@ namespace MeisterGeister.View.AudioPlayer {
 
             if (AktKlangPlaylist != null)
             {
-             //   Grid grdKlang = (Grid)this.FindName("grdKlang" + objGruppe);
 
                 AlleKlangSongsAus(objGruppe, true, true);
                 ZeigeKlangSongsParallel(objGruppe, false);
 
-              //  if (tcKlang.SelectedIndex == 0)
-              //  {
-                    if (rbtnGleichSpielen.IsChecked == true)
-                        _GrpObjecte[posObjGruppe].btnKlangPause.IsChecked = false;
-                    else
-                        _GrpObjecte[posObjGruppe].btnKlangPause.IsChecked = true;
-
-            /*    }
+                if (rbtnGleichSpielen.IsChecked == true)
+                    _GrpObjecte[posObjGruppe].btnKlangPause.IsChecked = false;
                 else
-                {                   
-                    if (rbtnGleichSpielen.IsChecked == true)
-                        _GrpObjecte[posObjGruppe].grdKlangTop ((ToggleButton)((Grid)this.FindName("grdKlangTop" + objGruppe)).FindName("btnKlangPause" + objGruppe)).IsChecked = false;
-                    else
-                        ((ToggleButton)((Grid)this.FindName("grdKlangTop" + objGruppe)).FindName("btnKlangPause" + objGruppe)).IsChecked = true;
-                }*/
+                    _GrpObjecte[posObjGruppe].btnKlangPause.IsChecked = true;
 
-                    if (_GrpObjecte[posObjGruppe].grdKlang != null)
-                        _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.RemoveRange(1, _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.Count - 2);
+
+                if (_GrpObjecte[posObjGruppe].grdKlang != null)
+                    _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.RemoveRange(1, _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.Count - 2);
             }
             if (_GrpObjecte[posObjGruppe]._listZeile.Count > 0)
                 _GrpObjecte[posObjGruppe]._listZeile.RemoveRange(0, _GrpObjecte[posObjGruppe]._listZeile.Count);
-         //   _GrpObjecte[posObjGruppe].AnzKlangParallel = 0;
+            _GrpObjecte[posObjGruppe].anzTitelAkt = 0;
             _GrpObjecte[posObjGruppe].istHintergrundMusik = true;
             _GrpObjecte[posObjGruppe].maxsongparallel = 0;
             _GrpObjecte[posObjGruppe].anzTitelAkt = 0;
