@@ -1970,20 +1970,18 @@ namespace MeisterGeister.View.AudioPlayer {
                         _GrpObjecte[posObjGruppe]._listZeile[i].chkTitel.IsChecked = false;
                         chkTitel0_0_Click(_GrpObjecte[posObjGruppe]._listZeile[i].chkTitel, new RoutedEventArgs());
                     }
-                    Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, titel[i]);
 
                     List<Audio_Playlist> playlistliste = Global.ContextAudio.PlaylistListe;
                     int anz = 0;
-                    bool gefunden = false;
-                    while (anz < playlistliste.Count && !gefunden)
+                    int gefunden = 0;
+                    while (anz < playlistliste.Count && gefunden <= 1)
                     {
-
-                        if ((Global.ContextAudio.LoadPlaylist_TitelByPlaylist(playlistliste[anz], titel[i])).Count > 0)
-                            gefunden = true;
-                        else
-                            anz++;
+                        gefunden = gefunden + 
+                            Convert.ToUInt16((Global.ContextAudio.LoadPlaylist_TitelByPlaylist(playlistliste[anz], titel[i])).Count);                            
+                        anz++;
                     }
-                    if (!gefunden)
+                    Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, titel[i]);
+                    if (gefunden <= 1)
                         Global.ContextAudio.RemoveTitel(titel[i]);
                                         
                     int vorher = lbKlang.SelectedIndex;
