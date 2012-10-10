@@ -37,6 +37,14 @@ namespace MeisterGeister.Logic.General
             return (int)pt.Eval(random);
         }
 
+        public static bool Validate(string w)
+        {
+            Logic.Würfel.ParseTree pt = _parser.Parse(w);
+            if (pt.Errors.Count != 0)
+                return false;
+            return true;
+        }
+
         public static int Wurf(int seiten, int anzahl)
         {
             //TODO hier einen Dialog starten?

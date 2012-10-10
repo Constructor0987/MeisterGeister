@@ -476,6 +476,7 @@
       <DependentUpon>ModInfoBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\ViewHelper.cs" />
+    <Compile Include="View\General\WürfelValidationRule.cs" />
     <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">
       <DependentUpon>AllgemeinView.xaml</DependentUpon>
     </Compile>

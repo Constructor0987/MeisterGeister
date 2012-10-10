@@ -199,8 +199,13 @@
                         <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
                         <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
                         <Label   Grid.Row="2" Grid.Column="2" Content="INI-Zufall:" />
-                        <!-- TODO Valueconverter zum Validieren -->
-                        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding SelectedGegnerBase.INIZufall}" Margin="2" />
+                        <TextBox Grid.Row="2" Grid.Column="3" Margin="2">
+                            <Binding Path="SelectedGegnerBase.INIZufall">
+                                <Binding.ValidationRules>
+                                    <ViewGeneral:WürfelValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox>
                     </Grid>
                 </Grid>
             </Border>
