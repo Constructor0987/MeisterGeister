@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Held_Tests.cs" />
     <Compile Include="Kampf_Tests.cs" />
+    <Compile Include="Probe_Tests.cs" />
     <Compile Include="Serialization_Tests.cs" />
     <Compile Include="Update_Tests.cs" />
     <Compile Include="Voraussetzungen_Tests.cs" />

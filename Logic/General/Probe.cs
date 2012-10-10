@@ -98,17 +98,13 @@ namespace MeisterGeister.Logic.General
 
         public ProbenErgebnis Würfeln()
         {
-            // TODO MT: SpezielleErfahrungSpeichern
-
             ProbenErgebnis pe = new ProbenErgebnis();
             if (Werte == null)
                 Werte = new int[0];
             pe.Würfe = new int[Werte.Length];
 
             for (int i = 0; i < Werte.Length; i++)
-            {
                 pe.Würfe[i] = Würfel.Wurf(20);
-            }
 
             ProbenErgebnisBerechnen(pe);
 
@@ -119,12 +115,17 @@ namespace MeisterGeister.Logic.General
         /// <summary>
         /// Berechnet das Probenergebnis auf Basis der Würfe in 'pe'.
         /// </summary>
-        /// <param name="pe"></param>
-        /// <returns></returns>
+        /// <param name="pe">Das Proben-Ergebnis, auf dessen Basis das Ergebnis berechnet werden soll.</param>
+        /// <returns>Das berechnete Proben-Ergebnis.</returns>
         public ProbenErgebnis ProbenErgebnisBerechnen(ProbenErgebnis pe)
         {
-            pe.Übrig = Fertigkeitswert - Modifikator;
-            pe.Qualität = pe.Übrig;
+            // Modifikatoren verändern den effektiven Fertigkeitswert
+            // Modifikator > 0 : Erschwernis
+            // Modifikator < 0 : Erleichterung
+            int fertigkeitswertEff = Fertigkeitswert - Modifikator;
+            pe.Übrig = fertigkeitswertEff;
+            pe.Qualität = fertigkeitswertEff;
+
             int einsen = 0, zwanzigen = 0, tmpÜbrig = 0;
             for (int i = 0; i < Werte.Length; i++)
             {
@@ -146,6 +147,9 @@ namespace MeisterGeister.Logic.General
             //    pe.Übrig = Fertigkeitswert; // man kann nicht mehr übrig haben als den Fertigkeitswert
             if (pe.Übrig == 0)
                 pe.Übrig = 1; // man hat immer 1 Punkt übrig
+
+            // TODO MT: Spezielle Erfahrung speichern
+            // Den User per YesNo-Dialog fragen?
 
             if (einsen >= Werte.Length)
                 pe.Ergebnis = ErgebnisTyp.MEISTERHAFT;
