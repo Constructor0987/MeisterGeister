@@ -165,9 +165,9 @@ namespace MeisterGeister.Logic.General
                 pe.Ergebnis = ErgebnisTyp.FATALER_PATZER;
             else if (zwanzigen >= Werte.Length / 2.0)
                 pe.Ergebnis = ErgebnisTyp.PATZER;
-            else if (pe.Übrig >= 0)
+            else if (erfolg)
                 pe.Ergebnis = ErgebnisTyp.GELUNGEN;
-            else if (pe.Übrig < 0)
+            else
                 pe.Ergebnis = ErgebnisTyp.MISSLUNGEN;
             return pe;
         }
