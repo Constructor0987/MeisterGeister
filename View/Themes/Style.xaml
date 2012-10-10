@@ -158,8 +158,7 @@
         <Setter Property="BorderThickness" Value="1,3,1,1"/>
         <Setter Property="Height" Value="20"/>
     </Style>
-    <Style x:Key="ControlContentBorder" TargetType="{x:Type Border}">
-        <Setter Property="Effect" Value="{DynamicResource LightBloom}" />
+    <Style x:Key="ControlContentBorder" TargetType="{x:Type Border}">        
         <Setter Property="Background" Value="#389E804D"/>
         <Setter Property="BorderBrush" Value="#FFBEB3A3"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -184,8 +183,7 @@
     <Style x:Key="sLblStretchTextCenterHighlight" TargetType="{x:Type Label}">
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Effect" Value="{DynamicResource LightBloom}" />
+        <Setter Property="FontWeight" Value="Bold"/>        
         <Setter Property="FontFamily" Value="Rockwell"/>
         <Setter Property="BorderBrush" Value="#FFBEB3A3"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -680,8 +678,7 @@
 		</Style>
     
     <Style TargetType="{x:Type ComboBox}">
-        <Setter Property="Background" Value="Transparent" />
-		<Setter Property="Effect" Value="{DynamicResource LightBloom}" />
+        <Setter Property="Background" Value="Transparent" />		
     </Style>
     <ControlTemplate x:Key="ListBoxItemControlTemplate1" TargetType="{x:Type ListBoxItem}">
     	<Grid>
@@ -737,10 +734,10 @@
     			</VisualStateGroup>
     		</VisualStateManager.VisualStateGroups>
 			<Grid VerticalAlignment="Center">
-				<ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="3,0,0,3"/>
+				<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" CornerRadius="0,0,0,0" Margin="0,0,0,3">
+					<ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0" VerticalAlignment="Center"/>
+				</Border>
 			</Grid>
-    		<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True" CornerRadius="0,0,0,0">    			
-    		</Border>
     	</Grid>
     	<ControlTemplate.Triggers>
     		<MultiTrigger>
