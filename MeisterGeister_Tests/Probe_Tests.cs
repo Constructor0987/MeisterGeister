@@ -68,7 +68,7 @@ namespace MeisterGeister_Tests
             //  4   12   8
             //  6   -2   2
             // TaP* 2   Qualität 2
-            ht.TaW = 0;
+            ht.TaW = 4;
             ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
             ht.Ergebnis.Würfe[0] = 4; ht.Ergebnis.Würfe[1] = 12; ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
@@ -80,7 +80,7 @@ namespace MeisterGeister_Tests
             //  4   10   8
             //  6    0   2
             // TaP* 4   Qualität 4
-            ht.TaW = 0;
+            ht.TaW = 4;
             ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
             ht.Ergebnis.Würfe[0] = 4; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 8;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
@@ -106,7 +106,7 @@ namespace MeisterGeister_Tests
             // TaP* 1   Qualität 1
             ht.TaW = -2;
             ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
-            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 10;
+            ht.Ergebnis.Würfe[0] = 7; ht.Ergebnis.Würfe[1] = 7; ht.Ergebnis.Würfe[2] = 6;
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(1, pe.Qualität, "Qualität\n" + InfoText(ht));

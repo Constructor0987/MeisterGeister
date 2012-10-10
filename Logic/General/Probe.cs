@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Linq;
 
 namespace MeisterGeister.Logic.General
 {
@@ -126,27 +127,32 @@ namespace MeisterGeister.Logic.General
             pe.Übrig = fertigkeitswertEff;
             pe.Qualität = fertigkeitswertEff;
 
-            int einsen = 0, zwanzigen = 0, tmpÜbrig = 0;
+            int einsen = 0, zwanzigen = 0;
+            int[] wurfQualität = new int[Werte.Length];
             for (int i = 0; i < Werte.Length; i++)
             {
-                // TODO MT: Probe reparieren und testen
-                tmpÜbrig = pe.Würfe[i] - Math.Min(Fertigkeitswert - Modifikator, 0) * -1 - Werte[i];
-                pe.Übrig -= tmpÜbrig;
-                pe.Qualität -= tmpÜbrig; // TODO MT: Qualität korrekt ermitteln
+                wurfQualität[i] = Werte[i] + Math.Min(fertigkeitswertEff, 0) - pe.Würfe[i];
                 if (pe.Würfe[i] == 1)
                     einsen++;
                 else if (pe.Würfe[i] == 20)
                     zwanzigen++;
             }
+            int tmpÜbrig = fertigkeitswertEff;
+            wurfQualität.Where(q => q < 0).ToList().ForEach(q => tmpÜbrig += q);
+            int minQ = wurfQualität.Min();
+            bool erfolg = tmpÜbrig >= 0 || minQ >= 0;
+            tmpÜbrig = Math.Max(0, tmpÜbrig);
+            if (erfolg)
+            {
+                if(minQ<0)
+                    minQ = 0;
+                pe.Qualität = tmpÜbrig + minQ;
+                tmpÜbrig = Math.Max(1, tmpÜbrig);
+            }
+            else
+                pe.Qualität = tmpÜbrig + wurfQualität.Min();
+            pe.Übrig = tmpÜbrig;
 
-            pe.Übrig = Math.Min(pe.Übrig, Fertigkeitswert);
-
-            //if (Fertigkeitswert < 0 && pe.Übrig >= 0)
-            //    pe.Übrig = 1; // bei negativen Fertigkeitswert und Erleichterung kann maximal 1 Punkt übrig bleiben
-            //else if (pe.Übrig > Fertigkeitswert)
-            //    pe.Übrig = Fertigkeitswert; // man kann nicht mehr übrig haben als den Fertigkeitswert
-            if (pe.Übrig == 0)
-                pe.Übrig = 1; // man hat immer 1 Punkt übrig
 
             // TODO MT: Spezielle Erfahrung speichern
             // Den User per YesNo-Dialog fragen?
