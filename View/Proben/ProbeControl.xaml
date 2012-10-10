@@ -111,6 +111,8 @@
                     <Run Text="{Binding Ergebnis.Übrig}" FontWeight="Bold" />
                     <Run Text="{Binding Probe.PunkteText, Mode=OneWay}" FontWeight="Bold" />
                     <Run Text="*" FontWeight="Bold" />
+                </TextBlock>
+                <TextBlock ToolTip="Proben-Qualität (wie hoch hätte die Erschwernis maximal sein können)" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Run Text="(" FontWeight="Bold" />
                     <Run Text="{Binding Ergebnis.Qualität}" FontWeight="Bold" />
                     <Run Text=")" FontWeight="Bold" />

@@ -27,10 +27,12 @@ namespace MeisterGeister.ViewModel.Proben
             get { return Global.ContextHeld.HeldenGruppeListe; }
         }
 
-        private ObservableCollection<ProbeControlViewModel> _probeErgebnisListe = new ObservableCollection<ProbeControlViewModel>();
-        public ObservableCollection<ProbeControlViewModel> ProbeErgebnisListe
+        private List<ProbeControlViewModel> _probeErgebnisListe = new List<ProbeControlViewModel>();
+        public List<ProbeControlViewModel> ProbeErgebnisListe
         {
-            get { return _probeErgebnisListe; }
+            get { return _probeErgebnisListe.OrderByDescending(vm => vm.Ergebnis.Übrig).
+                ThenByDescending(vm => vm.Ergebnis.Qualität).
+                ThenByDescending(vm => vm.Probe.Fertigkeitswert).ToList(); }
             set
             {
                 _probeErgebnisListe = value;
@@ -62,6 +64,7 @@ namespace MeisterGeister.ViewModel.Proben
                 foreach (ProbeControlViewModel er in ProbeErgebnisListe)
                     er.Modifikator = _modifikator;
                 OnChanged("Modifikator");
+                OnChanged("ProbeErgebnisListe");
             }
         }
 
@@ -121,7 +124,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         private void RefreshProbeErgebnisListe()
         {
-            ProbeErgebnisListe.Clear();
+            _probeErgebnisListe.Clear();
 
             foreach (var item in HeldListe)
             {
@@ -138,8 +141,9 @@ namespace MeisterGeister.ViewModel.Proben
 
                 // nur einfügen, wenn der Held die Fähigkeit besitzt
                 if (vm.Probe != null)
-                    ProbeErgebnisListe.Add(vm);
+                    _probeErgebnisListe.Add(vm);
             }
+            OnChanged("ProbeErgebnisListe");
         }
 
         private void RefreshProbeListe()
@@ -160,6 +164,7 @@ namespace MeisterGeister.ViewModel.Proben
             if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
+            OnChanged("ProbeErgebnisListe");
             OnChanged("GruppenErgebnis");
         }
 

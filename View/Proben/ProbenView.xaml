@@ -48,11 +48,12 @@
                                 <Setter Property="Focusable" Value="False"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
-                        <ListBox.ItemsPanel>
+                    <!-- TODO MT: Layout-Varianten einstellbar machen (Zeile und Kachel) -->
+                    <!--<ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                             </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
+                        </ListBox.ItemsPanel>-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Border Margin="5">
