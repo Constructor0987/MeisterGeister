@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="TestTemplate">
-            <Border BorderBrush="#FFBEB3A3" Effect="{StaticResource LightBloom}" BorderThickness="1">
+            <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
                 <Grid>
                     <Grid Margin="0,0,25,0" >
                         <Grid.ColumnDefinitions>
@@ -50,7 +50,7 @@
         </DataTemplate>
         <!-- KlangzeileTemplate -->
         <DataTemplate x:Key="KlangzeileTemplate">
-            <Border Grid.Row="0" Grid.ColumnSpan="1" Name="brdKlangRow" Effect="{StaticResource LightBloom}">
+            <Border Grid.Row="0" Grid.ColumnSpan="1" Name="brdKlangRow">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="23" />
@@ -160,23 +160,23 @@
                             
                         </Border>
                         <Button Height="23" HorizontalAlignment="Left" Margin="0,20,0,0" Name="btnBGAbspielen" VerticalAlignment="Top" Width="90" ClickMode="Press" IsEnabled="False" AllowDrop="True" Tag="0" OverridesDefaultStyle="False" Click="btnBGAbspielen_Click" Grid.Column="1" Grid.ColumnSpan="2" >
-                            <Grid >
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="22" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/Images/Icons/General/play.png" Name="btnImgBGAbspielen" />
-                                <Label Padding="0" Name="btnLblBGAbspielen" Grid.Column="1">Abspielen</Label>
+                                <Image Source="/Images/Icons/General/play.png" Name="btnImgBGAbspielen" VerticalAlignment="Center" />
+                                <Label Padding="0" Name="btnLblBGAbspielen" Grid.Column="1" VerticalContentAlignment="Center">Abspielen</Label>
                             </Grid>
                         </Button>
                         <Button Grid.Column="2" Height="23" HorizontalAlignment="Left" Margin="60,20,0,0" Name="btnBGNext" VerticalAlignment="Top" Width="90" IsEnabled="False" Click="btnBGNext_Click" >
-                            <Grid >
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="22" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/Images/Icons/General/play_next.png"/>
-                                <Label Padding="0" Content=" Nächster" Grid.Column="1" />
+                                <Image Source="/Images/Icons/General/play_next.png" VerticalAlignment="Center"/>
+                                <Label Padding="0" Content=" Nächster" Grid.Column="1" VerticalAlignment="Center" />
                             </Grid>
                         </Button>
                         <ListBox Background="{StaticResource BackgroundPergamentHoch}" HorizontalAlignment="Left" Margin="0,19,0,10" Name="lbhintergrundtitellist" VerticalAlignment="Stretch" Width="176" Grid.Column="2" Grid.Row="1" SelectionChanged="lbhintergrundtitellist_SelectionChanged" ToolTip="Anklicken um den Titel abzuspielen"></ListBox>

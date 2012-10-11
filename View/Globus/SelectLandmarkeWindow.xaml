@@ -7,6 +7,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Button Content="OK"  Grid.Row="1" Margin="12" Name="_buttonLadeDG" Click="_buttonOK" HorizontalAlignment="Right" Width="43" Height="23" VerticalAlignment="Bottom" ToolTip="Landmarke auswählen." />
+        <Button Content="OK"  Grid.Row="1" Margin="12" Name="_buttonLadeDG" Click="_buttonOK" HorizontalAlignment="Right" Width="43" Height="23" ToolTip="Landmarke auswählen." />
     </Grid>
 </Window>

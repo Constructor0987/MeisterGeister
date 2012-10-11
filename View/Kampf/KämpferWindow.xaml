@@ -37,14 +37,14 @@
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Images/Icons/helden_add.png" Stretch="Fill" />
-                            <TextBlock Text="Helden" Margin="4,0,0,0" />
+                            <TextBlock Text="Helden" Margin="4,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button.Content>
                 </Button>
                 <Button Margin="6,6,6,6" Name="_buttonKampfClear" Click="ButtonKampfClear_Click" Height="23" ToolTip="Alle Kämpfer aus Liste entfernen" Padding="4,1" DockPanel.Dock="Right">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/clear_kampf.png" Stretch="Fill" />
-                        <TextBlock Text="Liste leeren" Margin="4,0,0,0" />
+                        <TextBlock Text="Liste leeren" Margin="4,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
                 <Grid DockPanel.Dock="Left">
@@ -53,7 +53,7 @@
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/Icons/gegner_add.png" Stretch="Fill" />
-                                    <TextBlock Text="Gegner" Margin="4,0,0,0" />
+                                    <TextBlock Text="Gegner" Margin="4,0,0,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button.Content>
                         </Button>

@@ -216,11 +216,11 @@ namespace MeisterGeister.ViewModel.Basar
 
         public void Init()
         {
-            HandelsgutListe = Global.ContextHandelsgut.HandelsgüterListe;
-            WaffeListe = Global.ContextWaffe.WaffeListe;
-            FernkampfwaffeListe = Global.ContextFernkampfwaffe.FernkampfwaffeListe;
-            SchildListe = Global.ContextSchild.SchildListe;
-            RüstungListe = Global.ContextRüstung.RüstungListe;
+            HandelsgutListe = Global.ContextHandelsgut == null ? new List<Model.Handelsgut>() : Global.ContextHandelsgut.HandelsgüterListe;
+            WaffeListe = Global.ContextWaffe == null ? new List<Model.Waffe>() : Global.ContextWaffe.WaffeListe;
+            FernkampfwaffeListe = Global.ContextFernkampfwaffe == null ? new List<Model.Fernkampfwaffe>() : Global.ContextFernkampfwaffe.FernkampfwaffeListe;
+            SchildListe = Global.ContextSchild == null ? new List<Model.Schild>() : Global.ContextSchild.SchildListe;
+            RüstungListe = Global.ContextRüstung == null ? new List<Model.Rüstung>() : Global.ContextRüstung.RüstungListe;
 
             // Globale Listen der unterschiedlichen Handelsgütern in eine Gesamt-Liste zusammenführen
             List<BasarItem> itemList = new List<BasarItem>();

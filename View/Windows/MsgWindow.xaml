@@ -18,7 +18,7 @@
             <Button Name="_buttonCopy" Grid.Column="0" Height="25" Margin="10" Click="ButtonCopy_Click" ToolTip="Meldung in die Zwischenablage kopieren." Tag="Meldung in Zwischenablage kopieren.">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/Icons/General/copy.png" />
-                    <TextBlock Text="Kopieren" Margin="5,0" />
+                    <TextBlock Text="Kopieren" Margin="5,0" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button Name="_buttonOK" Grid.Column="2" Content="OK" Width="38" Height="25" Margin="10" Click="ButtonOK_Click" IsDefault="True" />

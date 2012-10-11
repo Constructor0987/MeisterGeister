@@ -112,7 +112,7 @@
             <Button Height="23" Margin="520,10,0,0" Command="{Binding OnReset}" HorizontalAlignment="Left" ToolTip="Auswahl zurücksetzen" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/Icons/General/entf_01.png" />
-                    <TextBlock Text="Reset" Margin="3,0" />
+                    <TextBlock Text="Reset" Margin="3,0" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <CheckBox Height="23" Margin="585,13,0,0" Width="100" Content="unübl. Kulturen" HorizontalAlignment="Left" IsChecked="{Binding CBKulturenIsChecked}" ToolTip="auch unübliche Kulturen einblenden" VerticalAlignment="Top" />
@@ -121,7 +121,7 @@
             <Button Height="23" Margin="100,38,0,0" Command="{Binding OnGenerate}" HorizontalAlignment="Left" ToolTip="NSCs generieren" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Images/Icons/mechanik.png" />
-                    <TextBlock Text="Generieren" Margin="3,0" />
+                    <TextBlock Text="Generieren" Margin="3,0" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
             <Button Height="24" Margin="198,38,0,0" Width="24" Click="ButtonSave_Click" HorizontalAlignment="Left" Name="_buttonSave" VerticalAlignment="Top">
@@ -136,7 +136,7 @@
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
-                        <TextBlock Margin="4,0,0,0" Text="Alle" />
+                        <TextBlock Margin="3,0" Text="Alle" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button.Content>
             </Button>

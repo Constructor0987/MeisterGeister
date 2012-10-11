@@ -110,7 +110,7 @@
 					</StackPanel>
 				</Image.ToolTip>
 			</Image>
-			<Button Height="23" Margin="5,0,0,5" Width="25" Background="#6600FF00" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
+			<Button Height="23" Margin="5,0,0,5" Width="25" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
 				<Button.ContextMenu>
 					<ContextMenu>
                         <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Helden eingeben.">

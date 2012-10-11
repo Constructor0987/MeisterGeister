@@ -7,7 +7,6 @@ xmlns:MeisterGeister_ViewModel_Kampf_LogicAlt="clr-namespace:MeisterGeister.View
 xmlns:MeisterGeister_ViewModel_Base="clr-namespace:MeisterGeister.ViewModel.Base" 
 Anzahl="323.8" 
 HasValidationErrors="False" 
-HeldTalentwerte="HELDTALENTWERT" 
 RabattAufschlag="295.64" 
 SuchText="MEINE SUCHANFRAGE">
 

@@ -123,7 +123,7 @@
                     <Button Margin="6,0" Name="_buttonNächsterKämpfer" Click="ButtonNächsterKämpfer_Click" Height="23" FontWeight="Bold" ToolTip="Wählt den nächsten Kämpfer aus." HorizontalAlignment="Right">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" />
-                            <TextBlock Text="Nächster Kämpfer" />
+                            <TextBlock Text="Nächster Kämpfer" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                 </StackPanel>

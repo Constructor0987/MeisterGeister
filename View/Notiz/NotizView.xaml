@@ -21,18 +21,18 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding EntityNotiz.Name}" VerticalAlignment="Center" Visibility="{Binding Path=IsNotEditMode}" />
                         <TextBox Text="{Binding EntityNotiz.Name}" VerticalAlignment="Center" Visibility="{Binding IsEditMode}" FontSize="17" Margin="3" Background="Khaki" />
-                        <Button  Margin="4,0,0,0" Height="25" ToolTip="Umbenennen" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        <Button  Margin="8,0,0,0" Height="18" ToolTip="Umbenennen" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                 Visibility="{Binding Path=IsEditable}" Command="{Binding OnEditNotiz}">
                             <DockPanel>
                                 <Image Source="/Images/Icons/General/feder.png" Stretch="Fill" Visibility="{Binding Path=IsNotEditMode}" />
                                 <Image Source="/Images/Icons/General/ok.png" Stretch="Fill" Visibility="{Binding Path=IsEditMode}" />
                             </DockPanel>
                         </Button>
-                        <Button  Margin="1,0,0,0" Height="25" Opacity="0.5" ToolTip="Löschen" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        <Button  Margin="4,0,0,0" Height="18" Opacity="0.5" ToolTip="Löschen" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                 Visibility="{Binding Path=IsDeletable}" Command="{Binding OnDeleteNotiz}">
                             <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </Button>
-                        <Button  Margin="0" Height="25" Opacity="0.5" ToolTip="Neue Notiz..." HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        <Button  Margin="0" Height="20" Opacity="0.5" ToolTip="Neue Notiz..." HorizontalAlignment="Center" VerticalAlignment="Center" 
                                 Visibility="{Binding Path=IsNewTab}" Command="{Binding OnAddNewNotiz}">
                             <Image Source="/Images/Icons/General/add.png" Stretch="Fill" />
                         </Button>

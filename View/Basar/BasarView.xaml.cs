@@ -26,6 +26,7 @@ namespace MeisterGeister.View.Basar
         public BasarView()
         {
             InitializeComponent();
+            VM = new VM.BasarViewModel();
         }
 
         /// <summary>
