@@ -100,7 +100,7 @@
             <RowDefinition Height="549*" />
         </Grid.RowDefinitions>
 
-        <Border Background="{StaticResource BackgroundPergamentQuer}" BorderBrush="Silver" BorderThickness="1" Name="brdHintergrundOption" Grid.ColumnSpan="1" Grid.Column="1">
+        <Border Name="brdHintergrundOption" Grid.ColumnSpan="1" Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
             <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" />
         </Border>
         <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2">
@@ -117,13 +117,15 @@
                             <RowDefinition Height="60" />
                             <RowDefinition Height="312*" />
                         </Grid.RowDefinitions>
-                        <ListBox Background="{StaticResource BackgroundPergamentHoch}" Grid.Row="1" HorizontalAlignment="Left" Margin="6,0,0,10" Name="lbBackground" VerticalAlignment="Stretch" Width="253" MouseDoubleClick="lbBackground_MouseDoubleClick" Grid.ColumnSpan="2" SelectionChanged="lbBackground_SelectionChanged"></ListBox>
-                        <Border Background="{StaticResource BackgroundPergamentQuer}" BorderBrush="Silver" BorderThickness="1" Height="45" HorizontalAlignment="Left" Margin="6,6,0,0" Name="border1" VerticalAlignment="Top" Width="206">
+                        <Border Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="6,0,0,10" Style="{DynamicResource ControlContentBorder}">
+                            <ListBox Background="Transparent" Name="lbBackground" VerticalAlignment="Stretch" Width="253" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged"></ListBox>
+                        </Border>
+                        <Border Height="45" HorizontalAlignment="Left" Margin="6,6,0,0" Name="border1" VerticalAlignment="Top" Width="206" Style="{DynamicResource ControlContentBorder}">
                             <Label Content="Volume" Height="28" Name="label1" />                            
                         </Border>
                         <Slider Height="22" HorizontalAlignment="Right" Margin="0,20,31,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" VerticalAlignment="Top" Width="127" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" />
-                        
-                        <Border BorderBrush="Silver" BorderThickness="1" Grid.Column="3" Grid.Row="1" Height="220" HorizontalAlignment="Right" Name="border2" VerticalAlignment="Center" Width="310" Background="{StaticResource BackgroundPergamentQuer}" Margin="0,102,0,101">
+
+                        <Border Grid.Column="3" Grid.Row="1" Height="220" HorizontalAlignment="Right" Name="border2" VerticalAlignment="Center" Width="310" Margin="0,102,0,101" Style="{DynamicResource ControlContentBorder}">
                             <Grid Name="grdSongInfo" Width="284" Visibility="Hidden">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="39*" />
@@ -179,7 +181,14 @@
                                 <Label Padding="0" Content=" Nächster" Grid.Column="1" VerticalAlignment="Center" />
                             </Grid>
                         </Button>
-                        <ListBox Background="{StaticResource BackgroundPergamentHoch}" HorizontalAlignment="Left" Margin="0,19,0,10" Name="lbhintergrundtitellist" VerticalAlignment="Stretch" Width="176" Grid.Column="2" Grid.Row="1" SelectionChanged="lbhintergrundtitellist_SelectionChanged" ToolTip="Anklicken um den Titel abzuspielen"></ListBox>
+                        <Expander Margin="0,19,0,10" Grid.Column="2" Grid.Row="1" Width="176" HorizontalAlignment="Left" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Titel" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <ListBox Background="Transparent" Name="lbhintergrundtitellist" VerticalAlignment="Stretch" SelectionChanged="lbhintergrundtitellist_SelectionChanged" ToolTip="Anklicken um den Titel abzuspielen"></ListBox>
+                            </Border>
+                        </Expander>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -194,7 +203,7 @@
                         <RowDefinition Height="312*" />
                     </Grid.RowDefinitions>
 
-                    <Border BorderBrush="Silver" BorderThickness="0" Grid.Column="1" Height="40" HorizontalAlignment="Stretch" Margin="0" Name="brdKlang" VerticalAlignment="Top" Background="{StaticResource BackgroundMenu}">
+                    <Border Grid.Column="1" Height="40" HorizontalAlignment="Stretch" Margin="0" Name="brdKlang" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}">
                         <Grid Name="grdKlangPlaylistInfo">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10" />
@@ -474,7 +483,9 @@
                             <RowDefinition Height="37*" />
                             <RowDefinition Height="297*" />
                         </Grid.RowDefinitions>
-                        <ListBox Background="{StaticResource BackgroundPergamentHoch}" HorizontalAlignment="Stretch" Name="lbKlang" VerticalAlignment="Stretch" SelectionChanged="lbKlang_SelectionChanged" Grid.Row="1" Margin="4,0,0,10"></ListBox>
+                        <Border Grid.Row="1" Margin="4,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}">
+                            <ListBox Background="Transparent" Name="lbKlang" SelectionChanged="lbKlang_SelectionChanged"></ListBox>
+                        </Border>
                         <RadioButton Content="Klänge" GroupName="KlangListe" Height="17" IsChecked="False" Margin="40,8,56,0" Name="rbKlangKlang" VerticalAlignment="Top" Click="rbKlangKlang_Click" />
                         <RadioButton Content="Alle" GroupName="KlangListe" HorizontalAlignment="Left" IsChecked="True" Margin="0,8,0,0" Name="rbKlangAlle" VerticalAlignment="Top" Click="rbKlangAlle_Click" />
                         <RadioButton Content="Musik" GroupName="KlangListe" Height="17" HorizontalAlignment="Right" IsChecked="False" Margin="0,8,3,0" Name="rbKlangMusik" VerticalAlignment="Top" Click="rbKlangKlang_Click" />
