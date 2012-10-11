@@ -24,18 +24,19 @@ namespace MeisterGeister.View.Helden.Controls
         public InventarView()
         {
             InitializeComponent();
+            VM = new VM.InventarViewModel();
         }
 
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
         /// </summary>
-        public VM.Inventar VM
+        public VM.InventarViewModel VM
         {
             get
             {
-                if (DataContext == null || !(DataContext is VM.Inventar))
+                if (DataContext == null || !(DataContext is VM.InventarViewModel))
                     return null;
-                return DataContext as VM.Inventar;
+                return DataContext as VM.InventarViewModel;
             }
             set { DataContext = value; }
         }

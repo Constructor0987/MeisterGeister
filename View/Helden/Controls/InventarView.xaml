@@ -252,9 +252,6 @@
         </EventTrigger>
     </UserControl.Triggers>
 
-    <UserControl.DataContext>
-        <vm:Inventar />
-    </UserControl.DataContext>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>

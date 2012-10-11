@@ -12,7 +12,7 @@ using Logik = MeisterGeister.ViewModel.Inventar.Logic;
 using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Inventar {
-    public class Inventar : Base.ViewModelBase, MeisterGeister.ViewModel.Helden.Logic.IChangeListener {
+    public class InventarViewModel : Base.ViewModelBase, MeisterGeister.ViewModel.Helden.Logic.IChangeListener {
 
         #region //FELDER
 
@@ -417,7 +417,7 @@ namespace MeisterGeister.ViewModel.Inventar {
 
         #region //KONSTRUKTOR
 
-        public Inventar() {
+        public InventarViewModel() {
             onAddNahkampfwaffe = new Base.CommandBase(AddNahkampfwaffe, null);
             onAddFernkampfwaffe = new Base.CommandBase(AddFernkampfwaffe, null);
             onAddSchild = new Base.CommandBase(AddSchild, null);
@@ -434,13 +434,15 @@ namespace MeisterGeister.ViewModel.Inventar {
             if (IsLoaded == false) {
                 //Nahkampf
                 NahkampfWaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
-                NahkampfWaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t =>
-                    t.TalentgruppeID == 1
-                    && (t.Untergruppe == TALENTNAHKAMPFWAFFEUNTERKATEGORIE
-                    || t.Untergruppe == TALENTNAHKAMPFWAFFEATTECHNIK)
-                    && !NahkampfWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+                if (Global.ContextTalent != null)
+                    NahkampfWaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t =>
+                        t.TalentgruppeID == 1
+                        && (t.Untergruppe == TALENTNAHKAMPFWAFFEUNTERKATEGORIE
+                        || t.Untergruppe == TALENTNAHKAMPFWAFFEATTECHNIK)
+                        && !NahkampfWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
                 //NahkampfWaffeTalentListe = NahkampfWaffeTalentListe;                
-                NahkampfwaffeListe.AddRange(Global.ContextInventar.WaffeListe.Where(w => !NahkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
+                if (Global.ContextInventar != null)
+                    NahkampfwaffeListe.AddRange(Global.ContextInventar.WaffeListe.Where(w => !NahkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
                 if (NahkampfwaffeListe.Count > 0) {
                     IsNahkampfwaffevorhanden = Visibility.Visible;
                     OnChanged("IsNahkampfwaffevorhanden");
@@ -449,9 +451,11 @@ namespace MeisterGeister.ViewModel.Inventar {
 
                 //Fernkampf
                 FernkampWaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
-                FernkampWaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && !FernkampWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
-                //FernkampWaffeTalentListe = FernkampWaffeTalentListe;                
-                FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
+                if (Global.ContextTalent != null)
+                    FernkampWaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && !FernkampWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+                //FernkampWaffeTalentListe = FernkampWaffeTalentListe;    
+                if (Global.ContextInventar != null)
+                    FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
                 OnChanged("FernkampfwaffeListe");
                 if (FernkampfwaffeListe.Count > 0) {
                     IsFernkampfwaffevorhanden = Visibility.Visible;
@@ -460,7 +464,8 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("SchildListe");
 
                 //Schild
-                SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => !SchildListe.Contains(w)).OrderBy(w => w.Name));
+                if (Global.ContextInventar != null)
+                    SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => !SchildListe.Contains(w)).OrderBy(w => w.Name));
                 SchildListe = SchildListe;
                 if (SchildListe.Count > 0) {
                     IsSchildVorhanden = Visibility.Visible;
@@ -469,7 +474,8 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("SchildListe");
 
                 //Rüstung
-                RuestungListe.AddRange(Global.ContextInventar.RuestungListe.Where(w => !RuestungListe.Contains(w)).OrderBy(w => w.Name));
+                if (Global.ContextInventar != null)
+                    RuestungListe.AddRange(Global.ContextInventar.RuestungListe.Where(w => !RuestungListe.Contains(w)).OrderBy(w => w.Name));
                 RuestungListe = RuestungListe;
                 if (RuestungListe.Count > 0) {
                     IsRuestungVorhanden = Visibility.Visible;

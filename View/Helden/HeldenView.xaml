@@ -146,29 +146,6 @@
                         </Grid>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Kampfwerte" x:Name="_tabItemKampfwerte">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Margin="0" Background="{StaticResource BackgroundPergamentHoch}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" Margin="0,4,0,0" Orientation="Horizontal">
-                                <TextBlock Margin="183,2,0,0" Width="65" FontWeight="Bold" Text="TaW" TextAlignment="Center" />
-                                <TextBlock Margin="18,2,0,0" Width="65" FontWeight="Bold" Text="AT/FK+" TextAlignment="Center" ToolTip="AT/FK Zuteilung" />
-                                <TextBlock Margin="10,2,0,0" Width="65" FontWeight="Bold" Text="PA+" TextAlignment="Center" ToolTip="PA Zuteilung" />
-                                <TextBlock Margin="15,2,0,0" Width="40" FontWeight="Bold" Text="AT/FK" TextAlignment="Center" ToolTip="AT/FK Wert" />
-                                <TextBlock Margin="15,2,0,0" Width="40" FontWeight="Bold" Text="PA" TextAlignment="Center" ToolTip="PA Wert" />
-                            </StackPanel>
-                            <ScrollViewer Grid.Row="1" Padding="8" VerticalScrollBarVisibility="Auto">
-                                <ListBox Background="Transparent" ItemsSource="{Binding Tag.KampfTalente, ElementName=_listBoxHelden, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}" ItemTemplate="{StaticResource KampftalenteTemplate}" x:Name="_listBoxKampfTalente" BorderBrush="#00000000"/>
-                            </ScrollViewer>
-                        </Grid>
-                    </Grid>
-                </TabItem>
                 <TabItem Header="Talente" x:Name="_tabItemTalente">
                     <Held:TalentView/>
                 </TabItem>

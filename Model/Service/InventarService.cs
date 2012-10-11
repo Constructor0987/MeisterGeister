@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 //Eigene Using
-using VM = MeisterGeister.ViewModel.Inventar.Inventar;
+using VM = MeisterGeister.ViewModel.Inventar.InventarViewModel;
 
 namespace MeisterGeister.Model.Service {
     public class InventarService : ServiceBase {
