@@ -168,12 +168,6 @@ namespace MeisterGeister.ViewModel.Helden.Logic
             set { Werte[0] = value; }
         }
 
-        public override int Fertigkeitswert
-        {
-            get { return Wert; }
-            set { Wert = value; }
-        }
-
         #endregion //---- PROBE ----
     }
 }

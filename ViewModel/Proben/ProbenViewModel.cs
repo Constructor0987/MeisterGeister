@@ -74,7 +74,7 @@ namespace MeisterGeister.ViewModel.Proben
             get
             {
                 int tapSum = 0, vorSum = 0, i = 1;
-                string art = "Übrig";
+                string art = SelectedProbe == null ? "Punkte*" : SelectedProbe.PunkteText + "*";
                 foreach (ProbeControlViewModel er in ProbeErgebnisListe)
                 {
                     if (er.Ergebnis.Übrig >= 0) //nur positive Ergebnisse addieren
@@ -84,10 +84,6 @@ namespace MeisterGeister.ViewModel.Proben
                         i++;
                     }
                 }
-                if (SelectedProbe is Model.Talent)
-                    art = "TaP*";
-                else if (SelectedProbe is Model.Zauber)
-                    art = "ZfP*";
 
                 return string.Format("Unabhängige Zusammenarbeit: {0} {1}\nMit fähigstem Held als Vorarbeiter: {2} {1}", tapSum, art, vorSum);
             }
