@@ -38,7 +38,7 @@ namespace MeisterGeister.ViewModel.NscGenerator
         private List<string> _professionListe = new List<string>();
         private List<string> _alterListe = new List<string>();
         private List<string> _geschlechtListe = new List<string>();
-        private ObservableCollection<Person> _personenListe = new ObservableCollection<Person>();
+        private List<Person> _personenListe = new List<Person>();
         //Commands
         private Base.CommandBase _onReset;
         private Base.CommandBase _onGenerate;
@@ -242,7 +242,7 @@ namespace MeisterGeister.ViewModel.NscGenerator
             }
         }
 
-        public ObservableCollection<Person> PersonenListe
+        public List<Person> PersonenListe
         {
             get { return _personenListe; }
             set
@@ -367,16 +367,20 @@ namespace MeisterGeister.ViewModel.NscGenerator
 
         void Generate(object sender)
         {
-            
+            Global.SetIsBusy(true);
+
             PersonenListe.Clear();
-            for (int i = 0; i < GenNumber; i++) { 
+            List<Person> personen = new List<Person>();
+            for (int i = 0; i < GenNumber; i++)
+            {
                 Person person = new Person(SelectedGeschlecht, SelectedAlter, SelectedRasse, SelectedKultur, SelectedProfession, CBKulturenIsChecked, CBNamenIsChecked) { IsNurName = (CBNamenIsChecked) ? Visibility.Collapsed : Visibility.Visible };
                 //handle Goblin & Orks
                 if (!(person.Name == null))
-                {
-                    PersonenListe.Add(person);
-                }
+                    personen.Add(person);
             }
+            PersonenListe = personen;
+
+            Global.SetIsBusy(false);
         }
 
         void AddAllNSC(object sender)

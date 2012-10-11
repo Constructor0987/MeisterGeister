@@ -200,6 +200,9 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
                 return;
+
+            Global.SetIsBusy(true);
+
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
             foreach (string fileName in System.IO.Directory.EnumerateFiles("Daten\\Helden\\Demohelden", "*.xml", System.IO.SearchOption.TopDirectoryOnly))
             {
@@ -207,6 +210,8 @@ namespace MeisterGeister.ViewModel.Helden
             }
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
             LoadDaten();
+
+            Global.SetIsBusy(false);
         }
 
         private Base.CommandBase onImportHeld = null;
@@ -297,8 +302,12 @@ namespace MeisterGeister.ViewModel.Helden
         }
         private void CloneHeld(object sender)
         {
+            Global.SetIsBusy(true);
+
             Held h = SelectedHeld.Clone();
             LoadDaten();
+
+            Global.SetIsBusy(false);
         }
     }
 }
