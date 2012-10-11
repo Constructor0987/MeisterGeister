@@ -30,7 +30,7 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" Name="_textBoxInt" Text="0" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="_textBoxInt_KeyDown" 
-                 Style="{StaticResource TextBoxIntStyle}" BorderBrush="Transparent" LostFocus="_textBoxInt_LostFocus" GotFocus="_textBoxInt_GotFocus" />
+                 Style="{StaticResource TextBoxIntStyle}" BorderBrush="Transparent" LostFocus="_textBoxInt_LostFocus" GotFocus="_textBoxInt_GotFocus" PreviewKeyDown="_textBoxInt_KeyDown" />
         <StackPanel Grid.Column="1" Name="_stackPanelButtons" Orientation="Horizontal" Visibility="{Binding ElementName=_intBox, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}">
             <Button Name="_buttonMinus" Width="18" Click="ButtonMinus_Click">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />

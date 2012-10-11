@@ -222,6 +222,11 @@ namespace MeisterGeister.View.General
                 DecreaseValue();
         }
 
+        private void _textBoxInt_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+
         private void _textBoxInt_GotFocus(object sender, RoutedEventArgs e)
         {
             _textBoxInt.SelectAll();
@@ -240,5 +245,6 @@ namespace MeisterGeister.View.General
             // Wert zurück in TextBox schreiben, falls Value korrigiert wurde
             (sender as TextBox).Text = Value.ToString();
         }
+
     }
 }
