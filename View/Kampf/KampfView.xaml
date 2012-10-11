@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
@@ -112,7 +111,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid Background="{StaticResource BackgroundPergamentHoch}" >
+
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="90*" />
@@ -185,29 +186,36 @@
                         </ContextMenu>
                     </ListBox.ContextMenu>
                 </ListBox>
-                <Image Grid.Row="1" Height="16" HorizontalAlignment="Right" Margin="0,4,4,0" Name="_imageInfoKämpferListe" Source="/Images/Icons/General/info.png" Stretch="Fill" Width="16" VerticalAlignment="Top">
-                    <Image.ToolTip>
-                        <StackPanel>
-                            <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Rechtsklick für weitere Funktionen.</TextBlock>
-                            <StackPanel Margin="0,6,0,0" Orientation="Horizontal">
-                                <Image Width="24" Source="/Images/Icons/Wuerfel/w6.png" VerticalAlignment="Top" />
-                                <TextBlock Margin="4,0,0,0" Height="Auto" TextWrapping="Wrap" Width="200">
+                    <Image Grid.Row="1" Height="16" HorizontalAlignment="Right" Margin="0,4,4,0" Name="_imageInfoKämpferListe" Source="/Images/Icons/General/info.png" Stretch="Fill" Width="16" VerticalAlignment="Top">
+                        <Image.ToolTip>
+                            <StackPanel>
+                                <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Rechtsklick für weitere Funktionen.</TextBlock>
+                                <StackPanel Margin="0,6,0,0" Orientation="Horizontal">
+                                    <Image Width="24" Source="/Images/Icons/Wuerfel/w6.png" VerticalAlignment="Top" />
+                                    <TextBlock Margin="4,0,0,0" Height="Auto" TextWrapping="Wrap" Width="200">
                                     Rechtsklick auf den INI-Würfel, um das Ergebnis zu ändern. Mit einem Doppelklick wird neu gewürfelt.
-                                </TextBlock>
+                                    </TextBlock>
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </Image.ToolTip>
-                </Image>
-                <Expander Name="_kämpferExpander" Header="Kämpfer einfügen" Grid.Row="2" Margin="2,2,2,2" Background="{StaticResource BackgroundPergamentHoch}" Expanded="GegnerExpander_Expanded" />
-            </Grid>
+                        </Image.ToolTip>
+                    </Image>
+                    <Expander Name="_kämpferExpander" Grid.Row="2" Margin="2,2,2,2" Expanded="GegnerExpander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Kämpfer einfügen" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                    </Expander>
+                </Grid>
+            </Border>
+                
         </Grid>
         <TabControl Margin="4" Grid.Column="1">
             <TabControl.Background>
                 <SolidColorBrush />
             </TabControl.Background>
             <TabItem Name="_tabItemÜbersicht" Header="Übersicht">
-                <ScrollViewer Name="_scrollViewerKämpferDetails" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <Grid Background="{StaticResource BackgroundPergamentHoch}">
+                <ScrollViewer Name="_scrollViewerKämpferDetails" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -398,32 +406,35 @@
                             <Button Margin="6" Padding="3" Content="Kriegskunst" Name="_buttonKriegskunstProbe" Click="ButtonKriegskunstProbe_Click" ToolTip="Kriegskunst-Probe würfeln." />
                         </StackPanel>
                     </Grid>
+                    </Border>
                 </ScrollViewer>
             </TabItem>
             <TabItem Name="_tabItemSfVorNach" Header="SF &amp; Vor-/Nachteile" ToolTip="Sonderfertigkeiten &amp; Vor-/Nachteile">
-                <ScrollViewer VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <Grid Background="{StaticResource BackgroundPergamentHoch}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" Margin="6,6,0,0" Text="{Binding Path=SelectedItem.VorNachteile, ElementName=_listBoxKämpfer}" ToolTip="Vor-/Nachteile" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">
-                            <TextBox.BorderBrush>
-                                <SolidColorBrush />
-                            </TextBox.BorderBrush>
-                            <TextBox.Background>
-                                <SolidColorBrush />
-                            </TextBox.Background>
-                        </TextBox>
-                        <TextBox Grid.Row="1" Margin="6,6,0,0" Text="{Binding Path=SelectedItem.Sonderfertigkeiten, ElementName=_listBoxKämpfer}" ToolTip="Sonderfertigkeiten" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">
-                            <TextBox.BorderBrush>
-                                <SolidColorBrush />
-                            </TextBox.BorderBrush>
-                            <TextBox.Background>
-                                <SolidColorBrush />
-                            </TextBox.Background>
-                        </TextBox>
-                    </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBox Grid.Row="0" Margin="6,6,0,0" Text="{Binding Path=SelectedItem.VorNachteile, ElementName=_listBoxKämpfer}" ToolTip="Vor-/Nachteile" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">
+                                <TextBox.BorderBrush>
+                                    <SolidColorBrush />
+                                </TextBox.BorderBrush>
+                                <TextBox.Background>
+                                    <SolidColorBrush />
+                                </TextBox.Background>
+                            </TextBox>
+                            <TextBox Grid.Row="1" Margin="6,6,0,0" Text="{Binding Path=SelectedItem.Sonderfertigkeiten, ElementName=_listBoxKämpfer}" ToolTip="Sonderfertigkeiten" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">
+                                <TextBox.BorderBrush>
+                                    <SolidColorBrush />
+                                </TextBox.BorderBrush>
+                                <TextBox.Background>
+                                    <SolidColorBrush />
+                                </TextBox.Background>
+                            </TextBox>
+                        </Grid>
+                    </Border>
                 </ScrollViewer>
             </TabItem>
         </TabControl>
@@ -433,83 +444,94 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Margin="2,2,2,2" Grid.Row="0" Background="{StaticResource BackgroundPergamentQuer}">
-                <Button Width="51" Height="47" HorizontalAlignment="Left" Margin="6,3,0,18" Name="_buttonArena" Click="ButtonArena_Click" ToolTip="Interaktiven Bodenplan öffnen">
-                    <Image Source="/Images/Icons/bodenplan.png" Stretch="Uniform" />
-                </Button>
-                <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="6,0,0,2"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox>
-                <Button Name="_buttonSpielerInfo" Height="47" Width="28"  Click="ButtonSpielerInfo_Click" Visibility="Visible" HorizontalAlignment="Right" Margin="0,3,180,18">
-                    <Button.ToolTip>
-                        <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
-            		Den Spielern die INI-Liste in einem separaten Fenster zeigen.
-                        </TextBlock>
-                    </Button.ToolTip>
-                    <Image Source="/Images/Icons/General/screen.png" />
-                </Button>
-                <TextBlock Margin="0,3,94,0" Name="_textBlockKampfrunde" Text="0" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
-                <Button Content="Starten" Margin="0,4,6,0" Name="_buttonNeueKR" HorizontalAlignment="Right" Width="82" Click="ButtonNeueKampfrunde_Click" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
-                <Button Content="Neuer Kampf" Height="23" Margin="0,32,6,0" Name="_buttonNeuerKampf" VerticalAlignment="Top" Click="ButtonNeuerKampf_Click" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
-                <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="0,48,94,0" Name="_textBlockKampfZeit" Padding="0" Text="00:00:00" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
-            </Grid>
-            <Expander Grid.Row="1" Header="Aktionen" Margin="2,5,2,2" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}">
+            <Border Margin="2" Grid.Row="0" Style="{DynamicResource ControlContentBorder}">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid Margin="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="35*" />
-                            <ColumnDefinition Width="65*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Height="23" Margin="2" Name="_textBoxAktionQuelle" VerticalAlignment="Top" ToolTip="Aktions-Quelle." />
-                        <TextBox Grid.Column="1" Height="23" Margin="2" Name="_textBoxAktionName" VerticalAlignment="Top" ToolTip="Aktions-Beschreibung." />
-                    </Grid>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Label Content="Start in:" Height="28" Margin="2,6,0,0" Name="label5" />
-                        <RadioButton Content="1. Aktion" Height="16" Margin="2,6,4,0" Name="_radioButtonAktion1" IsChecked="True" />
-                        <RadioButton Content="2. Aktion" Height="16" Margin="2,6,0,0" Name="_radioButtonAktion2" />
-                    </StackPanel>
-                    <ViewGeneral:IntBox Height="25" HorizontalAlignment="Left" Margin="60,9,0,0" x:Name="_intBoxAktionDauer" VerticalAlignment="Top" Width="75" Value="2" Grid.Row="2" ToolTip="Aktions-Dauer in Aktionen." ShowButtons="True" />
-                    <Label Content="Dauer:" Height="28" HorizontalAlignment="Left" Margin="2,9,0,0" VerticalAlignment="Top" Grid.Row="2" />
-                    <Label Content="Aktionen" Height="28" HorizontalAlignment="Left" Margin="156,10,0,0" VerticalAlignment="Top" FontStyle="Italic" Grid.Row="2" />
-                    <Button Content="▼" Height="23" Margin="0,11,4,0" Name="_buttonAktion" VerticalAlignment="Top" Click="ButtonAktion_Click" Grid.Row="2" HorizontalAlignment="Right" Width="23" ToolTip="Aktion einfügen." />
+                    <Button Width="51" Height="47" HorizontalAlignment="Left" Margin="6,3,0,18" Name="_buttonArena" Click="ButtonArena_Click" ToolTip="Interaktiven Bodenplan öffnen">
+                        <Image Source="/Images/Icons/bodenplan.png" Stretch="Uniform" />
+                    </Button>
+                    <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="6,0,0,2"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox>
+                    <Button Name="_buttonSpielerInfo" Height="47" Width="28"  Click="ButtonSpielerInfo_Click" Visibility="Visible" HorizontalAlignment="Right" Margin="0,3,180,18">
+                        <Button.ToolTip>
+                            <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
+            		Den Spielern die INI-Liste in einem separaten Fenster zeigen.
+                            </TextBlock>
+                        </Button.ToolTip>
+                        <Image Source="/Images/Icons/General/screen.png" />
+                    </Button>
+                    <TextBlock Margin="0,3,94,0" Name="_textBlockKampfrunde" Text="0" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
+                    <Button Content="Starten" Margin="0,4,6,0" Name="_buttonNeueKR" HorizontalAlignment="Right" Width="82" Click="ButtonNeueKampfrunde_Click" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
+                    <Button Content="Neuer Kampf" Height="23" Margin="0,32,6,0" Name="_buttonNeuerKampf" VerticalAlignment="Top" Click="ButtonNeuerKampf_Click" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
+                    <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="0,48,94,0" Name="_textBlockKampfZeit" Padding="0" Text="00:00:00" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
                 </Grid>
+            </Border>
+            <Expander Grid.Row="1" Margin="2,5,2,2" IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="Aktionen" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35*" />
+                                <ColumnDefinition Width="65*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Height="23" Margin="2" Name="_textBoxAktionQuelle" VerticalAlignment="Top" ToolTip="Aktions-Quelle." />
+                            <TextBox Grid.Column="1" Height="23" Margin="2" Name="_textBoxAktionName" VerticalAlignment="Top" ToolTip="Aktions-Beschreibung." />
+                        </Grid>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Label Content="Start in:" Height="28" Margin="2,6,0,0" Name="label5" />
+                            <RadioButton Content="1. Aktion" Height="16" Margin="2,6,4,0" Name="_radioButtonAktion1" IsChecked="True" />
+                            <RadioButton Content="2. Aktion" Height="16" Margin="2,6,0,0" Name="_radioButtonAktion2" />
+                        </StackPanel>
+                        <ViewGeneral:IntBox Height="25" HorizontalAlignment="Left" Margin="60,9,0,0" x:Name="_intBoxAktionDauer" VerticalAlignment="Top" Width="75" Value="2" Grid.Row="2" ToolTip="Aktions-Dauer in Aktionen." ShowButtons="True" />
+                        <Label Content="Dauer:" Height="28" HorizontalAlignment="Left" Margin="2,9,0,0" VerticalAlignment="Top" Grid.Row="2" />
+                        <Label Content="Aktionen" Height="28" HorizontalAlignment="Left" Margin="156,10,0,0" VerticalAlignment="Top" FontStyle="Italic" Grid.Row="2" />
+                        <Button Content="▼" Height="23" Margin="0,11,4,0" Name="_buttonAktion" VerticalAlignment="Top" Click="ButtonAktion_Click" Grid.Row="2" HorizontalAlignment="Right" Width="23" ToolTip="Aktion einfügen." />
+                    </Grid>
+                </Border>
             </Expander>
-            <ListBox Margin="2,2,2,2" Name="_listBoxAktionen" ToolTip="Aktionsliste" ItemTemplate="{StaticResource AktionListTemplate}" KeyUp="ListBoxAktionen_KeyUp" SelectionChanged="ListBoxAktionen_SelectionChanged" Grid.Row="3" 
-                     MouseDoubleClick="ListBoxAktionen_MouseDoubleClick" MouseDown="ListBoxAktionen_MouseDown" Background="{StaticResource BackgroundPergamentHoch}" Padding="4,8">
-                <ListBox.BorderBrush>
-                    <SolidColorBrush />
-                </ListBox.BorderBrush>
-                <ListBox.ContextMenu>
-                    <ContextMenu Name="_contextMenuAktionen" Opened="ContextMenuAktionen_Opened">
-                        <ContextMenu.Items>
-                            <MenuItem Name="_menuItemHandleAktionAlt" Height="28" Header="Alte Aktionen abschließen" Click="MenuItemHandleAktionAlt_Click">
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/General/ok.png" Stretch="Fill" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Name="_menuItemAktionEntfernen" Height="28" Header="Aktion entfernen" Click="MenuItemAktionEntfernen_Click">
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Name="_menuItemAktionListeLeeren" Height="28" Header="Liste leeren" Click="MenuItemAktionListeLeeren_Click">
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" Margin="2" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu.Items>
-                    </ContextMenu>
-                </ListBox.ContextMenu>
-            </ListBox>
+
+            <Border Grid.Row="3" Margin="2" Style="{DynamicResource ControlContentBorder}">
+                <ListBox Name="_listBoxAktionen" ToolTip="Aktionsliste" ItemTemplate="{StaticResource AktionListTemplate}" KeyUp="ListBoxAktionen_KeyUp" SelectionChanged="ListBoxAktionen_SelectionChanged"
+                     MouseDoubleClick="ListBoxAktionen_MouseDoubleClick" MouseDown="ListBoxAktionen_MouseDown" Background="Transparent" Padding="4,8">
+                    <ListBox.BorderBrush>
+                        <SolidColorBrush />
+                    </ListBox.BorderBrush>
+                    <ListBox.ContextMenu>
+                        <ContextMenu Name="_contextMenuAktionen" Opened="ContextMenuAktionen_Opened">
+                            <ContextMenu.Items>
+                                <MenuItem Name="_menuItemHandleAktionAlt" Height="28" Header="Alte Aktionen abschließen" Click="MenuItemHandleAktionAlt_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/General/ok.png" Stretch="Fill" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Name="_menuItemAktionEntfernen" Height="28" Header="Aktion entfernen" Click="MenuItemAktionEntfernen_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Name="_menuItemAktionListeLeeren" Height="28" Header="Liste leeren" Click="MenuItemAktionListeLeeren_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" Margin="2" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu.Items>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                </ListBox>
+            </Border>
             <Image HorizontalAlignment="Right" Margin="0,4,4,0" Name="image1" Source="/Images/Icons/General/info.png" Stretch="Fill" Width="16" Grid.Row="2" Height="16" VerticalAlignment="Top">
-                <Image.ToolTip>
-                    <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Mit einem Doppelklick auf eine Aktion wird diese Aktion entfernt. Weitere Funktionen mit Rechtsklick.</TextBlock>
-                </Image.ToolTip>
-            </Image>
+                    <Image.ToolTip>
+                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Mit einem Doppelklick auf eine Aktion wird diese Aktion entfernt. Weitere Funktionen mit Rechtsklick.</TextBlock>
+                    </Image.ToolTip>
+                </Image>
+            
         </Grid>
     </Grid>
 </UserControl>

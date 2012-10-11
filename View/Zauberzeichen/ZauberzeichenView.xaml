@@ -27,169 +27,191 @@
                                 </ComboBox.ToolTip>
                         </ComboBox>
                     </StackPanel>
-                    <Border Margin="5" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="250">
-                            <TextBlock Text="Zauberzeichen:" />
-                            <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding ZauberzeichenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedZauberzeichen}" ToolTip="Es können nur die Zauberzeichen ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
-                            <TextBlock Text="Größe Zeichenträger:" />
-                            <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding GrößenZeichenträgerListeZauberzeichen}"  SelectedItem="{Binding SelectedGrößeZeichenträgerZauberzeichen}" />
-                            <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenZauberzeichen}" IsEnabled="{Binding IsEnabledSpontanzeichenZauberzeichen}"/>
-                        </StackPanel>
-                    </Border>
-                    
+
+                    <Expander Margin="2" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Zauberzeichen" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
+                                <TextBlock Text="Zauberzeichen:" />
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding ZauberzeichenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedZauberzeichen}" ToolTip="Es können nur die Zauberzeichen ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
+                                <TextBlock Text="Größe Zeichenträger:" />
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding GrößenZeichenträgerListeZauberzeichen}"  SelectedItem="{Binding SelectedGrößeZeichenträgerZauberzeichen}" />
+                                <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenZauberzeichen}" IsEnabled="{Binding IsEnabledSpontanzeichenZauberzeichen}"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+
                     <StackPanel Orientation="Horizontal" Background="Transparent">
-                        <Border Margin="5" Width="225" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-                                <TextBlock Margin="0,0,0,5" Text="Handwerkliche Herstellung:" FontSize="14" FontWeight="Bold" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Talent" />
-                                    <ComboBox Margin="5,0,5,0" Height="20" Width="122" ItemsSource="{Binding TalentListeZauberzeichen}" DisplayMemberPath="Talentname"  SelectedItem="{Binding SelectedTalentZauberzeichen}" />
-                                    <CheckBox Margin="0,0,5,0" Content="Spez" IsChecked="{Binding CheckedSpezialisierungZauberzeichen}"/>
+                        <Expander Margin="2" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Handwerkliche Herstellung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Talent" />
+                                        <ComboBox Margin="5,0,5,0" Height="20" Width="122" ItemsSource="{Binding TalentListeZauberzeichen}" DisplayMemberPath="Talentname"  SelectedItem="{Binding SelectedTalentZauberzeichen}" />
+                                        <CheckBox Margin="0,0,5,0" Content="Spez" IsChecked="{Binding CheckedSpezialisierungZauberzeichen}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Handwerkstalent TaW (" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding WertErleichterungTaZauberzeichen}" VerticalAlignment="Center" />
+                                        <TextBlock Text=")" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="23,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHandwerkZauberzeichen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0,5,0,5" Text="Werkzeug:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                        <ComboBox Margin="5,0,5,0" Height="20" Width="149" ItemsSource="{Binding WerkzeugListeZauberzeichen}" SelectedItem="{Binding SelectedWerkzeugZauberzeichen}" />
+                                    </StackPanel>
+                                    <TextBlock Margin="0,5,0,5" Text="Zusatzzeichen:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Satinavs Siegel" />
+                                        <ComboBox Margin="6,0,5,0" Height="20" Width="130" ItemsSource="{Binding SatinavsSiegelListeZauberzeichen}" SelectedItem="{Binding SelectedSatinavsSiegelZauberzeichen}" IsEnabled="{Binding IsEnabledSatinavsSiegelListeZauberzeichen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Verkleinerung" />
+                                        <ComboBox Margin="10,0,5,0" Height="20" Width="130" ItemsSource="{Binding VerkleinerungListeZauberzeichen}" SelectedItem="{Binding SelectedVerkleinerungZauberzeichen}" IsEnabled="{Binding IsEnabledVerkleinerungListeZauberzeichen}" />
+                                    </StackPanel>
+                                    <CheckBox Margin="0,0,5,0" Content="Potenzierung" IsChecked="{Binding CheckedPotenzierungZauberzeichen}" IsEnabled="{Binding IsEnabledPotenzierungZauberzeichen}"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Kraftquellenspeisung" IsChecked="{Binding CheckedKraftquellenspeisungZauberzeichen}" IsEnabled="{Binding IsEnabledKraftquellenspeisungZauberzeichen}"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Magiewiderstand"  IsChecked="{Binding CheckedMagiewiderstandZauberzeichen}" IsEnabled="{Binding IsEnabledMagiewiderstandZauberzeichen}"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Schutzsiegel"  IsChecked="{Binding CheckedSchutzsiegelZauberzeichen}" IsEnabled="{Binding IsEnabledSchutzsiegelZauberzeichen}"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Tarnung"  IsChecked="{Binding CheckedTarnungZauberzeichen}" IsEnabled="{Binding IsEnabledTarnungZauberzeichen}"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Zielbeschränkung"  IsChecked="{Binding CheckedZielbeschränkungZauberzeichen}" IsEnabled="{Binding IsEnabledZielbeschränkungZauberzeichen}"/>
+                                    <Button Margin="5,20,5,20"  VerticalAlignment="Center" Content="Bau" Command="{Binding OnBauZauberzeichen}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Handwerkstalent TaW (" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding WertErleichterungTaZauberzeichen}" VerticalAlignment="Center" />
-                                    <TextBlock Text=")" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="23,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHandwerkZauberzeichen}" />
+                            </Border>
+                        </Expander>
+
+                        <Expander Margin="2" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Aktivierung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Visibility="{Binding VisibilityHandwerkErgebnis}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Ritualkenntnis TaW"  VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="50,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertRitualkenntnis}" />
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Verteilung TaP*:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                        <TextBlock Margin="50,0,0,0"  Text="(" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding WertTaPZauberzeichen}" VerticalAlignment="Center" />
+                                        <TextBlock Text=")" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Halbierung Herstellungszeit" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHerstellungszeitZauberzeichen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Erleichterung Aktivierung" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="18,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAktivierungZauberzeichen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Künstlerische Qualität" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="37,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertQualitätZauberzeichen}" />
+                                    </StackPanel>
+                                    <TextBlock Margin="0,5,0,5" Text="Modifikationen durch Material und Form:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Form [1-3]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="95,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFormZauberzeichen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Farbe [0-2]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="93,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFarbeZauberzeichen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Affinität [0-25%]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="64,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAffinitätZauberzeichen}" />
+                                    </StackPanel>
+                                    <Button Margin="5,20,5,20" VerticalAlignment="Center" Content="Aktivierung" Command="{Binding OnAktivierungZauberzeichen}"  />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="0,5,0,5" Text="Werkzeug:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                    <ComboBox Margin="5,0,5,0" Height="20" Width="149" ItemsSource="{Binding WerkzeugListeZauberzeichen}" SelectedItem="{Binding SelectedWerkzeugZauberzeichen}" />
-                                </StackPanel>
-                                <TextBlock Margin="0,5,0,5" Text="Zusatzzeichen:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Satinavs Siegel" />
-                                    <ComboBox Margin="6,0,5,0" Height="20" Width="130" ItemsSource="{Binding SatinavsSiegelListeZauberzeichen}" SelectedItem="{Binding SelectedSatinavsSiegelZauberzeichen}" IsEnabled="{Binding IsEnabledSatinavsSiegelListeZauberzeichen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Verkleinerung" />
-                                    <ComboBox Margin="10,0,5,0" Height="20" Width="130" ItemsSource="{Binding VerkleinerungListeZauberzeichen}" SelectedItem="{Binding SelectedVerkleinerungZauberzeichen}" IsEnabled="{Binding IsEnabledVerkleinerungListeZauberzeichen}" />
-                                </StackPanel>
-                                <CheckBox Margin="0,0,5,0" Content="Potenzierung" IsChecked="{Binding CheckedPotenzierungZauberzeichen}" IsEnabled="{Binding IsEnabledPotenzierungZauberzeichen}"/>
-                                <CheckBox Margin="0,0,5,0" Content="Kraftquellenspeisung" IsChecked="{Binding CheckedKraftquellenspeisungZauberzeichen}" IsEnabled="{Binding IsEnabledKraftquellenspeisungZauberzeichen}"/>
-                                <CheckBox Margin="0,0,5,0" Content="Magiewiderstand"  IsChecked="{Binding CheckedMagiewiderstandZauberzeichen}" IsEnabled="{Binding IsEnabledMagiewiderstandZauberzeichen}"/>
-                                <CheckBox Margin="0,0,5,0" Content="Schutzsiegel"  IsChecked="{Binding CheckedSchutzsiegelZauberzeichen}" IsEnabled="{Binding IsEnabledSchutzsiegelZauberzeichen}"/>
-                                <CheckBox Margin="0,0,5,0" Content="Tarnung"  IsChecked="{Binding CheckedTarnungZauberzeichen}" IsEnabled="{Binding IsEnabledTarnungZauberzeichen}"/>
-                                <CheckBox Margin="0,0,5,0" Content="Zielbeschränkung"  IsChecked="{Binding CheckedZielbeschränkungZauberzeichen}" IsEnabled="{Binding IsEnabledZielbeschränkungZauberzeichen}"/>
-                                <Button Margin="5,20,5,20"  VerticalAlignment="Center" Content="Bau" Command="{Binding OnBauZauberzeichen}" />
-                            </StackPanel>
-                        </Border>
-                        <Border Margin="5" Width="225" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                            <StackPanel  Orientation="Vertical" VerticalAlignment="Top" Visibility="{Binding VisibilityHandwerkErgebnis}" Background="{StaticResource BackgroundPergamentHoch}">
-                            
-                                <TextBlock Margin="0,0,0,5" Text="Aktivierung:" FontSize="14" FontWeight="Bold"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Ritualkenntnis TaW"  VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="50,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertRitualkenntnis}" />
-                                    
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Verteilung TaP*:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                    <TextBlock Margin="50,0,0,0"  Text="(" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding WertTaPZauberzeichen}" VerticalAlignment="Center" />
-                                    <TextBlock Text=")" VerticalAlignment="Center" />                                  
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Halbierung Herstellungszeit" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHerstellungszeitZauberzeichen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Erleichterung Aktivierung" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="18,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAktivierungZauberzeichen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Künstlerische Qualität" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="37,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertQualitätZauberzeichen}" />
-                                </StackPanel>
-                                <TextBlock Margin="0,5,0,5" Text="Modifikationen durch Material und Form:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Form [1-3]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="95,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFormZauberzeichen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Farbe [0-2]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="93,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFarbeZauberzeichen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Affinität [0-25%]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="64,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAffinitätZauberzeichen}" />
-                                </StackPanel>
-                                <Button Margin="5,20,5,20" VerticalAlignment="Center" Content="Aktivierung" Command="{Binding OnAktivierungZauberzeichen}"  />
-                            </StackPanel>
-                        </Border>
+                            </Border>
+                        </Expander>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Column="2" Margin="20,25,0,0" Background="{StaticResource BackgroundPergamentHoch}" HorizontalAlignment="Left" Width="Auto">
-                    <TextBlock Text="{Binding WertNameZauberzeichen}" Margin="20,20,20,10" FontWeight="Bold"/>
-                    <Grid Margin="20,10,20,10" Width="Auto">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="50" />
-                            <ColumnDefinition Width="Auto" MinWidth="50" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Komplexität"  Grid.Row="0" />
-                        <TextBlock Text="{Binding WertKomplexitätZauberzeichen}" Grid.Row="0" Grid.Column="2" />
-                        <TextBlock Text="benötigte Anzahl" Grid.Row="1" />
-                        <TextBlock Text="{Binding WertAnzahlZauberzeichen}" Grid.Row="1" Grid.Column="2" />
-                        <TextBlock Text="Wirkungsradius"  Grid.Row="2" />
-                        <TextBlock Text="{Binding WertWirkungsradiusZauberzeichen}" Grid.Row="2" Grid.Column="2" />
-                        <TextBlock Text="Artefaktkontrolle"  Grid.Row="3" />
-                        <TextBlock Text="{Binding WertArtefaktkontrolleZauberzeichen}" Grid.Row="3" Grid.Column="2" />
-                        <TextBlock Text="Merkmale:"  Grid.Row="4" />
-                        <TextBlock Text="{Binding WertMerkmaleZauberzeichen}" Grid.Row="4" Grid.Column="2" />
-                        <TextBlock Text="Herstellung:"  Grid.Row="5" FontWeight="Bold" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="2">
-                            <TextBlock Text="TaP* "/>
-                            <TextBlock Text="{Binding WertTaPZauberzeichen}"/>
+
+                <Expander Grid.Column="2" Margin="2" IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <StackPanel Margin="20,25,0,0" HorizontalAlignment="Left">
+                            <TextBlock Text="{Binding WertNameZauberzeichen}" Margin="20,20,20,10" FontWeight="Bold"/>
+                            <Grid Margin="20,10,20,10" Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Komplexität"  Grid.Row="0" />
+                                <TextBlock Text="{Binding WertKomplexitätZauberzeichen}" Grid.Row="0" Grid.Column="2" />
+                                <TextBlock Text="benötigte Anzahl" Grid.Row="1" />
+                                <TextBlock Text="{Binding WertAnzahlZauberzeichen}" Grid.Row="1" Grid.Column="2" />
+                                <TextBlock Text="Wirkungsradius"  Grid.Row="2" />
+                                <TextBlock Text="{Binding WertWirkungsradiusZauberzeichen}" Grid.Row="2" Grid.Column="2" />
+                                <TextBlock Text="Artefaktkontrolle"  Grid.Row="3" />
+                                <TextBlock Text="{Binding WertArtefaktkontrolleZauberzeichen}" Grid.Row="3" Grid.Column="2" />
+                                <TextBlock Text="Merkmale:"  Grid.Row="4" />
+                                <TextBlock Text="{Binding WertMerkmaleZauberzeichen}" Grid.Row="4" Grid.Column="2" />
+                                <TextBlock Text="Herstellung:"  Grid.Row="5" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="2">
+                                    <TextBlock Text="TaP* "/>
+                                    <TextBlock Text="{Binding WertTaPZauberzeichen}"/>
+                                </StackPanel>
+                                <TextBlock Text="Herstellungsdauer" Grid.Row="6" />
+                                <TextBlock Text="{Binding WertHerstellungsdauerZauberzeichen}" Grid.Row="6" Grid.Column="2" />
+                                <TextBlock Text="Wirkungsdauer"  Grid.Row="7" />
+                                <TextBlock Text="{Binding WertWirkungsdauerZauberzeichen}" Grid.Row="7" Grid.Column="2" />
+                                <TextBlock Text="Aktivierung:"  Grid.Row="8" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="2">
+                                    <TextBlock Text="RkP* "/>
+                                    <TextBlock Text="{Binding WertRkPZauberzeichen}"/>
+                                </StackPanel>
+                                <TextBlock Text="Aktivierung"  Grid.Row="9" />
+                                <TextBlock Text="{Binding WertErleichterungRkZauberzeichen}" Grid.Row="9" Grid.Column="2" />
+                                <TextBlock Text="Aktivierungsdauer"  Grid.Row="10" />
+                                <TextBlock Text="{Binding WertAktivierungsdauerZauberzeichen}" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="Aktivierungskosten"  Grid.Row="11" />
+                                <TextBlock Text="{Binding WertAktivierungskostenZauberzeichen}" Grid.Row="11" Grid.Column="2" />
+                                <TextBlock Text="RkW des Erschaffers"  Grid.Row="12" />
+                                <TextBlock Text="{Binding WertRkWErschafferZauberzeichen}" Grid.Row="12" Grid.Column="2" />
+                                <TextBlock Text="Aussehen:"  Grid.Row="13" FontWeight="Bold" />
+                                <TextBlock Text="Größe Zeichen"  Grid.Row="14" />
+                                <TextBlock Text="{Binding WertGrößeZauberzeichen}" Grid.Row="14" Grid.Column="2" />
+                                <TextBlock Text="Künstlerische Qualität"  Grid.Row="15" />
+                                <TextBlock Text="{Binding WertQualitätZauberzeichen}" Grid.Row="15" Grid.Column="2" />
+                                <TextBlock Text="Erkennen (Sinnesschärfe)"  Grid.Row="16" />
+                                <TextBlock Text="{Binding WertErkennenZauberzeichen}" Grid.Row="16" Grid.Column="2" />
+                                <TextBlock Text="Zusatzzeichen"  Grid.Row="17" />
+                                <ListBox ItemsSource="{Binding ZusatzzeichenListeZauberzeichen}" Grid.Row="20" Grid.Column="2" Background="Beige"/>
+                            </Grid>
+                            <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
                         </StackPanel>
-                        <TextBlock Text="Herstellungsdauer" Grid.Row="6" />
-                        <TextBlock Text="{Binding WertHerstellungsdauerZauberzeichen}" Grid.Row="6" Grid.Column="2" />
-                        <TextBlock Text="Wirkungsdauer"  Grid.Row="7" />
-                        <TextBlock Text="{Binding WertWirkungsdauerZauberzeichen}" Grid.Row="7" Grid.Column="2" />
-                        <TextBlock Text="Aktivierung:"  Grid.Row="8" FontWeight="Bold" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="2">
-                            <TextBlock Text="RkP* "/>
-                            <TextBlock Text="{Binding WertRkPZauberzeichen}"/>
-                        </StackPanel>
-                        <TextBlock Text="Aktivierung"  Grid.Row="9" />
-                        <TextBlock Text="{Binding WertErleichterungRkZauberzeichen}" Grid.Row="9" Grid.Column="2" />
-                        <TextBlock Text="Aktivierungsdauer"  Grid.Row="10" />
-                        <TextBlock Text="{Binding WertAktivierungsdauerZauberzeichen}" Grid.Row="10" Grid.Column="2" />
-                        <TextBlock Text="Aktivierungskosten"  Grid.Row="11" />
-                        <TextBlock Text="{Binding WertAktivierungskostenZauberzeichen}" Grid.Row="11" Grid.Column="2" />
-                        <TextBlock Text="RkW des Erschaffers"  Grid.Row="12" />
-                        <TextBlock Text="{Binding WertRkWErschafferZauberzeichen}" Grid.Row="12" Grid.Column="2" />
-                        <TextBlock Text="Aussehen:"  Grid.Row="13" FontWeight="Bold" />
-                        <TextBlock Text="Größe Zeichen"  Grid.Row="14" />
-                        <TextBlock Text="{Binding WertGrößeZauberzeichen}" Grid.Row="14" Grid.Column="2" />
-                        <TextBlock Text="Künstlerische Qualität"  Grid.Row="15" />
-                        <TextBlock Text="{Binding WertQualitätZauberzeichen}" Grid.Row="15" Grid.Column="2" />
-                        <TextBlock Text="Erkennen (Sinnesschärfe)"  Grid.Row="16" />
-                        <TextBlock Text="{Binding WertErkennenZauberzeichen}" Grid.Row="16" Grid.Column="2" />
-                        <TextBlock Text="Zusatzzeichen"  Grid.Row="17" />
-                        <ListBox ItemsSource="{Binding ZusatzzeichenListeZauberzeichen}" Grid.Row="20" Grid.Column="2" Background="{StaticResource BackgroundPergamentHoch}"/>
-                    </Grid>
-                    <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
-                </StackPanel>
+                    </Border>
+                </Expander>
 
             </Grid>            
         </TabItem>
@@ -197,7 +219,7 @@
             <Grid OpacityMask="Black">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="62" />
-                    <ColumnDefinition Width="408" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="104*" />
                 </Grid.ColumnDefinitions>
@@ -213,18 +235,27 @@
                             </ComboBox.ToolTip>
                         </ComboBox>
                     </StackPanel>
-                    <Border Margin="5" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="250">
-                            <TextBlock Text="Kreise:" />
-                            <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding KreiseListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedKreis}" ToolTip="Es können nur die Kreise ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
-                            <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenKreise}" IsEnabled="{Binding IsEnabledSpontanzeichenKreise}"/>
-                        </StackPanel>
-                    </Border>
+                    <Expander Margin="2" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Kreise" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
+                                <TextBlock Text="Kreise:" />
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding KreiseListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedKreis}" ToolTip="Es können nur die Kreise ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
+                                <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenKreise}" IsEnabled="{Binding IsEnabledSpontanzeichenKreise}"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
 
                     <StackPanel Orientation="Horizontal" Background="Transparent">
-                        <Border Margin="5" Width="225" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-                                <TextBlock Margin="0,0,0,5" Text="Handwerkliche Herstellung:" FontSize="14" FontWeight="Bold" />
+
+                        <Expander Margin="2" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Handwerkliche Herstellung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Talent" />
                                     <ComboBox Margin="5,0,5,0" Height="20" Width="122" ItemsSource="{Binding TalentListeKreise}" DisplayMemberPath="Talentname"  SelectedItem="{Binding SelectedTalentKreise}" />
@@ -256,126 +287,142 @@
                                 <Button Margin="5,20,5,20"  VerticalAlignment="Center" Content="Bau" Command="{Binding OnBauKreise}"/>
                             </StackPanel>
                         </Border>
-                        <Border Margin="5" Width="225" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                            <StackPanel  Orientation="Vertical" VerticalAlignment="Top" Visibility="{Binding VisibilityHandwerkErgebnis}" Background="{StaticResource BackgroundPergamentHoch}">
-                                <TextBlock Margin="0,0,0,5" Text="Aktivierung:" FontSize="14" FontWeight="Bold"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Ritualkenntnis TaW"  VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="49,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertRitualkenntnis}" />
+                        </Expander>
+
+                        <Expander Margin="2" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Aktivierung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Visibility="{Binding VisibilityHandwerkErgebnis}">
+                                    <TextBlock Margin="0,0,0,5" Text="Aktivierung:" FontSize="14" FontWeight="Bold"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Ritualkenntnis TaW"  VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="49,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertRitualkenntnis}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Verteilung TaP*:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                        <TextBlock Margin="50,0,0,0"  Text="(" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding WertTaPKreise}" VerticalAlignment="Center" />
+                                        <TextBlock Text=")" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Halbierung Herstellungszeit" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHerstellungszeitKreise}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Erleichterung Aktivierung" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="18,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAktivierungKreise}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Künstlerische Qualität" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="37,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertQualitätKreise}" />
+                                    </StackPanel>
+                                    <TextBlock Margin="0,5,0,5" Text="Modifikationen durch Material und Form:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Form [1-3]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="95,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFormKreise}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Farbe [0-2]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="93,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFarbeKreise}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Affinität [0-25%]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="64,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAffinitätKreise}" />
+                                    </StackPanel>
+                                    <Button Margin="5,20,5,20" VerticalAlignment="Center" Content="Aktivierung" Command="{Binding OnAktivierungKreise}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Verteilung TaP*:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                    <TextBlock Margin="50,0,0,0"  Text="(" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding WertTaPKreise}" VerticalAlignment="Center" />
-                                    <TextBlock Text=")" VerticalAlignment="Center" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Halbierung Herstellungszeit" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHerstellungszeitKreise}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Erleichterung Aktivierung" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="18,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAktivierungKreise}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Künstlerische Qualität" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="37,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertQualitätKreise}" />
-                                </StackPanel>
-                                <TextBlock Margin="0,5,0,5" Text="Modifikationen durch Material und Form:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Form [1-3]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="95,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFormKreise}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Farbe [0-2]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="93,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFarbeKreise}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Affinität [0-25%]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="64,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAffinitätKreise}" />
-                                </StackPanel>
-                                <Button Margin="5,20,5,20" VerticalAlignment="Center" Content="Aktivierung" Command="{Binding OnAktivierungKreise}" />
-                            </StackPanel>
-                        </Border>
+                            </Border>
+                        </Expander>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Column="2" Margin="20,25,0,0" Background="{StaticResource BackgroundPergamentHoch}" HorizontalAlignment="Left" Width="Auto">
-                    <TextBlock Text="{Binding WertNameKreise}" Margin="20,20,20,10" FontWeight="Bold"/>
-                    <Grid Margin="20,10,20,10" Width="Auto">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="50" />
-                            <ColumnDefinition Width="Auto" MinWidth="50" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Komplexität"  Grid.Row="0" />
-                        <TextBlock Text="{Binding WertKomplexitätKreise}" Grid.Row="0" Grid.Column="2" />
-                        <TextBlock Text="Wirkungsradius"  Grid.Row="1" />
-                        <TextBlock Text="{Binding WertWirkungsradiusKreise}" Grid.Row="1" Grid.Column="2" />
-                        <TextBlock Text="Artefaktkontrolle"  Grid.Row="2" />
-                        <TextBlock Text="{Binding WertArtefaktkontrolleKreise}" Grid.Row="2" Grid.Column="2" />
-                        <TextBlock Text="Merkmale:"  Grid.Row="3" />
-                        <TextBlock Text="{Binding WertMerkmaleKreise}" Grid.Row="3" Grid.Column="2" />
-                        <TextBlock Text="Herstellung:"  Grid.Row="4" FontWeight="Bold" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="2">
-                            <TextBlock Text="TaP* "/>
-                            <TextBlock Text="{Binding WertTaPKreise}"/>
+
+                <Expander Grid.Column="2" Margin="2" IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <StackPanel HorizontalAlignment="Left">
+                            <TextBlock Text="{Binding WertNameKreise}" Margin="20,20,20,10" FontWeight="Bold"/>
+                            <Grid Margin="20,10,20,10" Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Komplexität"  Grid.Row="0" />
+                                <TextBlock Text="{Binding WertKomplexitätKreise}" Grid.Row="0" Grid.Column="2" />
+                                <TextBlock Text="Wirkungsradius"  Grid.Row="1" />
+                                <TextBlock Text="{Binding WertWirkungsradiusKreise}" Grid.Row="1" Grid.Column="2" />
+                                <TextBlock Text="Artefaktkontrolle"  Grid.Row="2" />
+                                <TextBlock Text="{Binding WertArtefaktkontrolleKreise}" Grid.Row="2" Grid.Column="2" />
+                                <TextBlock Text="Merkmale:"  Grid.Row="3" />
+                                <TextBlock Text="{Binding WertMerkmaleKreise}" Grid.Row="3" Grid.Column="2" />
+                                <TextBlock Text="Herstellung:"  Grid.Row="4" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="2">
+                                    <TextBlock Text="TaP* "/>
+                                    <TextBlock Text="{Binding WertTaPKreise}"/>
+                                </StackPanel>
+                                <TextBlock Text="Herstellungsdauer" Grid.Row="5" />
+                                <TextBlock Text="{Binding WertHerstellungsdauerKreise}" Grid.Row="5" Grid.Column="2" />
+                                <TextBlock Text="Wirkungsdauer"  Grid.Row="6" />
+                                <TextBlock Text="{Binding WertWirkungsdauerKreise}" Grid.Row="6" Grid.Column="2" />
+                                <TextBlock Text="Aktivierung:"  Grid.Row="7" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="2">
+                                    <TextBlock Text="RkP* "/>
+                                    <TextBlock Text="{Binding WertRkPKreise}"/>
+                                </StackPanel>
+                                <TextBlock Text="Aktivierung"  Grid.Row="9" />
+                                <TextBlock Text="{Binding WertErleichterungRkKreise}" Grid.Row="9" Grid.Column="2" />
+                                <TextBlock Text="Aktivierungsdauer"  Grid.Row="10" />
+                                <TextBlock Text="{Binding WertAktivierungsdauerKreise}" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="Aktivierungskosten"  Grid.Row="11" />
+                                <TextBlock Text="{Binding WertAktivierungskostenKreise}" Grid.Row="11" Grid.Column="2" />
+                                <TextBlock Text="RkW des Erschaffers"  Grid.Row="12" />
+                                <TextBlock Text="{Binding WertRkWErschafferKreise}" Grid.Row="12" Grid.Column="2" />
+                                <TextBlock Text="Zirkelstärke"  Grid.Row="13" />
+                                <TextBlock Text="{Binding WertZirkelstärkeKreise}" Grid.Row="13" Grid.Column="2" />
+                                <TextBlock Text="Aussehen:"  Grid.Row="14" FontWeight="Bold" />
+                                <TextBlock Text="max. Radius"  Grid.Row="16" />
+                                <TextBlock Text="{Binding WertGrößeKreisKreise}" Grid.Row="16" Grid.Column="2" />
+                                <TextBlock Text="Künstlerische Qualität"  Grid.Row="17" />
+                                <TextBlock Text="{Binding WertQualitätKreise}" Grid.Row="17" Grid.Column="2" />
+                                <TextBlock Text="Erkennen (Sinnesschärfe)"  Grid.Row="19" />
+                                <TextBlock Text="{Binding WertErkennenKreise}" Grid.Row="19" Grid.Column="2" />
+                                <TextBlock Text="Zusatzzeichen"  Grid.Row="20" />
+                                <ListBox ItemsSource="{Binding ZusatzzeichenListeKreise}" Grid.Row="20" Grid.Column="2" Background="Beige"/>
+                                <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="2">
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
                         </StackPanel>
-                        <TextBlock Text="Herstellungsdauer" Grid.Row="5" />
-                        <TextBlock Text="{Binding WertHerstellungsdauerKreise}" Grid.Row="5" Grid.Column="2" />
-                        <TextBlock Text="Wirkungsdauer"  Grid.Row="6" />
-                        <TextBlock Text="{Binding WertWirkungsdauerKreise}" Grid.Row="6" Grid.Column="2" />
-                        <TextBlock Text="Aktivierung:"  Grid.Row="7" FontWeight="Bold" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="2">
-                            <TextBlock Text="RkP* "/>
-                            <TextBlock Text="{Binding WertRkPKreise}"/>
-                        </StackPanel>
-                        <TextBlock Text="Aktivierung"  Grid.Row="9" />
-                        <TextBlock Text="{Binding WertErleichterungRkKreise}" Grid.Row="9" Grid.Column="2" />
-                        <TextBlock Text="Aktivierungsdauer"  Grid.Row="10" />
-                        <TextBlock Text="{Binding WertAktivierungsdauerKreise}" Grid.Row="10" Grid.Column="2" />
-                        <TextBlock Text="Aktivierungskosten"  Grid.Row="11" />
-                        <TextBlock Text="{Binding WertAktivierungskostenKreise}" Grid.Row="11" Grid.Column="2" />
-                        <TextBlock Text="RkW des Erschaffers"  Grid.Row="12" />
-                        <TextBlock Text="{Binding WertRkWErschafferKreise}" Grid.Row="12" Grid.Column="2" />
-                        <TextBlock Text="Zirkelstärke"  Grid.Row="13" />
-                        <TextBlock Text="{Binding WertZirkelstärkeKreise}" Grid.Row="13" Grid.Column="2" />
-                        <TextBlock Text="Aussehen:"  Grid.Row="14" FontWeight="Bold" />
-                        <TextBlock Text="max. Radius"  Grid.Row="16" />
-                        <TextBlock Text="{Binding WertGrößeKreisKreise}" Grid.Row="16" Grid.Column="2" />
-                        <TextBlock Text="Künstlerische Qualität"  Grid.Row="17" />
-                        <TextBlock Text="{Binding WertQualitätKreise}" Grid.Row="17" Grid.Column="2" />
-                        <TextBlock Text="Erkennen (Sinnesschärfe)"  Grid.Row="19" />
-                        <TextBlock Text="{Binding WertErkennenKreise}" Grid.Row="19" Grid.Column="2" />
-                        <TextBlock Text="Zusatzzeichen"  Grid.Row="20" />
-                        <ListBox ItemsSource="{Binding ZusatzzeichenListeKreise}" Grid.Row="20" Grid.Column="2" Background="{StaticResource BackgroundPergamentHoch}"/>
-                        <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="2">
-                        </StackPanel>
-                    </Grid>
-                    <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
-                </StackPanel>
+                    </Border>
+                </Expander>
+
             </Grid>
         </TabItem>
         <TabItem Header="Runen">
@@ -398,148 +445,172 @@
                             </ComboBox.ToolTip>
                         </ComboBox>
                     </StackPanel>
-                    <Border Margin="5" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="250">
-                            <TextBlock Text="Runen:" />
-                            <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding RunenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRune}" ToolTip="Es können nur die Runen ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
-                            <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenRunen}" IsEnabled="{Binding IsEnabledSpontanzeichenRunen}"/>
-                        </StackPanel>
-                    </Border>
+                    <Expander Margin="2" IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock Text="Runen" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
+                                <TextBlock Text="Runen:" />
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding RunenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRune}" ToolTip="Es können nur die Runen ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
+                                <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenRunen}" IsEnabled="{Binding IsEnabledSpontanzeichenRunen}"/>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
 
                     <StackPanel Orientation="Horizontal" Background="Transparent">
-                        <Border Margin="5" Width="225" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-                                <TextBlock Margin="0,0,0,5" Text="Handwerkliche Herstellung:" FontSize="14" FontWeight="Bold" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Talent" />
-                                    <ComboBox Margin="5,0,5,0" Height="20" Width="122" ItemsSource="{Binding TalentListeRunen}" DisplayMemberPath="Talentname"  SelectedItem="{Binding SelectedTalentRunen}" />
-                                    <CheckBox Margin="0,0,5,0" Content="Spez" IsChecked="{Binding CheckedSpezialisierungRunen}"/>
+
+                        <Expander IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Handwerkliche Herstellung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Talent" />
+                                        <ComboBox Margin="5,0,5,0" Height="20" Width="122" ItemsSource="{Binding TalentListeRunen}" DisplayMemberPath="Talentname"  SelectedItem="{Binding SelectedTalentRunen}" />
+                                        <CheckBox Margin="0,0,5,0" Content="Spez" IsChecked="{Binding CheckedSpezialisierungRunen}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Handwerkstalent TaW (" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding WertErleichterungTaRunen}" VerticalAlignment="Center" />
+                                        <TextBlock Text=")" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="23,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHandwerkRunen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0,5,0,5" Text="Werkzeug:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                        <ComboBox Margin="5,0,5,0" Height="20" Width="149" ItemsSource="{Binding WerkzeugListeRunen}" SelectedItem="{Binding SelectedWerkzeugRunen}" />
+                                    </StackPanel>
+                                    <Button Margin="5,20,5,20"  VerticalAlignment="Center" Content="Bau" Command="{Binding OnBauRunen}"/>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Handwerkstalent TaW (" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding WertErleichterungTaRunen}" VerticalAlignment="Center" />
-                                    <TextBlock Text=")" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="23,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHandwerkRunen}" />
+                            </Border>
+                        </Expander>
+
+                        <Expander IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Aktivierung" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Visibility="{Binding VisibilityHandwerkErgebnis}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Ritualkenntnis TaW"  VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="49,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertRitualkenntnis}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Verteilung TaP*:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                        <TextBlock Margin="50,0,0,0"  Text="(" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding WertTaPRunen}" VerticalAlignment="Center" />
+                                        <TextBlock Text=")" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Halbierung Herstellungszeit" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHerstellungszeitRunen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Erleichterung Aktivierung" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="18,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAktivierungRunen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Künstlerische Qualität" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="37,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertQualitätRunen}" />
+                                    </StackPanel>
+                                    <TextBlock Margin="0,5,0,5" Text="Modifikationen durch Material und Form:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Form [1-3]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="95,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFormRunen}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Affinität [0-25%]" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox Margin="64,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAffinitätRunen}" />
+                                    </StackPanel>
+                                    <Button Margin="5,20,5,20" VerticalAlignment="Center" Content="Aktivierung" Command="{Binding OnAktivierungRunen}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="0,5,0,5" Text="Werkzeug:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                    <ComboBox Margin="5,0,5,0" Height="20" Width="149" ItemsSource="{Binding WerkzeugListeRunen}" SelectedItem="{Binding SelectedWerkzeugRunen}" />
-                                </StackPanel>
-                                <Button Margin="5,20,5,20"  VerticalAlignment="Center" Content="Bau" Command="{Binding OnBauRunen}"/>
-                            </StackPanel>
-                        </Border>
-                        <Border Margin="5" Width="225" Padding="4" CornerRadius="5" BorderBrush="AliceBlue" Background="{StaticResource BackgroundPergamentHoch}">
-                            <StackPanel  Orientation="Vertical" VerticalAlignment="Top" Visibility="{Binding VisibilityHandwerkErgebnis}" Background="{StaticResource BackgroundPergamentHoch}">
-                                <TextBlock Margin="0,0,0,5" Text="Aktivierung:" FontSize="14" FontWeight="Bold"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Ritualkenntnis TaW"  VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="49,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertRitualkenntnis}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Verteilung TaP*:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                    <TextBlock Margin="50,0,0,0"  Text="(" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding WertTaPRunen}" VerticalAlignment="Center" />
-                                    <TextBlock Text=")" VerticalAlignment="Center" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Halbierung Herstellungszeit" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertHerstellungszeitRunen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Erleichterung Aktivierung" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="18,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAktivierungRunen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Künstlerische Qualität" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="37,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertQualitätRunen}" />
-                                </StackPanel>
-                                <TextBlock Margin="0,5,0,5" Text="Modifikationen durch Material und Form:" VerticalAlignment="Center" FontWeight="Bold" FontSize="11" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Form [1-3]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="95,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFormRunen}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Affinität [0-25%]" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="64,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAffinitätRunen}" />
-                                </StackPanel>
-                                <Button Margin="5,20,5,20" VerticalAlignment="Center" Content="Aktivierung" Command="{Binding OnAktivierungRunen}" />
-                            </StackPanel>
-                        </Border>
+                            </Border>
+                        </Expander>
+                        
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Column="2" Margin="20,25,0,0" Background="{StaticResource BackgroundPergamentHoch}" HorizontalAlignment="Left" Width="Auto">
-                    <TextBlock Text="{Binding WertNameRunen}" Margin="20,20,20,10" FontWeight="Bold"/>
-                    <Grid Margin="20,10,20,10" Width="Auto">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="50" />
-                            <ColumnDefinition Width="Auto" MinWidth="50" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Komplexität"  Grid.Row="0" />
-                        <TextBlock Text="{Binding WertKomplexitätRunen}" Grid.Row="0" Grid.Column="2" />
-                        <TextBlock Text="Wirkungsradius"  Grid.Row="1" />
-                        <TextBlock Text="{Binding WertWirkungsradiusRunen}" Grid.Row="1" Grid.Column="2" />
-                        <TextBlock Text="Artefaktkontrolle"  Grid.Row="2" />
-                        <TextBlock Text="{Binding WertArtefaktkontrolleRunen}" Grid.Row="2" Grid.Column="2" />
-                        <TextBlock Text="Merkmale:"  Grid.Row="3" />
-                        <TextBlock Text="{Binding WertMerkmaleRunen}" Grid.Row="3" Grid.Column="2" />
-                        <TextBlock Text="Herstellung:"  Grid.Row="4" FontWeight="Bold" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="2">
-                            <TextBlock Text="TaP* "/>
-                            <TextBlock Text="{Binding WertTaPRunen}"/>
+
+                <Expander Grid.Column="2" Margin="2" IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <StackPanel HorizontalAlignment="Left">
+                            <TextBlock Text="{Binding WertNameRunen}" Margin="20,20,20,10" FontWeight="Bold"/>
+                            <Grid Margin="20,10,20,10" Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Komplexität"  Grid.Row="0" />
+                                <TextBlock Text="{Binding WertKomplexitätRunen}" Grid.Row="0" Grid.Column="2" />
+                                <TextBlock Text="Wirkungsradius"  Grid.Row="1" />
+                                <TextBlock Text="{Binding WertWirkungsradiusRunen}" Grid.Row="1" Grid.Column="2" />
+                                <TextBlock Text="Artefaktkontrolle"  Grid.Row="2" />
+                                <TextBlock Text="{Binding WertArtefaktkontrolleRunen}" Grid.Row="2" Grid.Column="2" />
+                                <TextBlock Text="Merkmale:"  Grid.Row="3" />
+                                <TextBlock Text="{Binding WertMerkmaleRunen}" Grid.Row="3" Grid.Column="2" />
+                                <TextBlock Text="Herstellung:"  Grid.Row="4" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="2">
+                                    <TextBlock Text="TaP* "/>
+                                    <TextBlock Text="{Binding WertTaPRunen}"/>
+                                </StackPanel>
+                                <TextBlock Text="Herstellungsdauer" Grid.Row="5" />
+                                <TextBlock Text="{Binding WertHerstellungsdauerRunen}" Grid.Row="5" Grid.Column="2" />
+                                <TextBlock Text="Wirkungsdauer"  Grid.Row="6" />
+                                <TextBlock Text="{Binding WertWirkungsdauerRunen}" Grid.Row="6" Grid.Column="2" />
+                                <TextBlock Text="Aktivierung:"  Grid.Row="7" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="2">
+                                    <TextBlock Text="RkP* "/>
+                                    <TextBlock Text="{Binding WertRkPRunen}"/>
+                                </StackPanel>
+                                <TextBlock Text="Aktivierung"  Grid.Row="9" />
+                                <TextBlock Text="{Binding WertErleichterungRkRunen}" Grid.Row="9" Grid.Column="2" />
+                                <TextBlock Text="Aktivierungsdauer"  Grid.Row="10" />
+                                <TextBlock Text="{Binding WertAktivierungsdauerRunen}" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="Aktivierungskosten"  Grid.Row="11" />
+                                <TextBlock Text="{Binding WertAktivierungskostenRunen}" Grid.Row="11" Grid.Column="2" />
+                                <TextBlock Text="RkW des Erschaffers"  Grid.Row="12" />
+                                <TextBlock Text="{Binding WertRkWErschafferRunen}" Grid.Row="12" Grid.Column="2" />
+                                <TextBlock Text="Aussehen:"  Grid.Row="14" FontWeight="Bold" />
+                                <TextBlock Text="Größe Zeichen"  Grid.Row="15" />
+                                <TextBlock Text="{Binding WertGrößeRunen}" Grid.Row="15" Grid.Column="2" />
+                                <TextBlock Text="Künstlerische Qualität"  Grid.Row="17" />
+                                <TextBlock Text="{Binding WertQualitätRunen}" Grid.Row="17" Grid.Column="2" />
+                                <TextBlock Text="Erkennen (Sinnesschärfe)"  Grid.Row="19" />
+                                <TextBlock Text="{Binding WertErkennenRunen}" Grid.Row="19" Grid.Column="2" />
+                                <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="2">
+                                </StackPanel>
+                            </Grid>
+                            <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
                         </StackPanel>
-                        <TextBlock Text="Herstellungsdauer" Grid.Row="5" />
-                        <TextBlock Text="{Binding WertHerstellungsdauerRunen}" Grid.Row="5" Grid.Column="2" />
-                        <TextBlock Text="Wirkungsdauer"  Grid.Row="6" />
-                        <TextBlock Text="{Binding WertWirkungsdauerRunen}" Grid.Row="6" Grid.Column="2" />
-                        <TextBlock Text="Aktivierung:"  Grid.Row="7" FontWeight="Bold" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="2">
-                            <TextBlock Text="RkP* "/>
-                            <TextBlock Text="{Binding WertRkPRunen}"/>
-                        </StackPanel>
-                        <TextBlock Text="Aktivierung"  Grid.Row="9" />
-                        <TextBlock Text="{Binding WertErleichterungRkRunen}" Grid.Row="9" Grid.Column="2" />
-                        <TextBlock Text="Aktivierungsdauer"  Grid.Row="10" />
-                        <TextBlock Text="{Binding WertAktivierungsdauerRunen}" Grid.Row="10" Grid.Column="2" />
-                        <TextBlock Text="Aktivierungskosten"  Grid.Row="11" />
-                        <TextBlock Text="{Binding WertAktivierungskostenRunen}" Grid.Row="11" Grid.Column="2" />
-                        <TextBlock Text="RkW des Erschaffers"  Grid.Row="12" />
-                        <TextBlock Text="{Binding WertRkWErschafferRunen}" Grid.Row="12" Grid.Column="2" />
-                        <TextBlock Text="Aussehen:"  Grid.Row="14" FontWeight="Bold" />
-                        <TextBlock Text="Größe Zeichen"  Grid.Row="15" />
-                        <TextBlock Text="{Binding WertGrößeRunen}" Grid.Row="15" Grid.Column="2" />
-                        <TextBlock Text="Künstlerische Qualität"  Grid.Row="17" />
-                        <TextBlock Text="{Binding WertQualitätRunen}" Grid.Row="17" Grid.Column="2" />
-                        <TextBlock Text="Erkennen (Sinnesschärfe)"  Grid.Row="19" />
-                        <TextBlock Text="{Binding WertErkennenRunen}" Grid.Row="19" Grid.Column="2" />
-                        <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="2">
-                        </StackPanel>
-                    </Grid>
-                    <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
-                </StackPanel>
+                    </Border>
+                </Expander>
             </Grid>
         </TabItem>
         <TabItem Header="Analyse">

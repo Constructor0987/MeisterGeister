@@ -8,80 +8,96 @@
              d:DesignHeight="361" d:DesignWidth="727" Background="{StaticResource Background1}">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Orientation="Vertical">
-            <Grid Margin="15,15,15,0" Background="{StaticResource BackgroundPergamentQuer}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <ViewGeneral:IntBox x:Name="_intBoxWiederholungen" Grid.Column="0" Margin="10" Height="35" Width="70" ShowButtons="True" ToolTip="Wiederholungen des Wurfes." Value="1" MinValue="1" MaxValue="10000" FontWeight="Bold" />
-                <TextBlock Grid.Column="1" Margin="10,0,10,15" Text="x" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="36" />
-                <TextBlock Grid.Column="2" Margin="10,0,10,15" Text="(" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="56" />
-                <ViewGeneral:IntBox x:Name="_intBoxAnzahl" Grid.Column="3" Margin="10" Height="35" Width="70" ShowButtons="True" ToolTip="Würfel-Anzahl." Value="1" MinValue="1" MaxValue="10000" FontWeight="Bold" />
-                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Height="55" Margin="5" Width="55" Tag="6" Click="ButtonWürfel_Click"  ToolTip="W6 (6-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
-                                <Image Source="/Images/Icons/Wuerfel/w6.png" Stretch="Uniform" />
-                            </Button>
-                            <Button Height="55" Margin="5" Width="55" Tag="10" Click="ButtonWürfel_Click"  ToolTip="W10 (10-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
-                                <Image Source="/Images/Icons/Wuerfel/w10.png" Stretch="Uniform" />
+
+            <Expander Margin="15,15,15,0" IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="Würfel" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ViewGeneral:IntBox x:Name="_intBoxWiederholungen" Grid.Column="0" Margin="10" Height="35" Width="70" ShowButtons="True" ToolTip="Wiederholungen des Wurfes." Value="1" MinValue="1" MaxValue="10000" FontWeight="Bold" />
+                        <TextBlock Grid.Column="1" Margin="10,0,10,15" Text="x" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="36" />
+                        <TextBlock Grid.Column="2" Margin="10,0,10,15" Text="(" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="56" />
+                        <ViewGeneral:IntBox x:Name="_intBoxAnzahl" Grid.Column="3" Margin="10" Height="35" Width="70" ShowButtons="True" ToolTip="Würfel-Anzahl." Value="1" MinValue="1" MaxValue="10000" FontWeight="Bold" />
+                        <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Height="55" Margin="5" Width="55" Tag="6" Click="ButtonWürfel_Click"  ToolTip="W6 (6-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                        <Image Source="/Images/Icons/Wuerfel/w6.png" Stretch="Uniform" />
+                                    </Button>
+                                    <Button Height="55" Margin="5" Width="55" Tag="10" Click="ButtonWürfel_Click"  ToolTip="W10 (10-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                        <Image Source="/Images/Icons/Wuerfel/w10.png" Stretch="Uniform" />
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button Height="55" Margin="5" Width="55" Tag="12" Click="ButtonWürfel_Click"  ToolTip="W12 (12-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                        <Image Source="/Images/Icons/Wuerfel/w12.png" Stretch="Uniform" />
+                                    </Button>
+                                    <Button Height="55" Margin="5" Width="55" Tag="20" Click="ButtonWürfel_Click"  ToolTip="W20 (20-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                        <Image Source="/Images/Icons/Wuerfel/w20.png" Stretch="Uniform" />
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                            <Button Name="_buttonWx" Height="55" Margin="5" Width="55" Click="ButtonWürfel_Click"  ToolTip="WX (Generischer Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
+                                <Grid>
+                                    <Image Source="/Images/Icons/Wuerfel/wuerfel.png" Stretch="Uniform" />
+                                    <ViewGeneral:IntBox x:Name="_intBoxWx" Margin="10" MinWidth="25" ToolTip="Seitenzahl" Value="2" MinValue="1" NumValueChanged="IntBoxWx_NumValueChanged" />
+                                </Grid>
                             </Button>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Button Height="55" Margin="5" Width="55" Tag="12" Click="ButtonWürfel_Click"  ToolTip="W12 (12-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
-                                <Image Source="/Images/Icons/Wuerfel/w12.png" Stretch="Uniform" />
-                            </Button>
-                            <Button Height="55" Margin="5" Width="55" Tag="20" Click="ButtonWürfel_Click"  ToolTip="W20 (20-seitiger Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
-                                <Image Source="/Images/Icons/Wuerfel/w20.png" Stretch="Uniform" />
-                            </Button>
-                        </StackPanel>
-                    </StackPanel>
-                    <Button Name="_buttonWx" Height="55" Margin="5" Width="55" Click="ButtonWürfel_Click"  ToolTip="WX (Generischer Würfel)." MouseEnter="ButtonWürfel_MouseEnter" Background="Beige">
-                        <Grid>
-                            <Image Source="/Images/Icons/Wuerfel/wuerfel.png" Stretch="Uniform" />
-                            <ViewGeneral:IntBox x:Name="_intBoxWx" Margin="10" MinWidth="25" ToolTip="Seitenzahl" Value="2" MinValue="1" NumValueChanged="IntBoxWx_NumValueChanged" />
-                        </Grid>
-                    </Button>
-                </StackPanel>
-                <TextBlock Grid.Column="5" Margin="10,0,10,15"  Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="42" />
-                <ViewGeneral:IntBox x:Name="_intBoxMod" Grid.Column="6" Margin="10" Height="35" Width="70" ShowButtons="True" ToolTip="Würfel-Modifikator." Value="0" FontWeight="Bold" />
-                <TextBlock Grid.Column="7" Margin="10,0,10,15"  Text=")" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="56" />
-                <CheckBox Grid.Column="8" Name="_checkBoxSoundAbspielen" IsChecked="True" FlowDirection="LeftToRight" Margin="10,10,0,0" Checked="CheckBoxSoundAbspielen_Changed" Unchecked="CheckBoxSoundAbspielen_Changed" ToolTip="Würfel-Sound abspielen." Height="25" VerticalAlignment="Center" Width="44" HorizontalAlignment="Left">
-                    <CheckBox.Content>
-                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
-                    </CheckBox.Content>
-                </CheckBox>
-            </Grid>
-            <Grid Margin="15,15,15,0" Background="{StaticResource BackgroundPergamentQuer}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="230*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="260*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Name="_labelErwartungswert" Grid.Column="0" Grid.Row="0" Margin="15,15,5,15" Text="Erwartungswert:" TextAlignment="Left" TextWrapping="Wrap" FontSize="14" />
-                <TextBlock Name="_labelEinzelwürfe" Grid.Column="0" Grid.Row="1" Margin="15" Text="Einzelwürfe:" TextAlignment="Left" TextWrapping="Wrap" FontSize="14" />
-                <TextBlock Name="_textBlockEinzelwürfe" Grid.Column="1" Grid.Row="1" Margin="15" Text="-" TextAlignment="Center" FontSize="14" TextWrapping="Wrap" />
-                <TextBlock Grid.Column="2" Grid.Row="0" Margin="15" Text="Summe:" TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" />
-                <TextBlock Grid.Column="2" Grid.Row="1" Margin="15" Text="Staffelung:" TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" />
-                <TextBlock Name="_textBlockErwartungswert" Grid.Column="1" Grid.Row="0" Margin="15" Text="-" TextAlignment="Center" FontSize="14" />
-                <TextBlock Name="_textBlockErgebnisSumme" Grid.Column="3" MinWidth="200" Margin="15" Text="-" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" Height="21" Background="{StaticResource BackgroundPergamentQuer}"></TextBlock>
-                <TextBlock Name="_textBlockErgebnisStaffel" Grid.Column="3" Grid.Row="1" MinWidth="200" Margin="15" Text="-" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" MinHeight="21" Background="{StaticResource BackgroundPergamentQuer}"></TextBlock>
-            </Grid>
+                        <TextBlock Grid.Column="5" Margin="10,0,10,15"  Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="42" />
+                        <ViewGeneral:IntBox x:Name="_intBoxMod" Grid.Column="6" Margin="10" Height="35" Width="70" ShowButtons="True" ToolTip="Würfel-Modifikator." Value="0" FontWeight="Bold" />
+                        <TextBlock Grid.Column="7" Margin="10,0,10,15"  Text=")" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="56" />
+                        <CheckBox Grid.Column="8" Name="_checkBoxSoundAbspielen" IsChecked="True" FlowDirection="LeftToRight" Margin="10,10,0,0" Checked="CheckBoxSoundAbspielen_Changed" Unchecked="CheckBoxSoundAbspielen_Changed" ToolTip="Würfel-Sound abspielen." Height="25" VerticalAlignment="Center" Width="44" HorizontalAlignment="Left">
+                            <CheckBox.Content>
+                                <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                            </CheckBox.Content>
+                        </CheckBox>
+                    </Grid>
+                </Border>
+            </Expander>
+
+            <Expander Margin="15,15,15,0" IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="230*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="260*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="_labelErwartungswert" Grid.Column="0" Grid.Row="0" Margin="15,15,5,15" Text="Erwartungswert:" TextAlignment="Left" TextWrapping="Wrap" FontSize="14" />
+                        <TextBlock Name="_labelEinzelwürfe" Grid.Column="0" Grid.Row="1" Margin="15" Text="Einzelwürfe:" TextAlignment="Left" TextWrapping="Wrap" FontSize="14" />
+                        <TextBlock Name="_textBlockEinzelwürfe" Grid.Column="1" Grid.Row="1" Margin="15" Text="-" TextAlignment="Center" FontSize="14" TextWrapping="Wrap" />
+                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="15" Text="Summe:" TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" />
+                        <TextBlock Grid.Column="2" Grid.Row="1" Margin="15" Text="Staffelung:" TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" />
+                        <TextBlock Name="_textBlockErwartungswert" Grid.Column="1" Grid.Row="0" Margin="15" Text="-" TextAlignment="Center" FontSize="14" />
+                        <TextBlock Name="_textBlockErgebnisSumme" Grid.Column="3" MinWidth="200" Margin="15" Text="-" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" Height="21" Background="{StaticResource BackgroundPergamentQuer}"></TextBlock>
+                        <TextBlock Name="_textBlockErgebnisStaffel" Grid.Column="3" Grid.Row="1" MinWidth="200" Margin="15" Text="-" TextAlignment="Center" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" MinHeight="21" Background="{StaticResource BackgroundPergamentQuer}"></TextBlock>
+                    </Grid>
+                </Border>
+            </Expander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

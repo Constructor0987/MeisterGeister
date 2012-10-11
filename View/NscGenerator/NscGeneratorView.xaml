@@ -103,50 +103,66 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="8" Background="{StaticResource BackgroundPergamentQuer}">
-            <ComboBox Height="23" Margin="15,10,0,0" Width="56" HorizontalAlignment="Left" IsEnabled="{Binding GeschlechtListeIsEnabled}" ItemsSource="{Binding GeschlechtListe}" SelectedItem="{Binding SelectedGeschlecht}" ToolTip="Geschlecht" VerticalAlignment="Top" />
-            <ComboBox Height="23" Margin="71,10,0,0" Width="82" HorizontalAlignment="Left" ItemsSource="{Binding AlterListe}" SelectedItem="{Binding SelectedAlter}" ToolTip="Alter" VerticalAlignment="Top" />
-            <ComboBox Height="23" Margin="153,10,0,0" Width="93" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding RasseListeIsEnabled}" ItemsSource="{Binding RasseListe}" SelectedItem="{Binding SelectedRasse}" ToolTip="Rasse" VerticalAlignment="Top" />
-            <ComboBox Height="23" Margin="246,10,0,0" Width="131" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding KulturListeIsEnabled}" ItemsSource="{Binding KulturListe}" SelectedItem="{Binding SelectedKultur}" ToolTip="Kultur" VerticalAlignment="Top" />
-            <ComboBox Height="23" Margin="370,10,0,0" Width="150" HorizontalAlignment="Left" IsEnabled="{Binding ProfessionListeIsEnabled}" ItemsSource="{Binding ProfessionListe}" SelectedItem="{Binding SelectedProfession}" ToolTip="Profession" VerticalAlignment="Top" Visibility="Collapsed" />
-            <Button Height="23" Margin="520,10,0,0" Command="{Binding OnReset}" HorizontalAlignment="Left" ToolTip="Auswahl zurücksetzen" VerticalAlignment="Top">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Images/Icons/General/entf_01.png" />
-                    <TextBlock Text="Reset" Margin="3,0" VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
-            <CheckBox Height="23" Margin="585,13,0,0" Width="100" Content="unübl. Kulturen" HorizontalAlignment="Left" IsChecked="{Binding CBKulturenIsChecked}" ToolTip="auch unübliche Kulturen einblenden" VerticalAlignment="Top" />
-            <CheckBox Height="23" Margin="685,13,0,0" Width="100" Content="nur Namen" HorizontalAlignment="Left" IsChecked="{Binding CBNamenIsChecked}" ToolTip="nur Namen, Rasse, Kultur berechnen" VerticalAlignment="Top" />
-            <generalControls:IntBox Height="23" Margin="15,38,0,5" Width="73" HorizontalAlignment="Left" MinValue="1" ShowButtons="True" ToolTip="Anzahl" Value="{Binding GenNumber}" VerticalAlignment="Top" />
-            <Button Height="23" Margin="100,38,0,0" Command="{Binding OnGenerate}" HorizontalAlignment="Left" ToolTip="NSCs generieren" VerticalAlignment="Top">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Images/Icons/mechanik.png" />
-                    <TextBlock Text="Generieren" Margin="3,0" VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
-            <Button Height="24" Margin="198,38,0,0" Width="24" Click="ButtonSave_Click" HorizontalAlignment="Left" Name="_buttonSave" VerticalAlignment="Top">
-                <Button.Content>
-                    <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
-                </Button.Content>
-                <Button.ToolTip>
-                    <TextBlock Height="Auto" Width="350" TextWrapping="Wrap">Markierte NSCs in Notiz 'Allgemein' speichern. Mit gedrückter STRG-Taste können auch mehrere NSCs ausgewählt werden.</TextBlock>
-                </Button.ToolTip>
-            </Button>
-            <Button Height="24" Margin="233,38,0,0" Width="51" Command="{Binding OnAddAllNSC}" HorizontalAlignment="Left" Name="_buttonSaveAll" ToolTip="Alle generierten NSCs in Notiz 'Allgemein' speichern." VerticalAlignment="Top">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
-                        <TextBlock Margin="3,0" Text="Alle" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <TextBlock Height="23" Margin="297,38,0,0" Padding="3" HorizontalAlignment="Left" Name="_textBlockSaveInfo" Text="{Binding InfoText}" VerticalAlignment="Top" />
-            <generalControls:WikiLinkControl Height="34" Margin="0,10,15,0" Width="30" HorizontalAlignment="Right" Tag="Aventurische_Namen" VerticalAlignment="Top" />
-        </Grid>
-        <ListBox Grid.Row="1" Margin="12,0,12,12" Padding="8" Background="{StaticResource BackgroundPergamentQuer}" FontSize="14" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ItemsSource="{Binding PersonenListe}" ItemTemplate="{StaticResource PersonItemTemplate}" Name="_listBoxNscs" SelectionMode="Extended">
-            <ListBox.BorderBrush>
-                <SolidColorBrush />
-            </ListBox.BorderBrush>
-        </ListBox>
+
+        <Expander Grid.Row="0" Margin="2" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <ComboBox Height="23" Margin="15,10,0,0" Width="56" HorizontalAlignment="Left" IsEnabled="{Binding GeschlechtListeIsEnabled}" ItemsSource="{Binding GeschlechtListe}" SelectedItem="{Binding SelectedGeschlecht}" ToolTip="Geschlecht" VerticalAlignment="Top" />
+                    <ComboBox Height="23" Margin="71,10,0,0" Width="82" HorizontalAlignment="Left" ItemsSource="{Binding AlterListe}" SelectedItem="{Binding SelectedAlter}" ToolTip="Alter" VerticalAlignment="Top" />
+                    <ComboBox Height="23" Margin="153,10,0,0" Width="93" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding RasseListeIsEnabled}" ItemsSource="{Binding RasseListe}" SelectedItem="{Binding SelectedRasse}" ToolTip="Rasse" VerticalAlignment="Top" />
+                    <ComboBox Height="23" Margin="246,10,0,0" Width="131" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding KulturListeIsEnabled}" ItemsSource="{Binding KulturListe}" SelectedItem="{Binding SelectedKultur}" ToolTip="Kultur" VerticalAlignment="Top" />
+                    <ComboBox Height="23" Margin="370,10,0,0" Width="150" HorizontalAlignment="Left" IsEnabled="{Binding ProfessionListeIsEnabled}" ItemsSource="{Binding ProfessionListe}" SelectedItem="{Binding SelectedProfession}" ToolTip="Profession" VerticalAlignment="Top" Visibility="Collapsed" />
+                    <Button Height="23" Margin="520,10,0,0" Command="{Binding OnReset}" HorizontalAlignment="Left" ToolTip="Auswahl zurücksetzen" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/Icons/General/entf_01.png" />
+                            <TextBlock Text="Reset" Margin="3,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <CheckBox Height="23" Margin="585,13,0,0" Width="100" Content="unübl. Kulturen" HorizontalAlignment="Left" IsChecked="{Binding CBKulturenIsChecked}" ToolTip="auch unübliche Kulturen einblenden" VerticalAlignment="Top" />
+                    <CheckBox Height="23" Margin="685,13,0,0" Width="100" Content="nur Namen" HorizontalAlignment="Left" IsChecked="{Binding CBNamenIsChecked}" ToolTip="nur Namen, Rasse, Kultur berechnen" VerticalAlignment="Top" />
+                    <generalControls:IntBox Height="23" Margin="15,38,0,5" Width="73" HorizontalAlignment="Left" MinValue="1" ShowButtons="True" ToolTip="Anzahl" Value="{Binding GenNumber}" VerticalAlignment="Top" />
+                    <Button Height="23" Margin="100,38,0,0" Command="{Binding OnGenerate}" HorizontalAlignment="Left" ToolTip="NSCs generieren" VerticalAlignment="Top">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/Icons/mechanik.png" />
+                            <TextBlock Text="Generieren" Margin="3,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button Height="24" Margin="198,38,0,0" Width="24" Click="ButtonSave_Click" HorizontalAlignment="Left" Name="_buttonSave" VerticalAlignment="Top">
+                        <Button.Content>
+                            <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
+                        </Button.Content>
+                        <Button.ToolTip>
+                            <TextBlock Height="Auto" Width="350" TextWrapping="Wrap">Markierte NSCs in Notiz 'Allgemein' speichern. Mit gedrückter STRG-Taste können auch mehrere NSCs ausgewählt werden.</TextBlock>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Height="24" Margin="233,38,0,0" Width="51" Command="{Binding OnAddAllNSC}" HorizontalAlignment="Left" Name="_buttonSaveAll" ToolTip="Alle generierten NSCs in Notiz 'Allgemein' speichern." VerticalAlignment="Top">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
+                                <TextBlock Margin="3,0" Text="Alle" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <TextBlock Height="23" Margin="297,38,0,0" Padding="3" HorizontalAlignment="Left" Name="_textBlockSaveInfo" Text="{Binding InfoText}" VerticalAlignment="Top" />
+                    <generalControls:WikiLinkControl Height="34" Margin="0,10,15,0" Width="30" HorizontalAlignment="Right" Tag="Aventurische_Namen" VerticalAlignment="Top" />
+                </Grid>
+            </Border>
+        </Expander>
+
+        <Expander Grid.Row="1" Margin="2" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="NSCs" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <ListBox Padding="4" Background="Transparent" FontSize="14" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ItemsSource="{Binding PersonenListe}" ItemTemplate="{StaticResource PersonItemTemplate}" Name="_listBoxNscs" SelectionMode="Extended">
+                    <ListBox.BorderBrush>
+                        <SolidColorBrush />
+                    </ListBox.BorderBrush>
+                </ListBox>
+            </Border>
+        </Expander>
     </Grid>
 </UserControl>

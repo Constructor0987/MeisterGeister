@@ -5,8 +5,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:vmSchmiede="clr-namespace:MeisterGeister.ViewModel.Schmiede"
 			 xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-			 mc:Ignorable="d" 
-			 d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+			 mc:Ignorable="d" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}" Height="482.103">
 	<UserControl.DataContext>
 		<vmSchmiede:SchmiedeFernkampfwaffeViewModel />
 	</UserControl.DataContext>
@@ -15,7 +14,9 @@
 			<ColumnDefinition Width="450*" />
 			<ColumnDefinition Width="296" />
 		</Grid.ColumnDefinitions>
-		<StackPanel Grid.Column="1" Margin="36,32,0,0" Orientation="Vertical" VerticalAlignment="Top">
+
+        <Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
+		<StackPanel Orientation="Vertical" VerticalAlignment="Top">
 			<TextBlock Margin="5" Text="Talent:" />
 			<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedFernkampfwaffeTalent}" />
 			<TextBlock Margin="5" Text="Waffe:" />
@@ -56,107 +57,111 @@
 				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTechnikListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffeTechnik}" />
 			</StackPanel>
 		</StackPanel>
-		<StackPanel Margin="36,32,0,0" Background="{StaticResource BackgroundPergamentHoch}" >
-			<TextBlock Margin="20,20,20,10" FontWeight="Bold" Text="{Binding Path=ErstellteFernkampfwaffe.Name}" />
-			<Grid Margin="20,10,20,10">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-					<ColumnDefinition Width="Auto" MinWidth="100" />
-					<ColumnDefinition Width="Auto" MinWidth="100" />
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
-				<TextBlock Text="TP" HorizontalAlignment="Left" />
-				<TextBlock Text="TP/KK"  Grid.Column="1" />
-				<TextBlock Text="Reichweite"  Grid.Column="2" />
-				<TextBlock Text="TP / Reichweite"  Grid.Column="3" />
-				<TextBlock Text="Laden"  Grid.Column="4" />
-				<TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.TPString}"  Grid.Row="1" Grid.Column="0" />
-				<TextBlock Grid.Row="1" Grid.Column="1">
-							<TextBlock.Text>
-								<MultiBinding StringFormat="{}{0}/{1}">
-									<Binding Path="ErstellteFernkampfwaffe.TPKKSchritt" />
-									<Binding Path="ErstellteFernkampfwaffe.TPKKSchwelle" />
-								</MultiBinding>
-							</TextBlock.Text>
-				</TextBlock>
-				<TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Reichweiten}"  Grid.Row="1" Grid.Column="2" />
-				<TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.TPReichweiten}"  Grid.Row="1" Grid.Column="3" />
-				<TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Laden}"  Grid.Row="1" Grid.Column="4" />
-			</Grid>
-			<Grid Margin="20,10,20,10" Visibility="{Binding Path=AnzeigenNahkampfwerte}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-					<ColumnDefinition Width="Auto" MinWidth="50" />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
-				<TextBlock Text="TP" HorizontalAlignment="Left" />
-				<TextBlock Text="DK"  Grid.Column="1" />
-				<TextBlock Text="TP/KK"  Grid.Column="2" />
-				<TextBlock Text="WM"  Grid.Column="3" />
-				<TextBlock Text="INI"  Grid.Column="4" />
-				<TextBlock Text="BF"  Grid.Column="5" />
-				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.TPString}"  Grid.Row="1" Grid.Column="0" />
-				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.DK}"  Grid.Row="1" Grid.Column="1" />
-				<TextBlock Grid.Row="1" Grid.Column="2">
-							<TextBlock.Text>
-								<MultiBinding StringFormat="{}{0}/{1}">
-									<Binding Path="ErstellteNahkampfwaffe.TPKKSchritt" />
-									<Binding Path="ErstellteNahkampfwaffe.TPKKSchwelle" />
-								</MultiBinding>
-							</TextBlock.Text>
-				</TextBlock>
-				<TextBlock Grid.Row="1" Grid.Column="3">
-							<TextBlock.Text>
-								<MultiBinding StringFormat="{}{0}/{1}">
-									<Binding Path="ErstellteNahkampfwaffe.WMAT" />
-									<Binding Path="ErstellteNahkampfwaffe.WMPA" />
-								</MultiBinding>
-							</TextBlock.Text>
-				</TextBlock>
-				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.INI}"  Grid.Row="1" Grid.Column="4" />
-				<TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.BF}"  Grid.Row="1" Grid.Column="5" />
-			</Grid>
-			<StackPanel Orientation="Horizontal" Margin="20,0,20,0">
-				<TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
-				<TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
-			</StackPanel>
-			<TextBlock Margin="20,40,20,10" FontWeight="Bold" Text="Schmiedevorgang" />
-			<StackPanel Margin="15,0" Orientation="Horizontal">
-				<TextBlock Margin="5" Text="benötigte Talentpunkte:" />
-				<TextBlock Margin="5" Text="{Binding Path=ProbePunkte, StringFormat={}{0} TaP*}" />
-			</StackPanel>
-			<StackPanel Margin="15,0" Orientation="Horizontal">
-				<TextBlock Margin="5" Text="Erschwernis:" />
-				<TextBlock Margin="5" Text="{Binding Path=ProbeErschwernis}" />
-			</StackPanel>
-			<StackPanel Margin="15,0" Orientation="Horizontal">
-				<TextBlock Margin="5" Text="Dauer jeder Probe:" />
-				<TextBlock Margin="5" Text="{Binding Path=ProbeDauerInZe, StringFormat={}{0} ZE}" />
-			</StackPanel>
-			<StackPanel Margin="15,30,15,0" Orientation="Horizontal">
-				<TextBlock Margin="5" Text="TaW des Bogenbauers/Schmieds" />
-				<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmied}" />
-			</StackPanel>
-			<StackPanel Margin="15,0" Orientation="Horizontal">
-				<TextBlock Margin="5" Text="Zus. Erschwernis/Erleichterung" />
-				<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
-			</StackPanel>
-			<StackPanel Margin="15,0" Orientation="Horizontal">
-				<TextBlock Margin="5" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
-				<TextBlock Margin="5" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Tage}" />
-			</StackPanel>
-		</StackPanel>
-	</Grid>
+        </Border>
+            
+        <Border Margin="32" Style="{DynamicResource ControlContentBorder}">
+            <StackPanel>
+                <TextBlock Margin="20,20,20,10" FontWeight="Bold" Text="{Binding Path=ErstellteFernkampfwaffe.Name}" />
+                <Grid Margin="20,10,20,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                        <ColumnDefinition Width="Auto" MinWidth="100" />
+                        <ColumnDefinition Width="Auto" MinWidth="100" />
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="TP" HorizontalAlignment="Left" />
+                    <TextBlock Text="TP/KK"  Grid.Column="1" />
+                    <TextBlock Text="Reichweite"  Grid.Column="2" />
+                    <TextBlock Text="TP / Reichweite"  Grid.Column="3" />
+                    <TextBlock Text="Laden"  Grid.Column="4" />
+                    <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.TPString}"  Grid.Row="1" Grid.Column="0" />
+                    <TextBlock Grid.Row="1" Grid.Column="1">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}/{1}">
+                                <Binding Path="ErstellteFernkampfwaffe.TPKKSchritt" />
+                                <Binding Path="ErstellteFernkampfwaffe.TPKKSchwelle" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Reichweiten}"  Grid.Row="1" Grid.Column="2" />
+                    <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.TPReichweiten}"  Grid.Row="1" Grid.Column="3" />
+                    <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Laden}"  Grid.Row="1" Grid.Column="4" />
+                </Grid>
+                <Grid Margin="20,10,20,10" Visibility="{Binding Path=AnzeigenNahkampfwerte}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="TP" HorizontalAlignment="Left" />
+                    <TextBlock Text="DK"  Grid.Column="1" />
+                    <TextBlock Text="TP/KK"  Grid.Column="2" />
+                    <TextBlock Text="WM"  Grid.Column="3" />
+                    <TextBlock Text="INI"  Grid.Column="4" />
+                    <TextBlock Text="BF"  Grid.Column="5" />
+                    <TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.TPString}"  Grid.Row="1" Grid.Column="0" />
+                    <TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.DK}"  Grid.Row="1" Grid.Column="1" />
+                    <TextBlock Grid.Row="1" Grid.Column="2">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}/{1}">
+                                <Binding Path="ErstellteNahkampfwaffe.TPKKSchritt" />
+                                <Binding Path="ErstellteNahkampfwaffe.TPKKSchwelle" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="3">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}/{1}">
+                                <Binding Path="ErstellteNahkampfwaffe.WMAT" />
+                                <Binding Path="ErstellteNahkampfwaffe.WMPA" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.INI}"  Grid.Row="1" Grid.Column="4" />
+                    <TextBlock Text="{Binding Path=ErstellteNahkampfwaffe.BF}"  Grid.Row="1" Grid.Column="5" />
+                </Grid>
+                <StackPanel Orientation="Horizontal" Margin="20,0,20,0">
+                    <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
+                    <TextBlock Text="{Binding Path=ErstellteFernkampfwaffe.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
+                </StackPanel>
+                <TextBlock Margin="20,40,20,10" FontWeight="Bold" Text="Schmiedevorgang" />
+                <StackPanel Margin="15,0" Orientation="Horizontal">
+                    <TextBlock Margin="5" Text="benötigte Talentpunkte:" />
+                    <TextBlock Margin="5" Text="{Binding Path=ProbePunkte, StringFormat={}{0} TaP*}" />
+                </StackPanel>
+                <StackPanel Margin="15,0" Orientation="Horizontal">
+                    <TextBlock Margin="5" Text="Erschwernis:" />
+                    <TextBlock Margin="5" Text="{Binding Path=ProbeErschwernis}" />
+                </StackPanel>
+                <StackPanel Margin="15,0" Orientation="Horizontal">
+                    <TextBlock Margin="5" Text="Dauer jeder Probe:" />
+                    <TextBlock Margin="5" Text="{Binding Path=ProbeDauerInZe, StringFormat={}{0} ZE}" />
+                </StackPanel>
+                <StackPanel Margin="15,30,15,0" Orientation="Horizontal">
+                    <TextBlock Margin="5" Text="TaW des Bogenbauers/Schmieds" />
+                    <ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmied}" />
+                </StackPanel>
+                <StackPanel Margin="15,0" Orientation="Horizontal">
+                    <TextBlock Margin="5" Text="Zus. Erschwernis/Erleichterung" />
+                    <ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
+                </StackPanel>
+                <StackPanel Margin="15,0" Orientation="Horizontal">
+                    <TextBlock Margin="5" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
+                    <TextBlock Margin="5" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Tage}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>
