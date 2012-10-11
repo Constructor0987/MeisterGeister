@@ -126,6 +126,8 @@ namespace MeisterGeister.Logic.General
             int fertigkeitswertEff = Fertigkeitswert - Modifikator;
             pe.Übrig = fertigkeitswertEff;
             pe.Qualität = fertigkeitswertEff;
+            if (pe.Würfe == null)
+                pe.Würfe = new int[Werte.Length];
 
             int einsen = 0, zwanzigen = 0;
             int[] wurfQualität = new int[Werte.Length];
