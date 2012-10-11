@@ -75,10 +75,25 @@
 				<Button Grid.Column="4" Grid.Row="1" Height="23" Click="ButtonBildLinkDelete_Click" x:Name="_buttonBildLinkDelete" ToolTip="Bild-Link entfernen">
 					<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
 				</Button>
-				<GroupBox Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,-4,0,0" Cursor="Hand" Header="Bild" MouseDown="TextBlockBild_MouseDown" Background="{DynamicResource BackgroundPergamentHoch}">
+				<GroupBox Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,-4,0,0" Cursor="Hand" Header="Bild" MouseDown="TextBlockBild_MouseDown">
 					<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock FontSize="10" HorizontalAlignment="Center" MaxWidth="150" Opacity="0" Text="{Binding SelectedHeld.BildLink}" TextWrapping="Wrap" VerticalAlignment="Center" />
-						<Image HorizontalAlignment="Center" x:Name="_imageHeldBild" Source="{Binding SelectedHeld.BildLink}" ToolTip="{Binding SelectedHeld.BildLink}" VerticalAlignment="Center" />
+                        <Image HorizontalAlignment="Center" x:Name="_imageHeldBild" ToolTip="{Binding SelectedHeld.BildLink, FallbackValue='Bild einfügen über Buttons...', TargetNullValue='Bild einfügen über Buttons...'}" VerticalAlignment="Center">
+                            <Image.Source>
+                                <Binding Path="SelectedHeld.BildLink">
+                                    <Binding.FallbackValue>
+                                        <ImageSource>
+                                            /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
+                                        </ImageSource>
+                                    </Binding.FallbackValue>
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
                     </Grid>
 				</GroupBox>
             </Grid>
