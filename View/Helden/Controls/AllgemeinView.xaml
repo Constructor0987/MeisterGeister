@@ -80,7 +80,7 @@
                         <TextBlock FontSize="10" HorizontalAlignment="Center" MaxWidth="150" Opacity="0" Text="{Binding SelectedHeld.BildLink}" TextWrapping="Wrap" VerticalAlignment="Center" />
                         <Image HorizontalAlignment="Center" x:Name="_imageHeldBild" ToolTip="{Binding SelectedHeld.BildLink, FallbackValue='Bild einfügen über Buttons...', TargetNullValue='Bild einfügen über Buttons...'}" VerticalAlignment="Center">
                             <Image.Source>
-                                <Binding Path="SelectedHeld.BildLink">
+                                <Binding Path="SelectedHeld.BildLink" IsAsync="True" Mode="OneWay">
                                     <Binding.FallbackValue>
                                         <ImageSource>
                                             /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
