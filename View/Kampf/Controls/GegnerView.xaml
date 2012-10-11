@@ -142,122 +142,188 @@
                 </Grid>
             </Border>
         </Grid>
-<!-- TODO Grid für Gegner_Angriff-->
-        <Expander IsExpanded="True" Grid.Column="1">
-            <Expander.Header>
-                <TextBlock Text="Details" Style="{DynamicResource TextTitel}" />
-            </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid Margin="5,5,5,0" Grid.Row="0">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Expander IsExpanded="True" Grid.Row="0">
+                <Expander.Header>
+                    <TextBlock Text="Details" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Margin="5,5,5,0" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <!-- Name, AE, AU, Bemerkung, Beschwörung, Beschwörungskosten, Bild, GS, GS2, GS3, GW, INIBasis, INIZufall, Jagd, KE, KO, Kontrolle, LE, Literatur, MRGeist, MRKörper, PA, RSx, Setting, Tags, Aktionen  -->
+                            <Border   Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="5" Width="80" Height="80" ToolTip="Klicken um ein Bild einzufügen..." Cursor="Hand">
+                                <Image>
+                                    <Image.Source>
+                                        <Binding Path="SelectedGegnerBase.Bild" IsAsync="True" Mode="OneWay">
+                                            <Binding.FallbackValue>
+                                                <ImageSource>
+                                                    /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
+                                                </ImageSource>
+                                            </Binding.FallbackValue>
+                                            <Binding.TargetNullValue>
+                                                <ImageSource>
+                                                    /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
+                                                </ImageSource>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+                            </Border>
+                            <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
+                            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding SelectedGegnerBase.Name}" Margin="2" ToolTip="{Binding SelectedGegnerBase.GegnerBaseGUID}"/>
+                            <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
+                            <!-- TODO AutoComplete für Tags -->
+                            <TextBox Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags}" Margin="2" />
+                        </Grid>
+                        <Grid Margin="5,0,5,5" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <!-- Name, LE, AU, AE, KE, KO, INIBasis, INIZufall, MRGeist, MRKörper, PA, RSx, Aktionen, GS, GS2, GS3,  Bemerkung, Beschwörung, Beschwörungskosten, Bild, GW, Jagd, Kontrolle, Literatur, Setting, Tags  -->
+                            <Label   Grid.Row="0" Grid.Column="0" Content="LE:" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="0" Grid.Column="2" Content="AU:" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="1" Grid.Column="0" Content="AE:" />
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="1" Grid.Column="2" Content="KE:" />
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
+
+                            <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
+                            <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="2" Grid.Column="2" Content="INI-Zufall:" />
+                            <TextBox Grid.Row="2" Grid.Column="3" Margin="2">
+                                <Binding Path="SelectedGegnerBase.INIZufall">
+                                    <Binding.ValidationRules>
+                                        <ViewGeneral:WürfelValidationRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+
+                            <Label   Grid.Row="3" Grid.Column="0" Content="PA:" />
+                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="1" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="3" Grid.Column="2" Content="KO:" />
+                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="3" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
+                            <!-- TODO ZonenControl auf Klick um Details eintragen zu können -->
+                            <ViewGeneral:IntBox Grid.Row="4" Grid.Column="1" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="4" Grid.Column="2" Content="MR:" />
+                            <Grid Grid.Row="4" Grid.Column="3" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Eine Möglichkeit auch MRKörper eintragen zu können  -->
+                                <ViewGeneral:IntBox Grid.Column="0" Value="{Binding SelectedGegnerBase.MRGeist}" Margin="2" ToolTip="Magieresistenz des Geistes (z.B. Einfluss, Herrschaft)"/>
+                                <ViewGeneral:IntBox Grid.Column="1" Value="{Binding SelectedGegnerBase.MRKörper}" Margin="2" CanBeNull="True" ToolTip="Magieresistenz des Körpers (z.B. Form, Eigenschaften)"/>
+                            </Grid>
+                            <Label   Grid.Row="5" Grid.Column="0" Content="GS:" />
+                            <Grid Grid.Row="5" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <!-- Eine Möglichkeit auch GS2 und GS3 eintragen zu können  -->
+                                <ViewGeneral:IntBox Grid.Column="0" Value="{Binding SelectedGegnerBase.GS}" Margin="2" ToolTip="Normale Geschwindigkeit"/>
+                                <ViewGeneral:IntBox Grid.Column="1" Value="{Binding SelectedGegnerBase.GS2}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 2"/>
+                                <ViewGeneral:IntBox Grid.Column="2" Value="{Binding SelectedGegnerBase.GS3}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 3"/>
+                            </Grid>
+                            <Label   Grid.Row="5" Grid.Column="2" Content="Aktionen:" />
+                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="3" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Expander>
+            <Expander IsExpanded="False" Grid.Row="1">
+                <Expander.Header>
+                    <TextBlock Text="Werte für Beschwörung und Jagd" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <!-- Name, AE, AU, Bemerkung, Beschwörung, Beschwörungskosten, Bild, GS, GS2, GS3, GW, INIBasis, INIZufall, Jagd, KE, KO, Kontrolle, LE, Literatur, MRGeist, MRKörper, PA, RSx, Setting, Tags, Aktionen  -->
-                        <Border   Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="5" Width="80" Height="80" ToolTip="Klicken um ein Bild einzufügen..." Cursor="Hand">
-                            <Image>
-                                <Image.Source>
-                                    <Binding Path="SelectedGegnerBase.Bild" IsAsync="True" Mode="OneWay">
-                                        <Binding.FallbackValue>
-                                            <ImageSource>
-                                                /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
-                                            </ImageSource>
-                                        </Binding.FallbackValue>
-                                        <Binding.TargetNullValue>
-                                            <ImageSource>
-                                                /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
-                                            </ImageSource>
-                                        </Binding.TargetNullValue>
-                                    </Binding>
-                                </Image.Source>
-                            </Image>
-                        </Border>
-                        <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
-                        <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding SelectedGegnerBase.Name}" Margin="2" />
-                        <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
-                        <!-- TODO AutoComplete für Tags -->
-                        <TextBox Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags}" Margin="2" />
+                        <!-- Beschwörung, Beschwörungskosten, GW, Jagd, Kontrolle -->
+                        <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        <Label   Grid.Row="0" Grid.Column="2" Content="Kosten:" />
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" Value="{Binding SelectedGegnerBase.Kosten}" Margin="2" ShowButtons="True" CanBeNull="True" />
+                        <Label   Grid.Row="1" Grid.Column="0" Content="Kontrolle:" />
+                        <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.Kontrolle}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        
+                        <Label   Grid.Row="2" Grid.Column="0" Content="Jagd:" />
+                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.Jagd}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        <Label   Grid.Row="2" Grid.Column="2" Content="GW:" />
+                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="3" Value="{Binding SelectedGegnerBase.GW}" Margin="2" ShowButtons="True" CanBeNull="True" />
                     </Grid>
-                    <Grid Margin="5,0,5,5" Grid.Row="1">
+                    
+                </Border>
+            </Expander>
+            <Expander IsExpanded="False" Grid.Row="2">
+                <Expander.Header>
+                    <TextBlock Text="Angriffe" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <!-- Name, LE, AU, AE, KE, KO, INIBasis, INIZufall, MRGeist, MRKörper, PA, RSx, Aktionen, GS, GS2, GS3,  Bemerkung, Beschwörung, Beschwörungskosten, Bild, GW, Jagd, Kontrolle, Literatur, Setting, Tags  -->
-                        <Label   Grid.Row="0" Grid.Column="0" Content="LE:" />
-                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
-                        <Label   Grid.Row="0" Grid.Column="2" Content="AU:" />
-                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
-                        <Label   Grid.Row="1" Grid.Column="0" Content="AE:" />
-                        <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
-                        <Label   Grid.Row="1" Grid.Column="2" Content="KE:" />
-                        <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
-
-                        <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
-                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
-                        <Label   Grid.Row="2" Grid.Column="2" Content="INI-Zufall:" />
-                        <TextBox Grid.Row="2" Grid.Column="3" Margin="2">
-                            <Binding Path="SelectedGegnerBase.INIZufall">
-                                <Binding.ValidationRules>
-                                    <ViewGeneral:WürfelValidationRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox>
-
-                        <Label   Grid.Row="3" Grid.Column="0" Content="PA:" />
-                        <ViewGeneral:IntBox Grid.Row="3" Grid.Column="1" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" />
-                        <Label   Grid.Row="3" Grid.Column="2" Content="KO:" />
-                        <ViewGeneral:IntBox Grid.Row="3" Grid.Column="3" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
-                        <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
-                        <!-- TODO ZonenControl auf Klick um Details eintragen zu können -->
-                        <ViewGeneral:IntBox Grid.Row="4" Grid.Column="1" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" />
-                        <Label   Grid.Row="4" Grid.Column="2" Content="MR:" />
-                        <Grid Grid.Row="4" Grid.Column="3" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <!-- Eine Möglichkeit auch MRKörper eintragen zu können  -->
-                            <ViewGeneral:IntBox Grid.Column="0" Value="{Binding SelectedGegnerBase.MRGeist}" Margin="2" ToolTip="Magieresistenz des Geistes (z.B. Einfluss, Herrschaft)"/>
-                            <ViewGeneral:IntBox Grid.Column="1" Value="{Binding SelectedGegnerBase.MRKörper}" Margin="2" CanBeNull="True" ToolTip="Magieresistenz des Körpers (z.B. Form, Eigenschaften)"/>
-                        </Grid>
-                        <Label   Grid.Row="5" Grid.Column="0" Content="GS:" />
-                        <Grid Grid.Row="5" Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <!-- Eine Möglichkeit auch GS2 und GS3 eintragen zu können  -->
-                            <ViewGeneral:IntBox Grid.Column="0" Value="{Binding SelectedGegnerBase.GS}" Margin="2" ToolTip="Normale Geschwindigkeit"/>
-                            <ViewGeneral:IntBox Grid.Column="1" Value="{Binding SelectedGegnerBase.GS2}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 2"/>
-                            <ViewGeneral:IntBox Grid.Column="2" Value="{Binding SelectedGegnerBase.GS3}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 3"/>
-                        </Grid>
-                        <Label   Grid.Row="5" Grid.Column="2" Content="Aktionen:" />
-                        <ViewGeneral:IntBox Grid.Row="5" Grid.Column="3" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
+                        <!-- SelectedGegnerBase.GegnerBase_Angriff, AngriffAddName (als Prompt), Add und Delete Commands, SelectedAngriff,
+                            Name, AT, Bemerkung, Distanzklasse oder DK(DB-Wert), Reichweite, TPBonus, TPWürfel, TPWürfelAnzahl
+                        -->
+                        <!-- 
+                        <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        -->
                     </Grid>
-                </Grid>
-            </Border>
-        </Expander>
+
+                </Border>
+            </Expander>
+        </Grid>
     </Grid>
 </UserControl>

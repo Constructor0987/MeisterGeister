@@ -216,6 +216,10 @@ namespace MeisterGeister.View.General
                 if (!_textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right)))
                     _textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
+            else if (e.Key == Key.Up)
+                IncreaseValue();
+            else if (e.Key == Key.Down)
+                DecreaseValue();
         }
 
         private void _textBoxInt_GotFocus(object sender, RoutedEventArgs e)
