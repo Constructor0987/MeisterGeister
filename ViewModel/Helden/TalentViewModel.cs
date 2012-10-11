@@ -136,6 +136,8 @@ namespace MeisterGeister.ViewModel.Helden {
         void SelectedHeldChanged() {
             if (!ListenToChangeEvents)
                 return;
+
+            Global.SetIsBusy(true);
             SelectedHeld = Global.SelectedHeld;
             ReInit();
             if (SelectedHeld != null) {
@@ -232,6 +234,7 @@ namespace MeisterGeister.ViewModel.Helden {
                 if (SelectedHeld != null) {
                     TalentauswahlListe = Global.ContextTalent.TalentListe.Where(item => SelectedHeld.Held_Talent.Where(t => t.Talent == item).Count() <= 0 && item.TalentgruppeID != 8).OrderBy(item => item.Talentname).ToList();
                 }
+                Global.SetIsBusy(false);
             }
         }        
         private void AddTalent(object obj) {
