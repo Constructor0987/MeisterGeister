@@ -216,20 +216,24 @@ namespace MeisterGeister.View.General
                 if (!_textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right)))
                     _textBoxInt.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
-            else if (e.Key == Key.Up)
+        }
+
+        private void _textBoxInt_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up)
                 IncreaseValue();
             else if (e.Key == Key.Down)
                 DecreaseValue();
         }
 
-        private void _textBoxInt_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            
-        }
-
         private void _textBoxInt_GotFocus(object sender, RoutedEventArgs e)
         {
-            _textBoxInt.SelectAll();
+            TextBox tb = (TextBox)e.OriginalSource;
+            tb.Dispatcher.BeginInvoke(
+                new Action(delegate
+                {
+                    tb.SelectAll();
+                }), System.Windows.Threading.DispatcherPriority.Input);
         }
 
         private void _textBoxInt_LostFocus(object sender, RoutedEventArgs e)
