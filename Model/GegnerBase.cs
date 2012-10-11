@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class GegnerBase
+    public partial class GegnerBase : KampfLogic.IHasZonenRs
     {
         public GegnerBase()
         {
@@ -53,6 +54,104 @@ namespace MeisterGeister.Model
                 return null;
             Global.ContextHeld.UpdateList<GegnerBase>();
             return Global.ContextHeld.Liste<GegnerBase>().Where(h => h.GegnerBaseGUID == gegnerGuid).FirstOrDefault();
+        }
+        #endregion
+
+        #region IHasZonenRs
+        int? KampfLogic.IHasZonenRs.RSKopf
+        {
+            get
+            {
+                return RSKopf;
+            }
+            set
+            {
+                RSKopf = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBrust
+        {
+            get
+            {
+                return RSBrust;
+            }
+            set
+            {
+                RSBrust = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSRücken
+        {
+            get
+            {
+                return RSRücken;
+            }
+            set
+            {
+                RSRücken = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSArmL
+        {
+            get
+            {
+                return RSArmL;
+            }
+            set
+            {
+                RSArmL = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSArmR
+        {
+            get
+            {
+                return RSArmR;
+            }
+            set
+            {
+                RSArmR = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBauch
+        {
+            get
+            {
+                return RSBauch;
+            }
+            set
+            {
+                RSBauch = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBeinL
+        {
+            get
+            {
+                return RSBeinL;
+            }
+            set
+            {
+                RSBeinL = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBeinR
+        {
+            get
+            {
+                return RSBeinR;
+            }
+            set
+            {
+                RSBeinR = value ?? 0;
+            }
         }
         #endregion
     }

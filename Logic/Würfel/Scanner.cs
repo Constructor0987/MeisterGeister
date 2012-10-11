@@ -39,6 +39,10 @@ namespace MeisterGeister.Logic.Würfel
             Patterns.Add(TokenType.NUMBER, regex);
             Tokens.Add(TokenType.NUMBER);
 
+            regex = new Regex(@"[0-9]+", RegexOptions.Compiled);
+            Patterns.Add(TokenType.NUMBER2, regex);
+            Tokens.Add(TokenType.NUMBER2);
+
             regex = new Regex(@"[\(\[]", RegexOptions.Compiled);
             Patterns.Add(TokenType.BROPEN, regex);
             Tokens.Add(TokenType.BROPEN);
@@ -193,12 +197,13 @@ namespace MeisterGeister.Logic.Würfel
 
             //Terminal tokens:
             NUMBER  = 5,
-            BROPEN  = 6,
-            BRCLOSE = 7,
-            W       = 8,
-            PLUSMINUS= 9,
-            EOF     = 10,
-            WHITESPACE= 11
+            NUMBER2 = 6,
+            BROPEN  = 7,
+            BRCLOSE = 8,
+            W       = 9,
+            PLUSMINUS= 10,
+            EOF     = 11,
+            WHITESPACE= 12
     }
 
     public class Token

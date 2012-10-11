@@ -264,7 +264,7 @@ namespace MeisterGeister.View.Kampf
             }
 
             _kampf.AddAktion(_textBoxAktionQuelle.Text, _textBoxAktionName.Text,
-                           _intBoxAktionDauer.Value, _selectedKämpfer, ak);
+                           _intBoxAktionDauer.Value ?? 0, _selectedKämpfer, ak);
 
             SortKämpfer();
             RefreshAktionen();
@@ -322,7 +322,7 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.Schadenspunkte(_intBoxSchaden.Value, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                _selectedKämpfer.Schadenspunkte(_intBoxSchaden.Value ?? 0, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
                     (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
             }
@@ -332,7 +332,7 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.AstralenergieAktuell -= _intBoxSchaden.Value;
+                _selectedKämpfer.AstralenergieAktuell -= _intBoxSchaden.Value ?? 0;
                 SetAstralenergie();
             }
         }
@@ -341,7 +341,7 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.KarmaenergieAktuell -= _intBoxSchaden.Value;
+                _selectedKämpfer.KarmaenergieAktuell -= _intBoxSchaden.Value ?? 0;
                 SetKarmaenergie();
             }
         }
@@ -396,7 +396,7 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.Trefferpunkte(_intBoxSchaden.Value, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                _selectedKämpfer.Trefferpunkte(_intBoxSchaden.Value ?? 0, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
                     (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
             }
@@ -551,7 +551,7 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.SchadenspunkteAusdauer(_intBoxSchaden.Value, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                _selectedKämpfer.SchadenspunkteAusdauer(_intBoxSchaden.Value ?? 0, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
                     (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
                 SetAusdauer();
@@ -562,7 +562,7 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.TrefferpunkteAusdauer(_intBoxSchaden.Value, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                _selectedKämpfer.TrefferpunkteAusdauer(_intBoxSchaden.Value ?? 0, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
                     (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
                 SetAusdauer();

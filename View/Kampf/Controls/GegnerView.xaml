@@ -185,6 +185,7 @@
                         <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
                         <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding SelectedGegnerBase.Name}" Margin="2" />
                         <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
+                        <!-- TODO AutoComplete für Tags -->
                         <TextBox Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags}" Margin="2" />
                     </Grid>
                     <Grid Margin="5,0,5,5" Grid.Row="1">
@@ -199,7 +200,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition  />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <!-- Name, LE, AU, AE, KE, KO, INIBasis, INIZufall, MRGeist, MRKörper, PA, RSx, Aktionen, GS, GS2, GS3,  Bemerkung, Beschwörung, Beschwörungskosten, Bild, GW, Jagd, Kontrolle, Literatur, Setting, Tags  -->
                         <Label   Grid.Row="0" Grid.Column="0" Content="LE:" />
@@ -221,6 +223,38 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox>
+
+                        <Label   Grid.Row="3" Grid.Column="0" Content="PA:" />
+                        <ViewGeneral:IntBox Grid.Row="3" Grid.Column="1" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" />
+                        <Label   Grid.Row="3" Grid.Column="2" Content="KO:" />
+                        <ViewGeneral:IntBox Grid.Row="3" Grid.Column="3" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
+                        <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
+                        <!-- TODO ZonenControl auf Klick um Details eintragen zu können -->
+                        <ViewGeneral:IntBox Grid.Row="4" Grid.Column="1" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" />
+                        <Label   Grid.Row="4" Grid.Column="2" Content="MR:" />
+                        <Grid Grid.Row="4" Grid.Column="3" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Eine Möglichkeit auch MRKörper eintragen zu können  -->
+                            <ViewGeneral:IntBox Grid.Column="0" Value="{Binding SelectedGegnerBase.MRGeist}" Margin="2" ToolTip="Magieresistenz des Geistes (z.B. Einfluss, Herrschaft)"/>
+                            <ViewGeneral:IntBox Grid.Column="1" Value="{Binding SelectedGegnerBase.MRKörper}" Margin="2" CanBeNull="True" ToolTip="Magieresistenz des Körpers (z.B. Form, Eigenschaften)"/>
+                        </Grid>
+                        <Label   Grid.Row="5" Grid.Column="0" Content="GS:" />
+                        <Grid Grid.Row="5" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <!-- Eine Möglichkeit auch GS2 und GS3 eintragen zu können  -->
+                            <ViewGeneral:IntBox Grid.Column="0" Value="{Binding SelectedGegnerBase.GS}" Margin="2" ToolTip="Normale Geschwindigkeit"/>
+                            <ViewGeneral:IntBox Grid.Column="1" Value="{Binding SelectedGegnerBase.GS2}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 2"/>
+                            <ViewGeneral:IntBox Grid.Column="2" Value="{Binding SelectedGegnerBase.GS3}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 3"/>
+                        </Grid>
+                        <Label   Grid.Row="5" Grid.Column="2" Content="Aktionen:" />
+                        <ViewGeneral:IntBox Grid.Row="5" Grid.Column="3" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
                     </Grid>
                 </Grid>
             </Border>

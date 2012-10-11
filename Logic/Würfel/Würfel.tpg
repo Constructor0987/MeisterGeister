@@ -20,6 +20,7 @@
 <% @TextHighlighter Generate="False" %> // toggle generation of the code for the TextHighlighter
 
 NUMBER 	-> @"[0-9]+";
+NUMBER2 	-> @"[0-9]+";
 BROPEN 	->  @"[\(\[]";
 BRCLOSE 	->  @"[\)\]]";
 W		-> @"W";
@@ -49,20 +50,22 @@ AddExpression -> Atom (PLUSMINUS Atom)*
 	return ergebnis; 
 };
 
-Atom -> NUMBER? (W NUMBER)?
+Atom -> NUMBER? (W NUMBER2?)?
 {
 	if($NUMBER[0] == null && $W == null)
 		return 0;
 	int anzahl = 1;
-	int seiten = 1;
+	int seiten = 6;
 	if($NUMBER[0] != null)
 		anzahl = Convert.ToInt32($NUMBER[0]);
 	if($W != null)
 	{
-		seiten = Convert.ToInt32($NUMBER[1]);
+		if($NUMBER2[0]!=null)
+			seiten = Convert.ToInt32($NUMBER2[0]);
 		bool random = true;
 		if(paramlist != null && paramlist.Length > 0  && paramlist[0] is bool) 
 			random = (bool)paramlist[0];
+//		return anzahl * seiten;
 		return anzahl * (random?Logic.General.RandomNumberGenerator.RandomInt(1, seiten):seiten);
 	}
 	return anzahl;

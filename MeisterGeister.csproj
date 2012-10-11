@@ -371,6 +371,7 @@
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Distanzklasse.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IGegnerBase.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IHasZonenRs.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWaffe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWaffeMitTPKK.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Kampf.cs" />

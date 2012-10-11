@@ -136,13 +136,17 @@ namespace MeisterGeister.Logic.Würfel
                 }
 
                 
-                tok = scanner.Scan(TokenType.NUMBER);
-                n = node.CreateNode(tok, tok.ToString() );
-                node.Token.UpdateRange(tok);
-                node.Nodes.Add(n);
-                if (tok.Type != TokenType.NUMBER) {
-                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.NUMBER.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
-                    return;
+                tok = scanner.LookAhead(TokenType.NUMBER2);
+                if (tok.Type == TokenType.NUMBER2)
+                {
+                    tok = scanner.Scan(TokenType.NUMBER2);
+                    n = node.CreateNode(tok, tok.ToString() );
+                    node.Token.UpdateRange(tok);
+                    node.Nodes.Add(n);
+                    if (tok.Type != TokenType.NUMBER2) {
+                        tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.NUMBER2.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                        return;
+                    }
                 }
             }
 

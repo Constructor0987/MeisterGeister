@@ -83,6 +83,14 @@ namespace MeisterGeister.View.General
         public static DependencyProperty ShowButtonsProperty = DependencyProperty.Register("ShowButtons", typeof(bool), typeof(IntBox),
                 new PropertyMetadata(false));
 
+        public bool CanBeNull
+        {
+            get { return (bool)GetValue(CanBeNullProperty); }
+            set { SetValue(CanBeNullProperty, value); }
+        }
+        public static DependencyProperty CanBeNullProperty = DependencyProperty.Register("CanBeNull", typeof(bool), typeof(IntBox),
+                new PropertyMetadata(false));
+
         new public Brush Foreground
         {
             get { return (Brush)GetValue(ForegroundProperty); }
@@ -107,34 +115,42 @@ namespace MeisterGeister.View.General
             box._textBoxInt.Foreground = (Brush)e.NewValue;
         }
 
-        public int Value
+        public int? Value
         {
-            get { return (int)GetValue(ValueProperty); }
+            get { return (int?)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
-        public static DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(IntBox),
+        public static DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(int?), typeof(IntBox),
                 new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnCurrentValueChanged),
                     new CoerceValueCallback(OnCoerceValue)));
 
         private static object OnCoerceValue(DependencyObject d, Object baseValue)
         {
             IntBox box = (IntBox)d;
+            int? value = (int?)baseValue;
+            if (value == null)
+            {
+                if (box.CanBeNull)
+                    return null;
+                else
+                    value = 0;
+            }
 
-            if ((int)baseValue < box.MinValue)
+            if ((int)value < box.MinValue)
                 return box.MinValue;
-            else if ((int)baseValue > box.MaxValue)
+            else if ((int)value > box.MaxValue)
                 return box.MaxValue;
-            return baseValue;
+            return value;
         }
 
         private static void OnCurrentValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             IntBox box = (IntBox)d;
-
+            int? value = box.Value;
             if (box.MarkPlusValue)
-                box.MarkRed((int)box.Value > 0);
+                box.MarkRed(value != null && value > 0);
 
-            box._textBoxInt.Text = box.Value.ToString();
+            box._textBoxInt.Text = (value==null)?String.Empty:value.ToString();
 
             if (box.NumValueChanged != null)
                 box.NumValueChanged(box);
@@ -153,16 +169,32 @@ namespace MeisterGeister.View.General
             }
         }
 
+        private void IncreaseValue(int i = 1)
+        {
+            int value = (Value ?? 0) + i;
+            if (value < MaxValue)
+                Value = value;
+            else
+                Value = MaxValue;
+        }
+
+        private void DecreaseValue(int i = 1)
+        {
+            int value = (Value ?? 0) - i;
+            if (value > MinValue)
+                Value = value;
+            else
+                Value = MinValue;
+        }
+
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
-            if (Value < MaxValue)
-                Value++;
+            IncreaseValue();
         }
 
         private void ButtonMinus_Click(object sender, RoutedEventArgs e)
         {
-            if (Value > MinValue)
-                Value--;
+            DecreaseValue();
         }
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -170,15 +202,9 @@ namespace MeisterGeister.View.General
             if (!NoMouseWheel)
             {
                 if (e.Delta < 0)
-                {
-                    if (Value > MinValue)
-                        Value--;
-                }
+                    DecreaseValue();
                 else
-                {
-                    if (Value < MaxValue)
-                        Value++;
-                }
+                    IncreaseValue();
             }
         }
 
@@ -199,46 +225,14 @@ namespace MeisterGeister.View.General
 
         private void _textBoxInt_LostFocus(object sender, RoutedEventArgs e)
         {
-            int i = 0; int tmp = 0;
-            string input = (sender as TextBox).Text.Trim();
-            if (input.Contains('+'))
+            string input = (sender as TextBox).Text;
+            if (CanBeNull && input == null || input == string.Empty)
             {
-                string[] operanden = input.Split('+');
-                foreach (var item in operanden)
-                {
-                    i = 0;
-                    if (Int32.TryParse(item, out i))
-                        tmp += i;
-                }
-                input = tmp.ToString();
+                Value = null;
+                return;
             }
-            else if (input.Contains('-'))
-            {
-                string[] operanden = input.Split('-');
-                if (operanden.Length >= 1)
-                {
-                    if (Int32.TryParse(operanden[0], out i))
-                        tmp = i;
-                }
-                for (int j = 1; j < operanden.Length; j++ )
-                {
-                    i = 0;
-                    if (Int32.TryParse(operanden[j], out i))
-                        tmp -= i;
-                }
-                input = tmp.ToString();
-            }
-
-            i = 0;
-            if (Int32.TryParse(input, out i))
-            {
-                if (i < MinValue)
-                    i = MinValue;
-                else if (i > MaxValue)
-                    i = MaxValue;
-                Value = i;
-            }
-
+            input = input.Trim();
+            Value = Logic.General.Würfel.Parse(input, true);
             // Wert zurück in TextBox schreiben, falls Value korrigiert wurde
             (sender as TextBox).Text = Value.ToString();
         }

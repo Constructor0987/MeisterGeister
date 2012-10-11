@@ -16,7 +16,7 @@ using MeisterGeister.ViewModel.Helden.Logic;
 namespace MeisterGeister.Model
 {
     // Man kann Superklassen hinzufügen. Es sollten jedoch nicht die gleichen Eigenschaften, wie in der Datenbankklasse existieren.
-    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable
+    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable, KampfLogic.IHasZonenRs
     {
         public Held()
         {

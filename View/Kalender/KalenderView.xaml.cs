@@ -145,8 +145,8 @@ namespace MeisterGeister.View.Kalender
             {
                 Logic.Kalender.Kalender von = (Logic.Kalender.Kalender)(((ComboBoxItem)_comboBoxZeitrechnung.SelectedItem).Tag);
 
-                Datum d = new Datum(_intBoxJahr.Value, (Monat)(_comboBoxMonat.SelectedItem), (int)(_comboBoxTag.SelectedItem), von);
-                Datum.Aktuell = new Datum(_intBoxJahr.Value, (Monat)_comboBoxMonat.SelectedItem, (int)_comboBoxTag.SelectedItem, von);
+                Datum d = new Datum(_intBoxJahr.Value ?? 0, (Monat)(_comboBoxMonat.SelectedItem), (int)(_comboBoxTag.SelectedItem), von);
+                Datum.Aktuell = new Datum(_intBoxJahr.Value ?? 0, (Monat)_comboBoxMonat.SelectedItem, (int)_comboBoxTag.SelectedItem, von);
                 // Changed Event weitergeben
                 if (DatumAktuellChanged != null)
                     DatumAktuellChanged(this, null);

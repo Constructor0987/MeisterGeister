@@ -210,15 +210,17 @@ namespace MeisterGeister.Logic.Würfel
             if(this.GetValue(tree, TokenType.NUMBER, 0, paramlist) == null && this.GetValue(tree, TokenType.W, 0, paramlist) == null)
         		return 0;
         	int anzahl = 1;
-        	int seiten = 1;
+        	int seiten = 6;
         	if(this.GetValue(tree, TokenType.NUMBER, 0, paramlist) != null)
         		anzahl = Convert.ToInt32(this.GetValue(tree, TokenType.NUMBER, 0, paramlist));
         	if(this.GetValue(tree, TokenType.W, 0, paramlist) != null)
         	{
-        		seiten = Convert.ToInt32(this.GetValue(tree, TokenType.NUMBER, 1, paramlist));
+        		if(this.GetValue(tree, TokenType.NUMBER2, 0, paramlist)!=null)
+        			seiten = Convert.ToInt32(this.GetValue(tree, TokenType.NUMBER2, 0, paramlist));
         		bool random = true;
         		if(paramlist != null && paramlist.Length > 0  && paramlist[0] is bool) 
         			random = (bool)paramlist[0];
+        //		return anzahl * seiten;
         		return anzahl * (random?Logic.General.RandomNumberGenerator.RandomInt(1, seiten):seiten);
         	}
         	return anzahl;

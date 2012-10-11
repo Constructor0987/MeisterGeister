@@ -7,7 +7,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Gegner : KampfLogic.Wesen, KampfLogic.IKämpfer, KampfLogic.IGegnerBase, Extensions.IInitializable
+    public partial class Gegner : KampfLogic.Wesen, KampfLogic.IKämpfer, KampfLogic.IGegnerBase, Extensions.IInitializable, KampfLogic.IHasZonenRs
     {
         public Gegner()
         {
@@ -404,6 +404,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSKopf;
             }
+            set { }
         }
 
         public int RSBrust
@@ -412,6 +413,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSBrust;
             }
+            set { }
         }
 
         public int RSRücken
@@ -420,6 +422,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSRücken;
             }
+            set { }
         }
 
         public int RSArmL
@@ -428,6 +431,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSArmL;
             }
+            set { }
         }
 
         public int RSArmR
@@ -436,6 +440,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSArmR;
             }
+            set { }
         }
 
         public int RSBauch
@@ -444,6 +449,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSBauch;
             }
+            set { }
         }
 
         public int RSBeinL
@@ -452,6 +458,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSBeinL;
             }
+            set { }
         }
 
         public int RSBeinR
@@ -460,6 +467,7 @@ namespace MeisterGeister.Model
             {
                 return GegnerBase.RSBeinR;
             }
+            set { }
         }
 
         public int? GW
@@ -527,5 +535,102 @@ namespace MeisterGeister.Model
         }
         #endregion
 
+        #region IHasZonenRs
+        int? KampfLogic.IHasZonenRs.RSKopf
+        {
+            get
+            {
+                return RSKopf;
+            }
+            set
+            {
+                RSKopf = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBrust
+        {
+            get
+            {
+                return RSBrust;
+            }
+            set
+            {
+                RSBrust = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSRücken
+        {
+            get
+            {
+                return RSRücken;
+            }
+            set
+            {
+                RSRücken = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSArmL
+        {
+            get
+            {
+                return RSArmL;
+            }
+            set
+            {
+                RSArmL = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSArmR
+        {
+            get
+            {
+                return RSArmR;
+            }
+            set
+            {
+                RSArmR = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBauch
+        {
+            get
+            {
+                return RSBauch;
+            }
+            set
+            {
+                RSBauch = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBeinL
+        {
+            get
+            {
+                return RSBeinL;
+            }
+            set
+            {
+                RSBeinL = value ?? 0;
+            }
+        }
+
+        int? KampfLogic.IHasZonenRs.RSBeinR
+        {
+            get
+            {
+                return RSBeinR;
+            }
+            set
+            {
+                RSBeinR = value ?? 0;
+            }
+        }
+        #endregion
     }
 }

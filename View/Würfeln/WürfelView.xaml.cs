@@ -64,7 +64,7 @@ namespace MeisterGeister.View.Würfeln
                 seiten = Convert.ToUInt32(((Button)sender).Tag);
             
             Würfel w = new Würfel(seiten);
-            w.Würfeln((uint)_intBoxAnzahl.Value, (uint)_intBoxWiederholungen.Value, _intBoxMod.Value);
+            w.Würfeln((uint)(_intBoxAnzahl.Value ?? 0), (uint)_intBoxWiederholungen.Value, _intBoxMod.Value ?? 0);
 
             _labelEinzelwürfe.Text = string.Format("Einzelwürfe:\nW{0}", seiten);
 
@@ -95,7 +95,7 @@ namespace MeisterGeister.View.Würfeln
                 seiten = Convert.ToInt32(((Button)sender).Tag);
 
             _textBlockErwartungswert.Text =
-                Würfel.Erwartungswert(seiten, _intBoxAnzahl.Value, _intBoxWiederholungen.Value, _intBoxMod.Value).ToString();
+                Würfel.Erwartungswert(seiten, _intBoxAnzahl.Value ?? 0, _intBoxWiederholungen.Value ?? 0, _intBoxMod.Value ?? 0).ToString();
             _labelErwartungswert.Text = string.Format("Erwartungswert:\n{0} x ({1}W{2}+{3})", _intBoxWiederholungen.Value, _intBoxAnzahl.Value, seiten, _intBoxMod.Value);
         }
 

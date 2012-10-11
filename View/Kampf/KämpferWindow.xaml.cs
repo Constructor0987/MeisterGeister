@@ -54,23 +54,23 @@ namespace MeisterGeister.View.Kampf
 
         private void AddGegner()
         {
-            Gegner g = new Gegner(_textBoxGegner.Text, _intBoxGegnerInitiative.Value,
-                                  _intBoxGegnerLebensenergie.Value,
-                                  _intBoxGegnerAusdauer.Value);
-            g.KO = _intBoxGegnerKonstitution.Value;
-            g.RüstungsschutzGesamt = _intBoxGegnerRSges.Value;
-            g.RüstungsschutzArmL = _intBoxGegnerRSAL.Value;
-            g.RüstungsschutzArmR = _intBoxGegnerRSAR.Value;
-            g.RüstungsschutzBauch = _intBoxGegnerRSBa.Value;
-            g.RüstungsschutzBeinL = _intBoxGegnerRSBL.Value;
-            g.RüstungsschutzBeinR = _intBoxGegnerRSBR.Value;
-            g.RüstungsschutzBrust = _intBoxGegnerRSBr.Value;
-            g.RüstungsschutzKopf = _intBoxGegnerRSKo.Value;
-            g.RüstungsschutzRücken = _intBoxGegnerRSRü.Value;
+            Gegner g = new Gegner(_textBoxGegner.Text, _intBoxGegnerInitiative.Value ?? 0,
+                                  _intBoxGegnerLebensenergie.Value ?? 0,
+                                  _intBoxGegnerAusdauer.Value ?? 0);
+            g.KO = _intBoxGegnerKonstitution.Value ?? 0;
+            g.RüstungsschutzGesamt = _intBoxGegnerRSges.Value ?? 0;
+            g.RüstungsschutzArmL = _intBoxGegnerRSAL.Value ?? 0;
+            g.RüstungsschutzArmR = _intBoxGegnerRSAR.Value ?? 0;
+            g.RüstungsschutzBauch = _intBoxGegnerRSBa.Value ?? 0;
+            g.RüstungsschutzBeinL = _intBoxGegnerRSBL.Value ?? 0;
+            g.RüstungsschutzBeinR = _intBoxGegnerRSBR.Value ?? 0;
+            g.RüstungsschutzBrust = _intBoxGegnerRSBr.Value ?? 0;
+            g.RüstungsschutzKopf = _intBoxGegnerRSKo.Value ?? 0;
+            g.RüstungsschutzRücken = _intBoxGegnerRSRü.Value ?? 0;
             g.Besonderheiten = _textBoxGegnerBesonderheiten.Text;
             g.Sonderfertigkeiten = _textBoxGegnerSonderfertigkeiten.Text;
             g.Kampfwerte = _textBoxGegnerKampfwerte.Text;
-            g.Parade = _intBoxGegnerParade.Value;
+            g.Parade = _intBoxGegnerParade.Value ?? 0;
             g.ProbeWürfelnEvent += _kampfControl.WesenProbeWürfeln_Event;
 
             // Auf vorhandene Einträge prüfen
@@ -110,23 +110,23 @@ namespace MeisterGeister.View.Kampf
                 {
                     var rowGegner = (DatabaseDSADataSet.BestiariumRow)rows[0];
                     rowGegner.Name = _textBoxGegner.Text;
-                    rowGegner.INI_Basis = _intBoxGegnerInitiative.Value;
-                    rowGegner.LE = _intBoxGegnerLebensenergie.Value;
+                    rowGegner.INI_Basis = _intBoxGegnerInitiative.Value ?? 0;
+                    rowGegner.LE = _intBoxGegnerLebensenergie.Value ?? 0;
                     rowGegner.AU = _intBoxGegnerAusdauer.Value.ToString();
-                    rowGegner.KO = _intBoxGegnerKonstitution.Value;
-                    rowGegner.RS = _intBoxGegnerRSges.Value;
-                    rowGegner.RSArmL = _intBoxGegnerRSAL.Value;
-                    rowGegner.RSArmR = _intBoxGegnerRSAR.Value;
-                    rowGegner.RSBauch = _intBoxGegnerRSBa.Value;
-                    rowGegner.RSBeinL = _intBoxGegnerRSBL.Value;
-                    rowGegner.RSBeinR = _intBoxGegnerRSBR.Value;
-                    rowGegner.RSBrust = _intBoxGegnerRSBr.Value;
-                    rowGegner.RSKopf = _intBoxGegnerRSKo.Value;
-                    rowGegner.RSRücken = _intBoxGegnerRSRü.Value;
+                    rowGegner.KO = _intBoxGegnerKonstitution.Value ?? 0;
+                    rowGegner.RS = _intBoxGegnerRSges.Value ?? 0;
+                    rowGegner.RSArmL = _intBoxGegnerRSAL.Value ?? 0;
+                    rowGegner.RSArmR = _intBoxGegnerRSAR.Value ?? 0;
+                    rowGegner.RSBauch = _intBoxGegnerRSBa.Value ?? 0;
+                    rowGegner.RSBeinL = _intBoxGegnerRSBL.Value ?? 0;
+                    rowGegner.RSBeinR = _intBoxGegnerRSBR.Value ?? 0;
+                    rowGegner.RSBrust = _intBoxGegnerRSBr.Value ?? 0;
+                    rowGegner.RSKopf = _intBoxGegnerRSKo.Value ?? 0;
+                    rowGegner.RSRücken = _intBoxGegnerRSRü.Value ?? 0;
                     rowGegner.Besonderheiten = _textBoxGegnerBesonderheiten.Text;
                     rowGegner.Sonderfertigkeiten = _textBoxGegnerSonderfertigkeiten.Text;
                     rowGegner.Kampfwerte = _textBoxGegnerKampfwerte.Text;
-                    rowGegner.PA = _intBoxGegnerParade.Value;
+                    rowGegner.PA = _intBoxGegnerParade.Value ?? 0;
                 }
             }
             else
@@ -134,23 +134,23 @@ namespace MeisterGeister.View.Kampf
                 // Gegner neu einfügen
                 DatabaseDSADataSet.BestiariumRow b = App.DatenDataSet.Bestiarium.NewBestiariumRow();
                 b.Name = _textBoxGegner.Text;
-                b.INI_Basis = _intBoxGegnerInitiative.Value;
-                b.LE = _intBoxGegnerLebensenergie.Value;
+                b.INI_Basis = _intBoxGegnerInitiative.Value ?? 0;
+                b.LE = _intBoxGegnerLebensenergie.Value ?? 0;
                 b.AU = _intBoxGegnerAusdauer.Value.ToString();
-                b.KO = _intBoxGegnerKonstitution.Value;
-                b.RS = _intBoxGegnerRSges.Value;
-                b.RSArmL = _intBoxGegnerRSAL.Value;
-                b.RSArmR = _intBoxGegnerRSAR.Value;
-                b.RSBauch = _intBoxGegnerRSBa.Value;
-                b.RSBeinL = _intBoxGegnerRSBL.Value;
-                b.RSBeinR = _intBoxGegnerRSBR.Value;
-                b.RSBrust = _intBoxGegnerRSBr.Value;
-                b.RSKopf = _intBoxGegnerRSKo.Value;
-                b.RSRücken = _intBoxGegnerRSRü.Value;
+                b.KO = _intBoxGegnerKonstitution.Value ?? 0;
+                b.RS = _intBoxGegnerRSges.Value ?? 0;
+                b.RSArmL = _intBoxGegnerRSAL.Value ?? 0;
+                b.RSArmR = _intBoxGegnerRSAR.Value ?? 0;
+                b.RSBauch = _intBoxGegnerRSBa.Value ?? 0;
+                b.RSBeinL = _intBoxGegnerRSBL.Value ?? 0;
+                b.RSBeinR = _intBoxGegnerRSBR.Value ?? 0;
+                b.RSBrust = _intBoxGegnerRSBr.Value ?? 0;
+                b.RSKopf = _intBoxGegnerRSKo.Value ?? 0;
+                b.RSRücken = _intBoxGegnerRSRü.Value ?? 0;
                 b.Besonderheiten = _textBoxGegnerBesonderheiten.Text;
                 b.Sonderfertigkeiten = _textBoxGegnerSonderfertigkeiten.Text;
                 b.Kampfwerte = _textBoxGegnerKampfwerte.Text;
-                b.PA = _intBoxGegnerParade.Value;
+                b.PA = _intBoxGegnerParade.Value ?? 0;
                 App.DatenDataSet.Bestiarium.AddBestiariumRow(b);
 
                 MessageBox.Show("Gegner-Vorlage im Bestiarium gespeichert.", "Gegner-Vorlage gespeichert", MessageBoxButton.OK);
@@ -239,7 +239,7 @@ namespace MeisterGeister.View.Kampf
                         + _intBoxGegnerRSRü.Value * 4
                         + _intBoxGegnerRSBa.Value * 4
                         + _intBoxGegnerRSAL.Value + _intBoxGegnerRSAR.Value
-                        + _intBoxGegnerRSBL.Value * 2 + _intBoxGegnerRSBR.Value * 2) / 20.0;
+                        + _intBoxGegnerRSBL.Value * 2 + _intBoxGegnerRSBR.Value ?? 0 * 2) / 20.0;
 
                     _intBoxGegnerRSges.Value = (int)Math.Round(gRS, 0, MidpointRounding.AwayFromZero);
                 }

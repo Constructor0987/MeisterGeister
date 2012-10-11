@@ -12,10 +12,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
     /// </summary>
     public class Rüstungsschutz : IRüstungsschutz
     {
-        private Model.Held _held;
-        public Rüstungsschutz(Model.Held held)
+        private IHasZonenRs _wesen;
+
+        public Rüstungsschutz(IHasZonenRs wesen)
         {
-            _held = held;
+            _wesen = wesen;
         }
 
         public int this[Trefferzone zone]
@@ -25,21 +26,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 switch (zone)
                 {
                     case Trefferzone.Kopf:
-                        return _held.RSKopf ?? 0;
+                        return _wesen.RSKopf ?? 0;
                     case Trefferzone.Brust:
-                        return _held.RSBrust ?? 0;
+                        return _wesen.RSBrust ?? 0;
                     case Trefferzone.Rücken:
-                        return _held.RSRücken ?? 0;
+                        return _wesen.RSRücken ?? 0;
                     case Trefferzone.ArmL:
-                        return _held.RSArmL ?? 0;
+                        return _wesen.RSArmL ?? 0;
                     case Trefferzone.ArmR:
-                        return _held.RSArmR ?? 0;
+                        return _wesen.RSArmR ?? 0;
                     case Trefferzone.Bauch:
-                        return _held.RSBauch ?? 0;
+                        return _wesen.RSBauch ?? 0;
                     case Trefferzone.BeinL:
-                        return _held.RSBeinL ?? 0;
+                        return _wesen.RSBeinL ?? 0;
                     case Trefferzone.BeinR:
-                        return _held.RSBeinR ?? 0;
+                        return _wesen.RSBeinR ?? 0;
                     case Trefferzone.Unlokalisiert:
                         return GesamtRS;
                     case Trefferzone.Zufall:
@@ -54,28 +55,28 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 switch (zone)
                 {
                     case Trefferzone.Kopf:
-                        _held.RSKopf = value;
+                        _wesen.RSKopf = value;
                         break;
                     case Trefferzone.Brust:
-                        _held.RSBrust = value;
+                        _wesen.RSBrust = value;
                         break;
                     case Trefferzone.Rücken:
-                        _held.RSRücken = value;
+                        _wesen.RSRücken = value;
                         break;
                     case Trefferzone.ArmL:
-                        _held.RSArmL = value;
+                        _wesen.RSArmL = value;
                         break;
                     case Trefferzone.ArmR:
-                        _held.RSArmR = value;
+                        _wesen.RSArmR = value;
                         break;
                     case Trefferzone.Bauch:
-                        _held.RSBauch = value;
+                        _wesen.RSBauch = value;
                         break;
                     case Trefferzone.BeinL:
-                        _held.RSBeinL = value;
+                        _wesen.RSBeinL = value;
                         break;
                     case Trefferzone.BeinR:
-                        _held.RSBeinR = value;
+                        _wesen.RSBeinR = value;
                         break;
                     case Trefferzone.Zufall:
                         this[TrefferzonenHelper.ZufallsZone()] = value;
