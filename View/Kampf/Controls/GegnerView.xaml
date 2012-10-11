@@ -147,10 +147,11 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Expander IsExpanded="True" Grid.Row="0">
                 <Expander.Header>
-                    <TextBlock Text="Details" Style="{DynamicResource TextTitel}" />
+                    <TextBlock Text="Basisinformationen" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
                     <Grid>
@@ -266,6 +267,33 @@
             </Expander>
             <Expander IsExpanded="False" Grid.Row="1">
                 <Expander.Header>
+                    <TextBlock Text="Angriffe" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!-- SelectedGegnerBase.GegnerBase_Angriff, AngriffAddName (als Prompt), Add und Delete Commands, SelectedAngriff,
+                            Name, AT, Bemerkung, Distanzklasse oder DK(DB-Wert), Reichweite, TPBonus, TPWürfel, TPWürfelAnzahl
+                        -->
+                        <!-- 
+                        <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        -->
+                    </Grid>
+
+                </Border>
+            </Expander>
+            <Expander IsExpanded="False" Grid.Row="2">
+                <Expander.Header>
                     <TextBlock Text="Werte für Beschwörung und Jagd" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
@@ -297,9 +325,10 @@
                     
                 </Border>
             </Expander>
-            <Expander IsExpanded="False" Grid.Row="2">
+            
+            <Expander IsExpanded="False" Grid.Row="3">
                 <Expander.Header>
-                    <TextBlock Text="Angriffe" Style="{DynamicResource TextTitel}" />
+                    <TextBlock Text="Besondere Kampfregeln" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
                     <Grid>
@@ -313,9 +342,6 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <!-- SelectedGegnerBase.GegnerBase_Angriff, AngriffAddName (als Prompt), Add und Delete Commands, SelectedAngriff,
-                            Name, AT, Bemerkung, Distanzklasse oder DK(DB-Wert), Reichweite, TPBonus, TPWürfel, TPWürfelAnzahl
-                        -->
                         <!-- 
                         <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
                         <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
