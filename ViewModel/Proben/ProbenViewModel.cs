@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.ViewModel.Proben
 {
@@ -137,6 +138,8 @@ namespace MeisterGeister.ViewModel.Proben
                     vm.Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
                 else if (SelectedProbe is Model.Zauber)
                     vm.Probe = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).FirstOrDefault();
+                else if (SelectedProbe is Eigenschaft)
+                    vm.Probe = item.Eigenschaft((SelectedProbe as Eigenschaft).Name);
                 vm.Gewürfelt += ProbeControlGewürfelt;
 
                 // nur einfügen, wenn der Held die Fähigkeit besitzt
@@ -148,6 +151,8 @@ namespace MeisterGeister.ViewModel.Proben
 
         private void RefreshProbeListe()
         {
+            // Eigenschaften hinzufügen
+            ProbeListe.AddRange(Eigenschaft.EigenschaftenListe);
             // Talente hinzufügen
             ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Talent>().OrderBy(t => t.Name));
             // Zauber hinzufügen

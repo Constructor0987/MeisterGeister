@@ -11,6 +11,7 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using System.ComponentModel;
 using DependentProperty = MeisterGeister.Model.Extensions.DependentProperty;
 using MeisterGeister.Logic.Extensions;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Model
 {
@@ -349,7 +350,7 @@ namespace MeisterGeister.Model
         /// <param name="eigenschaft">Name oder Abkürzung der gewünschten Eigenschaft.</param>
         /// <param name="ohneMod">'True' falls der unmodifizierte Wert gewünscht ist.</param>
         /// <returns>Eigenschaftswert.</returns>
-        public int GetEigenschaftWert(string eigenschaft, bool ohneMod = false)
+        public int EigenschaftWert(string eigenschaft, bool ohneMod = false)
         {
             switch (eigenschaft)
             {
@@ -384,6 +385,18 @@ namespace MeisterGeister.Model
                     return 0;
             }
         }
+
+        /// <summary>
+        /// Gibt die Eigenschaft zurück. ACHTUNG: Änderungen am Wert wirken sich nicht auf den DataMember aus!
+        /// </summary>
+        /// <param name="eigenschaft">Name oder Abkürzung der gewünschten Eigenschaft.</param>
+        /// <param name="ohneMod">'True' falls der unmodifizierte Wert gewünscht ist.</param>
+        /// <returns>Eigenschaft.</returns>
+        public Eigenschaft Eigenschaft(string eigenschaft, bool ohneMod = false)
+        {
+            return new Eigenschaft(eigenschaft, EigenschaftWert(eigenschaft, ohneMod));
+        }
+
         #endregion
 
         #region BaseEigenschaften / Für die Berechnung von abgeleiteten Werten

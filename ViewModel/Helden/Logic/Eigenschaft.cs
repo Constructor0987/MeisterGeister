@@ -11,11 +11,31 @@ namespace MeisterGeister.ViewModel.Helden.Logic
     {
         #region //---- KONSTRUKTOREN & INITIALISIERUNG ----
 
-        public Eigenschaft() { }
-
-        public Eigenschaft(string name)
+        public Eigenschaft() 
         {
-            Name = name;
+            _werte = new int[1];
+            _werte[0] = 8; // Standard-Minimum-Wert setzen
+        }
+
+        /// <summary>
+        /// Eine Eigenschaft.
+        /// </summary>
+        /// <param name="name">Name oder Abkürzung der Eigenschaft.</param>
+        /// <param name="wert">Wert der Eigenschaft.</param>
+        public Eigenschaft(string name, int wert = 8)
+        {
+            if (name.Length <= 2) // Abkürzung
+            {
+                Abkürzung = name;
+                Name = GetName(name);
+            }
+            else // Name
+            {
+                Abkürzung = GetAbkürzung(name);
+                Name = name;
+            }
+            _werte = new int[1];
+            Wert = wert;
         }
 
         #endregion //---- KONSTRUKTOREN & INITIALISIERUNG ----
@@ -23,6 +43,8 @@ namespace MeisterGeister.ViewModel.Helden.Logic
         #region //---- EIGENSCHAFTEN & FELDER ----
 
         public string Name { get; set; }
+
+        public string Abkürzung { get; set; }
 
         #endregion //---- EIGENSCHAFTEN & FELDER ----
 
@@ -44,7 +66,15 @@ namespace MeisterGeister.ViewModel.Helden.Logic
             EigenschaftenDictionary.Add("SO", new Eigenschaft("Sozialstatus"));
         }
 
+        /// <summary>
+        /// Eigenschaften als Liste.
+        /// </summary>
+        public static List<Eigenschaft> EigenschaftenListe { get { return new List<Eigenschaft>(EigenschaftenDictionary.Values); } }
+
         private static Dictionary<string, Eigenschaft> _eigenschaftenDictionary = new Dictionary<string, Eigenschaft>(9);
+        /// <summary>
+        /// Eigenschaften als Dictionary mit der Abkürzung als Key.
+        /// </summary>
         public static Dictionary<string, Eigenschaft> EigenschaftenDictionary { get { return _eigenschaftenDictionary; } }
 
         /// <summary>
@@ -58,6 +88,21 @@ namespace MeisterGeister.ViewModel.Helden.Logic
             {
                 if (item.Value.Name == name)
                     return item.Key;
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Gibt den Namen zu einer abgekürzten Eigenschaft zurük.
+        /// </summary>
+        /// <param name="name">Abkürzung der Eigenschaft.</param>
+        /// <returns>Name der Eigenschaft.</returns>
+        public static string GetName(string abkürzung)
+        {
+            foreach (var item in EigenschaftenDictionary)
+            {
+                if (item.Key == abkürzung)
+                    return item.Value.Name;
             }
             return string.Empty;
         }
@@ -108,8 +153,6 @@ namespace MeisterGeister.ViewModel.Helden.Logic
         {
             get
             {
-                if (_werte == null)
-                    _werte = new int[1];
                 return _werte;
             }
             set
@@ -117,6 +160,12 @@ namespace MeisterGeister.ViewModel.Helden.Logic
                 _werte = value;
                 _chanceBerechnet = false;
             }
+        }
+
+        public int Wert
+        {
+            get { return Werte[0]; }
+            set { Werte[0] = value; }
         }
 
         #endregion //---- PROBE ----

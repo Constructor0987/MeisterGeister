@@ -18,9 +18,9 @@ namespace MeisterGeister.Model
                     _werte = new int[3];
                 if (Held != null && Zauber != null)
                 {
-                    _werte[0] = Held.GetEigenschaftWert(Zauber.Eigenschaft1);
-                    _werte[1] = Held.GetEigenschaftWert(Zauber.Eigenschaft2);
-                    _werte[2] = Held.GetEigenschaftWert(Zauber.Eigenschaft3);
+                    _werte[0] = Held.EigenschaftWert(Zauber.Eigenschaft1);
+                    _werte[1] = Held.EigenschaftWert(Zauber.Eigenschaft2);
+                    _werte[2] = Held.EigenschaftWert(Zauber.Eigenschaft3);
                 }
                 return _werte;
             }

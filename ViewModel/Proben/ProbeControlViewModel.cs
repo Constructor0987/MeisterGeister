@@ -124,9 +124,8 @@ namespace MeisterGeister.ViewModel.Proben
                     return (Probe as Model.Zauber).Name;
                 if (Probe is Model.Held_Zauber)
                     return (Probe as Model.Held_Zauber).Zauber.Name;
-                // TODO MT: GetEigenschaftWert muss noch von Probe ableiten
-                //else if (Probe is GetEigenschaftWert) 
-                //    return (Probe as GetEigenschaftWert).Name;
+                else if (Probe is Eigenschaft) 
+                    return (Probe as Eigenschaft).Name;
                 return string.Empty; 
             }
         }
@@ -157,13 +156,12 @@ namespace MeisterGeister.ViewModel.Proben
         {
             get 
             {
-                // TODO MT: Für Zauber und Eigenschaften erweitern
-
                 foreach (var item in _eigenschaftWurfItemListe)
                     item.Held = Held;
 
                 Model.Talent talent = null;
                 Model.Zauber zauber = null;
+                Eigenschaft eigenschaft = null;
                 if (Probe is Model.Talent)
                     talent = Probe as Model.Talent;
                 else if (Probe is Model.Held_Talent)
@@ -172,6 +170,8 @@ namespace MeisterGeister.ViewModel.Proben
                     zauber = Probe as Model.Zauber;
                 else if (Probe is Model.Held_Zauber)
                     zauber = (Probe as Model.Held_Zauber).Zauber;
+                else if (Probe is Eigenschaft)
+                    eigenschaft = Probe as Eigenschaft;
 
                 if ((talent != null || zauber != null) && _eigenschaftWurfItemListe.Count >= 3)
                 {
@@ -190,10 +190,15 @@ namespace MeisterGeister.ViewModel.Proben
                     if (Held != null)
                     {
                         // Eigenschaftswerte setzen
-                        _eigenschaftWurfItemListe[0].Wert = Held.GetEigenschaftWert(e1);
-                        _eigenschaftWurfItemListe[1].Wert = Held.GetEigenschaftWert(e2);
-                        _eigenschaftWurfItemListe[2].Wert = Held.GetEigenschaftWert(e3);
+                        _eigenschaftWurfItemListe[0].Wert = Held.EigenschaftWert(e1);
+                        _eigenschaftWurfItemListe[1].Wert = Held.EigenschaftWert(e2);
+                        _eigenschaftWurfItemListe[2].Wert = Held.EigenschaftWert(e3);
                     }
+                }
+                else if (eigenschaft != null)
+                {
+                    _eigenschaftWurfItemListe[0].Name = eigenschaft.Abkürzung;
+                    _eigenschaftWurfItemListe[0].Wert = eigenschaft.Wert;
                 }
 
                 return _eigenschaftWurfItemListe; 
@@ -320,7 +325,7 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 if (Held == null)
                     return Wert;
-                return Held.GetEigenschaftWert(Name, true);
+                return Held.EigenschaftWert(Name, true);
             }
         }
 
@@ -328,9 +333,10 @@ namespace MeisterGeister.ViewModel.Proben
         {
             get
             {
-                if (Held == null)
+                Type modType = Eigenschaft.GetModType(Name);
+                if (Held == null || modType == null)
                     return new List<dynamic>();
-                return Held.ModifikatorenListe(Eigenschaft.GetModType(Name), StartWert);
+                return Held.ModifikatorenListe(modType, StartWert);
             }
         }
     }
