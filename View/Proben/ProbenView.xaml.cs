@@ -44,27 +44,6 @@ namespace MeisterGeister.View.Proben
             set { DataContext = value; }
         }
 
-        // TODO MT: Testmethode entfernen
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            // einfache Probe
-            Probe p1 = new Probe();
-            ProbenErgebnis e1 = p1.Würfeln();
-
-            // Talent-Probe
-            Model.Talent p2 = new Model.Talent();
-            ProbenErgebnis e2 = p2.Würfeln();
-
-            Model.Talent p3 = Global.ContextTalent.TalentListe.Where(t => t.Name == "Sinnenschärfe").FirstOrDefault();
-            ProbenErgebnis e3 = p3.Würfeln();
-
-            Model.Held_Talent p4 = new Model.Held_Talent();
-            ProbenErgebnis e4 = p4.Würfeln();
-
-            Model.Held_Talent p5 = Global.ContextHeld.HeldenGruppeListe.FirstOrDefault().Held_Talent.Where(t => t.Talent == p3).FirstOrDefault();
-            ProbenErgebnis e5 = p5.Würfeln();
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             if (VM != null)

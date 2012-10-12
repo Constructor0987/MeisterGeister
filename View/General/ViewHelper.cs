@@ -92,5 +92,19 @@ namespace MeisterGeister.View.General
             return dlg.Ergebnis;
         }
 
+        /// <summary>
+        /// Zeigt ein Würfel Dialog-Fenster an.
+        /// </summary>
+        /// <param name="würfel">Würfel-Text (z.B. 2W+3, W20).</param>
+        /// <param name="infoText">Info-Text, der angezeigt wird und den Würfelwurf beschreibt.</param>
+        /// <returns>Würfelergebnis.</returns>
+        public static int ShowWürfelDialog(string würfel, string infoText = "")
+        {
+            View.Würfeln.WürfelDialog dlg = new View.Würfeln.WürfelDialog(würfel, infoText);
+            dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+            dlg.ShowDialog();
+            return dlg.Ergebnis;
+        }
+
     }
 }
