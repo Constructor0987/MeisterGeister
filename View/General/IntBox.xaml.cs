@@ -205,6 +205,7 @@ namespace MeisterGeister.View.General
                     DecreaseValue();
                 else
                     IncreaseValue();
+                e.Handled = true;
             }
         }
 
