@@ -612,6 +612,14 @@ namespace MeisterGeister.View
                 if (tag != null && tag is string)
                     StarteTab(tag.ToString(), _tabControlMain.SelectedIndex);
             }
+
+            // Menü zuklappen
+            if (isPopOut == false)
+            {
+                Storyboard animation = (Storyboard)FindResource("MenuPopOut");
+                animation.Begin(this);
+                isPopOut = true;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
