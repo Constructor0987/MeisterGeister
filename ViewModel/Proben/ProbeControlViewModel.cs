@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
+using MeisterGeister.Logic.Settings;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
 
@@ -21,6 +22,17 @@ namespace MeisterGeister.ViewModel.Proben
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
+
+        /// <summary>
+        /// Bei 'true' wird das Abspielen des WürfelSounds unterbunden.
+        /// </summary>
+        public bool LockSoundAbspielen { get; set; }
+
+        public bool SoundAbspielen
+        {
+            get { return Einstellungen.WuerfelSoundAbspielen; }
+            set { Einstellungen.WuerfelSoundAbspielen = value; OnChanged("SoundAbspielen"); }
+        }
 
         private ProbenErgebnis _ergebnis = new ProbenErgebnis();
         public ProbenErgebnis Ergebnis
@@ -249,7 +261,7 @@ namespace MeisterGeister.ViewModel.Proben
             }
 
             // Sound abspielen
-            if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
+            if (!LockSoundAbspielen && MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             NotifyEergebnisChanged();

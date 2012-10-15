@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -110,8 +111,12 @@ namespace MeisterGeister.Logic.Settings
             set
             {
                 SetEinstellung<bool>("WuerfelSoundAbspielen", value);
+                if (WuerfelSoundAbspielenChanged != null)
+                    WuerfelSoundAbspielenChanged(null, new EventArgs());
             }
         }
+
+        public static EventHandler WuerfelSoundAbspielenChanged;
 
         public static int SelectedTab
         {

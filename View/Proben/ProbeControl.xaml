@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Background="Transparent"
              d:DataContext="{d:DesignData /SampleData/ProbeControlViewModelSampleData.xaml}"
-             Loaded="UserControl_Loaded_1">
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <Style x:Key="BoderContent" TargetType="{x:Type Border}" BasedOn="{StaticResource ControlContentBorder}">
             <Style.Triggers>

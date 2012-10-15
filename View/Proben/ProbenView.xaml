@@ -7,24 +7,25 @@
              xmlns:Proben="clr-namespace:MeisterGeister.View.Proben"
              mc:Ignorable="d" 
              d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}" Loaded="UserControl_Loaded">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Grid.Column="0" Margin="5,5,5,0" Style="{DynamicResource ControlContentBorder}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100*" />
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="50*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" Margin="5,5,5,0" Style="{DynamicResource ControlContentBorder}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
                 <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl">
                     <ComboBox.ItemsPanel>
@@ -35,47 +36,53 @@
                 </ComboBox>
 
                 <ViewGeneral:IntBox Grid.Column="1" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
-                    
-                    <Button Grid.Column="3" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
-                    </Button>
-                </Grid>
-            </Border>
 
-            <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
-                <Expander.Header>
-                    <TextBlock Text="Proben" Style="{DynamicResource TextTitel}" />
-                </Expander.Header>
-                <Border Style="{DynamicResource ControlContentBorder}">
-                    <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                <Button Grid.Column="3" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
+                </Button>
+
+                <CheckBox Grid.Column="4" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
+                    <CheckBox.Content>
+                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                    </CheckBox.Content>
+                </CheckBox>
+            </Grid>
+        </Border>
+
+        <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <TextBlock Text="Proben" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemsSource="{Binding ProbeErgebnisListe}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}">
-                                <Setter Property="Focusable" Value="False"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Focusable" Value="False"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <!-- TODO MT: Layout-Varianten einstellbar machen (Zeile und Kachel) -->
                     <!--<ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>-->
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border Margin="5">
-                                    <StackPanel>
-                                        <Proben:ProbeControl Orientation="Horizontal" />
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Border>
-            </Expander>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="5">
+                                <StackPanel>
+                                    <Proben:ProbeControl Orientation="Horizontal" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        </Expander>
 
-            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
-                <TextBlock Text="{Binding GruppenErgebnis}"/>
-            </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
+            <TextBlock Text="{Binding GruppenErgebnis}"/>
+        </StackPanel>
 
-        </Grid>
+    </Grid>
 </UserControl>

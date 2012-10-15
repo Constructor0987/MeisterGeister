@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
+using MeisterGeister.Logic.Settings;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
 
@@ -89,6 +90,12 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
+        public bool SoundAbspielen
+        {
+            get { return Einstellungen.WuerfelSoundAbspielen; }
+            set { Einstellungen.WuerfelSoundAbspielen = value; OnChanged("SoundAbspielen"); }
+        }
+
         // Listen
         List<Probe> _probeListe = new List<Probe>();
         public List<Probe> ProbeListe
@@ -104,6 +111,7 @@ namespace MeisterGeister.ViewModel.Proben
         public ProbenViewModel()
         {
             onWürfeln = new Base.CommandBase(Würfeln, null);
+            Einstellungen.WuerfelSoundAbspielenChanged += WuerfelSoundAbspielenChanged;
 
             Refresh();
             RefreshProbeErgebnisListe();
@@ -159,11 +167,15 @@ namespace MeisterGeister.ViewModel.Proben
         {
             // Alle Proben neu würfeln
             foreach (var item in ProbeErgebnisListe)
+            {
+                item.LockSoundAbspielen = true;
                 item.Würfeln();
+                item.LockSoundAbspielen = false;
+            }
 
             // Sound abspielen
-            if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
-                MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
+            if (Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
+                Logic.General.AudioPlayer.PlayWürfel();
 
             OnChanged("ProbeErgebnisListe");
             OnChanged("GruppenErgebnis");
@@ -172,6 +184,11 @@ namespace MeisterGeister.ViewModel.Proben
         #endregion
 
         #region //---- EVENTS ----
+
+        private void WuerfelSoundAbspielenChanged(object sender, EventArgs e)
+        {
+            OnChanged("SoundAbspielen");
+        }
 
         void ProbeControlGewürfelt(object sender, EventArgs e)
         {

@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MeisterGeister.Logic.General;
 //Eigene Usings
 using VM = MeisterGeister.ViewModel.Proben;
 
@@ -22,10 +10,18 @@ namespace MeisterGeister.View.Proben
     /// </summary>
     public partial class ProbeControl : UserControl
     {
+        // TODO MT: Erfolgswahrscheinlichkeit hinzufügen
+
+        #region //---- KONSTRUKTOR ----
+
         public ProbeControl()
         {
             InitializeComponent();
         }
+
+        #endregion //---- KONSTRUKTOR ----
+
+        #region //---- EIGENSCHAFTEN & FELDER ----
 
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
@@ -41,25 +37,10 @@ namespace MeisterGeister.View.Proben
             set { DataContext = value; }
         }
 
-        // TODO MT: Erfolgswahrscheinlichkeit hinzufügen
+        #endregion //---- EIGENSCHAFTEN & FELDER ----
 
+        #region //---- DEPENDENCY PROPERTIES ----
 
-        //public Probe Probe
-        //{
-        //    get { return (Probe)GetValue(ProbeProperty); }
-        //    set { SetValue(ProbeProperty, value); }
-        //}
-        //public static readonly DependencyProperty ProbeProperty = DependencyProperty.Register(
-        //  "Probe", typeof(Probe), typeof(ProbeControl),
-        //        new FrameworkPropertyMetadata(new Probe(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnProbeChanged)));
-
-        //private static void OnProbeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    ProbeControl control = (ProbeControl)d;
-        //    //(e.NewValue as Probe).Gewürfelt += control.ProbeControl_Gewürfelt;
-        //}
-
-        
         public Model.Held Held
         {
             get { return (Model.Held)GetValue(HeldProperty); }
@@ -78,14 +59,6 @@ namespace MeisterGeister.View.Proben
                 control.VM.Held = e.NewValue as Model.Held;
         }
 
-        private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
-        {
-            // Neues ViewModel erzeugen, falls keins vorhanden
-            if (VM == null)
-                VM = new VM.ProbeControlViewModel();
-        }
-
-
         public Orientation Orientation
         {
             get { return (Orientation)GetValue(OrientationProperty); }
@@ -94,5 +67,18 @@ namespace MeisterGeister.View.Proben
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
           "Orientation", typeof(Orientation), typeof(ProbeControl),
                 new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        #endregion //---- DEPENDENCY PROPERTIES ----
+
+        #region //---- EVENTS ----
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Neues ViewModel erzeugen, falls keins vorhanden
+            if (VM == null)
+                VM = new VM.ProbeControlViewModel();
+        }
+
+        #endregion //---- EVENTS ----
     }
 }

@@ -29,11 +29,11 @@ namespace MeisterGeister.View.Würfeln
 
             _checkBoxSoundAbspielen.Checked -= CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked -= CheckBoxSoundAbspielen_Changed;
-            _checkBoxSoundAbspielen.IsChecked = MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen;
+            _checkBoxSoundAbspielen.IsChecked = Logic.Settings.Einstellungen.WuerfelSoundAbspielen;
             _checkBoxSoundAbspielen.Checked += CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked += CheckBoxSoundAbspielen_Changed;
 
-            //Würfel.SoundAbspielenChanged += WürfelSoundAbspielen_Changed;
+            Logic.Settings.Einstellungen.WuerfelSoundAbspielenChanged += WürfelSoundAbspielen_Changed;
         }
 
         private void CheckBoxSoundAbspielen_Changed(object sender, RoutedEventArgs e)
