@@ -1086,7 +1086,7 @@
     <Resource Include="Images\Icons\Wuerfel\w10.png" />
     <Resource Include="Images\Icons\Wuerfel\w12.png" />
     <Resource Include="Images\Icons\Wuerfel\w20.png" />
-    <Resource Include="Images\Icons\Wuerfel\w20_blank.png" />
+    <Resource Include="Images\Icons\Wuerfel\w20_blank_gruen.png" />
     <Resource Include="Images\Icons\Wuerfel\w6_blank.png" />
     <Resource Include="Images\Icons\Wuerfel\wuerfel.png" />
     <Resource Include="Images\Icons\Wuerfel\w6.png" />
@@ -1169,6 +1169,9 @@
     <Resource Include="Images\Icons\General\play.png" />
     <Resource Include="Images\Icons\General\play_next.png" />
     <Resource Include="Images\Icons\General\play_stop.png" />
+    <Resource Include="Images\Icons\Wuerfel\w20_blank_gelb.png" />
+    <Resource Include="Images\Icons\Wuerfel\w20_blank_rot.png" />
+    <Resource Include="Images\Icons\Wuerfel\w20_blank_blau.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

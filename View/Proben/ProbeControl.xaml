@@ -88,10 +88,9 @@
                                 </ViewGeneral:IntBox>
                                 <Border Grid.Row="2" Width="24" Height="24" ToolTip="Ergebnis des Wurfs">
                                     <Border.Background>
-                                        <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank.png" />
+                                        <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank_gelb.png" Opacity="0.9" />
                                     </Border.Background>
-                                    <ViewGeneral:IntBox Value="{Binding Wurf}" MinValue="1" MaxValue="20"
-                                                        HorizontalAlignment="Center" VerticalAlignment="Center" NoBackground="True" Foreground="White" />
+                                    <ViewGeneral:IntBox HorizontalAlignment="Center" VerticalAlignment="Center" MaxValue="20" MinValue="1" NoBackground="True" FontWeight="Bold" Value="{Binding Wurf}" />
                                 </Border>
                             </Grid>
                         </DataTemplate>
