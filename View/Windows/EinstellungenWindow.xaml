@@ -21,14 +21,24 @@
                     <ComboBoxItem Content="DSA4.1" />
                 </ComboBox>
             </StackPanel>
-            <Expander Header="Regel-Optionen" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="4">
+            <Expander Margin="4" IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="Regel-Optionen" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
                 <ListBox ItemsSource="{Binding}" ItemTemplate="{StaticResource RegelnListTemplate}" BorderThickness="0">
                     <ListBox.Background>
                         <SolidColorBrush />
                     </ListBox.Background>
                 </ListBox>
+                </Border>
             </Expander>
-            <Expander Header="Einstellungen" IsExpanded="True" Background="{StaticResource BackgroundPergamentQuer}" Margin="4">
+
+            <Expander Margin="4" IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
                 <ListBox BorderThickness="0">
                     <ListBox.Background>
                         <SolidColorBrush />
@@ -48,6 +58,7 @@
                         </TextBlock>
                     </StackPanel>
                 </ListBox>
+                    </Border>
             </Expander>
         </StackPanel>
     </Grid>
