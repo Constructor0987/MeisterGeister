@@ -19,7 +19,13 @@
         <Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
             <StackPanel Orientation="Vertical" VerticalAlignment="Top">
                 <TextBlock Margin="5" Text="Schild:" />
-                <ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=SchildListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedSchild}" />
+                <ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=SchildListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedSchild}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
             </StackPanel>
         </Border>
 

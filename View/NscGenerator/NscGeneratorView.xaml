@@ -112,9 +112,27 @@
                 <Grid>
                     <ComboBox Height="23" Margin="15,10,0,0" Width="56" HorizontalAlignment="Left" IsEnabled="{Binding GeschlechtListeIsEnabled}" ItemsSource="{Binding GeschlechtListe}" SelectedItem="{Binding SelectedGeschlecht}" ToolTip="Geschlecht" VerticalAlignment="Top" />
                     <ComboBox Height="23" Margin="71,10,0,0" Width="82" HorizontalAlignment="Left" ItemsSource="{Binding AlterListe}" SelectedItem="{Binding SelectedAlter}" ToolTip="Alter" VerticalAlignment="Top" />
-                    <ComboBox Height="23" Margin="153,10,0,0" Width="93" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding RasseListeIsEnabled}" ItemsSource="{Binding RasseListe}" SelectedItem="{Binding SelectedRasse}" ToolTip="Rasse" VerticalAlignment="Top" />
-                    <ComboBox Height="23" Margin="246,10,0,0" Width="131" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding KulturListeIsEnabled}" ItemsSource="{Binding KulturListe}" SelectedItem="{Binding SelectedKultur}" ToolTip="Kultur" VerticalAlignment="Top" />
-                    <ComboBox Height="23" Margin="370,10,0,0" Width="150" HorizontalAlignment="Left" IsEnabled="{Binding ProfessionListeIsEnabled}" ItemsSource="{Binding ProfessionListe}" SelectedItem="{Binding SelectedProfession}" ToolTip="Profession" VerticalAlignment="Top" Visibility="Collapsed" />
+                    <ComboBox Height="23" Margin="153,10,0,0" Width="93" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding RasseListeIsEnabled}" ItemsSource="{Binding RasseListe}" SelectedItem="{Binding SelectedRasse}" ToolTip="Rasse" VerticalAlignment="Top">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <ComboBox Height="23" Margin="246,10,0,0" Width="131" DisplayMemberPath="Name" HorizontalAlignment="Left" IsEnabled="{Binding KulturListeIsEnabled}" ItemsSource="{Binding KulturListe}" SelectedItem="{Binding SelectedKultur}" ToolTip="Kultur" VerticalAlignment="Top">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                    <ComboBox Height="23" Margin="370,10,0,0" Width="150" HorizontalAlignment="Left" IsEnabled="{Binding ProfessionListeIsEnabled}" ItemsSource="{Binding ProfessionListe}" SelectedItem="{Binding SelectedProfession}" ToolTip="Profession" VerticalAlignment="Top" Visibility="Collapsed">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
                     <Button Height="23" Margin="520,10,0,0" Command="{Binding OnReset}" HorizontalAlignment="Left" ToolTip="Auswahl zurücksetzen" VerticalAlignment="Top">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Images/Icons/General/entf_01.png" />

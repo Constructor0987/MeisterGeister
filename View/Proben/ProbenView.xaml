@@ -26,7 +26,13 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl" />
+                <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
 
                 <ViewGeneral:IntBox Grid.Column="1" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
                     

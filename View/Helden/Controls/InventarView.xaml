@@ -540,11 +540,34 @@
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" Margin="5">
-                                    <ComboBox Margin="0,0,0,3"  ItemsSource="{Binding NahkampfWaffeTalentListe}" SelectedItem="{Binding SelectedNahkampfwaffeTalent}" Height="25.96" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" VerticalContentAlignment="Stretch" />
-                                    <ComboBox Margin="0,0,0,3" Height="25.96" ItemsSource="{Binding FernkampWaffeTalentListe}" SelectedItem="{Binding SelectedFernkampfwaffeTalent}" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-                                    <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-                                    <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" IsEnabled="False" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-
+                                    <ComboBox Margin="0,0,0,3"  ItemsSource="{Binding NahkampfWaffeTalentListe}" SelectedItem="{Binding SelectedNahkampfwaffeTalent}" Height="25.96" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                    <ComboBox Margin="0,0,0,3" Height="25.96" ItemsSource="{Binding FernkampWaffeTalentListe}" SelectedItem="{Binding SelectedFernkampfwaffeTalent}" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                    <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                    <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" IsEnabled="False" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="5">
                                     <Label Margin="0,0,0,3" Height="26"/>
@@ -560,9 +583,27 @@
 
                                 </StackPanel>
                                 <StackPanel Grid.Column="4" Margin="5">
-                                    <ComboBox Height="25.96" ItemsSource="{Binding NahkampfwaffeListe}" SelectedItem="{Binding SelectedNahkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-                                    <ComboBox Height="25.96" ItemsSource="{Binding FernkampfwaffeListe}"  SelectedItem="{Binding SelectedFernkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-                                    <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                                    <ComboBox Height="25.96" ItemsSource="{Binding NahkampfwaffeListe}" SelectedItem="{Binding SelectedNahkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                    <ComboBox Height="25.96" ItemsSource="{Binding FernkampfwaffeListe}"  SelectedItem="{Binding SelectedFernkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
+                                    <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="5" Margin="5">
                                     <Button x:Name="ADDNah" Command="{Binding OnAddNahkampfwaffe}" VerticalAlignment="Center" Height="26"  Margin="0,0,0,3">
@@ -597,13 +638,25 @@
                                     <Label Content="Talent Nahkampf" Style="{DynamicResource TextInStack}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
-                                    <ComboBox Margin="0,0,0,3"  ItemsSource="{Binding NahkampfWaffeTalentListe}" SelectedItem="{Binding SelectedNahkampfwaffeTalent}" Height="25.96" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                                    <ComboBox Margin="0,0,0,3"  ItemsSource="{Binding NahkampfWaffeTalentListe}" SelectedItem="{Binding SelectedNahkampfwaffeTalent}" Height="25.96" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="5">
                                     <Label Content="Nahkampfwaffe" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="3" Margin="5">
-                                    <ComboBox Height="25.96" ItemsSource="{Binding NahkampfwaffeListe}" SelectedItem="{Binding SelectedNahkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                                    <ComboBox Height="25.96" ItemsSource="{Binding NahkampfwaffeListe}" SelectedItem="{Binding SelectedNahkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="4" Margin="5">
                                     <Button x:Name="ADDNah2" Command="{Binding OnAddNahkampfwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5">
@@ -632,13 +685,25 @@
                                     <Label Content="Talent Fernkampf" Style="{DynamicResource TextInStack}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
-                                    <ComboBox Margin="0,0,0,3" Height="25.96" ItemsSource="{Binding FernkampWaffeTalentListe}" SelectedItem="{Binding SelectedFernkampfwaffeTalent}" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                                    <ComboBox Margin="0,0,0,3" Height="25.96" ItemsSource="{Binding FernkampWaffeTalentListe}" SelectedItem="{Binding SelectedFernkampfwaffeTalent}" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="5">
                                     <Label Content="Fernkampfwaffe" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="3" Margin="5">
-                                    <ComboBox Height="25.96" ItemsSource="{Binding FernkampfwaffeListe}"  SelectedItem="{Binding SelectedFernkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                                    <ComboBox Height="25.96" ItemsSource="{Binding FernkampfwaffeListe}"  SelectedItem="{Binding SelectedFernkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="4" Margin="5">
                                     <Button  Command="{Binding OnAddFernwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5">
@@ -666,7 +731,13 @@
                                     <Label Content="Schild" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
-                                    <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                                    <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="5">
                                     <Button  Command="{Binding OnAddSchild}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5">
@@ -694,7 +765,13 @@
                                     <Label Content="Rüstung" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
-                                    <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                                    <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ComboBox.ItemsPanel>
+                                    </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="5">
                                     <Button  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23">

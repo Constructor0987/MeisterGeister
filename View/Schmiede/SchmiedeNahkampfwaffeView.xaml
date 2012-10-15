@@ -19,9 +19,21 @@
         <Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
             <StackPanel Orientation="Vertical" VerticalAlignment="Top">
                 <TextBlock Margin="5" Text="Talent:" />
-                <ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=NahkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedNahkampfwaffeTalent}" />
+                <ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=NahkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedNahkampfwaffeTalent}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
                 <TextBlock Margin="5" Text="Waffe:" />
-                <ComboBox Margin="5,0,5,20" Height="23" ItemsSource="{Binding Path=NahkampfwaffeListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedNahkampfwaffe}" />
+                <ComboBox Margin="5,0,5,20" Height="23" ItemsSource="{Binding Path=NahkampfwaffeListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedNahkampfwaffe}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
                 <TextBlock Margin="5" Text="allgemeine Verbesserungen:" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="TP" Margin="5" VerticalAlignment="Center" />
