@@ -246,9 +246,10 @@ namespace MeisterGeister.ViewModel.Basar
                 itemList.Add(new BasarItem() { Item = item });
 
             BasarItemListe = itemList;
-            FilteredBasarItemListe = BasarItemListe.OrderBy(n => n.Name).ToList();
 
             Refresh();
+
+            FilterListe();
         }
 
         /// <summary>
@@ -260,7 +261,7 @@ namespace MeisterGeister.ViewModel.Basar
             string[] suchWorte = suchText.Split(' ');
 
             if (suchText == string.Empty) // kein Suchwort
-                FilteredBasarItemListe = BasarItemListe.OrderBy(n => n.Name).ToList();
+                FilteredBasarItemListe = BasarItemListe.AsParallel().OrderBy(n => n.Name).ToList();
             else if (suchWorte.Length == 1) // nur ein Suchwort
                 FilteredBasarItemListe = BasarItemListe.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
             else // mehrere Suchwörter

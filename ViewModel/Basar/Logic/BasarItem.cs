@@ -13,6 +13,13 @@ namespace MeisterGeister.ViewModel.Basar.Logic
     {
         #region //---- FELDER ----
 
+        private IHandelsgut _item = null;
+
+        /// <summary>
+        /// Eine Zusammenführung aller durchsuchbaren Felder.
+        /// </summary>
+        private string _suchtext = string.Empty;
+
         private Preis _preis;
         private double _rabattAufschlag = 0.0;
         private double _anzahl = 1.0;
@@ -24,7 +31,16 @@ namespace MeisterGeister.ViewModel.Basar.Logic
 
         #region //---- EIGENSCHAFTEN ----
 
-        public IHandelsgut Item { get; set; }
+        public IHandelsgut Item 
+        {
+            get { return _item; }
+            set
+            {
+                _item = value;
+                _suchtext = Name.ToLower() + Kategorie.ToLower() + Tags.ToLower();
+            }
+
+        }
 
         public Type ItemType 
         {
@@ -168,9 +184,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         /// <returns></returns>
         public bool Contains(string suchWort)
         {
-            return Name.ToLower().Contains(suchWort)
-                || Kategorie.ToLower().Contains(suchWort)
-                || Tags.ToLower().Contains(suchWort);
+            return _suchtext.Contains(suchWort);
         }
 
         /// <summary>
