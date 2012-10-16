@@ -889,7 +889,7 @@ namespace MeisterGeister.Model
             get
             {
                 int ko = Konstitution;
-                int ws = Convert.ToInt32(Math.Round(ko / 2.0, 0, MidpointRounding.AwayFromZero));
+                int ws = ko;
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
                 if (HatVorNachteil(VorNachteil.Glasknochen))
