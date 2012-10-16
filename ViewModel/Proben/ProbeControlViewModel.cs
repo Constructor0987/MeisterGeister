@@ -306,6 +306,43 @@ namespace MeisterGeister.ViewModel.Proben
 
     public class EigenschaftWurfItem : Base.ViewModelBase
     {
+        #region //---- COMMANDS ----
+
+        private Base.CommandBase onSetWurf;
+        public Base.CommandBase OnSetWurf
+        {
+            get { return onSetWurf; }
+        }
+
+        #endregion //---- COMMANDS ----
+
+        #region //---- KONSTRUKTOR ----
+
+        public EigenschaftWurfItem()
+        {
+            onSetWurf = new Base.CommandBase(SetWurf, null);
+        }
+
+        #endregion
+
+        #region //---- INSTANZMETHODEN ----
+
+        private void SetWurf(object obj)
+        {
+            int wurf = 0;
+            if (Int32.TryParse(obj.ToString(), out wurf))
+                Wurf = wurf;
+            ContextMenuIsOpen = false;
+        }
+
+        #endregion //---- INSTANZMETHODEN ----
+
+        #region //---- EIGENSCHAFTEN & FELDER ----
+
+        // UI-Steuerung
+        private bool _contextMenuIsOpen;
+        public bool ContextMenuIsOpen { get { return _contextMenuIsOpen; } set { _contextMenuIsOpen = value; OnChanged("ContextMenuIsOpen"); } }
+
         private string _name = string.Empty;
         /// <summary>
         /// Der Name der Eigenschaft, auf die geworfen wird.
@@ -351,6 +388,8 @@ namespace MeisterGeister.ViewModel.Proben
                 return Held.ModifikatorenListe(modType, StartWert);
             }
         }
+
+        #endregion //---- EIGENSCHAFTEN & FELDER ----
     }
 
     #endregion

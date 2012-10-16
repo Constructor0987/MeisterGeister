@@ -80,17 +80,56 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="24" />
-                                <ViewGeneral:IntBox Grid.Row="1" Value="{Binding Wert}" HorizontalAlignment="Center" MinWidth="24" NoBackground="True">
-                                    <ViewGeneral:IntBox.ToolTip>
+                                <TextBlock Grid.Row="1" Text="{Binding Wert}" HorizontalAlignment="Center" MinWidth="24" TextAlignment="Center">
+                                    <TextBlock.ToolTip>
                                         <ViewGeneral:ModInfoBox ModListe="{Binding ModList}" WertName="{Binding Name}" 
                                                             StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
-                                    </ViewGeneral:IntBox.ToolTip>
-                                </ViewGeneral:IntBox>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                                 <Border Grid.Row="2" Width="24" Height="24" ToolTip="Ergebnis des Wurfs">
                                     <Border.Background>
                                         <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank_gelb.png" Opacity="0.9" />
                                     </Border.Background>
-                                    <ViewGeneral:IntBox HorizontalAlignment="Center" VerticalAlignment="Center" MaxValue="20" MinValue="1" NoBackground="True" FontWeight="Bold" Value="{Binding Wurf}" />
+                                    <Border.ContextMenu>
+                                        <ContextMenu IsOpen="{Binding ContextMenuIsOpen}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="26" />
+                                                    <ColumnDefinition Width="26" />
+                                                    <ColumnDefinition Width="26" />
+                                                    <ColumnDefinition Width="26" />
+                                                    <ColumnDefinition Width="26" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="26" />
+                                                    <RowDefinition Height="26" />
+                                                    <RowDefinition Height="26" />
+                                                    <RowDefinition Height="26" />
+                                                </Grid.RowDefinitions>
+                                                <Button Grid.Row="0" Grid.Column="0" Margin="2" Padding="2" Content="1" CommandParameter="1" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="0" Grid.Column="1" Margin="2" Padding="2" Content="2" CommandParameter="2" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="0" Grid.Column="2" Margin="2" Padding="2" Content="3" CommandParameter="3" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="0" Grid.Column="3" Margin="2" Padding="2" Content="4" CommandParameter="4" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="0" Grid.Column="4" Margin="2" Padding="2" Content="5" CommandParameter="5" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="1" Grid.Column="0" Margin="2" Padding="2" Content="6" CommandParameter="6" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="1" Grid.Column="1" Margin="2" Padding="2" Content="7" CommandParameter="7" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="1" Grid.Column="2" Margin="2" Padding="2" Content="8" CommandParameter="8" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="1" Grid.Column="3" Margin="2" Padding="2" Content="9" CommandParameter="9" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="1" Grid.Column="4" Margin="2" Padding="2" Content="10" CommandParameter="10" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="2" Grid.Column="0" Margin="2" Padding="2" Content="11" CommandParameter="11" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="2" Grid.Column="1" Margin="2" Padding="2" Content="12" CommandParameter="12" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="2" Grid.Column="2" Margin="2" Padding="2" Content="13" CommandParameter="13" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="2" Grid.Column="3" Margin="2" Padding="2" Content="14" CommandParameter="14" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="2" Grid.Column="4" Margin="2" Padding="2" Content="15" CommandParameter="15" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="3" Grid.Column="0" Margin="2" Padding="2" Content="16" CommandParameter="16" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="3" Grid.Column="1" Margin="2" Padding="2" Content="17" CommandParameter="17" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="3" Grid.Column="2" Margin="2" Padding="2" Content="18" CommandParameter="18" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="3" Grid.Column="3" Margin="2" Padding="2" Content="19" CommandParameter="19" Command="{Binding OnSetWurf}" />
+                                                <Button Grid.Row="3" Grid.Column="4" Margin="2" Padding="2" Content="20" CommandParameter="20" Command="{Binding OnSetWurf}" />
+                                            </Grid>
+                                        </ContextMenu>
+                                    </Border.ContextMenu>
+                                    <ViewGeneral:IntBox ContextMenu="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxValue="20" MinValue="1" NoBackground="True" FontWeight="Bold" Value="{Binding Wurf}" />
                                 </Border>
                             </Grid>
                         </DataTemplate>
