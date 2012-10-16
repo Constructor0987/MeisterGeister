@@ -91,9 +91,7 @@ namespace MeisterGeister.View.SpielerScreen
                 AddImages(fileList, filesTif);
                 AddImages(fileList, filesTiff);
 
-                fileList.OrderBy(img => img.Name);
-
-                _listBoxDirectory.ItemsSource = fileList;
+                _listBoxDirectory.ItemsSource = fileList.OrderBy(img => img.Name);
             }
         }
 
@@ -131,9 +129,14 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ListBoxDirectory_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            string key = e.Key.ToString();
+            key = key.Replace("NumPad", string.Empty)
+                .Replace("OemQuotes", "Ä").Replace("Oem1", "Ü").Replace("Oem3", "Ö");
+            if (key.Length == 2 && key.StartsWith("D"))
+                key = key.Replace("D", string.Empty);
             foreach (dynamic item in _listBoxDirectory.Items)
             {
-                if (item.Name.StartsWith(e.Key.ToString()))
+                if (item.Name.StartsWith(key))
                 {
                     _listBoxDirectory.SelectedItem = item;
                     _listBoxDirectory.ScrollIntoView(item);
