@@ -38,6 +38,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(0, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW 0    Mod 0
             // 10   10  10
@@ -50,6 +51,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(0, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW 0    Mod 0
             // 10   10  10
@@ -62,6 +64,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW 4    Mod 0
             // 10   10  10
@@ -74,6 +77,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(2, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW 4    Mod 0
             // 10   10  10
@@ -86,6 +90,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(4, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(4, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW -2    Mod 0
             // 10(8)    10(8)    10(8)
@@ -98,6 +103,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.MISSLUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW -2    Mod 0
             // 10(8)    10(8)    10(8)
@@ -110,6 +116,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(1, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
 
             // Mit Erschwernis
             // ---------------------------------------
@@ -125,6 +132,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.MISSLUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW 0    Mod +2
             // 10(8)   10(8)  10(8)
@@ -137,6 +145,7 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(0, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(-2, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.MISSLUNGEN, pe.Ergebnis, InfoText(ht));
 
             // TaW 0    Mod +2
             // 10(8)   10(8)  10(8)
@@ -149,6 +158,49 @@ namespace MeisterGeister_Tests
             pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(0, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
+
+            // Mit Erleichterung
+            // ---------------------------------------
+
+            // TaW 0    Mod -2
+            // 10      10     10
+            // 10      10     10
+            // 0       0      0
+            // TaP* 1   Qualität 2
+            ht.TaW = 0; ht.Modifikator = -2;
+            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 10;
+            pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
+            Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
+            Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
+
+            // TaW 0    Mod -2
+            // 10      10     10
+            // 10      10     8
+            // 0       0      2
+            // TaP* 1   Qualität 2
+            ht.TaW = 0; ht.Modifikator = -2;
+            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 10; ht.Ergebnis.Würfe[1] = 10; ht.Ergebnis.Würfe[2] = 8;
+            pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
+            Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
+            Assert.AreEqual(2, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
+
+            // TaW 0    Mod -2
+            // 10      10     10
+            // 6       8      8
+            // 4       2      2
+            // TaP* 1   Qualität 4
+            ht.TaW = 0; ht.Modifikator = -2;
+            ht.Werte[0] = 10; ht.Werte[1] = 10; ht.Werte[2] = 10;
+            ht.Ergebnis.Würfe[0] = 6; ht.Ergebnis.Würfe[1] = 8; ht.Ergebnis.Würfe[2] = 8;
+            pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
+            Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
+            Assert.AreEqual(4, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
         }
 
         private string InfoText(Held_Talent probe)

@@ -149,7 +149,7 @@ namespace MeisterGeister.Logic.General
                 if(minQ<0)
                     minQ = 0;
                 pe.Qualität = tmpÜbrig + minQ;
-                tmpÜbrig = Math.Max(1, tmpÜbrig);
+                tmpÜbrig = Math.Max(1, Math.Min(Fertigkeitswert, tmpÜbrig));
             }
             else
                 pe.Qualität = tmpÜbrig + wurfQualität.Min();
