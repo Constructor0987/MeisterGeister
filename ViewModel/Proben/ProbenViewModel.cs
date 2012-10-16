@@ -81,7 +81,7 @@ namespace MeisterGeister.ViewModel.Proben
                     if (er.Ergebnis.Übrig >= 0) //nur positive Ergebnisse addieren
                     {
                         tapSum += er.Ergebnis.Übrig;
-                        vorSum += Convert.ToInt32(Math.Round((double)er.Ergebnis.Übrig / i, 0));
+                        vorSum += Convert.ToInt32(Math.Round((double)er.Ergebnis.Übrig / i, 0, MidpointRounding.AwayFromZero));
                         i++;
                     }
                 }
