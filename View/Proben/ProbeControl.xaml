@@ -168,8 +168,8 @@
                     <Run Text=")" FontWeight="Bold" />
                         </TextBlock>
                     </StackPanel>
-                    <TextBlock Grid.Row="1" ToolTip="Erfolgschance" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Run Text="{Binding Erfolgschance, StringFormat=\{0:P\}, IsAsync=True}" />
+                    <TextBlock Grid.Row="1" ToolTip="Erfolgschance" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF686868">
+                    <Run Text="{Binding Erfolgschance, StringFormat=\{0:P\}}" />
                     <Run Text="Chanche" />
                     </TextBlock>
                 </Grid>
