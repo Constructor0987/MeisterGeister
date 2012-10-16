@@ -80,12 +80,30 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="24" />
-                                <TextBlock Grid.Row="1" Text="{Binding Wert}" HorizontalAlignment="Center" MinWidth="24" TextAlignment="Center">
-                                    <TextBlock.ToolTip>
+                                <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.ToolTip>
                                         <ViewGeneral:ModInfoBox ModListe="{Binding ModList}" WertName="{Binding Name}" 
                                                             StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
-                                    </TextBlock.ToolTip>
-                                </TextBlock>
+                                    </Grid.ToolTip>
+                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Wert}" TextAlignment="Center" VerticalAlignment="Center" />
+                                    <Image Grid.Column="1" Width="10" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ModList.Count}" Value="0" >
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </Grid>
+
                                 <Border Grid.Row="2" Width="24" Height="24" ToolTip="Ergebnis des Wurfs">
                                     <Border.Background>
                                         <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank_gelb.png" />
