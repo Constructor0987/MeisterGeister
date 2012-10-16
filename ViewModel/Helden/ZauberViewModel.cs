@@ -165,8 +165,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void WürfelGruppenProbe(object obj)
         {
-            // TODO MT: Proben-Tool über zu würfelnde Probe informieren
-            // vermutlich am sinnvollsten über Events
+            Global.WürfelGruppenProbe(SelectedHeldZauber);
         }
 
         private void WürfelProbe(object obj)

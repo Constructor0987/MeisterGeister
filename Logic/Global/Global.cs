@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MeisterGeister.Logic.General;
 //Eigene Usings
 using MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
@@ -165,6 +166,22 @@ namespace MeisterGeister
             }
         }
 
+        /// <summary>
+        /// Wechselt ins Proben-Tool und würfelt eine Probe.
+        /// </summary>
+        /// <param name="probe">Die zu würfelnde Probe.</param>
+        public static void WürfelGruppenProbe(Probe probe)
+        {
+            if (App.Current.MainWindow == null
+                || !(App.Current.MainWindow is View.MainView))
+                return;
+
+            (App.Current.MainWindow as View.MainView).StarteTab("Proben");
+
+            if (GruppenProbeWürfeln != null)
+                GruppenProbeWürfeln(probe, new EventArgs());
+        }
+
         #endregion
 
         #region //EVENTS
@@ -172,7 +189,12 @@ namespace MeisterGeister
         public static event EventHandler HeldSelectionChanged;
         public static event EventHandler HeldSelectionChanging;
 
+        public static event GruppenProbeWürfelnEventHandler GruppenProbeWürfeln;
+
         #endregion
 
     }
+
+    public delegate void GruppenProbeWürfelnEventHandler(Probe probe, EventArgs e);
+
 }

@@ -112,6 +112,7 @@ namespace MeisterGeister.ViewModel.Proben
         {
             onWürfeln = new Base.CommandBase(Würfeln, null);
             Einstellungen.WuerfelSoundAbspielenChanged += WuerfelSoundAbspielenChanged;
+            Global.GruppenProbeWürfeln += Global_GruppenProbeWürfeln;
 
             Refresh();
             RefreshProbeErgebnisListe();
@@ -190,9 +191,20 @@ namespace MeisterGeister.ViewModel.Proben
             OnChanged("SoundAbspielen");
         }
 
-        void ProbeControlGewürfelt(object sender, EventArgs e)
+        private void ProbeControlGewürfelt(object sender, EventArgs e)
         {
             OnChanged("GruppenErgebnis");
+        }
+
+        private void Global_GruppenProbeWürfeln(Probe probe, EventArgs e)
+        {
+            if (probe is Model.Held_Talent)
+                SelectedProbe = (probe as Model.Held_Talent).Talent;
+            else if (probe is Model.Held_Zauber)
+                SelectedProbe = (probe as Model.Held_Zauber).Zauber;
+            else
+                SelectedProbe = probe;
+            Würfeln(null);
         }
 
         #endregion

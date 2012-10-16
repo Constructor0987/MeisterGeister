@@ -88,7 +88,7 @@
                                 </TextBlock>
                                 <Border Grid.Row="2" Width="24" Height="24" ToolTip="Ergebnis des Wurfs">
                                     <Border.Background>
-                                        <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank_gelb.png" Opacity="0.9" />
+                                        <ImageBrush x:Name="_image" ImageSource="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20_blank_gelb.png" />
                                     </Border.Background>
                                     <Border.ContextMenu>
                                         <ContextMenu IsOpen="{Binding ContextMenuIsOpen}">
@@ -129,7 +129,7 @@
                                             </Grid>
                                         </ContextMenu>
                                     </Border.ContextMenu>
-                                    <ViewGeneral:IntBox ContextMenu="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxValue="20" MinValue="1" NoBackground="True" FontWeight="Bold" Value="{Binding Wurf}" />
+                                    <ViewGeneral:IntBox ContextMenu="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxValue="20" MinValue="1" Foreground="Black" NoBackground="True" FontWeight="Bold" Value="{Binding Wurf}" />
                                 </Border>
                             </Grid>
                         </DataTemplate>

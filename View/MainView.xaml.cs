@@ -107,7 +107,7 @@ namespace MeisterGeister.View
         /// </summary>
         private void InitializeMenu()
         {
-            // TODO MT: Tool-Menü-Eintzräge erzeugen
+            // TODO MT: Tool-Menü-Einträge erzeugen
 
             // User-Verknüpfungen ins Menü einhängen
             foreach (var mLink in Global.ContextMenuLink.Liste<Model.MenuLink>())
@@ -141,13 +141,10 @@ namespace MeisterGeister.View
 
         public static SpielerWindow WindowSpieler { get; set; }
 
-        private void StarteTab(string tabName, int position = -1)
+        public void StarteTab(string tabName, int position = -1)
         {
             // falls Tool-Name nicht vorhanden, Tab-Erzeugung abbrechen
             if (!Tool.ToolListe.ContainsKey(tabName)) return;
-
-            Tool t = Tool.ToolListe[tabName];
-            Control con = t.CreateToolView();
 
             // Falls Tool bereits geöffnet, kein zweites öffnen, sondern geöffnetes aktivieren
             TabItem tabItem = IsTabOpend(tabName);
@@ -157,24 +154,15 @@ namespace MeisterGeister.View
                 return;
             }
 
+            Tool t = Tool.ToolListe[tabName];
+            Control con = t.CreateToolView();
+
             // falls View nicht erzeugt werden konnte, abbrechen
             if (con == null) return;
 
             // Event-Handler verbinden
             switch (tabName)
             {
-                // TODO MT: Events auf neues MVVM-Proben-Tool umstellen
-                case "Proben":
-                    //((Proben.ProbenView)con).ZooBotClick += TabItemControl_ZooBotProbe;
-                    break;
-                case "Kampf":
-                    ((Kampf.KampfView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
-                    break;
-                case "Helden":
-                    // TODO ??: ProbeWürfeln Event
-                    //((Helden.HeldenView)con).ProbeWürfeln += TabItemControl_ProbeWürfeln;
-                    //((Helden.HeldenView)con).HeldChanged += TabItemControl_RefreshHeld;
-                    break;
                 case "Kalender":
                     ((Kalender.KalenderView)con).DatumAktuellChanged += TabItemControl_RefreshDatumAktuell;
                     break;
@@ -188,50 +176,12 @@ namespace MeisterGeister.View
                 if (position < 0)
                 {
                     _tabControlMain.Items.Add(tab);
-                    _tabControlMain.SelectedIndex = 0;
+                    _tabControlMain.SelectedIndex = _tabControlMain.Items.Count - 1;
                 }
                 else
                 {
                     _tabControlMain.Items.Insert(position + 1, tab);
                     _tabControlMain.SelectedIndex = position + 1;
-                }
-            }
-        }
-
-        // TODO MT: ProbeWürfeln Umstellen auf neues ProbeTool
-        private void TabItemControl_ProbeWürfeln(string talentname)
-        {
-            bool probenTab = false;
-            foreach (var tab in _tabControlMain.Items)
-            {
-                if (tab is TabItem)
-                {
-                    if (((TabItem)tab).Content is Proben.ProbenView)
-                    {
-                        probenTab = true;
-                        _tabControlMain.SelectedItem = tab;
-                        //((Proben.ProbenView)((TabItem)tab).Content).ProbeWürfeln(talentname);
-                    }
-                }
-            }
-            // Falls Proben-Tool geschlossen -> Öffnen
-            if (probenTab == false)
-            {
-                StarteTab("Proben");
-                TabItemControl_ProbeWürfeln(talentname);
-            }
-        }
-
-        private void TabItemControl_RefreshHeld(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            foreach (var tab in _tabControlMain.Items)
-            {
-                if (tab is TabItem)
-                {
-                    if (((TabItem)tab).Content is ZooBot.ZooBotView)
-                        ((ZooBot.ZooBotView)((TabItem)tab).Content).SetHeldWerte();
-                    else if (((TabItem)tab).Content is Kampf.KampfView)
-                        ((Kampf.KampfView)((TabItem)tab).Content).RefreshKämpfer();
                 }
             }
         }
