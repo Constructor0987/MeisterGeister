@@ -43,7 +43,7 @@
     </UserControl.Resources>
     <Border Style="{DynamicResource BoderContent}" Padding="8,4,4,4">
         <StackPanel Name="_layoutStackPanel" Orientation="{Binding ElementName=userControl, Mode=OneWay, Path=Orientation, FallbackValue=Horizontal}">
-            
+
             <Grid Width="180" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -141,33 +141,40 @@
                 </Button>
             </StackPanel>
 
-            <StackPanel Name="_werteStackPanel" Orientation="Horizontal">
-            
+            <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal" Width="70" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Proben-Modifikator">
                     <TextBlock Text="Mod:" VerticalAlignment="Center" />
                     <ViewGeneral:IntBox Value="{Binding Modifikator}" Margin="5,0,0,0" MinWidth="25" HorizontalAlignment="Center" VerticalAlignment="Center" NoBackground="False" />
                 </StackPanel>
-
                 <StackPanel Orientation="Horizontal" Width="65" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource WertVisibility}">
                     <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" FontWeight="Bold"  />
-                <TextBlock Text="{Binding Probe.Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" />
-            </StackPanel>
+                    <TextBlock Text="{Binding Probe.Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" />
+                </StackPanel>
 
-            <StackPanel Width="105" Orientation="Horizontal"  Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <TextBlock ToolTip="Übrig behaltene Punkte" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Grid VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Width="105" Orientation="Horizontal"  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        <TextBlock ToolTip="Übrig behaltene Punkte" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Run Text="{Binding Ergebnis.Übrig}" FontWeight="Bold" />
                     <Run Text="{Binding Probe.PunkteText, Mode=OneWay}" FontWeight="Bold" />
                     <Run Text="*" FontWeight="Bold" />
-                </TextBlock>
-                <TextBlock ToolTip="Proben-Qualität (wie hoch hätte die Erschwernis maximal sein können)" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        </TextBlock>
+                        <TextBlock ToolTip="Proben-Qualität (wie hoch hätte die Erschwernis maximal sein können)" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Run Text="(" FontWeight="Bold" />
                     <Run Text="{Binding Ergebnis.Qualität}" FontWeight="Bold" />
                     <Run Text=")" FontWeight="Bold" />
-                </TextBlock>
-            </StackPanel>
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock Grid.Row="1" ToolTip="Erfolgschance" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Run Text="{Binding Erfolgschance, StringFormat=\{0:P\}, IsAsync=True}" />
+                    <Run Text="Chanche" />
+                    </TextBlock>
+                </Grid>
 
-            <Image Source="{Binding ErgebnisImagePath}" Margin="5,0,5,0" Width="22" Height="22" ToolTip="{Binding Ergebnis.Ergebnis}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-
+                <Image Source="{Binding ErgebnisImagePath}" Margin="5,0,5,0" Width="22" Height="22" ToolTip="{Binding Ergebnis.Ergebnis}" VerticalAlignment="Center" HorizontalAlignment="Left" />
             </StackPanel>
 
         </StackPanel>

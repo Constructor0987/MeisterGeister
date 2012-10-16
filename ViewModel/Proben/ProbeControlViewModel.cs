@@ -43,7 +43,8 @@ namespace MeisterGeister.ViewModel.Proben
                 _ergebnis = value;
                 OnChanged("Ergebnis");
                 OnChanged("ErgebnisImagePath");
-                NotifyEergebnisChanged();
+                OnChanged("Erfolgschance");
+                NotifyErgebnisChanged();
             }
         }
 
@@ -90,6 +91,12 @@ namespace MeisterGeister.ViewModel.Proben
                 OnChanged("Modifikator");
                 Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
             }
+        }
+
+        public double Erfolgschance
+        {
+            get { return Probe != null ? Probe.Erfolgschance : 0.0; }
+            set { }
         }
 
         public string ErgebnisImagePath
@@ -241,6 +248,7 @@ namespace MeisterGeister.ViewModel.Proben
         {
             OnChanged("Held");
             OnChanged("Ergebnis");
+            OnChanged("Erfolgschance");
         }
 
         public void Würfeln(object obj = null)
@@ -264,10 +272,10 @@ namespace MeisterGeister.ViewModel.Proben
             if (!LockSoundAbspielen && MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
-            NotifyEergebnisChanged();
+            NotifyErgebnisChanged();
         }
 
-        private void NotifyEergebnisChanged()
+        private void NotifyErgebnisChanged()
         {
             // Event werfen
             if (Gewürfelt != null)

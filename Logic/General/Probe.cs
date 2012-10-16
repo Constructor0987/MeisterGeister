@@ -66,7 +66,7 @@ namespace MeisterGeister.Logic.General
             }
         }
 
-        public double Erfolgsschance {
+        public double Erfolgschance {
             get
             {
                 if (!_chanceBerechnet)
@@ -185,14 +185,33 @@ namespace MeisterGeister.Logic.General
         {
             if(Werte.Length==3)
                 return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], Fertigkeitswert - Modifikator);
-            _chanceBerechnet = true;
             if (Werte.Length == 1)
+                return ErfolgsChancheBerechnen(Werte[0] - Modifikator);
+            return _erfolgsschance = 0;
+        }
+
+        private double ErfolgsChancheBerechnen(int wertEff)
+        {
+            _chanceBerechnet = true;
+
+            _erwartungswert = wertEff - 10.5;
+
+            if (Settings.Regeln.EigenschaftenProbePatzerGlück)
             {
-                //nicht optimal. 1 und 20 nicht betrachetet.
-                _erwartungswert = Werte[0] - 10.5 + Fertigkeitswert - Modifikator;
-                return _erfolgsschance = Math.Min( (Werte[0]-(Fertigkeitswert - Modifikator))/20, 1.0);
+                if (wertEff <= 1)
+                    return _erfolgsschance = 0.05; // Glückswurf
+                if (wertEff >= 20)
+                    return _erfolgsschance = 0.95;
+                return _erfolgsschance = (wertEff / 20d);
             }
-            return _erfolgsschance = _erwartungswert = 0;
+            else
+            {
+                if (wertEff < 0)
+                    return _erfolgsschance = 0;
+                if (wertEff > 20)
+                    return _erfolgsschance = 1;
+                return _erfolgsschance = (wertEff / 20d);
+            }
         }
 
         private double ErfolgsChanceBerechnen(int e1, int e2, int e3, int taw)
