@@ -150,7 +150,7 @@ namespace MeisterGeister.View.General
                     break;
                 case WürfelEnum._1W20:
                 default:
-                    w = "w20_blank.png";
+                    w = "w20_blank_gelb.png";
                     _textBlockErgebnis.Foreground = System.Windows.Media.Brushes.White;
                     break;
             }
