@@ -14,9 +14,9 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        
-        <Proben:ProbeControl x:Name="_probeControl" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="25" Orientation="Vertical" />
 
-        <Button Grid.Row="1" Grid.Column="2" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" />
+        <Proben:ProbeControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" DataContext="{Binding ProbeControlViewModel}"  Margin="25" Orientation="Vertical" />
+
+        <Button Grid.Row="1" Grid.Column="2" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Command="{Binding OnOkay}" />
     </Grid>
 </Window>

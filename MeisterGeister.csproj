@@ -400,6 +400,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Proben\ProbeControlViewModel.cs" />
+    <Compile Include="ViewModel\Proben\ProbeDialogViewModel.cs" />
     <Compile Include="ViewModel\Proben\ProbenViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeGeschossViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeRüstungViewModel.cs" />

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using MeisterGeister.Logic.General;
+//Eigene Usings
+using VM = MeisterGeister.ViewModel.Proben;
 
 namespace MeisterGeister.View.Proben
 {
@@ -19,33 +11,60 @@ namespace MeisterGeister.View.Proben
     /// </summary>
     public partial class ProbeDialog : Window
     {
+        #region //---- KONSTRUKTOREN ----
+
         public ProbeDialog()
         {
             InitializeComponent();
+            VM = new VM.ProbeDialogViewModel();
+            VM.RequestClose += VM_RequestClose;
         }
 
         public ProbeDialog(Probe probe, Model.Held held = null)
         {
             InitializeComponent();
+            VM = new VM.ProbeDialogViewModel(probe, held);
+            VM.RequestClose += VM_RequestClose;
+        }
 
-            _probeControl.VM = new ViewModel.Proben.ProbeControlViewModel();
-            _probeControl.VM.Probe = probe;
-            _probeControl.VM.Held = held;
-            _probeControl.VM.Würfeln();
+        #endregion //---- KONSTRUKTOREN ----
+
+        #region //---- EIGENSCHAFTEN & FELDER ----
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.ProbeDialogViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.ProbeDialogViewModel))
+                    return null;
+                return DataContext as VM.ProbeDialogViewModel;
+            }
+            set { DataContext = value; }
         }
 
         public ProbenErgebnis Ergebnis
         {
             get
             {
-                return _probeControl.VM == null ? new ProbenErgebnis()
-                    : _probeControl.VM.Ergebnis;
+                return VM == null ? new ProbenErgebnis()
+                    : VM.Ergebnis;
             }
         }
 
-        private void OkButton_Click(object sender, RoutedEventArgs e)
+        #endregion //---- EIGENSCHAFTEN & FELDER ----
+
+        #region //---- EVENT HANDLER ----
+
+        private void VM_RequestClose(object sender, EventArgs e)
         {
-            DialogResult = true;
+            DialogResult = VM.DialogResult;
+            Close();
         }
+
+        #endregion //---- EVENT HANDLER ----
+
     }
 }
