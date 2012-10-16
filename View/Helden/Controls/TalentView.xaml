@@ -243,19 +243,19 @@
                     		</Image.RenderTransform>
                     	</Image>
                     </Border>
-					<Border x:Name="border1" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Körpertalente" MouseLeftButtonDown="brdKlicked">
+					<Border x:Name="border1" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Körperliche Talente" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image1" Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
                     </Border>
-					<Border x:Name="border2" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gesellschaftstalente" MouseLeftButtonDown="brdKlicked">
+					<Border x:Name="border2" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gesellschaftliche Talente" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image2" Source="/DSA%20MeisterGeister;component/Images/Icons/helden_kopieren.png"/>
                     </Border>
-					<Border x:Name="border3" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Naturtalente" MouseLeftButtonDown="brdKlicked">
+					<Border x:Name="border3" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Natur-Talente" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image3" Source="/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png"/>
                     </Border>
 					<Border x:Name="border6" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Wissenstalente" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image4" Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png"/>
                     </Border>
-					<Border x:Name="border5" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Sprachtalente" MouseLeftButtonDown="brdKlicked">
+					<Border x:Name="border5" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Sprachen und Schriften" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image5" Source="/DSA%20MeisterGeister;component/Images/Icons/sprache.png"/>
                     </Border>
 					<Border x:Name="border4" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Handwerkstalente" MouseLeftButtonDown="brdKlicked">
@@ -264,10 +264,10 @@
 					<Border x:Name="border7" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gaben" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image7" Source="/DSA%20MeisterGeister;component/Images/Icons/hesinde.png"/>
                     </Border>
-					<Border x:Name="border8" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Rituale" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border8" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Ritualkenntnisse" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image8" Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png"/>
                     </Border>
-					<Border x:Name="border9" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Liturgien" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border9" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Liturgiekenntnisse" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image9" Source="/DSA MeisterGeister;component/Images/Icons/audio2.png"/>
 					</Border>
                 </StackPanel>
@@ -395,7 +395,7 @@
                     </Expander>
                     <Expander x:Name="expKoerper" IsExpanded="True" Margin="0,5,0,0">
                         <Expander.Header>
-                            <TextBlock Text="Körpertalente" Style="{DynamicResource TextTitel}" />
+                            <TextBlock Text="Körperliche Talente" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <Grid >
@@ -478,7 +478,7 @@
                     </Expander>
                     <Expander x:Name="expGesellschaft" IsExpanded="True" Margin="0,5,0,0">
                         <Expander.Header>
-                            <TextBlock Text="Gesellschaftstalente" Style="{DynamicResource TextTitel}" />
+                            <TextBlock Text="Gesellschaftliche Talente" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <Grid >
@@ -560,7 +560,7 @@
                     </Expander>
                     <Expander x:Name="expNatur" IsExpanded="True" Margin="0,5,0,0">
                         <Expander.Header>
-                            <TextBlock Text="Naturtalente" Style="{DynamicResource TextTitel}" />
+                            <TextBlock Text="Natur-Talente" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <Grid >
@@ -725,7 +725,7 @@
                     </Expander>
                     <Expander x:Name="expSprache" IsExpanded="True" Margin="0,5,0,0">
                         <Expander.Header>
-                            <TextBlock Text="Sprachtalente" Style="{DynamicResource TextTitel}" />
+                            <TextBlock Text="Sprachen und Schriften" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <Grid>
@@ -951,7 +951,7 @@
                     </Expander>
                     <Expander x:Name="expRituale" Margin="0,5,0,0" IsExpanded="True">
                     	<Expander.Header>
-                    		<TextBlock Text="Rituale" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="Ritualkenntnisse" Style="{DynamicResource TextTitel}" />
                     	</Expander.Header>
                     	<Border Style="{DynamicResource ControlContentBorder}">
                     		<Grid >                                
@@ -998,7 +998,7 @@
                     </Expander>
                     <Expander x:Name="expLiturgie" Margin="0,5,0,0" IsExpanded="True">
                     	<Expander.Header>
-                    		<TextBlock Text="Liturgie" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="Liturgiekenntnisse" Style="{DynamicResource TextTitel}" />
                     	</Expander.Header>
                     	<Border Style="{DynamicResource ControlContentBorder}">
                     		<Grid >                                
