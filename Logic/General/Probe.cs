@@ -163,17 +163,25 @@ namespace MeisterGeister.Logic.General
             // Den User per YesNo-Dialog fragen?
 
             if (einsen >= Werte.Length)
+            {
                 pe.Ergebnis = ErgebnisTyp.MEISTERHAFT;
+                pe.Übrig = Math.Max(fertigkeitswertEff, 1);  // Alle Punkte übrig
+            }
             else if (einsen >= Werte.Length / 2.0)
+            {
                 pe.Ergebnis = ErgebnisTyp.GLÜCKLICH;
+                pe.Übrig = Math.Max(fertigkeitswertEff, 1); // Alle Punkte übrig
+            }
             else if (zwanzigen >= Werte.Length)
                 pe.Ergebnis = ErgebnisTyp.FATALER_PATZER;
             else if (zwanzigen >= Werte.Length / 2.0)
                 pe.Ergebnis = ErgebnisTyp.PATZER;
-            else if (erfolg)
+            else if (erfolg && pe.Würfe.Sum() > 0)
                 pe.Ergebnis = ErgebnisTyp.GELUNGEN;
-            else
+            else if (!erfolg)
                 pe.Ergebnis = ErgebnisTyp.MISSLUNGEN;
+            else
+                pe.Ergebnis = ErgebnisTyp.KEIN_ERGEBNIS;
             return pe;
         }
 
