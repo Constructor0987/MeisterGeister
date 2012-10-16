@@ -14,6 +14,9 @@
                     <ColumnDefinition Width="32" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                </Grid.RowDefinitions>
                 <Image Grid.Column="0" Source="{Binding Pfad, IsAsync=True}" />
                 <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="4,0,0,0" />
             </Grid>
