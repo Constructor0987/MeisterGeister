@@ -53,6 +53,13 @@ namespace MeisterGeister.Model
             }
         }
 
+        public static string DistanzklasseToString(KampfLogic.Distanzklasse DK)
+        {
+            if (DK == KampfLogic.Distanzklasse.None)
+                return null;
+            return DK.ToString();
+        }
+
         public static int TPKKBonus(Held held, KampfLogic.IWaffeMitTPKK waffe)
         {
             if(waffe == null || held == null || !MeisterGeister.Logic.Settings.Regeln.TPKK)

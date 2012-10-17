@@ -1251,12 +1251,27 @@ namespace MeisterGeister.Model
             return Held_Zauber.Where(hz => hz.Zauber == z && hz.Repräsentation == rep).Count() > 0;
         }
 
+        public bool HatZauber(string zaubername)
+        {
+            return Held_Zauber.Where(hz => hz.Zauber.Name.ToUpperInvariant() == zaubername.ToUpperInvariant()).Count() > 0;
+        }
+
+        //TODO JT: Eventuell auch nur auf den anfang des Zaubernamens abprüfen
+        public bool HatZauber(string zaubername, int zfw)
+        {
+            if (!HatZauber(zaubername))
+                return false;
+            if (zfw == int.MinValue)
+                return true;
+            return Zauberfertigkeitswert(zaubername, true) >= zfw;
+        }
+
         /// <summary>
         /// Der ZfW eines Zaubers.
         /// </summary>
         public int Zauberfertigkeitswert(string zauberName, bool nurPositiv = false)
         {
-            Model.Held_Zauber hz = Held_Zauber.Where(h => h.Zauber.Name == zauberName).FirstOrDefault();
+            Model.Held_Zauber hz = Held_Zauber.Where(h => h.Zauber.Name.ToUpperInvariant() == zauberName.ToUpperInvariant()).FirstOrDefault();
             if (hz == null)
                 return 0;
             int zfw = hz.ZfW ?? 0;

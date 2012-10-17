@@ -197,8 +197,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
                 case TokenType.Nachteil:
                     Value = EvalNachteil(tree, paramlist);
                     break;
-                case TokenType.Talent:
-                    Value = EvalTalent(tree, paramlist);
+                case TokenType.TalentZauber:
+                    Value = EvalTalentZauber(tree, paramlist);
                     break;
 
                 default:
@@ -246,8 +246,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
         		atom = Convert.ToBoolean(this.GetValue(tree, TokenType.Nachteil, 0, paramlist));
         	else if(this.GetValue(tree, TokenType.Eigenschaft, 0, paramlist) != null)
         		atom = Convert.ToBoolean(this.GetValue(tree, TokenType.Eigenschaft, 0, paramlist));
-        	else if(this.GetValue(tree, TokenType.Talent, 0, paramlist) != null)
-        		atom = Convert.ToBoolean(this.GetValue(tree, TokenType.Talent, 0, paramlist));
+        	else if(this.GetValue(tree, TokenType.TalentZauber, 0, paramlist) != null)
+        		atom = Convert.ToBoolean(this.GetValue(tree, TokenType.TalentZauber, 0, paramlist));
         	else
         		atom = Convert.ToBoolean(this.GetValue(tree, TokenType.AndExpression, 0, paramlist));
         	if(this.GetValue(tree, TokenType.NOT, 0, paramlist) != null)
@@ -298,6 +298,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
         		return held.FF >= wert;
         	if(this.GetValue(tree, TokenType.AT, 0, paramlist) != null)
         		return held.AttackeBasis >= wert;
+        	if(this.GetValue(tree, TokenType.PA, 0, paramlist) != null)
+        		return held.ParadeBasis >= wert;
         	if(this.GetValue(tree, TokenType.FK, 0, paramlist) != null)
         		return held.FernkampfBasis >= wert;
         	if(this.GetValue(tree, TokenType.INI, 0, paramlist) != null)
@@ -356,7 +358,7 @@ namespace MeisterGeister.Logic.Voraussetzungen
         	return held.HatVorNachteil(vName, wert);
         }
 
-        protected virtual object EvalTalent(ParseTree tree, params object[] paramlist)
+        protected virtual object EvalTalentZauber(ParseTree tree, params object[] paramlist)
         {
             //	return true;
         
@@ -367,6 +369,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
         		return false;
         	string tName = Convert.ToString(this.GetValue(tree, TokenType.Text, 0, paramlist));
         	int wert = Convert.ToInt32(this.GetValue(tree, TokenType.NUMBER, 0, paramlist));
+        	if (tName.ToUpperInvariant().Equals(tName))
+        		return held.HatZauber(tName, wert);
         	return held.HatTalent(tName, wert);
         }
 

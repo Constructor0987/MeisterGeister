@@ -39,6 +39,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 SaveGegner();
                 selectedGegnerBase = value;
                 OnChanged("SelectedGegnerBase");
+                OnChanged("AngriffListe");
             }
         }
 
@@ -92,6 +93,11 @@ namespace MeisterGeister.ViewModel.Kampf
             set { selectedGegnerKampfregel = value; OnChanged("SelectedGegnerKampfregel"); }
         }
 
+        public List<GegnerBase_Angriff> AngriffListe
+        {
+            get { return (selectedGegnerBase==null)?null:selectedGegnerBase.GegnerBase_Angriff.OrderBy(ga => ga.Name).ToList(); }
+        }
+
         private GegnerBase_Angriff selectedAngriff;
         public GegnerBase_Angriff SelectedAngriff
         {
@@ -118,7 +124,7 @@ namespace MeisterGeister.ViewModel.Kampf
             get
             {
                 if (onNewAngriff == null)
-                    onNewAngriff = new Base.CommandBase(NewGegnerBase, null);
+                    onNewAngriff = new Base.CommandBase(NewAngriff, null);
                 return onNewAngriff;
             }
         }
@@ -139,7 +145,8 @@ namespace MeisterGeister.ViewModel.Kampf
             SelectedGegnerBase.GegnerBase_Angriff.Add(ga);
             SaveGegner();
             //Aktualisieren
-            OnChanged("SelectedGegnerBase");
+            //OnChanged("SelectedGegnerBase");
+            OnChanged("AngriffListe");
         }
 
         private Base.CommandBase onDeleteAngriff = null;
@@ -163,7 +170,8 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     SelectedGegnerBase.GegnerBase_Angriff.Remove(h);
                     SaveGegner();
-                    OnChanged("SelectedGegnerBase");
+                    //OnChanged("SelectedGegnerBase");
+                    OnChanged("AngriffListe");
                 }
             }
         }

@@ -71,6 +71,7 @@ namespace MeisterGeister.Model
         public Distanzklasse Distanzklasse
         {
             get { return Waffe.ParseDistanzklasse(DK); }
+            set { DK = Waffe.DistanzklasseToString(value); }
         }
         #endregion
     }

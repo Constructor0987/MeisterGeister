@@ -268,7 +268,7 @@ namespace MeisterGeister.Logic.Voraussetzungen
             Sonderfertigkeit= 9,
             Vorteil = 10,
             Nachteil= 11,
-            Talent  = 12,
+            TalentZauber= 12,
 
             //Terminal tokens:
             NUMBER  = 13,

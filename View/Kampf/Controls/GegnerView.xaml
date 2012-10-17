@@ -101,12 +101,17 @@
                             </MenuItem>
                         </ContextMenu>
                     </ListBox.ContextMenu>
-                </ListBox>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 <StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal">
-                    <Button Height="23" Width="25" Click="ButtonHeldNeu_Click" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen">
+                    <Button Height="23" Width="25" Click="ButtonHeldNeu_Click" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Gegner einfügen">
                         <Button.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Helden eingeben.">
+                                <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Gegner eingeben.">
                                     <MenuItem.Icon>
                                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
                                     </MenuItem.Icon>
@@ -276,18 +281,73 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <!-- SelectedGegnerBase.GegnerBase_Angriff, AngriffAddName (als Prompt), Add und Delete Commands, SelectedAngriff,
+                        <!-- SelectedGegnerBase.GegnerBase_Angriff, AngriffAddName (als Prompt?), Add und Delete Commands, SelectedAngriff,
                             Name, AT, Bemerkung, Distanzklasse oder DK(DB-Wert), Reichweite, TPBonus, TPWürfel, TPWürfelAnzahl
                         -->
                         <!-- 
                         <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
                         <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                         -->
+                        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding AngriffAddName}"/>
+                        <Button Grid.Row="0" Grid.Column="1"  Height="23" Width="25" ToolTip="Neuer Angriff" Command="{Binding OnNewAngriff}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
+                        </Button>
+                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding AngriffListe}" SelectedItem="{Binding SelectedAngriff}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000">
+                            <DataGrid.InputBindings>
+                                <KeyBinding Key="Delete" Command="{Binding OnDeleteAngriff}" />
+                            </DataGrid.InputBindings>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Name}" IsReadOnly="True">
+                                    <DataGridTextColumn.Header >
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding AT}" IsReadOnly="False">
+                                    <DataGridTextColumn.Header >
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP"/>
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="False" Value="{Binding TPWürfelAnzahl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                <!-- TODO Angenehme Möglichkeit die TP einzustellen (mit W etc.)-->
+                                                <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="False" Value="{Binding TPWürfel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="False" Value="{Binding TPBonus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Distanzklasse}" IsReadOnly="False">
+                                    <DataGridTextColumn.Header >
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="DK" ToolTip="Die möglichen Distanzklassen für diesen Angriff. Für Fernkampfangriffe sollte keine Angabe gemacht werden."/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Reichweite" ToolTip="Wenn ein Wert angegeben ist, dann kann dieser Angriff im Fernkampf benutzt werden."/>
+                                    </DataGridTemplateColumn.Header>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="False" CanBeNull="True" Value="{Binding Reichweite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}">
+                                    <DataGridTextColumn.Header>
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
 
                 </Border>

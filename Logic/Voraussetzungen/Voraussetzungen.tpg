@@ -72,7 +72,7 @@ OrExpression -> Atom (WHITESPACE? ODER WHITESPACE? Atom)*
 	return Value; 
 };
 
-Atom -> NOT? (Sonderfertigkeit | Vorteil | Nachteil | Eigenschaft | Talent | BROPEN WHITESPACE? AndExpression WHITESPACE? BRCLOSE)
+Atom -> NOT? (Sonderfertigkeit | Vorteil | Nachteil | Eigenschaft | TalentZauber | BROPEN WHITESPACE? AndExpression WHITESPACE? BRCLOSE)
 {
 	bool atom;
 	if($Sonderfertigkeit != null)
@@ -83,8 +83,8 @@ Atom -> NOT? (Sonderfertigkeit | Vorteil | Nachteil | Eigenschaft | Talent | BRO
 		atom = Convert.ToBoolean($Nachteil);
 	else if($Eigenschaft != null)
 		atom = Convert.ToBoolean($Eigenschaft);
-	else if($Talent != null)
-		atom = Convert.ToBoolean($Talent);
+	else if($TalentZauber != null)
+		atom = Convert.ToBoolean($TalentZauber);
 	else
 		atom = Convert.ToBoolean($AndExpression);
 	if($NOT != null)
@@ -139,6 +139,8 @@ Eigenschaft -> (INI | KL | IN | CH | MU | KK | KO | GE | FF | AT | PA | FK) WHIT
 		return held.FF >= wert;
 	if($AT != null)
 		return held.AttackeBasis >= wert;
+	if($PA != null)
+		return held.ParadeBasis >= wert;
 	if($FK != null)
 		return held.FernkampfBasis >= wert;
 	if($INI != null)
@@ -199,7 +201,7 @@ Nachteil -> N WHITESPACE Text Wert?
 	return held.HatVorNachteil(vName, wert);
 };
 
-Talent -> Text NUMBER
+TalentZauber -> Text NUMBER
 {
 //	return true;
 
@@ -210,6 +212,7 @@ Talent -> Text NUMBER
 		return false;
 	string tName = Convert.ToString($Text);
 	int wert = Convert.ToInt32($NUMBER);
+	if (tName.ToUpperInvariant().Equals(tName))
+		return held.HatZauber(tName, wert);
 	return held.HatTalent(tName, wert);
-
 };

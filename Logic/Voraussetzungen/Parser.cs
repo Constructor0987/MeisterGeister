@@ -240,7 +240,7 @@ namespace MeisterGeister.Logic.Voraussetzungen
                     ParseEigenschaft(node);
                     break;
                 case TokenType.WORT:
-                    ParseTalent(node);
+                    ParseTalentZauber(node);
                     break;
                 case TokenType.BROPEN:
 
@@ -744,11 +744,11 @@ namespace MeisterGeister.Logic.Voraussetzungen
             parent.Token.UpdateRange(node.Token);
         }
 
-        private void ParseTalent(ParseNode parent)
+        private void ParseTalentZauber(ParseNode parent)
         {
             Token tok;
             ParseNode n;
-            ParseNode node = parent.CreateNode(scanner.GetToken(TokenType.Talent), "Talent");
+            ParseNode node = parent.CreateNode(scanner.GetToken(TokenType.TalentZauber), "TalentZauber");
             parent.Nodes.Add(node);
 
 
