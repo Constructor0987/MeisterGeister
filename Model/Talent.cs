@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
     public partial class Talent : MeisterGeister.Logic.General.Probe
     {
         #region //---- PROBE ----
+
+        [DependentProperty("Talentname")]
+        override public string Probenname
+        {
+            get { return Talentname; }
+        }
 
         override public int[] Werte
         {
@@ -26,13 +33,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion //---- PROBE ----
-
-        // Mapping zur Property "Talentname", zur Vereinheitlichung beim DataBinding
-        public string Name
-        {
-            get { return Talentname; }
-            set { Talentname = value; }
-        }
 
         public List<string> Talentspezialisierungen(Held h)
         {

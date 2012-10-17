@@ -290,7 +290,7 @@ namespace MeisterGeister.ViewModel.Helden {
                 h = SelectedTalentListeItem.HeldTalent;
 
             if (h != null
-                && Confirm("Talent löschen", String.Format("Soll das Talent '{0}' wirklich vom Helden entfernt werden?", h.Talent.Name))
+                && Confirm("Talent löschen", String.Format("Soll das Talent '{0}' wirklich vom Helden entfernt werden?", h.Talent.Talentname))
                 && Global.ContextHeld.Delete<Model.Held_Talent>(h))
             {
                 SelectedHeldChanged();
@@ -302,7 +302,7 @@ namespace MeisterGeister.ViewModel.Helden {
         private void OpenWiki(object sender)
         {
             if (SelectedTalentListeItem != null)
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedTalentListeItem.Talent.Name);
+                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedTalentListeItem.Talent.Talentname);
         }
 
         private void WürfelGruppenProbe(object obj)

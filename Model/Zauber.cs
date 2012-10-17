@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
     public partial class Zauber : MeisterGeister.Logic.General.Probe
     {
         #region //---- PROBE ----
+
+        [DependentProperty("Name")]
+        override public string Probenname
+        {
+            get { return Name; }
+        }
 
         override public int[] Werte
         {

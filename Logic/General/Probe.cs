@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Linq;
+using MeisterGeister.ViewModel.Proben.Logic;
 
 namespace MeisterGeister.Logic.General
 {
     //Eigenschaften mit taw und modifikator
     [DataContract(IsReference = true)]
-    public class Probe
+    public class Probe : IProbenname
     {
+        virtual public string Probenname { get; set; }
+
         protected int[] _werte;
         virtual public int[] Werte
         {

@@ -129,26 +129,6 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
-        public string Probenname
-        {
-            get 
-            {
-                if (Probe == null)
-                    return string.Empty;
-                if (Probe is Model.Talent)
-                    return (Probe as Model.Talent).Talentname;
-                if (Probe is Model.Held_Talent)
-                    return (Probe as Model.Held_Talent).Talent.Talentname;
-                else if (Probe is Model.Zauber)
-                    return (Probe as Model.Zauber).Name;
-                if (Probe is Model.Held_Zauber)
-                    return (Probe as Model.Held_Zauber).Zauber.Name;
-                else if (Probe is Eigenschaft) 
-                    return (Probe as Eigenschaft).Name;
-                return string.Empty; 
-            }
-        }
-
         public int WertCount
         {
             get { return EigenschaftWurfItemListe.Count; }

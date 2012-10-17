@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
+using MeisterGeister.Model.Extensions;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
 namespace MeisterGeister.ViewModel.Helden.Logic
@@ -148,6 +149,13 @@ namespace MeisterGeister.ViewModel.Helden.Logic
         #endregion //---- STATIC ----
 
         #region //---- PROBE ----
+
+        [DependentProperty("Name")]
+        override public string Probenname
+        {
+            get { return Name; }
+            set { Name = value; }
+        }
 
         override public int[] Werte
         {

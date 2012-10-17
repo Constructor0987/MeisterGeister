@@ -10,6 +10,12 @@ namespace MeisterGeister.Model
     {
         #region //---- PROBE ----
 
+        [DependentProperty("Talent")]
+        override public string Probenname
+        {
+            get { return Talent.Talentname; }
+        }
+
         override public int[] Werte
         {
             get

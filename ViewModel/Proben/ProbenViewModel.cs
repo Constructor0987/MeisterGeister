@@ -61,6 +61,7 @@ namespace MeisterGeister.ViewModel.Proben
             set 
             { 
                 _selectedFilterItem = value;
+                FilterProbeListe();
                 OnChanged("SelectedFilterItem");
             }
         }
@@ -112,14 +113,21 @@ namespace MeisterGeister.ViewModel.Proben
         public List<Probe> ProbeListe
         {
             get { return _probeListe; }
-            set { _probeListe = value; OnChanged("ProbeListe"); }
+            set { _probeListe = value; FilterProbeListe(); OnChanged("ProbeListe"); }
+        }
+
+        List<Probe> _filteredProbeListe = new List<Probe>();
+        public List<Probe> FilteredProbeListe
+        {
+            get { return _filteredProbeListe; }
+            set { _filteredProbeListe = value; OnChanged("FilteredProbeListe"); }
         }
 
         List<FilterItem> _filterListe = new List<FilterItem>();
         public List<FilterItem> FilterListe
         {
             get { return _filterListe; }
-            set { _filterListe = value; OnChanged("FilterListe"); }
+            set { _filterListe = value; FilterProbeListe(); OnChanged("FilterListe"); }
         }
 
         #endregion
@@ -132,12 +140,25 @@ namespace MeisterGeister.ViewModel.Proben
             Einstellungen.WuerfelSoundAbspielenChanged += WuerfelSoundAbspielenChanged;
             Global.GruppenProbeWürfeln += Global_GruppenProbeWürfeln;
 
+            InitFilterListe();
+
+            Refresh();
+            InitProbeListe();
+            RefreshProbeErgebnisListe();
+        }
+
+        #endregion
+
+        #region //---- INSTANZMETHODEN ----
+
+        private void InitFilterListe()
+        {
             // Filter-Liste
             _filterListe.Add(new FilterItem("Alle"));
             _filterListe.Add(new FilterItem("Häufig verwendet"));
-            _filterListe.Add(new FilterItem("Eigenschaften"));
+            _filterListe.Add(new FilterItem("Eigenschaft"));
 
-            _filterListe.Add(new FilterItem("Talente"));
+            _filterListe.Add(new FilterItem("Talent"));
             // Talentgruppen
             _filterListe.Add(new FilterItem("Kampf"));
             _filterListe.Add(new FilterItem("Körper"));
@@ -146,27 +167,67 @@ namespace MeisterGeister.ViewModel.Proben
             _filterListe.Add(new FilterItem("Wissen"));
             _filterListe.Add(new FilterItem("Handwerk"));
             _filterListe.Add(new FilterItem("Sprachen/Schriften"));
-            _filterListe.Add(new FilterItem("Gaben"));
-            _filterListe.Add(new FilterItem("Ritualkenntnisse"));
-            _filterListe.Add(new FilterItem("Liturgiekenntnisse"));
+            _filterListe.Add(new FilterItem("Gabe"));
+            _filterListe.Add(new FilterItem("Ritualkenntnis"));
+            _filterListe.Add(new FilterItem("Liturgiekenntnis"));
             _filterListe.Add(new FilterItem("Meta"));
             _filterListe.Add(new FilterItem("Basis"));
             _filterListe.Add(new FilterItem("Spezial"));
 
             _filterListe.Add(new FilterItem("Zauber"));
 
-            Refresh();
-            RefreshProbeErgebnisListe();
+            _selectedFilterItem = FilterListe.FirstOrDefault();
         }
 
-        #endregion
+        private void InitProbeListe()
+        {
+            ProbeListe.Clear();
+            // Eigenschaften hinzufügen
+            ProbeListe.AddRange(Eigenschaft.EigenschaftenListe);
+            // Talente hinzufügen
+            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Talent>());
+            // Zauber hinzufügen
+            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Zauber>());
 
-        #region //---- INSTANZMETHODEN ----
+            FilterProbeListe();
+        }
+
+        private void FilterProbeListe()
+        {
+            if (SelectedFilterItem == null)
+            {
+                FilteredProbeListe = ProbeListe.OrderBy(p => p.Probenname).ToList();
+                return;
+            }
+
+            switch (SelectedFilterItem.Name)
+            {
+                case"Alle":
+                    FilteredProbeListe = ProbeListe.OrderBy(p => p.Probenname).ToList();
+                    return;
+                case "Häufig verwendet":
+                    // TODO MT: Filter
+                    //FilteredProbeListe = ProbeListe;
+                    return;
+                case "Eigenschaft":
+                    FilteredProbeListe = ProbeListe.Where(p => p is Eigenschaft).OrderBy(p => p.Probenname).ToList();
+                    return;
+                case "Talent":
+                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent).OrderBy(p => p.Probenname).ToList();
+                    return;
+                case "Zauber":
+                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Zauber).OrderBy(p => p.Probenname).ToList();
+                    return;
+                default:
+                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent 
+                        && (p as Model.Talent).Talentgruppe.Kurzname == SelectedFilterItem.Name).OrderBy(p => p.Probenname).ToList();
+                    return;
+            }
+        }
 
         public void Refresh()
         {
             OnChanged("HeldListe");
-            RefreshProbeListe();
         }
 
         private void RefreshProbeErgebnisListe()
@@ -195,16 +256,6 @@ namespace MeisterGeister.ViewModel.Proben
             OnChanged("ProbeErgebnisListe");
         }
 
-        private void RefreshProbeListe()
-        {
-            // Eigenschaften hinzufügen
-            ProbeListe.AddRange(Eigenschaft.EigenschaftenListe);
-            // Talente hinzufügen
-            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Talent>().OrderBy(t => t.Name));
-            // Zauber hinzufügen
-            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Zauber>().OrderBy(z => z.Name));
-        }
-
         private void Würfeln(object obj)
         {
             // Alle Proben neu würfeln
@@ -216,8 +267,8 @@ namespace MeisterGeister.ViewModel.Proben
             }
 
             // Sound abspielen
-            if (Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
-                Logic.General.AudioPlayer.PlayWürfel();
+            if (Einstellungen.WuerfelSoundAbspielen)
+                MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             OnChanged("ProbeErgebnisListe");
             OnChanged("GruppenErgebnis");
@@ -280,11 +331,11 @@ namespace MeisterGeister.ViewModel.Proben
                 case "Häufig verwendet":
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/General/neu.png";
                     break;
-                case "Eigenschaften":
+                case "Eigenschaft":
                     // TODO ??: Passenderes Icon
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png";
                     break;
-                case "Talente":
+                case "Talent":
                     // TODO ??: Passenderes Icon
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/helden.png";
                     break;
@@ -309,13 +360,13 @@ namespace MeisterGeister.ViewModel.Proben
                 case "Sprachen/Schriften":
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/sprache.png";
                     break;
-                case "Gaben":
+                case "Gabe":
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/hesinde.png";
                     break;
-                case "Ritualkenntnisse":
+                case "Ritualkenntnis":
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/zauberzeichen.png";
                     break;
-                case "Liturgiekenntnisse":
+                case "Liturgiekenntnis":
                     // TODO ??: Passenderes Icon
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/audio2.png";
                     break;
