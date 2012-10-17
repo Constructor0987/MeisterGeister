@@ -140,6 +140,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeRüstungViewModel()
         {
+            Init();
             TawSchmied = 12;
         }
 
@@ -147,10 +148,15 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        private void Init()
         {
             RüstungListe = Global.ContextRüstung.RüstungListe;
             OnChanged("RüstungListe");
+        }
+
+        public void Refresh()
+        {
+            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
         }
 
         private void BerechneNicwinscheApproximation()
@@ -168,14 +174,19 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (_selectedRüstung == null) return;
             ProbePunkte = (int)Math.Round((_selectedRüstung.gRS.HasValue ? _selectedRüstung.gRS.Value : 0)* 7,0);
             ProbeErschwernis = 0;
+            if (SelectedRüstung.MeisterlicheRüstung())
+            {
+                ProbeErschwernis = 5;
+                ProbePunkte *= 2;
+            }
             ProbeDauerInZe = 6;
-            switch (_selectedRüstung.Gruppe)
+            switch (SelectedRüstung.Gruppe)
             {
                 case RÜSTUNGGRUPPEEXOTISCH :
                     ProbeErschwernis = 7;
                     break;
                 case RÜSTUNGGRUPPEKETTESCHUPPE :
-                    ProbeDauerInZe = 16;
+                    ProbeDauerInZe = SelectedRüstung.MeisterlicheRüstung() ? 24 : 16;
                     break;
                 case RÜSTUNGGRUPPEPLATTE:
                     ProbeDauerInZe = 8;

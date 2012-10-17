@@ -319,10 +319,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeNahkampfwaffeViewModel()
         {
-            NahkampfwaffeMaterialListe = new Materialien();
-            SelectedNahkampfwaffeMaterial = NahkampfwaffeMaterialListe.First();
-            NahkampfwaffeTechnikListe = new Techniken();
-            SelectedNahkampfwaffeTechnik = NahkampfwaffeTechnikListe.First();
+            Init();
             TawSchmied = 12;
         }
 
@@ -330,7 +327,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        private void Init()
         {
             // Neben Nahkampfwaffen auch Raufen-Waffen (-> Parierwaffen)
             NahkampfwaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
@@ -342,6 +339,15 @@ namespace MeisterGeister.ViewModel.Schmiede
             OnChanged("NahkampfwaffeTalentListe");
             NahkampfwaffeListe.AddRange(Global.ContextInventar.WaffeListe.Where(w => !NahkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("NahkampfwaffeListe");
+            NahkampfwaffeMaterialListe = new Materialien();
+            NahkampfwaffeTechnikListe = new Techniken();
+            SelectedNahkampfwaffeMaterial = NahkampfwaffeMaterialListe.First();
+            SelectedNahkampfwaffeTechnik = NahkampfwaffeTechnikListe.First();
+        }
+
+        public void Refresh()
+        {
+            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
         }
 
         private void BerechneNicwinscheApproximation()

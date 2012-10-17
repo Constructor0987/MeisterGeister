@@ -24,8 +24,8 @@ namespace MeisterGeister.ViewModel.Schmiede
         const string TALENTFERNKAMPFBOGEN = "Bogen";
         const string TALENTFERNKAMPFARMBRUST = "Armbrust";
         const string FILTERDEAKTIVIEREN = "Alle";
-        static Guid MUNITIONGUIDJAGDPFEIL = new Guid("f48e5df6-71ca-4e66-b8b2-096ffd45c09e");
-        static Guid MUNITIONGUIDJAGDBOLZEN = new Guid("00000000-0000-0000-0000-123456789012");
+        const string MUNITIONGUIDJAGDPFEIL = "00000000-0000-0000-000f-000000000003";
+        const string MUNITIONGUIDJAGDBOLZEN = "00000000-0000-0000-000f-000000000011";
         
 
         //Felder
@@ -275,6 +275,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeGeschossViewModel()
         {
+            Init();
             TawSchmied = 12;
             TawSchmiedSpitze = 12;
             ProbeErschwernisSpitze = 0;
@@ -285,15 +286,20 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        private void Init()
         {
             FernkampfwaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
             FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && (t.Talentname == TALENTFERNKAMPFBOGEN || t.Talentname == TALENTFERNKAMPFARMBRUST) && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
             OnChanged("FernkampfwaffeTalentListe");
-            FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => (w.Munitionsart == MUNITIONSTYPBOLZEN || w.Munitionsart == MUNITIONSTYPPFEIL) &&  !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
-            MunitionListe.AddRange(Global.ContextFernkampfwaffe.Liste<Model.Munition>().Where(m => (m.Art == MUNITIONSTYPBOLZEN || m.Art==MUNITIONSTYPPFEIL)));
+            FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => (w.Munitionsart == MUNITIONSTYPBOLZEN || w.Munitionsart == MUNITIONSTYPPFEIL) && !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("FernkampfwaffeListe");
+            MunitionListe.AddRange(Global.ContextFernkampfwaffe.Liste<Model.Munition>().Where(m => (m.Art == MUNITIONSTYPBOLZEN || m.Art == MUNITIONSTYPPFEIL)));
             OnChanged("MunitionListe");
+        }
+
+        public void Refresh()
+        {
+            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
         }
 
         private void BerechneNicwinscheApproximation()
@@ -318,7 +324,7 @@ namespace MeisterGeister.ViewModel.Schmiede
         {
             if (_selectedMunition == null || _selectedFernkampfwaffe == null) return;
             ProbePunkte = (int)Math.Round(((_selectedFernkampfwaffe.TPWürfelAnzahl.HasValue ? _selectedFernkampfwaffe.TPWürfelAnzahl.Value : 0) * (int)Math.Round(((_selectedFernkampfwaffe.TPWürfel.HasValue ? _selectedFernkampfwaffe.TPWürfel.Value : 0) + 1) / 2.0) + (_selectedFernkampfwaffe.TPBonus.HasValue ? _selectedFernkampfwaffe.TPBonus.Value : 0))/3.0);
-            ProbeErschwernisSpitze = (_selectedMunition.MunitionGUID.CompareTo(MUNITIONGUIDJAGDBOLZEN)==0 || _selectedMunition.MunitionGUID.CompareTo(MUNITIONGUIDJAGDPFEIL)==0) ? 0 : 4;
+            ProbeErschwernisSpitze = (_selectedMunition.MunitionGUID.ToString() == MUNITIONGUIDJAGDBOLZEN || _selectedMunition.MunitionGUID.ToString() == MUNITIONGUIDJAGDPFEIL) ? 0 : 4;
             Munitionspreis = _selectedFernkampfwaffe.Munitionspreis.HasValue ? _selectedFernkampfwaffe.Munitionspreis.Value * _selectedMunition.Preismodifikator : 0;
             BerechneNicwinscheApproximation();
         }

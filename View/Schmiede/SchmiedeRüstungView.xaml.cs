@@ -46,7 +46,7 @@ namespace MeisterGeister.View.Schmiede
         {
             try
             {
-                VM.LoadDaten();
+                VM.Refresh();
             }
             catch (Exception) { }
         }

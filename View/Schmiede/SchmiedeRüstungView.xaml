@@ -16,106 +16,106 @@
 			<ColumnDefinition Width="296" />
 		</Grid.ColumnDefinitions>
 
-        <Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-                <TextBlock Margin="5" Text="Rüstung:" />
-                <ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=RüstungListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRüstung}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
-            </StackPanel>
-        </Border>
+		<Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
+			<StackPanel Orientation="Vertical" VerticalAlignment="Top">
+				<TextBlock Margin="5" Text="Rüstung:" />
+				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=RüstungListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRüstung}">
+					<ComboBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<VirtualizingStackPanel />
+						</ItemsPanelTemplate>
+					</ComboBox.ItemsPanel>
+				</ComboBox>
+			</StackPanel>
+		</Border>
 
-        <Border Grid.Column="0" Margin="32" Style="{DynamicResource ControlContentBorder}">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="20,20,20,10" FontWeight="Bold" Text="{Binding Path=SelectedRüstung.Name}" />
-                    <TextBlock Margin="20,20,20,10" Text="{Binding Path=SelectedRüstung.Art, StringFormat={}({0}) }" />
-                </StackPanel>
-                <Grid Margin="20,10,20,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Art" Margin="0,0,10,0" />
-                    <TextBlock Text="V" ToolTip="Sterne" Margin="5,0" Grid.Column="1" />
-                    <TextBlock Text="Ko" ToolTip="Kopf" Margin="5,0" Grid.Column="2" />
-                    <TextBlock Text="Br" ToolTip="Brust" Margin="5,0" Grid.Column="3" />
-                    <TextBlock Text="Rü" ToolTip="Rücken" Margin="5,0" Grid.Column="4" />
-                    <TextBlock Text="Ba" ToolTip="Bauch" Margin="5,0" Grid.Column="5" />
-                    <TextBlock Text="LA" ToolTip="linker Arm" Margin="5,0" Grid.Column="6" />
-                    <TextBlock Text="RA" ToolTip="rechterArm" Margin="5,0" Grid.Column="7" />
-                    <TextBlock Text="LB" ToolTip="linkes Bein" Margin="5,0" Grid.Column="8" />
-                    <TextBlock Text="RB" ToolTip="rechtes Bein" Margin="5,0" Grid.Column="9" />
-                    <TextBlock Text="gRS" Margin="5,0" ToolTip="Zonensystem" Grid.Column="10" />
-                    <TextBlock Text="gBE" Margin="5,0" ToolTip="Zonensystem" Grid.Column="11" />
-                    <TextBlock Text="RS" Margin="5,0" Grid.Column="12" />
-                    <TextBlock Text="BE" Grid.Column="13" Margin="10,0,0,0" />
-                    <TextBlock Text="{Binding SelectedRüstung.Gruppe}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.Verarbeitung}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.Kopf}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.Brust}" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.Rücken}" Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.Bauch}" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.LArm}" Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.RArm}" Grid.Row="1" Grid.Column="7" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.LBein}" Grid.Row="1" Grid.Column="8" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.RBein}" Grid.Row="1" Grid.Column="9" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.gRS}" Grid.Row="1" Grid.Column="10" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.gBE}" Grid.Row="1" Grid.Column="11" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.RS}" Grid.Row="1" Grid.Column="12" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedRüstung.BE}" Grid.Row="1" Grid.Column="13" VerticalAlignment="Center" />
-                </Grid>
-                <StackPanel Orientation="Horizontal" Margin="20,0,20,0">
-                    <TextBlock Text="{Binding Path=SelectedRüstung.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
-                    <TextBlock Text="{Binding Path=SelectedRüstung.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
-                </StackPanel>
-                <TextBlock Margin="20,40,20,10" FontWeight="Bold" Text="Schmiedevorgang" />
-                <StackPanel Margin="15,0" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="benötigte Talentpunkte:" />
-                    <TextBlock Margin="5" Text="{Binding Path=ProbePunkte, StringFormat={}{0} TaP*}" />
-                </StackPanel>
-                <StackPanel Margin="15,0" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="Erschwernis:" />
-                    <TextBlock Margin="5" Text="{Binding ProbeErschwernis}" />
-                </StackPanel>
-                <StackPanel Margin="15,0" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="Dauer jeder Probe:" />
-                    <TextBlock Margin="5" Text="{Binding ProbeDauerInZe}" />
-                </StackPanel>
-                <StackPanel Margin="15,30,15,0" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="TaW des Schmied" />
-                    <ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmied}" />
-                </StackPanel>
-                <StackPanel Margin="15,0" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="Zus. Erschwernis/Erleichterung" />
-                    <ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
-                </StackPanel>
-                <StackPanel Margin="15,0" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
-                    <TextBlock Margin="5" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Tage oder mehr (s.o.)}" />
-                </StackPanel>
-            </StackPanel>
-        </Border>
+		<Border Grid.Column="0" Margin="32" Style="{DynamicResource ControlContentBorder}">
+			<StackPanel>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Margin="20,20,20,10" FontWeight="Bold" Text="{Binding Path=SelectedRüstung.Name}" />
+					<TextBlock Margin="20,20,20,10" Text="{Binding Path=SelectedRüstung.Art, StringFormat={}({0}) }" />
+				</StackPanel>
+				<Grid Margin="20,10,20,10">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<TextBlock Text="Art" Margin="0,0,10,0" />
+					<TextBlock Text="V" ToolTip="Sterne" Margin="5,0" Grid.Column="1" VerticalAlignment="Center" />
+					<TextBlock Text="Ko" ToolTip="Kopf" Margin="5,0" Grid.Column="2" VerticalAlignment="Center" />
+					<TextBlock Text="Br" ToolTip="Brust" Margin="5,0" Grid.Column="3" VerticalAlignment="Center" />
+					<TextBlock Text="Rü" ToolTip="Rücken" Margin="5,0" Grid.Column="4" VerticalAlignment="Center" />
+					<TextBlock Text="Ba" ToolTip="Bauch" Margin="5,0" Grid.Column="5" VerticalAlignment="Center" />
+					<TextBlock Text="LA" ToolTip="linker Arm" Margin="5,0" Grid.Column="6" VerticalAlignment="Center" />
+					<TextBlock Text="RA" ToolTip="rechterArm" Margin="5,0" Grid.Column="7" VerticalAlignment="Center" />
+					<TextBlock Text="LB" ToolTip="linkes Bein" Margin="5,0" Grid.Column="8" VerticalAlignment="Center" />
+					<TextBlock Text="RB" ToolTip="rechtes Bein" Margin="5,0" Grid.Column="9" VerticalAlignment="Center" />
+					<TextBlock Text="gRS" Margin="5,0" ToolTip="Zonensystem" Grid.Column="10" VerticalAlignment="Center" />
+					<TextBlock Text="gBE" Margin="5,0" ToolTip="Zonensystem" Grid.Column="11" VerticalAlignment="Center" />
+					<TextBlock Text="RS" Margin="5,0" Grid.Column="12" VerticalAlignment="Center" />
+					<TextBlock Text="BE" Grid.Column="13" Margin="10,0,0,0" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.Gruppe}" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.Verarbeitung}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.Kopf}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.Brust}" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.Rücken}" Grid.Row="1" Grid.Column="4" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.Bauch}" Grid.Row="1" Grid.Column="5" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.LArm}" Grid.Row="1" Grid.Column="6" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.RArm}" Grid.Row="1" Grid.Column="7" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.LBein}" Grid.Row="1" Grid.Column="8" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.RBein}" Grid.Row="1" Grid.Column="9" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.gRS}" Grid.Row="1" Grid.Column="10" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.gBE}" Grid.Row="1" Grid.Column="11" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.RS}" Grid.Row="1" Grid.Column="12" VerticalAlignment="Center" />
+					<TextBlock Text="{Binding SelectedRüstung.BE}" Grid.Row="1" Grid.Column="13" VerticalAlignment="Center" />
+				</Grid>
+				<StackPanel Orientation="Horizontal" Margin="20,0,20,0">
+					<TextBlock Text="{Binding Path=SelectedRüstung.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
+					<TextBlock Text="{Binding Path=SelectedRüstung.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
+				</StackPanel>
+				<TextBlock Margin="20,40,20,10" FontWeight="Bold" Text="Schmiedevorgang" />
+				<StackPanel Margin="15,0" Orientation="Horizontal">
+					<TextBlock Margin="5" Text="benötigte Talentpunkte:" />
+					<TextBlock Margin="5" Text="{Binding Path=ProbePunkte, StringFormat={}{0} TaP*}" />
+				</StackPanel>
+				<StackPanel Margin="15,0" Orientation="Horizontal">
+					<TextBlock Margin="5" Text="Erschwernis:" />
+					<TextBlock Margin="5" Text="{Binding ProbeErschwernis}" />
+				</StackPanel>
+				<StackPanel Margin="15,0" Orientation="Horizontal">
+					<TextBlock Margin="5" Text="Dauer jeder Probe:" />
+					<TextBlock Margin="5" Text="{Binding ProbeDauerInZe}" />
+				</StackPanel>
+				<StackPanel Margin="15,30,15,0" Orientation="Horizontal">
+					<TextBlock Margin="5" Text="TaW des Schmied" />
+					<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmied}" />
+				</StackPanel>
+				<StackPanel Margin="15,0" Orientation="Horizontal">
+					<TextBlock Margin="5" Text="Zus. Erschwernis/Erleichterung" />
+					<ViewGeneral:IntBox Margin="0,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
+				</StackPanel>
+				<StackPanel Margin="15,0" Orientation="Horizontal">
+					<TextBlock Margin="5" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
+					<TextBlock Margin="5" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Tage oder mehr (s.o.)}" />
+				</StackPanel>
+			</StackPanel>
+		</Border>
 
-    </Grid>
+	</Grid>
 </UserControl>

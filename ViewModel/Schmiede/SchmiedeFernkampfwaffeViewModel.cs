@@ -575,10 +575,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeFernkampfwaffeViewModel()
         {
-            FernkampfwaffeMaterialListe = new Materialien();
-            SelectedFernkampfwaffeMaterial = FernkampfwaffeMaterialListe.First();
-            FernkampfwaffeTechnikListe = new Techniken();
-            SelectedFernkampfwaffeTechnik = FernkampfwaffeTechnikListe.First();
+            Init();
             TawSchmied = 12;
         }
 
@@ -586,12 +583,20 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        private void Init()
         {
+            // Listen erstellen
+            FernkampfwaffeMaterialListe = new Materialien();
+            FernkampfwaffeTechnikListe = new Techniken();
             FernkampfwaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
             FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+            OnChanged("FernkampfwaffeTalentListe");
             FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("FernkampfwaffeListe");
+
+            SelectedFernkampfwaffeMaterial = FernkampfwaffeMaterialListe.First();
+            SelectedFernkampfwaffeTechnik = FernkampfwaffeTechnikListe.First();
+
             // Verbesserungsoptionen zunächst verbergen
             IstAuchNahkampfwaffe = false;
             IstBogen = false;
@@ -599,6 +604,11 @@ namespace MeisterGeister.ViewModel.Schmiede
             IstNahkampfPersonalisierbar = false;
             IstWurfwaffe = false;
             BerechneSichtbarkeitErstellungsoptionen();
+        }
+
+        public void Refresh()
+        {
+            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
         }
 
         private void BerechneSichtbarkeitErstellungsoptionen()

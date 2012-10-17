@@ -115,6 +115,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeSchildViewModel()
         {
+            Init();
             TawSchmied = 12;
         }
 
@@ -122,12 +123,16 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         #region //---- INSTANZMETHODEN ----
 
-        public void LoadDaten()
+        private void Init()
         {
             // Schilde - keine Parierwaffen
-            SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => (w.Typ == "S" || w.SchildGUID.ToString().CompareTo(GUIDBUCKLER)==0 || w.SchildGUID.ToString().CompareTo(GUIDBUCKLERVOLLMETAL)==0) && !SchildListe.Contains(w)).OrderBy(w => w.Name));
-            SchildListe = SchildListe;
+            SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => (w.Typ == "S" || w.SchildGUID.ToString().CompareTo(GUIDBUCKLER) == 0 || w.SchildGUID.ToString().CompareTo(GUIDBUCKLERVOLLMETAL) == 0) && !SchildListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("SchildListe");
+        }
+
+        public void Refresh()
+        {
+            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
         }
 
         private void BerechneNicwinscheApproximation()
