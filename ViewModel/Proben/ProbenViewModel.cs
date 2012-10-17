@@ -206,14 +206,21 @@ namespace MeisterGeister.ViewModel.Proben
                     FilteredProbeListe = ProbeListe.OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Häufig verwendet":
-                    // TODO MT: Filter
-                    //FilteredProbeListe = ProbeListe;
+                    List<string> häufigList = new List<string> { "Fährtensuchen", "Gassenwissen", "Gefahreninstinkt", "Menschenkenntnis", 
+                        "Orientierung", "Schleichen", "Sich Verstecken", "Sinnenschärfe", "Überreden", "Wildnisleben" };
+                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent
+                        && häufigList.Contains(p.Probenname)).OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Eigenschaft":
                     FilteredProbeListe = ProbeListe.Where(p => p is Eigenschaft).OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Talent":
                     FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent).OrderBy(p => p.Probenname).ToList();
+                    return;
+                case "Basis":
+                case "Spezial":
+                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent
+                        && (p as Model.Talent).Talenttyp == SelectedFilterItem.Name).OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Zauber":
                     FilteredProbeListe = ProbeListe.Where(p => p is Model.Zauber).OrderBy(p => p.Probenname).ToList();
@@ -290,6 +297,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         private void Global_GruppenProbeWürfeln(Probe probe, EventArgs e)
         {
+            SelectedFilterItem = FilterListe.FirstOrDefault();
             if (probe is Model.Held_Talent)
                 SelectedProbe = (probe as Model.Held_Talent).Talent;
             else if (probe is Model.Held_Zauber)
