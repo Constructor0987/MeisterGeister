@@ -265,7 +265,7 @@
 						<Image x:Name="image7" Source="/DSA%20MeisterGeister;component/Images/Icons/hesinde.png"/>
                     </Border>
                     <Border x:Name="border8" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Ritualkenntnisse" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image8" Source="/DSA%20MeisterGeister;component/Images/Icons/magie.png"/>
+                        <Image x:Name="image8" Source="/DSA%20MeisterGeister;component/Images/Icons/zauberzeichen.png"/>
                     </Border>
                     <Border x:Name="border9" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Liturgiekenntnisse" MouseLeftButtonDown="brdKlicked">
 						<Image x:Name="image9" Source="/DSA MeisterGeister;component/Images/Icons/audio2.png"/>

@@ -13,76 +13,134 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="0" Margin="5,5,5,0" Style="{DynamicResource ControlContentBorder}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100*" />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+        <Expander Grid.Row="0" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <TextBlock Text="" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                    <ComboBox Height="32" Width="48" Margin="5" ItemsSource="{Binding FilterListe}" SelectedItem="{Binding SelectedFilterItem}">
+                        <ComboBox.ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="Probenfilter" FontWeight="Bold" />
+                                <TextBlock Text="{Binding SelectedFilterItem.Name}" />
+                            </StackPanel>
+                        </ComboBox.ToolTip>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding ImagePath}" Width="24" />
+                                    <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                <ViewGeneral:IntBox Grid.Column="1" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
+                    <ComboBox Grid.Column="1" Height="23" ItemsSource="{Binding ProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Name" ToolTip="Proben-Auswahl">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
 
-                <Button Grid.Column="3" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
-                </Button>
+                    <ViewGeneral:IntBox Grid.Column="2" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
 
-                <CheckBox Grid.Column="4" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
-                    <CheckBox.Content>
-                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
-                    </CheckBox.Content>
-                </CheckBox>
-            </Grid>
-        </Border>
+                    <Button Grid.Column="4" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
+                        <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
+                    </Button>
+
+                    <CheckBox Grid.Column="5" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
+                        <CheckBox.Content>
+                            <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                        </CheckBox.Content>
+                    </CheckBox>
+
+                    <TextBlock Grid.Row="1" Grid.ColumnSpan="6" Text="TODO: Proben-Favoriten" />
+
+                </Grid>
+            </Border>
+        </Expander>
 
         <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
             <Expander.Header>
-                <TextBlock Text="Proben" Style="{DynamicResource TextTitel}" />
+                <TextBlock Text="Proben-Informationen" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
-                <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 ItemsSource="{Binding ProbeErgebnisListe}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="Focusable" Value="False"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <!-- TODO MT: Layout-Varianten einstellbar machen (Zeile und Kachel) -->
-                    <!--<ListBox.ItemsPanel>
+                <TextBlock Text="TODO..." />
+            </Border>
+        </Expander>
+
+        <Expander Grid.Row="2" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <TextBlock Text="Probenergebnisse" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ProbeErgebnisListe}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Focusable" Value="False"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <!-- TODO MT: Layout-Varianten einstellbar machen (Zeile und Kachel) -->
+                        <!--<ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>-->
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border Margin="5">
-                                <StackPanel>
-                                    <Proben:ProbeControl Orientation="Horizontal" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="5">
+                                    <StackPanel>
+                                        <Proben:ProbeControl Orientation="Horizontal" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel Grid.Column="1"  Orientation="Vertical" Margin="5">
+                        <TextBlock Text="TODO: Sortierung" />
+                        <TextBlock Text="TODO: Anzeige-Option" />
+                        <TextBlock Text="TODO: SendToSpielerWindow" />
+                    </StackPanel>
+                </Grid>
             </Border>
         </Expander>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
-            <TextBlock Text="{Binding GruppenErgebnis}"/>
-        </StackPanel>
+        <Expander Grid.Row="3" Grid.Column="0" IsExpanded="True" Margin="5">
+            <Expander.Header>
+                <TextBlock Text="Zusammenarbeit" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
+                    <TextBlock Text="{Binding GruppenErgebnis}"/>
+                </StackPanel>
+            </Border>
+        </Expander>
 
     </Grid>
 </UserControl>
