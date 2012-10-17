@@ -140,6 +140,11 @@
                                     <Image Source="/Images/Icons/nahkampf_01.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Gegner-Verwaltung" Tag="Gegner" ToolTip="Gegner-Verwaltung"  >
+                                <MenuItem.Icon>
+                                    <Image Source="/Images/Icons/gegner.png" Margin="2" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <Separator   />
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
                         </MenuItem>
