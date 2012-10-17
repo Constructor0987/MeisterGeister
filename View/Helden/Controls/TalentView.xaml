@@ -14,210 +14,210 @@
             <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch" />
             <Setter Property="Control.HorizontalContentAlignment" Value="Stretch" />
         </Style>
-		<DataTemplate x:Key="ComboboxEasyItem_Talentname">
+        <DataTemplate x:Key="ComboboxEasyItem_Talentname">
             <Border Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch">
                 <TextBlock Text="{Binding Talentname}" FontWeight="Bold" HorizontalAlignment="Left"/>
             </Border>
         </DataTemplate>
-		<Storyboard x:Key="OnMouseEnter1">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="image">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleX)" Storyboard.TargetName="image">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleY)" Storyboard.TargetName="image">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-			<PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="image">
-				<EasingPointKeyFrame KeyTime="0" Value="1,0.5"/>
-				<EasingPointKeyFrame KeyTime="0:0:0.3" Value="1,0.5"/>
-			</PointAnimationUsingKeyFrames>
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave1">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
-				<EasingThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter2">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave2">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter3">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave3">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter4">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave4">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter5">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave5">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter6">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image5">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave6">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image5">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter7">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image6">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave7">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image6">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter8">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image7">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave8">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image7">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter9">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image8">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave9">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image8">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseEnter10">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image9">
-				<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-				<EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Key="OnMouseLeave10">
-			<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image9">
-				<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
-				<SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
-			</ThicknessAnimationUsingKeyFrames>
-		</Storyboard>
+        <Storyboard x:Key="OnMouseEnter1">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="image">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleX)" Storyboard.TargetName="image">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleY)" Storyboard.TargetName="image">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="image">
+                <EasingPointKeyFrame KeyTime="0" Value="1,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="1,0.5"/>
+            </PointAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave1">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+                <EasingThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter2">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave2">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter3">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave3">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter4">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave4">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter5">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave5">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter6">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image5">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave6">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image5">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter7">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image6">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave7">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image6">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter8">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image7">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave8">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image7">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter9">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image8">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave9">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image8">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseEnter10">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image9">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave10">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image9">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
-	<UserControl.Triggers>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border">
-			<BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border1">
-			<BeginStoryboard x:Name="OnMouseEnter2_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter2}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border1">
-			<BeginStoryboard x:Name="OnMouseLeave2_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave2}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border2">
-			<BeginStoryboard x:Name="OnMouseEnter3_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter3}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border2">
-			<BeginStoryboard x:Name="OnMouseLeave3_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave3}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border3">
-			<BeginStoryboard x:Name="OnMouseEnter4_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter4}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border3">
-			<BeginStoryboard x:Name="OnMouseLeave4_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave4}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border">
-			<BeginStoryboard x:Name="OnMouseLeave1_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave1}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border6">
-			<BeginStoryboard Storyboard="{StaticResource OnMouseEnter5}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border6">
-			<BeginStoryboard x:Name="OnMouseLeave5_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave5}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border5">
-			<BeginStoryboard x:Name="OnMouseLeave6_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter6}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border5">
-			<BeginStoryboard x:Name="OnMouseLeave6_BeginStoryboard1" Storyboard="{StaticResource OnMouseLeave6}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border4">
-			<BeginStoryboard x:Name="OnMouseEnter7_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter7}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border4">
-			<BeginStoryboard x:Name="OnMouseLeave7_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave7}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border7">
-			<BeginStoryboard x:Name="OnMouseEnter8_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter8}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border7">
-			<BeginStoryboard x:Name="OnMouseLeave8_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave8}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border8">
-			<BeginStoryboard x:Name="OnMouseEnter9_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter9}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border8">
-			<BeginStoryboard x:Name="OnMouseLeave9_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave9}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border9">
-			<BeginStoryboard x:Name="OnMouseEnter10_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter10}"/>
-		</EventTrigger>
-		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border9">
-			<BeginStoryboard x:Name="OnMouseLeave10_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave10}"/>
-		</EventTrigger>
-	</UserControl.Triggers>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border">
+            <BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border1">
+            <BeginStoryboard x:Name="OnMouseEnter2_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter2}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border1">
+            <BeginStoryboard x:Name="OnMouseLeave2_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave2}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border2">
+            <BeginStoryboard x:Name="OnMouseEnter3_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter3}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border2">
+            <BeginStoryboard x:Name="OnMouseLeave3_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave3}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border3">
+            <BeginStoryboard x:Name="OnMouseEnter4_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter4}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border3">
+            <BeginStoryboard x:Name="OnMouseLeave4_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave4}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border">
+            <BeginStoryboard x:Name="OnMouseLeave1_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave1}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border6">
+            <BeginStoryboard Storyboard="{StaticResource OnMouseEnter5}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border6">
+            <BeginStoryboard x:Name="OnMouseLeave5_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave5}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border5">
+            <BeginStoryboard x:Name="OnMouseLeave6_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter6}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border5">
+            <BeginStoryboard x:Name="OnMouseLeave6_BeginStoryboard1" Storyboard="{StaticResource OnMouseLeave6}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border4">
+            <BeginStoryboard x:Name="OnMouseEnter7_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter7}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border4">
+            <BeginStoryboard x:Name="OnMouseLeave7_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave7}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border7">
+            <BeginStoryboard x:Name="OnMouseEnter8_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter8}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border7">
+            <BeginStoryboard x:Name="OnMouseLeave8_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave8}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border8">
+            <BeginStoryboard x:Name="OnMouseEnter9_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter9}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border8">
+            <BeginStoryboard x:Name="OnMouseLeave9_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave9}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border9">
+            <BeginStoryboard x:Name="OnMouseEnter10_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter10}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border9">
+            <BeginStoryboard x:Name="OnMouseLeave10_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave10}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid x:Name="LayoutRoot">
 
         <Grid>
@@ -227,49 +227,49 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>                
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1" Grid.Column="1">
                 <StackPanel>
                     <Border x:Name="border" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Kampftalente" MouseLeftButtonDown="brdKlicked">
-                    	<Image x:Name="image" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5">
-                    		<Image.RenderTransform>
-                    			<TransformGroup>
-                    				<ScaleTransform/>
-                    				<SkewTransform/>
-                    				<RotateTransform/>
-                    				<TranslateTransform/>
-                    			</TransformGroup>
-                    		</Image.RenderTransform>
-                    	</Image>
+                        <Image x:Name="image" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
                     </Border>
-					<Border x:Name="border1" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Körperliche Talente" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image1" Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
+                    <Border x:Name="border1" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Körperliche Talente" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="image1" Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
                     </Border>
-					<Border x:Name="border2" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gesellschaftliche Talente" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image2" Source="/DSA%20MeisterGeister;component/Images/Icons/helden_kopieren.png"/>
+                    <Border x:Name="border2" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gesellschaftliche Talente" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="image2" Source="/DSA%20MeisterGeister;component/Images/Icons/helden_kopieren.png"/>
                     </Border>
-					<Border x:Name="border3" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Natur-Talente" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image3" Source="/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png"/>
+                    <Border x:Name="border3" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Natur-Talente" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="image3" Source="/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png"/>
                     </Border>
-					<Border x:Name="border6" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Wissenstalente" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image4" Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png"/>
+                    <Border x:Name="border6" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Wissenstalente" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="image4" Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png"/>
                     </Border>
-					<Border x:Name="border5" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Sprachen und Schriften" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image5" Source="/DSA%20MeisterGeister;component/Images/Icons/sprache.png"/>
+                    <Border x:Name="border5" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Sprachen und Schriften" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="image5" Source="/DSA%20MeisterGeister;component/Images/Icons/sprache.png"/>
                     </Border>
-					<Border x:Name="border4" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Handwerkstalente" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image6" Source="/DSA%20MeisterGeister;component/Images/Icons/schmiede.png"/>
+                    <Border x:Name="border4" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Handwerkstalente" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="image6" Source="/DSA%20MeisterGeister;component/Images/Icons/schmiede.png"/>
                     </Border>
-					<Border x:Name="border7" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gaben" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image7" Source="/DSA%20MeisterGeister;component/Images/Icons/hesinde.png"/>
+                    <Border x:Name="border7" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gaben" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="image7" Source="/DSA%20MeisterGeister;component/Images/Icons/hesinde.png"/>
                     </Border>
                     <Border x:Name="border8" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Ritualkenntnisse" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image8" Source="/DSA%20MeisterGeister;component/Images/Icons/zauberzeichen.png"/>
                     </Border>
                     <Border x:Name="border9" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Liturgiekenntnisse" MouseLeftButtonDown="brdKlicked">
-						<Image x:Name="image9" Source="/DSA MeisterGeister;component/Images/Icons/audio2.png"/>
-					</Border>
+                        <Image x:Name="image9" Source="/DSA MeisterGeister;component/Images/Icons/audio2.png"/>
+                    </Border>
                 </StackPanel>
             </Grid>
             <Expander Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsExpanded="True">
@@ -280,11 +280,11 @@
                     <Border Style="{DynamicResource ControlContentBorder}">
                         <Grid Margin="5">
                             <Grid>
-                                <Grid.ColumnDefinitions>                                                                        
-									<ColumnDefinition Width="*"/>
-									<ColumnDefinition Width="Auto"/>                                    									
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-								<ComboBox Grid.Column="0" Height="23" DropDownClosed="_comboBoxTalentAktivieren_DropDownClosed" DropDownOpened="_comboBoxTalentAktivieren_DropDownOpened" KeyDown="_comboBoxTalentAktivieren_KeyDown" x:Name="_comboBoxTalentAktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentauswahlListe}" SelectedItem="{Binding TalentAuswahl}" ItemTemplate="{DynamicResource DataTemplate1}">
+                                <ComboBox Grid.Column="0" Height="23" x:Name="_comboBoxTalentAktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentauswahlListe}" SelectedItem="{Binding TalentAuswahl}" ItemTemplate="{DynamicResource DataTemplate1}">
                                     <ComboBox.Resources>
                                         <DataTemplate x:Key="DataTemplate1">
                                             <Border Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch">
@@ -307,23 +307,51 @@
                 </Grid>
             </Expander>
             <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch">
-                <Grid  >
-                	<StackPanel x:Name="spHeldTalent">
-                    <Expander x:Name="expKampf" IsExpanded="True" Margin="0,5,0,0">
-                        <Expander.Header>
-                            <TextBlock Text="Kampftalente" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <Grid>
+                <Grid>
+                    <Grid.ContextMenu>
+                        <ContextMenu Opened="ContextMenuTalent_Opened">
+                            <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Height="28" Command="{Binding OnWürfelProbe}" Header="Probe würfeln">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}" Header="Gruppenprobe würfeln">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Height="28" Command="{Binding OnRemove}" Header="Löschen">
+                                <MenuItem.Icon>
+                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+                    <StackPanel x:Name="spHeldTalent">
+                        <Expander x:Name="expKampf" IsExpanded="True" Margin="0,5,0,0">
+                            <Expander.Header>
+                                <TextBlock Text="Kampftalente" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
-                                    <DataGrid ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding KampfTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" HorizontalContentAlignment="Stretch">                                        
+                                    <DataGrid ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" HorizontalContentAlignment="Stretch">
+                                        <DataGrid.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </DataGrid.InputBindings>
                                         <DataGrid.Columns>
-                                        	<DataGridTemplateColumn>                                                
+                                            <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-														</Button>
+                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                        </Button>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -381,366 +409,461 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                 </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>											
+                                            </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                     <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                                    	<Image.ToolTip>
-                                    		<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                    	</Image.ToolTip>
+                                        <Image.ToolTip>
+                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                        </Image.ToolTip>
                                     </Image>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </Expander>
-                    <Expander x:Name="expKoerper" IsExpanded="True" Margin="0,5,0,0">
-                        <Expander.Header>
-                            <TextBlock Text="Körperliche Talente" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <Grid >
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expKoerper" IsExpanded="True" Margin="0,5,0,0">
+                            <Expander.Header>
+                                <TextBlock Text="Körperliche Talente" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
 
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding KoerperTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000"  HorizontalContentAlignment="Stretch">
-                                        <DataGrid.Columns>
-                                        	<DataGridTemplateColumn>                                                
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000"  HorizontalContentAlignment="Stretch">
+                                            <DataGrid.InputBindings>
+                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                            </DataGrid.InputBindings>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding OnRemove}" >
+                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                    </DataGridTemplateColumn.Header>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                            <Image.ToolTip>
+                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                            </Image.ToolTip>
+                                        </Image>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </Expander>
-                    <Expander x:Name="expGesellschaft" IsExpanded="True" Margin="0,5,0,0">
-                        <Expander.Header>
-                            <TextBlock Text="Gesellschaftliche Talente" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <Grid >
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <DataGrid Grid.Column="1" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding GesellschaftTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                                        <DataGrid.Columns>
-                                        	<DataGridTemplateColumn>                                                
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expGesellschaft" IsExpanded="True" Margin="0,5,0,0">
+                            <Expander.Header>
+                                <TextBlock Text="Gesellschaftliche Talente" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                            <DataGrid.InputBindings>
+                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                            </DataGrid.InputBindings>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding OnRemove}" >
+                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                    </DataGridTemplateColumn.Header>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                            <Image.ToolTip>
+                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                            </Image.ToolTip>
+                                        </Image>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </Expander>
-                    <Expander x:Name="expNatur" IsExpanded="True" Margin="0,5,0,0">
-                        <Expander.Header>
-                            <TextBlock Text="Natur-Talente" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <Grid >
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expNatur" IsExpanded="True" Margin="0,5,0,0">
+                            <Expander.Header>
+                                <TextBlock Text="Natur-Talente" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
 
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <DataGrid Grid.Column="1" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding NaturTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                                        <DataGrid.Columns>
-                                        	<DataGridTemplateColumn>                                                
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                            <DataGrid.InputBindings>
+                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                            </DataGrid.InputBindings>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding OnRemove}" >
+                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                    </DataGridTemplateColumn.Header>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                            <Image.ToolTip>
+                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                            </Image.ToolTip>
+                                        </Image>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </Expander>
-                    <Expander x:Name="expWissen" IsExpanded="True" Margin="0,5,0,0">
-                        <Expander.Header>
-                            <TextBlock Text="Wissenstalente" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <Grid>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expWissen" IsExpanded="True" Margin="0,5,0,0">
+                            <Expander.Header>
+                                <TextBlock Text="Wissenstalente" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding WissenTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                                        <DataGrid.Columns>
-                                        	<DataGridTemplateColumn>                                                
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding SelectedTalentListeItem}" SelectedItem="{Binding WissenTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                            <DataGrid.InputBindings>
+                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                            </DataGrid.InputBindings>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding OnRemove}" >
+                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                    </DataGridTemplateColumn.Header>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                            <Image.ToolTip>
+                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                            </Image.ToolTip>
+                                        </Image>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </Expander>
-                    <Expander x:Name="expSprache" IsExpanded="True" Margin="0,5,0,0">
-                        <Expander.Header>
-                            <TextBlock Text="Sprachen und Schriften" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <Grid>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expSprache" IsExpanded="True" Margin="0,5,0,0">
+                            <Expander.Header>
+                                <TextBlock Text="Sprachen und Schriften" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <DataGrid Grid.Column="1" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SpracheTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                            <DataGrid.InputBindings>
+                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                            </DataGrid.InputBindings>
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Button Command="{Binding OnRemove}" >
+                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                    </DataGridTemplateColumn.Header>
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                    <DataGridTextColumn.Header>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                    </DataGridTextColumn.Header>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                            <Image.ToolTip>
+                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                            </Image.ToolTip>
+                                        </Image>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expHandwerk" Margin="0,5,0,0" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Handwerkstalente" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid >
+                                    <DataGrid ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </DataGrid.InputBindings>
                                         <DataGrid.Columns>
-                                        	<DataGridTemplateColumn>                                                
+                                            <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
+                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                        </Button>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -802,264 +925,195 @@
                                         </Image.ToolTip>
                                     </Image>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </Expander>
-                    <Expander x:Name="expHandwerk" Margin="0,5,0,0" IsExpanded="True">
-                        <Expander.Header>
-                            <TextBlock Text="Handwerkstalente" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                    	<Border Style="{DynamicResource ControlContentBorder}">
-                    		<Grid >                                
-                    			<DataGrid ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding HandwerkTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                    				<DataGrid.Columns>
-                    					<DataGridTemplateColumn>                                                
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expGaben" Margin="0,5,0,0" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Gaben" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid >
+                                    <DataGrid ItemsSource="{Binding GabenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </DataGrid.InputBindings>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
+                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                        </Button>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTemplateColumn>
-                    						<DataGridTemplateColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                    						</DataGridTemplateColumn.Header>
-                    						<DataGridTemplateColumn.CellTemplate>
-                    							<DataTemplate>
-                    								<MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    							</DataTemplate>
-                    						</DataGridTemplateColumn.CellTemplate>
-                    					</DataGridTemplateColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    				</DataGrid.Columns>
-                    			</DataGrid>
-                    			<Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                    				<Image.ToolTip>
-                    					<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                    				</Image.ToolTip>
-                    			</Image>                                
-                    		</Grid>
-                    	</Border>
-                    </Expander>
-                    <Expander x:Name="expGaben" Margin="0,5,0,0" IsExpanded="True">
-                    	<Expander.Header>
-                    		<TextBlock Text="Gaben" Style="{DynamicResource TextTitel}" />
-                    	</Expander.Header>
-                    	<Border Style="{DynamicResource ControlContentBorder}">
-                    		<Grid >                                
-                    			<DataGrid ItemsSource="{Binding GabenTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                    				<DataGrid.Columns>
-                    					<DataGridTemplateColumn>                                                
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTemplateColumn>
-                    						<DataGridTemplateColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                    						</DataGridTemplateColumn.Header>
-                    						<DataGridTemplateColumn.CellTemplate>
-                    							<DataTemplate>
-                    								<MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    							</DataTemplate>
-                    						</DataGridTemplateColumn.CellTemplate>
-                    					</DataGridTemplateColumn>                    					                    					
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    				</DataGrid.Columns>
-                    			</DataGrid>
-                    			<Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                    				<Image.ToolTip>
-                    					<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                    				</Image.ToolTip>
-                    			</Image>                                
-                    		</Grid>
-                    	</Border>
-                    </Expander>
-                    <Expander x:Name="expRituale" Margin="0,5,0,0" IsExpanded="True">
-                    	<Expander.Header>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image.ToolTip>
+                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                        </Image.ToolTip>
+                                    </Image>
+                                </Grid>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expRituale" Margin="0,5,0,0" IsExpanded="True">
+                            <Expander.Header>
                                 <TextBlock Text="Ritualkenntnisse" Style="{DynamicResource TextTitel}" />
-                    	</Expander.Header>
-                    	<Border Style="{DynamicResource ControlContentBorder}">
-                    		<Grid >                                
-                    			<DataGrid ItemsSource="{Binding RitualeTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                    				<DataGrid.Columns>
-                    					<DataGridTemplateColumn>                                                
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid >
+                                    <DataGrid ItemsSource="{Binding RitualeTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </DataGrid.InputBindings>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
+                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                        </Button>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>                    					                    					
-                    					<DataGridTemplateColumn>
-                    						<DataGridTemplateColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                    						</DataGridTemplateColumn.Header>
-                    						<DataGridTemplateColumn.CellTemplate>
-                    							<DataTemplate>
-                    								<MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    							</DataTemplate>
-                    						</DataGridTemplateColumn.CellTemplate>
-                    					</DataGridTemplateColumn>                    					                    					
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    				</DataGrid.Columns>
-                    			</DataGrid>
-                    			<Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                    				<Image.ToolTip>
-                    					<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                    				</Image.ToolTip>
-                    			</Image>                                
-                    		</Grid>
-                    	</Border>
-                    </Expander>
-                    <Expander x:Name="expLiturgie" Margin="0,5,0,0" IsExpanded="True">
-                    	<Expander.Header>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                </DataGridTemplateColumn.Header>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image.ToolTip>
+                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                        </Image.ToolTip>
+                                    </Image>
+                                </Grid>
+                            </Border>
+                        </Expander>
+                        <Expander x:Name="expLiturgie" Margin="0,5,0,0" IsExpanded="True">
+                            <Expander.Header>
                                 <TextBlock Text="Liturgiekenntnisse" Style="{DynamicResource TextTitel}" />
-                    	</Expander.Header>
-                    	<Border Style="{DynamicResource ControlContentBorder}">
-                    		<Grid >                                
-                    			<DataGrid ItemsSource="{Binding LiturgienTalentListe}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  PreviewKeyDown="_dataGridHeldTalente_PreviewKeyDown" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
-                    				<DataGrid.Columns>
-                    					<DataGridTemplateColumn>                                                
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <Grid >
+                                    <DataGrid ItemsSource="{Binding LiturgienTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </DataGrid.InputBindings>
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Command="{Binding OnRemove}" >
-                                                        	<Image Source="/Images/Icons/General/entf_01.png" Height="15" />                                  
-														</Button>
+                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
+                                                        </Button>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>                    					
-                    					<DataGridTemplateColumn>
-                    						<DataGridTemplateColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                    						</DataGridTemplateColumn.Header>
-                    						<DataGridTemplateColumn.CellTemplate>
-                    							<DataTemplate>
-                    								<MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    							</DataTemplate>
-                    						</DataGridTemplateColumn.CellTemplate>
-                    					</DataGridTemplateColumn>                    					                    					
-                    					<DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                    						<DataGridTextColumn.Header>
-                    							<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                    						</DataGridTextColumn.Header>
-                    					</DataGridTextColumn>
-                    				</DataGrid.Columns>
-                    			</DataGrid>
-                    			<Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
-                    				<Image.ToolTip>
-                    					<TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                    				</Image.ToolTip>
-                    			</Image>                                
-                    		</Grid>
-                    	</Border>
-                    </Expander>
-					</StackPanel>
-                </Grid>                
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
+                                                </DataGridTemplateColumn.Header>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image.ToolTip>
+                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                        </Image.ToolTip>
+                                    </Image>
+                                </Grid>
+                            </Border>
+                        </Expander>
+                    </StackPanel>
+                </Grid>
             </ScrollViewer>
         </Grid>
     </Grid>

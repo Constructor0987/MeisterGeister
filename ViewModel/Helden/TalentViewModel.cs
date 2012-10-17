@@ -7,6 +7,7 @@ using System.ComponentModel;
 //Eigene Usings
 using M = MeisterGeister.Model;
 using System.Collections.ObjectModel;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Helden {
     public class TalentViewModel : Base.ViewModelBase, Logic.IChangeListener {
@@ -14,6 +15,9 @@ namespace MeisterGeister.ViewModel.Helden {
         private bool listenToChangeEvents = true;
         public Base.CommandBase onAddTalent;
         public Base.CommandBase onRemoveTalent;
+        private Base.CommandBase onOpenWiki;
+        private Base.CommandBase onWürfelProbe;
+        private Base.CommandBase onWürfelGruppenProbe;
         private M.Held selectedHeld;
         private M.Talent talentAuswahl;        
         private List<Model.Talent> talentAuswahlListe = new List<Model.Talent>();
@@ -101,14 +105,38 @@ namespace MeisterGeister.ViewModel.Helden {
         }
         //Selection
         public Model.Held SelectedHeld { get { return selectedHeld; } set { selectedHeld = value; OnChanged("SelectedHeld"); } }
-        public M.Talent TalentAuswahl { get { return talentAuswahl; } set { talentAuswahl = value; OnChanged("TalentAuswahl"); } }        
+        public M.Talent TalentAuswahl { get { return talentAuswahl; } set { talentAuswahl = value; OnChanged("TalentAuswahl"); } }
+        TalentListeItem _selectedTalentListeItem = null;
+        public TalentListeItem SelectedTalentListeItem
+        {
+            get { return _selectedTalentListeItem; }
+            set { _selectedTalentListeItem = value; OnChanged("SelectedTalentListeItem"); }
+        }
         public Base.CommandBase OnAddTalent_Click { get { return onAddTalent; } }
-        public Base.CommandBase OnRemoveTalent_Click { get { return onRemoveTalent; } }
+        public Base.CommandBase OnRemove { get { return onRemoveTalent; } }
+        public Base.CommandBase OnOpenWiki
+        {
+            get { return onOpenWiki; }
+        }
+        public Base.CommandBase OnWürfelProbe
+        {
+            get { return onWürfelProbe; }
+        }
+        public Base.CommandBase OnWürfelGruppenProbe
+        {
+            get { return onWürfelGruppenProbe; }
+        }
         #endregion
         #region //KONSTRUKTOR
-        public TalentViewModel() {
+        public TalentViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
+            : base(popup, confirm, showProbeDialog, showError)
+        {
             onAddTalent = new Base.CommandBase(AddTalent, null);
             onRemoveTalent = new Base.CommandBase(RemoveTalent, null);
+            onOpenWiki = new Base.CommandBase(OpenWiki, null);
+            onWürfelProbe = new Base.CommandBase(WürfelProbe, null);
+            onWürfelGruppenProbe = new Base.CommandBase(WürfelGruppenProbe, null);
+
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
             SelectedHeld = Global.SelectedHeld;
         }
@@ -255,12 +283,38 @@ namespace MeisterGeister.ViewModel.Helden {
             }
         }
         void RemoveTalent(object sender) {
-            if (sender != null) {
-                SelectedHeld.Held_Talent.Remove((sender as TalentListeItem).HeldTalent);
+            M.Held_Talent h = null;
+            if (sender != null) // Aufruf durch 'TalentListeItem'
+                h = ((sender as TalentListeItem).HeldTalent);
+            else if (SelectedTalentListeItem != null) // Aufruf durch ContextMenu
+                h = SelectedTalentListeItem.HeldTalent;
+
+            if (h != null
+                && Confirm("Talent löschen", String.Format("Soll das Talent '{0}' wirklich vom Helden entfernt werden?", h.Talent.Name))
+                && Global.ContextHeld.Delete<Model.Held_Talent>(h))
+            {
                 SelectedHeldChanged();
-                TalentauswahlListe.Add((sender as TalentListeItem).Talent);
+                TalentauswahlListe.Add(h.Talent);
                 TalentAuswahl = null;
             }
+
+        }
+        private void OpenWiki(object sender)
+        {
+            if (SelectedTalentListeItem != null)
+                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedTalentListeItem.Talent.Name);
+        }
+
+        private void WürfelGruppenProbe(object obj)
+        {
+            if (SelectedTalentListeItem != null)
+                Global.WürfelGruppenProbe(SelectedTalentListeItem.HeldTalent);
+        }
+
+        private void WürfelProbe(object obj)
+        {
+            if (SelectedTalentListeItem != null)
+                ShowProbeDialog(SelectedTalentListeItem.HeldTalent, SelectedHeld);
         }
         #endregion
     }

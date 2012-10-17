@@ -61,15 +61,5 @@ namespace MeisterGeister.View.Helden.Controls
             _menuItemZauberProbe.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
         }
 
-        // TODO MT: Löschen, wenn auf neues Proben-Tool umgestellt
-        private void MenuItemZauberProbe_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO MT: Probe würfeln
-            //if (ProbeWürfeln != null)
-            //{
-            //    ProbeWürfeln(SelectedZauberRow.ZauberRow.Name);
-            //}
-        }
-
     }
 }
