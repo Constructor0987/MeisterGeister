@@ -47,7 +47,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private int AusdauerSchaden(int alt, int neu)
         {
             if (neu > alt)
-                return Würfel.Wurf(6, neu - alt); //WdS 83
+            {
+                // TODO ??: Dialog MVVM-konform aufrufen
+                return View.General.ViewHelper.ShowWürfelDialog((neu - alt) + "W6", "Ausdauer-Schaden durch Wunde"); //WdS 83
+            }
             return 0;
         }
 
@@ -113,8 +116,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         {
                             if (mehrAlsDreiWunden)
                             {
-                                //bewusstlos + blutverlust
-                                _held.LebensenergieAktuell -= Würfel.Wurf(6, 2); //eventuell per Dialog?
+                                // TODO ??: bewusstlos + blutverlust
+                                
+                                // TODO ??: Dialog MVVM-konform aufrufen
+                                _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog("2W6",
+                                    string.Format("SP durch {0}. Kopf-Wunde", value));
                             }
                         }
                         _held.WundenKopf = value;
@@ -123,10 +129,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     case Trefferzone.Brust:
                         if (value > _held.WundenBrust)
                         {
-                            _held.LebensenergieAktuell -= Würfel.Wurf(6, value - _held.WundenBrust ?? 0);
+                            // TODO ??: Dialog MVVM-konform aufrufen
+                            _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog( (value - _held.WundenBrust ?? 0) + "W6",
+                                string.Format("SP durch {0}. Brust-Wunde", value));
                             if (mehrAlsDreiWunden)
                             {
-                                //bewusstlos + blutverlust
+                                // TODO ??: bewusstlos + blutverlust
                             }
                         }
                         _held.WundenBrust = value;
@@ -136,7 +144,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         {
                             if (mehrAlsDreiWunden)
                             {
-                                //arm handlungsunfähig
+                                // TODO ??: arm handlungsunfähig
                             }
                         }
                         _held.WundenArmL = value;
@@ -146,7 +154,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         {
                             if (mehrAlsDreiWunden)
                             {
-                                //arm handlungsunfähig
+                                // TODO ??: arm handlungsunfähig
                             }
                         }
                         _held.WundenArmR = value;
@@ -154,10 +162,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     case Trefferzone.Bauch:
                         if (value > _held.WundenBauch)
                         {
-                            _held.LebensenergieAktuell -= Würfel.Wurf(6, value - _held.WundenBrust ?? 0);
+                            // TODO ??: Dialog MVVM-konform aufrufen
+                            _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog((value - _held.WundenBauch ?? 0) + "W6",
+                                string.Format("SP durch {0}. Bauch-Wunde", value));
                             if (mehrAlsDreiWunden)
                             {
-                                //bewusstlos + blutverlust
+                                // TODO ??: bewusstlos + blutverlust
                             }
                         }
                         _held.WundenBauch = value;
@@ -167,7 +177,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         {
                             if (mehrAlsDreiWunden)
                             {
-                                //sturz, kampfunfähig
+                                // TODO ??: sturz, kampfunfähig
                             }
                         }
                         _held.WundenBeinL = value;
@@ -177,7 +187,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         {
                             if (mehrAlsDreiWunden)
                             {
-                                //sturz, kampfunfähig
+                                // TODO ??: sturz, kampfunfähig
                             }
                         }
                         _held.WundenBeinR = value;
