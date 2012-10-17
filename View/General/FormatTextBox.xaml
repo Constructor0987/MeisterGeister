@@ -22,6 +22,11 @@
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal">
                                 <ComboBox Name="cbFontStyle" Margin="4,0,4,0"  MinWidth="200" Background="White" TabIndex="7" Height="24" ToolTip="Schriftart" SelectionChanged="cbFontStyle_SelectionChanged">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock FontFamily="{Binding}" Text="{Binding Source}" FontSize="13" />
