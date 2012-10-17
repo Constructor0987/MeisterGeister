@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.Model.Extensions;
@@ -22,6 +23,13 @@ namespace MeisterGeister.ViewModel.Proben
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
+
+        private Orientation _orientation = Orientation.Horizontal;
+        public Orientation Orientation
+        {
+            get { return _orientation; }
+            set { _orientation = value; OnChanged("Orientation"); }
+        }
 
         /// <summary>
         /// Bei 'true' wird das Abspielen des WürfelSounds unterbunden.

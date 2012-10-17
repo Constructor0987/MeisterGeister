@@ -71,7 +71,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="BoderContent" TargetType="{x:Type Border}" BasedOn="{StaticResource ControlContentBorder}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Ergebnis.Ergebnis}" Value="GELUNGEN">
@@ -105,7 +105,7 @@
         </Style>
     </UserControl.Resources>
     <Border Style="{DynamicResource BoderContent}" Padding="8,4,4,4">
-        <StackPanel Name="_layoutStackPanel" Orientation="{Binding ElementName=userControl, Mode=OneWay, Path=Orientation, FallbackValue=Horizontal}">
+        <StackPanel Name="_layoutStackPanel" Orientation="{Binding Orientation}">
 
             <Grid Width="180" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
@@ -207,7 +207,9 @@
                     <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" FontWeight="Bold"  />
                     <TextBlock Text="{Binding Probe.Fertigkeitswert}" FontWeight="Bold" Margin="5,0,0,0" />
                 </StackPanel>
+            </StackPanel>
 
+            <StackPanel Orientation="Horizontal">
                 <Grid VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition />

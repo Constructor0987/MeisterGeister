@@ -99,18 +99,13 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ProbeErgebnisListe}">
+                    <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             ItemsSource="{Binding ProbeErgebnisListe}" ItemsPanel="{Binding ProbeErgebnisListePanel}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
                                 <Setter Property="Focusable" Value="False"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
-                        <!-- TODO MT: Layout-Varianten einstellbar machen (Zeile und Kachel) -->
-                        <!--<ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Border Margin="5">
@@ -123,6 +118,7 @@
                     </ListBox>
 
                     <StackPanel Grid.Column="1"  Orientation="Vertical" Margin="5">
+                        <ComboBox Margin="2" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}" />
                         <TextBlock Text="TODO: Sortierung" />
                         <TextBlock Text="TODO: Anzeige-Option" />
                         <TextBlock Text="TODO: SendToSpielerWindow" />

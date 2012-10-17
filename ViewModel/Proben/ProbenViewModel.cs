@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.Model.Extensions;
@@ -63,6 +64,55 @@ namespace MeisterGeister.ViewModel.Proben
                 _selectedFilterItem = value;
                 FilterProbeListe();
                 OnChanged("SelectedFilterItem");
+            }
+        }
+
+        private string _selectedAnzeigeModus = "Zeile";
+        public string SelectedAnzeigeModus
+        {
+            get { return _selectedAnzeigeModus; }
+            set
+            {
+                _selectedAnzeigeModus = value;
+                Orientation or = (value == "Zeile") ? Orientation.Horizontal : Orientation.Vertical;
+                foreach (var item in ProbeErgebnisListe)
+                    item.Orientation = or;
+                OnChanged("SelectedAnzeigeModus");
+                ProbeErgebnisListePanel = CreatePanelTemplate(or);
+            }
+        }
+
+        private ItemsPanelTemplate _probeErgebnisListePanel = null;
+        public ItemsPanelTemplate ProbeErgebnisListePanel
+        {
+            get 
+            { 
+                if (_probeErgebnisListePanel == null)
+                    _probeErgebnisListePanel = CreatePanelTemplate(Orientation.Horizontal);
+                return _probeErgebnisListePanel; 
+            }
+            set
+            {
+                _probeErgebnisListePanel = value;
+                OnChanged("ProbeErgebnisListePanel");
+            }
+        }
+
+        private ItemsPanelTemplate CreatePanelTemplate(Orientation or)
+        {
+            if (or == Orientation.Horizontal)
+            { // ListBox
+                System.Windows.FrameworkElementFactory factory =
+                    new System.Windows.FrameworkElementFactory(typeof(VirtualizingStackPanel));
+                factory.SetValue(VirtualizingStackPanel.OrientationProperty, Orientation.Vertical);
+                return new ItemsPanelTemplate(factory);
+            }
+            else
+            { // WrapPanel
+                System.Windows.FrameworkElementFactory factory =
+                    new System.Windows.FrameworkElementFactory(typeof(WrapPanel));
+                //factory.SetValue(WrapPanel.OrientationProperty, Orientation.Horizontal);
+                return new ItemsPanelTemplate(factory);
             }
         }
 
@@ -128,6 +178,13 @@ namespace MeisterGeister.ViewModel.Proben
         {
             get { return _filterListe; }
             set { _filterListe = value; FilterProbeListe(); OnChanged("FilterListe"); }
+        }
+
+        List<string> _anzeigeModusListe = new List<string>() { "Zeile", "Kachel" };
+        public List<string> AnzeigeModusListe
+        {
+            get { return _anzeigeModusListe; }
+            set { _anzeigeModusListe = value; OnChanged("AnzeigeModusListe"); }
         }
 
         #endregion

@@ -66,7 +66,16 @@ namespace MeisterGeister.View.Proben
         }
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
           "Orientation", typeof(Orientation), typeof(ProbeControl),
-                new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnOrientationChanged)));
+
+        private static void OnOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ProbeControl control = (ProbeControl)d;
+            if (control.VM == null)
+                control.VM = new VM.ProbeControlViewModel();
+            if (e.NewValue is Orientation)
+                control.VM.Orientation = (Orientation)e.NewValue;
+        }
 
         #endregion //---- DEPENDENCY PROPERTIES ----
 
