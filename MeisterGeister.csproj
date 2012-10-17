@@ -150,7 +150,6 @@
     <Compile Include="Daten\SqlCeUpgrade.cs" />
     <Compile Include="Logic\Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
-    <Compile Include="ViewModel\Proben\Logic\IProbenname.cs" />
     <Compile Include="Logic\General\Literatur.cs" />
     <Compile Include="Logic\General\Probe.cs" />
     <Compile Include="Logic\General\RandomNumberGenerator.cs" />

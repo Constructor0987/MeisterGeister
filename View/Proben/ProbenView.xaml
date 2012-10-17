@@ -74,7 +74,7 @@
                         </CheckBox.Content>
                     </CheckBox>
 
-                    <TextBlock Grid.Row="1" Grid.ColumnSpan="6" Text="TODO: Filter funktionsfähig machen; Proben-Favoriten" />
+                    <TextBlock Grid.Row="1" Grid.ColumnSpan="6" Text="TODO: Proben-Favoriten" />
 
                 </Grid>
             </Border>
