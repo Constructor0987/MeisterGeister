@@ -273,7 +273,7 @@
                     </Grid>
                 </Border>
             </Expander>
-            <Expander IsExpanded="False" Grid.Row="1">
+            <Expander IsExpanded="True" Grid.Row="1">
                 <Expander.Header>
                     <TextBlock Text="Angriffe" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -284,7 +284,8 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="129*"></ColumnDefinition>
+                            <ColumnDefinition Width="242*"/>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <!-- SelectedGegnerBase.GegnerBase_Angriff, AngriffAddName (als Prompt?), Add und Delete Commands, SelectedAngriff,
@@ -294,11 +295,11 @@
                         <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
                         <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                         -->
-                        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding AngriffAddName}"/>
-                        <Button Grid.Row="0" Grid.Column="1"  Height="23" Width="25" ToolTip="Neuer Angriff" Command="{Binding OnNewAngriff}">
+                        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding AngriffAddName}" Grid.ColumnSpan="2"/>
+                        <Button Grid.Row="0" Grid.Column="2"  Height="23" Width="25" ToolTip="Neuer Angriff" Command="{Binding OnNewAngriff}">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                         </Button>
-                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding AngriffListe}" SelectedItem="{Binding SelectedAngriff}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000">
+                        <DataGrid Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding AngriffListe}" SelectedItem="{Binding SelectedAngriff}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000">
                             <DataGrid.InputBindings>
                                 <KeyBinding Key="Delete" Command="{Binding OnDeleteAngriff}" />
                             </DataGrid.InputBindings>
