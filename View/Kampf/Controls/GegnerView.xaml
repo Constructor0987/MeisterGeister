@@ -172,10 +172,11 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <!-- Name, AE, AU, Bemerkung, Beschwörung, Beschwörungskosten, Bild, GS, GS2, GS3, GW, INIBasis, INIZufall, Jagd, KE, KO, Kontrolle, LE, Literatur, MRGeist, MRKörper, PA, RSx, Setting, Tags, Aktionen  -->
-                            <Border   Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="5" Width="80" Height="80" ToolTip="Klicken um ein Bild einzufügen..." Cursor="Hand">
+                            <Border   Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="5" Width="80" Height="80" ToolTip="Klicken um ein Bild einzufügen..." Cursor="Hand">
                                 <Image>
                                     <Image.Source>
                                         <Binding Path="SelectedGegnerBase.Bild" IsAsync="True" Mode="OneWay">
@@ -198,6 +199,8 @@
                             <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
                             <!-- TODO AutoComplete für Tags -->
                             <TextBox Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags}" Margin="2" />
+                            <Label   Grid.Row="2" Grid.Column="1" Content="Bemerkung:" />
+                            <TextBox Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Bemerkung}" Margin="2" />
                         </Grid>
                         <Grid Margin="5,0,5,5" Grid.Row="1">
                             <Grid.ColumnDefinitions>
