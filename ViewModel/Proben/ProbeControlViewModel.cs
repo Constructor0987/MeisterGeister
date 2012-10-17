@@ -339,7 +339,7 @@ namespace MeisterGeister.ViewModel.Proben
         {
             int wurf = 0;
             if (Int32.TryParse(obj.ToString(), out wurf))
-                Wurf = wurf;
+                Wurf = (wurf == 0) ? Würfel.Wurf(20) : wurf; // bei Wurf=0 wird gewürfelt
             ContextMenuIsOpen = false;
         }
 
