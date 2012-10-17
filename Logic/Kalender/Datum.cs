@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.Settings;
 
 namespace MeisterGeister.Logic.Kalender
 {
@@ -10,30 +11,19 @@ namespace MeisterGeister.Logic.Kalender
     /// </summary>
     public class Datum
     {
+        private static Datum _aktuell = null;
         public static Datum Aktuell
         {
             get
             {
-                if (App.DatenDataSet == null || App.DatenDataSet.Einstellungen == null)
-                    return new Datum();
-                var row = App.DatenDataSet.Einstellungen.FindByName("DatumAktuell");
-                if (row == null || row.IsWertStringNull())
-                    return new Datum();
-                return new Datum(row.WertString);
+                if (_aktuell == null)
+                    _aktuell = new Datum(Einstellungen.DatumAktuell);
+                return _aktuell;
             }
             set
             {
-                if (App.DatenDataSet != null && App.DatenDataSet.Einstellungen != null)
-                {
-                    var row = App.DatenDataSet.Einstellungen.FindByName("DatumAktuell");
-                    if (row != null)
-                    {
-                        if (row.IsWertStringNull())
-                            row.WertString = value.ToString();
-                        else if (row.WertString != value.ToString())
-                            row.WertString = value.ToString();
-                    }
-                }
+                _aktuell = value;
+                Einstellungen.DatumAktuell = value.ToString();
             }
         }
 

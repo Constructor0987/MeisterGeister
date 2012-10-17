@@ -398,13 +398,6 @@
                             <RadioButton Content="{Binding Path=Content, ElementName=_radioButtonAktion1}" Height="16" Margin="2,6,4,0" IsChecked="{Binding Path=IsChecked, ElementName=_radioButtonAktion1}" />
                             <RadioButton Content="{Binding Path=Content, ElementName=_radioButtonAktion2}" Height="16" Margin="2,6,0,0" IsChecked="{Binding Path=IsChecked, ElementName=_radioButtonAktion2}" />
                         </StackPanel>
-                        <StackPanel Name="_stackPanelAktionen" Grid.ColumnSpan="2" Grid.Row="8" Margin="6,0,0,0" Orientation="Horizontal" Visibility="Visible">
-                            <Button Margin="6" Name="_buttonAttacke" Padding="3" Content="AT" ToolTip="Attacke" Click="ButtonAttacke_Click" />
-                            <Button Margin="6" Name="_buttonOrientieren" Padding="3" Content="Orientieren" ToolTip="Orientieren" Click="ButtonOrientieren_Click" />
-                        </StackPanel>
-                        <StackPanel Name="_stackPanelAktionen2" Grid.ColumnSpan="2" Grid.Row="9" Margin="6,0,0,0" Orientation="Horizontal">
-                            <Button Margin="6" Padding="3" Content="Kriegskunst" Name="_buttonKriegskunstProbe" Click="ButtonKriegskunstProbe_Click" ToolTip="Kriegskunst-Probe würfeln." />
-                        </StackPanel>
                     </Grid>
                     </Border>
                 </ScrollViewer>

@@ -90,11 +90,10 @@ namespace MeisterGeister.View.Arena
             _enemyAdder.Items.Add("Gegner hinzufügen");
             _enemyAdder.SelectedIndex = 0;
 
-            MeisterGeister.Daten.DatabaseDSADataSet.BestiariumRow[] bestieRows = (MeisterGeister.Daten.DatabaseDSADataSet.BestiariumRow[])App.DatenDataSet.Bestiarium.Select("", "Name ASC");
-
-            foreach (MeisterGeister.Daten.DatabaseDSADataSet.BestiariumRow bestieRow in bestieRows) {
-                _enemyAdder.Items.Add(new CreatureNameIdPair(bestieRow.Name, bestieRow.BestiariumID));
-                 _arenaViewer.AddGegnerPortrait(bestieRow.Name);
+            foreach (var item in Global.ContextHeld.Liste<Model.GegnerBase>().OrderBy(h => h.Name).ToList())
+            {
+                _enemyAdder.Items.Add(new CreatureNameIdPair(item.Name, item.GegnerBaseGUID));
+                _arenaViewer.AddGegnerPortrait(item.Name, item.Bild);
             } 
 
         }
@@ -116,11 +115,10 @@ namespace MeisterGeister.View.Arena
             _heroAdder.Items.Add("Held hinzufügen");
             _heroAdder.SelectedIndex = 0;
 
-            MeisterGeister.Daten.DatabaseDSADataSet.HeldRow[] heldRows = (MeisterGeister.Daten.DatabaseDSADataSet.HeldRow[])App.DatenDataSet.Held.Select("AktiveHeldengruppe = true", "Name ASC");
-
-            foreach (MeisterGeister.Daten.DatabaseDSADataSet.HeldRow heldRow in heldRows) {
-                _heroAdder.Items.Add(new CreatureNameIdPair(heldRow.Name, heldRow.HeldGUID));
-                _arenaViewer.AddHeldPortrait(heldRow.HeldGUID, heldRow.BildLink);
+            foreach (var item in Global.ContextHeld.HeldenGruppeListe)
+	        {
+                _heroAdder.Items.Add(new CreatureNameIdPair(item.Name, item.HeldGUID));
+                _arenaViewer.AddHeldPortrait(item.HeldGUID, item.BildLink);
             }            
         }
         
@@ -241,12 +239,6 @@ namespace MeisterGeister.View.Arena
             public CreatureNameIdPair(String heldName, Guid heldId) {
                 _name = heldName;
                 _id = heldId;
-            }
-
-            public CreatureNameIdPair(String heldName, int bestieId)
-            {
-                _name = heldName;
-                _id = Guid.Parse("00000000-0000-0000-0000-" + bestieId.ToString().PadLeft(12, '0'));
             }
 
             public String Name {

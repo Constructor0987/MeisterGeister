@@ -37,13 +37,5 @@ namespace MeisterGeister.Logic.General
         public const string SpätweiheNamenloser = "Spätweihe Namenloser";
         public const string SpätweiheDunkleZeiten = "Spätweihe Dunkle Zeiten";
 
-
-        public static int GetSonderfertigkeitId(string sonderfertigkeit)
-        {
-            var sonderfertigkeitRows = App.DatenDataSet.Sonderfertigkeit.Select(string.Format("Name = '{0}'", sonderfertigkeit.Replace("'", "''")));
-            if (sonderfertigkeitRows.Length == 1)
-                return Convert.ToInt32(sonderfertigkeitRows[0]["SonderfertigkeitID"]);
-            return -1;
-        }
     }
 }

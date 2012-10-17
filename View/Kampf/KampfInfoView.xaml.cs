@@ -19,7 +19,7 @@ namespace MeisterGeister.View.Kampf
     /// </summary>
     public partial class KampfInfoView : UserControl
     {
-        public KampfInfoView(MeisterGeister.ViewModel.Kampf.LogicAlt.Kampf kampf)
+        public KampfInfoView(ViewModel.Kampf.Logic.Kampf kampf)
         {
             InitializeComponent();
             this.DataContext = kampf;

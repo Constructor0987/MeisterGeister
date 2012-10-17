@@ -142,9 +142,6 @@ namespace MeisterGeister {
             InitializeComponent();
 
             try {
-                // Einstellungen aus Datenbank laden
-                LoadEinstellungenFromDatabase();
-
                 // Jingle abspielen
 #if !(NO_JINGLE)
                 if (!Einstellungen.JingleAbstellen)
@@ -161,50 +158,7 @@ namespace MeisterGeister {
             LoadDataFromDatabase();
         }
 
-        private void LoadEinstellungenFromDatabase() {
-            // Dataset und TableAdapter erzeugen
-            DatenDataSet = ((Daten.DatabaseDSADataSet)(FindResource("DatenDataSet")));
-            DatenDataSetTableAdapters = new Daten.DatabaseDSADataSetTableAdapters.TableAdapterManager();
-            DatenDataSetTableAdapters.EinstellungenTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.EinstellungenTableAdapter();
-
-            // Daten aus der Datenbank laden
-            if (DatenDataSet != null) {
-                DatenDataSetTableAdapters.EinstellungenTableAdapter.Fill(DatenDataSet.Einstellungen);
-            }
-        }
-
         private void LoadDataFromDatabase() {
-            // TableAdapter erzeugen
-            DatenDataSetTableAdapters.TalentgruppeTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.TalentgruppeTableAdapter();
-            DatenDataSetTableAdapters.TalentTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.TalentTableAdapter();
-            DatenDataSetTableAdapters.ZauberTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.ZauberTableAdapter();
-            DatenDataSetTableAdapters.SonderfertigkeitTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.SonderfertigkeitTableAdapter();
-            DatenDataSetTableAdapters.HeldTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.HeldTableAdapter();
-            DatenDataSetTableAdapters.Held_TalentTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.Held_TalentTableAdapter();
-            DatenDataSetTableAdapters.Held_ZauberTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.Held_ZauberTableAdapter();
-            DatenDataSetTableAdapters.Held_SonderfertigkeitTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.Held_SonderfertigkeitTableAdapter();
-            DatenDataSetTableAdapters.VorNachteilTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.VorNachteilTableAdapter();
-            DatenDataSetTableAdapters.Held_VorNachteilTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.Held_VorNachteilTableAdapter();
-            DatenDataSetTableAdapters.BestiariumTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.BestiariumTableAdapter();
-            DatenDataSetTableAdapters.EinstellungenTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.EinstellungenTableAdapter();
-            DatenDataSetTableAdapters.NameTableAdapter = new Daten.DatabaseDSADataSetTableAdapters.NameTableAdapter();
-
-            // Daten aus der Datenbank laden
-            if (DatenDataSet != null) {
-                DatenDataSetTableAdapters.TalentgruppeTableAdapter.Fill(DatenDataSet.Talentgruppe);
-                DatenDataSetTableAdapters.TalentTableAdapter.Fill(DatenDataSet.Talent);
-                DatenDataSetTableAdapters.ZauberTableAdapter.Fill(DatenDataSet.Zauber);
-                DatenDataSetTableAdapters.SonderfertigkeitTableAdapter.Fill(DatenDataSet.Sonderfertigkeit);
-                DatenDataSetTableAdapters.HeldTableAdapter.Fill(DatenDataSet.Held);
-                DatenDataSetTableAdapters.Held_TalentTableAdapter.Fill(DatenDataSet.Held_Talent);
-                DatenDataSetTableAdapters.Held_ZauberTableAdapter.Fill(DatenDataSet.Held_Zauber);
-                DatenDataSetTableAdapters.Held_SonderfertigkeitTableAdapter.Fill(DatenDataSet.Held_Sonderfertigkeit);
-                DatenDataSetTableAdapters.VorNachteilTableAdapter.Fill(DatenDataSet.VorNachteil);
-                DatenDataSetTableAdapters.Held_VorNachteilTableAdapter.Fill(DatenDataSet.Held_VorNachteil);
-                DatenDataSetTableAdapters.BestiariumTableAdapter.Fill(DatenDataSet.Bestiarium);
-                DatenDataSetTableAdapters.EinstellungenTableAdapter.Fill(DatenDataSet.Einstellungen);
-            }
-
             //DW 2012-01-24: Globale-Klasse mit allen Daten wird initialisiert
             Global.Init();
         }
@@ -218,37 +172,16 @@ namespace MeisterGeister {
             return true;
         }
 
-        public static DatabaseDSADataSet DatenDataSet { get; set; }
-        public static Daten.DatabaseDSADataSetTableAdapters.TableAdapterManager DatenDataSetTableAdapters { get; set; }
-
         public static void SaveHelden() {
-            // Änderungen in Datenbank speichern
-            DatenDataSetTableAdapters.HeldTableAdapter.Update(DatenDataSet.Held);
-            DatenDataSetTableAdapters.Held_TalentTableAdapter.Update(DatenDataSet.Held_Talent);
-            DatenDataSetTableAdapters.Held_SonderfertigkeitTableAdapter.Update(DatenDataSet.Held_Sonderfertigkeit);
-            DatenDataSetTableAdapters.Held_VorNachteilTableAdapter.Update(DatenDataSet.Held_VorNachteil);
-            DatenDataSetTableAdapters.Held_ZauberTableAdapter.Update(DatenDataSet.Held_Zauber);
-
             //Wenn Helden gespeichert werden, werden sie für die neue Struktur neu geladen
             Global.ContextHeld.UpdateList<Model.Held>();
         }
 
-        public static void SaveGegner() {
-            // Änderungen in Datenbank speichern
-            DatenDataSetTableAdapters.BestiariumTableAdapter.Update(DatenDataSet.Bestiarium);
-
-            // Neu laden
-            DatenDataSetTableAdapters.BestiariumTableAdapter.ClearBeforeFill = true;
-            DatenDataSetTableAdapters.BestiariumTableAdapter.Fill(DatenDataSet.Bestiarium);
-        }
-
         public static void SaveAll() {
             // Änderungen in Datenbank speichern
-            if (DatenDataSetTableAdapters != null && DatenDataSet != null && DatenDataSet.HasChanges() && Global.IsInitialized) {
+            if (Global.IsInitialized) {
                 try {
                     Global.ContextHeld.Save();
-                    DatenDataSetTableAdapters.UpdateAll(DatenDataSet);
-                    //DatenDataSet.AcceptChanges();
                 } catch (Exception ex) {
                     MsgWindow errWin = new MsgWindow("Fehler beim Speichern der Datenbank", "Beim Speichern der Datenbank ist ein Fehler aufgetreten!", ex);
                     errWin.ShowDialog();

@@ -145,35 +145,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Daten\DatabaseDSADataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseDSADataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Daten\DatabaseTools.cs" />
     <Compile Include="Daten\DatabaseUpdate.cs" />
     <Compile Include="Daten\SqlCeUpgrade.cs" />
     <Compile Include="Logic\Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
-    <Compile Include="Logic\General\Eigenschaft.cs" />
-    <Compile Include="Logic\General\Eigenschaften.cs" />
-    <Compile Include="Logic\General\Held.cs" />
-    <Compile Include="Logic\General\HeldKampfTalent.cs" />
-    <Compile Include="Logic\General\HeldWaffeWert.cs" />
-    <Compile Include="Logic\General\IProbe.cs" />
     <Compile Include="Logic\General\Literatur.cs" />
     <Compile Include="Logic\General\Probe.cs" />
-    <Compile Include="Logic\General\ProbenErgebnis.cs" />
     <Compile Include="Logic\General\RandomNumberGenerator.cs" />
     <Compile Include="Logic\General\Repräsentationen.cs" />
     <Compile Include="Logic\General\Sonderfertigkeit.cs" />
-    <Compile Include="Logic\General\Talent.cs" />
     <Compile Include="Logic\General\TalentTypen.cs" />
-    <Compile Include="Logic\General\VorNachteil.cs" />
     <Compile Include="Logic\General\Würfel.cs" />
-    <Compile Include="Logic\General\Zauber.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
-    <Compile Include="Logic\NSC\NscGenerator.cs" />
     <Compile Include="Logic\Würfel\Parser.cs" />
     <Compile Include="Logic\Würfel\ParseTree.cs" />
     <Compile Include="Logic\Würfel\Scanner.cs" />
@@ -588,9 +572,6 @@
     <Compile Include="View\Arena\CreateNewArenaWindow.xaml.cs">
       <DependentUpon>CreateNewArenaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Kampf\KämpferWindow.xaml.cs">
-      <DependentUpon>KämpferWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\SpielerScreen\SpielerWindow.xaml.cs">
       <DependentUpon>SpielerWindow.xaml</DependentUpon>
     </Compile>
@@ -636,11 +617,7 @@
     <Compile Include="Logic\Kalender\DsaTool\MathUtil.cs" />
     <Compile Include="Logic\Kalender\DsaTool\Season.cs" />
     <Compile Include="Logic\Kalender\Woche.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\Aktion.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\Manöver.cs" />
     <Compile Include="Logic\Kalender\Feiertag.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\Trefferzone.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\TrefferzoneEnum.cs" />
     <Compile Include="Logic\Kalender\Kalender.cs" />
     <Compile Include="Logic\Kalender\Monat.cs" />
     <Compile Include="Logic\Kalender\WochentagEnum.cs" />
@@ -653,23 +630,16 @@
     <Compile Include="View\Windows\EinstellungenWindow.xaml.cs">
       <DependentUpon>EinstellungenWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Kampf\LogicAlt\Gegner.cs" />
     <Compile Include="View\Windows\MsgWindow.xaml.cs">
       <DependentUpon>MsgWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Kampf\LogicAlt\Kampf.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\KampfAktion.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\KampfAktionListe.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\KämpferList.cs" />
     <Compile Include="View\General\WürfelControl.xaml.cs">
       <DependentUpon>WürfelControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Kampf\LogicAlt\IKämpfer.cs" />
     <Compile Include="Logic\Settings\Regeln.cs" />
-    <Compile Include="ViewModel\Kampf\LogicAlt\Wesen.cs" />
     <Compile Include="View\Windows\InputWindow.xaml.cs">
       <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
@@ -933,10 +903,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Kampf\KämpferWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\SpielerScreen\SpielerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1015,17 +981,6 @@
       <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Daten\DatabaseDSADataSet.xsc">
-      <DependentUpon>DatabaseDSADataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Daten\DatabaseDSADataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>DatabaseDSADataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Daten\DatabaseDSADataSet.xss">
-      <DependentUpon>DatabaseDSADataSet.xsd</DependentUpon>
-    </None>
     <EntityDeploy Include="Model\MeisterGeisterModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MeisterGeisterModel.Designer.cs</LastGenOutput>
@@ -1188,7 +1143,6 @@
     <Content Include="Libs\ImpromptuInterface.dll" />
     <Content Include="Libs\DG-Suche.dll" />
     <Resource Include="Images\Icons\General\kreise.png" />
-    <Resource Include="Images\Wesen\crow.png" />
     <Resource Include="Images\Wesen\question_mark_portrait.jpg" />
     <Resource Include="Images\Logos\facebook.png" />
     <Resource Include="Images\Logos\twitter.png" />

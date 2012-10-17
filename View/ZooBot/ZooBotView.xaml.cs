@@ -16,7 +16,6 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Daten;
 using MeisterGeister.View.Windows;
 using MeisterGeister.Logic.Kalender;
-using MeisterGeister.LogicAlt.General;
 
 namespace MeisterGeister.View.ZooBot
 {

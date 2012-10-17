@@ -400,12 +400,13 @@ namespace MeisterGeister.View.Arena
             }
         }
 
-        public void AddGegnerPortrait(string bestiarumName) {
+        public void AddGegnerPortrait(string bestiarumName, string portraitFilename)
+        {
 
             string filename = getBestiarumBildLink(bestiarumName);
             if (filename != null){
                 try {
-                    _gegnerNameHasPortrait[bestiarumName] = LoadImage(new Uri(@ArenaWindow.CREATURE_IMAGE_DIR + filename, UriKind.Relative));
+                    _gegnerNameHasPortrait[bestiarumName] = LoadImage(new Uri(portraitFilename, UriKind.Absolute));
                 }
                 catch {
                     _gegnerNameHasPortrait[bestiarumName] = LoadImage(new Uri(@ArenaWindow.CREATURE_IMAGE_DIR + "question_mark_portrait.jpg", UriKind.Relative));

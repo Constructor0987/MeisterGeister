@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 // Eigene Usings
-using LogicAlt = MeisterGeister.ViewModel.Kampf.LogicAlt;
 using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic

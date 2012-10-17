@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 using MeisterGeister.Daten;
 // Eigene Usings
 using MeisterGeister.Logic.General;
-using MeisterGeister.LogicAlt.General;
 using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.View.ArtGen

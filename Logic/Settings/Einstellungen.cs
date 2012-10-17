@@ -154,6 +154,18 @@ namespace MeisterGeister.Logic.Settings
             }
         }
 
+        public static string DatumAktuell
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("DatumAktuell", "1|0|993|0");
+            }
+            set
+            {
+                SetEinstellung<string>("DatumAktuell", value);
+            }
+        }
+
         public static string UmrechnerExpandedSections
         {
             get
@@ -165,7 +177,7 @@ namespace MeisterGeister.Logic.Settings
                 SetEinstellung<string>("UmrechnerExpandedSections", value);
             }
         }
-
+        
         public static string Standort
         {
             get

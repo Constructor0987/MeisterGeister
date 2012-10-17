@@ -5,7 +5,6 @@ using System.Text;
 // Eigene Usings
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel.Kampf.Logic;
-using LogicAlt = MeisterGeister.ViewModel.Kampf.LogicAlt;
 using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using System.ComponentModel;

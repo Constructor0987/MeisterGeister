@@ -8,8 +8,7 @@ using System.Collections.Generic;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.View.Arena;
-using MeisterGeister.ViewModel.Kampf.LogicAlt;
-using MeisterGeister.LogicAlt.General;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -21,72 +20,44 @@ namespace MeisterGeister.View.Kampf
         public KampfView()
         {
             InitializeComponent();
-            _listBoxKämpfer.DataContext = _kampf.KämpferListe;
-            _listBoxAktionen.ItemsSource = _kampf.AktionenListe;
+            _listBoxKämpfer.DataContext = _kampf.Kämpfer;
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
 
-            _kampf.NächsterKämpferRollover += NächsterKämpferRollover_EventHandler;
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_kampf.NächsterKämpferRollover += NächsterKämpferRollover_EventHandler;
 
-            _comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
-            _comboBoxTrefferzone.SelectedIndex = 0;
-
-#if !(DEBUG)
-            _stackPanelAktionIn.Visibility = Visibility.Collapsed;
-            _stackPanelAktionen.Visibility = Visibility.Collapsed;
-            _buttonKriegskunstProbe.Visibility = Visibility.Collapsed;
-#endif
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
+            //_comboBoxTrefferzone.SelectedIndex = 0;
         }
 
-        private MeisterGeister.ViewModel.Kampf.LogicAlt.Kampf _kampf = new MeisterGeister.ViewModel.Kampf.LogicAlt.Kampf();
+        private ViewModel.Kampf.Logic.Kampf _kampf = new ViewModel.Kampf.Logic.Kampf();
 
-        public MeisterGeister.ViewModel.Kampf.LogicAlt.Kampf Kampf
+        public ViewModel.Kampf.Logic.Kampf Kampf
         {
             get { return _kampf; }
         }
 
         public void HeldenEinfügen()
         {
-            foreach (DatabaseDSADataSet.HeldRow heldRow in App.DatenDataSet.Held)
+            foreach (Model.Held held in Global.ContextHeld.HeldenGruppeListe)
             {
-                if (heldRow.AktiveHeldengruppe)
-                {
-                    Held h = _kampf.AddHeld(heldRow);
-                    h.ProbeWürfelnEvent += WesenProbeWürfeln_Event;
-                }
+                _kampf.Kämpfer.Add(held);
             }
             SortKämpfer();
         }
 
-        public LogicAlt.General.ProbenErgebnis WesenProbeWürfeln_Event(Wesen wesen, IProbe probe, string aktion)
-        {
-            int wert = 0;
-            if (wesen is Held)
-            {
-                wert = ((Held)wesen).Eigenschaft(probe.Name);
-            }
-            LogicAlt.General.ProbenErgebnis pErgebnis = new LogicAlt.General.ProbenErgebnis();
-            if (MessageBox.Show(string.Format("{0}: {1}-Probe ({2}).\nGelungen?", aktion, probe.Name,
-                wert), wesen.Name,
-                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                pErgebnis.Gelungen = true;
-            }
-            else
-            {
-                pErgebnis.Gelungen = false;
-            }
-
-            return pErgebnis;
-        }
-
         public void ClearKämpferListe()
         {
-            _kampf.KämpferListe.Clear();
+            _kampf.Kämpfer.Clear();
             SortKämpfer();
         }
 
         private IKämpfer _selectedKämpfer;
 
-        private KampfAktion _selectedAktion;
+        // TODO ??: Umstellen auf neues Kampf-Model
+        //private KampfAktion _selectedAktion;
 
         private void ListBoxKämpfer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -95,9 +66,10 @@ namespace MeisterGeister.View.Kampf
             if (_listBoxKämpfer.SelectedItem != null && _listBoxKämpfer.SelectedItem is IKämpfer)
             {
                 _selectedKämpfer = (IKämpfer)_listBoxKämpfer.SelectedItem;
-                _textBoxAktionQuelle.Text = _selectedKämpfer.Kurzname;
-                _radioButtonAktion1.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative);
-                _radioButtonAktion2.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative - 8);
+                _textBoxAktionQuelle.Text = _selectedKämpfer.Name;
+                // TODO ??: Umstellen auf neues Kampf-Model
+                //_radioButtonAktion1.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative);
+                //_radioButtonAktion2.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative - 8);
             }
             else
             {
@@ -161,21 +133,22 @@ namespace MeisterGeister.View.Kampf
             if (MessageBox.Show("Soll der Kämpfer entfernt werden?", "Kämpfer entfernen", MessageBoxButton.YesNo,
                                 MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
             {
-                _kampf.KämpferListe.Remove(_selectedKämpfer);
+                _kampf.Kämpfer.Remove(_selectedKämpfer);
                 SortKämpfer();
             }
         }
 
         private void InitiativeSenken()
         {
-            _selectedKämpfer.InitiativeMod--;
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_selectedKämpfer.InitiativeMod--;
             SortKämpfer();
             RefreshAktionen();
         }
 
         public void SortKämpfer()
         {
-            _kampf.KämpferListe.Sort();
+            _kampf.Kämpfer.Sort();
             _listBoxKämpfer.Items.Refresh();
 
             // Liste im Spieler-Info-Fenster aktualisieren
@@ -190,7 +163,8 @@ namespace MeisterGeister.View.Kampf
 
         private void InitiativeErhöhen()
         {
-            _selectedKämpfer.InitiativeMod++;
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_selectedKämpfer.InitiativeMod++;
             SortKämpfer();
             RefreshAktionen();
         }
@@ -216,8 +190,9 @@ namespace MeisterGeister.View.Kampf
         private void SetKampfrunde()
         {
             _textBlockKampfrunde.Text = _kampf.Kampfrunde.ToString();
-            _textBlockKampfZeit.Text = _kampf.KampfZeit.ToString();
-            _kampf.AktionenListe.Sort();
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_textBlockKampfZeit.Text = _kampf.KampfZeit.ToString();
+            //_kampf.AktionenListe.Sort();
             SortKämpfer();
             RefreshAktionen();
         }
@@ -227,22 +202,13 @@ namespace MeisterGeister.View.Kampf
             if (MessageBox.Show("Soll ein neuer Kampf gestartet werden?", "Neuer Kampf", MessageBoxButton.YesNo)
                 == MessageBoxResult.Yes)
             {
-                _kampf.NeuerKampf();
+                _kampf.KampfEnde();
                 _buttonNeueKR.Content = "Starten";
-                _listBoxKämpfer.DataContext = _kampf.KämpferListe;
-                _listBoxAktionen.ItemsSource = _kampf.AktionenListe;
+                _listBoxKämpfer.DataContext = _kampf.Kämpfer;
+                // TODO ??: Umstellen auf neues Kampf-Model
+                //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
                 SetKampfrunde();
                 SortKämpfer();
-            }
-        }
-
-        public event ProbeWürfelnEventHandler ProbeWürfeln;
-
-        private void ButtonKriegskunstProbe_Click(object sender, RoutedEventArgs e)
-        {
-            if (ProbeWürfeln != null)
-            {
-                ProbeWürfeln("Kriegskunst");
             }
         }
 
@@ -253,37 +219,39 @@ namespace MeisterGeister.View.Kampf
 
         private void AddAktion()
         {
-            Aktion ak = Aktion.Aktion1;
-            if (_radioButtonAktion1.IsChecked == true)
-            {
-                ak = Aktion.Aktion1;
-            }
-            else if (_radioButtonAktion2.IsChecked == true)
-            {
-                ak = Aktion.Aktion2;
-            }
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //Aktion ak = Aktion.Aktion1;
+            //if (_radioButtonAktion1.IsChecked == true)
+            //{
+            //    ak = Aktion.Aktion1;
+            //}
+            //else if (_radioButtonAktion2.IsChecked == true)
+            //{
+            //    ak = Aktion.Aktion2;
+            //}
 
-            _kampf.AddAktion(_textBoxAktionQuelle.Text, _textBoxAktionName.Text,
-                           _intBoxAktionDauer.Value ?? 0, _selectedKämpfer, ak);
+            //_kampf.AddAktion(_textBoxAktionQuelle.Text, _textBoxAktionName.Text,
+            //               _intBoxAktionDauer.Value ?? 0, _selectedKämpfer, ak);
 
-            SortKämpfer();
-            RefreshAktionen();
+            //SortKämpfer();
+            //RefreshAktionen();
         }
 
         private void ListBoxAktionen_KeyUp(object sender, KeyEventArgs e)
         {
-            if (_selectedAktion != null)
-            {
-                switch (e.Key)
-                {
-                    // Aktion löschen
-                    case Key.Delete:
-                        AktionEntfernen();
-                        break;
-                    default:
-                        break;
-                }
-            }
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //if (_selectedAktion != null)
+            //{
+            //    switch (e.Key)
+            //    {
+            //        // Aktion löschen
+            //        case Key.Delete:
+            //            AktionEntfernen();
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
         }
 
         private void AktionEntfernen()
@@ -291,9 +259,10 @@ namespace MeisterGeister.View.Kampf
             if (MessageBox.Show("Soll die Aktion entfernt werden?", "Aktion entfernen", MessageBoxButton.YesNo,
                     MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
             {
-                _kampf.AktionenListe.Remove(_selectedAktion);
-                if (_selectedAktion.Kämpfer != null)
-                    _selectedAktion.Kämpfer.AktionenLaufend.Remove(_selectedAktion);
+                // TODO ??: Umstellen auf neues Kampf-Model
+                //_kampf.AktionenListe.Remove(_selectedAktion);
+                //if (_selectedAktion.Kämpfer != null)
+                //    _selectedAktion.Kämpfer.AktionenLaufend.Remove(_selectedAktion);
                 SortKämpfer();
                 RefreshAktionen();
             }
@@ -301,19 +270,21 @@ namespace MeisterGeister.View.Kampf
 
         private void ListBoxAktionen_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_listBoxAktionen.SelectedItem != null && _listBoxAktionen.SelectedItem is KampfAktion)
-            {
-                _selectedAktion = (KampfAktion)_listBoxAktionen.SelectedItem;
-            }
-            else
-            {
-                _selectedAktion = null;
-            }
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //if (_listBoxAktionen.SelectedItem != null && _listBoxAktionen.SelectedItem is KampfAktion)
+            //{
+            //    _selectedAktion = (KampfAktion)_listBoxAktionen.SelectedItem;
+            //}
+            //else
+            //{
+            //    _selectedAktion = null;
+            //}
         }
 
         private void WürfelControlInitiative_WürfelGeändert(uint ergebnis)
         {
-            _selectedKämpfer.InitiativeWurf = ergebnis;
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_selectedKämpfer.InitiativeWurf = ergebnis;
             SortKämpfer();
             RefreshAktionen();
         }
@@ -322,8 +293,9 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.Schadenspunkte(_intBoxSchaden.Value ?? 0, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
-                    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
+                // TODO ??: Umstellen auf neues Kampf-Model
+                //_selectedKämpfer.Schadenspunkte(_intBoxSchaden.Value ?? 0, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                //    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
             }
         }
@@ -346,73 +318,44 @@ namespace MeisterGeister.View.Kampf
             }
         }
 
-        private void ButtonAttacke_Click(object sender, RoutedEventArgs e)
-        {
-            if (_selectedKämpfer != null)
-            {
-                _kampf.AddAktion(_selectedKämpfer.Name, "Attacke", 1, _selectedKämpfer, GetAktion());
-
-                SortKämpfer();
-                RefreshAktionen();
-            }
-        }
-
-        private void ButtonOrientieren_Click(object sender, RoutedEventArgs e)
-        {
-            if (_selectedKämpfer != null)
-            {
-                int dauer = 2;
-                if (_selectedKämpfer is Wesen)
-                {
-                    if (((Wesen)_selectedKämpfer).HatAufmerksamkeit
-                        && ((Wesen)_selectedKämpfer).HatVoraussetzungenAufmerksamkeit)
-                    {
-                        dauer = 1;
-                    }
-                }
-                _kampf.AddAktion(_selectedKämpfer.Name, "Orientieren", dauer, _selectedKämpfer, GetAktion(),
-                               _selectedKämpfer.Orientieren);
-
-                SortKämpfer();
-                RefreshAktionen();
-            }
-        }
-
-        private Aktion GetAktion()
-        {
-            Aktion ak = Aktion.Aktion1;
-            if (_radioButtonAktion1.IsChecked == true)
-            {
-                ak = Aktion.Aktion1;
-            }
-            else if (_radioButtonAktion2.IsChecked == true)
-            {
-                ak = Aktion.Aktion2;
-            }
-            return ak;
-        }
+        // TODO ??: Umstellen auf neues Kampf-Model
+        //private Aktion GetAktion()
+        //{
+        //    Aktion ak = Aktion.Aktion1;
+        //    if (_radioButtonAktion1.IsChecked == true)
+        //    {
+        //        ak = Aktion.Aktion1;
+        //    }
+        //    else if (_radioButtonAktion2.IsChecked == true)
+        //    {
+        //        ak = Aktion.Aktion2;
+        //    }
+        //    return ak;
+        //}
 
         private void ButtonTrefferpunkte_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.Trefferpunkte(_intBoxSchaden.Value ?? 0, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
-                    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
+                // TODO ??: Umstellen auf neues Kampf-Model
+                //_selectedKämpfer.Trefferpunkte(_intBoxSchaden.Value ?? 0, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                //    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
             }
         }
 
         private void ListBoxAktionen_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (_selectedAktion != null)
-            {
-                _selectedAktion.AktionAusführen();
-                _kampf.AktionenListe.Remove(_selectedAktion);
-                if (_selectedAktion.Kämpfer != null)
-                    _selectedAktion.Kämpfer.AktionenLaufend.Remove(_selectedAktion);
-                SortKämpfer();
-                RefreshAktionen();
-            }
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //if (_selectedAktion != null)
+            //{
+            //    _selectedAktion.AktionAusführen();
+            //    _kampf.AktionenListe.Remove(_selectedAktion);
+            //    if (_selectedAktion.Kämpfer != null)
+            //        _selectedAktion.Kämpfer.AktionenLaufend.Remove(_selectedAktion);
+            //    SortKämpfer();
+            //    RefreshAktionen();
+            //}
         }
 
         private void ListBoxKämpfer_MouseDown(object sender, MouseButtonEventArgs e)
@@ -484,28 +427,30 @@ namespace MeisterGeister.View.Kampf
 
         private void MenuItemAktionListeLeeren_Click(object sender, RoutedEventArgs e)
         {
-            _kampf.RemoveAktionenAll();
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_kampf.RemoveAktionenAll();
             SortKämpfer();
             RefreshAktionen();
         }
 
         private void MenuItemHandleAktionAlt_Click(object sender, RoutedEventArgs e)
         {
-            List<KampfAktion> aktionenRemove = new List<KampfAktion>();
-            foreach (KampfAktion aktion in _kampf.AktionenListe)
-            {
-                if (aktion.Vorbei)
-                {
-                    aktion.AktionAusführen();
-                    aktionenRemove.Add(aktion);
-                }
-            }
-            foreach (KampfAktion aktion in aktionenRemove)
-            {
-                _kampf.AktionenListe.Remove(aktion);
-                if (aktion.Kämpfer != null)
-                    aktion.Kämpfer.AktionenLaufend.Remove(aktion);
-            }
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //List<KampfAktion> aktionenRemove = new List<KampfAktion>();
+            //foreach (KampfAktion aktion in _kampf.AktionenListe)
+            //{
+            //    if (aktion.Vorbei)
+            //    {
+            //        aktion.AktionAusführen();
+            //        aktionenRemove.Add(aktion);
+            //    }
+            //}
+            //foreach (KampfAktion aktion in aktionenRemove)
+            //{
+            //    _kampf.AktionenListe.Remove(aktion);
+            //    if (aktion.Kämpfer != null)
+            //        aktion.Kämpfer.AktionenLaufend.Remove(aktion);
+            //}
             SortKämpfer();
             RefreshAktionen();
         }
@@ -551,8 +496,9 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.SchadenspunkteAusdauer(_intBoxSchaden.Value ?? 0, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
-                    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
+                // TODO ??: Umstellen auf neues Kampf-Model
+                //_selectedKämpfer.SchadenspunkteAusdauer(_intBoxSchaden.Value ?? 0, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                //    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
                 SetAusdauer();
             }
@@ -562,8 +508,9 @@ namespace MeisterGeister.View.Kampf
         {
             if (_selectedKämpfer != null)
             {
-                _selectedKämpfer.TrefferpunkteAusdauer(_intBoxSchaden.Value ?? 0, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
-                    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
+                // TODO ??: Umstellen auf neues Kampf-Model
+                //_selectedKämpfer.TrefferpunkteAusdauer(_intBoxSchaden.Value ?? 0, (bool)_checkBoxAusdauerSchadenLeAbziehen.IsChecked, Trefferzone.GetTrefferzoneEnum(_comboBoxTrefferzone.SelectedValue.ToString()), 
+                //    (bool)_radioButtonWundschwelleGesenkt.IsChecked, (bool)_radioButtonWundeKeine.IsChecked);
                 SetLebensenergie();
                 SetAusdauer();
             }
@@ -571,13 +518,14 @@ namespace MeisterGeister.View.Kampf
 
         private void ButtonNächsterKämpfer_Click(object sender, RoutedEventArgs e)
         {
-            _kampf.NächsterKämpfer();
+            _kampf.Next();
             ListBoxKämpfer_FocusItem();
         }
 
         private void ListBoxKämpfer_FocusItem()
         {
-            _listBoxKämpfer.SelectedItem = _kampf.AktuellerKämpfer;
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_listBoxKämpfer.SelectedItem = _kampf.AktuellerKämpfer;
             _listBoxKämpfer.ScrollIntoView(_listBoxKämpfer.SelectedItem);
         }
 
@@ -599,7 +547,8 @@ namespace MeisterGeister.View.Kampf
             switch (res)
             {
                 case MessageBoxResult.Cancel:
-                    _kampf.VorherigerKämpfer();
+                    // TODO ??: Umstellen auf neues Kampf-Model    
+                //_kampf.VorherigerKämpfer();
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -613,15 +562,18 @@ namespace MeisterGeister.View.Kampf
 
         private void MenuItemKämpferFarbmarkierung_Click(object sender, RoutedEventArgs e)
         {
-            _selectedKämpfer.Farbmarkierung = ((MenuItem)sender).Background;
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_selectedKämpfer.Farbmarkierung = ((MenuItem)sender).Background;
         }
 
         private void MenuItemKämpferAktuell_Click(object sender, RoutedEventArgs e)
         {
-            _kampf.NächsterKämpfer(_selectedKämpfer);
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //_kampf.NächsterKämpfer(_selectedKämpfer);
         }
 
-        private KämpferWindow _kämpferGui;
+        // TODO ??: Umstellen auf neues Kampf-Model
+        //private GegnerWindow _kämpferGui;
 
         private void GegnerExpander_Expanded(object sender, RoutedEventArgs e)
         {
@@ -631,17 +583,17 @@ namespace MeisterGeister.View.Kampf
 
         private void ShowKämpferVerwaltung()
         {
-            if (_kämpferGui == null || _kämpferGui.IsVisible == false)
-                _kämpferGui = new KämpferWindow(this);
-            _kämpferGui.Owner = App.Current.MainWindow;
-            _kämpferGui.Show();
+            // TODO ??: Umstellen auf neues Kampf-Model
+            //if (_kämpferGui == null || _kämpferGui.IsVisible == false)
+            //    _kämpferGui = new GegnerWindow(this);
+            //_kämpferGui.Owner = App.Current.MainWindow;
+            //_kämpferGui.Show();
         }
 
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
-            // TODO ??: Neue Kampf-Klasse verwenden
-            // hier wird ein leerer Kampf übergeben, bis das neue Model verwendet wird
-            ViewModel.Kampf.Logic.Kampf k = new ViewModel.Kampf.Logic.Kampf();
+            // TODO ??: Umstellen auf neues Kampf-Model
+            ViewModel.Kampf.Logic.Kampf k = _kampf;
             ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
             arenaWindow.Width = 1200;
             arenaWindow.Height = 800;
