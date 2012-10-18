@@ -402,6 +402,12 @@
     <Compile Include="View\AresPlayer\AresPlayerView.xaml.cs">
       <DependentUpon>AresPlayerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\AudioTheme.xaml.cs">
+      <DependentUpon>AudioTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
+      <DependentUpon>SliderRange.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\DereGlobusLinkControl.xaml.cs">
       <DependentUpon>DereGlobusLinkControl.xaml</DependentUpon>
     </Compile>
@@ -723,6 +729,14 @@
     <Page Include="View\AresPlayer\AresPlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AudioPlayer\AudioTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\SliderRange.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\General\DereGlobusLinkControl.xaml">
       <SubType>Designer</SubType>
@@ -1132,6 +1146,9 @@
     <Resource Include="Images\Icons\General\kachel.png" />
     <Resource Include="Images\Icons\General\zeile.png" />
     <Resource Include="Images\Icons\General\entf_all.png" />
+    <Resource Include="Images\Icons\General\shuffle.png" />
+    <Resource Include="Images\Icons\General\pause_grau.png" />
+    <Resource Include="Images\Icons\General\play_grau.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
