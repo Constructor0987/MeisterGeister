@@ -28,7 +28,9 @@ namespace MeisterGeister.Model
         private void SetDefaultValues()
         {
             Name = "Alrik";
-            AktiveHeldengruppe = false;
+            AktiveHeldengruppe = true;
+            MU = 8; KL = 8; IN = 8; CH = 8; FF = 8; GE = 8; KO = 8; KK = 8;
+            LE_Aktuell = 12; AU_Aktuell = 12;
         }
 
         #region IInitializable
