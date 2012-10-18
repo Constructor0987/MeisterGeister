@@ -34,6 +34,14 @@ namespace MeisterGeister.Model
             }
         }
 
+        override public string WerteNamen
+        {
+            get
+            {
+                return string.Format("({0}/{1}/{2})", Eigenschaft1, Eigenschaft2, Eigenschaft3);
+            }
+        }
+
         #endregion //---- PROBE ----
 
         public List<string> Talentspezialisierungen(Held h)
@@ -56,6 +64,23 @@ namespace MeisterGeister.Model
         public bool IsMetaTalent
         {
             get { return TalentgruppeID == 8; }
+        }
+
+        public string GetWikiLink()
+        {
+            if (!string.IsNullOrEmpty(WikiLink))
+                return WikiLink.Replace(" ", "_");
+            if (Talentname.StartsWith("Lesen/Schreiben"))
+                return Talentname.Replace("Lesen/Schreiben (", "").TrimEnd(')').Replace(" ", "_");
+            if (Talentname.StartsWith("Sprachen Kennen"))
+                return Talentname.Replace("Sprachen Kennen (", "").TrimEnd(')').Replace(" ", "_");
+            if (Talentname.StartsWith("Nahrung Sammeln"))
+                return "Nahrung Sammeln";
+            if (Talentname.StartsWith("Pirschjagd"))
+                return "Pirschjagd";
+            if (Talentname.StartsWith("Ansitzjagd"))
+                return "Ansitzjagd";
+            return Talentname.Replace(" ", "_");
         }
     }
 }

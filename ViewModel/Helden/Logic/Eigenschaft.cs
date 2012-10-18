@@ -47,6 +47,8 @@ namespace MeisterGeister.ViewModel.Helden.Logic
 
         public string Abkürzung { get; set; }
 
+        public string Literatur { get { return "WdS 6"; } }
+
         #endregion //---- EIGENSCHAFTEN & FELDER ----
 
         #region //---- STATIC ----

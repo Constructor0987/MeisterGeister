@@ -59,6 +59,16 @@ namespace MeisterGeister.Model
             }
         }
 
+        override public string WerteNamen
+        {
+            get
+            {
+                if (Zauber != null)
+                    return string.Format("({0}/{1}/{2})", Zauber.Eigenschaft1, Zauber.Eigenschaft2, Zauber.Eigenschaft3);
+                return string.Empty;
+            }
+        }
+
         #endregion //---- PROBE ----
         
     }

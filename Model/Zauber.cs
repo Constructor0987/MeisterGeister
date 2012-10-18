@@ -33,6 +33,14 @@ namespace MeisterGeister.Model
             }
         }
 
+        override public string WerteNamen
+        {
+            get
+            {
+                return string.Format("({0}/{1}/{2})", Eigenschaft1, Eigenschaft2, Eigenschaft3);
+            }
+        }
+
         #endregion //---- PROBE ----
 
         private const int maxid = 360;

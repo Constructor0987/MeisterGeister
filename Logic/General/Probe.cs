@@ -45,7 +45,7 @@ namespace MeisterGeister.Logic.General
         {
             get
             {
-                if (this is Model.Talent
+                if (this is Model.Talent || this is MetaTalent
                     || this is Model.Held_Talent)
                     return "TaW";
                 else if (this is Model.Zauber
@@ -59,7 +59,7 @@ namespace MeisterGeister.Logic.General
         {
             get
             {
-                if (this is Model.Talent
+                if (this is Model.Talent || this is MetaTalent
                     || this is Model.Held_Talent)
                     return "TaP";
                 else if (this is Model.Zauber
@@ -68,6 +68,8 @@ namespace MeisterGeister.Logic.General
                 return "Punkte";
             }
         }
+
+        virtual public string WerteNamen { get { return string.Empty; } }
 
         public double Erfolgschance {
             get

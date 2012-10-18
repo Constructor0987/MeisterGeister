@@ -32,6 +32,16 @@ namespace MeisterGeister.Logic.General
             }
         }
 
+        override public string WerteNamen 
+        { 
+            get 
+            {
+                if (Talent != null)
+                    return string.Format("({0}/{1}/{2})", Talent.Eigenschaft1, Talent.Eigenschaft2, Talent.Eigenschaft3);
+                return string.Empty;
+            }
+        }
+
         #endregion //---- PROBE ----
 
         public int? TaW { get; set; }

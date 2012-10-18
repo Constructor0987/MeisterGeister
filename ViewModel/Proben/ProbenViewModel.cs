@@ -21,6 +21,31 @@ namespace MeisterGeister.ViewModel.Proben
             get { return onWürfeln; }
         }
 
+        private Base.CommandBase onOpenWiki = null;
+        public Base.CommandBase OnOpenWiki
+        {
+            get
+            {
+                if (onOpenWiki == null)
+                    onOpenWiki = new Base.CommandBase(OpenWiki, null);
+                return onOpenWiki;
+            }
+        }
+        private void OpenWiki(object sender)
+        {
+            if (SelectedProbe != null)
+            {
+                string wikiLink = string.Empty;
+                if (SelectedProbe is Model.Talent)
+                    wikiLink = (SelectedProbe as Model.Talent).GetWikiLink();
+                else if (SelectedProbe is Model.Zauber)
+                    wikiLink = (SelectedProbe as Model.Zauber).Name;
+                else
+                    wikiLink = SelectedProbe.Probenname;
+                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + wikiLink);
+            }
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
