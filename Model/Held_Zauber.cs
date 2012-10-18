@@ -13,8 +13,12 @@ namespace MeisterGeister.Model
         [DependentProperty("Zauber")]
         override public string Probenname
         {
-            get { return Zauber.Name; }
-            set { Zauber.Name = value; }
+            get { return Zauber != null ? Zauber.Name : string.Empty; }
+            set
+            {
+                if (Zauber != null)
+                    Zauber.Name = value;
+            }
 
         }
 

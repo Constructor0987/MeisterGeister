@@ -61,6 +61,12 @@
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
 							</MenuItem.Icon>
 						</MenuItem>
+                        <Separator />
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!">
+                            <MenuItem.Icon>
+                                <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
+                            </MenuItem.Icon>
+                        </MenuItem>
 						<Separator />
                         <MenuItem Height="28" Command="{Binding OnCloneHeld}" Header="Kopieren" x:Name="_menuItemHeldKopie" ToolTip="Held kopieren.">
 							<MenuItem.Icon>
@@ -99,7 +105,7 @@
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
 							</MenuItem.Icon>
 						</MenuItem>
-					</ContextMenu>
+                    </ContextMenu>
 				</ListBox.ContextMenu>				
 			</ListBox>
 			<Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
@@ -139,6 +145,12 @@
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
 							</MenuItem.Icon>
 						</MenuItem>
+                        <Separator />
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!">
+                            <MenuItem.Icon>
+                                <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
+                            </MenuItem.Icon>
+                        </MenuItem>
 					</ContextMenu>
 				</Button.ContextMenu>
 				<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />

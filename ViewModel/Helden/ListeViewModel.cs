@@ -131,6 +131,36 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
+        private Base.CommandBase onDeleteHeldAll = null;
+        public Base.CommandBase OnDeleteHeldAll
+        {
+            get
+            {
+                if (onDeleteHeldAll == null)
+                    onDeleteHeldAll = new Base.CommandBase(DeleteHeldAll, null);
+                return onDeleteHeldAll;
+            }
+        }
+
+        private void DeleteHeldAll(object sender)
+        {
+            if (Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.Count)))
+            {
+                Global.SetIsBusy(true);
+
+                Held[] deleteList = new Held[Global.ContextHeld.Liste<Held>().Count];
+                Global.ContextHeld.Liste<Held>().CopyTo(deleteList);
+                foreach (Held h in deleteList)
+                    Global.ContextHeld.Delete<Held>(h);
+
+                //Liste aktualisieren
+                LoadDaten();
+                SelectedHeld = null;
+
+                Global.SetIsBusy(false);
+            }
+        }
+
         private Base.CommandBase onExportHeld = null;
         public Base.CommandBase OnExportHeld
         {

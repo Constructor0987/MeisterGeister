@@ -61,6 +61,8 @@ namespace MeisterGeister.Logic.General
         public static List<Probe> GetMetaTalentListe(Talent talent, Held held)
         {
             List<Probe> talentListe = new List<Probe>();
+            if (talent == null)
+                return talentListe;
 
             if (talent.Talentname == "Kräuter Suchen" || talent.Talentname == "Nahrung Sammeln (Wildnis)")
             {

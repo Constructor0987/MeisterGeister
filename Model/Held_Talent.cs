@@ -14,8 +14,12 @@ namespace MeisterGeister.Model
         [DependentProperty("Talent")]
         override public string Probenname
         {
-            get { return Talent.Talentname; }
-            set { Talent.Talentname = value; }
+            get { return Talent != null ? Talent.Talentname : string.Empty; }
+            set 
+            { 
+                if (Talent != null)
+                    Talent.Talentname = value; 
+            }
         }
 
         override public int[] Werte
