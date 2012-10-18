@@ -14,6 +14,8 @@ namespace MeisterGeister.Model
         override public string Probenname
         {
             get { return Name; }
+            set { Name = value; }
+
         }
 
         override public int[] Werte

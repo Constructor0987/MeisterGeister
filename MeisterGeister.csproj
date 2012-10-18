@@ -151,6 +151,7 @@
     <Compile Include="Logic\Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\Literatur.cs" />
+    <Compile Include="Logic\General\MetaTalent.cs" />
     <Compile Include="Logic\General\Probe.cs" />
     <Compile Include="Logic\General\RandomNumberGenerator.cs" />
     <Compile Include="Logic\General\Repräsentationen.cs" />

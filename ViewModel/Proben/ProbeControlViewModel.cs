@@ -173,6 +173,8 @@ namespace MeisterGeister.ViewModel.Proben
                     talent = Probe as Model.Talent;
                 else if (Probe is Model.Held_Talent)
                     talent = (Probe as Model.Held_Talent).Talent;
+                else if (Probe is MetaTalent)
+                    talent = (Probe as MetaTalent).Talent;
                 else if (Probe is Model.Zauber)
                     zauber = Probe as Model.Zauber;
                 else if (Probe is Model.Held_Zauber)

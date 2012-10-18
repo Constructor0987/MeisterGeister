@@ -113,12 +113,10 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal">
-                    <TextBlock ToolTip="{Binding Probe.Probenname, StringFormat='/{0/}-Probe'}" TextTrimming="CharacterEllipsis">
-                        <TextBlock Text="{Binding Probe.Probenname}" FontStyle="Italic" />
-                        <TextBlock Text="-Probe" />
-                    </TextBlock>
-                </StackPanel>
+                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" ToolTip="{Binding Probe.Probenname, StringFormat=\{0\}-Probe}" TextTrimming="CharacterEllipsis">
+                    <Run Text="{Binding Probe.Probenname}" FontStyle="Italic" />
+                    <Run Text="-Probe" />
+                </TextBlock>
             </Grid>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">

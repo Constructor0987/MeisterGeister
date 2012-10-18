@@ -687,7 +687,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding SelectedTalentListeItem}" SelectedItem="{Binding WissenTalent}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
                                             <DataGrid.InputBindings>
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>

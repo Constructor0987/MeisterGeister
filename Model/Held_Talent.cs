@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Held_Talent : MeisterGeister.Logic.General.Probe
+    public partial class Held_Talent : Probe
     {
         #region //---- PROBE ----
 
@@ -14,6 +15,7 @@ namespace MeisterGeister.Model
         override public string Probenname
         {
             get { return Talent.Talentname; }
+            set { Talent.Talentname = value; }
         }
 
         override public int[] Werte
@@ -54,5 +56,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion //---- PROBE ----
+
     }
 }

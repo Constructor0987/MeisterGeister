@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Talent : MeisterGeister.Logic.General.Probe
+    public partial class Talent : Probe
     {
         #region //---- PROBE ----
 
@@ -15,6 +16,7 @@ namespace MeisterGeister.Model
         override public string Probenname
         {
             get { return Talentname; }
+            set { Talentname = value; }
         }
 
         override public int[] Werte
@@ -49,6 +51,11 @@ namespace MeisterGeister.Model
         {
             Regex regex = new Regex(talentname + " \\((.+)\\)");
             return regex.Replace(wert, "$1");
+        }
+
+        public bool IsMetaTalent
+        {
+            get { return TalentgruppeID == 8; }
         }
     }
 }

@@ -317,7 +317,15 @@ namespace MeisterGeister.ViewModel.Proben
                 vm.Orientation = SelectedAnzeigeOrientation;
                 vm.Held = item;
                 if (SelectedProbe is Model.Talent)
-                    vm.Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+                {
+                    if ((SelectedProbe as Model.Talent).IsMetaTalent) // Meta-Talent
+                    {
+                        MetaTalent mt = new MetaTalent((SelectedProbe as Model.Talent), item);
+                        vm.Probe = mt.Aktiviert ? mt : null;
+                    }
+                    else
+                        vm.Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+                }
                 else if (SelectedProbe is Model.Zauber)
                     vm.Probe = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).FirstOrDefault();
                 else if (SelectedProbe is Eigenschaft)

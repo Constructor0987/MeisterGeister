@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace MeisterGeister.Logic.General
 {
@@ -278,6 +279,7 @@ namespace MeisterGeister.Logic.General
                 (w2 == 20) && (w3 == 20) ||
                 (w1 == 20) && (w3 == 20);
         }
+
     }
     
 
