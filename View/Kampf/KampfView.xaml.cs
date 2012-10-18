@@ -9,6 +9,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.View.Arena;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using VM = MeisterGeister.ViewModel.Kampf;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -20,7 +21,7 @@ namespace MeisterGeister.View.Kampf
         public KampfView()
         {
             InitializeComponent();
-            _listBoxKämpfer.DataContext = _kampf.Kämpfer;
+            //_listBoxKämpfer.DataContext = _kampf.Kämpfer;
             // TODO ??: Umstellen auf neues Kampf-Model
             //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
 
@@ -30,6 +31,21 @@ namespace MeisterGeister.View.Kampf
             // TODO ??: Umstellen auf neues Kampf-Model
             //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
             //_comboBoxTrefferzone.SelectedIndex = 0;
+            VM = new VM.KampfViewModel();
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.KampfViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.KampfViewModel))
+                    return null;
+                return DataContext as VM.KampfViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private ViewModel.Kampf.Logic.Kampf _kampf = new ViewModel.Kampf.Logic.Kampf();
@@ -105,9 +121,9 @@ namespace MeisterGeister.View.Kampf
                 switch (e.Key)
                 {
                     // Kämpfer löschen
-                    case Key.Delete:
-                        KämpferEntfernen();
-                        break;
+                    //case Key.Delete:
+                    //    KämpferEntfernen();
+                    //    break;
                     // Initiative erhöhen
                     case Key.OemPlus:
                         InitiativeErhöhen();
@@ -204,7 +220,7 @@ namespace MeisterGeister.View.Kampf
             {
                 _kampf.KampfEnde();
                 _buttonNeueKR.Content = "Starten";
-                _listBoxKämpfer.DataContext = _kampf.Kämpfer;
+                //_listBoxKämpfer.DataContext = _kampf.Kämpfer;
                 // TODO ??: Umstellen auf neues Kampf-Model
                 //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
                 SetKampfrunde();
@@ -389,10 +405,10 @@ namespace MeisterGeister.View.Kampf
             KämpferEntfernen();
         }
 
-        private void MenuItemHeldenEinfügen_Click(object sender, RoutedEventArgs e)
-        {
-            HeldenEinfügen();
-        }
+        //private void MenuItemHeldenEinfügen_Click(object sender, RoutedEventArgs e)
+        //{
+        //    HeldenEinfügen();
+        //}
 
         private void MenuItemKämpferEinfügen_Click(object sender, RoutedEventArgs e)
         {
@@ -526,7 +542,7 @@ namespace MeisterGeister.View.Kampf
         {
             // TODO ??: Umstellen auf neues Kampf-Model
             //_listBoxKämpfer.SelectedItem = _kampf.AktuellerKämpfer;
-            _listBoxKämpfer.ScrollIntoView(_listBoxKämpfer.SelectedItem);
+            //_listBoxKämpfer.ScrollIntoView(_listBoxKämpfer.SelectedItem);
         }
 
         public void RefreshKämpfer()

@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
+using System.Collections.Specialized;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -71,7 +72,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #endregion
     }
 
-    public class KämpferInfoListe : List<KämpferInfo>, INotifyPropertyChanged
+    public class KämpferInfoListe : List<KämpferInfo>, INotifyPropertyChanged, INotifyCollectionChanged
     {
         private Dictionary<IKämpfer, KämpferInfo> _kämpfer_kämpferinfo;
 
@@ -108,7 +109,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             _kämpfer_kämpferinfo.Add(ki.Kämpfer, ki);
             ki.PropertyChanged += OnKämpferInfoChanged;
             Sort();
-            OnCollectionChanged(CollectionChangeAction.Add, ki);
+            OnCollectionChanged(NotifyCollectionChangedAction.Add, ki);
         }
 
         public void Add(IKämpfer k)
@@ -127,7 +128,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             ki.PropertyChanged -= OnKämpferInfoChanged;
             base.Remove(ki);
-            OnCollectionChanged(CollectionChangeAction.Remove, ki);
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, ki);
         }
 
         public new void RemoveAt(int index)
@@ -135,7 +136,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             var removed = this[index];
             this[index].PropertyChanged -= OnKämpferInfoChanged;
             base.RemoveAt(index);
-            OnCollectionChanged(CollectionChangeAction.Remove, removed);
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, removed);
         }
 
         public new void RemoveAll(Predicate<KämpferInfo> match)
@@ -203,14 +204,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         #endregion
 
-        private void OnCollectionChanged(CollectionChangeAction action, object element)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action, object element)
         {
             if (CollectionChanged != null)
             {
-                CollectionChanged(this, new CollectionChangeEventArgs(action, element));
+                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
             }
         }
 
-        public event CollectionChangeEventHandler CollectionChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }

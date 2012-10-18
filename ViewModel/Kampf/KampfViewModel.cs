@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MeisterGeister.Model;
+using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
 
@@ -10,13 +11,75 @@ namespace MeisterGeister.ViewModel.Kampf
 {
     public class KampfViewModel : Base.ViewModelBase
     {
-        private K _kampf;
-
+        private K _kampf = new K();
         public K Kampf
         {
             get { return _kampf; }
-            set { _kampf = value; }
+            set { _kampf = value; OnChanged("Kampf"); }
         }
+
+        [DependentProperty("Kampf")]
+        public InitiativListe InitiativListe
+        {
+            get { return Kampf != null ? Kampf.InitiativListe : null; }
+        }
+
+        public KämpferInfoListe KämpferListe
+        {
+            get { return Kampf != null ? Kampf.Kämpfer : null; }
+        }
+
+        private KämpferInfo _selectedKämpferInfo = null;
+        public KämpferInfo SelectedKämpferInfo
+        {
+            get { return _selectedKämpferInfo; }
+            set { _selectedKämpferInfo = value; OnChanged("SelectedKämpferInfo"); }
+        }
+
+        #region // ---- COMMANDS ----
+
+        private Base.CommandBase onAddHelden = null;
+        public Base.CommandBase OnAddHelden
+        {
+            get
+            {
+                if (onAddHelden == null)
+                    onAddHelden = new Base.CommandBase(AddHelden, null);
+                return onAddHelden;
+            }
+        }
+
+        private void AddHelden(object obj)
+        {
+            KämpferInfo ki = null;
+            foreach (Model.Held held in Global.ContextHeld.HeldenGruppeListe)
+            {
+                if (!KämpferListe.Kämpfer.Contains(held))
+                {
+                    ki = new KämpferInfo(held);
+                    KämpferListe.Add(held);
+                }
+            }
+            var k = KämpferListe[0];
+        }
+
+        private Base.CommandBase onDeleteKämpfer = null;
+        public Base.CommandBase OnDeleteKämpfer
+        {
+            get
+            {
+                if (onDeleteKämpfer == null)
+                    onDeleteKämpfer = new Base.CommandBase(DeleteKämpfer, null);
+                return onDeleteKämpfer;
+            }
+        }
+
+        private void DeleteKämpfer(object obj)
+        {
+            KämpferListe.Remove(_selectedKämpferInfo);
+        }
+
+        #endregion // ---- COMMANDS ----
 
         #region Subklassen
         public class KämpferNahkampfwaffe : Logic.INahkampfwaffe

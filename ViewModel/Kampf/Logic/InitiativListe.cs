@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Collections.Specialized;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -87,7 +88,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
     }
 
-    public class InitiativListe : List<ManöverInfo>, INotifyPropertyChanged
+    public class InitiativListe : List<ManöverInfo>, INotifyPropertyChanged, INotifyCollectionChanged
     {
         public InitiativListe(Kampf kampf)
         {
@@ -117,7 +118,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Remove(minfo);
             base.Add(mi);
             mi.PropertyChanged += OnManöverInfoChanged;
-            OnCollectionChanged(CollectionChangeAction.Add, mi);
+            OnCollectionChanged(NotifyCollectionChangedAction.Add, mi);
             Sort();
         }
 
@@ -142,7 +143,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             mi.PropertyChanged -= OnManöverInfoChanged;
             base.Remove(mi);
-            OnCollectionChanged(CollectionChangeAction.Remove, mi);
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
         }
 
         public new void RemoveAt(int index)
@@ -150,7 +151,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             var mi = this[index];
             this[index].PropertyChanged -= OnManöverInfoChanged;
             base.RemoveAt(index);
-            OnCollectionChanged(CollectionChangeAction.Remove, mi);
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
         }
 
         public new void RemoveAll(Predicate<ManöverInfo> match)
@@ -174,7 +175,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 mi.PropertyChanged -= OnManöverInfoChanged;
                 base.Remove(mi);
-                OnCollectionChanged(CollectionChangeAction.Remove, mi);
+                OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
             }
         }
         #endregion
@@ -228,14 +229,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         #endregion
 
-        private void OnCollectionChanged(CollectionChangeAction action, object element)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action, object element)
         {
             if (CollectionChanged != null)
             {
-                CollectionChanged(this, new CollectionChangeEventArgs(action, element));
+                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
             }
         }
 
-        public event CollectionChangeEventHandler CollectionChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }

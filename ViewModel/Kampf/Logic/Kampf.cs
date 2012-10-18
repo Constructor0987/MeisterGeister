@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
+using System.Collections.Specialized;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -150,17 +151,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //Anzeige neu darstellen?
         }
 
-        public void Kämpfer_CollectionChanged(object sender, System.ComponentModel.CollectionChangeEventArgs args)
+        public void Kämpfer_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (args.Action == System.ComponentModel.CollectionChangeAction.Remove)
-                InitiativListe.Remove((KämpferInfo)args.Element);
-            else if (args.Action == System.ComponentModel.CollectionChangeAction.Add)
-                InitiativListe.Add((KämpferInfo)args.Element, new Manöver.KeineAktion(((KämpferInfo)args.Element).Kämpfer), 0);
+            if (args.Action == NotifyCollectionChangedAction.Remove)
+                InitiativListe.Remove((KämpferInfo)args.OldItems[0]);
+            else if (args.Action == NotifyCollectionChangedAction.Add)
+                InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
         }
 
-        public void InitiativListe_CollectionChanged(object sender, System.ComponentModel.CollectionChangeEventArgs args)
+        public void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (args.Action == System.ComponentModel.CollectionChangeAction.Add && !(args.Element is Manöver.KeineAktion))
+            if (args.Action == NotifyCollectionChangedAction.Add && !(args.NewItems[0] is Manöver.KeineAktion))
                 UmwandelnMöglich = false;
         }
     }

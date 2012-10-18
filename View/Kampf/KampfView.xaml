@@ -37,7 +37,7 @@
         <Style x:Key="KämpferListItemNameStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="Black" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=KampfPartei}" Value="2">
+                <DataTrigger Binding="{Binding Path=Team}" Value="2">
                     <Setter Property="Foreground" Value="Sienna" />
                 </DataTrigger>
             </Style.Triggers>
@@ -79,8 +79,8 @@
         </DataTemplate>
         <DataTemplate x:Key="KämpferListTemplate">
             <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" >
-                <TextBlock Text="{Binding Path=Kurzname}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
-                <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="{Binding Path=Kämpfer.Name}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
+                <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Path=InitiativeInfo}" Margin="8,2,0,0" ToolTip="{Binding Path=InitiativeInfoDetails}" />
                     <ViewGeneral:WürfelControl x:Name="_würfelControlInitiative" Ergebnis="{Binding Path=InitiativeWurf}" ErgebnisText="INI-Wurf" Würfel="{Binding Path=InitiativeZufall}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlInitiative_WürfelGeändert" />
                     <Rectangle Margin="4" Width="15" Height="15" Fill="{Binding Path=Farbmarkierung}" />
@@ -128,9 +128,12 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                <ListBox Name="_listBoxKämpfer" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource KämpferListTemplate}" SelectionChanged="ListBoxKämpfer_SelectionChanged" 
-                         KeyUp="ListBoxKämpfer_KeyUp" MouseDown="ListBoxKämpfer_MouseDown" Background="Transparent" Padding="4,8">
-                    <ListBox.BorderBrush>
+                    <ListBox Name="_listBoxKämpfer" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding KämpferListe}" SelectedItem="{Binding SelectedKämpferInfo}" ItemTemplate="{StaticResource KämpferListTemplate}" 
+                             SelectionChanged="ListBoxKämpfer_SelectionChanged" KeyUp="ListBoxKämpfer_KeyUp" MouseDown="ListBoxKämpfer_MouseDown" Background="Transparent" Padding="4,8">
+                        <ListBox.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding OnDeleteKämpfer}" />
+                        </ListBox.InputBindings>
+                            <ListBox.BorderBrush>
                         <SolidColorBrush />
                     </ListBox.BorderBrush>
                     <ListBox.ContextMenu>
@@ -160,13 +163,13 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />
-                                <MenuItem Name="_menuItemKämpferEntfernen" Height="28" Header="Kämpfer/Held entfernen" Click="MenuItemKämpferEntfernen_Click">
+                                    <MenuItem Name="_menuItemKämpferEntfernen" Height="28" Header="Kämpfer/Held entfernen" Command="{Binding OnDeleteKämpfer}">
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/kämpfer_entf.png" Stretch="Fill" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />
-                                <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Header="Helden einfügen" Click="MenuItemHeldenEinfügen_Click">
+                                <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Header="Helden einfügen" Command="{Binding OnAddHelden}">
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
                                     </MenuItem.Icon>
