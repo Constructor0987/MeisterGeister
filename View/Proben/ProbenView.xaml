@@ -118,10 +118,17 @@
                     </ListBox>
 
                     <StackPanel Grid.Column="1"  Orientation="Vertical" Margin="5">
-                        <ComboBox Margin="2" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}" />
+                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="48" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding ImagePath}" Width="24" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                         <TextBlock Text="TODO: Sortierung" />
-                        <TextBlock Text="TODO: Anzeige-Option" />
-                        <TextBlock Text="TODO: SendToSpielerWindow" />
+                        <TextBlock Text="TODO: ToSpielerWindow" />
                     </StackPanel>
                 </Grid>
             </Border>

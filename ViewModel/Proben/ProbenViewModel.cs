@@ -67,20 +67,28 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
-        private string _selectedAnzeigeModus = "Zeile";
-        public string SelectedAnzeigeModus
+        private AnzeigeModusItem _selectedAnzeigeModus;
+        public AnzeigeModusItem SelectedAnzeigeModus
         {
             get { return _selectedAnzeigeModus; }
             set
             {
                 _selectedAnzeigeModus = value;
-                Orientation or = (value == "Zeile") ? Orientation.Horizontal : Orientation.Vertical;
-                foreach (var item in ProbeErgebnisListe)
-                    item.Orientation = or;
+                if (value != null)
+                {
+                    Einstellungen.ProbenAnzeigeModus = value.Name;
+                    SelectedAnzeigeOrientation = (value.Name == "Zeile") ? Orientation.Horizontal : Orientation.Vertical;
+                    foreach (var item in ProbeErgebnisListe)
+                        item.Orientation = SelectedAnzeigeOrientation;
+
+                    ProbeErgebnisListePanel = CreatePanelTemplate(SelectedAnzeigeOrientation);
+                }
                 OnChanged("SelectedAnzeigeModus");
-                ProbeErgebnisListePanel = CreatePanelTemplate(or);
             }
         }
+
+        private Orientation SelectedAnzeigeOrientation { get; set; }
+
 
         private ItemsPanelTemplate _probeErgebnisListePanel = null;
         public ItemsPanelTemplate ProbeErgebnisListePanel
@@ -180,8 +188,8 @@ namespace MeisterGeister.ViewModel.Proben
             set { _filterListe = value; FilterProbeListe(); OnChanged("FilterListe"); }
         }
 
-        List<string> _anzeigeModusListe = new List<string>() { "Zeile", "Kachel" };
-        public List<string> AnzeigeModusListe
+        List<AnzeigeModusItem> _anzeigeModusListe = new List<AnzeigeModusItem>() { new AnzeigeModusItem("Zeile"), new AnzeigeModusItem("Kachel") };
+        public List<AnzeigeModusItem> AnzeigeModusListe
         {
             get { return _anzeigeModusListe; }
             set { _anzeigeModusListe = value; OnChanged("AnzeigeModusListe"); }
@@ -196,6 +204,8 @@ namespace MeisterGeister.ViewModel.Proben
             onWürfeln = new Base.CommandBase(Würfeln, null);
             Einstellungen.WuerfelSoundAbspielenChanged += WuerfelSoundAbspielenChanged;
             Global.GruppenProbeWürfeln += Global_GruppenProbeWürfeln;
+
+            SelectedAnzeigeModus = AnzeigeModusListe.Where(i => i.Name == Einstellungen.ProbenAnzeigeModus).FirstOrDefault();
 
             InitFilterListe();
 
@@ -304,13 +314,14 @@ namespace MeisterGeister.ViewModel.Proben
                 // Solange wird erstmal der Zauber mit dem höchsten ZfW ausgewählt
 
                 ProbeControlViewModel vm = new ProbeControlViewModel();
+                vm.Orientation = SelectedAnzeigeOrientation;
                 vm.Held = item;
                 if (SelectedProbe is Model.Talent)
                     vm.Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
                 else if (SelectedProbe is Model.Zauber)
                     vm.Probe = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).FirstOrDefault();
                 else if (SelectedProbe is Eigenschaft)
-                    vm.Probe = item.Eigenschaft((SelectedProbe as Eigenschaft).Name);
+                    vm.Probe = item.Eigenschaft(SelectedProbe.Probenname);
                 vm.Gewürfelt += ProbeControlGewürfelt;
 
                 // nur einfügen, wenn der Held die Fähigkeit besitzt
@@ -368,6 +379,37 @@ namespace MeisterGeister.ViewModel.Proben
     }
 
     #region //---- SUBKLASSEN ----
+
+    public class AnzeigeModusItem
+    {
+        public AnzeigeModusItem(string name)
+        {
+            Name = name;
+            SetImagePath();
+        }
+        public string Name { get; set; }
+
+        private string _imagePath = string.Empty;
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set { _imagePath = value; }
+        }
+
+        private void SetImagePath()
+        {
+            switch (Name)
+            {
+                case "Kachel":
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/General/kachel.png";
+                    break;
+                case "Zeile":
+                default:
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/General/zeile.png";
+                    break;
+            }
+        }
+    }
 
     public class FilterItem
     {

@@ -1128,6 +1128,8 @@
     <Resource Include="Images\Icons\Wuerfel\w20_blank_gelb.png" />
     <Resource Include="Images\Icons\Wuerfel\w20_blank_rot.png" />
     <Resource Include="Images\Icons\Wuerfel\w20_blank_blau.png" />
+    <Resource Include="Images\Icons\General\kachel.png" />
+    <Resource Include="Images\Icons\General\zeile.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -154,6 +154,18 @@ namespace MeisterGeister.Logic.Settings
             }
         }
 
+        public static string ProbenAnzeigeModus
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("ProbenAnzeigeModus", "Zeile");
+            }
+            set
+            {
+                SetEinstellung<string>("ProbenAnzeigeModus", value);
+            }
+        }
+
         public static string DatumAktuell
         {
             get
