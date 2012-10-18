@@ -53,6 +53,17 @@ namespace MeisterGeister.View
             set { _busyBorder.Visibility = value ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; _busyBorder.Refresh(); }
         }
 
+        public string IsBusyInfoText 
+        {
+            get { return _textBlockIsBusyInfo.Text; }
+            set { _textBlockIsBusyInfo.Text = value; }
+        }
+
+        private void ButtonCloseIsBusy_Click(object sender, RoutedEventArgs e)
+        {
+            IsBusy = false;
+        }
+
         #endregion // ---- IS BUSY ----
 
         #region //FELDER
@@ -154,11 +165,13 @@ namespace MeisterGeister.View
                 return;
             }
 
+            Global.SetIsBusy(true, string.Format("{0} Tab wird geladen...", tabName));
+
             Tool t = Tool.ToolListe[tabName];
             Control con = t.CreateToolView();
 
             // falls View nicht erzeugt werden konnte, abbrechen
-            if (con == null) return;
+            if (con == null) { Global.SetIsBusy(false); return; }
 
             // Event-Handler verbinden
             switch (tabName)
@@ -184,6 +197,7 @@ namespace MeisterGeister.View
                     _tabControlMain.SelectedIndex = position + 1;
                 }
             }
+            Global.SetIsBusy(false);
         }
 
         private void TabItemControl_RefreshDatumAktuell(object sender, EventArgs e)

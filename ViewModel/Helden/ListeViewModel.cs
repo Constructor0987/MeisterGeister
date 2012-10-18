@@ -146,7 +146,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.Count)))
             {
-                Global.SetIsBusy(true);
+                Global.SetIsBusy(true, "Alle Helden werden gelöscht...");
 
                 Global.ContextHeld.DeleteAll<Held>();
 
@@ -228,7 +228,7 @@ namespace MeisterGeister.ViewModel.Helden
             if (!System.IO.Directory.Exists("Daten\\Helden\\Demohelden"))
                 return;
 
-            Global.SetIsBusy(true);
+            Global.SetIsBusy(true, "Demo-Helden werden importiert...");
 
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
             foreach (string fileName in System.IO.Directory.EnumerateFiles("Daten\\Helden\\Demohelden", "*.xml", System.IO.SearchOption.TopDirectoryOnly))
@@ -256,7 +256,7 @@ namespace MeisterGeister.ViewModel.Helden
             string pfad = ChooseFile("Held importieren", "", false, "xml");
             if (pfad != null)
             {
-                Global.SetIsBusy(true);
+                Global.SetIsBusy(true, string.Format("{0} wird importiert...", pfad));
 
                 #if !DEBUG
                 try
@@ -329,7 +329,7 @@ namespace MeisterGeister.ViewModel.Helden
         }
         private void CloneHeld(object sender)
         {
-            Global.SetIsBusy(true);
+            Global.SetIsBusy(true, "Held wird kopiert...");
 
             Held h = SelectedHeld.Clone();
             LoadDaten();

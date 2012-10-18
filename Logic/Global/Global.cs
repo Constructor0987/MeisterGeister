@@ -157,11 +157,13 @@ namespace MeisterGeister
         /// Das Hauptfenster zeigt dabei ein Busy-Overlay.
         /// </summary>
         /// <param name="isBusy">'True' falls Anwendung gerade arbeitet.</param>
-        public static void SetIsBusy(bool isBusy)
+        /// <param name="info">Info Text.</param>
+        public static void SetIsBusy(bool isBusy, string info = "Beschäftigt...")
         {
             if (App.Current.MainWindow != null
                 && App.Current.MainWindow is View.MainView)
             {
+                (App.Current.MainWindow as View.MainView).IsBusyInfoText = info;
                 (App.Current.MainWindow as View.MainView).IsBusy = isBusy;
             }
         }

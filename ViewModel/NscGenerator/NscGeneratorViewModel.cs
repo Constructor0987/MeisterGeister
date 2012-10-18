@@ -367,7 +367,7 @@ namespace MeisterGeister.ViewModel.NscGenerator
 
         void Generate(object sender)
         {
-            Global.SetIsBusy(true);
+            Global.SetIsBusy(true, "NSCs werden generiert...");
 
             PersonenListe.Clear();
             List<Person> personen = new List<Person>();

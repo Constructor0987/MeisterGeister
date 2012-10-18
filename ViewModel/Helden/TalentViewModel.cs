@@ -165,7 +165,7 @@ namespace MeisterGeister.ViewModel.Helden {
             if (!ListenToChangeEvents)
                 return;
 
-            Global.SetIsBusy(true);
+            Global.SetIsBusy(true, "Talente werden geladen...");
             SelectedHeld = Global.SelectedHeld;
             ReInit();
             if (SelectedHeld != null) {
@@ -262,8 +262,8 @@ namespace MeisterGeister.ViewModel.Helden {
                 if (SelectedHeld != null) {
                     TalentauswahlListe = Global.ContextTalent.TalentListe.Where(item => SelectedHeld.Held_Talent.Where(t => t.Talent == item).Count() <= 0 && item.TalentgruppeID != 8).OrderBy(item => item.Talentname).ToList();
                 }
-                Global.SetIsBusy(false);
             }
+            Global.SetIsBusy(false);
         }        
         private void AddTalent(object obj) {
             if (TalentAuswahl != null) {
