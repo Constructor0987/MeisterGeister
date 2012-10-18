@@ -490,6 +490,7 @@ namespace MeisterGeister.View
         private void MenuItemEinstellungen_Click(object sender, RoutedEventArgs e)
         {
             EinstellungenWindow gui = new EinstellungenWindow();
+            gui.Owner = this;
             gui.ShowDialog();
         }
 
@@ -501,12 +502,14 @@ namespace MeisterGeister.View
         private void MenuItemSysInfo_Click(object sender, RoutedEventArgs e)
         {
             MsgWindow sysInfoview = new MsgWindow();
+            sysInfoview.Owner = this;
             sysInfoview.Show();
         }
 
         private static void OpenInfoWindow()
         {
             InfoWindow info = new InfoWindow();
+            info.Owner = App.Current.MainWindow;
             info.ShowDialog();
         }
 

@@ -58,9 +58,8 @@
         </EventTrigger>
     </Window.Triggers>
     <Grid>
-        <!--<Separator Grid.Row="1" Grid.ColumnSpan="2" Margin="2,0,2,5" Background="Black" />-->
         <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" x:Name="_tabControlMain" SelectionChanged="_tabControlMain_SelectionChanged" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" d:IsHidden="True" />
-        <Border x:Name="Menue" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Top"   Height="40" CornerRadius="0,0,30,30" RenderTransformOrigin="0.5,0.5" Margin="0">
+        <Border x:Name="Menue" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Top"   Height="40" CornerRadius="0,0,30,30" RenderTransformOrigin="0.5,0.5" Margin="0" Background="{DynamicResource Background1}">
             <Border.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -72,7 +71,7 @@
             <Grid>
                 <StackPanel x:Name="MenuControls"  Orientation="Horizontal" VerticalAlignment="Top">
                     <Menu x:Name="_menuTools"  FontSize="15" VerticalAlignment="Top" Height="30" Background="Transparent">
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Header="Wege des Meisters" Margin="2" >
+                        <MenuItem Header="Wege des Meisters" Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Helden-Verwaltung" Tag="Helden" ToolTip="Helden-Verwaltung"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/helden.png" Margin="2" />
@@ -134,7 +133,7 @@
                             <Separator  />
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
                         </MenuItem>
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Header="Wege des Kampfes" Margin="2"  >
+                        <MenuItem Header="Wege des Kampfes" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Kampf-Tool" Tag="Kampf" ToolTip="Kampf-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/nahkampf_01.png" Margin="2" />
@@ -148,7 +147,7 @@
                             <Separator   />
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
                         </MenuItem>
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Header="Wege der Magie" Margin="2"  >
+                        <MenuItem Header="Wege der Magie" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem Height="28" x:Name="_menuItemAlchimie" Click="ButtonTool_Click" Header="Alchimie-Tool" Tag="Alchimie" ToolTip="Alchimie-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/alchimie.png" Margin="2" />
@@ -177,7 +176,7 @@
                             <Separator   />
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
                         </MenuItem>
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Header="Wege des Handels" Margin="2"  >
+                        <MenuItem Header="Wege des Handels" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Basar-Tool" Tag="Basar" ToolTip="Basar-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/muenzen.png" Margin="2" />
@@ -196,7 +195,7 @@
                             <Separator   />
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
                         </MenuItem>
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Header="Wege des Wanderers" Margin="2"  >
+                        <MenuItem Header="Wege des Wanderers" Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Kalender-Tool" Tag="Kalender" ToolTip="Kalender-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/kalender.png" Margin="2" />
@@ -234,15 +233,15 @@
                             <Separator   />
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
                         </MenuItem>
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Header="Eigene Wege" Margin="2"  >
+                        <MenuItem Header="Eigene Wege" Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
                         </MenuItem>
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Click="MenuItemEinstellungen_Click" ToolTip="Einstellungen." Margin="2"  >
+                        <MenuItem Click="MenuItemEinstellungen_Click" ToolTip="Einstellungen." Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem.Header>
                                 <Image Source="/Images/Icons/mechanik.png" Height="20"  />
                             </MenuItem.Header>
                         </MenuItem>
-                        <MenuItem Background="{StaticResource BackgroundMenu}" Margin="2"  >
+                        <MenuItem Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem.Header>
                                 <Image Source="/Images/Icons/General/question.png" Height="20"  />
                             </MenuItem.Header>
@@ -359,12 +358,12 @@
                             <GradientStop/>
                         </LinearGradientBrush>
                     </Border.Background>
-                    <TextBlock Text="Hier klicken, um das Menü zu öffnen/schließen!" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" FontSize="8" />
+                    <TextBlock Text="Hier klicken, um das Menü zu öffnen/schließen!" ToolTip="Hier klicken, um das Menü zu öffnen/schließen!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" />
                 </Border>
             </Grid>
         </Border>
 
-        <Border Name="_busyBorder" BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="Visible">
+        <Border Name="_busyBorder" BorderBrush="Black" BorderThickness="1" Background="#80000000" Visibility="Hidden">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
