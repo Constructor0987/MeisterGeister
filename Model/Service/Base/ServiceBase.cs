@@ -88,6 +88,23 @@ namespace MeisterGeister.Model.Service {
             }
         }
 
+        public virtual bool DeleteAll<T>() where T : class
+        {
+            try
+            {
+                Liste<T>().ForEach(item => Context.DeleteObject(item));
+                Save();
+                Liste<T>().Clear();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.InnerException);
+                return false;
+            }
+        }
+
         public virtual System.Data.EntityState GetEntityState(object entity)
         {
             return Context.ObjectStateManager.GetObjectStateEntry(entity).State;

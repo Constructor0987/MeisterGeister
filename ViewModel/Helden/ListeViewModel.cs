@@ -148,10 +148,7 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 Global.SetIsBusy(true);
 
-                Held[] deleteList = new Held[Global.ContextHeld.Liste<Held>().Count];
-                Global.ContextHeld.Liste<Held>().CopyTo(deleteList);
-                foreach (Held h in deleteList)
-                    Global.ContextHeld.Delete<Held>(h);
+                Global.ContextHeld.DeleteAll<Held>();
 
                 //Liste aktualisieren
                 LoadDaten();
