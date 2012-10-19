@@ -266,7 +266,8 @@ namespace MeisterGeister.ViewModel.Helden {
             Global.SetIsBusy(false);
         }        
         private void AddTalent(object obj) {
-            if (TalentAuswahl != null) {
+            if (TalentAuswahl != null && SelectedHeld != null)
+            {
                 M.Held_Talent newTalent = new M.Held_Talent() {
                     Held = SelectedHeld,
                     HeldGUID = SelectedHeld.HeldGUID,
