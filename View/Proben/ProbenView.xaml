@@ -55,7 +55,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <Image Grid.Column="1" Width="24" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" />
+                    <Image Grid.Column="1" Width="24" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Opacity="0.8" />
                     <ComboBox Grid.Column="2" Height="23" ItemsSource="{Binding FilteredProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Probenname" ToolTip="Proben-Auswahl">
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>

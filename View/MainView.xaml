@@ -105,12 +105,12 @@
                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Ein Fenster starten/schließen, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können."/></TextBlock>
                                 </MenuItem.ToolTip>
                             </MenuItem>
-                            <MenuItem x:Name="_menuItemAbenteuer" Height="28" Click="ButtonTool_Click" Header="Abenteuer-Tool" Tag="Abenteuer" ToolTip="Abenteuer-Verwaltung"  >
+                            <MenuItem x:Name="_menuItemAbenteuer" Height="28" Click="ButtonTool_Click" Header="Abenteuer-Tool (INTERN)" Tag="Abenteuer" ToolTip="Abenteuer-Verwaltung"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/meistertools_02.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem x:Name="_menuItemAudioPlayer" Height="28" Click="ButtonTool_Click" Header="Audio-Player" Tag="Audio" ToolTip="Audio-Player"  >
+                            <MenuItem x:Name="_menuItemAudioPlayer" Height="28" Click="ButtonTool_Click" Header="Audio-Player (INTERN)" Tag="Audio" ToolTip="Audio-Player"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/General/audio.png" Margin="2" />
                                 </MenuItem.Icon>
@@ -145,10 +145,10 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <Separator   />
-                            <ViewGeneral:ExterneVerknüpfungAddMenuItem   />
+                            <ViewGeneral:ExterneVerknüpfungAddMenuItem />
                         </MenuItem>
                         <MenuItem Header="Wege der Magie" Margin="2"  BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
-                            <MenuItem Height="28" x:Name="_menuItemAlchimie" Click="ButtonTool_Click" Header="Alchimie-Tool" Tag="Alchimie" ToolTip="Alchimie-Tool"  >
+                            <MenuItem Height="28" x:Name="_menuItemAlchimie" Click="ButtonTool_Click" Header="Alchimie-Tool (INTERN)" Tag="Alchimie" ToolTip="Alchimie-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/alchimie.png" Margin="2" />
                                 </MenuItem.Icon>
