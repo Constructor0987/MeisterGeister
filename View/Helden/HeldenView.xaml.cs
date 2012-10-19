@@ -48,11 +48,7 @@ namespace MeisterGeister.View.Helden
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //ListBoxHelden_SelectionChanged(sender, null);
+            
         }
-
-
-        //public event ProbeWürfelnEventHandler ProbeWürfeln;
-        
     }
 }

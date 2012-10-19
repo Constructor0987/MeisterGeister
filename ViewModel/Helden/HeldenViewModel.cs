@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
 {
@@ -22,6 +23,12 @@ namespace MeisterGeister.ViewModel.Helden
                 Global.SelectedHeld = value;
                 OnChanged("SelectedHeld");
             }
+        }
+
+        [DependentProperty("SelectedHeld")]
+        public bool SelectedHeldIsNotNull
+        {
+            get { return SelectedHeld != null; }
         }
 
         private System.Windows.Controls.TabItem _selectedTabItem = null;
@@ -69,7 +76,8 @@ namespace MeisterGeister.ViewModel.Helden
         public void NotifyRefresh()
         {
             OnChanged("SelectedHeld");
-            
+            OnChanged("SelectedHeldIsNotNull");
+
             // Prüfen, ob ein ausgeblendeter Tab ausgewält ist
             if (SelectedTabItem == null
                 || SelectedTabItem.Visibility != System.Windows.Visibility.Visible)
