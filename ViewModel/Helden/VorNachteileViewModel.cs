@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Helden
@@ -155,7 +156,7 @@ namespace MeisterGeister.ViewModel.Helden
         private void OpenWiki(object sender)
         {
             if (SelectedHeldVorNachteil != null)
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedHeldVorNachteil.VorNachteil.Name);
+                WikiAventurica.OpenBrowser(SelectedHeldVorNachteil.VorNachteil.Name);
         }
 
         #endregion

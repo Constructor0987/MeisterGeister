@@ -15,6 +15,7 @@ using MeisterGeister.Model;
 using MeisterGeister.View.Windows;
 //Eigene Usings
 using VM = MeisterGeister.ViewModel.Helden;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.View.Helden.Controls
 {
@@ -57,7 +58,7 @@ namespace MeisterGeister.View.Helden.Controls
         private void ImageWikiHeldenbrief_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (VM.SelectedHeld != null)
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/Spielerhelden/"
+                WikiAventurica.OpenBrowser("Spielerhelden/"
                     + VM.SelectedHeld.Name.Replace(" ", "_"));
 
         }

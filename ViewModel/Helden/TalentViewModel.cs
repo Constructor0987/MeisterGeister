@@ -303,7 +303,7 @@ namespace MeisterGeister.ViewModel.Helden {
         private void OpenWiki(object sender)
         {
             if (SelectedTalentListeItem != null)
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedTalentListeItem.Talent.GetWikiLink());
+                WikiAventurica.OpenBrowser(SelectedTalentListeItem.Talent);
         }
 
         private void WürfelGruppenProbe(object obj)

@@ -157,6 +157,7 @@
     <Compile Include="Logic\General\Repräsentationen.cs" />
     <Compile Include="Logic\General\Sonderfertigkeit.cs" />
     <Compile Include="Logic\General\TalentTypen.cs" />
+    <Compile Include="Logic\General\WikiAventurica.cs" />
     <Compile Include="Logic\General\Würfel.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
     <Compile Include="Logic\Würfel\Parser.cs" />

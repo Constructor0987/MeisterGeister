@@ -98,7 +98,7 @@
                     <TextBlock VerticalAlignment="Center" Margin="2,0" Style="{DynamicResource TextTitel}" Text="{Binding SelectedProbe.WerteNamen, FallbackValue=(XX/XX/XX)}" />
                 </StackPanel>
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
+            <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
                 <WrapPanel>
                     <WrapPanel.Resources>
                         <Style TargetType="{x:Type Label}">
@@ -110,21 +110,33 @@
                             <Setter Property="FontSize" Value="11" />
                         </Style>
                     </WrapPanel.Resources>
-                    <Label Content="Literatur:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Literatur, FallbackValue=-}" />
-                    <Label Content="eBE:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.eBE, FallbackValue=-}" />
-                    <Label Content="Komplexität:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Steigerung}" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Komplex}" />
-                    <Label Content="Voraussetzungen:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Voraussetzungen, FallbackValue=-}" />
-                    <Label Content="Spezialisierungen:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Spezialisierungen, FallbackValue=-}" />
-                    <Label Content="Merkmale:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Merkmale, FallbackValue=-}" />
-                    <Label Content="Repräsentationen:" FontWeight="Bold" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Repräsentationen, FallbackValue=-}" />
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Literatur:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Literatur, FallbackValue=-}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" ToolTip="Effektive Behinderung (eBE)" Visibility="{Binding SelectedProbeHat_eBE, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                        <Label Content="eBE:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.eBE, FallbackValue=-}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" ToolTip="Spalte auf der Steigerungskosten-Tabelle (SKT)">
+                        <Label Content="Komplexität:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Steigerung, FallbackValue=-}" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Komplex, FallbackValue=-}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Voraussetzungen:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Voraussetzungen, FallbackValue=-}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Spezialisierungen:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Spezialisierungen, FallbackValue=-}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                        <Label Content="Merkmale:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Merkmale, FallbackValue=-}" />
+                        <Label Content="Repräsentationen:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Repräsentationen, FallbackValue=-}" />
+                    </StackPanel>
                 </WrapPanel>
             </Border>
         </Expander>

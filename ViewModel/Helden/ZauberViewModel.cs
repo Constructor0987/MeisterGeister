@@ -160,7 +160,7 @@ namespace MeisterGeister.ViewModel.Helden
         private void OpenWiki(object sender)
         {
             if (SelectedHeldZauber != null)
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + SelectedHeldZauber.Zauber.Name);
+                WikiAventurica.OpenBrowser(SelectedHeldZauber.Zauber);
         }
 
         private void WürfelGruppenProbe(object obj)

@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.View.General
 {
@@ -27,7 +28,7 @@ namespace MeisterGeister.View.General
         private void ImageWiki_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Tag != null && Tag.ToString().Trim() != string.Empty)
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + Tag.ToString());
+                WikiAventurica.OpenBrowser(Tag.ToString());
             else
                 MessageBox.Show("Kein Eintrag ausgewählt.", "Wiki-Aventurica");
         }

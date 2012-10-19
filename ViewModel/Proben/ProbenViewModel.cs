@@ -34,16 +34,7 @@ namespace MeisterGeister.ViewModel.Proben
         private void OpenWiki(object sender)
         {
             if (SelectedProbe != null)
-            {
-                string wikiLink = string.Empty;
-                if (SelectedProbe is Model.Talent)
-                    wikiLink = (SelectedProbe as Model.Talent).GetWikiLink();
-                else if (SelectedProbe is Model.Zauber)
-                    wikiLink = (SelectedProbe as Model.Zauber).Name;
-                else
-                    wikiLink = SelectedProbe.Probenname;
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + wikiLink);
-            }
+                WikiAventurica.OpenBrowser(SelectedProbe);
         }
 
         #endregion
@@ -78,6 +69,18 @@ namespace MeisterGeister.ViewModel.Proben
                 RefreshProbeErgebnisListe();
                 OnChanged("SelectedProbe");
             }
+        }
+
+        [DependentProperty("SelectedProbe")]
+        public bool SelectedProbeHat_eBE
+        {
+            get { return _selectedProbe is Model.Talent; }
+        }
+
+        [DependentProperty("SelectedProbe")]
+        public bool SelectedProbeIsZauber
+        {
+            get { return _selectedProbe is Model.Zauber; }
         }
 
         private FilterItem _selectedFilterItem = null;
