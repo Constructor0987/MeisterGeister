@@ -70,20 +70,20 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void SetEnergieMax(object energieTyp)
         {
-            if (energieTyp is MeisterGeister.View.General.EnergieEnum)
+            if (SelectedHeld != null && energieTyp is View.General.EnergieEnum)
             {
-                switch ((MeisterGeister.View.General.EnergieEnum)energieTyp)
+                switch ((View.General.EnergieEnum)energieTyp)
                 {
-                    case MeisterGeister.View.General.EnergieEnum.Lebensenergie:
+                    case View.General.EnergieEnum.Lebensenergie:
                         SelectedHeld.LebensenergieAktuell = SelectedHeld.LebensenergieMax;
                         break;
-                    case MeisterGeister.View.General.EnergieEnum.Ausdauer:
+                    case View.General.EnergieEnum.Ausdauer:
                         SelectedHeld.AusdauerAktuell = SelectedHeld.AusdauerMax;
                         break;
-                    case MeisterGeister.View.General.EnergieEnum.Astralenergie:
+                    case View.General.EnergieEnum.Astralenergie:
                         SelectedHeld.AstralenergieAktuell = SelectedHeld.AstralenergieMax;
                         break;
-                    case MeisterGeister.View.General.EnergieEnum.Karmaenergie:
+                    case View.General.EnergieEnum.Karmaenergie:
                         SelectedHeld.KarmaenergieAktuell = SelectedHeld.KarmaenergieMax;
                         break;
                     default:
