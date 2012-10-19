@@ -36,6 +36,9 @@ namespace MeisterGeister.ViewModel.Kampf
             set { _selectedKämpferInfo = value; OnChanged("SelectedKämpferInfo"); }
         }
 
+        private ManöverInfo _selectedManöverInfo = null;
+        
+
         #region // ---- COMMANDS ----
 
         private Base.CommandBase onAddHelden = null;

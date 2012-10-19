@@ -100,6 +100,36 @@
                 </ListBox>
             </StackPanel>
         </DataTemplate>
+        <DataTemplate x:Key="InitiativeListTemplate">
+            <!-- TODO {Binding Ausgeführt} davon abhängig die Zeile ausgrauen -->
+            <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" >
+                <TextBlock Text="{Binding Path=KämpferInfo.Kämpfer.Name}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Path=InitiativeInfo}" Margin="8,2,0,0" ToolTip="{Binding Path=InitiativeInfoDetails}" />
+                    <ViewGeneral:WürfelControl x:Name="_würfelControlInitiative" Ergebnis="{Binding Path=InitiativeWurf}" ErgebnisText="INI-Wurf" Würfel="{Binding Path=InitiativeZufall}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlInitiative_WürfelGeändert" />
+                    <Rectangle Margin="4" Width="15" Height="15" Fill="{Binding Path=Farbmarkierung}" />
+                    <!--
+                    <TextBlock Text="Aktionen:" Margin="8,2,0,0" />
+                    <TextBlock Text="{Binding Path=AktionenVerbleibend}" Margin="4,2,0,0" ToolTip="Noch nicht verbrauchte Aktionen in aktueller Kampfrunde." />
+                    -->
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Initiative}"/>
+                    <TextBlock Margin="2,0,0,0" Text="{Binding Manöver.Name}"/>
+                </StackPanel>
+                <!--
+                <ListBox Margin="2,2,2,2" Name="_listBoxKämpferAktionen" ToolTip="Laufende Aktionen des Kämpfers" ItemTemplate="{StaticResource KämpferAktionListTemplate}" ItemsSource="{Binding Path=AktionenLaufend}"
+                         BorderThickness="0"  Visibility="{Binding Path=IsChecked, ElementName=_checkBoxShowAktionen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                    <ListBox.BorderBrush>
+                        <SolidColorBrush />
+                    </ListBox.BorderBrush>
+                    <ListBox.Background>
+                        <SolidColorBrush />
+                    </ListBox.Background>
+                </ListBox>
+                -->
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -128,7 +158,7 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                    <ListBox Name="_listBoxKämpfer" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding KämpferListe}" SelectedItem="{Binding SelectedKämpferInfo}" ItemTemplate="{StaticResource KämpferListTemplate}" 
+                    <ListBox Name="_listBoxKämpfer" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" SelectedItem="{Binding SelectedManöverInfo}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
                              SelectionChanged="ListBoxKämpfer_SelectionChanged" KeyUp="ListBoxKämpfer_KeyUp" MouseDown="ListBoxKämpfer_MouseDown" Background="Transparent" Padding="4,8">
                         <ListBox.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteKämpfer}" />
