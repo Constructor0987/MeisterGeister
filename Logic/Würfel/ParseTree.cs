@@ -221,7 +221,7 @@ namespace MeisterGeister.Logic.Würfel
         		if(paramlist != null && paramlist.Length > 0  && paramlist[0] is bool) 
         			random = (bool)paramlist[0];
         //		return anzahl * seiten;
-        		return anzahl * (random?Logic.General.RandomNumberGenerator.RandomInt(1, seiten):seiten);
+        		return (random?Logic.General.Würfel.Wurf(seiten, anzahl):seiten*anzahl);
         	}
         	return anzahl;
         }
