@@ -423,10 +423,11 @@ namespace MeisterGeister.ViewModel.Schmiede
                     _selectedNahkampfwaffe = _selectedFernkampfwaffe.Ausrüstung.Waffe;
                     _erstellteNahkampfwaffe = Global.ContextWaffe.Clone<Model.Waffe>(_selectedNahkampfwaffe);
                     _erstellteNahkampfwaffe.WaffeGUID = Guid.Empty;
-                    foreach (Model.Talent t in _selectedNahkampfwaffe.Talent)
-                    {
-                        _erstellteNahkampfwaffe.Talent.Add(t);
-                    }
+                    // Auskommentiert bis Waffe später wirklich in die DB eingetragen wird
+                    //foreach (Model.Talent t in _selectedNahkampfwaffe.Talent)
+                    //{
+                    //    _erstellteNahkampfwaffe.Talent.Add(t);
+                    //}
                     ausr.Waffe = _erstellteNahkampfwaffe;
                     _erstellteNahkampfwaffe.Ausrüstung = ausr;
                     IstAuchNahkampfwaffe = true;
@@ -445,7 +446,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
                 foreach (Model.Talent t in _selectedFernkampfwaffe.Talent)
                 {
-                    _erstellteFernkampfwaffe.Talent.Add(t);
+                    // Auskommentiert bis Waffe später wirklich in die DB eingetragen wird
+                    //_erstellteFernkampfwaffe.Talent.Add(t);
                     switch (t.Talentname)
                     {
                         case TALENTDISKUS:

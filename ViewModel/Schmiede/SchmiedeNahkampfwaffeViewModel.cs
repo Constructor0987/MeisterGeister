@@ -218,10 +218,11 @@ namespace MeisterGeister.ViewModel.Schmiede
                 Model.Ausrüstung ausr = Global.ContextWaffe.Clone<Model.Ausrüstung>(_selectedNahkampfwaffe.Ausrüstung);
                 ausr.AusrüstungGUID = Guid.Empty;
                 _erstellteNahkampfwaffe.Ausrüstung = ausr;
-                foreach (Model.Talent t in _selectedNahkampfwaffe.Talent)
-                {
-                    _erstellteNahkampfwaffe.Talent.Add(t);
-                }
+                // Auskommentiert bis Waffe später wirklich in die DB eingetragen wird
+                //foreach (Model.Talent t in _selectedNahkampfwaffe.Talent)
+                //{
+                //    _erstellteNahkampfwaffe.Talent.Add(t);
+                //}
 
                 BerechneNahkampfwaffe();
             }
