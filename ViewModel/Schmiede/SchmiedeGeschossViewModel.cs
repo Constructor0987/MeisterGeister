@@ -324,6 +324,7 @@ namespace MeisterGeister.ViewModel.Schmiede
         {
             if (_selectedMunition == null || _selectedFernkampfwaffe == null) return;
             ProbePunkte = (int)Math.Round(((_selectedFernkampfwaffe.TPWürfelAnzahl.HasValue ? _selectedFernkampfwaffe.TPWürfelAnzahl.Value : 0) * (int)Math.Round(((_selectedFernkampfwaffe.TPWürfel.HasValue ? _selectedFernkampfwaffe.TPWürfel.Value : 0) + 1) / 2.0) + (_selectedFernkampfwaffe.TPBonus.HasValue ? _selectedFernkampfwaffe.TPBonus.Value : 0))/3.0);
+            ProbeErschwernis = _selectedMunition.Probe;
             ProbeErschwernisSpitze = (_selectedMunition.MunitionGUID.ToString() == MUNITIONGUIDJAGDBOLZEN || _selectedMunition.MunitionGUID.ToString() == MUNITIONGUIDJAGDPFEIL) ? 0 : 4;
             Munitionspreis = _selectedFernkampfwaffe.Munitionspreis.HasValue ? _selectedFernkampfwaffe.Munitionspreis.Value * _selectedMunition.Preismodifikator : 0;
             BerechneNicwinscheApproximation();
