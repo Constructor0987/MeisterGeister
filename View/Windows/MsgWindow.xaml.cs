@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -157,16 +158,25 @@ namespace MeisterGeister.View.Windows
             string auflösung = SystemParameters.PrimaryScreenWidth.ToString() + "x" + SystemParameters.PrimaryScreenHeight.ToString()
                 + " (" + SystemParameters.FullPrimaryScreenWidth.ToString() + "x" + SystemParameters.FullPrimaryScreenHeight.ToString() + ")";
 
-            return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nArbeitsverzeichnis: {4}\nProzessoranzahl: {5}\nWorkingSet: {6}"
-                + "\nRenderingebene: {7}\nAuflösung: {8}\nBildschirme: {9}",
-                Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), Environment.CurrentDirectory,
+            return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nArbeitsverzeichnis: {4}\nMeisterGeister-Verzeichnis {5}\nProzessoranzahl: {6}\nWorkingSet: {7}"
+                + "\nRenderingebene: {8}\nAuflösung: {9}\nBildschirme: {10}",
+                Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), Environment.CurrentDirectory, System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),
                 Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length);
         }
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             if (Owner != null)
-                DialogResult = true;
+            {
+                try
+                {
+                    DialogResult = true;
+                }
+                finally
+                {
+                    Close();
+                }
+            }
             else
                 Close();
         }

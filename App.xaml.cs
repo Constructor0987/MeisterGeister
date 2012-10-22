@@ -39,11 +39,12 @@ namespace MeisterGeister {
             System.Windows.Forms.Application.EnableVisualStyles();
 
             // Prüfen, ob Datenbank vorhanden ist
-            if (!File.Exists(@"Daten\DatabaseDSA.sdf")) {
+            if (!File.Exists(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf")) {
                 // Es handelt sich vermutlich um eine Neuinstallation:
                 // Standard-Datenbank kopieren und umbenennen
                 try {
-                    File.Copy(@"Daten\DatabaseDSA_Standard.sdf", @"Daten\DatabaseDSA.sdf", false);
+                    File.Copy(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA_Standard.sdf",
+                         Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf", false);
                 } catch (Exception ex) {
                     MsgWindow errWin = new MsgWindow("Datenbank-Fehler", "Die Standard-Datanbank konnte nicht gefunden werden!", ex);
                     errWin.ShowDialog();
@@ -53,7 +54,8 @@ namespace MeisterGeister {
             }
 
             // Erneut prüfen...
-            if (!File.Exists(@"Daten\DatabaseDSA.sdf")) {
+            if (!File.Exists(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf"))
+            {
                 string msg = "Die Datenbank-Datei \"Daten\\DatabaseDSA.sdf\" konnte nicht gefunden werden. Das Programm wird geschlossen.";
                 MsgWindow errWin = new MsgWindow("Datenbank-Fehler", msg);
                 errWin.ShowDialog();
@@ -62,7 +64,8 @@ namespace MeisterGeister {
             }
 
             // Schreibrecht prüfen
-            if (!IsWriteable(Environment.CurrentDirectory + @"\Daten\DatabaseDSA.sdf")) {
+            if (!IsWriteable(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf"))
+            {
                 string msg = "Das Programm hat keinen schreibenden Zugriff auf die Datenbank-Datei \"Daten\\DatabaseDSA.sdf\". "
                     + "Kopiere DSA MeisterGeister in ein Verzeichnis mit Schreibzugriff und starte es erneut.";
                 MsgWindow errWin = new MsgWindow("Datenbank-Fehler", msg);
@@ -89,7 +92,7 @@ namespace MeisterGeister {
 
             //Version der Datenbank überprüfen und upgraden.
             try {
-                SqlCeUpgrade.Run(@"Daten\DatabaseDSA.sdf");
+                SqlCeUpgrade.Run(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf");
             } catch (Exception ex) {
                 MsgWindow errWin = new MsgWindow("Fehler beim Datenbank-Upgrade", "Beim Datenbank-Upgrade ist ein Fehler aufgetreten!", ex);
                 errWin.ShowDialog();

@@ -503,7 +503,7 @@ namespace MeisterGeister.View
         {
             MsgWindow sysInfoview = new MsgWindow();
             sysInfoview.Owner = this;
-            sysInfoview.Show();
+            sysInfoview.ShowDialog();
         }
 
         private static void OpenInfoWindow()
