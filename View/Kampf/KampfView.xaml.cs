@@ -75,24 +75,24 @@ namespace MeisterGeister.View.Kampf
         // TODO ??: Umstellen auf neues Kampf-Model
         //private KampfAktion _selectedAktion;
 
-        private void ListBoxKämpfer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _radioButtonAktion1.Content = "1. Aktion";
-            _radioButtonAktion2.Content = "2. Aktion";
-            if (_listBoxKämpfer.SelectedItem != null && _listBoxKämpfer.SelectedItem is IKämpfer)
-            {
-                _selectedKämpfer = (IKämpfer)_listBoxKämpfer.SelectedItem;
-                _textBoxAktionQuelle.Text = _selectedKämpfer.Name;
-                // TODO ??: Umstellen auf neues Kampf-Model
-                //_radioButtonAktion1.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative);
-                //_radioButtonAktion2.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative - 8);
-            }
-            else
-            {
-                _selectedKämpfer = null;
-                _textBoxAktionQuelle.Text = string.Empty;
-            }
-        }
+        //private void ListBoxKämpfer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    _radioButtonAktion1.Content = "1. Aktion";
+        //    _radioButtonAktion2.Content = "2. Aktion";
+        //    if (_listBoxKämpfer.SelectedItem != null && _listBoxKämpfer.SelectedItem is IKämpfer)
+        //    {
+        //        _selectedKämpfer = (IKämpfer)_listBoxKämpfer.SelectedItem;
+        //        _textBoxAktionQuelle.Text = _selectedKämpfer.Name;
+        //        // TODO ??: Umstellen auf neues Kampf-Model
+        //        //_radioButtonAktion1.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative);
+        //        //_radioButtonAktion2.Content += string.Format(" [{0}]", _selectedKämpfer.Initiative - 8);
+        //    }
+        //    else
+        //    {
+        //        _selectedKämpfer = null;
+        //        _textBoxAktionQuelle.Text = string.Empty;
+        //    }
+        //}
 
         private void SetLebensenergie()
         {
@@ -165,7 +165,7 @@ namespace MeisterGeister.View.Kampf
         public void SortKämpfer()
         {
             _kampf.Kämpfer.Sort();
-            _listBoxKämpfer.Items.Refresh();
+            //_listBoxKämpfer.Items.Refresh();
 
             // Liste im Spieler-Info-Fenster aktualisieren
             if (MainView.WindowSpieler != null && MainView.WindowSpieler.IsKampfInfoModus)
@@ -376,7 +376,7 @@ namespace MeisterGeister.View.Kampf
 
         private void ListBoxKämpfer_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _listBoxKämpfer.SelectedItem = null;
+            //_listBoxKämpfer.SelectedItem = null;
         }
 
         private void ListBoxAktionen_MouseDown(object sender, MouseButtonEventArgs e)
@@ -386,7 +386,7 @@ namespace MeisterGeister.View.Kampf
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            if (_listBoxKämpfer.SelectedItem == null)
+            if (_treeInitiative.SelectedItem == null)
             {
                 _menuItemKämpferFarbmarkierung.Visibility = System.Windows.Visibility.Collapsed;
                 _menuItemKämpferEntfernen.Visibility = System.Windows.Visibility.Collapsed;
@@ -549,9 +549,9 @@ namespace MeisterGeister.View.Kampf
         {
             SortKämpfer();
             RefreshAktionen();
-            var tmpKämpfer = _listBoxKämpfer.SelectedItem;
-            _listBoxKämpfer.SelectedItem = null;
-            _listBoxKämpfer.SelectedItem = tmpKämpfer;
+            //var tmpKämpfer = _treeInitiative.SelectedItem;
+            //_listBoxKämpfer.SelectedItem = null;
+            //_listBoxKämpfer.SelectedItem = tmpKämpfer;
         }
 
         private void NächsterKämpferRollover_EventHandler(object sender, EventArgs e)
@@ -625,6 +625,12 @@ namespace MeisterGeister.View.Kampf
         {
             KampfInfoView infoView = new KampfInfoView(_kampf);
             MainView.ShowSpielerInfo(infoView);
+        }
+
+        private void InitiativeListe_TreeViewItemSelected(object sender, RoutedEventArgs e)
+        {
+            var parent = ItemsControl.ItemsControlFromItemContainer(e.OriginalSource as TreeViewItem);
+            VM.KämpferSelected = parent is TreeView;
         }
 
     }

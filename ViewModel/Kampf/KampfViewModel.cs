@@ -29,14 +29,28 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return Kampf != null ? Kampf.Kämpfer : null; }
         }
 
-        private KämpferInfo _selectedKämpferInfo = null;
         public KämpferInfo SelectedKämpferInfo
         {
-            get { return _selectedKämpferInfo; }
-            set { _selectedKämpferInfo = value; OnChanged("SelectedKämpferInfo"); }
+            get { return (SelectedManöverInfo != null) ? SelectedManöverInfo.KämpferInfo : null; }
+            //set { SelectedTreeItem = value; }
         }
 
         private ManöverInfo _selectedManöverInfo = null;
+        public ManöverInfo SelectedManöverInfo
+        {
+            get { return _selectedManöverInfo; }
+            set { _selectedManöverInfo = value; OnChanged("SelectedManöverInfo"); OnChanged("SelectedKämpferInfo"); }
+        }
+        
+        private bool kämpferSelected = false;
+        /// <summary>
+        /// Um ManöverInfo und auch KämpferInfo unterscheiden zu können.
+        /// </summary>
+        public bool KämpferSelected
+        {
+            get { return kämpferSelected; }
+            set { kämpferSelected = value; OnChanged("KämpferSelected"); }
+        }
         
 
         #region // ---- COMMANDS ----
@@ -79,7 +93,8 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void DeleteKämpfer(object obj)
         {
-            KämpferListe.Remove(_selectedKämpferInfo);
+            if(SelectedKämpferInfo != null)
+                KämpferListe.Remove(SelectedKämpferInfo);
         }
 
         #endregion // ---- COMMANDS ----

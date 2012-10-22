@@ -409,6 +409,7 @@
     <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
       <DependentUpon>SliderRange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\BindableSelectedItemBehavior.cs" />
     <Compile Include="View\General\DereGlobusLinkControl.xaml.cs">
       <DependentUpon>DereGlobusLinkControl.xaml</DependentUpon>
     </Compile>

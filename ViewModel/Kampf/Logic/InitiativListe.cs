@@ -47,6 +47,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             private set { manöver = value; }
         }
 
+        public ICollection<ManöverInfo> ThisAsList
+        {
+            get
+            {
+                return new List<ManöverInfo>() { this };
+            }
+        }
+
         public ManöverInfo(KämpferInfo ki, Manöver.Manöver m, int inimod)
         {
             KämpferInfo = ki;

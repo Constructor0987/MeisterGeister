@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
@@ -100,36 +101,107 @@
                 </ListBox>
             </StackPanel>
         </DataTemplate>
-        <DataTemplate x:Key="InitiativeListTemplate">
-            <!-- TODO {Binding Ausgeführt} davon abhängig die Zeile ausgrauen -->
-            <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" >
-                <TextBlock Text="{Binding Path=KämpferInfo.Kämpfer.Name}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Path=InitiativeInfo}" Margin="8,2,0,0" ToolTip="{Binding Path=InitiativeInfoDetails}" />
-                    <ViewGeneral:WürfelControl x:Name="_würfelControlInitiative" Ergebnis="{Binding Path=InitiativeWurf}" ErgebnisText="INI-Wurf" Würfel="{Binding Path=InitiativeZufall}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlInitiative_WürfelGeändert" />
-                    <Rectangle Margin="4" Width="15" Height="15" Fill="{Binding Path=Farbmarkierung}" />
-                    <!--
-                    <TextBlock Text="Aktionen:" Margin="8,2,0,0" />
-                    <TextBlock Text="{Binding Path=AktionenVerbleibend}" Margin="4,2,0,0" ToolTip="Noch nicht verbrauchte Aktionen in aktueller Kampfrunde." />
-                    -->
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Initiative}"/>
-                    <TextBlock Margin="2,0,0,0" Text="{Binding Manöver.Name}"/>
-                </StackPanel>
-                <!--
-                <ListBox Margin="2,2,2,2" Name="_listBoxKämpferAktionen" ToolTip="Laufende Aktionen des Kämpfers" ItemTemplate="{StaticResource KämpferAktionListTemplate}" ItemsSource="{Binding Path=AktionenLaufend}"
-                         BorderThickness="0"  Visibility="{Binding Path=IsChecked, ElementName=_checkBoxShowAktionen, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                    <ListBox.BorderBrush>
-                        <SolidColorBrush />
-                    </ListBox.BorderBrush>
-                    <ListBox.Background>
-                        <SolidColorBrush />
-                    </ListBox.Background>
-                </ListBox>
-                -->
+        <DataTemplate x:Key="InitiativeListManöverTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Manöver: " />
+                <TextBlock Text="{Binding Manöver.Name}" />
             </StackPanel>
         </DataTemplate>
+        <HierarchicalDataTemplate x:Key="InitiativeListTemplate" ItemsSource="{Binding ThisAsList}" ItemTemplate="{StaticResource InitiativeListManöverTemplate}">
+            <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" />
+        </HierarchicalDataTemplate>
+
+        <Style x:Key="TreeViewItemFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Width" Value="19"/>
+            <Setter Property="Height" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border Width="19" Height="13" Background="Transparent">
+                            <Border SnapsToDevicePixels="true" Width="9" Height="9" BorderBrush="#FF7898B5" BorderThickness="1" CornerRadius="1">
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                                        <GradientStop Color="White" Offset=".2"/>
+                                        <GradientStop Color="#FFC0B7A6" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Path Margin="1,1,1,1" x:Name="ExpandPath" Fill="Black" Data="M 0 2 L 0 3 L 2 3 L 2 5 L 3 5 L 3 3 L 5 3 L 5 2 L 3 2 L 3 0 L 2 0 L 2 2 Z"/>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Data" TargetName="ExpandPath" Value="M 0 2 L 0 3 L 5 3 L 5 2 Z"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="TreeViewItemStyle1" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="True" />
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="Padding" Value="1,0,0,0"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MinWidth="19" Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <!-- <ToggleButton x:Name="Expander" Style="{StaticResource ExpandCollapseToggleStyle}" ClickMode="Press" IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"/> -->
+                            <Border SnapsToDevicePixels="true" x:Name="Bd" Grid.Column="1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" x:Name="PART_Header" ContentSource="Header"/>
+                            </Border>
+                            <ItemsPresenter x:Name="ItemsHost" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="false">
+                                <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                            </Trigger>
+                            <!--<Trigger Property="HasItems" Value="false">
+                                <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
+                            </Trigger>-->
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true"/>
+                                    <Condition Property="IsSelectionActive" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+       
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -144,81 +216,84 @@
 
             <Border Style="{DynamicResource ControlContentBorder}">
                 <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="90*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,2,0,0">
-                    <CheckBox Name="_checkBoxShowAktionen" Content="Aktionen" Margin="5,3,0,3"  IsChecked="True" Height="19" ToolTip="Aktionen in Liste anzeigen" />
-                    <Button Margin="6,0" Name="_buttonNächsterKämpfer" Click="ButtonNächsterKämpfer_Click" Height="23" FontWeight="Bold" ToolTip="Wählt den nächsten Kämpfer aus." HorizontalAlignment="Right">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" />
-                            <TextBlock Text="Nächster Kämpfer" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                    <ListBox Name="_listBoxKämpfer" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" SelectedItem="{Binding SelectedManöverInfo}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
-                             SelectionChanged="ListBoxKämpfer_SelectionChanged" KeyUp="ListBoxKämpfer_KeyUp" MouseDown="ListBoxKämpfer_MouseDown" Background="Transparent" Padding="4,8">
-                        <ListBox.InputBindings>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="90*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,2,0,0">
+                        <CheckBox Name="_checkBoxShowAktionen" Content="Aktionen" Margin="5,3,0,3"  IsChecked="True" Height="19" ToolTip="Aktionen in Liste anzeigen" />
+                        <Button Margin="6,0" Name="_buttonNächsterKämpfer" Click="ButtonNächsterKämpfer_Click" Height="23" FontWeight="Bold" ToolTip="Wählt den nächsten Kämpfer aus." HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" />
+                                <TextBlock Text="Nächster Kämpfer" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <TreeView Name="_treeInitiative" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
+                             TreeViewItem.Selected="InitiativeListe_TreeViewItemSelected" KeyUp="ListBoxKämpfer_KeyUp" MouseDown="ListBoxKämpfer_MouseDown" Background="Transparent" Padding="4,8" ItemContainerStyle="{StaticResource TreeViewItemStyle1}">
+                        <e:Interaction.Behaviors>
+                            <ViewGeneral:BindableSelectedItemBehavior SelectedItem="{Binding SelectedTreeItem, Mode=TwoWay}" />
+                        </e:Interaction.Behaviors>
+                        <TreeView.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteKämpfer}" />
-                        </ListBox.InputBindings>
-                            <ListBox.BorderBrush>
-                        <SolidColorBrush />
-                    </ListBox.BorderBrush>
-                    <ListBox.ContextMenu>
-                        <ContextMenu Opened="ContextMenu_Opened">
-                            <ContextMenu.Items>
-                                <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" Header="Farbmarkierung setzen...">
-                                    <MenuItem.Icon>
-                                        <Image Source="/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
-                                    </MenuItem.Icon>
-                                    <MenuItem Background="Transparent" Header="Transparent" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Blue" Header="Blau" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="DarkBlue" Header="Dunkelblau" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Green" Header="Grün" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="DarkGreen" Header="Dunkelgrün" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Orange" Header="Orange" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Red" Header="Rot" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="DarkRed" Header="Dunkelrot" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Gold" Header="Gold" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Magenta" Header="Magenta" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Brown" Header="Braun" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="Black" Foreground="White" Header="Schwarz" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                    <MenuItem Background="White" Header="Weiß" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                </MenuItem>
-                                <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Als aktuellen Kämpfer setzen" Click="MenuItemKämpferAktuell_Click">
-                                    <MenuItem.Icon>
-                                        <Image Source="/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
+                        </TreeView.InputBindings>
+                        <TreeView.BorderBrush>
+                            <SolidColorBrush />
+                        </TreeView.BorderBrush>
+                        <TreeView.ContextMenu>
+                            <ContextMenu Opened="ContextMenu_Opened">
+                                <ContextMenu.Items>
+                                    <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" Header="Farbmarkierung setzen...">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
+                                        </MenuItem.Icon>
+                                        <MenuItem Background="Transparent" Header="Transparent" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Blue" Header="Blau" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="DarkBlue" Header="Dunkelblau" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Green" Header="Grün" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="DarkGreen" Header="Dunkelgrün" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Orange" Header="Orange" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Red" Header="Rot" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="DarkRed" Header="Dunkelrot" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Gold" Header="Gold" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Magenta" Header="Magenta" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Brown" Header="Braun" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="Black" Foreground="White" Header="Schwarz" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                        <MenuItem Background="White" Header="Weiß" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                    </MenuItem>
+                                    <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Als aktuellen Kämpfer setzen" Click="MenuItemKämpferAktuell_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
                                     <MenuItem Name="_menuItemKämpferEntfernen" Height="28" Header="Kämpfer/Held entfernen" Command="{Binding OnDeleteKämpfer}">
-                                    <MenuItem.Icon>
-                                        <Image Source="/Images/Icons/kämpfer_entf.png" Stretch="Fill" Margin="2" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Header="Helden einfügen" Command="{Binding OnAddHelden}">
-                                    <MenuItem.Icon>
-                                        <Image Source="/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Header="Kämpfer einfügen..." Click="MenuItemKämpferEinfügen_Click">
-                                    <MenuItem.Icon>
-                                        <Image Source="/Images/Icons/gegner_add.png" Stretch="Fill" Margin="2" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Name="_menuItemListeLeeren" Height="28" Header="Liste leeren" Click="MenuItemListeLeeren_Click">
-                                    <MenuItem.Icon>
-                                        <Image Source="/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="2" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu.Items>
-                        </ContextMenu>
-                    </ListBox.ContextMenu>
-                </ListBox>
+                                        <MenuItem.Icon>
+                                            <Image Source="/Images/Icons/kämpfer_entf.png" Stretch="Fill" Margin="2" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Header="Helden einfügen" Command="{Binding OnAddHelden}">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Header="Kämpfer einfügen..." Click="MenuItemKämpferEinfügen_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Images/Icons/gegner_add.png" Stretch="Fill" Margin="2" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Name="_menuItemListeLeeren" Height="28" Header="Liste leeren" Click="MenuItemListeLeeren_Click">
+                                        <MenuItem.Icon>
+                                            <Image Source="/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="2" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu.Items>
+                            </ContextMenu>
+                        </TreeView.ContextMenu>
+                    </TreeView>
                     <Image Grid.Row="1" Height="16" HorizontalAlignment="Right" Margin="0,4,4,0" Name="_imageInfoKämpferListe" Source="/Images/Icons/General/info.png" Stretch="Fill" Width="16" VerticalAlignment="Top">
                         <Image.ToolTip>
                             <StackPanel>
@@ -239,7 +314,7 @@
                     </Expander>
                 </Grid>
             </Border>
-                
+
         </Grid>
         <TabControl Margin="4" Grid.Column="1">
             <TabControl.Background>
@@ -248,190 +323,190 @@
             <TabItem Name="_tabItemÜbersicht" Header="Übersicht">
                 <ScrollViewer Name="_scrollViewerKämpferDetails" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <Border Style="{DynamicResource ControlContentBorder}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox Margin="6,6,2,2" Grid.ColumnSpan="2" Text="{Binding Path=SelectedItem.Name, ElementName=_listBoxKämpfer}" ToolTip="Name des Kämpfers" FontWeight="Bold" >
-                            <TextBox.BorderBrush>
-                                <SolidColorBrush />
-                            </TextBox.BorderBrush>
-                            <TextBox.Background>
-                                <SolidColorBrush />
-                            </TextBox.Background>
-                        </TextBox>
-                        <Image Name="_imageInfo" Grid.Column="1" Width="16" HorizontalAlignment="Right" Margin="0,3,3,0" Source="/Images/Icons/General/info.png" Stretch="Fill" Height="16" VerticalAlignment="Top">
-                            <Image.ToolTip>
-                                <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
-            		Um einen Wert zu verändern, einfach mit der Maus über das entsprechende Feld gehen und hineinklicken. Bei einigen Feldern kann man den Wert auch einfach mit dem Mausrad erhöhen bzw. senken.
-                                </TextBlock>
-                            </Image.ToolTip>
-                        </Image>
-                        <StackPanel Grid.Row="1" Margin="0,8,0,0" Orientation="Vertical">
-                            <!-- Lebensenergie -->
-                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
-                                <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.LebensenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Lebensenergie" />
-                                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.LebensenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" SourceUpdated="_textBoxLebensenergieAktuell_SourceUpdated" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
-                            </StackPanel>
-                            <!-- Ausdauer -->
-                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
-                                <TextBlock Text="AU:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.AusdauerMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Ausdauer" />
-                                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.AusdauerAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Ausdauer" FontWeight="Bold" SourceUpdated="_textBoxAusdauerAktuell_SourceUpdated" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
-                            </StackPanel>
-                            <!-- Astralenergie -->
-                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource MagiebegabtStyle}">
-                                <TextBlock Text="AE:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.AstralenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Astralenergie" />
-                                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.AstralenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Astralenergie" FontWeight="Bold" SourceUpdated="_textBoxAstralenergieAktuell_SourceUpdated" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
-                            </StackPanel>
-                            <!-- Karmaenergie -->
-                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource GeweihtStyle}">
-                                <TextBlock Text="KE:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.KarmaenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Karmaenergie" />
-                                <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.KarmaenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" SourceUpdated="_textBoxKarmaenergieAktuell_SourceUpdated" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
-                            </StackPanel>
-                        </StackPanel>
-                        <!-- Wunden und Rüstungsschutz -->
-                        <Image Grid.Column="1" Source="/Images/Koerperzonen/koerperzonen_01.png" Height="213" ToolTip="Wunden und Rüstungsschutz" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="133" Grid.RowSpan="1" />
-                        <ViewGeneral:IntBox Margin="0,5,9,0" Value="{Binding Path=SelectedItem.RüstungsschutzGesamt, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Gesamt)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,9,56,0" Value="{Binding Path=SelectedItem.RüstungsschutzKopf, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Kopf)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,61,67,0" Value="{Binding Path=SelectedItem.RüstungsschutzBrust, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Brust)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,61,43,0" Value="{Binding Path=SelectedItem.RüstungsschutzRücken, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Rücken)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,112,56,0" Value="{Binding Path=SelectedItem.RüstungsschutzBauch, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Bauch)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,81,102,0" Value="{Binding Path=SelectedItem.RüstungsschutzArmL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (linker Arm)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,81,9,0" Value="{Binding Path=SelectedItem.RüstungsschutzArmR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (rechter Arm)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,171,92,0" Value="{Binding Path=SelectedItem.RüstungsschutzBeinL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (linkes Bein)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                        <ViewGeneral:IntBox Margin="0,171,21,0" Value="{Binding Path=SelectedItem.RüstungsschutzBeinR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (rechtes Bein)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-
-                        <ViewGeneral:IntBox Margin="0,31,56,0" Value="{Binding Path=SelectedItem.WundenKopf, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (Kopf)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" MarkPlusValue="True" />
-                        <ViewGeneral:IntBox Margin="0,27,9,0" Value="{Binding Path=SelectedItem.Wunden, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (unlokalisiert)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
-                        <ViewGeneral:IntBox Margin="0,84,56,0" Value="{Binding Path=SelectedItem.WundenBrust, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (Brust)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                        <ViewGeneral:IntBox Margin="0,134,56,0" Value="{Binding Path=SelectedItem.WundenBauch, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (Bauch)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                        <ViewGeneral:IntBox Margin="0,104,102,0" Value="{Binding Path=SelectedItem.WundenArmL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (linker Arm)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                        <ViewGeneral:IntBox Margin="0,104,9,0" Value="{Binding Path=SelectedItem.WundenArmR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (rechter Arm)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
-                        <ViewGeneral:IntBox Margin="0,171,71,0" Value="{Binding Path=SelectedItem.WundenBeinL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (linkes Bein)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                        <ViewGeneral:IntBox Margin="0,171,42,0" Value="{Binding Path=SelectedItem.WundenBeinR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (rechtes Bein)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" Width="23" MarkPlusValue="True" />
-                        <TextBox Grid.Row="2" Grid.ColumnSpan="2" Margin="4,0,0,0" Text="{Binding Path=SelectedItem.Kampfwerte, ElementName=_listBoxKämpfer}" ToolTip="Kampfwerte (z.B. Schwert: DK N AT 14 TP 1W6+2)" TextWrapping="Wrap" AcceptsReturn="True">
-                            <TextBox.BorderBrush>
-                                <SolidColorBrush />
-                            </TextBox.BorderBrush>
-                            <TextBox.Background>
-                                <SolidColorBrush />
-                            </TextBox.Background>
-                        </TextBox>
-                        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="6,0,0,0" Orientation="Horizontal" >
-                            <TextBlock Text="INI:" Margin="2,6,2,2" />
-                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.InitiativeMod, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Initiative Modifikator" FontWeight="Bold" SourceUpdated="IntBox_SourceUpdated" ShowButtons="True" />
-                            <TextBlock Margin="2,6,2,2" Text="PA: " />
-                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.Parade, ElementName=_listBoxKämpfer}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Vertical">
-                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
-                                <TextBlock Margin="2,6,2,2" Text="BE: " />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.Behinderung, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Behinderung" FontWeight="Bold" SourceUpdated="_textBoxBehinderung_SourceUpdated" NoBackground="True" />
-                                <TextBlock Margin="6,6,2,2" Text="WS: " />
-                                <TextBlock Margin="2,6,2,2" Text="{Binding Path=SelectedItem.Wundschwellen, ElementName=_listBoxKämpfer}" FontWeight="Bold" ToolTip="Wundschwellen" />
-                            </StackPanel>
-                            <StackPanel Margin="6,0,0,2" Orientation="Horizontal" ToolTip="{Binding Path=SelectedItem.ModKampf_TextDetail, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" >
-                                <TextBlock Margin="2,6,2,2" Text="Modifikatoren: " />
-                                <TextBlock Margin="6,6,2,2" Text="{Binding Path=SelectedItem.ModKampf_Text, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" FontWeight="Bold" />
-                            </StackPanel>
-                        </StackPanel>
-                        <Grid Grid.Row="5" Grid.ColumnSpan="2" Margin="0,8,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="90" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.RowSpan="2" Margin="8,0,4,0" x:Name="_intBoxSchaden" Value="5" ShowButtons="True" MinWidth="60" Height="Auto" ToolTip="SP/TP bzw. Abzug AE/KE" FontSize="16" />
-                            <StackPanel Grid.Row="0" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
-                                <StackPanel Margin="0" ToolTip="Wunden-Art" Orientation="Horizontal">
-                                    <RadioButton Name="_radioButtonWundschwelleNormal" VerticalAlignment="Center" Content="Normal" ToolTip="Mormale Wundschwelle." IsChecked="True" />
-                                    <RadioButton Name="_radioButtonWundschwelleGesenkt" VerticalAlignment="Center" Content="WS -2" ToolTip="Wundschwelle um 2 gesenkt (Pfeil, Bolzen, Gezielter Stich, Todesstoß, etc.)." Margin="4,0,0,0" />
-                                    <RadioButton Name="_radioButtonWundeKeine" VerticalAlignment="Center" Content="Keine" ToolTip="Keine Wunde." Margin="4,0,0,0" />
+                            <TextBox Margin="6,6,2,2" Grid.ColumnSpan="2" Text="{Binding Path=SelectedItem.Name, ElementName=_listBoxKämpfer}" ToolTip="Name des Kämpfers" FontWeight="Bold" >
+                                <TextBox.BorderBrush>
+                                    <SolidColorBrush />
+                                </TextBox.BorderBrush>
+                                <TextBox.Background>
+                                    <SolidColorBrush />
+                                </TextBox.Background>
+                            </TextBox>
+                            <Image Name="_imageInfo" Grid.Column="1" Width="16" HorizontalAlignment="Right" Margin="0,3,3,0" Source="/Images/Icons/General/info.png" Stretch="Fill" Height="16" VerticalAlignment="Top">
+                                <Image.ToolTip>
+                                    <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
+            		Um einen Wert zu verändern, einfach mit der Maus über das entsprechende Feld gehen und hineinklicken. Bei einigen Feldern kann man den Wert auch einfach mit dem Mausrad erhöhen bzw. senken.
+                                    </TextBlock>
+                                </Image.ToolTip>
+                            </Image>
+                            <StackPanel Grid.Row="1" Margin="0,8,0,0" Orientation="Vertical">
+                                <!-- Lebensenergie -->
+                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
+                                    <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.LebensenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Lebensenergie" />
+                                    <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.LebensenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" SourceUpdated="_textBoxLebensenergieAktuell_SourceUpdated" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
+                                </StackPanel>
+                                <!-- Ausdauer -->
+                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
+                                    <TextBlock Text="AU:" Margin="2,6,2,2" Width="25" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.AusdauerMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Ausdauer" />
+                                    <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.AusdauerAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Ausdauer" FontWeight="Bold" SourceUpdated="_textBoxAusdauerAktuell_SourceUpdated" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
+                                </StackPanel>
+                                <!-- Astralenergie -->
+                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource MagiebegabtStyle}">
+                                    <TextBlock Text="AE:" Margin="2,6,2,2" Width="25" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.AstralenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Astralenergie" />
+                                    <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.AstralenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Astralenergie" FontWeight="Bold" SourceUpdated="_textBoxAstralenergieAktuell_SourceUpdated" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
+                                </StackPanel>
+                                <!-- Karmaenergie -->
+                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource GeweihtStyle}">
+                                    <TextBlock Text="KE:" Margin="2,6,2,2" Width="25" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.KarmaenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Karmaenergie" />
+                                    <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.KarmaenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" SourceUpdated="_textBoxKarmaenergieAktuell_SourceUpdated" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
                                 </StackPanel>
                             </StackPanel>
-                            <Button Grid.Row="0" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkte" Padding="0" Width="45" ToolTip="Trefferpunkte verrechnen" Click="ButtonTrefferpunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <Border Background="Firebrick">
-                                    <Label Content="TP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </Border>
-                            </Button>
-                            <Button Grid.Row="0" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkte" Width="45" ToolTip="Schadenspunkte verrechnen" Click="ButtonSchadenspunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <Border Background="Firebrick">
-                                    <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </Border>
-                            </Button>
-                            <Button Grid.Row="0" Grid.Column="4" Margin="2" Style="{StaticResource MagiebegabtStyle}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" Click="ButtonAstralpunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <Border Background="BlueViolet">
-                                    <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </Border>
-                            </Button>
-                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
-                                <ComboBox Name="_comboBoxTrefferzone" Margin="0,2,0,0" Width="109" ToolTip="Trefferzone" VerticalContentAlignment="Center" />
-                                <CheckBox Margin="4" VerticalAlignment="Center" Name="_checkBoxAusdauerSchadenLeAbziehen" Content="-LeP" Background="SteelBlue" Foreground="DarkBlue" ToolTip="Halben Ausdauer-Schaden von der LE abziehen." IsChecked="True" />
+                            <!-- Wunden und Rüstungsschutz -->
+                            <Image Grid.Column="1" Source="/Images/Koerperzonen/koerperzonen_01.png" Height="213" ToolTip="Wunden und Rüstungsschutz" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="133" Grid.RowSpan="1" />
+                            <ViewGeneral:IntBox Margin="0,5,9,0" Value="{Binding Path=SelectedItem.RüstungsschutzGesamt, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Gesamt)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,9,56,0" Value="{Binding Path=SelectedItem.RüstungsschutzKopf, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Kopf)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,61,67,0" Value="{Binding Path=SelectedItem.RüstungsschutzBrust, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Brust)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,61,43,0" Value="{Binding Path=SelectedItem.RüstungsschutzRücken, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Rücken)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,112,56,0" Value="{Binding Path=SelectedItem.RüstungsschutzBauch, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (Bauch)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,81,102,0" Value="{Binding Path=SelectedItem.RüstungsschutzArmL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (linker Arm)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,81,9,0" Value="{Binding Path=SelectedItem.RüstungsschutzArmR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (rechter Arm)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,171,92,0" Value="{Binding Path=SelectedItem.RüstungsschutzBeinL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (linkes Bein)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,171,21,0" Value="{Binding Path=SelectedItem.RüstungsschutzBeinR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Rüstungsschutz (rechtes Bein)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+
+                            <ViewGeneral:IntBox Margin="0,31,56,0" Value="{Binding Path=SelectedItem.WundenKopf, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (Kopf)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,27,9,0" Value="{Binding Path=SelectedItem.Wunden, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (unlokalisiert)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,84,56,0" Value="{Binding Path=SelectedItem.WundenBrust, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (Brust)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,134,56,0" Value="{Binding Path=SelectedItem.WundenBauch, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (Bauch)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,104,102,0" Value="{Binding Path=SelectedItem.WundenArmL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (linker Arm)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,104,9,0" Value="{Binding Path=SelectedItem.WundenArmR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (rechter Arm)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,171,71,0" Value="{Binding Path=SelectedItem.WundenBeinL, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (linkes Bein)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,171,42,0" Value="{Binding Path=SelectedItem.WundenBeinR, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Wunden (rechtes Bein)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" Width="23" MarkPlusValue="True" />
+                            <TextBox Grid.Row="2" Grid.ColumnSpan="2" Margin="4,0,0,0" Text="{Binding Path=SelectedItem.Kampfwerte, ElementName=_listBoxKämpfer}" ToolTip="Kampfwerte (z.B. Schwert: DK N AT 14 TP 1W6+2)" TextWrapping="Wrap" AcceptsReturn="True">
+                                <TextBox.BorderBrush>
+                                    <SolidColorBrush />
+                                </TextBox.BorderBrush>
+                                <TextBox.Background>
+                                    <SolidColorBrush />
+                                </TextBox.Background>
+                            </TextBox>
+                            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="6,0,0,0" Orientation="Horizontal" >
+                                <TextBlock Text="INI:" Margin="2,6,2,2" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.InitiativeMod, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Initiative Modifikator" FontWeight="Bold" SourceUpdated="IntBox_SourceUpdated" ShowButtons="True" />
+                                <TextBlock Margin="2,6,2,2" Text="PA: " />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.Parade, ElementName=_listBoxKämpfer}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
                             </StackPanel>
-                            <Button Grid.Row="1" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkteAusdauer" ToolTip="Ausdauer-Trefferpunkte verrechnen" Click="ButtonTrefferpunkteAusdauer_Click"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45">
-                                <Border Background="SteelBlue">
-                                    <Label Content="TP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </Border>
-                            </Button>
-                            <Button Grid.Row="1" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkteAusdauer" ToolTip="Ausdauer-Schadenspunkte verrechnen" Click="ButtonSchadenspunkteAusdauer_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45">
-                                <Border Background="SteelBlue">
-                                    <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </Button>
-                            <Button Grid.Row="1" Grid.Column="4" Margin="2" Style="{StaticResource GeweihtStyle}" Name="_buttonKarmapunkte" Width="45" ToolTip="KaP abziehen" Click="ButtonKarmapunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                <Border Background="Gold">
-                                    <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                </Border>
-                            </Button>
+                            <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Vertical">
+                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
+                                    <TextBlock Margin="2,6,2,2" Text="BE: " />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.Behinderung, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Behinderung" FontWeight="Bold" SourceUpdated="_textBoxBehinderung_SourceUpdated" NoBackground="True" />
+                                    <TextBlock Margin="6,6,2,2" Text="WS: " />
+                                    <TextBlock Margin="2,6,2,2" Text="{Binding Path=SelectedItem.Wundschwellen, ElementName=_listBoxKämpfer}" FontWeight="Bold" ToolTip="Wundschwellen" />
+                                </StackPanel>
+                                <StackPanel Margin="6,0,0,2" Orientation="Horizontal" ToolTip="{Binding Path=SelectedItem.ModKampf_TextDetail, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" >
+                                    <TextBlock Margin="2,6,2,2" Text="Modifikatoren: " />
+                                    <TextBlock Margin="6,6,2,2" Text="{Binding Path=SelectedItem.ModKampf_Text, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" FontWeight="Bold" />
+                                </StackPanel>
+                            </StackPanel>
+                            <Grid Grid.Row="5" Grid.ColumnSpan="2" Margin="0,8,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <ViewGeneral:IntBox Grid.Row="0" Grid.RowSpan="2" Margin="8,0,4,0" x:Name="_intBoxSchaden" Value="5" ShowButtons="True" MinWidth="60" Height="Auto" ToolTip="SP/TP bzw. Abzug AE/KE" FontSize="16" />
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
+                                    <StackPanel Margin="0" ToolTip="Wunden-Art" Orientation="Horizontal">
+                                        <RadioButton Name="_radioButtonWundschwelleNormal" VerticalAlignment="Center" Content="Normal" ToolTip="Mormale Wundschwelle." IsChecked="True" />
+                                        <RadioButton Name="_radioButtonWundschwelleGesenkt" VerticalAlignment="Center" Content="WS -2" ToolTip="Wundschwelle um 2 gesenkt (Pfeil, Bolzen, Gezielter Stich, Todesstoß, etc.)." Margin="4,0,0,0" />
+                                        <RadioButton Name="_radioButtonWundeKeine" VerticalAlignment="Center" Content="Keine" ToolTip="Keine Wunde." Margin="4,0,0,0" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Grid.Row="0" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkte" Padding="0" Width="45" ToolTip="Trefferpunkte verrechnen" Click="ButtonTrefferpunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Border Background="Firebrick">
+                                        <Label Content="TP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </Button>
+                                <Button Grid.Row="0" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkte" Width="45" ToolTip="Schadenspunkte verrechnen" Click="ButtonSchadenspunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Border Background="Firebrick">
+                                        <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </Button>
+                                <Button Grid.Row="0" Grid.Column="4" Margin="2" Style="{StaticResource MagiebegabtStyle}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" Click="ButtonAstralpunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Border Background="BlueViolet">
+                                        <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </Button>
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
+                                    <ComboBox Name="_comboBoxTrefferzone" Margin="0,2,0,0" Width="109" ToolTip="Trefferzone" VerticalContentAlignment="Center" />
+                                    <CheckBox Margin="4" VerticalAlignment="Center" Name="_checkBoxAusdauerSchadenLeAbziehen" Content="-LeP" Background="SteelBlue" Foreground="DarkBlue" ToolTip="Halben Ausdauer-Schaden von der LE abziehen." IsChecked="True" />
+                                </StackPanel>
+                                <Button Grid.Row="1" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkteAusdauer" ToolTip="Ausdauer-Trefferpunkte verrechnen" Click="ButtonTrefferpunkteAusdauer_Click"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45">
+                                    <Border Background="SteelBlue">
+                                        <Label Content="TP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </Button>
+                                <Button Grid.Row="1" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkteAusdauer" ToolTip="Ausdauer-Schadenspunkte verrechnen" Click="ButtonSchadenspunkteAusdauer_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45">
+                                    <Border Background="SteelBlue">
+                                        <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Button>
+                                <Button Grid.Row="1" Grid.Column="4" Margin="2" Style="{StaticResource GeweihtStyle}" Name="_buttonKarmapunkte" Width="45" ToolTip="KaP abziehen" Click="ButtonKarmapunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Border Background="Gold">
+                                        <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </Button>
+                            </Grid>
+                            <TextBox Grid.Row="6" Grid.ColumnSpan="2" Margin="6,6,0,0" Text="{Binding Path=SelectedItem.Besonderheiten, ElementName=_listBoxKämpfer}" ToolTip="Besonderheiten" TextWrapping="Wrap" FontSize="10" AcceptsReturn="True">
+                                <TextBox.BorderBrush>
+                                    <SolidColorBrush />
+                                </TextBox.BorderBrush>
+                                <TextBox.Background>
+                                    <SolidColorBrush />
+                                </TextBox.Background>
+                            </TextBox>
+                            <StackPanel Name="_stackPanelAktionIn" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal" Visibility="Visible">
+                                <Label Content="Aktion in:" Height="28" Margin="6,6,0,0" />
+                                <RadioButton Content="{Binding Path=Content, ElementName=_radioButtonAktion1}" Height="16" Margin="2,6,4,0" IsChecked="{Binding Path=IsChecked, ElementName=_radioButtonAktion1}" />
+                                <RadioButton Content="{Binding Path=Content, ElementName=_radioButtonAktion2}" Height="16" Margin="2,6,0,0" IsChecked="{Binding Path=IsChecked, ElementName=_radioButtonAktion2}" />
+                            </StackPanel>
                         </Grid>
-                        <TextBox Grid.Row="6" Grid.ColumnSpan="2" Margin="6,6,0,0" Text="{Binding Path=SelectedItem.Besonderheiten, ElementName=_listBoxKämpfer}" ToolTip="Besonderheiten" TextWrapping="Wrap" FontSize="10" AcceptsReturn="True">
-                            <TextBox.BorderBrush>
-                                <SolidColorBrush />
-                            </TextBox.BorderBrush>
-                            <TextBox.Background>
-                                <SolidColorBrush />
-                            </TextBox.Background>
-                        </TextBox>
-                        <StackPanel Name="_stackPanelAktionIn" Grid.ColumnSpan="2" Grid.Row="7" Orientation="Horizontal" Visibility="Visible">
-                            <Label Content="Aktion in:" Height="28" Margin="6,6,0,0" />
-                            <RadioButton Content="{Binding Path=Content, ElementName=_radioButtonAktion1}" Height="16" Margin="2,6,4,0" IsChecked="{Binding Path=IsChecked, ElementName=_radioButtonAktion1}" />
-                            <RadioButton Content="{Binding Path=Content, ElementName=_radioButtonAktion2}" Height="16" Margin="2,6,0,0" IsChecked="{Binding Path=IsChecked, ElementName=_radioButtonAktion2}" />
-                        </StackPanel>
-                    </Grid>
                     </Border>
                 </ScrollViewer>
             </TabItem>
@@ -553,11 +628,11 @@
                 </ListBox>
             </Border>
             <Image HorizontalAlignment="Right" Margin="0,4,4,0" Name="image1" Source="/Images/Icons/General/info.png" Stretch="Fill" Width="16" Grid.Row="2" Height="16" VerticalAlignment="Top">
-                    <Image.ToolTip>
-                        <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Mit einem Doppelklick auf eine Aktion wird diese Aktion entfernt. Weitere Funktionen mit Rechtsklick.</TextBlock>
-                    </Image.ToolTip>
-                </Image>
-            
+                <Image.ToolTip>
+                    <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Mit einem Doppelklick auf eine Aktion wird diese Aktion entfernt. Weitere Funktionen mit Rechtsklick.</TextBlock>
+                </Image.ToolTip>
+            </Image>
+
         </Grid>
     </Grid>
 </UserControl>
