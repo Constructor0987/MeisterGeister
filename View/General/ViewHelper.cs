@@ -100,10 +100,17 @@ namespace MeisterGeister.View.General
         /// <returns>Würfelergebnis.</returns>
         public static int ShowWürfelDialog(string würfel, string infoText = "")
         {
-            View.Würfeln.WürfelDialog dlg = new View.Würfeln.WürfelDialog(würfel, infoText);
-            dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
-            dlg.ShowDialog();
-            return dlg.Ergebnis;
+            int ergebnis = 0;
+            if (System.Threading.Thread.CurrentThread.GetApartmentState() == System.Threading.ApartmentState.STA)
+            {
+                View.Würfeln.WürfelDialog dlg = new View.Würfeln.WürfelDialog(würfel, infoText);
+                dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+                dlg.ShowDialog();
+                ergebnis = dlg.Ergebnis;
+            }
+            else
+                ergebnis = Logic.General.Würfel.Parse(würfel, true);
+            return ergebnis;
         }
 
     }
