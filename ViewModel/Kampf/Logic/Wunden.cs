@@ -49,7 +49,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (neu > alt)
             {
                 // TODO ??: Dialog MVVM-konform aufrufen
-                return View.General.ViewHelper.ShowWürfelDialog((neu - alt) + "W6", "Ausdauer-Schaden durch Wunde"); //WdS 83
+                int count = neu - alt;
+                string wundeText = count > 1 ? "Wunden" : "Wunde";
+                return View.General.ViewHelper.ShowWürfelDialog(count + "W6", string.Format("Ausdauer-Schaden durch {0} {1}.", count, wundeText)); //WdS 83
             }
             return 0;
         }
@@ -120,7 +122,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                                 
                                 // TODO ??: Dialog MVVM-konform aufrufen
                                 _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog("2W6",
-                                    string.Format("SP durch {0}. Kopf-Wunde", value));
+                                    string.Format("SP durch {0}. Kopf-Wunde.", value));
                             }
                         }
                         _held.WundenKopf = value;
@@ -129,9 +131,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     case Trefferzone.Brust:
                         if (value > _held.WundenBrust)
                         {
+                            int count = value - _held.WundenBrust ?? 0;
+                            string wundeText = count > 1 ? "Wunden" : "Wunde";
+
                             // TODO ??: Dialog MVVM-konform aufrufen
-                            _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog( (value - _held.WundenBrust ?? 0) + "W6",
-                                string.Format("SP durch {0}. Brust-Wunde", value));
+                            _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog( count + "W6",
+                                string.Format("SP durch {0} Brust-{1}.", count, wundeText));
                             if (mehrAlsDreiWunden)
                             {
                                 // TODO ??: bewusstlos + blutverlust
@@ -162,9 +167,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     case Trefferzone.Bauch:
                         if (value > _held.WundenBauch)
                         {
+                            int count = value - _held.WundenBauch ?? 0;
+                            string wundeText = count > 1 ? "Wunden" : "Wunde";
+
                             // TODO ??: Dialog MVVM-konform aufrufen
-                            _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog((value - _held.WundenBauch ?? 0) + "W6",
-                                string.Format("SP durch {0}. Bauch-Wunde", value));
+                            _held.LebensenergieAktuell -= View.General.ViewHelper.ShowWürfelDialog(count + "W6",
+                                string.Format("SP durch {0} Bauch-{1}.", count, wundeText));
                             if (mehrAlsDreiWunden)
                             {
                                 // TODO ??: bewusstlos + blutverlust
