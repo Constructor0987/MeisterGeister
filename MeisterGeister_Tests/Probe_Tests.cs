@@ -201,6 +201,19 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(1, pe.Übrig, "TaP*\n" + InfoText(ht));
             Assert.AreEqual(4, pe.Qualität, "Qualität\n" + InfoText(ht));
             Assert.AreEqual(ErgebnisTyp.GELUNGEN, pe.Ergebnis, InfoText(ht));
+
+            // TaW 7    Mod -56
+            // 16      12     11
+            // 19       1      1
+            // -3      11     10
+            // TaP* 7   Qualität 60
+            ht.TaW = 7; ht.Modifikator = -56;
+            ht.Werte[0] = 16; ht.Werte[1] = 12; ht.Werte[2] = 11;
+            ht.Ergebnis.Würfe[0] = 19; ht.Ergebnis.Würfe[1] = 1; ht.Ergebnis.Würfe[2] = 1;
+            pe = ht.ProbenErgebnisBerechnen(ht.Ergebnis);
+            Assert.AreEqual(7, pe.Übrig, "TaP*\n" + InfoText(ht));
+            Assert.AreEqual(60, pe.Qualität, "Qualität\n" + InfoText(ht));
+            Assert.AreEqual(ErgebnisTyp.GLÜCKLICH, pe.Ergebnis, InfoText(ht));
         }
 
         private string InfoText(Held_Talent probe)

@@ -170,12 +170,12 @@ namespace MeisterGeister.Logic.General
             if (einsen >= Werte.Length)
             {
                 pe.Ergebnis = ErgebnisTyp.MEISTERHAFT;
-                pe.Übrig = Math.Max(fertigkeitswertEff, 1);  // Alle Punkte übrig
+                pe.Übrig = Math.Max(Math.Min(Fertigkeitswert, fertigkeitswertEff), 1);  // Alle Punkte übrig
             }
             else if (einsen >= Werte.Length / 2.0)
             {
                 pe.Ergebnis = ErgebnisTyp.GLÜCKLICH;
-                pe.Übrig = Math.Max(fertigkeitswertEff, 1); // Alle Punkte übrig
+                pe.Übrig = Math.Max(Math.Min(Fertigkeitswert, fertigkeitswertEff), 1); // Alle Punkte übrig
             }
             else if (zwanzigen >= Werte.Length)
                 pe.Ergebnis = ErgebnisTyp.FATALER_PATZER;
