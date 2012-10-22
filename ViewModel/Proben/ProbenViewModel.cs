@@ -68,6 +68,8 @@ namespace MeisterGeister.ViewModel.Proben
                 _selectedProbe = value;
                 RefreshProbeErgebnisListe();
                 OnChanged("SelectedProbe");
+                OnChanged("SelectedProbeIsZauber");
+                OnChanged("SelectedProbeHat_eBE");
             }
         }
 

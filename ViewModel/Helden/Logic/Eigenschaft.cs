@@ -49,7 +49,7 @@ namespace MeisterGeister.ViewModel.Helden.Logic
 
         public string Literatur { get { return "WdS 6"; } }
 
-        public string Komplexität { get { return "H"; } }
+        public string Komplex { get { return "H"; } }
 
         #endregion //---- EIGENSCHAFTEN & FELDER ----
 
