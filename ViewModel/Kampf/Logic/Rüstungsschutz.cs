@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
-
 using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
@@ -10,7 +10,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
     /// <summary>
     /// Die Rüstung abhängig vom Trefferzone-Enum
     /// </summary>
-    public class Rüstungsschutz : IRüstungsschutz
+    public class Rüstungsschutz : IRüstungsschutz, INotifyPropertyChanged
     {
         private IHasZonenRs _wesen;
 
@@ -90,6 +90,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     default:
                         break;
                 }
+                OnChanged(string.Empty);
             }
         }
 
@@ -126,5 +127,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 return (int)Math.Round(rs/20.0);
             }
         }
+
+        #region //---- INotifyPropertyChanged ----
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
     }
 }
