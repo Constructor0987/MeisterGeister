@@ -229,7 +229,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="1" Grid.Column="1">
+            <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <Border x:Name="border" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Kampftalente" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5">
@@ -271,7 +271,7 @@
                         <Image x:Name="image9" Source="/DSA MeisterGeister;component/Images/Icons/audio2.png"/>
                     </Border>
                 </StackPanel>
-            </Grid>
+            </ScrollViewer>
             <Expander Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Talentauswahl" Style="{DynamicResource TextTitel}" />
@@ -339,18 +339,9 @@
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                        </Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" CellStyle="{StaticResource HorizontalStretchSet}">
                                                 <DataGridTextColumn.Header >
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
                                             </DataGridTextColumn>
                                             <DataGridTemplateColumn>
@@ -405,7 +396,7 @@
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Image.ToolTip>
                                             <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                         </Image.ToolTip>
@@ -429,18 +420,9 @@
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
                                             <DataGrid.Columns>
-                                                <DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="{Binding OnRemove}" >
-                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                            </Button>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -490,7 +472,7 @@
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image.ToolTip>
                                                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                             </Image.ToolTip>
@@ -514,18 +496,9 @@
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
                                             <DataGrid.Columns>
-                                                <DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="{Binding OnRemove}" >
-                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                            </Button>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -575,7 +548,7 @@
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image.ToolTip>
                                                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                             </Image.ToolTip>
@@ -600,18 +573,9 @@
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
                                             <DataGrid.Columns>
-                                                <DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="{Binding OnRemove}" >
-                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                            </Button>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -661,7 +625,7 @@
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image.ToolTip>
                                                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                             </Image.ToolTip>
@@ -685,18 +649,9 @@
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
                                             <DataGrid.Columns>
-                                                <DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="{Binding OnRemove}" >
-                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                            </Button>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -746,7 +701,7 @@
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image.ToolTip>
                                                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                             </Image.ToolTip>
@@ -770,18 +725,9 @@
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
                                             <DataGrid.Columns>
-                                                <DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <Button Command="{Binding OnRemove}" >
-                                                                <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                            </Button>
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -831,7 +777,7 @@
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Image.ToolTip>
                                                 <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                             </Image.ToolTip>
@@ -851,18 +797,9 @@
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                        </Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -912,7 +849,7 @@
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Image.ToolTip>
                                             <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                         </Image.ToolTip>
@@ -931,18 +868,9 @@
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                        </Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -982,7 +910,7 @@
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Image.ToolTip>
                                             <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                         </Image.ToolTip>
@@ -1001,18 +929,9 @@
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                        </Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
                                             </DataGridTextColumn>
                                             <DataGridTemplateColumn>
@@ -1032,7 +951,7 @@
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Image.ToolTip>
                                             <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                         </Image.ToolTip>
@@ -1051,18 +970,9 @@
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
                                         <DataGrid.Columns>
-                                            <DataGridTemplateColumn>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <Button Command="{Binding OnRemove}" >
-                                                            <Image Source="/Images/Icons/General/entf_01.png" Height="15" />
-                                                        </Button>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"/>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
@@ -1097,7 +1007,7 @@
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="LEft" VerticalAlignment="Top">
+                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Image.ToolTip>
                                             <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                         </Image.ToolTip>

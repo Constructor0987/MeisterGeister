@@ -53,10 +53,14 @@ namespace MeisterGeister.ViewModel.Proben
 
         #region //---- KONSTRUKTOR ----
 
-        public ProbeDialogViewModel() { }
+        public ProbeDialogViewModel() 
+        {
+            ProbeControlViewModel.Orientation = System.Windows.Controls.Orientation.Vertical;
+        }
 
         public ProbeDialogViewModel(Probe probe, Model.Held held)
         {
+            ProbeControlViewModel.Orientation = System.Windows.Controls.Orientation.Vertical;
             ProbeControlViewModel.Held = held;
             ProbeControlViewModel.Probe = probe;
             ProbeControlViewModel.Würfeln();

@@ -59,16 +59,7 @@
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-                        <Image.ToolTip>
-                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Zauber für weitere Aktionen."/></TextBlock>
-                        </Image.ToolTip>
-                    </Image>
-                    <DataGrid Grid.Column="1" Name="_dataGridHeldZauber" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
+                    <DataGrid Name="_dataGridHeldZauber" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
                         ItemsSource="{Binding ZauberListe}" SelectedItem="{Binding SelectedHeldZauber}">
                         <DataGrid.ContextMenu>
                             <ContextMenu Opened="ContextMenuZauber_Opened">
@@ -102,7 +93,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Name}" IsReadOnly="True">
                                 <DataGridTextColumn.Header >
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Zaubername"/>
+                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Zaubername"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
                             <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True">
@@ -152,6 +143,11 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Image.ToolTip>
+                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Zauber für weitere Aktionen."/></TextBlock>
+                        </Image.ToolTip>
+                    </Image>
                 </Grid>
             </Border>
         </Expander>
