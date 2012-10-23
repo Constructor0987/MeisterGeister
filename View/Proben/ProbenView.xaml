@@ -173,14 +173,23 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="48" ToolTip="TODO: Sortierung" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}">
+                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="48" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}">
+                            <ComboBox.ToolTip>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Sortierung:" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding SelectedSortierung.Name}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="Übrig: Übrigbehaltene Punkte" />
+                                    <TextBlock Text="Wert: Fertigkeitswert" />
+                                    <TextBlock Text="Name: Heldenname" />
+                                </StackPanel>
+                            </ComboBox.ToolTip>
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Grid>
-                                            <Image Source="{Binding ImagePath}" Width="24" />
-                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                        </Grid>
+                                        <Image Source="{Binding ImagePath}" Width="24" />
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>

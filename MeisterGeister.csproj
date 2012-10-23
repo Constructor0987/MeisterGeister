@@ -1151,6 +1151,7 @@
     <Resource Include="Images\Icons\General\shuffle.png" />
     <Resource Include="Images\Icons\General\pause_grau.png" />
     <Resource Include="Images\Icons\General\play_grau.png" />
+    <Resource Include="Images\Icons\General\sort.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -49,9 +49,29 @@ namespace MeisterGeister.ViewModel.Proben
         private List<ProbeControlViewModel> _probeErgebnisListe = new List<ProbeControlViewModel>();
         public List<ProbeControlViewModel> ProbeErgebnisListe
         {
-            get { return _probeErgebnisListe.OrderByDescending(vm => vm.Ergebnis.Übrig).
-                ThenByDescending(vm => vm.Ergebnis.Qualität).
-                ThenByDescending(vm => vm.Probe.Fertigkeitswert).ToList(); }
+            get 
+            {
+                if (SelectedSortierung != null)
+                {
+                    switch (SelectedSortierung.Name)
+                    {
+                        case "Übrig":
+                            return _probeErgebnisListe.OrderByDescending(vm => vm.Ergebnis.Übrig).
+                                ThenByDescending(vm => vm.Ergebnis.Qualität).
+                                ThenByDescending(vm => vm.Probe.Fertigkeitswert).ToList();
+                        case "Wert":
+                            return _probeErgebnisListe.OrderByDescending(vm => vm.Probe.Fertigkeitswert).
+                                ThenByDescending(vm => vm.Probe.Werte.Sum()).
+                                ThenBy(vm => vm.Held.Name).ToList();
+                        case "Name":
+                            return _probeErgebnisListe.OrderBy(vm => vm.Held.Name).
+                                ThenByDescending(vm => vm.Probe.Fertigkeitswert).ToList();
+                        default:
+                            break;
+                    }
+                }
+                return _probeErgebnisListe;
+            }
             set
             {
                 _probeErgebnisListe = value;
@@ -97,8 +117,20 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
-        private AnzeigeModusItem _selectedAnzeigeModus;
-        public AnzeigeModusItem SelectedAnzeigeModus
+        private AnzeigeModusSortierungItem _selectedSortierung;
+        public AnzeigeModusSortierungItem SelectedSortierung
+        {
+            get { return _selectedSortierung; }
+            set
+            {
+                _selectedSortierung = value;
+                OnChanged("SelectedSortierung");
+                OnChanged("ProbeErgebnisListe");
+            }
+        }
+
+        private AnzeigeModusSortierungItem _selectedAnzeigeModus;
+        public AnzeigeModusSortierungItem SelectedAnzeigeModus
         {
             get { return _selectedAnzeigeModus; }
             set
@@ -149,7 +181,6 @@ namespace MeisterGeister.ViewModel.Proben
             { // WrapPanel
                 System.Windows.FrameworkElementFactory factory =
                     new System.Windows.FrameworkElementFactory(typeof(WrapPanel));
-                //factory.SetValue(WrapPanel.OrientationProperty, Orientation.Horizontal);
                 return new ItemsPanelTemplate(factory);
             }
         }
@@ -218,11 +249,19 @@ namespace MeisterGeister.ViewModel.Proben
             set { _filterListe = value; FilterProbeListe(); OnChanged("FilterListe"); }
         }
 
-        List<AnzeigeModusItem> _anzeigeModusListe = new List<AnzeigeModusItem>() { new AnzeigeModusItem("Zeile"), new AnzeigeModusItem("Kachel") };
-        public List<AnzeigeModusItem> AnzeigeModusListe
+        List<AnzeigeModusSortierungItem> _anzeigeModusListe = new List<AnzeigeModusSortierungItem>() { new AnzeigeModusSortierungItem("Zeile"), new AnzeigeModusSortierungItem("Kachel") };
+        public List<AnzeigeModusSortierungItem> AnzeigeModusListe
         {
             get { return _anzeigeModusListe; }
             set { _anzeigeModusListe = value; OnChanged("AnzeigeModusListe"); }
+        }
+
+        List<AnzeigeModusSortierungItem> _sortierungListe = new List<AnzeigeModusSortierungItem>() { new AnzeigeModusSortierungItem("Übrig"), new AnzeigeModusSortierungItem("Wert"),
+            new AnzeigeModusSortierungItem("Name")};
+        public List<AnzeigeModusSortierungItem> SortierungListe
+        {
+            get { return _sortierungListe; }
+            set { _sortierungListe = value; OnChanged("SortierungListe"); }
         }
 
         #endregion
@@ -236,6 +275,7 @@ namespace MeisterGeister.ViewModel.Proben
             Global.GruppenProbeWürfeln += Global_GruppenProbeWürfeln;
 
             SelectedAnzeigeModus = AnzeigeModusListe.Where(i => i.Name == Einstellungen.ProbenAnzeigeModus).FirstOrDefault();
+            _selectedSortierung = SortierungListe.FirstOrDefault();
 
             InitFilterListe();
 
@@ -418,9 +458,9 @@ namespace MeisterGeister.ViewModel.Proben
 
     #region //---- SUBKLASSEN ----
 
-    public class AnzeigeModusItem
+    public class AnzeigeModusSortierungItem
     {
-        public AnzeigeModusItem(string name)
+        public AnzeigeModusSortierungItem(string name)
         {
             Name = name;
             SetImagePath();
@@ -442,8 +482,10 @@ namespace MeisterGeister.ViewModel.Proben
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/General/kachel.png";
                     break;
                 case "Zeile":
-                default:
                     _imagePath = "/DSA MeisterGeister;component/Images/Icons/General/zeile.png";
+                    break;
+                default:
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/General/sort.png";
                     break;
             }
         }

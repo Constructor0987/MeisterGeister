@@ -160,10 +160,6 @@ namespace MeisterGeister.Logic.General
                 pe.Qualität = tmpÜbrig + wurfQualität.Min();
             pe.Übrig = tmpÜbrig;
 
-            // Sonderfall 1er Probe
-            if (Werte.Length <= 1)
-                pe.Übrig = pe.Qualität;
-
             // TODO MT: Spezielle Erfahrung speichern
             // Den User per YesNo-Dialog fragen?
 
@@ -187,6 +183,11 @@ namespace MeisterGeister.Logic.General
                 pe.Ergebnis = ErgebnisTyp.MISSLUNGEN;
             else
                 pe.Ergebnis = ErgebnisTyp.KEIN_ERGEBNIS;
+
+            // Sonderfall 1er Probe
+            if (Werte.Length <= 1)
+                pe.Übrig = pe.Qualität;
+
             return pe;
         }
 
