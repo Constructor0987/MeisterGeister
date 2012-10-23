@@ -47,6 +47,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             private set { manöver = value; }
         }
 
+        /// <summary>
+        /// Ein Hack um zwei Anzeigen in der InitiativListe (TreeView) zu bekommen.
+        /// </summary>
         public ICollection<ManöverInfo> ThisAsList
         {
             get

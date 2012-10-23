@@ -470,6 +470,40 @@ namespace MeisterGeister.ViewModel.Kampf
             if (SelectedGegnerBase != null)
                 Global.ContextHeld.Update<GegnerBase>(SelectedGegnerBase);
         }
+
+        private void ParseBemerkungen()
+        {
+            foreach (GegnerBase g in GegnerBaseListe)
+            {
+                if (g.Bemerkung != null && g.Bemerkung.Trim() != String.Empty)
+                    foreach (string zeile in g.Bemerkung.Split(new char[] { '\n' }))
+                    {
+                        GegnerBase_Angriff ga = GegnerBase_Angriff.Parse(zeile);
+                        if (ga != null)
+                        {
+                            string name = ga.Name; int i = 1;
+                            while (g.GegnerBase_Angriff.Where(gba => gba.Name == name).Count() > 0)
+                                name = String.Format("{0} ({1})", ga.Name, ++i);
+                            g.GegnerBase_Angriff.Add(ga);
+                        }
+                        else
+                        {
+                            IEnumerable<Kampfregel> kampfregeln = Kampfregel.Parse(zeile);
+                            if (kampfregeln != null && kampfregeln.Count() > 0)
+                                foreach (Kampfregel kr in kampfregeln)
+                                {
+                                    if (g.GegnerBase_Kampfregel.Where(gbkr => gbkr.KampfregelGUID == kr.KampfregelGUID).Count() == 0)
+                                    {
+                                        var gkr = new GegnerBase_Kampfregel();
+                                        gkr.KampfregelGUID = kr.KampfregelGUID;
+                                        gkr.GegnerBaseGUID = g.GegnerBaseGUID;
+                                        g.GegnerBase_Kampfregel.Add(gkr);
+                                    }
+                                }
+                        }
+                    }
+            }
+        }
         #endregion
     }
 
