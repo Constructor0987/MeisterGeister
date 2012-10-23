@@ -547,18 +547,15 @@ namespace MeisterGeister.Model
         {
             get
             {
+                int leModCount = 0;
                 if (LebensenergieAktuell < KO * -1)
                     return "Tot";
                 else if (LebensenergieAktuell <= 0)
                     return "Bewusstlos";
-                else if (LebensenergieAktuell <= 5)
+                else if (Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0)
                     return "Kampfunfähig";
-                else if (LebensenergieAktuell < LebensenergieMax / 4)
-                    return "< 1/4";
-                else if (LebensenergieAktuell < LebensenergieMax / 3)
-                    return "< 1/3";
-                else if (LebensenergieAktuell < LebensenergieMax / 2)
-                    return "< 1/2";
+                else if ((leModCount = Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count()) > 0)
+                    return "< 1/" + (leModCount + 1);
                 return string.Empty;
             }
         }
@@ -567,7 +564,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                string info = string.Empty;
+                string info = string.Empty; int leModCount = 0;
                 if (LebensenergieAktuell < KO * -1)
                     info = "Tot";
                 else if (LebensenergieAktuell <= 0)
@@ -576,25 +573,15 @@ namespace MeisterGeister.Model
                     info += Environment.NewLine + string.Format("tot in W6 x KO ({0}) Kampfrunden ({0} bis {1} KR = {2} bis {3} sec)",
                         KO, 6 * KO, 3 * KO, 18 * KO);
                 }
-                else if (LebensenergieAktuell <= 5)
+                else if (Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0)
                 {
                     info = "Kampfunfähig";
                     info += Environment.NewLine + "keine Aktionen möglich, außer mit GS 1 bewegen";
                 }
-                else if (LebensenergieAktuell < LebensenergieMax / 4)
+                else if ((leModCount = Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count()) > 0)
                 {
-                    info = "< 1/4";
-                    info += Environment.NewLine + "Optional: Eigenschaftsproben +3; Talent-/Zauberproben +9; GS -3";
-                }
-                else if (LebensenergieAktuell < LebensenergieMax / 3)
-                {
-                    info = "< 1/3";
-                    info += Environment.NewLine + "Optional: Eigenschaftsproben +2; Talent-/Zauberproben +6; GS -2";
-                }
-                else if (LebensenergieAktuell < LebensenergieMax / 2)
-                {
-                    info = "< 1/2";
-                    info += Environment.NewLine + "Optional: Eigenschaftsproben +1; Talent-/Zauberproben +3; GS -1";
+                    info = "< 1/" + (leModCount + 1);
+                    info += Environment.NewLine + string.Format("Optional: Eigenschaftsproben +{0}; Talent-/Zauberproben +{1}; GS -{0}", leModCount, leModCount * 3);
                 }
                 info += Environment.NewLine + "(\"Auswirkungen niedriger Lebensenergie\" siehe WdS 56f.)";
                 return info;
@@ -653,12 +640,11 @@ namespace MeisterGeister.Model
         {
             get
             {
-                if (AusdauerAktuell <= 0)
+                int auModCount = 0;
+                if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
                     return "Kampfunfähig";
-                else if (AusdauerAktuell < AusdauerMax / 4)
-                    return "< 1/4";
-                else if (AusdauerAktuell < AusdauerMax / 3)
-                    return "< 1/3";
+                else if ((auModCount = Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count()) > 0)
+                    return "< 1/" + (auModCount + 2);
                 return string.Empty;
             }
         }
@@ -667,21 +653,16 @@ namespace MeisterGeister.Model
         {
             get
             {
-                string info = string.Empty;
-                if (AusdauerAktuell <= 0)
+                string info = string.Empty; int auModCount = 0;
+                if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
                 {
                     info = "Kampfunfähig";
                     info += Environment.NewLine + "keine Aktionen möglich, außer Atem Holen";
                 }
-                else if (AusdauerAktuell < AusdauerMax / 4)
+                else if ((auModCount = Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count()) > 0)
                 {
-                    info = "< 1/4";
-                    info += Environment.NewLine + "Optional: Eigenschaftsproben +2; Talent-/Zauberproben +6";
-                }
-                else if (AusdauerAktuell < AusdauerMax / 3)
-                {
-                    info = "< 1/3";
-                    info += Environment.NewLine + "Optional: Eigenschaftsproben +1; Talent-/Zauberproben +3";
+                    info = "< 1/" + (auModCount + 2);
+                    info += Environment.NewLine + string.Format("Optional: Eigenschaftsproben +{0}; Talent-/Zauberproben +{1}", auModCount, auModCount * 3);
                 }
                 info += Environment.NewLine + "(\"Auswirkungen niedriger Ausdauer\" siehe WdS 83)";
                 return info;
