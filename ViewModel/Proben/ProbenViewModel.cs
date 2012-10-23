@@ -264,6 +264,13 @@ namespace MeisterGeister.ViewModel.Proben
             set { _sortierungListe = value; OnChanged("SortierungListe"); }
         }
 
+        private ObservableCollection<string> _spezielleErfahrungListe = new ObservableCollection<string>();
+        public ObservableCollection<string> SpezielleErfahrungListe 
+        {
+            get { return _spezielleErfahrungListe; }
+            set { _spezielleErfahrungListe = value; OnChanged("SpezielleErfahrungListe"); }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -273,6 +280,7 @@ namespace MeisterGeister.ViewModel.Proben
             onWürfeln = new Base.CommandBase(Würfeln, null);
             Einstellungen.WuerfelSoundAbspielenChanged += WuerfelSoundAbspielenChanged;
             Global.GruppenProbeWürfeln += Global_GruppenProbeWürfeln;
+            Probe.SpezielleErfahrung += Probe_SpezielleErfahrung;
 
             SelectedAnzeigeModus = AnzeigeModusListe.Where(i => i.Name == Einstellungen.ProbenAnzeigeModus).FirstOrDefault();
             _selectedSortierung = SortierungListe.FirstOrDefault();
@@ -451,6 +459,12 @@ namespace MeisterGeister.ViewModel.Proben
             else
                 SelectedProbe = probe;
             Würfeln(null);
+        }
+
+        private void Probe_SpezielleErfahrung(object sender, EventArgs e)
+        {
+            if (sender != null)
+                SpezielleErfahrungListe.Insert(0, sender.ToString());
         }
 
         #endregion

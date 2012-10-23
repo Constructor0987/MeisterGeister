@@ -61,8 +61,10 @@ namespace MeisterGeister.Model
                     // Text als neuen Block anfüfen
                     Document.Blocks.Add(new Paragraph(new Run(text)));
 
+                    ParseFlowDoumentToText();
+                    
                     // Notizen speichern
-                    Global.ContextNotizen.Save();
+                    Global.ContextNotizen.Update<Model.Notizen>(this);
                 }
                 catch (Exception) { throw; }
         }

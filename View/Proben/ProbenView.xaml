@@ -141,11 +141,28 @@
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <ListBox BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                    <ListBox Grid.Column="0" Grid.Row="0" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             ItemsSource="{Binding SpezielleErfahrungListe}" TextElement.FontStyle="Italic" TextElement.FontSize="11" MaxHeight="60" Margin="5,0,0,0"
+                             ToolTip="Bei Doppel- oder Dreifach-Eins wird eine Spezielle Erfahrung im Notiz-Tool vermerkt (WdS 162).">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="#7FF9DAB5">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Width="14" />
+                                    <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ListBox Grid.Column="0" Grid.Row="1" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                              ItemsSource="{Binding ProbeErgebnisListe}" ItemsPanel="{Binding ProbeErgebnisListePanel}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
@@ -163,7 +180,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <StackPanel Grid.Column="1"  Orientation="Vertical" Margin="5">
+                    <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Margin="5">
                         <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="48" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>

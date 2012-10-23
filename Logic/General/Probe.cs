@@ -160,9 +160,6 @@ namespace MeisterGeister.Logic.General
                 pe.Qualität = tmpÜbrig + wurfQualität.Min();
             pe.Übrig = tmpÜbrig;
 
-            // TODO MT: Spezielle Erfahrung speichern
-            // Den User per YesNo-Dialog fragen?
-
             if (einsen >= Werte.Length)
             {
                 pe.Ergebnis = ErgebnisTyp.MEISTERHAFT;
@@ -188,8 +185,35 @@ namespace MeisterGeister.Logic.General
             if (Werte.Length <= 1)
                 pe.Übrig = pe.Qualität;
 
+            // Spezielle Erfahrung
+            if (einsen >= 2) // WdS 162
+                SpezielleErfahrungSpeichern(einsen);
+
             return pe;
         }
+
+        private void SpezielleErfahrungSpeichern(int einsen)
+        {
+            // Bei Doppel1 oder Dreifach1 eine SE (WdS 162)
+            // TODO ??: Eventuell User per YesNo-Dialog fragen?
+            string held = "Unbekannt";
+            if (this is Model.Held_Zauber)
+                held = (this as Model.Held_Zauber).Held.Name;
+            else if (this is Model.Held_Talent)
+                held = (this as Model.Held_Talent).Held.Name;
+            else if (this is MetaTalent)
+                held = (this as MetaTalent).Held.Name;
+            string seTxt = string.Format("{0} - {1} - Spezielle Erfahrung in {2} (TaW {3}) für {4} ({5} Einsen)",
+                DateTime.Now.ToString("g"), MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort(),
+                Probenname, Fertigkeitswert, held, einsen);
+
+            Global.ContextNotizen.NotizErfahrungen.AppendText("\n" + seTxt + "\n");
+
+            if (SpezielleErfahrung != null)
+                SpezielleErfahrung(seTxt, new EventArgs());
+        }
+
+        public static EventHandler SpezielleErfahrung;
 
         private double _erfolgsschance = 0;
         private double _erwartungswert = 0;
