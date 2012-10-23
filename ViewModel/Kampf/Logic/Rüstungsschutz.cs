@@ -82,6 +82,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         this[TrefferzonenHelper.ZufallsZone()] = value;
                         break;
                     case Trefferzone.Gesamt:
+                        // TODO ??: Ändern des Gesamt-RS sollte automatisch die Werte in einer Zone setzen
                     case Trefferzone.Unlokalisiert:
                     default:
                         break;
@@ -89,6 +90,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+
+        // TODO ??: Falsches Ergebnis
         private int GesamtRS
         {
             get
