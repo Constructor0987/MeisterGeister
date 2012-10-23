@@ -284,12 +284,20 @@ namespace MeisterGeister.ViewModel.Proben
                 {
                     if (Probe != null)
                     {
+                        bool changed = false;
                         if (Ergebnis.Würfe == null)
                             Ergebnis.Würfe = new int[this.WertCount];
                         for (int i = 0; i < Ergebnis.Würfe.Length; i++)
-                            Ergebnis.Würfe[i] = EigenschaftWurfItemListe[i].Wurf;
+                        {
+                            if (Ergebnis.Würfe[i] != EigenschaftWurfItemListe[i].Wurf)
+                            {
+                                Ergebnis.Würfe[i] = EigenschaftWurfItemListe[i].Wurf;
+                                changed = true;
+                            }
+                        }
 
-                        Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
+                        if (changed)
+                            Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
                     }
                 }
             }

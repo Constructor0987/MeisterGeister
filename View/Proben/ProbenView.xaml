@@ -150,7 +150,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ListBox Grid.Column="0" Grid.Row="0" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                             ItemsSource="{Binding SpezielleErfahrungListe}" TextElement.FontStyle="Italic" TextElement.FontSize="11" MaxHeight="60" Margin="5,0,0,0"
+                             ItemsSource="{Binding SpezielleErfahrungListe}" TextElement.FontStyle="Italic" TextElement.FontSize="11" MaxHeight="55" Margin="5,0,0,0"
                              ToolTip="Bei Doppel- oder Dreifach-Eins wird eine Spezielle Erfahrung im Notiz-Tool vermerkt (WdS 162).">
                         <ListBox.ItemTemplate>
                             <DataTemplate>

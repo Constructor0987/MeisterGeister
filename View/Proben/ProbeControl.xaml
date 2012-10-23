@@ -170,10 +170,10 @@
                                         <StackPanel Width="225">
                                             <TextBlock TextWrapping="Wrap" Text="Ergebnis des Wurfs" FontWeight="Bold" />
                                             <TextBlock FontStyle="Italic" Text="Der Wert kann folgendermaßen geändert werden:" Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
-                                            <TextBlock FontStyle="Italic" FontSize="10" Text="• Rechtsklick -> Auswahl über Context-Menü" TextWrapping="WrapWithOverflow" />
-                                            <TextBlock FontStyle="Italic" FontSize="10" Text="• Pfeil-Hoch/Runter Tasten auf der Tastatur" TextWrapping="WrapWithOverflow" />
-                                            <TextBlock FontStyle="Italic" FontSize="10" Text="• Mausrad Hoch/Runter" TextWrapping="WrapWithOverflow" />
-                                            <TextBlock FontStyle="Italic" FontSize="10" Text="• Tastatureingabe: Bestätigen mit ENTER oder Klick in anderes Feld" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Rechtsklick -> Auswahl über Context-Menü" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Pfeil-Hoch/Runter Tasten auf der Tastatur" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Mausrad Hoch/Runter" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock FontStyle="Italic" FontSize="11" Text="• Tastatureingabe: Bestätigen mit ENTER oder Klick in anderes Feld" TextWrapping="WrapWithOverflow" />
                                         </StackPanel>
                                     </Border.ToolTip>
                                     <Border.Background>
