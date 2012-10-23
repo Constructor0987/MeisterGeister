@@ -12,6 +12,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Niedrige Lebensenergie"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "Eigenschaftsproben +1; Talent-/Zauberproben +3; GS -1"; }
+        }
+
         public override string Literatur
         {
             get { return "WdS 57"; }
@@ -40,6 +45,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Niedrige Ausdauer"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "Eigenschaftsproben +1; Talent-/Zauberproben +3"; }
+        }
+
         public override string Literatur
         {
             get { return "WdS 83"; }
@@ -63,6 +73,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Kampfunfähig (Lebensenergie)"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "GS 1"; }
+        }
+
         public override string Literatur
         {
             get { return "WdS 57"; }
@@ -79,6 +94,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         public override string Name
         {
             get { return "Kampfunfähig (Ausdauer)"; }
+        }
+
+        public override string Auswirkung
+        {
+            get { return "GS 1"; }
         }
 
         public override string Literatur

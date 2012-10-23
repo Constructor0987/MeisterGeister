@@ -29,6 +29,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return null; }
         }
 
+        public virtual string Auswirkung
+        {
+            get { return null; }
+        }
+
         private DateTime erstellt = DateTime.Now;
         public virtual DateTime Erstellt
         {

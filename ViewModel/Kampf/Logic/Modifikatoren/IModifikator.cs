@@ -10,6 +10,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         string Name { get; }
         string ToString();
         string Literatur { get; }
+        string Auswirkung { get; }
         //DSADateTime
         DateTime Erstellt { get; }
         //Dauer?

@@ -473,10 +473,13 @@
                     <TextBlock Text="Modifikatoren" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
-                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SelectedHeld.Modifikatoren}">
+                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SelectedHeld.Modifikatoren}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" HorizontalAlignment="Left" />
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding Auswirkung}" HorizontalAlignment="Right" Margin="4,0,4,0" FontStyle="Italic" Foreground="#FF6C6C6C" />
+                                </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

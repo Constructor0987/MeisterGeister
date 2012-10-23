@@ -57,6 +57,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "WdS 57"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "AT/PA/FK/INI-Basis, GE -2; GE -1"; }
+        }
+
         public int ApplyATBasisMod(int wert)
         {
             return wert - 2;
@@ -95,6 +100,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Wunde am Kopf"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "MU, KL, IN, INI-Basis -2"; }
+        }
+
         public int ApplyMUMod(int wert)
         {
             return wert - 2;
@@ -121,6 +131,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         public override string Name
         {
             get { return "Wunde an der Brust"; }
+        }
+
+        public override string Auswirkung
+        {
+            get { return "AT, PA, KO, KK -1"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -151,6 +166,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Wunde am linken Arm (Schildarm)"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "AT, PA, FF, KK -2"; }
+        }
+
         public int ApplyPAMod(int wert)
         {
             return wert - 2;
@@ -179,6 +199,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Wunde am rechten Arm (Waffenarm)"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "AT, PA, FF, KK -2"; }
+        }
+
         public int ApplyPAMod(int wert)
         {
             return wert - 2;
@@ -205,6 +230,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         public override string Name
         {
             get { return "Wunde am Bauch"; }
+        }
+
+        public override string Auswirkung
+        {
+            get { return "AT, PA, KO, KK, GS, INI-Basis -1"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -245,6 +275,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Wunde am linken Bein"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "AT, PA, GE, INI-Basis -2; GS -1"; }
+        }
+
         public int ApplyPAMod(int wert)
         {
             return wert - 2;
@@ -276,6 +311,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         public override string Name
         {
             get { return "Wunde am rechten Bein"; }
+        }
+
+        public override string Auswirkung
+        {
+            get { return "AT, PA, GE, INI-Basis -2; GS -1"; }
         }
 
         public int ApplyPAMod(int wert)

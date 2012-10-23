@@ -23,6 +23,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "Hohe Initiative"; }
         }
 
+        public override string Auswirkung
+        {
+            get { return "PA +" + Bonus; }
+        }
+
         public override string Literatur
         {
             get { return "WdS 78"; }
