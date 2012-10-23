@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MeisterGeister.View.Proben.ProbenView"
+﻿<UserControl x:Name="userControl" x:Class="MeisterGeister.View.Proben.ProbenView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -31,7 +31,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="120*" />
                         <ColumnDefinition Width="80" />
                         <ColumnDefinition Width="50*" />
                         <ColumnDefinition Width="Auto" />
@@ -54,9 +55,13 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-
-                    <Image Grid.Column="1" Width="24" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Opacity="0.8" />
-                    <ComboBox Grid.Column="2" Height="23" ItemsSource="{Binding FilteredProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Probenname" ToolTip="Proben-Auswahl">
+                    <CheckBox Grid.Column="1" IsChecked="{Binding IsAktivierteProben}" Margin="5" ToolTip="Nur aktivierte Proben in Auswahlliste anzeigen." VerticalAlignment="Center">
+                        <CheckBox.Content>
+                            <Image Source="/Images/Icons/General/ok.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                        </CheckBox.Content>
+                    </CheckBox>
+                    <Image Grid.Column="2" Width="24" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Opacity="0.8" />
+                    <ComboBox Grid.Column="3" Height="23" ItemsSource="{Binding FilteredProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Probenname" ToolTip="Proben-Auswahl">
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
@@ -64,20 +69,61 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
 
-                    <ViewGeneral:IntBox Grid.Column="3" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
+                    <ViewGeneral:IntBox Grid.Column="4" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
 
-                    <Button Grid.Column="5" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
+                    <Button Grid.Column="6" Grid.RowSpan="2" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
                     </Button>
 
-                    <CheckBox Grid.Column="6" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
+                    <CheckBox Grid.Column="7" Grid.RowSpan="2" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
                         <CheckBox.Content>
                             <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
                         </CheckBox.Content>
                     </CheckBox>
 
-                    <TextBlock Grid.Row="1" Grid.ColumnSpan="6" Text="TODO: Proben-Favoriten" />
-
+                        <Button Grid.Row="1" Command="{Binding OnAddFavorit}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="23" Width="23" Margin="5,2,2,2" ToolTip="Die aktuelle Probe als Favoriten-Button einfügen.">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
+                        </Button>
+                        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="30,0,0,0" BorderBrush="#00000000" Background="#00000000" ItemsSource="{Binding ProbeFavoritenListe}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}">
+                                    <Setter Property="Focusable" Value="False"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Height="23" Margin="2" Command="{Binding DataContext.OnWürfelFavorit, ElementName=userControl}" CommandParameter="{Binding}" 
+                                            Tag="{Binding DataContext, ElementName=userControl}">
+                                        <Button.ToolTip>
+                                            <StackPanel>
+                                                <TextBlock Text="Links-Klick: Probe würfeln." />
+                                                <TextBlock Text="Rechts-Klick: Context-Menü zum Löschen." />
+                                            </StackPanel>
+                                        </Button.ToolTip>
+                                        <Button.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavorit, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}" Header="Löschen">
+                                                    <MenuItem.Icon>
+                                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavoritAll, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Header="Alle Löschen">
+                                                    <MenuItem.Icon>
+                                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </Button.ContextMenu>
+                                        <TextBlock Text="{Binding Probenname}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" />
+                                    </Button>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                 </Grid>
             </Border>
         </Expander>
@@ -181,7 +227,7 @@
                     </ListBox>
 
                     <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Margin="5">
-                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="48" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}">
+                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="50" ToolTip="Anzeige-Modus" ItemsSource="{Binding AnzeigeModusListe}" SelectedItem="{Binding SelectedAnzeigeModus}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -190,7 +236,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="48" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}">
+                        <ComboBox Margin="2" HorizontalAlignment="Right" Height="32" Width="50" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}">
                             <ComboBox.ToolTip>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
@@ -206,12 +252,12 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{Binding ImagePath}" Width="24" />
-                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Margin="2" HorizontalAlignment="Right" Height="32">
+                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50">
                             <Button.ToolTip>
                                 <TextBlock Width="200" Height="Auto" TextWrapping="Wrap"
             	                    Text="TODO: Probenergebnisse im Spieler-Fenster anzeigen." />

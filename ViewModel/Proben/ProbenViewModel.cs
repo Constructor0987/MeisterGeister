@@ -37,6 +37,83 @@ namespace MeisterGeister.ViewModel.Proben
                 WikiAventurica.OpenBrowser(SelectedProbe);
         }
 
+        private Base.CommandBase onAddFavorit = null;
+        public Base.CommandBase OnAddFavorit
+        {
+            get
+            {
+                if (onAddFavorit == null)
+                    onAddFavorit = new Base.CommandBase(AddFavorit, null);
+                return onAddFavorit;
+            }
+        }
+        private void AddFavorit(object sender)
+        {
+            if (SelectedProbe != null && !_probeFavoritenListe.Contains(SelectedProbe))
+            {
+                _probeFavoritenListe.Add(SelectedProbe);
+                SaveProbeFavoriten();
+                OnChanged("ProbeFavoritenListe");
+            }
+        }
+
+        private Base.CommandBase onWürfelFavorit = null;
+        public Base.CommandBase OnWürfelFavorit
+        {
+            get
+            {
+                if (onWürfelFavorit == null)
+                    onWürfelFavorit = new Base.CommandBase(WürfelFavorit, null);
+                return onWürfelFavorit;
+            }
+        }
+        private void WürfelFavorit(object sender)
+        {
+            if (sender is Probe)
+            {
+                SelectedFilterItem = FilterListe.FirstOrDefault();
+                SelectedProbe = sender as Probe;
+                Würfeln(null);
+            }
+        }
+
+        private Base.CommandBase onDeleteFavorit = null;
+        public Base.CommandBase OnDeleteFavorit
+        {
+            get
+            {
+                if (onDeleteFavorit == null)
+                    onDeleteFavorit = new Base.CommandBase(DeleteFavorit, null);
+                return onDeleteFavorit;
+            }
+        }
+        private Base.CommandBase onDeleteFavoritAll = null;
+        public Base.CommandBase OnDeleteFavoritAll
+        {
+            get
+            {
+                if (onDeleteFavoritAll == null)
+                    onDeleteFavoritAll = new Base.CommandBase(DeleteFavorit, null);
+                return onDeleteFavoritAll;
+            }
+        }
+        /// <summary>
+        /// Löscht Probe-Favoriten.
+        /// </summary>
+        /// <param name="sender">Den zu löschenden Probe-Favorit oder 'null' für alle.</param>
+        private void DeleteFavorit(object sender)
+        {
+            if (sender == null)
+            {
+                if(Confirm("Probe-Favoriten", "Sollen wirklich alle Proben-Favoriten gelöscht werden?"))
+                    _probeFavoritenListe.Clear();
+            }
+            else if (sender is Probe)
+                _probeFavoritenListe.Remove(sender as Probe);
+            SaveProbeFavoriten();
+            OnChanged("ProbeFavoritenListe");
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
@@ -271,11 +348,19 @@ namespace MeisterGeister.ViewModel.Proben
             set { _spezielleErfahrungListe = value; OnChanged("SpezielleErfahrungListe"); }
         }
 
+        private List<Probe> _probeFavoritenListe = new List<Probe>();
+        public List<Probe> ProbeFavoritenListe
+        {
+            get { return _probeFavoritenListe.OrderBy(item => item.Probenname).ToList(); }
+            set { _probeFavoritenListe = value; OnChanged("ProbeFavoritenListe"); }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
 
-        public ProbenViewModel()
+        public ProbenViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError)
+            : base(confirm, showError)
         {
             onWürfeln = new Base.CommandBase(Würfeln, null);
             Einstellungen.WuerfelSoundAbspielenChanged += WuerfelSoundAbspielenChanged;
@@ -334,7 +419,42 @@ namespace MeisterGeister.ViewModel.Proben
             // Zauber hinzufügen
             ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Zauber>());
 
+            // Probe-Favoriten
+            LoadProbeFavoriten();
+
             FilterProbeListe();
+        }
+
+        private void LoadProbeFavoriten()
+        {
+            if (!string.IsNullOrEmpty(Einstellungen.ProbenFavoriten))
+            {
+                string[] favoriten = Einstellungen.ProbenFavoriten.Split('#');
+                foreach (string name in favoriten)
+                {
+                    if (name != string.Empty)
+                    {
+                        Probe p = ProbeListe.Where(item => item.Probenname == name).First();
+                        if (p != null)
+                            _probeFavoritenListe.Add(p);
+                    }
+                }
+                OnChanged("ProbeFavoritenListe");
+            }
+        }
+
+        private void SaveProbeFavoriten()
+        {
+            string favoriten = string.Empty;
+
+            foreach (Probe probe in _probeFavoritenListe)
+            {
+                if (favoriten != string.Empty)
+                    favoriten += "#";
+                favoriten += probe.Probenname;
+            }
+
+            Einstellungen.ProbenFavoriten = favoriten;
         }
 
         private void FilterProbeListe()

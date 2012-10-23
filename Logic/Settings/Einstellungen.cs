@@ -225,5 +225,17 @@ namespace MeisterGeister.Logic.Settings
                 SetEinstellung<int>("SelectedHeldenTab", value);
             }
         }
+
+        public static string ProbenFavoriten
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("ProbenFavoriten", null);
+            }
+            set
+            {
+                SetEinstellung<string>("ProbenFavoriten", value);
+            }
+        }
     }
 }
