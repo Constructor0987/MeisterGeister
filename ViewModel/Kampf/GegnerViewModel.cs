@@ -488,15 +488,19 @@ namespace MeisterGeister.ViewModel.Kampf
                         }
                         else
                         {
-                            IEnumerable<Kampfregel> kampfregeln = Kampfregel.Parse(zeile);
+                            Dictionary<string, int> erschwernisse;
+                            IEnumerable<Kampfregel> kampfregeln = Kampfregel.Parse(zeile, out erschwernisse);
                             if (kampfregeln != null && kampfregeln.Count() > 0)
                                 foreach (Kampfregel kr in kampfregeln)
                                 {
                                     if (g.GegnerBase_Kampfregel.Where(gbkr => gbkr.KampfregelGUID == kr.KampfregelGUID).Count() == 0)
                                     {
+                                        string eName = erschwernisse.Keys.Where(e => kr.Name.ToUpperInvariant().Contains(e.ToUpperInvariant())).FirstOrDefault();
                                         var gkr = new GegnerBase_Kampfregel();
                                         gkr.KampfregelGUID = kr.KampfregelGUID;
                                         gkr.GegnerBaseGUID = g.GegnerBaseGUID;
+                                        if (eName != null)
+                                            gkr.Erschwernis = erschwernisse[eName];
                                         g.GegnerBase_Kampfregel.Add(gkr);
                                     }
                                 }
