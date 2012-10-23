@@ -390,7 +390,7 @@
                 </Border>
             </Expander>
             
-            <Expander IsExpanded="False" Grid.Row="3">
+            <Expander IsExpanded="False" Grid.Row="3" Visibility="Collapsed">
                 <Expander.Header>
                     <TextBlock Text="Besondere Kampfregeln" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -402,9 +402,10 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="151*" />
+                            <ColumnDefinition Width="47*"/>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="198*" />
                         </Grid.ColumnDefinitions>
                         <!-- 
                         <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
