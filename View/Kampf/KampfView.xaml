@@ -5,8 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
+        <ViewGeneral:EnumItemsSource x:Key="KampfstilValues" Type="{x:Type KampfLogic:Kampfstil}" />
+        
         <Style x:Key="MagiebegabtStyle" TargetType="{x:Type FrameworkElement}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
@@ -38,7 +41,7 @@
         <Style x:Key="KämpferListItemNameStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="Black" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=Team}" Value="2">
+                <DataTrigger Binding="{Binding Path=KämpferInfo.Team}" Value="2">
                     <Setter Property="Foreground" Value="Sienna" />
                 </DataTrigger>
             </Style.Triggers>
@@ -103,12 +106,23 @@
         </DataTemplate>
         <DataTemplate x:Key="InitiativeListManöverTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Manöver: " />
+                <TextBlock Text="{Binding Initiative}" />
                 <TextBlock Text="{Binding Manöver.Name}" />
             </StackPanel>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="InitiativeListTemplate" ItemsSource="{Binding ThisAsList}" ItemTemplate="{StaticResource InitiativeListManöverTemplate}">
-            <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" />
+            <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" >
+                <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding KämpferInfo.Initiative}" Margin="8,2,0,0" />
+                    <ComboBox ItemsSource="{StaticResource KampfstilValues}" SelectedValue="{Binding KämpferInfo.Kämpfer.Kampfstil, Converter={StaticResource KampfstilValues}}">
+                    </ComboBox>
+                    <TextBlock Text="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>
+                    <Slider Minimum="0" Maximum="{Binding KämpferInfo.Kämpfer.Aktionen}" IsSnapToTickEnabled="True"/>
+                    <TextBlock Text="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ToolTip="Abwehraktionen"/>
+                    
+                </StackPanel>
+            </StackPanel>
         </HierarchicalDataTemplate>
 
         <Style x:Key="TreeViewItemFocusVisual">

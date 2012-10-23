@@ -84,23 +84,36 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
     public enum Kampfstil
     {
+        [System.ComponentModel.Description("Kein Kampfstil")]
         Keiner,
+        [System.ComponentModel.Description("Schildkampf")]
         Schildkampf,
+        [System.ComponentModel.Description("Parierwaffen")]
         Parierwaffenstil,
+        [System.ComponentModel.Description("Beidhändig")]
         BeidhändigerKampf,
+        [System.ComponentModel.Description("Halbschwert")]
         //MehrhändigerKampf, //Mehrhändiger Kampf kann mit den anderen Stilen kombiniert werden.
         Halbschwert
     }
 
     public enum WaffenloserKampfstil
     {
+        [System.ComponentModel.Description("Raufen")]
         Raufen,
+        [System.ComponentModel.Description("Ringen")]
         Ringen,
+        [System.ComponentModel.Description("Mercanario")]
         Mercanario,
+        [System.ComponentModel.Description("Hammerfaust")]
         Hammerfaust,
+        [System.ComponentModel.Description("Bornländisch")]
         Bornländisch,
+        [System.ComponentModel.Description("Hruruzat")]
         Hruruzat,
+        [System.ComponentModel.Description("Unauer Schule")]
         UnauerSchule,
+        [System.ComponentModel.Description("Gladiatorenstil")]
         Gladiatorenstil
     }
 }

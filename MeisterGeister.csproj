@@ -416,6 +416,7 @@
     <Compile Include="View\General\EnergieControl.xaml.cs">
       <DependentUpon>EnergieControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\EnumItemsSource.cs" />
     <Compile Include="View\General\ExterneVerknüpfungMenuItem.xaml.cs">
       <DependentUpon>ExterneVerknüpfungMenuItem.xaml</DependentUpon>
     </Compile>
@@ -1152,6 +1153,7 @@
     <Resource Include="Images\Icons\General\pause_grau.png" />
     <Resource Include="Images\Icons\General\play_grau.png" />
     <Resource Include="Images\Icons\General\sort.png" />
+    <Resource Include="Images\Icons\nahkampf_03.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
