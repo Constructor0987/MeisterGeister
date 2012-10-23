@@ -67,9 +67,8 @@
                                                 <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RSBauch}" />
                                                 <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RSBeinL}" />
                                                 <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RSBeinR}" />
-                                                <Label Height="38" Margin="23,14,0,0" Width="73" Content="Rüstung" HorizontalAlignment="Left" VerticalAlignment="Top" />
                                             </Grid>
-                                            <Label Height="27" Margin="14,286,0,0" Content="Behinderung:" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                            <Label Height="27" Margin="14,286,0,0" Content="Behinderung:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
                                             <ViewGeneral:IntBox Margin="101,287,0,0" Width="65" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" VerticalAlignment="Top" />
                                         </Grid>
                                     </Border>
@@ -81,7 +80,6 @@
                                     </Expander.Header>
                                     <Border Style="{DynamicResource ControlContentBorder}">
                                         <StackPanel Height="Auto" VerticalAlignment="Stretch">
-                                            <Label Height="27" Margin="10,10,0,0" Width="240" Content="Waffenwerte:" HorizontalAlignment="Left" />
                                             <TextBox Height="378" Margin="10,0,10,10" AcceptsReturn="True" HorizontalAlignment="Stretch" MinHeight="120" Text="{Binding SelectedHeld.Kampfwerte}" 
                                                      Background="{DynamicResource BackgroundPergamentQuer}" TextWrapping="Wrap" VerticalAlignment="Stretch" />
                                         </StackPanel>

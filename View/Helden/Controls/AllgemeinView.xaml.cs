@@ -80,7 +80,7 @@ namespace MeisterGeister.View.Helden.Controls
             if (VM.SelectedHeld != null)
                 VM.SelectedHeld.BildLink = null;
         }
-        private void TextBlockBild_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Bild_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (VM.SelectedHeld != null
                 && !string.IsNullOrWhiteSpace(VM.SelectedHeld.BildLink))

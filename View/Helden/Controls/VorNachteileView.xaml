@@ -102,7 +102,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Margin="5,0,5,0" Text="Vorteil:" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="0" Margin="5,0,5,0" Text="Vorteil:" VerticalAlignment="Center" FontWeight="Bold" />
                     <ComboBox Grid.Column="1" Height="23" DisplayMemberPath="Name" x:Name="_comboBoxVorteil" ToolTip="Vorteil" VerticalAlignment="Center"
                       ItemsSource="{Binding VorteilAuswahlListe}" SelectedItem="{Binding SelectedAddVorteil}">
                         <ComboBox.ItemsPanel>
@@ -114,7 +114,7 @@
                     <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
-                    <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="Nachteil:" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="Nachteil:" VerticalAlignment="Center" FontWeight="Bold" />
                     <ComboBox Grid.Column="4" Height="23" DisplayMemberPath="Name" x:Name="_comboBoxNachteil" ToolTip="Nachteil" VerticalAlignment="Center"
                       ItemsSource="{Binding NachteilAuswahlListe}" SelectedItem="{Binding SelectedAddNachteil}">
                         <ComboBox.ItemsPanel>

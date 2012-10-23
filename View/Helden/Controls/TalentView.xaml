@@ -284,14 +284,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" Height="23" x:Name="_comboBoxTalentAktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentauswahlListe}" SelectedItem="{Binding TalentAuswahl}" ItemTemplate="{DynamicResource DataTemplate1}">
-                                    <ComboBox.Resources>
-                                        <DataTemplate x:Key="DataTemplate1">
-                                            <Border Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch">
-                                                <TextBlock Text="{Binding Talentname}" FontWeight="Bold" HorizontalAlignment="Left" MinHeight="21" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ComboBox.Resources>
+                                <ComboBox Grid.Column="0" Height="23" x:Name="_comboBoxTalentAktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentauswahlListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding TalentAuswahl}">
                                     <ComboBox.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <VirtualizingStackPanel />

@@ -46,7 +46,7 @@
                     </Button>
 
                     <StackPanel Grid.Column="3" Margin="5,0,0,0" MinWidth="150" Orientation="Horizontal" VerticalAlignment="Center" >
-                        <Label Content="Aktivierte Zauber:" VerticalContentAlignment="Center" />
+                        <Label Content="Aktivierte Zauber:" VerticalContentAlignment="Center" FontWeight="Bold" />
                         <Label Content="{Binding SelectedHeld.Held_Zauber.Count}" VerticalContentAlignment="Center" />
                     </StackPanel>
                 </Grid>

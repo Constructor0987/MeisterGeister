@@ -345,8 +345,8 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label  Content="Gewicht"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />									
-                                    <Label Content="Belastung in %"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+                                    <Label  Content="Gewicht:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />									
+                                    <Label Content="Belastung in %:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left">
@@ -354,9 +354,9 @@
                                     <Label Content="{Binding AktuellesGewichtInProzentZuTragkraft}" Margin="0" FontFamily="Segoe UI" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label  Content="Tragkraft"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                    <Label Content="BE aus Überlastung"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
-                                    <Label Content="BE aus 'Rüstungen / Waffen'"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label  Content="Tragkraft:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label Content="BE aus Überlastung:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+                                    <Label Content="BE aus 'Rüstungen / Waffen':"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left">
                                     <Label Content="{Binding AktuelleTragkraft}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"  />
@@ -533,10 +533,10 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="5">
-                                    <Label Content="Talent Nahkampf" Style="{DynamicResource TextInStack}" />
-                                    <Label Content="Talent Fernkampf" Style="{DynamicResource TextInStack}" />
-                                    <Label Content="Schild" Style="{DynamicResource TextInStack}" />
-                                    <Label Content="Sonstiges" Style="{DynamicResource TextInStack}" />
+                                    <Label Content="Talent Nahkampf:" Style="{DynamicResource TextInStack}" />
+                                    <Label Content="Talent Fernkampf:" Style="{DynamicResource TextInStack}" />
+                                    <Label Content="Schild:" Style="{DynamicResource TextInStack}" />
+                                    <Label Content="Sonstiges:" Style="{DynamicResource TextInStack}" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" Margin="5">
@@ -577,9 +577,9 @@
                                     </Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="3" Margin="5">
-                                    <Label Content="Nahkampfwaffen" Style="{DynamicResource TextInStack}"/>
-                                    <Label Content="Fernkampfwaffen" Style="{DynamicResource TextInStack}"/>
-                                    <Label Content="Rüstung" Style="{DynamicResource TextInStack}"/>
+                                    <Label Content="Nahkampfwaffen:" Style="{DynamicResource TextInStack}"/>
+                                    <Label Content="Fernkampfwaffen:" Style="{DynamicResource TextInStack}"/>
+                                    <Label Content="Rüstung:" Style="{DynamicResource TextInStack}"/>
 
                                 </StackPanel>
                                 <StackPanel Grid.Column="4" Margin="5">
@@ -635,7 +635,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="5">
-                                    <Label Content="Talent Nahkampf" Style="{DynamicResource TextInStack}" />
+                                    <Label Content="Talent Nahkampf:" Style="{DynamicResource TextInStack}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
                                     <ComboBox Margin="0,0,0,3"  ItemsSource="{Binding NahkampfWaffeTalentListe}" SelectedItem="{Binding SelectedNahkampfwaffeTalent}" Height="25.96" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
@@ -647,7 +647,7 @@
                                     </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="5">
-                                    <Label Content="Nahkampfwaffe" Style="{DynamicResource TextInStack}"/>
+                                    <Label Content="Nahkampfwaffe:" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="3" Margin="5">
                                     <ComboBox Height="25.96" ItemsSource="{Binding NahkampfwaffeListe}" SelectedItem="{Binding SelectedNahkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
@@ -682,7 +682,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="5">
-                                    <Label Content="Talent Fernkampf" Style="{DynamicResource TextInStack}" />
+                                    <Label Content="Talent Fernkampf:" Style="{DynamicResource TextInStack}" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
                                     <ComboBox Margin="0,0,0,3" Height="25.96" ItemsSource="{Binding FernkampWaffeTalentListe}" SelectedItem="{Binding SelectedFernkampfwaffeTalent}" ItemTemplate="{DynamicResource ComboboxEasyItem_Talentname}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
@@ -694,7 +694,7 @@
                                     </ComboBox>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2" Margin="5">
-                                    <Label Content="Fernkampfwaffe" Style="{DynamicResource TextInStack}"/>
+                                    <Label Content="Fernkampfwaffe:" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="3" Margin="5">
                                     <ComboBox Height="25.96" ItemsSource="{Binding FernkampfwaffeListe}"  SelectedItem="{Binding SelectedFernkampfwaffe}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
@@ -728,7 +728,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="5">
-                                    <Label Content="Schild" Style="{DynamicResource TextInStack}"/>
+                                    <Label Content="Schild:" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
                                     <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
@@ -762,7 +762,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="5">
-                                    <Label Content="Rüstung" Style="{DynamicResource TextInStack}"/>
+                                    <Label Content="Rüstung:" Style="{DynamicResource TextInStack}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5">
                                     <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" ItemTemplate="{DynamicResource ComboboxEasyItem_Name}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
