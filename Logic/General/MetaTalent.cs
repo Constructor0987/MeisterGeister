@@ -68,7 +68,7 @@ namespace MeisterGeister.Logic.General
             Fertigkeitswert = TaW.GetValueOrDefault();
         }
 
-        public static List<Probe> GetMetaTalentListe(Talent talent, Held held)
+        public static List<Probe> GetMetaTalentListe(Talent talent, Held held = null)
         {
             List<Probe> talentListe = new List<Probe>();
             if (talent == null)
@@ -76,42 +76,51 @@ namespace MeisterGeister.Logic.General
 
             if (talent.Talentname == "Kräuter Suchen" || talent.Talentname == "Nahrung Sammeln (Wildnis)")
             {
-                AddTalent("Wildnisleben", held, talentListe);
-                AddTalent("Sinnenschärfe", held, talentListe);
-                AddTalent("Pflanzenkunde", held, talentListe);
+                AddTalent("Wildnisleben", talentListe, held);
+                AddTalent("Sinnenschärfe", talentListe, held);
+                AddTalent("Pflanzenkunde", talentListe, held);
             }
             else if (talent.Talentname == "Nahrung Sammeln (Agrarland)")
             {
-                AddTalent("Wildnisleben", held, talentListe);
-                AddTalent("Sinnenschärfe", held, talentListe);
-                AddTalent("Ackerbau", held, talentListe);
+                AddTalent("Wildnisleben", talentListe, held);
+                AddTalent("Sinnenschärfe", talentListe, held);
+                AddTalent("Ackerbau", talentListe, held);
             }
             else if (talent.Talentname.StartsWith("Pirschjagd"))
             {
-                AddTalent("Wildnisleben", held, talentListe);
-                AddTalent("Tierkunde", held, talentListe);
-                AddTalent("Fährtensuchen", held, talentListe);
-                AddTalent("Schleichen", held, talentListe);
+                AddTalent("Wildnisleben", talentListe, held);
+                AddTalent("Tierkunde", talentListe, held);
+                AddTalent("Fährtensuchen", talentListe, held);
+                AddTalent("Schleichen", talentListe, held);
                 string waffe = talent.Talentname.Substring(12).TrimEnd(')');
-                AddTalent(waffe, held, talentListe);
+                AddTalent(waffe, talentListe, held);
             }
             else if (talent.Talentname.StartsWith("Ansitzjagd"))
             {
-                AddTalent("Wildnisleben", held, talentListe);
-                AddTalent("Tierkunde", held, talentListe);
-                AddTalent("Fährtensuchen", held, talentListe);
-                AddTalent("Sich Verstecken", held, talentListe);
+                AddTalent("Wildnisleben", talentListe, held);
+                AddTalent("Tierkunde", talentListe, held);
+                AddTalent("Fährtensuchen", talentListe, held);
+                AddTalent("Sich Verstecken", talentListe, held);
                 string waffe = talent.Talentname.Substring(12).TrimEnd(')');
-                AddTalent(waffe, held, talentListe);
+                AddTalent(waffe, talentListe, held);
             }
             return talentListe;
         }
 
-        private static void AddTalent(string talent, Held held, List<Probe> talentListe)
+        private static void AddTalent(string talent, List<Probe> talentListe, Held held = null)
         {
-            IEnumerable<Held_Talent> ht;
-            ht = held.Held_Talent.Where(t => t.Talent.Talentname == talent);
-            talentListe.Add(ht.Count() > 0 ? ht.First() : null);
+            if (held != null)
+            {
+                IEnumerable<Held_Talent> ht;
+                ht = held.Held_Talent.Where(t => t.Talent.Talentname == talent);
+                talentListe.Add(ht.Count() > 0 ? ht.First() : null);
+            }
+            else
+            {
+                IEnumerable<Talent> ht;
+                ht = Global.ContextHeld.Liste<Talent>().Where(t => t.Talentname == talent);
+                talentListe.Add(ht.Count() > 0 ? ht.First() : null);
+            }
         }
 
         /// <summary>

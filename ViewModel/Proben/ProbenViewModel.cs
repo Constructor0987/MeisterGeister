@@ -508,10 +508,24 @@ namespace MeisterGeister.ViewModel.Proben
             List<Probe> probeListe = ProbeListe;
             if (IsAktivierteProben)
             { // nur aktivierte Proben
-                // TODO MT: Talente & Zauber aus Liste Filtern
-                // TODO MT: Sonderfall Meta-Talente
                 probeListe = ProbeListe.Where(p => p is Eigenschaft)
+                    .Concat(Global.ContextHeld.Liste<Model.Held_Talent>().Where(ht => ht.Held.AktiveHeldengruppe == true).Select(ht => (ht.Talent as Probe)).Distinct())
+                    .Concat(Global.ContextHeld.Liste<Model.Held_Zauber>().Where(hz => hz.Held.AktiveHeldengruppe == true).Select(hz => (hz.Zauber as Probe)).Distinct())
                     .ToList();
+
+                var liMeta = Global.ContextHeld.Liste<Model.Talent>().Where(p => p is Model.Talent && (p as Model.Talent).IsMetaTalent);
+                foreach (var talent in liMeta)
+                {
+                    foreach (var held in HeldListe)
+                    {
+                        MetaTalent mt = new MetaTalent(talent, held);
+                        if (mt.Aktiviert)
+                        {
+                            probeListe.Add(talent);
+                            break;
+                        }
+                    }
+                }
             }
 
             if (SelectedFilterItem == null)
