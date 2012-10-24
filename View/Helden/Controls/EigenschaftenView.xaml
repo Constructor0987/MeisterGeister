@@ -496,6 +496,7 @@
                                 <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
                             </Grid.Background>
                             <!-- Wunden -->
+                            <Image Width="45" Margin="20,20" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Wunden" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png" />
                             <ViewGeneral:IntBox Margin="159,20,6,187" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Unlokalisiert)" Value="{Binding SelectedHeld.WundenByZone[Unlokalisiert], Mode=TwoWay}" />
                             <ViewGeneral:IntBox Margin="81,14,84,193" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Kopf)" Value="{Binding SelectedHeld.WundenByZone[Kopf], Mode=TwoWay}" />
                             <ViewGeneral:IntBox Margin="81,54,84,153" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Brust)" Value="{Binding SelectedHeld.WundenByZone[Brust], Mode=TwoWay}" />
