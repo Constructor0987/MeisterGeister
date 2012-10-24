@@ -78,9 +78,15 @@ namespace MeisterGeister.View.Helden.Controls {
         
         private void brdKlicked(object sender, System.Windows.Input.MouseButtonEventArgs e) 
         {
-            int idxTalent = ((sender as Border).Parent as StackPanel).Children.IndexOf(sender as Border);
-            CloseAllExpanderTalente();
-            (spHeldTalent.Children[idxTalent] as Expander).IsExpanded = true;
+            int idxTalent = ((sender as Border).Parent as StackPanel).Children.IndexOf(sender as Border) - 1;
+            if (idxTalent == -1)
+                SetExpanderTalente(true);
+            else
+            {
+                SetExpanderTalente(false);
+                if (spHeldTalent.Children.Count > idxTalent)
+                    (spHeldTalent.Children[idxTalent] as Expander).IsExpanded = true;
+            }
         }
 
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -92,17 +98,18 @@ namespace MeisterGeister.View.Helden.Controls {
 
         #region // ---- METHODEN ----
 
-        private void CloseAllExpanderTalente() {
-            expGesellschaft.IsExpanded = false;
-            expHandwerk.IsExpanded = false;
-            expKampf.IsExpanded = false;
-            expKoerper.IsExpanded = false;
-            expNatur.IsExpanded = false;
-            expSprache.IsExpanded = false;
-            expWissen.IsExpanded = false;
-            expRituale.IsExpanded = false;
-            expLiturgie.IsExpanded = false;
-            expGaben.IsExpanded = false;
+        private void SetExpanderTalente(bool isExpanded)
+        {
+            expGesellschaft.IsExpanded = isExpanded;
+            expHandwerk.IsExpanded = isExpanded;
+            expKampf.IsExpanded = isExpanded;
+            expKoerper.IsExpanded = isExpanded;
+            expNatur.IsExpanded = isExpanded;
+            expSprache.IsExpanded = isExpanded;
+            expWissen.IsExpanded = isExpanded;
+            expRituale.IsExpanded = isExpanded;
+            expLiturgie.IsExpanded = isExpanded;
+            expGaben.IsExpanded = isExpanded;
         }
 
         #endregion

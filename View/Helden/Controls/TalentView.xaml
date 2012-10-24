@@ -47,6 +47,18 @@
                 <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
             </ThicknessAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="OnMouseEnter0">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="imageAll">
+                <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                <EasingThicknessKeyFrame KeyTime="0:0:0.3" Value="-5"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave0">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="imageAll">
+                <SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
         <Storyboard x:Key="OnMouseEnter2">
             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
                 <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
@@ -160,6 +172,12 @@
         <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border">
             <BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
         </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderAll">
+            <BeginStoryboard x:Name="OnMouseEnter0_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter0}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="borderAll">
+            <BeginStoryboard x:Name="OnMouseLeave0_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave0}"/>
+        </EventTrigger>
         <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border1">
             <BeginStoryboard x:Name="OnMouseEnter2_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter2}"/>
         </EventTrigger>
@@ -231,7 +249,10 @@
             </Grid.RowDefinitions>
             <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <Border x:Name="border" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Kampftalente" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="borderAll" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Alle Talente" MouseLeftButtonDown="brdKlicked">
+                        <Image x:Name="imageAll" Source="/DSA%20MeisterGeister;component/Images/Icons/General/filter.png"/>
+                    </Border>
+                    <Border x:Name="border" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Kampftalente" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5">
                             <Image.RenderTransform>
                                 <TransformGroup>
@@ -243,31 +264,31 @@
                             </Image.RenderTransform>
                         </Image>
                     </Border>
-                    <Border x:Name="border1" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Körperliche Talente" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border1" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Körperliche Talente" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image1" Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
                     </Border>
-                    <Border x:Name="border2" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gesellschaftliche Talente" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border2" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Gesellschaftliche Talente" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image2" Source="/DSA%20MeisterGeister;component/Images/Icons/helden_kopieren.png"/>
                     </Border>
-                    <Border x:Name="border3" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Natur-Talente" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border3" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Natur-Talente" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image3" Source="/DSA%20MeisterGeister;component/Images/Icons/kraeutersuche.png"/>
                     </Border>
-                    <Border x:Name="border6" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Wissenstalente" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border6" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Wissenstalente" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image4" Source="/DSA%20MeisterGeister;component/Images/Icons/foliant.png"/>
                     </Border>
-                    <Border x:Name="border5" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Sprachen und Schriften" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border5" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Sprachen und Schriften" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image5" Source="/DSA%20MeisterGeister;component/Images/Icons/sprache.png"/>
                     </Border>
-                    <Border x:Name="border4" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Handwerkstalente" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border4" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Handwerkstalente" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image6" Source="/DSA%20MeisterGeister;component/Images/Icons/schmiede.png"/>
                     </Border>
-                    <Border x:Name="border7" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Gaben" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border7" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Gaben" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image7" Source="/DSA%20MeisterGeister;component/Images/Icons/hesinde.png"/>
                     </Border>
-                    <Border x:Name="border8" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Ritualkenntnisse" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border8" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Ritualkenntnisse" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image8" Source="/DSA%20MeisterGeister;component/Images/Icons/zauberzeichen.png"/>
                     </Border>
-                    <Border x:Name="border9" Style="{DynamicResource ControlContentBorder}" Width="45" Height="45" ToolTipService.ToolTip="Liturgiekenntnisse" MouseLeftButtonDown="brdKlicked">
+                    <Border x:Name="border9" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Liturgiekenntnisse" MouseLeftButtonDown="brdKlicked">
                         <Image x:Name="image9" Source="/DSA MeisterGeister;component/Images/Icons/audio2.png"/>
                     </Border>
                 </StackPanel>
