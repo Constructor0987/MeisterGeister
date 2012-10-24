@@ -8,7 +8,7 @@
 	Unloaded="UserControl_Unloaded"
 	mc:Ignorable="d"	
 	d:DesignWidth="807"
-    d:DesignHeight="529.04">
+    d:DesignHeight="700">
     <UserControl.Resources>
         <Style x:Key="HorizontalStretchSet">
             <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch" />
@@ -299,7 +299,7 @@
                     </Border>
                 </Grid>
             </Expander>
-            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch">
+            <ScrollViewer Grid.Row="1" VerticalAlignment="Stretch" Name="scrollViewer">
                 <Grid>
                     <Grid.ContextMenu>
                         <ContextMenu Opened="ContextMenuTalent_Opened">
@@ -334,7 +334,8 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
-                                    <DataGrid ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" HorizontalContentAlignment="Stretch">
+                                    <DataGrid ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" 
+                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" HorizontalContentAlignment="Stretch" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                         <DataGrid.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
@@ -350,7 +351,7 @@
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT}" />
+                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -360,7 +361,7 @@
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA}" />
+                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -375,7 +376,7 @@
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -415,7 +416,8 @@
 
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000"  HorizontalContentAlignment="Stretch">
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" 
+                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000"  HorizontalContentAlignment="Stretch" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                             <DataGrid.InputBindings>
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
@@ -451,7 +453,7 @@
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
@@ -491,7 +493,8 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                             <DataGrid.InputBindings>
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
@@ -527,7 +530,7 @@
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
@@ -568,7 +571,8 @@
 
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                             <DataGrid.InputBindings>
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
@@ -604,7 +608,7 @@
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
@@ -644,7 +648,8 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                             <DataGrid.InputBindings>
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
@@ -680,7 +685,7 @@
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
@@ -720,7 +725,8 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                        <DataGrid Grid.Column="1" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                             <DataGrid.InputBindings>
                                                 <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                             </DataGrid.InputBindings>
@@ -756,7 +762,7 @@
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
@@ -792,7 +798,8 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid >
-                                    <DataGrid ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                    <DataGrid ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                         <DataGrid.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
@@ -828,7 +835,7 @@
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -863,7 +870,8 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid >
-                                    <DataGrid ItemsSource="{Binding GabenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True"  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                    <DataGrid ItemsSource="{Binding GabenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                         <DataGrid.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
@@ -899,7 +907,7 @@
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -924,7 +932,8 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid >
-                                    <DataGrid ItemsSource="{Binding RitualeTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                    <DataGrid ItemsSource="{Binding RitualeTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                         <DataGrid.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
@@ -934,13 +943,33 @@
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
                                             </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1, TargetNullValue=var.}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2, TargetNullValue=var.}" IsReadOnly="True">
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3, TargetNullValue=var.}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
                                             <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -965,7 +994,8 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid >
-                                    <DataGrid ItemsSource="{Binding LiturgienTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000">
+                                    <DataGrid ItemsSource="{Binding LiturgienTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
+                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                         <DataGrid.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </DataGrid.InputBindings>
@@ -990,13 +1020,18 @@
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                 </DataGridTextColumn.Header>
                                             </DataGridTextColumn>
+                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
+                                                <DataGridTextColumn.Header>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
+                                                </DataGridTextColumn.Header>
+                                            </DataGridTextColumn>
                                             <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>

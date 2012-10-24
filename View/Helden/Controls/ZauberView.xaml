@@ -127,7 +127,7 @@
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <ViewGeneral:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
