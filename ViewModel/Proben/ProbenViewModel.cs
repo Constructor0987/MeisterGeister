@@ -167,11 +167,13 @@ namespace MeisterGeister.ViewModel.Proben
                     switch (SelectedSortierung.Name)
                     {
                         case "Übrig":
-                            return _probeErgebnisListe.OrderByDescending(vm => vm.Ergebnis.Übrig).
+                            return _probeErgebnisListe.OrderBy(vm => vm.NichtProben).
+                                ThenByDescending(vm => vm.Ergebnis.Übrig).
                                 ThenByDescending(vm => vm.Ergebnis.Qualität).
                                 ThenByDescending(vm => vm.Probe.Fertigkeitswert).ToList();
                         case "Wert":
-                            return _probeErgebnisListe.OrderByDescending(vm => vm.Probe.Fertigkeitswert).
+                            return _probeErgebnisListe.OrderBy(vm => vm.NichtProben).
+                                ThenByDescending(vm => vm.Probe.Fertigkeitswert).
                                 ThenByDescending(vm => vm.Probe.Werte.Sum()).
                                 ThenBy(vm => vm.Held.Name).ToList();
                         case "Name":
