@@ -365,56 +365,83 @@
                                                 <DataGridTextColumn.Header >
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="65">
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT+"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="65">
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA+"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="65">
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
@@ -447,51 +474,96 @@
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="65">
                                                     <DataGridTemplateColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -524,51 +596,96 @@
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="65">
                                                     <DataGridTemplateColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -602,51 +719,96 @@
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="65">
                                                     <DataGridTemplateColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -679,51 +841,96 @@
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="65">
                                                     <DataGridTemplateColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -756,51 +963,96 @@
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn Width="65">
                                                     <DataGridTemplateColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                     </DataGridTemplateColumn.Header>
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
-                                                            <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                                     <DataGridTextColumn.Header>
                                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                     </DataGridTextColumn.Header>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -829,51 +1081,96 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="65">
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
@@ -901,34 +1198,63 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="65">
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -936,6 +1262,11 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
@@ -963,34 +1294,63 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1, TargetNullValue=var.}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1, TargetNullValue=var.}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2, TargetNullValue=var.}" IsReadOnly="True">
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2, TargetNullValue=var.}" IsReadOnly="True">
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3, TargetNullValue=var.}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3, TargetNullValue=var.}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="65">
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -998,6 +1358,11 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
@@ -1025,34 +1390,63 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
+                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn Width="65">
                                                 <DataGridTemplateColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
                                                 </DataGridTemplateColumn.Header>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <MGControl:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -1060,6 +1454,11 @@
                                                 <DataGridTextColumn.Header>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
                                                 </DataGridTextColumn.Header>
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
                                             </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>

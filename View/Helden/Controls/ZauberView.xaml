@@ -95,39 +95,74 @@
                                 <DataGridTextColumn.Header >
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Zaubername"/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True">
+                            <DataGridTextColumn Width="32" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True" TextBlock.TextAlignment="Center">
                                 <DataGridTextColumn.Header >
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft2}" IsReadOnly="True">
+                            <DataGridTextColumn Width="32" Binding="{Binding Zauber.Eigenschaft2}" IsReadOnly="True" TextBlock.TextAlignment="Center">
                                 <DataGridTextColumn.Header >
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Eigenschaft3}" IsReadOnly="True">
+                            <DataGridTextColumn Width="32" Binding="{Binding Zauber.Eigenschaft3}" IsReadOnly="True">
                                 <DataGridTextColumn.Header >
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Komplex}" IsReadOnly="True">
+                            <DataGridTextColumn Width="43" Binding="{Binding Zauber.Komplex}" IsReadOnly="True" TextBlock.TextAlignment="Center">
                                 <DataGridTextColumn.Header >
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kom."/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Width="Auto" Binding="{Binding Repräsentation}" IsReadOnly="True">
                                 <DataGridTextColumn.Header>
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Rep."/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="65">
                                 <DataGridTemplateColumn.Header>
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="ZfW"/>
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ViewGeneral:IntBox MinWidth="65" NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -135,11 +170,21 @@
                                 <DataGridTextColumn.Header>
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Merkmale"/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                             <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}">
                                 <DataGridTextColumn.Header>
                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung"/>
                                 </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
