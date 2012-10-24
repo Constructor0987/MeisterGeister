@@ -1712,14 +1712,34 @@ namespace MeisterGeister.Model
         public int Angriffsaktionen
         {
             get { return _angriffsaktionen; }
-            set { _angriffsaktionen = value; }
+            set {
+                if (value == _angriffsaktionen)
+                    return;
+                if (value > Aktionen)
+                    value = Aktionen;
+                _angriffsaktionen = value;
+                _abwehraktionen = Aktionen - _angriffsaktionen;
+                AktionenBerechnen();
+                _abwehraktionen = Aktionen - _angriffsaktionen;
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            }
         }
 
         private int _abwehraktionen = 1;
         public int Abwehraktionen
         {
             get { return _abwehraktionen; }
-            set { _abwehraktionen = value; }
+            set {
+                if (value == _abwehraktionen)
+                    return;
+                if (value > Aktionen)
+                    value = Aktionen;
+                _abwehraktionen = value;
+                _angriffsaktionen = Aktionen - _abwehraktionen;
+                AktionenBerechnen();
+                _angriffsaktionen = Aktionen - _abwehraktionen;
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            }
         }
 
 
@@ -1749,18 +1769,47 @@ namespace MeisterGeister.Model
         {
             get { return _kampfstil; }
             set {
+                if (_kampfstil == value)
+                    return;
                 _kampfstil = value;
-                //TODO JT: Sicherstellen, dass auch zwei Waffen geführt werden
-                if (_kampfstil == KampfLogic.Kampfstil.BeidhändigerKampf && HatSonderfertigkeitUndVoraussetzungen("Beidhändiger Kampf II"))
-                    Aktionen = 3;
-                else if (_kampfstil == KampfLogic.Kampfstil.Schildkampf && HatSonderfertigkeitUndVoraussetzungen("Schildkampf II"))
-                    Aktionen = 3;
-                else if (_kampfstil == KampfLogic.Kampfstil.Parierwaffenstil && HatSonderfertigkeitUndVoraussetzungen("Parierwaffen II") || HatSonderfertigkeitUndVoraussetzungen("Tod von Links"))
-                    Aktionen = 3;
-                else
-                    Aktionen = 2;
-                //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
+                AktionenBerechnen();
+                OnChanged("Kampfstil");
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
             }
+        }
+
+        private void AktionenBerechnen()
+        {
+            bool parierwaffenII = false;
+            //TODO JT: Sicherstellen, dass auch zwei Waffen geführt werden
+            if (Kampfstil == KampfLogic.Kampfstil.BeidhändigerKampf && HatSonderfertigkeitUndVoraussetzungen("Beidhändiger Kampf II"))
+            {
+                Aktionen = 3;
+                if (Abwehraktionen + Angriffsaktionen < 3)
+                    _angriffsaktionen = Aktionen - Abwehraktionen;
+            }
+            else if (Kampfstil == KampfLogic.Kampfstil.Schildkampf && HatSonderfertigkeitUndVoraussetzungen("Schildkampf II") && Abwehraktionen >= 1)
+            {
+                Aktionen = 3;
+                if (Abwehraktionen + Angriffsaktionen < 3)
+                    _abwehraktionen = Aktionen - Angriffsaktionen;
+            }
+            else if (Kampfstil == KampfLogic.Kampfstil.Parierwaffenstil && (parierwaffenII = HatSonderfertigkeitUndVoraussetzungen("Parierwaffen II") && Abwehraktionen >= 1 || HatSonderfertigkeitUndVoraussetzungen("Tod von Links") && Angriffsaktionen >= 1))
+            {
+                Aktionen = 3;
+                if (Abwehraktionen + Angriffsaktionen < 3)
+                    if (parierwaffenII)
+                        _abwehraktionen = Aktionen - Angriffsaktionen;
+                    else
+                        _angriffsaktionen = Aktionen - Abwehraktionen;
+            }
+            else
+            {
+                Aktionen = 2;
+                if (Abwehraktionen + Angriffsaktionen < 2)
+                    _angriffsaktionen = _abwehraktionen = 1;
+            }
+            //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
         }
 
         private WaffenloserKampfstil _waffenloserKampfstil;

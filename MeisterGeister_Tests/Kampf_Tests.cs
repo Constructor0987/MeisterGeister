@@ -95,6 +95,33 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
+        public void UmwandelnTest()
+        {
+            Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
+            Assert.IsNotNull(gero);
+            //einen Kampf anlegen
+            Kampf kampf = new Kampf();
+            //beide hinzufügen
+            kampf.Kämpfer.Add(gero); // Implizit Team 1
+            kampf.Kämpfer[gero].Initiative = 21;
+            Assert.AreEqual(2, gero.Aktionen);
+            Assert.AreEqual(1, gero.Angriffsaktionen);
+            Assert.AreEqual(1, gero.Abwehraktionen);
+            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.BeidhändigerKampf;
+            Assert.AreEqual(3, gero.Aktionen);
+            Assert.AreEqual(2, gero.Angriffsaktionen);
+            Assert.AreEqual(1, gero.Abwehraktionen);
+            gero.Angriffsaktionen = 3;
+            Assert.AreEqual(3, gero.Aktionen);
+            Assert.AreEqual(3, gero.Angriffsaktionen);
+            Assert.AreEqual(0, gero.Abwehraktionen);
+            gero.Angriffsaktionen = 0;
+            Assert.AreEqual(3, gero.Aktionen);
+            Assert.AreEqual(0, gero.Angriffsaktionen);
+            Assert.AreEqual(3, gero.Abwehraktionen);
+        }
+
+        [Test]
         public void ManöverTests()
         {
             Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();

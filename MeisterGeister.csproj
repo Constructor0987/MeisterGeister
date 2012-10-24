@@ -24,7 +24,7 @@
     <SccProvider>
     </SccProvider>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>4.0.20621.0</ExpressionBlendVersion>
     <Utf8Output>true</Utf8Output>
     <PublishUrl>publish\setup\</PublishUrl>
     <Install>true</Install>
@@ -716,10 +716,6 @@
     <Compile Include="View\ZooBot\Wuerfeleingabe.designer.cs">
       <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </Compile>
-    <Page Include="SampleData\KampfViewModelSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="SampleData\ProbeControlViewModelSampleData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
