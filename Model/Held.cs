@@ -395,7 +395,7 @@ namespace MeisterGeister.Model
         /// <returns>Eigenschaft.</returns>
         public Eigenschaft Eigenschaft(string eigenschaft, bool ohneMod = false)
         {
-            return new Eigenschaft(eigenschaft, EigenschaftWert(eigenschaft, ohneMod));
+            return new Eigenschaft(eigenschaft, EigenschaftWert(eigenschaft, ohneMod), this);
         }
 
         #endregion

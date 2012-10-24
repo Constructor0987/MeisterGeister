@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using System.Linq;
 using System.Collections.Generic;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Logic.General
 {
@@ -28,6 +29,16 @@ namespace MeisterGeister.Logic.General
             set { 
                 _modifikator = value;
                 _chanceBerechnet = false;
+            }
+        }
+
+        public int ModifikatorProben
+        {
+            get 
+            {
+                if (this is IHeld)
+                    return (this as IHeld).Held.GetModifikatorProben(this);
+                return 0; 
             }
         }
 
@@ -128,7 +139,7 @@ namespace MeisterGeister.Logic.General
             // Modifikatoren verändern den effektiven Fertigkeitswert
             // Modifikator > 0 : Erschwernis
             // Modifikator < 0 : Erleichterung
-            int fertigkeitswertEff = Fertigkeitswert - Modifikator;
+            int fertigkeitswertEff = Fertigkeitswert - (Modifikator + ModifikatorProben);
             pe.Übrig = fertigkeitswertEff;
             pe.Qualität = fertigkeitswertEff;
             if (pe.Würfe == null)
@@ -222,9 +233,9 @@ namespace MeisterGeister.Logic.General
         private double ErfolgsChanceBerechnen()
         {
             if(Werte.Length==3)
-                return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], Fertigkeitswert - Modifikator);
+                return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], Fertigkeitswert - (Modifikator + ModifikatorProben));
             if (Werte.Length == 1)
-                return ErfolgsChancheBerechnen(Werte[0] - Modifikator);
+                return ErfolgsChancheBerechnen(Werte[0] - (Modifikator + ModifikatorProben));
             return _erfolgsschance = 0;
         }
 

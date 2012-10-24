@@ -7,6 +7,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
+using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
 namespace MeisterGeister.ViewModel.Proben
 {
@@ -132,6 +133,27 @@ namespace MeisterGeister.ViewModel.Proben
                 }
 
                 OnChanged("Modifikator");
+            }
+        }
+
+
+        public int ModifikatorProben
+        {
+            get
+            {
+                if (Held == null)
+                    return 0;
+                return Held.GetModifikatorProben(Probe);
+            }
+        }
+
+        public List<dynamic> ModListProben
+        {
+            get
+            {
+                if (Held == null)
+                    return new List<dynamic>();
+                return Held.GetModifikatorenListe(Probe);
             }
         }
 

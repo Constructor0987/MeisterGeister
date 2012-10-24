@@ -10,6 +10,8 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using MeisterGeister.Logic.General;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -30,6 +32,41 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 ModifikatorenChanged(this, args);
         }
         #endregion
+
+        public int GetModifikatorProben(Probe probe)
+        {
+            if (probe == null)
+                return 0;
+            int mod = 0;
+            if (Modifikatoren != null && probe is Eigenschaft)
+                Modifikatoren.Where(m => m is Mod.IModAlleEigenschaftsProben).Select(m => (Mod.IModAlleEigenschaftsProben)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mod = m.ApplyAlleEigenschaftsProbenMod(mod));
+            else if (Modifikatoren != null)
+            {
+                Modifikatoren.Where(m => m is Mod.IModAlleProben).Select(m => (Mod.IModAlleProben)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mod = m.ApplyAlleProbenMod(mod));
+                if (probe is Model.Zauber || probe is Model.Held_Zauber)
+                    Modifikatoren.Where(m => m is Mod.IModZauberprobe).Select(m => (Mod.IModZauberprobe)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mod = m.ApplyZauberprobeMod(mod));
+                else if (probe is Model.Talent || probe is Model.Held_Talent || probe is MetaTalent)
+                    Modifikatoren.Where(m => m is Mod.IModTalentprobe).Select(m => (Mod.IModTalentprobe)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mod = m.ApplyTalentprobeMod(mod));
+            }
+            return mod;
+        }
+
+        public List<dynamic> GetModifikatorenListe(Probe probe)
+        {
+            if (Modifikatoren == null || probe == null)
+                return new List<dynamic>();
+            if (probe is Eigenschaft)
+                return ModifikatorenListe(typeof(Mod.IModAlleEigenschaftsProben), 0);
+            else
+            {
+                List<dynamic> list = ModifikatorenListe(typeof(Mod.IModAlleProben), 0);
+                if (probe is Model.Zauber || probe is Model.Held_Zauber)
+                    ModifikatorenListe(typeof(Mod.IModZauberprobe), list.Count() == 0 ? 0 : list.LastOrDefault().Wert);
+                else if (probe is Model.Talent || probe is Model.Held_Talent || probe is MetaTalent)
+                    ModifikatorenListe(typeof(Mod.IModTalentprobe), list.Count() == 0 ? 0 : list.LastOrDefault().Wert);
+                return list;
+            }
+        }
 
         private int Apply(Mod.IModifikator mod, Type typ, int? wert)
         {

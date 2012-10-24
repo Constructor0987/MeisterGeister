@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Held_Talent : Probe
+    public partial class Held_Talent : Probe, IHeld
     {
         #region //---- PROBE ----
 

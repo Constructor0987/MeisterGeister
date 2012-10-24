@@ -24,12 +24,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public int ApplyAlleProbenMod(int wert)
         {
-            return wert - 3;
+            return wert + 3;
         }
 
         public int ApplyAlleEigenschaftsProbenMod(int wert)
         {
-            return wert - 1;
+            return wert + 1;
         }
 
         public int ApplyGSMod(int wert)
@@ -57,12 +57,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public int ApplyAlleProbenMod(int wert)
         {
-            return wert - 3;
+            return wert + 3;
         }
 
         public int ApplyAlleEigenschaftsProbenMod(int wert)
         {
-            return wert - 1;
+            return wert + 1;
         }
     }
 

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Held_Zauber : MeisterGeister.Logic.General.Probe
+    public partial class Held_Zauber : MeisterGeister.Logic.General.Probe, IHeld
     {
         #region //---- PROBE ----
 

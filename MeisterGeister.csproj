@@ -344,6 +344,7 @@
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
     <Compile Include="ViewModel\Helden\Logic\IChangeListener.cs" />
+    <Compile Include="ViewModel\Helden\Logic\IHeld.cs" />
     <Compile Include="ViewModel\Helden\SonderfertigkeitenViewModel.cs" />
     <Compile Include="ViewModel\Helden\TalentViewModel.cs" />
     <Compile Include="ViewModel\Helden\ListeViewModel.cs" />

@@ -8,7 +8,7 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
 namespace MeisterGeister.ViewModel.Helden.Logic
 {
-    public class Eigenschaft : Probe
+    public class Eigenschaft : Probe, IHeld
     {
         #region //---- KONSTRUKTOREN & INITIALISIERUNG ----
 
@@ -23,7 +23,7 @@ namespace MeisterGeister.ViewModel.Helden.Logic
         /// </summary>
         /// <param name="name">Name oder Abkürzung der Eigenschaft.</param>
         /// <param name="wert">Wert der Eigenschaft.</param>
-        public Eigenschaft(string name, int wert = 8)
+        public Eigenschaft(string name, int wert = 8, Model.Held held = null)
         {
             if (name.Length <= 2) // Abkürzung
             {
@@ -36,6 +36,7 @@ namespace MeisterGeister.ViewModel.Helden.Logic
                 Name = name;
             }
             _werte = new int[1];
+            Held = held;
             Wert = wert;
         }
 
@@ -50,6 +51,8 @@ namespace MeisterGeister.ViewModel.Helden.Logic
         public string Literatur { get { return "WdS 6"; } }
 
         public string Komplex { get { return "H"; } }
+
+        public Model.Held Held { get; set; }
 
         #endregion //---- EIGENSCHAFTEN & FELDER ----
 
@@ -181,5 +184,6 @@ namespace MeisterGeister.ViewModel.Helden.Logic
         }
 
         #endregion //---- PROBE ----
+
     }
 }
