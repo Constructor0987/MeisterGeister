@@ -291,7 +291,7 @@
                                     <Grid.Background>
                                         <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
                                     </Grid.Background>
-                                    <ViewGeneral:IntBox Value="{Binding SelectedHeld..RS[Gesamt]}" ToolTip="Rüstungsschutz (Gesamt)" ShowButtons="True" Width="65" Margin="86.5,15.48,499.5,274.52" MinValue="0" IsEnabled="False" />
+                                    <ViewGeneral:IntBox Value="{Binding SelectedHeld.RS[Gesamt]}" ToolTip="Rüstungsschutz (Gesamt)" ShowButtons="True" Width="65" Margin="86.5,15.48,499.5,274.52" MinValue="0" IsEnabled="False" />
                                     <ViewGeneral:IntBox Margin="318.5,15.48,317.5,274.52" Value="{Binding SelectedHeld.RS[Kopf]}" ToolTip="Rüstungsschutz (Kopf)" ShowButtons="True" Width="65" MinWidth="50" MinValue="0" IsEnabled="False" />
                                     <ViewGeneral:IntBox Margin="250.5,65.5,335.5,224.5" Value="{Binding SelectedHeld.RS[Brust]}" ToolTip="Rüstungsschutz (Brust)" ShowButtons="True" Width="65" MinWidth="50" MinValue="0" IsEnabled="False" />
                                     <ViewGeneral:IntBox Margin="340.5,65.5,245.5,224.5" Value="{Binding SelectedHeld.RS[Rücken]}" ToolTip="Rüstungsschutz (Rücken)" ShowButtons="True" Width="65" MinValue="0" MinWidth="50" IsEnabled="False" />

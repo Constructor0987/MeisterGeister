@@ -355,7 +355,7 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <Grid>
-                                    <DataGrid ItemsSource="{Binding KampftalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" 
+                                    <DataGrid ItemsSource="{Binding KampfTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" 
                                               RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" HorizontalContentAlignment="Stretch" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                                         <DataGrid.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
