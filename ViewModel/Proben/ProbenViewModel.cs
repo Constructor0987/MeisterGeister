@@ -332,6 +332,8 @@ namespace MeisterGeister.ViewModel.Proben
                 string art = SelectedProbe == null ? "Punkte*" : SelectedProbe.PunkteText + "*";
                 foreach (ProbeControlViewModel er in ProbeErgebnisListe)
                 {
+                    if (er.NichtProben)
+                        break;
                     if (er.Ergebnis.Übrig >= 0) //nur positive Ergebnisse addieren
                     {
                         tapSum += er.Ergebnis.Übrig;
@@ -597,6 +599,7 @@ namespace MeisterGeister.ViewModel.Proben
                     vm.Probe = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).FirstOrDefault();
                 else if (SelectedProbe is Eigenschaft)
                     vm.Probe = item.Eigenschaft(SelectedProbe.Probenname);
+                vm.Modifikator = Modifikator;
                 vm.Gewürfelt += ProbeControlGewürfelt;
 
                 // nur einfügen, wenn der Held die Fähigkeit besitzt
@@ -611,6 +614,8 @@ namespace MeisterGeister.ViewModel.Proben
             // Alle Proben neu würfeln
             foreach (var item in ProbeErgebnisListe)
             {
+                if (item.NichtProben)
+                    break;
                 item.LockSoundAbspielen = true;
                 item.Würfeln();
                 item.LockSoundAbspielen = false;

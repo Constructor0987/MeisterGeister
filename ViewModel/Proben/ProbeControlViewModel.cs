@@ -24,6 +24,36 @@ namespace MeisterGeister.ViewModel.Proben
 
         #region //---- EIGENSCHAFTEN & FELDER ----
 
+        private bool _nichtProben = false;
+        public bool NichtProben
+        {
+            get { return _nichtProben; }
+            set 
+            { 
+                _nichtProben = value;
+                Ergebnis = new ProbenErgebnis();
+                foreach (var item in EigenschaftWurfItemListe)
+                {
+                    item.PropertyChanged -= EigenschaftWurfItem_PropertyChanged;
+                    item.Wurf = 0;
+                    item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
+                }
+                Opacity = value ? 0.5 : 1.0;
+                OnChanged("NichtProben");
+            }
+        }
+
+        private double _opacity = 1.0;
+        public double Opacity
+        {
+            get { return _opacity; }
+            set
+            {
+                _opacity = value;
+                OnChanged("Opacity");
+            }
+        }
+
         private Orientation _orientation = Orientation.Horizontal;
         public Orientation Orientation
         {
@@ -92,12 +122,16 @@ namespace MeisterGeister.ViewModel.Proben
             get { return Probe != null ? Probe.Modifikator : _modifikator; }
             set
             {
+                if (NichtProben)
+                    return;
                 _modifikator = value;
                 if (Probe != null)
+                {
                     Probe.Modifikator = _modifikator;
+                    Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
+                }
 
                 OnChanged("Modifikator");
-                Ergebnis = Probe.ProbenErgebnisBerechnen(Ergebnis);
             }
         }
 
@@ -243,7 +277,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         public void Würfeln(object obj = null)
         {
-            if (Probe != null)
+            if (Probe != null && !NichtProben)
             {
                 for (int i = 0; i < Probe.Werte.Length; i++)
                     Probe.Werte[i] = EigenschaftWurfItemListe[i].Wert;
@@ -282,6 +316,16 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 if (sender is EigenschaftWurfItem)
                 {
+                    if (NichtProben)
+                    {
+                        foreach (var item in EigenschaftWurfItemListe)
+                        {
+                            item.PropertyChanged -= EigenschaftWurfItem_PropertyChanged;
+                            item.Wurf = 0;
+                            item.PropertyChanged += EigenschaftWurfItem_PropertyChanged;
+                        }
+                        return;
+                    }
                     if (Probe != null)
                     {
                         bool changed = false;

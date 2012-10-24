@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Opacity="{Binding Opacity}"
              Background="Transparent"
              d:DataContext="{d:DesignData /SampleData/ProbeControlViewModelSampleData.xaml}"
              Loaded="UserControl_Loaded">
@@ -112,7 +112,7 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" ToolTip="{Binding Probe.Probenname, StringFormat=\{0\}-Probe}" TextTrimming="CharacterEllipsis">
                     <Run Text="{Binding Probe.Probenname}" FontStyle="Italic" />
                     <Run Text="-Probe" />
@@ -184,7 +184,7 @@
                                             <MenuItem Style="{DynamicResource ContextMenuItemWürfel}" />
                                         </ContextMenu>
                                     </Border.ContextMenu>
-                                    <ViewGeneral:IntBox ContextMenu="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxValue="20" MinValue="1" Foreground="Black" NoBackground="True" FontWeight="Bold" Value="{Binding Wurf}" />
+                                    <ViewGeneral:IntBox ContextMenu="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxValue="20" MinValue="0" Foreground="Black" NoBackground="True" FontWeight="Bold" Value="{Binding Wurf}" />
                                 </Border>
                             </Grid>
                         </DataTemplate>

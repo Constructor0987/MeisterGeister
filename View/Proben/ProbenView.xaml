@@ -219,7 +219,13 @@
                             <DataTemplate>
                                 <Border Margin="5">
                                     <StackPanel>
-                                        <Proben:ProbeControl Orientation="Horizontal" />
+                                        <Grid>
+                                            <Proben:ProbeControl Orientation="Horizontal" />
+                                            <ToggleButton IsChecked="{Binding NichtProben}" Margin="0,0,0,0" Height="15" Width="15" BorderThickness="0.5" Opacity="0.5" 
+                                                          HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Probe berücksichtigen oder ignorieren.">
+                                                <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                            </ToggleButton>
+                                        </Grid>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
