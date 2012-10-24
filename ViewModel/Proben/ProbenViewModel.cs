@@ -114,6 +114,40 @@ namespace MeisterGeister.ViewModel.Proben
             OnChanged("ProbeFavoritenListe");
         }
 
+        private Base.CommandBase _onShowSpielerInfo = null;
+        public Base.CommandBase OnShowSpielerInfo
+        {
+            get
+            {
+                if (_onShowSpielerInfo == null)
+                    _onShowSpielerInfo = new Base.CommandBase(ShowSpielerInfo, null);
+                return _onShowSpielerInfo;
+            }
+        }
+        private void ShowSpielerInfo(object sender)
+        {
+            // TODO MT: MVVM konform umbauen
+            View.Proben.ProbenSpielerInfoView infoView = new View.Proben.ProbenSpielerInfoView();
+            infoView.VM = this;
+            View.MainView.ShowSpielerInfo(infoView);
+        }
+
+        private Base.CommandBase _onCloseSpielerInfo = null;
+        public Base.CommandBase OnCloseSpielerInfo
+        {
+            get
+            {
+                if (_onCloseSpielerInfo == null)
+                    _onCloseSpielerInfo = new Base.CommandBase(CloseSpielerInfo, null);
+                return _onCloseSpielerInfo;
+            }
+        }
+        private void CloseSpielerInfo(object sender)
+        {
+            // TODO MT: MVVM konform umbauen
+            View.MainView.CloseSpielerFenster();
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN & FELDER ----
@@ -180,6 +214,18 @@ namespace MeisterGeister.ViewModel.Proben
         public bool SelectedProbeIsZauber
         {
             get { return _selectedProbe is Model.Zauber; }
+        }
+
+        private bool _isAktivierteProben = false;
+        public bool IsAktivierteProben
+        {
+            get { return _isAktivierteProben; }
+            set
+            {
+                _isAktivierteProben = value;
+                FilterProbeListe();
+                OnChanged("IsAktivierteProben");
+            }
         }
 
         private FilterItem _selectedFilterItem = null;
@@ -459,39 +505,48 @@ namespace MeisterGeister.ViewModel.Proben
 
         private void FilterProbeListe()
         {
+            List<Probe> probeListe = ProbeListe;
+            if (IsAktivierteProben)
+            { // nur aktivierte Proben
+                // TODO MT: Talente & Zauber aus Liste Filtern
+                // TODO MT: Sonderfall Meta-Talente
+                probeListe = ProbeListe.Where(p => p is Eigenschaft)
+                    .ToList();
+            }
+
             if (SelectedFilterItem == null)
             {
-                FilteredProbeListe = ProbeListe.OrderBy(p => p.Probenname).ToList();
+                FilteredProbeListe = probeListe.OrderBy(p => p.Probenname).ToList();
                 return;
             }
 
             switch (SelectedFilterItem.Name)
             {
                 case"Alle":
-                    FilteredProbeListe = ProbeListe.OrderBy(p => p.Probenname).ToList();
+                    FilteredProbeListe = probeListe.OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Häufig verwendet":
                     List<string> häufigList = new List<string> { "Fährtensuchen", "Gassenwissen", "Gefahreninstinkt", "Menschenkenntnis", 
                         "Orientierung", "Schleichen", "Sich Verstecken", "Sinnenschärfe", "Überreden", "Wildnisleben" };
-                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent
+                    FilteredProbeListe = probeListe.Where(p => p is Model.Talent
                         && häufigList.Contains(p.Probenname)).OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Eigenschaft":
-                    FilteredProbeListe = ProbeListe.Where(p => p is Eigenschaft).OrderBy(p => p.Probenname).ToList();
+                    FilteredProbeListe = probeListe.Where(p => p is Eigenschaft).OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Talent":
-                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent).OrderBy(p => p.Probenname).ToList();
+                    FilteredProbeListe = probeListe.Where(p => p is Model.Talent).OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Basis":
                 case "Spezial":
-                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent
+                    FilteredProbeListe = probeListe.Where(p => p is Model.Talent
                         && (p as Model.Talent).Talenttyp == SelectedFilterItem.Name).OrderBy(p => p.Probenname).ToList();
                     return;
                 case "Zauber":
-                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Zauber).OrderBy(p => p.Probenname).ToList();
+                    FilteredProbeListe = probeListe.Where(p => p is Model.Zauber).OrderBy(p => p.Probenname).ToList();
                     return;
                 default:
-                    FilteredProbeListe = ProbeListe.Where(p => p is Model.Talent 
+                    FilteredProbeListe = probeListe.Where(p => p is Model.Talent 
                         && (p as Model.Talent).Talentgruppe.Kurzname == SelectedFilterItem.Name).OrderBy(p => p.Probenname).ToList();
                     return;
             }

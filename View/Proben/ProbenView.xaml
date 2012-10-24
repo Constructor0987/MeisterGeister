@@ -208,7 +208,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <ListBox Grid.Column="0" Grid.Row="1" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                    <ListBox Grid.Column="0" Grid.Row="1" Name="_probeErgebnisListe" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                              ItemsSource="{Binding ProbeErgebnisListe}" ItemsPanel="{Binding ProbeErgebnisListePanel}">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
@@ -257,12 +257,14 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50">
-                            <Button.ToolTip>
-                                <TextBlock Width="200" Height="Auto" TextWrapping="Wrap"
-            	                    Text="TODO: Probenergebnisse im Spieler-Fenster anzeigen." />
-                            </Button.ToolTip>
+                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnShowSpielerInfo}" CommandParameter="{Binding ElementName=_probeErgebnisListe}" ToolTip="Probenergebnisse im Spieler-Fenster anzeigen.">
                             <Image Source="/Images/Icons/General/screen.png" />
+                        </Button>
+                        <Button Margin="2" HorizontalAlignment="Right" Height="32" Width="50" Command="{Binding OnCloseSpielerInfo}" ToolTip="Spieler-Fenster schließen.">
+                            <Grid>
+                                <Image Source="/Images/Icons/General/screen.png" />
+                                <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                            </Grid>
                         </Button>
                     </StackPanel>
                 </Grid>

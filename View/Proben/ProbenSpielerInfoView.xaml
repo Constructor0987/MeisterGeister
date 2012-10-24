@@ -1,0 +1,118 @@
+﻿<UserControl x:Name="userControl" x:Class="MeisterGeister.View.Proben.ProbenSpielerInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:Proben="clr-namespace:MeisterGeister.View.Proben"
+             mc:Ignorable="d" Margin="50" FontSize="15"
+             d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Expander Grid.Row="0" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="{Binding SelectedProbe.Probenname, FallbackValue=Probenname}" />
+                    <TextBlock VerticalAlignment="Center" Margin="2,0" Style="{DynamicResource TextTitel}" Text="{Binding SelectedProbe.WerteNamen, FallbackValue=(XX/XX/XX)}" />
+                </StackPanel>
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
+                <WrapPanel>
+                    <WrapPanel.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="FontStyle" Value="Italic" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontStyle" Value="Italic" />
+                        </Style>
+                    </WrapPanel.Resources>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Literatur:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Literatur, FallbackValue=-}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" ToolTip="Effektive Behinderung (eBE)" Visibility="{Binding SelectedProbeHat_eBE, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                        <Label Content="eBE:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.eBE, FallbackValue=-}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" ToolTip="Spalte auf der Steigerungskosten-Tabelle (SKT)">
+                        <Label Content="Komplexität:" FontWeight="Bold" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Steigerung}" />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Komplex}" />
+                    </StackPanel>
+                    <Label Content="Voraussetzungen:" FontWeight="Bold" />
+                    <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Voraussetzungen, FallbackValue=-}" />
+                    <Label Content="Spezialisierungen:" FontWeight="Bold" />
+                    <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Spezialisierungen, FallbackValue=-}" />
+                    <Label Content="Merkmale:" FontWeight="Bold" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Merkmale, FallbackValue=-}" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                    <Label Content="Repräsentationen:" FontWeight="Bold" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                    <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding SelectedProbe.Repräsentationen, FallbackValue=-}" Visibility="{Binding SelectedProbeIsZauber, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                </WrapPanel>
+            </Border>
+        </Expander>
+
+        <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <TextBlock Text="Probenergebnisse" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ListBox Grid.Row="0" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             ItemsSource="{Binding SpezielleErfahrungListe}" TextElement.FontStyle="Italic" MaxHeight="55" Margin="5,0,0,0"
+                             ToolTip="Bei Doppel- oder Dreifach-Eins wird eine Spezielle Erfahrung im Notiz-Tool vermerkt (WdS 162).">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="#7FF9DAB5">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Width="14" />
+                                    <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ListBox Grid.Row="1" Name="_probeErgebnisListe" BorderBrush="#00000000" Background="#00000000" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             ItemsSource="{Binding ProbeErgebnisListe}" ItemsPanel="{Binding ProbeErgebnisListePanel}" FontSize="14">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Focusable" Value="False"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="5">
+                                    <StackPanel>
+                                        <Proben:ProbeControl Orientation="Horizontal" IsReadOnly="True" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Expander>
+
+        <Expander Grid.Row="2" Grid.Column="0" IsExpanded="True" Margin="5">
+            <Expander.Header>
+                <TextBlock Text="Zusammenarbeit" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
+                    <TextBlock Text="{Binding GruppenErgebnis}"/>
+                </StackPanel>
+            </Border>
+        </Expander>
+
+    </Grid>
+</UserControl>

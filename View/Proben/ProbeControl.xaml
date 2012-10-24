@@ -140,7 +140,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="24" />
+                                <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="26" />
                                 <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -191,7 +191,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Button Height="34" Width="34" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}" Margin="10,0,15,0" HorizontalAlignment="Left">
+                <Button Height="34" Width="34" Name="_würfelButton" ToolTip="Probe würfeln" Command="{Binding OnWürfeln}" Margin="10,0,15,0" HorizontalAlignment="Left">
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png"  />
                 </Button>
             </StackPanel>
@@ -199,7 +199,7 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal" Width="70" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Proben-Modifikator">
                     <TextBlock Text="Mod:" VerticalAlignment="Center" />
-                    <ViewGeneral:IntBox Value="{Binding Modifikator}" Margin="5,0,0,0" MinWidth="25" HorizontalAlignment="Center" VerticalAlignment="Center" NoBackground="False" />
+                    <ViewGeneral:IntBox x:Name="_intBoxMod" Value="{Binding Modifikator}" Margin="5,0,0,0" MinWidth="25" HorizontalAlignment="Center" VerticalAlignment="Center" NoBackground="False" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Width="65" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource WertVisibility}">
                     <TextBlock Text="{Binding Probe.WertText, Mode=OneWay}" FontWeight="Bold"  />

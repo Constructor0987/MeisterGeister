@@ -503,6 +503,9 @@
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Proben\ProbenSpielerInfoView.xaml.cs">
+      <DependentUpon>ProbenSpielerInfoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Proben\ProbeControl.xaml.cs">
       <DependentUpon>ProbeControl.xaml</DependentUpon>
     </Compile>
@@ -812,6 +815,10 @@
     <Page Include="View\Kampf\KampfInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Proben\ProbenSpielerInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Proben\ProbeControl.xaml">
       <SubType>Designer</SubType>

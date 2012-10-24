@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using MeisterGeister.Logic.General;
 using MeisterGeister.View.Windows;
 
@@ -111,6 +115,52 @@ namespace MeisterGeister.View.General
             else
                 ergebnis = Logic.General.Würfel.Parse(würfel, true);
             return ergebnis;
+        }
+
+        public static Image GetImageFromControl(FrameworkElement controlToRender)
+        {
+            RenderTargetBitmap rtb = new RenderTargetBitmap(
+                (int)controlToRender.ActualWidth,
+                (int)controlToRender.ActualHeight,
+                90, 90,
+                PixelFormats.Default);
+
+            Visual vis = (Visual)controlToRender;
+            rtb.Render(vis);
+
+            Image img = new Image();
+            img.Source = rtb;
+            img.Stretch = Stretch.None;
+            img.Measure(new System.Windows.Size(
+                            (int)controlToRender.ActualWidth,
+                            (int)controlToRender.ActualHeight));
+            System.Windows.Size sizeImage = img.DesiredSize;
+            img.Arrange(new System.Windows.Rect(new System.Windows.Point(0, 0), sizeImage));
+
+            RenderTargetBitmap rtb2 = new RenderTargetBitmap(
+                (int)rtb.Width,
+                (int)rtb.Height,
+                90,
+                90,
+                PixelFormats.Default);
+            rtb2.Render(img);
+
+            PngBitmapEncoder png = new PngBitmapEncoder();
+            png.Frames.Add(BitmapFrame.Create(rtb2));
+
+            Stream ms = new MemoryStream();
+            png.Save(ms);
+
+            ms.Position = 0;
+
+            BitmapImage myBitmapImage = new BitmapImage();
+            myBitmapImage.BeginInit();
+            myBitmapImage.StreamSource = ms;
+            myBitmapImage.EndInit();
+
+            Image imgCon = new Image();
+            imgCon.Source = myBitmapImage;
+            return imgCon;
         }
 
     }

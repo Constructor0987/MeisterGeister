@@ -77,6 +77,22 @@ namespace MeisterGeister.View.Proben
                 control.VM.Orientation = (Orientation)e.NewValue;
         }
 
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+          "IsReadOnly", typeof(bool), typeof(ProbeControl),
+                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnIsReadOnlyChanged)));
+
+        private static void OnIsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ProbeControl control = (ProbeControl)d;
+            control._würfelButton.Visibility = (bool)e.NewValue ? Visibility.Hidden : Visibility.Visible;
+            // TODO ??: IntBoxen auf ReadOnly setzen
+        }
+
         #endregion //---- DEPENDENCY PROPERTIES ----
 
         #region //---- EVENTS ----
