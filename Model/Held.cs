@@ -70,10 +70,14 @@ namespace MeisterGeister.Model
                 targetModCount = 1;
             else
                 targetModCount = 2;
-            int change = SetModifikatorCount<Mod.NiedrigeAusdauerModifikator>(targetModCount);
+            int change = 0;
+
+            if (Logic.Settings.Regeln.NiedrigeAU) // nur anwenden, wenn Regel-Option aktiv
+                change = SetModifikatorCount<Mod.NiedrigeAusdauerModifikator>(targetModCount);
+
             if (targetModCount == 1 && change >= 1)
             {
-                //+ 1 Erschöpfung
+                // TODO ??: + 1 Erschöpfung
             }
 
             if (AusdauerAktuell <= 0)
@@ -81,7 +85,7 @@ namespace MeisterGeister.Model
                 if (!(Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0))
                 {
                     Modifikatoren.Add(new Mod.AusdauerKampfunfähigModifikator());
-                    //+ 1W6 Erschöpfung
+                    // TODO ??: + 1W6 Erschöpfung
                 }
             }
             else
@@ -103,7 +107,8 @@ namespace MeisterGeister.Model
             else
                 targetModCount = 3;
 
-            SetModifikatorCount<Mod.NiedrigeLebensenergieModifikator>(targetModCount);
+            if (Logic.Settings.Regeln.NiedrigeLE) // nur anwenden, wenn Regel-Option aktiv
+                SetModifikatorCount<Mod.NiedrigeLebensenergieModifikator>(targetModCount);
 
             if (!HatVorNachteil("Eisern") && !HatVorNachteil("Zäher Hund") && LebensenergieAktuell <= 5 || LebensenergieAktuell <= 0)
             {

@@ -26,11 +26,14 @@
                     <TextBlock Text="Regel-Optionen" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
-                <ListBox ItemsSource="{Binding}" ItemTemplate="{StaticResource RegelnListTemplate}" BorderThickness="0">
-                    <ListBox.Background>
-                        <SolidColorBrush />
-                    </ListBox.Background>
-                </ListBox>
+                    <StackPanel>
+                        <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
+                        <ListBox ItemsSource="{Binding}" ItemTemplate="{StaticResource RegelnListTemplate}" BorderThickness="0">
+                            <ListBox.Background>
+                                <SolidColorBrush />
+                            </ListBox.Background>
+                        </ListBox>
+                    </StackPanel>
                 </Border>
             </Expander>
 
