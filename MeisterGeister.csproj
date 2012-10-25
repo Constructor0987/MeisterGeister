@@ -1316,7 +1316,6 @@ if not $(ConfigurationName) == Debug (
    move  "$(TargetDir)$(TargetName).zip" "$(ProjectDir)publish"
 )</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
