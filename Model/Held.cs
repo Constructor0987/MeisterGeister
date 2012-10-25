@@ -226,6 +226,26 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModAT))]
+        public List<dynamic> ModifikatorenListeAT
+        {
+            get
+            {
+                List<dynamic> list = ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
+                list.AddRange(ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                return list;
+            }
+        }
+        [DependsOnModifikator(typeof(Mod.IModPA))]
+        public List<dynamic> ModifikatorenListePA
+        {
+            get
+            {
+                List<dynamic> list = ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
+                list.AddRange(ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                return list;
+            }
+        }
         [DependsOnModifikator(typeof(Mod.IModFKBasis))]
         public List<dynamic> ModifikatorenListeFKbasis
         {
@@ -992,6 +1012,22 @@ namespace MeisterGeister.Model
             }
         }
 
+        /// <summary>
+        /// Grund-AT-Wert inkl. Abzüge.
+        /// </summary>
+        [DependentProperty("AttackeBasis")]
+        [DependsOnModifikator(typeof(Mod.IModAT))]
+        public int Attacke
+        {
+            get
+            {
+                int v = AttackeBasis;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModAT).Select(m => (Mod.IModAT)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATMod(v));
+                return v;
+            }
+        }
+
         [DependentProperty("BaseIN"), DependentProperty("BaseGE"), DependentProperty("BaseKK")]
         public int ParadeBasisOhneMod
         {
@@ -1014,11 +1050,19 @@ namespace MeisterGeister.Model
             }
         }
 
+        /// <summary>
+        /// Grund-PA-Wert inkl. Abzüge.
+        /// </summary>
+        [DependentProperty("ParadeBasis")]
+        [DependsOnModifikator(typeof(Mod.IModPA))]
         public int Parade
         {
             get
             {
-                return ParadeBasis;
+                int v = ParadeBasis;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModPA).Select(m => (Mod.IModPA)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPAMod(v));
+                return v;
             }
         }
 

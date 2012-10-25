@@ -138,6 +138,9 @@ namespace MeisterGeister.Logic.General
             // Modifikatoren verändern den effektiven Fertigkeitswert
             // Modifikator > 0 : Erschwernis
             // Modifikator < 0 : Erleichterung
+            if (Werte.Length == 0)
+                return pe;
+
             int fertigkeitswertEff = Fertigkeitswert - (Modifikator + ModifikatorProben);
             pe.Übrig = fertigkeitswertEff;
             pe.Qualität = fertigkeitswertEff;

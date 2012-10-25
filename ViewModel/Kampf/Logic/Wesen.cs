@@ -61,9 +61,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 List<dynamic> list = ModifikatorenListe(typeof(Mod.IModAlleProben), 0);
                 if (probe is Model.Zauber || probe is Model.Held_Zauber)
-                    ModifikatorenListe(typeof(Mod.IModZauberprobe), list.Count() == 0 ? 0 : list.LastOrDefault().Wert);
+                    list.AddRange(ModifikatorenListe(typeof(Mod.IModZauberprobe), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
                 else if (probe is Model.Talent || probe is Model.Held_Talent || probe is MetaTalent)
-                    ModifikatorenListe(typeof(Mod.IModTalentprobe), list.Count() == 0 ? 0 : list.LastOrDefault().Wert);
+                    list.AddRange(ModifikatorenListe(typeof(Mod.IModTalentprobe), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
                 return list;
             }
         }

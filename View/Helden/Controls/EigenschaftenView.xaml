@@ -291,16 +291,16 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeATbasis}" WertName="AT-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.AttackeBasisOhneMod}" Wert="{Binding SelectedHeld.AttackeBasis}" />
+                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeAT}" WertName="AT-Wert" 
+                                                        StartWert="{Binding SelectedHeld.AttackeBasisOhneMod}" Wert="{Binding SelectedHeld.Attacke}" />
                         </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.AttackeBasis}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Attacke}" TextAlignment="Center" VerticalAlignment="Center" />
                         <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
                             <Image.Style>
                                 <Style TargetType="Image">
                                     <Setter Property="Visibility" Value="Visible" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeATbasis.Count}" Value="0" >
+                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeAT.Count}" Value="0" >
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -317,16 +317,16 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListePAbasis}" WertName="PA-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.ParadeBasisOhneMod}" Wert="{Binding SelectedHeld.ParadeBasis}" />
+                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListePA}" WertName="PA-Wert" 
+                                                        StartWert="{Binding SelectedHeld.ParadeBasisOhneMod}" Wert="{Binding SelectedHeld.Parade}" />
                         </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.ParadeBasis}" TextAlignment="Center" VerticalAlignment="Center" />
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Parade}" TextAlignment="Center" VerticalAlignment="Center" />
                         <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
                             <Image.Style>
                                 <Style TargetType="Image">
                                     <Setter Property="Visibility" Value="Visible" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListePAbasis.Count}" Value="0" >
+                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListePA.Count}" Value="0" >
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
