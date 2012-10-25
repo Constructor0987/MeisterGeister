@@ -581,12 +581,12 @@ namespace MeisterGeister.ViewModel.Proben
 
             foreach (var item in HeldListe)
             {
-                // TODO MT: Probem wenn der Held einen Zauber in mehreren Rep. hat
-                // Solange wird erstmal der Zauber mit dem höchsten ZfW ausgewählt
-
                 ProbeControlViewModel vm = new ProbeControlViewModel();
                 vm.Orientation = SelectedAnzeigeOrientation;
                 vm.Held = item;
+                vm.Modifikator = Modifikator;
+                vm.Gewürfelt += ProbeControlGewürfelt;
+
                 if (SelectedProbe is Model.Talent)
                 {
                     if ((SelectedProbe as Model.Talent).IsMetaTalent) // Meta-Talent
@@ -596,17 +596,33 @@ namespace MeisterGeister.ViewModel.Proben
                     }
                     else
                         vm.Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+
+                    if (vm.Probe != null)
+                        _probeErgebnisListe.Add(vm);
+                }
+                else if (SelectedProbe is Eigenschaft)
+                {
+                    vm.Probe = item.Eigenschaft(SelectedProbe.Probenname);
+                    if (vm.Probe != null)
+                        _probeErgebnisListe.Add(vm);
                 }
                 else if (SelectedProbe is Model.Zauber)
-                    vm.Probe = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).FirstOrDefault();
-                else if (SelectedProbe is Eigenschaft)
-                    vm.Probe = item.Eigenschaft(SelectedProbe.Probenname);
-                vm.Modifikator = Modifikator;
-                vm.Gewürfelt += ProbeControlGewürfelt;
+                {
+                    var zauberList = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).ToList();
+                    for (int i = 0; i < zauberList.Count(); i++)
+                    {
+                        vm = new ProbeControlViewModel();
+                        vm.Orientation = SelectedAnzeigeOrientation;
+                        vm.Held = item;
+                        vm.Modifikator = Modifikator;
+                        vm.Gewürfelt += ProbeControlGewürfelt;
+                        vm.Probe = zauberList[i];
+                        vm.NichtProben = i > 0;
 
-                // nur einfügen, wenn der Held die Fähigkeit besitzt
-                if (vm.Probe != null)
-                    _probeErgebnisListe.Add(vm);
+                        if (vm.Probe != null)
+                            _probeErgebnisListe.Add(vm);
+                    }
+                }
             }
             OnChanged("ProbeErgebnisListe");
         }

@@ -14,7 +14,7 @@ namespace MeisterGeister.Model
         [DependentProperty("Zauber")]
         override public string Probenname
         {
-            get { return Zauber != null ? Zauber.Name : string.Empty; }
+            get { return Zauber != null ? string.Format("{0} [{1}]", Zauber.Name, Repräsentation) : string.Empty; }
             set
             {
                 if (Zauber != null)
