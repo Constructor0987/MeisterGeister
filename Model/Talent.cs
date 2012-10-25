@@ -23,7 +23,7 @@ namespace MeisterGeister.Model
         {
             get 
             {
-                if (_werte == null)
+                if (_werte == null || _werte.Length != 3)
                     _werte = new int[3];
                 return _werte;
             }

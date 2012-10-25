@@ -100,7 +100,7 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
-        private Probe _probe = null;
+        private Probe _probe = new Probe();
         public Probe Probe
         {
             get { return _probe; }
@@ -108,7 +108,7 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 _probe = value;
 
-                if (_probe != null)
+                if (_probe != null && _probe.Werte != null)
                     WertCount = _probe.Werte.Length;
 
                 OnChanged("Probe");
@@ -201,6 +201,8 @@ namespace MeisterGeister.ViewModel.Proben
                 if (value < 0)
                     return;
 
+                if (Probe != null && Probe.Werte.Length != value)
+                    Probe.Werte = new int[value];
                 var list = new List<EigenschaftWurfItem>(value);
                 for (int i = 0; i < value; i++)
                 {
@@ -281,7 +283,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         public ProbeControlViewModel()
         {
-            WertCount = 3;
+            WertCount = Probe.Werte.Length;
 
             onWürfeln = new Base.CommandBase(Würfeln, null);
         }

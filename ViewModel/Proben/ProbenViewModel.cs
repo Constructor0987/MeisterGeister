@@ -170,15 +170,15 @@ namespace MeisterGeister.ViewModel.Proben
                             return _probeErgebnisListe.OrderBy(vm => vm.NichtProben).
                                 ThenByDescending(vm => vm.Ergebnis.Übrig).
                                 ThenByDescending(vm => vm.Ergebnis.Qualität).
-                                ThenByDescending(vm => vm.Probe.Fertigkeitswert).ToList();
+                                ThenByDescending(vm => (vm.Probe != null ? vm.Probe.Fertigkeitswert : 0)).ToList();
                         case "Wert":
                             return _probeErgebnisListe.OrderBy(vm => vm.NichtProben).
-                                ThenByDescending(vm => vm.Probe.Fertigkeitswert).
-                                ThenByDescending(vm => vm.Probe.Werte.Sum()).
-                                ThenBy(vm => vm.Held.Name).ToList();
+                                ThenByDescending(vm => (vm.Probe != null ? vm.Probe.Fertigkeitswert : 0)).
+                                ThenByDescending(vm => (vm.Probe != null ? vm.Probe.Werte.Sum() : 0)).
+                                ThenBy(vm => (vm.Held != null ? vm.Held.Name : string.Empty)).ToList();
                         case "Name":
-                            return _probeErgebnisListe.OrderBy(vm => vm.Held.Name).
-                                ThenByDescending(vm => vm.Probe.Fertigkeitswert).ToList();
+                            return _probeErgebnisListe.OrderBy(vm => (vm.Held != null ? vm.Held.Name : string.Empty)).
+                                ThenByDescending(vm => (vm.Probe != null ? vm.Probe.Fertigkeitswert : 0)).ToList();
                         default:
                             break;
                     }
@@ -578,7 +578,6 @@ namespace MeisterGeister.ViewModel.Proben
         private void RefreshProbeErgebnisListe()
         {
             _probeErgebnisListe.Clear();
-
             foreach (var item in HeldListe)
             {
                 ProbeControlViewModel vm = new ProbeControlViewModel();

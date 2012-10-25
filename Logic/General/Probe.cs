@@ -12,17 +12,18 @@ namespace MeisterGeister.Logic.General
     {
         virtual public string Probenname { get; set; }
 
-        protected int[] _werte;
+        protected int[] _werte = new int[0];
         virtual public int[] Werte
         {
             get { return _werte; }
-            set { 
+            set 
+            { 
                 _werte = value;
                 _chanceBerechnet = false;
             }
         }
 
-        private int _modifikator;
+        private int _modifikator = 0;
         public int Modifikator
         {
             get { return _modifikator; }
@@ -36,13 +37,13 @@ namespace MeisterGeister.Logic.General
         {
             get 
             {
-                if (this is IHeld)
+                if (this is IHeld && (this as IHeld).Held != null)
                     return (this as IHeld).Held.GetModifikatorProben(this);
                 return 0; 
             }
         }
 
-        private int _fertigkeitswert;
+        private int _fertigkeitswert = 0;
         virtual public int Fertigkeitswert
         {
             get { return _fertigkeitswert; }
@@ -116,8 +117,6 @@ namespace MeisterGeister.Logic.General
         public ProbenErgebnis Würfeln()
         {
             ProbenErgebnis pe = new ProbenErgebnis();
-            if (Werte == null)
-                Werte = new int[0];
             pe.Würfe = new int[Werte.Length];
 
             for (int i = 0; i < Werte.Length; i++)
@@ -157,7 +156,7 @@ namespace MeisterGeister.Logic.General
             }
             int tmpÜbrig = fertigkeitswertEff;
             wurfQualität.Where(q => q < 0).ToList().ForEach(q => tmpÜbrig += q);
-            int minQ = wurfQualität.Min();
+            int minQ = wurfQualität.Count() == 0 ? 0 : wurfQualität.Min();
             bool erfolg = tmpÜbrig >= 0 || minQ >= 0;
             tmpÜbrig = Math.Max(0, tmpÜbrig);
             if (erfolg)
@@ -208,12 +207,8 @@ namespace MeisterGeister.Logic.General
             // Bei Doppel1 oder Dreifach1 eine SE (WdS 162)
             // TODO ??: Eventuell User per YesNo-Dialog fragen?
             string held = "Unbekannt";
-            if (this is Model.Held_Zauber)
-                held = (this as Model.Held_Zauber).Held.Name;
-            else if (this is Model.Held_Talent)
-                held = (this as Model.Held_Talent).Held.Name;
-            else if (this is MetaTalent)
-                held = (this as MetaTalent).Held.Name;
+            if (this is IHeld)
+                held = (this as IHeld).Held.Name;
             string seTxt = string.Format("{0} - {1} - Spezielle Erfahrung in {2} (TaW {3}) für {4} ({5} Einsen)",
                 DateTime.Now.ToString("g"), MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort(),
                 Probenname, Fertigkeitswert, held, einsen);
