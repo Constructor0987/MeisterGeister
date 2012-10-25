@@ -500,11 +500,11 @@
                             <ViewGeneral:IntBox Margin="159,20,6,187" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Unlokalisiert)" Value="{Binding SelectedHeld.WundenByZone[Unlokalisiert], Mode=TwoWay}" />
                             <ViewGeneral:IntBox Margin="81,14,84,193" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Kopf)" Value="{Binding SelectedHeld.WundenByZone[Kopf], Mode=TwoWay}" />
                             <ViewGeneral:IntBox Margin="81,54,84,153" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Brust)" Value="{Binding SelectedHeld.WundenByZone[Brust], Mode=TwoWay}" />
-                            <ViewGeneral:IntBox Margin="13,83,152,124" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (linker Arm)" Value="{Binding SelectedHeld.WundenByZone[ArmL], Mode=TwoWay}" />
-                            <ViewGeneral:IntBox Margin="155,83,10,124" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (rechter Arm)" Value="{Binding SelectedHeld.WundenByZone[ArmR], Mode=TwoWay}" />
+                            <ViewGeneral:IntBox Margin="13,83,152,124" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (rechter Arm)" Value="{Binding SelectedHeld.WundenByZone[ArmR], Mode=TwoWay}" />
+                            <ViewGeneral:IntBox Margin="155,83,10,124" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (linker Arm)" Value="{Binding SelectedHeld.WundenByZone[ArmL], Mode=TwoWay}" />
                             <ViewGeneral:IntBox Margin="81,116,84,91" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (Bauch)" Value="{Binding SelectedHeld.WundenByZone[Bauch], Mode=TwoWay}" />
-                            <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (linkes Bein)" Value="{Binding SelectedHeld.WundenByZone[BeinL], Mode=TwoWay}" />
-                            <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (rechtes Bein)" Value="{Binding SelectedHeld.WundenByZone[BeinR], Mode=TwoWay}" />
+                            <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (rechtes Bein)" Value="{Binding SelectedHeld.WundenByZone[BeinR], Mode=TwoWay}" />
+                            <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MarkPlusValue="True" MinValue="0" ShowButtons="True" ToolTip="Wunden (linkes Bein)" Value="{Binding SelectedHeld.WundenByZone[BeinL], Mode=TwoWay}" />
                         </Grid>
                     </Border>
                 </Expander>
