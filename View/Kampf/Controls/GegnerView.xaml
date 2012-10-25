@@ -9,16 +9,16 @@
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
 	x:Name="UserControl" Background="{DynamicResource Background1}"
 	d:DesignWidth="600" d:DesignHeight="400">
-	<UserControl.Resources>
-        
-		<Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
-			<Setter Property="FontStyle" Value="Normal" />
-		</Style>
-		<Style x:Key="HeldenListItemStyle" TargetType="{x:Type StackPanel}">
-			<Setter Property="Opacity" Value="1.0" />
-		</Style>
-		<DataTemplate x:Key="HeldListTemplate">
-			<StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical">
+    <UserControl.Resources>
+
+        <Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontStyle" Value="Normal" />
+        </Style>
+        <Style x:Key="HeldenListItemStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Opacity" Value="1.0" />
+        </Style>
+        <DataTemplate x:Key="HeldListTemplate">
+            <StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical">
                 <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}">
                     <TextBlock.ToolTip>
                         <StackPanel>
@@ -27,22 +27,22 @@
                         </StackPanel>
                     </TextBlock.ToolTip>
                 </TextBlock>
-			</StackPanel>
-		</DataTemplate>
-	</UserControl.Resources>
-	<Grid>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Style="{DynamicResource ControlTitelBorder}">
-                    <TextBlock Text="Gegner" Style="{DynamicResource TextTitel}" />
-                </Border>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{DynamicResource ControlTitelBorder}">
+                <TextBlock Text="Gegner" Style="{DynamicResource TextTitel}" />
+            </Border>
 
             <Border Grid.Row="1" Style="{DynamicResource ControlContentBorder}">
                 <Grid>
@@ -50,100 +50,100 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                <ListBox x:Name="_listBoxGegnerBase" Grid.Row="0" Padding="4" Background="Transparent" AllowDrop="True" 
+                    <ListBox x:Name="_listBoxGegnerBase" Grid.Row="0" Padding="4" Background="Transparent" AllowDrop="True" 
 				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding GegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000">
-                    <ListBox.InputBindings>
-                        <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
-                    </ListBox.InputBindings>
-                    <ListBox.ContextMenu>
-                        <ContextMenu Opened="ContextMenu_Opened">
-                            <MenuItem Height="28"  Command="{Binding OnNewGegnerBase}" Header="Neu" x:Name="_menuItemGegnerNeu" ToolTip="Einen neuen Gegner eingeben.">
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Height="28" Command="{Binding OnCloneGegnerBase}" Header="Kopieren" x:Name="_menuItemGegnerKopie" ToolTip="Gegner kopieren.">
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/helden_kopieren.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Height="28" Command="{Binding OnImportGegnerBase}" Header="Importieren" x:Name="_menuItemGegnerImport">
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                                <MenuItem.ToolTip>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock FontWeight="Bold" Text="Gegner aus Datei importiere" />
-                                        <TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
-                                        <TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
-                                        <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
-                                    </StackPanel>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <MenuItem Height="28" Command="{Binding OnExportGegnerBase}" Header="Exportieren" x:Name="_menuItemGegnerExport">
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                                <MenuItem.ToolTip>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock FontWeight="Bold" Text="Gegner als XML-Datei exportieren" />
-                                        <TextBlock Foreground="Red" Text="ACHTUNG:" />
-                                        <TextBlock Text="Der Export/Import von Gegnern funktioniert nur zwischen MeisterGeister-Versionen derselben Versionsnummer!" />
-                                    </StackPanel>
-                                </MenuItem.ToolTip>
-                            </MenuItem>
-                            <Separator />
-                            <MenuItem Height="28" Command="{Binding OnDeleteGegnerBase}" Header="Löschen" x:Name="_menuItemGegnerLöschen" ToolTip="Gegner löschen.">
-                                <MenuItem.Icon>
-                                    <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListBox.ContextMenu>
+                        <ListBox.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
+                        </ListBox.InputBindings>
+                        <ListBox.ContextMenu>
+                            <ContextMenu Opened="ContextMenu_Opened">
+                                <MenuItem Height="28"  Command="{Binding OnNewGegnerBase}" Header="Neu" x:Name="_menuItemGegnerNeu" ToolTip="Einen neuen Gegner eingeben.">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Height="28" Command="{Binding OnCloneGegnerBase}" Header="Kopieren" x:Name="_menuItemGegnerKopie" ToolTip="Gegner kopieren.">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/helden_kopieren.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Height="28" Command="{Binding OnImportGegnerBase}" Header="Importieren" x:Name="_menuItemGegnerImport">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold" Text="Gegner aus Datei importiere" />
+                                            <TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+                                            <TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+                                            <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+                                        </StackPanel>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <MenuItem Height="28" Command="{Binding OnExportGegnerBase}" Header="Exportieren" x:Name="_menuItemGegnerExport">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                    <MenuItem.ToolTip>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock FontWeight="Bold" Text="Gegner als XML-Datei exportieren" />
+                                            <TextBlock Foreground="Red" Text="ACHTUNG:" />
+                                            <TextBlock Text="Der Export/Import von Gegnern funktioniert nur zwischen MeisterGeister-Versionen derselben Versionsnummer!" />
+                                        </StackPanel>
+                                    </MenuItem.ToolTip>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Height="28" Command="{Binding OnDeleteGegnerBase}" Header="Löschen" x:Name="_menuItemGegnerLöschen" ToolTip="Gegner löschen.">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                <StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal">
-                    <Button Height="23" Width="25" Click="ButtonHeldNeu_Click" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Gegner einfügen">
-                        <Button.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Gegner eingeben.">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                    <MenuItem.ToolTip>
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
-                                            <TextBlock Foreground="Red" Text="ACHTUNG!" />
-                                            <TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
-                                            <TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
-                                            <TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
-                                            <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
-                                        </StackPanel>
-                                    </MenuItem.ToolTip>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Button.ContextMenu>
-                        <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
-                    </Button>
-                    <Label Content="{Binding GegnerBaseListe.Count, FallbackValue=0}"/>
-                    <Label Content="Gegner" />
-                </StackPanel>
+                    <StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal">
+                        <Button Height="23" Width="25" Click="ButtonHeldNeu_Click" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Gegner einfügen">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Gegner eingeben.">
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren">
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                        <MenuItem.ToolTip>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
+                                                <TextBlock Foreground="Red" Text="ACHTUNG!" />
+                                                <TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
+                                                <TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
+                                                <TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+                                                <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
+                                            </StackPanel>
+                                        </MenuItem.ToolTip>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
+                        </Button>
+                        <Label Content="{Binding GegnerBaseListe.Count, FallbackValue=0}"/>
+                        <Label Content="Gegner" />
+                    </StackPanel>
                 </Grid>
             </Border>
         </Grid>
@@ -207,6 +207,7 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -220,17 +221,17 @@
                             <!-- Name, LE, AU, AE, KE, KO, INIBasis, INIZufall, MRGeist, MRKörper, PA, RSx, Aktionen, GS, GS2, GS3,  Bemerkung, Beschwörung, Beschwörungskosten, Bild, GW, Jagd, Kontrolle, Literatur, Setting, Tags  -->
                             <Label   Grid.Row="0" Grid.Column="0" Content="LE:" />
                             <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
-                            <Label   Grid.Row="0" Grid.Column="2" Content="AU:" />
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="0" Grid.Column="3" Content="AU:" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="4" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="1" Grid.Column="0" Content="AE:" />
                             <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
-                            <Label   Grid.Row="1" Grid.Column="2" Content="KE:" />
-                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="1" Grid.Column="3" Content="KE:" />
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="4" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
 
                             <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
                             <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
-                            <Label   Grid.Row="2" Grid.Column="2" Content="INI-Zufall:" />
-                            <TextBox Grid.Row="2" Grid.Column="3" Margin="2">
+                            <Label   Grid.Row="2" Grid.Column="3" Content="INI-Zufall:" />
+                            <TextBox Grid.Row="2" Grid.Column="4" Margin="2">
                                 <Binding Path="SelectedGegnerBase.INIZufall">
                                     <Binding.ValidationRules>
                                         <ViewGeneral:WürfelValidationRule />
@@ -240,13 +241,36 @@
 
                             <Label   Grid.Row="3" Grid.Column="0" Content="PA:" />
                             <ViewGeneral:IntBox Grid.Row="3" Grid.Column="1" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" />
-                            <Label   Grid.Row="3" Grid.Column="2" Content="KO:" />
-                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="3" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="3" Grid.Column="3" Content="KO:" />
+                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="4" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
                             <!-- TODO ZonenControl auf Klick um Details eintragen zu können -->
-                            <ViewGeneral:IntBox Grid.Row="4" Grid.Column="1" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" />
-                            <Label   Grid.Row="4" Grid.Column="2" Content="MR:" />
-                            <Grid Grid.Row="4" Grid.Column="3" >
+                            <ViewGeneral:IntBox Grid.Row="4" Grid.Column="1" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" />
+                            <Button Grid.Row="4" Grid.Column="2" Height="24" Click="ButtonZonenRsControl_Click">
+                                <Image Margin="1" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
+                                <Button.ToolTip>
+                                    <StackPanel Background="#389E804D">
+                                        <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" />
+                                        <Grid Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Grid.Background>
+                                                <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                                            </Grid.Background>
+                                            <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
+                                            <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" />
+                                            <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedGegnerBase.RS[Kopf]}" />
+                                            <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedGegnerBase.RS[Brust]}" />
+                                            <ViewGeneral:IntBox Margin="130,59,62,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedGegnerBase.RS[Rücken]}" />
+                                            <ViewGeneral:IntBox Margin="17,95,175,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedGegnerBase.RS[ArmR]}" />
+                                            <ViewGeneral:IntBox Margin="177,95,15,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedGegnerBase.RS[ArmL]}" />
+                                            <ViewGeneral:IntBox Margin="81,125,84,118" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedGegnerBase.RS[Bauch]}" />
+                                            <ViewGeneral:IntBox Margin="40,179,125,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
+                                            <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Button.ToolTip>
+                            </Button>
+                            <Label   Grid.Row="4" Grid.Column="3" Content="MR:" />
+                            <Grid Grid.Row="4" Grid.Column="4" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
@@ -267,8 +291,8 @@
                                 <ViewGeneral:IntBox Grid.Column="1" Value="{Binding SelectedGegnerBase.GS2}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 2"/>
                                 <ViewGeneral:IntBox Grid.Column="2" Value="{Binding SelectedGegnerBase.GS3}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 3"/>
                             </Grid>
-                            <Label   Grid.Row="5" Grid.Column="2" Content="Aktionen:" />
-                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="3" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
+                            <Label   Grid.Row="5" Grid.Column="3" Content="Aktionen:" />
+                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="4" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
                         </Grid>
                     </Grid>
                 </Border>
@@ -380,16 +404,16 @@
                         <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" Value="{Binding SelectedGegnerBase.Beschwörungskosten}" Margin="2" ShowButtons="True" CanBeNull="True" />
                         <Label   Grid.Row="1" Grid.Column="0" Content="Kontrolle:" />
                         <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.Kontrolle}" Margin="2" ShowButtons="True" CanBeNull="True"/>
-                        
+
                         <Label   Grid.Row="2" Grid.Column="0" Content="Jagd:" />
                         <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.Jagd}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                         <Label   Grid.Row="2" Grid.Column="2" Content="GW:" />
                         <ViewGeneral:IntBox Grid.Row="2" Grid.Column="3" Value="{Binding SelectedGegnerBase.GW}" Margin="2" ShowButtons="True" CanBeNull="True" />
                     </Grid>
-                    
+
                 </Border>
             </Expander>
-            
+
             <Expander IsExpanded="False" Grid.Row="3" Visibility="Collapsed">
                 <Expander.Header>
                     <TextBlock Text="Besondere Kampfregeln" Style="{DynamicResource TextTitel}" />
@@ -416,5 +440,32 @@
                 </Border>
             </Expander>
         </Grid>
+
+        <Border Name="_rsZonenRsControl" Grid.ColumnSpan="2" Background="#E57A7A7A" Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Margin="50,50,50,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Zonen-RS schließen." Click="ButtonCloseZonenRsControl_Click">
+                    <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
+                </Button>
+                <Grid Grid.Column="1" Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                    </Grid.Background>
+                    <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
+                    <ViewGeneral:IntBox Margin="159,20,6,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" />
+                    <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedGegnerBase.RS[Kopf]}" />
+                    <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedGegnerBase.RS[Brust]}" />
+                    <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedGegnerBase.RS[Rücken]}" />
+                    <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedGegnerBase.RS[ArmR]}" />
+                    <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedGegnerBase.RS[ArmL]}" />
+                    <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedGegnerBase.RS[Bauch]}" />
+                    <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
+                    <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

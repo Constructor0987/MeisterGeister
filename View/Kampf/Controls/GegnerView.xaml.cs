@@ -96,5 +96,15 @@ namespace MeisterGeister.View.Kampf.Controls
             _listBoxGegnerBase.SelectedItem = null;
         }
 
+        private void ButtonCloseZonenRsControl_Click(object sender, RoutedEventArgs e)
+        {
+            _rsZonenRsControl.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void ButtonZonenRsControl_Click(object sender, RoutedEventArgs e)
+        {
+            _rsZonenRsControl.Visibility = System.Windows.Visibility.Visible;
+        }
+
 	}
 }
