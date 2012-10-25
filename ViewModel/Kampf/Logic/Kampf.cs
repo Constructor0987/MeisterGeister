@@ -197,12 +197,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     InitiativListe.Add(ki, new Manöver.KeineAktion(ki.Kämpfer), 0);
                 for (int i = geplanteAktionen.Count; i < ki.Kämpfer.Angriffsaktionen; i++)
                 {
-                    if (i == 1 && ki.Kämpfer is Model.Held && (ki.Kämpfer.Kampfstil == Kampfstil.BeidhändigerKampf || ki.Kämpfer.Kampfstil == Kampfstil.Parierwaffenstil && (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")))
+                    if (i == 1 && ki.Kämpfer is Model.Held)
                     {
                         if (ki.Kämpfer.Kampfstil == Kampfstil.BeidhändigerKampf)
                             InitiativListe.Add(ki, new Manöver.ZusätzlicheAngriffsaktion(ki.Kämpfer), i * -4);
-                        if (ki.Kämpfer.Kampfstil == Kampfstil.Parierwaffenstil)
+                        else if (ki.Kämpfer.Kampfstil == Kampfstil.Parierwaffenstil && (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links"))
                             InitiativListe.Add(ki, new Manöver.TodVonLinks(ki.Kämpfer), i * -8);
+                        else
+                            InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), i * -8);
                     }
                     else
                         InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), i * -4);

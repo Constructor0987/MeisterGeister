@@ -1795,7 +1795,10 @@ namespace MeisterGeister.Model
             }
             else if (Kampfstil == KampfLogic.Kampfstil.Schildkampf && HatSonderfertigkeitUndVoraussetzungen("Schildkampf II") && Abwehraktionen >= 1)
             {
-                Aktionen = 3;
+                if (Angriffsaktionen >= 2)
+                    Aktionen = 2;
+                else
+                    Aktionen = 3;
                 if (Abwehraktionen + Angriffsaktionen < 3)
                     _abwehraktionen = Aktionen - Angriffsaktionen;
             }
