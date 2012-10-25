@@ -106,20 +106,30 @@
         </DataTemplate>
         <DataTemplate x:Key="InitiativeListManöverTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Initiative}" />
                 <TextBlock Text="{Binding Manöver.Name}" />
             </StackPanel>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="InitiativeListTemplate" ItemsSource="{Binding ThisAsList}" ItemTemplate="{StaticResource InitiativeListManöverTemplate}">
             <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" >
-                <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding KämpferInfo.Initiative}" Margin="8,2,0,0" />
-                    <ComboBox ItemsSource="{StaticResource KampfstilValues}" SelectedValue="{Binding KämpferInfo.Kämpfer.Kampfstil, Converter={StaticResource KampfstilValues}}"></ComboBox>
+                    <TextBlock Text="{Binding Initiative}" Width="20" Margin="0,0,2,0" />
+                    <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel.Style>
+                        <Style>
+                            <Setter Property="StackPanel.Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding InitiativeMod}" Value="0">
+                                    <Setter Property="StackPanel.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <ComboBox ItemsSource="{StaticResource KampfstilValues}" SelectedValue="{Binding KämpferInfo.Kämpfer.Kampfstil, Converter={StaticResource KampfstilValues}}" />
                     <TextBlock Text="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>
-                    <Slider Minimum="0" Maximum="{Binding KämpferInfo.Kämpfer.Aktionen}" IsSnapToTickEnabled="True"/>
+                    <Slider Minimum="0" Maximum="{Binding KämpferInfo.Kämpfer.Aktionen}" Value="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" IsSnapToTickEnabled="True" Width="40"/>
                     <TextBlock Text="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ToolTip="Abwehraktionen"/>
-                    
                 </StackPanel>
             </StackPanel>
         </HierarchicalDataTemplate>
@@ -213,6 +223,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsAktion}" Value="false">
+                    <Setter Property="TreeViewItem.IsExpanded" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
        
     </UserControl.Resources>

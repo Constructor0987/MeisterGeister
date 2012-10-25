@@ -1705,7 +1705,16 @@ namespace MeisterGeister.Model
             {
                 return _aktionen;
             }
-            private set { _aktionen = value; }
+            private set {
+                _aktionen = value;
+                if (_aktionen < Abwehraktionen + Angriffsaktionen)
+                {
+                    if (Abwehraktionen + Angriffsaktionen == 0)
+                        Angriffsaktionen = 0;
+                    else
+                        Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
+                }
+            }
         }
 
         private int _angriffsaktionen = 1;
@@ -1713,8 +1722,6 @@ namespace MeisterGeister.Model
         {
             get { return _angriffsaktionen; }
             set {
-                if (value == _angriffsaktionen)
-                    return;
                 if (value > Aktionen)
                     value = Aktionen;
                 _angriffsaktionen = value;
@@ -1730,8 +1737,6 @@ namespace MeisterGeister.Model
         {
             get { return _abwehraktionen; }
             set {
-                if (value == _abwehraktionen)
-                    return;
                 if (value > Aktionen)
                     value = Aktionen;
                 _abwehraktionen = value;

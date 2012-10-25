@@ -54,6 +54,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             get { return "Manöver"; }
         }
 
+        public virtual String Literatur
+        {
+            get { return "WdS 59"; }
+        }
+
         /// <summary>
         /// Dauer des Manövers
         /// </summary>

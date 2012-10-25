@@ -11,7 +11,18 @@ namespace MeisterGeister.ViewModel.Kampf
 {
     public class KampfViewModel : Base.ViewModelBase
     {
-        private K _kampf = new K();
+        private K _kampf = null;
+        public KampfViewModel()
+        {
+            _kampf = new K();
+            InitiativListe.PropertyChanged += InitiativListe_PropertyChanged;
+        }
+
+        private void InitiativListe_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnChanged("InitiativListe");
+        }
+
         public K Kampf
         {
             get { return _kampf; }

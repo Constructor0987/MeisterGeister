@@ -148,6 +148,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 //INI Liste sortieren
                 InitiativListe.Sort();
             }
+            else if (args.PropertyName == "Angriffsaktionen")
+            {
+                KämpferInfo ki = null;
+                if (sender is KämpferInfo)
+                    ki = sender as KämpferInfo;
+                if(ki != null)
+                    StandardAktionenSetzen(ki);
+            }
             //Anzeige neu darstellen?
         }
 
@@ -161,8 +169,45 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
+
+            /* ich glaube das taugt nichts, frei editierbar ist besser.
             if (args.Action == NotifyCollectionChangedAction.Add && !(args.NewItems[0] is Manöver.KeineAktion))
                 UmwandelnMöglich = false;
+             * */
+        }
+
+        private void StandardAktionenSetzen()
+        {
+            foreach (KämpferInfo ki in Kämpfer)
+            {
+                StandardAktionenSetzen(ki);
+            }
+        }
+
+        private void StandardAktionenSetzen(KämpferInfo ki)
+        {
+                var geplanteAktionen = InitiativListe.Where(mi => mi.KämpferInfo == ki && mi.IsAktion).ToList().OrderBy(mi => mi.Initiative).ToList();
+                while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Kämpfer.Angriffsaktionen)
+                {
+                    var manöver = geplanteAktionen.FirstOrDefault();
+                    InitiativListe.Remove(manöver);
+                    geplanteAktionen.Remove(manöver);
+                }
+                if (ki.Kämpfer.Angriffsaktionen == 0)
+                    InitiativListe.Add(ki, new Manöver.KeineAktion(ki.Kämpfer), 0);
+                for (int i = geplanteAktionen.Count; i < ki.Kämpfer.Angriffsaktionen; i++)
+                {
+                    if (i == 1 && ki.Kämpfer is Model.Held && (ki.Kämpfer.Kampfstil == Kampfstil.BeidhändigerKampf || ki.Kämpfer.Kampfstil == Kampfstil.Parierwaffenstil && (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")))
+                    {
+                        if (ki.Kämpfer.Kampfstil == Kampfstil.BeidhändigerKampf)
+                            InitiativListe.Add(ki, new Manöver.ZusätzlicheAngriffsaktion(ki.Kämpfer), i * -4);
+                        if (ki.Kämpfer.Kampfstil == Kampfstil.Parierwaffenstil)
+                            InitiativListe.Add(ki, new Manöver.TodVonLinks(ki.Kämpfer), i * -8);
+                    }
+                    else
+                        InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), i * -4);
+                }
+            
         }
     }
 }

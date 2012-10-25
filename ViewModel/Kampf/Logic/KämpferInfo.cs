@@ -9,7 +9,7 @@ using System.Collections.Specialized;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
-    public class KämpferInfo : INotifyPropertyChanged
+    public class KämpferInfo : INotifyPropertyChanged, IDisposable
     {
         private IKämpfer _kämpfer;
 
@@ -52,24 +52,38 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public KämpferInfo(IKämpfer k)
         {
+            if (k == null)
+                throw new ArgumentNullException("IKämpfer k darf nicht null sein.");
             Kämpfer = k;
+            Kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             Team = 1;
             Initiative = k.Initiative();
 
         }
 
+        private void Kämpfer_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnChanged(e.PropertyName);
+        }
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnChanged(String info)
+        public void OnChanged(String info, object sender = null)
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
+                PropertyChanged(sender ?? this, new PropertyChangedEventArgs(info));
             }
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            if (Kämpfer != null)
+                Kämpfer.PropertyChanged -= Kämpfer_PropertyChanged;
+        }
     }
 
     public class KämpferInfoListe : List<KämpferInfo>, INotifyPropertyChanged, INotifyCollectionChanged
@@ -159,6 +173,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             if(args.PropertyName == "Initiative")
                 Sort();
+            if (args.PropertyName == "Angriffsaktionen")
+                OnChanged("Angriffsaktionen", o);
         }
 
         public new void Sort()
@@ -194,11 +210,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnChanged(String info)
+        public void OnChanged(String info, object sender = null)
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
+                PropertyChanged(sender ?? this, new PropertyChangedEventArgs(info));
             }
         }
 

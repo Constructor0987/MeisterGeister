@@ -32,6 +32,7 @@ namespace MeisterGeister.View.Kampf
             //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
             //_comboBoxTrefferzone.SelectedIndex = 0;
             VM = new VM.KampfViewModel();
+            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Initiative", System.ComponentModel.ListSortDirection.Descending));
         }
 
         /// <summary>

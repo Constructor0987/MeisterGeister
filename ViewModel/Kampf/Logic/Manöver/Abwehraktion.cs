@@ -27,6 +27,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             get { return "Abwehraktion"; }
         }
 
+        public override string Literatur
+        {
+            get
+            {
+                return "WdS 66";
+            }
+        }
+
         protected override void OnAktion()
         {
             //Wenn Waffe schwerer als KK*10 Unzen

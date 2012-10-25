@@ -119,6 +119,18 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(3, gero.Aktionen);
             Assert.AreEqual(0, gero.Angriffsaktionen);
             Assert.AreEqual(3, gero.Abwehraktionen);
+            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.Keiner;
+            Assert.AreEqual(2, gero.Aktionen);
+            Assert.AreEqual(gero.Aktionen, gero.Angriffsaktionen + gero.Abwehraktionen);
+            Assert.AreEqual(0, gero.Angriffsaktionen);
+            Assert.AreEqual(2, gero.Abwehraktionen);
+            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.BeidhändigerKampf;
+            gero.Angriffsaktionen = 2;
+            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.Keiner;
+            Assert.AreEqual(2, gero.Aktionen);
+            Assert.AreEqual(gero.Aktionen, gero.Angriffsaktionen + gero.Abwehraktionen);
+            Assert.AreEqual(1, gero.Angriffsaktionen);
+            Assert.AreEqual(1, gero.Abwehraktionen);
         }
 
         [Test]
