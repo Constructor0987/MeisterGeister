@@ -59,6 +59,17 @@ namespace MeisterGeister.Model
         }
         #endregion
 
+        private KampfLogic.Rüstungsschutz _rs = null;
+        public KampfLogic.IRüstungsschutz RS
+        {
+            get
+            {
+                if (_rs == null)
+                    _rs = new KampfLogic.Rüstungsschutz((GegnerBase)this);
+                return _rs;
+            }
+        }
+
         #region IHasZonenRs
         int? KampfLogic.IHasZonenRs.RSKopf
         {
