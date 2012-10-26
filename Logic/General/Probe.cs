@@ -37,8 +37,8 @@ namespace MeisterGeister.Logic.General
         {
             get 
             {
-                if (this is IHeld && (this as IHeld).Held != null)
-                    return (this as IHeld).Held.GetModifikatorProben(this);
+                if (this is IHatHeld && (this as IHatHeld).Held != null)
+                    return (this as IHatHeld).Held.GetModifikatorProben(this);
                 return 0; 
             }
         }
@@ -210,8 +210,8 @@ namespace MeisterGeister.Logic.General
             // Bei Doppel1 oder Dreifach1 eine SE (WdS 162)
             // TODO ??: Eventuell User per YesNo-Dialog fragen?
             string held = "Unbekannt";
-            if (this is IHeld)
-                held = (this as IHeld).Held.Name;
+            if (this is IHatHeld)
+                held = (this as IHatHeld).Held.Name;
             string seTxt = string.Format("{0} - {1} - Spezielle Erfahrung in {2} (TaW {3}) für {4} ({5} Einsen)",
                 DateTime.Now.ToString("g"), MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort(),
                 Probenname, Fertigkeitswert, held, einsen);

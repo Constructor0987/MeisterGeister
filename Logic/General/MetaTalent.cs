@@ -8,7 +8,7 @@ using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Logic.General
 {
-    public class MetaTalent : Probe, IHeld
+    public class MetaTalent : Probe, IHatHeld
     {
         #region //---- PROBE ----
 

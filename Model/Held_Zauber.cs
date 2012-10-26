@@ -7,7 +7,7 @@ using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Held_Zauber : MeisterGeister.Logic.General.Probe, IHeld
+    public partial class Held_Zauber : MeisterGeister.Logic.General.Probe, IHatHeld
     {
         #region //---- PROBE ----
 

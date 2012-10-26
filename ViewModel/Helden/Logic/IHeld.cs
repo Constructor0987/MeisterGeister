@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Helden.Logic
 {
-    public interface IHeld
+    public interface IHatHeld
     {
         Model.Held Held
         {

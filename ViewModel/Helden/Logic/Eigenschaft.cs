@@ -8,7 +8,7 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
 namespace MeisterGeister.ViewModel.Helden.Logic
 {
-    public class Eigenschaft : Probe, IHeld
+    public class Eigenschaft : Probe, IHatHeld
     {
         #region //---- KONSTRUKTOREN & INITIALISIERUNG ----
 
