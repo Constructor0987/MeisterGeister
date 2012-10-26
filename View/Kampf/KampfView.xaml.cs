@@ -31,7 +31,8 @@ namespace MeisterGeister.View.Kampf
             // TODO ??: Umstellen auf neues Kampf-Model
             //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
             //_comboBoxTrefferzone.SelectedIndex = 0;
-            VM = new VM.KampfViewModel();
+            VM = new VM.KampfViewModel(View.General.ViewHelper.ShowGegnerView);
+            
             _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Initiative", System.ComponentModel.ListSortDirection.Descending));
         }
 
@@ -406,16 +407,6 @@ namespace MeisterGeister.View.Kampf
             KämpferEntfernen();
         }
 
-        //private void MenuItemHeldenEinfügen_Click(object sender, RoutedEventArgs e)
-        //{
-        //    HeldenEinfügen();
-        //}
-
-        private void MenuItemKämpferEinfügen_Click(object sender, RoutedEventArgs e)
-        {
-            ShowKämpferVerwaltung();
-        }
-
         private void MenuItemListeLeeren_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Soll die Liste geleert werden?", "Liste leeren", MessageBoxButton.YesNo,
@@ -591,21 +582,6 @@ namespace MeisterGeister.View.Kampf
 
         // TODO ??: Umstellen auf neues Kampf-Model
         //private GegnerWindow _kämpferGui;
-
-        private void GegnerExpander_Expanded(object sender, RoutedEventArgs e)
-        {
-            _kämpferExpander.IsExpanded = false;
-            ShowKämpferVerwaltung();
-        }
-
-        private void ShowKämpferVerwaltung()
-        {
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //if (_kämpferGui == null || _kämpferGui.IsVisible == false)
-            //    _kämpferGui = new GegnerWindow(this);
-            //_kämpferGui.Owner = App.Current.MainWindow;
-            //_kämpferGui.Show();
-        }
 
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {

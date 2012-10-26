@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MeisterGeister.Logic.General;
+using MeisterGeister.View.Kampf;
 using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.View.General
@@ -115,6 +116,12 @@ namespace MeisterGeister.View.General
             else
                 ergebnis = Logic.General.Würfel.Parse(würfel, true);
             return ergebnis;
+        }
+
+        public static void ShowGegnerView(ViewModel.Kampf.Logic.Kampf kampf)
+        {
+            GegnerWindow win = new GegnerWindow(kampf);
+            win.Show();
         }
 
         public static Image GetImageFromControl(FrameworkElement controlToRender)

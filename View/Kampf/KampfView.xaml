@@ -233,13 +233,13 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="215" />
+            <ColumnDefinition Width="235" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="280" />
         </Grid.ColumnDefinitions>
         <Grid Margin="4,4,0,4" Grid.Column="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Border Style="{DynamicResource ControlContentBorder}">
@@ -307,7 +307,7 @@
                                             <Image Source="/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Header="Kämpfer einfügen..." Click="MenuItemKämpferEinfügen_Click">
+                                    <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Header="Gegner einfügen..." Command="{Binding OnShowGegnerView}">
                                         <MenuItem.Icon>
                                             <Image Source="/Images/Icons/gegner_add.png" Stretch="Fill" Margin="2" />
                                         </MenuItem.Icon>
@@ -335,11 +335,12 @@
                             </StackPanel>
                         </Image.ToolTip>
                     </Image>
-                    <Expander Name="_kämpferExpander" Grid.Row="2" Margin="2,2,2,2" Expanded="GegnerExpander_Expanded">
-                        <Expander.Header>
-                            <TextBlock Text="Kämpfer einfügen" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
-                    </Expander>
+                    <Button Grid.Row="2" Height="23" Command="{Binding OnShowGegnerView}" Margin="2" ToolTip="Gegner-Verwaltung öffnen">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/Icons/gegner.png" />
+                            <TextBlock Text="Gegner einfügen..." Margin="3,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Border>
 

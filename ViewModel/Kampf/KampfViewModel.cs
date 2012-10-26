@@ -12,8 +12,10 @@ namespace MeisterGeister.ViewModel.Kampf
     public class KampfViewModel : Base.ViewModelBase
     {
         private K _kampf = null;
-        public KampfViewModel()
+        public KampfViewModel(Action<K> showGegnerView)
         {
+            this.showGegnerView = showGegnerView;
+
             _kampf = new K();
             InitiativListe.PropertyChanged += InitiativListe_PropertyChanged;
         }
@@ -107,6 +109,25 @@ namespace MeisterGeister.ViewModel.Kampf
             if(SelectedKämpferInfo != null)
                 KämpferListe.Remove(SelectedKämpferInfo);
         }
+
+        private Base.CommandBase onShowGegnerView = null;
+        public Base.CommandBase OnShowGegnerView
+        {
+            get
+            {
+                if (onShowGegnerView == null)
+                    onShowGegnerView = new Base.CommandBase(ShowGegnerView, null);
+                return onShowGegnerView;
+            }
+        }
+
+        private void ShowGegnerView(object obj)
+        {
+            if (showGegnerView != null)
+                showGegnerView(Kampf);
+        }
+
+        private Action<K> showGegnerView;
 
         #endregion // ---- COMMANDS ----
 
