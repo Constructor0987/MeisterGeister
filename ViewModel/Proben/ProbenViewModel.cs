@@ -212,6 +212,27 @@ namespace MeisterGeister.ViewModel.Proben
             get { return _selectedProbe is Model.Talent; }
         }
 
+        private bool _isBehinderung = true;
+        /// <summary>
+        /// Behinderung bei Probe berücksichtigen oder nicht.
+        /// </summary>
+        public bool IsBehinderung
+        {
+            get { return _isBehinderung; }
+            set
+            {
+                _isBehinderung = value;
+                // Wert an ProbeControls weiterreichen
+                foreach (ProbeControlViewModel er in ProbeErgebnisListe)
+                {
+                    if (er.Probe != null)
+                        er.Probe.IsBehinderung = _isBehinderung;
+                }
+                OnChanged("IsBehinderung");
+                OnChanged("ProbeErgebnisListe");
+            }
+        }
+
         [DependentProperty("SelectedProbe")]
         public bool SelectedProbeIsZauber
         {

@@ -43,6 +43,30 @@ namespace MeisterGeister.Logic.General
             }
         }
 
+        private bool _isBehinderung = true;
+        /// <summary>
+        /// Behinderung bei Probe berücksichtigen oder nicht.
+        /// </summary>
+        public bool IsBehinderung
+        {
+            get { return _isBehinderung; }
+            set
+            {
+                _isBehinderung = value;
+                _chanceBerechnet = false;
+            }
+        }
+
+        public int BehinderungEff
+        {
+            get
+            {
+                if (IsBehinderung && this is Model.Held_Talent)
+                    return (this as Model.Held_Talent).BerechneEffBehinderung();
+                return 0;
+            }
+        }
+
         private int _fertigkeitswert = 0;
         virtual public int Fertigkeitswert
         {
@@ -141,7 +165,7 @@ namespace MeisterGeister.Logic.General
             if (Werte.Length == 0)
                 return pe;
 
-            int fertigkeitswertEff = Fertigkeitswert - (Modifikator + ModifikatorProben);
+            int fertigkeitswertEff = Fertigkeitswert - (Modifikator + ModifikatorProben + BehinderungEff);
             pe.Übrig = fertigkeitswertEff;
             pe.Qualität = fertigkeitswertEff;
             if (pe.Würfe == null)
@@ -231,9 +255,9 @@ namespace MeisterGeister.Logic.General
         private double ErfolgsChanceBerechnen()
         {
             if(Werte.Length==3)
-                return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], Fertigkeitswert - (Modifikator + ModifikatorProben));
+                return ErfolgsChanceBerechnen(Werte[0], Werte[1], Werte[2], Fertigkeitswert - (Modifikator + ModifikatorProben + BehinderungEff));
             if (Werte.Length == 1)
-                return ErfolgsChancheBerechnen(Werte[0] - (Modifikator + ModifikatorProben));
+                return ErfolgsChancheBerechnen(Werte[0] - (Modifikator + ModifikatorProben + BehinderungEff));
             return _erfolgsschance = 0;
         }
 

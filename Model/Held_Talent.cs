@@ -72,5 +72,24 @@ namespace MeisterGeister.Model
 
         #endregion //---- PROBE ----
 
+        public int BerechneEffBehinderung()
+        {
+            int be = 0;
+
+            string eBe = Talent.eBE;
+            if (string.IsNullOrEmpty(eBe))
+                be = 0;
+            else if (eBe == "BE")
+                be = Held.Behinderung;
+            else if (eBe.StartsWith("BEx"))
+                be = Held.Behinderung * Convert.ToInt32(eBe.Substring(3));
+            else if (eBe.StartsWith("BE-"))
+                be = Held.Behinderung - Convert.ToInt32(eBe.Substring(3));
+            else if (eBe.StartsWith("BE+"))
+                be = Held.Behinderung + Convert.ToInt32(eBe.Substring(3));
+
+            return Math.Max(be, 0);
+        }
+
     }
 }

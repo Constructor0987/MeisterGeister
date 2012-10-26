@@ -34,6 +34,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="120*" />
                         <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="50*" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -71,11 +72,17 @@
 
                     <ViewGeneral:IntBox Grid.Column="4" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
 
-                    <Button Grid.Column="6" Grid.RowSpan="2" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
+                    <CheckBox Grid.Column="5" IsChecked="{Binding IsBehinderung}" Margin="5" ToolTip="Behinderung berücksichtigen." VerticalAlignment="Center">
+                        <CheckBox.Content>
+                            <Image Source="/Images/Icons/ueberanstrengung.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
+                        </CheckBox.Content>
+                    </CheckBox>
+
+                    <Button Grid.Column="7" Grid.RowSpan="2" Margin="5" Height="44" Width="44" Command="{Binding OnWürfeln}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
                     </Button>
 
-                    <CheckBox Grid.Column="7" Grid.RowSpan="2" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
+                    <CheckBox Grid.Column="8" Grid.RowSpan="2" IsChecked="{Binding SoundAbspielen}" Margin="5" ToolTip="Würfel-Sound abspielen." VerticalAlignment="Center">
                         <CheckBox.Content>
                             <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=CheckBox, AncestorLevel=1}, Path=ToolTip}" Width="22" />
                         </CheckBox.Content>
@@ -84,7 +91,7 @@
                         <Button Grid.Row="1" Command="{Binding OnAddFavorit}" VerticalAlignment="Center" HorizontalAlignment="Left" Height="23" Width="23" Margin="5,2,2,2" ToolTip="Die aktuelle Probe als Favoriten-Button einfügen.">
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                         </Button>
-                        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="30,0,0,0" BorderBrush="#00000000" Background="#00000000" ItemsSource="{Binding ProbeFavoritenListe}">
+                        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" Margin="30,0,0,0" BorderBrush="#00000000" Background="#00000000" ItemsSource="{Binding ProbeFavoritenListe}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel IsItemsHost="True" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
