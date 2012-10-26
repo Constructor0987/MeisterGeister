@@ -32,11 +32,14 @@ namespace MeisterGeister.View.Kampf
             //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
             //_comboBoxTrefferzone.SelectedIndex = 0;
             VM = new VM.KampfViewModel(View.General.ViewHelper.ShowGegnerView);
+            //VM.PropertyChanged += VM_PropertyChanged;
             
             _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Initiative", System.ComponentModel.ListSortDirection.Descending));
             _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("InitiativeBasis", System.ComponentModel.ListSortDirection.Descending));
             _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("KämpferName", System.ComponentModel.ListSortDirection.Descending));
         }
+
+        
 
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
@@ -51,6 +54,23 @@ namespace MeisterGeister.View.Kampf
             }
             set { DataContext = value; }
         }
+
+        //void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    if (e.PropertyName == "KämpferSelected")
+        //    {
+
+        //        var parent = ItemsControl.ItemsControlFromItemContainer(e.OriginalSource as TreeViewItem);
+        //        VM.KämpferSelected = parent is TreeView;
+        //    }
+        //}
+
+        //private void UpdateTreeSelection()
+        //{
+        //    if(VM.KämpferSelected)
+
+        //}
+
 
         private ViewModel.Kampf.Logic.Kampf _kampf = new ViewModel.Kampf.Logic.Kampf();
 

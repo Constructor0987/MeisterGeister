@@ -6,10 +6,11 @@ using System.Collections.ObjectModel;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
-    public class Kampf : IDisposable
+    public class Kampf : IDisposable, INotifyPropertyChanged
     {
         /*
          * Die Klasse hält und kontrolliert alle globalen Kampfinformationen und -Aktionen
@@ -55,14 +56,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public float INIPhase
         {
             get { return _iniphase; }
-            set { _iniphase = value; }
+            set { _iniphase = value; OnChanged("Initiative"); }
         }
 
-        private float _kampfrunde;
-        public float Kampfrunde
+        public delegate void NeueKampfrundeEventHandler(object sender, int kampfrunde);
+        public event NeueKampfrundeEventHandler OnNeueKampfrunde;
+
+        private int _kampfrunde;
+        public int Kampfrunde
         {
             get { return _kampfrunde; }
-            private set { _kampfrunde = value; }
+            private set { 
+                _kampfrunde = value;
+                OnChanged("Kampfrunde");
+            }
         }
 
         private ManöverInfo aktuelleAktion;
@@ -71,12 +78,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return aktuelleAktion; }
             set { 
                 aktuelleAktion = value;
-                //OnChanged("AktuelleAktion");
+                OnChanged("AktuelleAktion");
             }
         }
 
         public ManöverInfo Next()
         {
+            if (AktuelleAktion != null) //TODO JT: nur temporär, bis Manöver auch wirklich ausgeführt werden können
+            {
+                AktuelleAktion.Ausgeführt = true;
+                UmwandelnMöglich = false;
+            }
+
             foreach (ManöverInfo mi in InitiativListe)
             {
                 if (!(mi.Manöver is Manöver.KeineAktion) && !mi.Ausgeführt)
@@ -98,7 +111,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             foreach (KämpferInfo ki in Kämpfer)
             {
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
-                InitiativListe.Add(ki, new Manöver.KeineAktion(ki.Kämpfer), 0);
+                StandardAktionenSetzen(ki);
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)
             }
@@ -109,13 +122,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 INIPhase = 0;
             //im UI markieren, dass man nun bis zur ersten Aktions-Ansage umwandeln kann
             UmwandelnMöglich = true;
+            //eventuell in die Property?
+            if (OnNeueKampfrunde != null)
+                OnNeueKampfrunde(this, _kampfrunde);
         }
 
         bool _umwandelnMöglich = true;
         public bool UmwandelnMöglich
         {
             get { return _umwandelnMöglich; }
-            private set { _umwandelnMöglich = value; }
+            private set { _umwandelnMöglich = value; OnChanged("UmwandelnMöglich"); }
         }
 
         public void KampfBeginn()
@@ -156,7 +172,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if(ki != null)
                     StandardAktionenSetzen(ki);
             }
-            //Anzeige neu darstellen?
         }
 
         public void Kämpfer_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -246,5 +261,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //Alle Gegenerinstanzen löschen
             Global.ContextHeld.DeleteAll<Model.Gegner>();
         }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        #endregion
     }
 }

@@ -472,6 +472,7 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\General\ModInfoBox.xaml.cs">
       <DependentUpon>ModInfoBox.xaml</DependentUpon>
     </Compile>

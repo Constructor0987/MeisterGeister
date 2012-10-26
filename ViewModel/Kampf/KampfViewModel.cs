@@ -17,7 +17,19 @@ namespace MeisterGeister.ViewModel.Kampf
             this.showGegnerView = showGegnerView;
 
             _kampf = new K();
+            _kampf.OnNeueKampfrunde += _kampf_OnNeueKampfRunde;
+            Kampf.PropertyChanged += Kampf_PropertyChanged;
             InitiativListe.PropertyChanged += InitiativListe_PropertyChanged;
+        }
+
+        void Kampf_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "INIPhase") OnChanged("INIPhase");
+        }
+
+        void _kampf_OnNeueKampfRunde(object sender, int kampfrunde)
+        {
+            OnChanged("Kampfrunde");
         }
 
         private void InitiativListe_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -35,6 +47,16 @@ namespace MeisterGeister.ViewModel.Kampf
         public InitiativListe InitiativListe
         {
             get { return Kampf != null ? Kampf.InitiativListe : null; }
+        }
+
+        public int Kampfrunde
+        {
+            get { return Kampf != null ? Kampf.Kampfrunde : 0; }
+        }
+        
+        public float INIPhase
+        {
+            get { return Kampf != null ? Kampf.Kampfrunde : 0; }
         }
 
         public KämpferInfoListe KämpferListe
@@ -128,6 +150,31 @@ namespace MeisterGeister.ViewModel.Kampf
         }
 
         private Action<K> showGegnerView;
+
+
+        private Base.CommandBase onNext = null;
+        public Base.CommandBase OnNext
+        {
+            get
+            {
+                if (onNext == null)
+                    onNext = new Base.CommandBase(Next, null);
+                return onNext;
+            }
+        }
+
+        private void Next(object obj)
+        {
+            var mi = Kampf.Next();
+            if (mi != null)
+            {
+                //if(SelectedManöverInfo != null)
+                    //SelectedManöverInfo.IsSelected = false;
+                //mi.IsSelected = true;
+                KämpferSelected = false;
+                SelectedManöverInfo = mi;
+            }
+        }
 
         #endregion // ---- COMMANDS ----
 

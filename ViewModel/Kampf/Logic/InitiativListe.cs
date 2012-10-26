@@ -86,6 +86,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set; //private set; //sollte von einem Manöver-Event OnAusführung gesetzt werden
         }
 
+        private bool isSelected = false;
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { 
+                isSelected = value;
+                OnChanged("IsSelected");
+            }
+        }
+        
+
         private void OnKämpferInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
         {
             if (args.PropertyName == "Initiative")
@@ -205,6 +216,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 base.Remove(mi);
                 OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
             }
+        }
+
+        public new void Clear()
+        {
+            base.Clear();
+            OnCollectionChanged(NotifyCollectionChangedAction.Reset, null);
         }
         #endregion
 

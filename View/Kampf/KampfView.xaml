@@ -9,7 +9,7 @@
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
         <ViewGeneral:EnumItemsSource x:Key="KampfstilValues" Type="{x:Type KampfLogic:Kampfstil}" />
-        
+        <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <Style x:Key="MagiebegabtStyle" TargetType="{x:Type FrameworkElement}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
@@ -172,6 +172,7 @@
         </Style>
         <Style x:Key="TreeViewItemStyle1" TargetType="{x:Type TreeViewItem}">
             <Setter Property="IsExpanded" Value="True" />
+            <!-- <Setter Property="IsSelected" Value="{Binding IsSelected}" /> -->
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
             <Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
@@ -251,17 +252,17 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,2,0,0">
                         <CheckBox Name="_checkBoxShowAktionen" Content="Aktionen" Margin="5,3,0,3"  IsChecked="True" Height="19" ToolTip="Aktionen in Liste anzeigen" />
-                        <Button Margin="6,0" Name="_buttonNächsterKämpfer" Click="ButtonNächsterKämpfer_Click" Height="23" FontWeight="Bold" ToolTip="Wählt den nächsten Kämpfer aus." HorizontalAlignment="Right">
+                        <Button Margin="6,0" Name="_buttonNächsterKämpfer" Command="{Binding OnNext}" Height="23" FontWeight="Bold" ToolTip="Wählt die nächste Aktion aus." HorizontalAlignment="Right">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" />
-                                <TextBlock Text="Nächster Kämpfer" VerticalAlignment="Center" />
+                                <TextBlock Text="Weiter" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
                     <TreeView Name="_treeInitiative" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
                              TreeViewItem.Selected="InitiativeListe_TreeViewItemSelected" KeyUp="ListBoxKämpfer_KeyUp" MouseDown="ListBoxKämpfer_MouseDown" Background="Transparent" Padding="4,8" ItemContainerStyle="{StaticResource TreeViewItemStyle1}">
                         <e:Interaction.Behaviors>
-                            <ViewGeneral:BindableSelectedItemBehavior SelectedItem="{Binding SelectedTreeItem, Mode=TwoWay}" />
+                            <ViewGeneral:BindableSelectedItemBehavior SelectedItem="{Binding SelectedManöverInfo, Mode=TwoWay}" PreferNestedItems="{Binding KämpferSelected, Converter={StaticResource InverseBooleanConverter}}" />
                         </e:Interaction.Behaviors>
                         <TreeView.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteKämpfer}" />
@@ -588,7 +589,7 @@
                         </Button.ToolTip>
                         <Image Source="/Images/Icons/General/screen.png" />
                     </Button>
-                    <TextBlock Margin="0,3,94,0" Name="_textBlockKampfrunde" Text="0" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
+                    <TextBlock Margin="0,3,94,0" Name="_textBlockKampfrunde" Text="{Binding Kampfrunde}" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
                     <Button Content="Starten" Margin="0,4,6,0" Name="_buttonNeueKR" HorizontalAlignment="Right" Width="82" Click="ButtonNeueKampfrunde_Click" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
                     <Button Content="Neuer Kampf" Height="23" Margin="0,32,6,0" Name="_buttonNeuerKampf" VerticalAlignment="Top" Click="ButtonNeuerKampf_Click" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
                     <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="0,48,94,0" Name="_textBlockKampfZeit" Padding="0" Text="00:00:00" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
