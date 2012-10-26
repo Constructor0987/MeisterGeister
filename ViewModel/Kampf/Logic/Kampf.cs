@@ -179,7 +179,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             if (args.Action == NotifyCollectionChangedAction.Remove)
                 InitiativListe.Remove((KämpferInfo)args.OldItems[0]);
             else if (args.Action == NotifyCollectionChangedAction.Add)
-                InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
+                StandardAktionenSetzen((KämpferInfo)args.NewItems[0]);
+                //InitiativListe.Add((KämpferInfo)args.NewItems[0], new Manöver.KeineAktion(((KämpferInfo)args.NewItems[0]).Kämpfer), 0);
         }
 
         public void InitiativListe_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -229,7 +230,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             for (int i = geplanteAktionen.Count; i < ki.Kämpfer.Angriffsaktionen; i++)
             {
                 if(i==0)
-                    InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), 0);
+                {
+                    var m = InitiativListe.Where(mi => mi.KämpferInfo == ki && mi.Manöver is Manöver.KeineAktion).FirstOrDefault();
+                    if (m == null)
+                        InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), 0);
+                    else
+                        m.Manöver = new Manöver.Attacke(ki.Kämpfer); 
+                }
                 else if (ki.Kämpfer.Kampfstil == Kampfstil.BeidhändigerKampf && i>=1)
                 {
                     if (zusatzAktionen > 0 && i==2)

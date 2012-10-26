@@ -153,8 +153,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void Add(ManöverInfo mi)
         {
             //hier werden alle KeineAktion-Manöver des Kämpfers entfernt. man könnte auch für jede mögliche Aktion ein KeineAktion-Manöver anlegen, dann müsste man hier wieder anpassen.
-            foreach (ManöverInfo minfo in this.Where(m => m.KämpferInfo == mi.KämpferInfo && m.Manöver is Manöver.KeineAktion).ToList())
-                Remove(minfo);
+            //foreach (ManöverInfo minfo in this.Where(m => m.KämpferInfo == mi.KämpferInfo && m.Manöver is Manöver.KeineAktion).ToList())
+            //    Remove(minfo);
             base.Add(mi);
             mi.PropertyChanged += OnManöverInfoChanged;
             OnCollectionChanged(NotifyCollectionChangedAction.Add, mi);

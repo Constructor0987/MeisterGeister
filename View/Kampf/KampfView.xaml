@@ -13,7 +13,7 @@
         <Style x:Key="MagiebegabtStyle" TargetType="{x:Type FrameworkElement}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=SelectedItem.Magiebegabt, ElementName=_listBoxKämpfer}" Value="true">
+                <DataTrigger Binding="{Binding Path=KämpferInfo.Kämpfer.Magiebegabt}" Value="true">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>
@@ -21,7 +21,7 @@
         <Style x:Key="GeweihtStyle" TargetType="{x:Type FrameworkElement}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=SelectedItem.Geweiht, ElementName=_listBoxKämpfer}" Value="true">
+                <DataTrigger Binding="{Binding Path=KämpferInfo.Kämpfer.Geweiht}" Value="true">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>
@@ -392,34 +392,34 @@
                                 <!-- Lebensenergie -->
                                 <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
                                     <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
-                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.LebensenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Lebensenergie" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.LebensenergieMax}" ToolTip="Maximale Lebensenergie" />
                                     <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.LebensenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" SourceUpdated="_textBoxLebensenergieAktuell_SourceUpdated" ShowButtons="True" />
-                                    <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.LebensenergieAktuell, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" SourceUpdated="_textBoxLebensenergieAktuell_SourceUpdated" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding SelectedKämpferInfo.Kämpfer}" />
                                 </StackPanel>
                                 <!-- Ausdauer -->
                                 <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
                                     <TextBlock Text="AU:" Margin="2,6,2,2" Width="25" />
-                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.AusdauerMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Ausdauer" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.AusdauerMax}" ToolTip="Maximale Ausdauer" />
                                     <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.AusdauerAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Ausdauer" FontWeight="Bold" SourceUpdated="_textBoxAusdauerAktuell_SourceUpdated" ShowButtons="True" />
-                                    <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.AusdauerAktuell}" ToolTip="Aktuelle Ausdauer" FontWeight="Bold" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
                                 </StackPanel>
                                 <!-- Astralenergie -->
                                 <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource MagiebegabtStyle}">
                                     <TextBlock Text="AE:" Margin="2,6,2,2" Width="25" />
-                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.AstralenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Astralenergie" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.AstralenergieMax}" ToolTip="Maximale Astralenergie" />
                                     <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.AstralenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Astralenergie" FontWeight="Bold" SourceUpdated="_textBoxAstralenergieAktuell_SourceUpdated" ShowButtons="True" />
-                                    <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.AstralenergieAktuell}" ToolTip="Aktuelle Astralenergie" FontWeight="Bold" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
                                 </StackPanel>
                                 <!-- Karmaenergie -->
                                 <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource GeweihtStyle}">
                                     <TextBlock Text="KE:" Margin="2,6,2,2" Width="25" />
-                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedItem.KarmaenergieMax, ElementName=_listBoxKämpfer}" ToolTip="Maximale Karmaenergie" />
+                                    <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.KarmaenergieMax}" ToolTip="Maximale Karmaenergie" />
                                     <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedItem.KarmaenergieAktuell, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" SourceUpdated="_textBoxKarmaenergieAktuell_SourceUpdated" ShowButtons="True" />
-                                    <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding Path=SelectedItem, ElementName=_listBoxKämpfer}" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.KarmaenergieAktuell}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" ShowButtons="True" />
+                                    <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
                                 </StackPanel>
                             </StackPanel>
                             <!-- Wunden und Rüstungsschutz -->
@@ -454,7 +454,7 @@
                                 <TextBlock Text="INI:" Margin="2,6,2,2" />
                                 <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.InitiativeMod, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Initiative Modifikator" FontWeight="Bold" SourceUpdated="IntBox_SourceUpdated" ShowButtons="True" />
                                 <TextBlock Margin="2,6,2,2" Text="PA: " />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.Parade, ElementName=_listBoxKämpfer}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
                             </StackPanel>
                             <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Vertical">
                                 <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
