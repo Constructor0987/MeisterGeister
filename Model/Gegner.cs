@@ -15,6 +15,17 @@ namespace MeisterGeister.Model
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
+        public Gegner(GegnerBase gegnerBase) : this()
+        {
+            GegnerBaseGUID = gegnerBase.GegnerBaseGUID;
+            GegnerBase = gegnerBase;
+            AstralenergieAktuell = AstralenergieMax;
+            AusdauerAktuell = AusdauerMax;
+            LebensenergieAktuell = LebensenergieMax;
+            Name = gegnerBase.Name;
+            Bild = gegnerBase.Bild;
+        }
+
         #region IInitializable
         public void Initialize()
         {
@@ -75,15 +86,16 @@ namespace MeisterGeister.Model
             get { return LE;  }
         }
 
+        [DependentProperty("LEAktuell")]
         public int LebensenergieAktuell
         {
             get
             {
-                throw new NotImplementedException();
+                return LEAktuell;
             }
             set
             {
-                throw new NotImplementedException();
+                LEAktuell = value;
             }
         }
 
@@ -104,15 +116,16 @@ namespace MeisterGeister.Model
             get { return AU; }
         }
 
+        [DependentProperty("AUAktuell")]
         public int AusdauerAktuell
         {
             get
             {
-                throw new NotImplementedException();
+                return AUAktuell;
             }
             set
             {
-                throw new NotImplementedException();
+                AUAktuell = value;
             }
         }
         // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
@@ -132,15 +145,16 @@ namespace MeisterGeister.Model
             get { return AE; }
         }
 
+        [DependentProperty("AEAktuell")]
         public int AstralenergieAktuell
         {
             get
             {
-                throw new NotImplementedException();
+                return AEAktuell;
             }
             set
             {
-                throw new NotImplementedException();
+                AEAktuell = value;
             }
         }
 
@@ -221,7 +235,15 @@ namespace MeisterGeister.Model
         public int Angriffsaktionen
         {
             get { return _angriffsaktionen; }
-            set { _angriffsaktionen = value; }
+            set {
+                if (value > Aktionen)
+                    value = Aktionen;
+                _angriffsaktionen = Math.Max(value, 0);
+                _abwehraktionen = Aktionen - _angriffsaktionen;
+                //AktionenBerechnen();
+                _abwehraktionen = Aktionen - _angriffsaktionen;
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            }
         }
 
         private int _abwehraktionen = 1;
@@ -229,7 +251,16 @@ namespace MeisterGeister.Model
         public int Abwehraktionen
         {
             get { return _abwehraktionen; }
-            set { _abwehraktionen = value; }
+            set
+            {
+                if (value > Aktionen)
+                    value = Aktionen;
+                _abwehraktionen = Math.Max(value, 0);
+                _angriffsaktionen = Aktionen - _abwehraktionen;
+                //AktionenBerechnen();
+                _angriffsaktionen = Aktionen - _abwehraktionen;
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            }
         }
 
 
@@ -302,11 +333,25 @@ namespace MeisterGeister.Model
             }
         }
 
+        private int _aktionen = Int32.MinValue;
         public int Aktionen
         {
             get
             {
-                return GegnerBase.Aktionen;
+                if(_aktionen == Int32.MinValue);
+                    _aktionen = GegnerBase.Aktionen;
+                return _aktionen;
+            }
+            set
+            {
+                _aktionen = value;
+                if (_aktionen < Abwehraktionen + Angriffsaktionen)
+                {
+                    if (Abwehraktionen + Angriffsaktionen == 0)
+                        Angriffsaktionen = 0;
+                    else
+                        Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
+                }
             }
         }
 

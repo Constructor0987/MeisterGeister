@@ -41,10 +41,13 @@ namespace MeisterGeister.View.Kampf
                 Model.GegnerBase gegnerBase = _gegnerView.VM.SelectedGegnerBase;
                 
                 // TODO ??: Gegner aus GegnerBase erzeugen
-
-                //Model.Gegner gegner = new Model.Gegner();
+                Model.Gegner gegner = new Model.Gegner(gegnerBase);
+                Global.ContextHeld.Insert<Model.Gegner>(gegner);
+                //Model.Gegner gegner = Global.ContextHeld.New<Model.Gegner>();
+                //gegner.GegnerBaseGUID = gegnerBase.GegnerBaseGUID;
                 //gegner.GegnerBase = gegnerBase;
-                //_kampf.Kämpfer.Add(gegner, 2);
+                //gegnerBase.Gegner.Add(gegner);
+                _kampf.Kämpfer.Add(gegner, 2);
             }
         }
     }

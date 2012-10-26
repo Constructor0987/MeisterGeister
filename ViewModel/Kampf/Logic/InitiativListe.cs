@@ -39,12 +39,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get { return KämpferInfo.InitiativeBasis; }
         }
+        public string KämpferName
+        {
+            get { return KämpferInfo.Kämpfer.Name; }
+        }
+
 
         private Manöver.Manöver manöver;
         public Manöver.Manöver Manöver
         {
             get { return manöver; }
-            private set { manöver = value; }
+            set { 
+                manöver = value;
+                OnChanged("Manöver"); OnChanged("IsAktion");
+            }
         }
 
         /// <summary>
@@ -84,6 +92,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 OnChanged("Initiative");
             else if (args.PropertyName == "Angriffsaktionen")
                 OnChanged("Angriffsaktionen");
+            else if (args.PropertyName == "Name")
+                OnChanged("KämpferName");
         }
 
         #region INotifyPropertyChanged

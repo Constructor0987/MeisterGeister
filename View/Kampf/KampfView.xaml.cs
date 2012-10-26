@@ -34,6 +34,8 @@ namespace MeisterGeister.View.Kampf
             VM = new VM.KampfViewModel(View.General.ViewHelper.ShowGegnerView);
             
             _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Initiative", System.ComponentModel.ListSortDirection.Descending));
+            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("InitiativeBasis", System.ComponentModel.ListSortDirection.Descending));
+            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("KämpferName", System.ComponentModel.ListSortDirection.Descending));
         }
 
         /// <summary>
