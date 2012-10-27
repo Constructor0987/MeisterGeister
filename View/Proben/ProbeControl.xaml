@@ -228,7 +228,26 @@
                             </Grid>
 
                             <!-- Proben-Mod durch Behinderung -->
-                            <Grid ToolTip="Effektive Behinderung (eBE)" VerticalAlignment="Center">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ToolTip>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="Behinderung (BE):" Margin="0,0,2,2" />
+                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Held.Behinderung}" />
+                                        <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="Effektive Behinderung (eBE):" Margin="0,0,2,2" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Probe.Talent.eBE}" />
+                                        <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="Resultierende Behinderung:" Margin="0,0,2,2" />
+                                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Probe.BehinderungEff}" />
+                                    </Grid>
+                                </Grid.ToolTip>
                                 <Grid.Style>
                                     <Style TargetType="Grid">
                                         <Setter Property="Visibility" Value="Visible" />
@@ -275,7 +294,7 @@
                         </TextBlock>
                     </StackPanel>
                     <TextBlock Grid.Row="1" ToolTip="Erfolgschance" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF686868">
-                    <Run Text="{Binding Erfolgschance, StringFormat=\{0:P\}}" />
+                    <Run Text="{Binding Erfolgschance, StringFormat=\{0:P\}, IsAsync=True}" />
                     <Run Text="Chanche" />
                     </TextBlock>
                 </Grid>
