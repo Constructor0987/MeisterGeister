@@ -13,7 +13,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     /// <summary>
     /// Factory für einen Modifikator, der sich dynamisch, wie andere Modifikatoren verhalten kann.
     /// </summary>
-    public class CustomModifikatorFactory : IEnumerable<IDictionary<string,object>>
+    public class CustomModifikatorFactory : IEnumerable<IDictionary<string,object>>, IDisposable
     {
         dynamic modifikatorObj;
         List<Type> types;
@@ -123,6 +123,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             }
         }
 
+        private List<System.Collections.Specialized.INotifyCollectionChanged> objectWithRegisteredEvents = new List<System.Collections.Specialized.INotifyCollectionChanged>();
         public IDictionary<string, object> this[Type t]
         {
             get
@@ -132,6 +133,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
                 var d = new ObservableDictionary<string, object>();
                 //d.CollectionChanged
                 d.CollectionChanged += d_CollectionChanged;
+                objectWithRegisteredEvents.Add(d);
                 foreach (var m in t.GetMembers(BindingFlags.Instance | BindingFlags.Public))
                 {
                     if (iModifikatorMembers.Contains(m.Name) || m.Name.StartsWith("get_") || m.Name.StartsWith("set_"))
@@ -150,7 +152,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add || e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
             {
                 KeyValuePair<string, object> kvp = (KeyValuePair<string, object>)e.NewItems[0];
-                if (modifikatorObjAsDictionary.ContainsKey(kvp.Key))
+                if (!(kvp.Key.StartsWith("Apply") && kvp.Key.EndsWith("Mod")) && modifikatorObjAsDictionary.ContainsKey(kvp.Key))
                     modifikatorObjAsDictionary[kvp.Key] = kvp.Value;
             }
         }
@@ -228,6 +230,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         public int Count
         {
             get { return types.Count; }
+        }
+
+        public void Dispose()
+        {
+            foreach (var o in objectWithRegisteredEvents)
+                o.CollectionChanged -= d_CollectionChanged;
         }
 
         #region IEnumerable
