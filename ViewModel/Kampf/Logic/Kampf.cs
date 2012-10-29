@@ -224,7 +224,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 InitiativListe.Remove(manöver);
                 geplanteAktionen.Remove(manöver);
             }
-            if (ki.Kämpfer.Angriffsaktionen == 0 && geplanteAktionen.Count == 0)
+            if (ki.Kämpfer.Angriffsaktionen == 0 && InitiativListe.Where(mi => mi.KämpferInfo == ki).Count() == 0)
                 InitiativListe.Add(ki, new Manöver.KeineAktion(ki.Kämpfer), 0);
             int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).Count();
             for (int i = geplanteAktionen.Count; i < ki.Kämpfer.Angriffsaktionen; i++)
