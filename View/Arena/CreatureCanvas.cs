@@ -68,6 +68,8 @@ namespace MeisterGeister.View.Arena
             
             _contextMenu = new CreatureContextMenu(this);
             ContextMenu = _contextMenu;
+
+            ToolTip = new TextBlock() { Text = _creature.Name };
         }
         /*
         private void createDirectionPointer() {

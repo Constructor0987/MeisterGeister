@@ -608,7 +608,7 @@ namespace MeisterGeister.View.Kampf
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
             // TODO ??: Umstellen auf neues Kampf-Model
-            ViewModel.Kampf.Logic.Kampf k = _kampf;
+            ViewModel.Kampf.Logic.Kampf k = VM.Kampf;
             ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
             arenaWindow.Width = 1200;
             arenaWindow.Height = 800;
@@ -622,7 +622,7 @@ namespace MeisterGeister.View.Kampf
 
         private void ShowSpielerInfo()
         {
-            KampfInfoView infoView = new KampfInfoView(_kampf);
+            KampfInfoView infoView = new KampfInfoView(VM.Kampf);
             MainView.ShowSpielerInfo(infoView);
         }
 

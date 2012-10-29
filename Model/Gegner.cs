@@ -102,12 +102,12 @@ namespace MeisterGeister.Model
         // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
         public string LebensenergieStatus
         {
-            get { throw new NotImplementedException(); }
+            get { return "TODO"; }
         }
         // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
         public string LebensenergieStatusDetails
         {
-            get { throw new NotImplementedException(); }
+            get { return "TODO"; }
         }
 
         [DependentProperty("AU")]
@@ -131,12 +131,12 @@ namespace MeisterGeister.Model
         // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
         public string AusdauerStatus
         {
-            get { throw new NotImplementedException(); }
+            get { return "TODO"; }
         }
         // TODO ??: Property implementieren (siehe: ViewModel.Kampf.LogicAlt.Wesen)
         public string AusdauerStatusDetails
         {
-            get { throw new NotImplementedException(); }
+            get { return "TODO"; }
         }
 
         [DependentProperty("AE")]
