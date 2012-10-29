@@ -21,7 +21,7 @@ namespace MeisterGeister.Model
             get { return !RüstungGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
-        public bool BEsteigtDurchSchwereTreffer()
+        public bool BehinderungSteigtDurchSchwereTreffer()
         {
             String thisGuid = RüstungGUID.ToString();
             return thisGuid == "00000000-0000-0000-0004-000000000014" //Bronzeharnisch
