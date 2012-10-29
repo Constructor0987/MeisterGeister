@@ -157,7 +157,7 @@ namespace MeisterGeister.ViewModel.Helden {
             if (!ListenToChangeEvents)
                 return;
 
-            Global.SetIsBusy(true, "Talente werden geladen...");
+            //Global.SetIsBusy(true, "Talente werden geladen...");
             SelectedHeld = Global.SelectedHeld;
             ReInit();
             if (SelectedHeld != null) 
@@ -270,7 +270,7 @@ namespace MeisterGeister.ViewModel.Helden {
             OnChanged("RitualeTalentListe");
             OnChanged("LiturgienTalentListe");
 
-            Global.SetIsBusy(false);
+            //Global.SetIsBusy(false);
         }        
         private void AddTalent(object obj) {
             if (TalentAuswahl != null && SelectedHeld != null)
