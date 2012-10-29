@@ -19,13 +19,16 @@ namespace MeisterGeister.Model.Extensions
             get { return _name; }
         }
 
-        private static Dictionary<string, List<string>> cache = new Dictionary<string, List<string>>();
+        private static Dictionary<Type, Dictionary<string, List<string>>> cache = new Dictionary<Type,Dictionary<string,List<string>>>();//new Dictionary<string, List<string>>();
+        //private static Dictionary<string, List<string>> cache = new Dictionary<string, List<string>>();
 
         public static void PropagateINotifyProperyChanged(object o, PropertyChangedEventArgs args)
         {
             if (!(o is INotifyPropertyChanged))
                 return;
-            if (!cache.ContainsKey(args.PropertyName))
+            if (!cache.ContainsKey(o.GetType()))
+                cache[o.GetType()] = new Dictionary<string, List<string>>();
+            if (!cache[o.GetType()].ContainsKey(args.PropertyName))
             {
                 List<string> methodnames = new List<string>();
                 foreach (PropertyInfo pi in o.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
@@ -41,18 +44,19 @@ namespace MeisterGeister.Model.Extensions
                                 //Impromptu.InvokeMemberAction(o, "PropertyChanged", o, new PropertyChangedEventArgs(pi.Name)); //geht so leider nicht, das wäre noch eleganter
                                 methodnames.Add(pi.Name);
                             }
-                            catch (Exception e) { 
+                            catch (Exception e)
+                            {
                                 System.Diagnostics.Debug.WriteLine(e.Message);
                                 System.Diagnostics.Debug.WriteLine(e.InnerException);
                             }
                         }
                     }
                 }
-                cache.Add(args.PropertyName, methodnames);
+                cache[o.GetType()].Add(args.PropertyName, methodnames);
             }
             else
             {
-                foreach(string method in cache[args.PropertyName])
+                foreach (string method in cache[o.GetType()][args.PropertyName])
                     Impromptu.InvokeMemberAction(o, "OnChanged", method);
             }
         }

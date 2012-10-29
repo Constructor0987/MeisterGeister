@@ -10,7 +10,7 @@ namespace MeisterGeister.Model
 {
     public partial class Gegner : KampfLogic.Wesen, KampfLogic.IKämpfer, KampfLogic.IGegnerBase, Extensions.IInitializable, KampfLogic.IHasZonenRs
     {
-        public Gegner()
+        public Gegner() : base()
         {
             GegnerGUID = Guid.NewGuid();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
@@ -100,52 +100,15 @@ namespace MeisterGeister.Model
             }
         }
 
-        [DependentProperty("LebensenergieAktuell"), DependentProperty("LebensenergieMax"), DependentProperty("KO")]
+        [DependentProperty("LebensenergieAktuell"), DependentProperty("LebensenergieMax"), DependentProperty("Konstitution")]
         public string LebensenergieStatus
         {
             get
             {
-                int leModCount = 0;
-                if (LebensenergieAktuell < KO * -1)
-                    return "Tot";
-                else if (LebensenergieAktuell <= 0)
-                    return "Bewusstlos";
-                else if (Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0)
-                    return "Kampfunfähig";
-                else if ((leModCount = Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count()) > 0)
-                    return "< 1/" + (leModCount + 1);
-                return string.Empty;
+                return GetLebensenergieStatus();
             }
         }
         
-        public string LebensenergieStatusDetails
-        {
-            get
-            {
-                string info = string.Empty; int leModCount = 0;
-                if (LebensenergieAktuell < KO * -1)
-                    info = "Tot";
-                else if (LebensenergieAktuell <= 0)
-                {
-                    info = "Bewusstlos";
-                    info += Environment.NewLine + string.Format("tot in W6 x KO ({0}) Kampfrunden ({0} bis {1} KR = {2} bis {3} sec)",
-                        KO, 6 * KO, 3 * KO, 18 * KO);
-                }
-                else if (Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0)
-                {
-                    info = "Kampfunfähig";
-                    info += Environment.NewLine + "keine Aktionen möglich, außer mit GS 1 bewegen";
-                }
-                else if ((leModCount = Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count()) > 0)
-                {
-                    info = "< 1/" + (leModCount + 1);
-                    info += Environment.NewLine + string.Format("Optional: Eigenschaftsproben +{0}; Talent-/Zauberproben +{1}; GS -{0}", leModCount, leModCount * 3);
-                }
-                info += Environment.NewLine + "(\"Auswirkungen niedriger Lebensenergie\" siehe WdS 56f.)";
-                return info;
-            }
-        }
-
         [DependentProperty("AU")]
         public int AusdauerMax
         {
@@ -170,32 +133,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                int auModCount = 0;
-                if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
-                    return "Kampfunfähig";
-                else if ((auModCount = Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count()) > 0)
-                    return "< 1/" + (auModCount + 2);
-                return string.Empty;
-            }
-        }
-
-        public string AusdauerStatusDetails
-        {
-            get
-            {
-                string info = string.Empty; int auModCount = 0;
-                if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
-                {
-                    info = "Kampfunfähig";
-                    info += Environment.NewLine + "keine Aktionen möglich, außer Atem Holen";
-                }
-                else if ((auModCount = Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count()) > 0)
-                {
-                    info = "< 1/" + (auModCount + 2);
-                    info += Environment.NewLine + string.Format("Optional: Eigenschaftsproben +{0}; Talent-/Zauberproben +{1}", auModCount, auModCount * 3);
-                }
-                info += Environment.NewLine + "(\"Auswirkungen niedriger Ausdauer\" siehe WdS 83)";
-                return info;
+                return GetAusdauerStatus();
             }
         }
 

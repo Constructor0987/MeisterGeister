@@ -18,13 +18,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
     [DataContract(IsReference=true)]
     public class Wesen
     {
-        #region ModifikatorChanged Event
         public Wesen()
         {
             Modifikatoren.CollectionChanged += OnModifikatorenChanged;
             ModifikatorenChanged += DependsOnModifikator.OnModifikatorenChanged;
+            if (this is INotifyPropertyChanged)
+            {
+                (this as INotifyPropertyChanged).PropertyChanged += OnPropertyChanged;
+            }
         }
 
+        #region Modifikatoren
+        #region ModifikatorChanged Event
         private event NotifyCollectionChangedEventHandler ModifikatorenChanged;
         private void OnModifikatorenChanged(object o, NotifyCollectionChangedEventArgs args)
         {
@@ -144,5 +149,167 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             return change;
         }
+        #endregion
+
+        public string GetLebensenergieStatus()
+        {
+                IKämpfer k = this as IKämpfer;
+                if (k==null)
+                    return string.Empty;
+                int leModCount = 0;
+                if (k.LebensenergieAktuell < k.Konstitution * -1)
+                    return "Tot";
+                else if (k.LebensenergieAktuell <= 0)
+                    return "Bewusstlos";
+                else if (Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0)
+                    return "Kampfunfähig";
+                else if ((leModCount = Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count()) > 0)
+                    return "< 1/" + (leModCount + 1);
+                return string.Empty;
+        }
+
+        public string LebensenergieStatusDetails
+        {
+            get
+            {
+                IKämpfer k = this as IKämpfer;
+                if (k == null)
+                    return string.Empty;
+                string info = string.Empty; int leModCount = 0;
+                if (k.LebensenergieAktuell < k.Konstitution * -1)
+                    info = "Tot";
+                else if (k.LebensenergieAktuell <= 0)
+                {
+                    info = "Bewusstlos";
+                    info += Environment.NewLine + string.Format("tot in W6 x KO ({0}) Kampfrunden ({0} bis {1} KR = {2} bis {3} sec)",
+                        k.Konstitution, 6 * k.Konstitution, 3 * k.Konstitution, 18 * k.Konstitution);
+                }
+                else if (Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0)
+                {
+                    info = "Kampfunfähig";
+                    info += Environment.NewLine + "keine Aktionen möglich, außer mit GS 1 bewegen";
+                }
+                else if ((leModCount = Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count()) > 0)
+                {
+                    info = "< 1/" + (leModCount + 1);
+                    info += Environment.NewLine + string.Format("Optional: Eigenschaftsproben +{0}; Talent-/Zauberproben +{1}; GS -{0}", leModCount, leModCount * 3);
+                }
+                info += Environment.NewLine + "(\"Auswirkungen niedriger Lebensenergie\" siehe WdS 56f.)";
+                return info;
+            }
+        }
+
+        protected string GetAusdauerStatus()
+        {
+            int auModCount = 0;
+            if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
+                return "Kampfunfähig";
+            else if ((auModCount = Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count()) > 0)
+                return "< 1/" + (auModCount + 2);
+            return string.Empty;
+        }
+
+        public string AusdauerStatusDetails
+        {
+            get
+            {
+                string info = string.Empty; int auModCount = 0;
+                if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
+                {
+                    info = "Kampfunfähig";
+                    info += Environment.NewLine + "keine Aktionen möglich, außer Atem Holen";
+                }
+                else if ((auModCount = Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count()) > 0)
+                {
+                    info = "< 1/" + (auModCount + 2);
+                    info += Environment.NewLine + string.Format("Optional: Eigenschaftsproben +{0}; Talent-/Zauberproben +{1}", auModCount, auModCount * 3);
+                }
+                info += Environment.NewLine + "(\"Auswirkungen niedriger Ausdauer\" siehe WdS 83)";
+                return info;
+            }
+        }
+
+        #region Events und resultierende Modifikatoren
+
+        //Events auf setter, die im DB-Model stehen.
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == "LebensenergieAktuell")
+            {
+                CheckLePModifikatoren();
+            }
+            else if (args.PropertyName == "AusdauerAktuell")
+            {
+                CheckAuModifikatoren();
+            }
+        }
+        
+        protected void CheckAuModifikatoren()
+        {
+            IKämpfer k = this as IKämpfer;
+            if (k == null)
+                return;
+            double percent = (double)k.AusdauerAktuell / (double)k.AusdauerMax;
+            int targetModCount = 0;
+            if (percent >= 1.0 / 3.0)
+                targetModCount = 0;
+            else if (percent >= 1.0 / 4.0)
+                targetModCount = 1;
+            else
+                targetModCount = 2;
+            int change = 0;
+
+            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeAU) // nur anwenden, wenn Regel-Option aktiv
+                change = SetModifikatorCount<Mod.NiedrigeAusdauerModifikator>(targetModCount);
+
+            if (targetModCount == 1 && change >= 1)
+            {
+                // TODO ??: + 1 Erschöpfung
+            }
+
+            if (k.AusdauerAktuell <= 0)
+            {
+                if (!(Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0))
+                {
+                    Modifikatoren.Add(new Mod.AusdauerKampfunfähigModifikator());
+                    // TODO ??: + 1W6 Erschöpfung
+                }
+            }
+            else
+            {
+                Modifikatoren.RemoveAll(m => m is Mod.AusdauerKampfunfähigModifikator);
+            }
+        }
+
+        protected void CheckLePModifikatoren()
+        {
+            IKämpfer k = this as IKämpfer;
+            if (k == null)
+                return;
+            double percent = (double)k.LebensenergieAktuell / (double)k.LebensenergieMax;
+            int targetModCount = 0;
+            if (percent >= 0.5)
+                targetModCount = 0;
+            else if (percent >= 1.0 / 3.0)
+                targetModCount = 1;
+            else if (percent >= 1.0 / 4.0)
+                targetModCount = 2;
+            else
+                targetModCount = 3;
+
+            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeLE) // nur anwenden, wenn Regel-Option aktiv
+                SetModifikatorCount<Mod.NiedrigeLebensenergieModifikator>(targetModCount);
+
+            if (k is Model.Held && !(k as Model.Held).HatVorNachteil("Eisern") && !(k as Model.Held).HatVorNachteil("Zäher Hund") && k.LebensenergieAktuell <= 5 || k.LebensenergieAktuell <= 0)
+            {
+                if (!(Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0))
+                    Modifikatoren.Add(new Mod.LebensenergieKampfunfähigModifikator());
+            }
+            else
+            {
+                Modifikatoren.RemoveAll(m => m is Mod.LebensenergieKampfunfähigModifikator);
+            }
+        }
+        #endregion
     }
 }
