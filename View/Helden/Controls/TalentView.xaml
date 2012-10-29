@@ -386,7 +386,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KampfTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -459,7 +459,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -534,7 +534,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -609,7 +609,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -684,7 +684,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -759,7 +759,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -834,7 +834,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -909,7 +909,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GabenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -984,7 +984,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding RitualeTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -1059,7 +1059,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding LiturgienTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>

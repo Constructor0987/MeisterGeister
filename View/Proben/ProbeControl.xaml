@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" Opacity="{Binding Opacity}"
-             Background="Transparent"
+             Background="Transparent" 
              d:DataContext="{d:DesignData /SampleData/ProbeControlViewModelSampleData.xaml}"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -140,7 +140,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="26" />
+                                <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="28" />
                                 <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -197,11 +197,11 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal" Width="90" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Proben-Modifikator">
+                <StackPanel Orientation="Horizontal" Width="100" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Proben-Modifikator">
                     <TextBlock Text="Mod:" VerticalAlignment="Center" />
                     <ViewGeneral:IntBox x:Name="_intBoxMod" Value="{Binding Modifikator}" Margin="5,0,0,0" MinWidth="25" HorizontalAlignment="Center" VerticalAlignment="Center" NoBackground="False" />
 
-                    <Grid VerticalAlignment="Center" Margin="2,0,0,0" MinHeight="32">
+                    <Grid VerticalAlignment="Center" Margin="2,0,0,0" MinHeight="34">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
                             <!-- Proben-Mods durch niedrige Energie, etc. -->
                             <Grid VerticalAlignment="Center">
@@ -281,7 +281,7 @@
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <StackPanel Width="105" Orientation="Horizontal"  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <StackPanel Width="110" Orientation="Horizontal"  Margin="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <TextBlock ToolTip="Übrig behaltene Punkte" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <Run Text="{Binding Ergebnis.Übrig}" FontWeight="Bold" />
                     <Run Text="{Binding Probe.PunkteText, Mode=OneWay}" FontWeight="Bold" />
