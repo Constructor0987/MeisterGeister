@@ -149,6 +149,8 @@
     <Compile Include="Daten\DatabaseUpdate.cs" />
     <Compile Include="Daten\SqlCeUpgrade.cs" />
     <Compile Include="Logic\Extensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="Logic\Extensions\ObservableDictionary.cs" />
+    <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\Literatur.cs" />
     <Compile Include="Logic\General\MetaTalent.cs" />
@@ -381,6 +383,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IEndetMit.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModEigenschaft.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModProbe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\CustomModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\PABonusDurchHoheIni.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
