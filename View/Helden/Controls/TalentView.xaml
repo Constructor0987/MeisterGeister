@@ -7,7 +7,7 @@
     Loaded="UserControl_Loaded" 
 	Unloaded="UserControl_Unloaded"
 	mc:Ignorable="d"	
-	d:DesignWidth="807"
+	d:DesignWidth="810"
     d:DesignHeight="700">
     <UserControl.Resources>
         <Style x:Key="HorizontalStretchSet">
@@ -357,103 +357,67 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid>
-                                    <DataGrid ItemsSource="{Binding KampfTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" 
-                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" HorizontalContentAlignment="Stretch" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                        <DataGrid.InputBindings>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="66" />
+                                                <ColumnDefinition Width="66" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT+" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA+" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="7" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KampfTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                        </DataGrid.InputBindings>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" CellStyle="{StaticResource HorizontalStretchSet}">
-                                                <DataGridTextColumn.Header >
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="65">
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT+"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn Width="65">
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA+"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="65">
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
-                                </Grid>
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="66" />
+                                                            <ColumnDefinition Width="66" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT}" Grid.Column="1" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA}" Grid.Column="2" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="4" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="6" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="7" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expKoerper" IsExpanded="True" Margin="0,5,0,0">
@@ -464,122 +428,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid >
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="True" EnableRowVirtualization="True" 
-                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000"  HorizontalContentAlignment="Stretch" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                            <DataGrid.InputBindings>
-                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                            </DataGrid.InputBindings>
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTemplateColumn Width="65">
-                                                    <DataGridTemplateColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                    </DataGridTemplateColumn.Header>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Image.ToolTip>
-                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                            </Image.ToolTip>
-                                        </Image>
-                                    </Grid>
-                                </Grid>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KoerperTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expGesellschaft" IsExpanded="True" Margin="0,5,0,0">
@@ -590,121 +503,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid >
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                            <DataGrid.InputBindings>
-                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                            </DataGrid.InputBindings>
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTemplateColumn Width="65">
-                                                    <DataGridTemplateColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                    </DataGridTemplateColumn.Header>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Image.ToolTip>
-                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                            </Image.ToolTip>
-                                        </Image>
-                                    </Grid>
-                                </Grid>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GesellschaftTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expNatur" IsExpanded="True" Margin="0,5,0,0">
@@ -715,122 +578,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid >
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                            <DataGrid.InputBindings>
-                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                            </DataGrid.InputBindings>
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTemplateColumn Width="65">
-                                                    <DataGridTemplateColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                    </DataGridTemplateColumn.Header>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Image.ToolTip>
-                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                            </Image.ToolTip>
-                                        </Image>
-                                    </Grid>
-                                </Grid>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding NaturTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expWissen" IsExpanded="True" Margin="0,5,0,0">
@@ -841,121 +653,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <DataGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                            <DataGrid.InputBindings>
-                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                            </DataGrid.InputBindings>
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTemplateColumn Width="65">
-                                                    <DataGridTemplateColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                    </DataGridTemplateColumn.Header>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Image.ToolTip>
-                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                            </Image.ToolTip>
-                                        </Image>
-                                    </Grid>
-                                </Grid>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding WissenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expSprache" IsExpanded="True" Margin="0,5,0,0">
@@ -966,121 +728,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <DataGrid Grid.Column="1" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                                  RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                            <DataGrid.InputBindings>
-                                                <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                            </DataGrid.InputBindings>
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTemplateColumn Width="65">
-                                                    <DataGridTemplateColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                    </DataGridTemplateColumn.Header>
-                                                    <DataGridTemplateColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                        </DataTemplate>
-                                                    </DataGridTemplateColumn.CellTemplate>
-                                                </DataGridTemplateColumn>
-                                                <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                                <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                    <DataGridTextColumn.Header>
-                                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                    </DataGridTextColumn.Header>
-                                                    <DataGridTextColumn.ElementStyle>
-                                                        <Style TargetType="TextBlock">
-                                                            <Setter Property="VerticalAlignment" Value="Center" />
-                                                        </Style>
-                                                    </DataGridTextColumn.ElementStyle>
-                                                </DataGridTextColumn>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                        <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                            <Image.ToolTip>
-                                                <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                            </Image.ToolTip>
-                                        </Image>
-                                    </Grid>
-                                </Grid>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SpracheTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
+                                            <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expHandwerk" Margin="0,5,0,0" IsExpanded="True">
@@ -1091,116 +803,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid >
-                                    <DataGrid ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                        <DataGrid.InputBindings>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding HandwerkTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                        </DataGrid.InputBindings>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="65">
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="40" Binding="{Binding Talent.eBE}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Voraussetzungen}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
-                                </Grid>
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expGaben" Margin="0,5,0,0" IsExpanded="True">
@@ -1211,95 +878,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid >
-                                    <DataGrid ItemsSource="{Binding GabenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                        <DataGrid.InputBindings>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GabenTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                        </DataGrid.InputBindings>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="65">
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
-                                </Grid>
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expRituale" Margin="0,5,0,0" IsExpanded="True">
@@ -1310,95 +953,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid >
-                                    <DataGrid ItemsSource="{Binding RitualeTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                        <DataGrid.InputBindings>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding RitualeTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                        </DataGrid.InputBindings>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1, TargetNullValue=var.}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2, TargetNullValue=var.}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3, TargetNullValue=var.}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="65">
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
-                                </Grid>
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung, TargetNullValue=var}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                         <Expander x:Name="expLiturgie" Margin="0,5,0,0" IsExpanded="True">
@@ -1409,95 +1028,71 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <Grid >
-                                    <DataGrid ItemsSource="{Binding LiturgienTalentListe}"  SelectedItem="{Binding SelectedTalentListeItem}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" 
-                                              RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="#00000000" Background="#00000000" BorderBrush="#00000000" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
-                                        <DataGrid.InputBindings>
+                                <StackPanel>
+                                    <Border Style="{DynamicResource ControlContentBorder}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="32" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <Image.ToolTip>
+                                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
+                                                </Image.ToolTip>
+                                            </Image>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                        </Grid>
+                                    </Border>
+                                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding LiturgienTalentListe}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                        <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
-                                        </DataGrid.InputBindings>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding Talent.Talentname}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Name"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft1}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft2}" IsReadOnly="True">
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Eigenschaft3}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTextColumn Width="32" Binding="{Binding Talent.Steigerung, TargetNullValue=var.}" IsReadOnly="True" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                            <DataGridTemplateColumn Width="65">
-                                                <DataGridTemplateColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW"/>
-                                                </DataGridTemplateColumn.Header>
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn Width="Auto" Binding="{Binding HeldTalent.Bemerkung}" >
-                                                <DataGridTextColumn.Header>
-                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz"/>
-                                                </DataGridTextColumn.Header>
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <Image.ToolTip>
-                                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
-                                        </Image.ToolTip>
-                                    </Image>
-                                </Grid>
+                                        </ListBox.InputBindings>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="44" />
+                                                            <ColumnDefinition Width="32" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="100*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Steigerung, TargetNullValue=var}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
+                                                        <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
                             </Border>
                         </Expander>
                     </StackPanel>
