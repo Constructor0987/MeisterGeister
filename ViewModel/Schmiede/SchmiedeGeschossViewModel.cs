@@ -218,7 +218,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 }
                 else
                 {
-                    FernkampfwaffeListe = Global.ContextInventar.FernkampfwaffeListe.ToList();
+                    FernkampfwaffeListe = Global.ContextInventar.FernkampfwaffeListe.Where(w => (w.Munitionsart == MUNITIONSTYPBOLZEN || w.Munitionsart == MUNITIONSTYPPFEIL)).OrderBy(w => w.Name).ToList();
                 }
                 OnChanged("SelectedFernkampfwaffeTalent");
             }
