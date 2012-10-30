@@ -110,8 +110,9 @@ namespace MeisterGeister.View.General
             {
                 View.Würfeln.WürfelDialog dlg = new View.Würfeln.WürfelDialog(würfel, infoText);
                 dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
-                dlg.ShowDialog();
-                ergebnis = dlg.Ergebnis;
+                bool? result = dlg.ShowDialog();
+                if (result == true)
+                    ergebnis = dlg.Ergebnis;
             }
             else
                 ergebnis = Logic.General.Würfel.Parse(würfel, true);
