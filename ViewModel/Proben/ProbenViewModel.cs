@@ -297,6 +297,35 @@ namespace MeisterGeister.ViewModel.Proben
 
         private Orientation SelectedAnzeigeOrientation { get; set; }
 
+        // Mod-Stufen: -7, -3, +/-0, 3, 7, 12, 18, 25
+        public int SelectedMod
+        {
+            get 
+            {
+                if (Modifikator <= -7)
+                    return -7;
+                else if (Modifikator <= -3)
+                    return -3;
+                else if (Modifikator <= 0 && Modifikator < 3)
+                    return 0;
+                else if (Modifikator >= 25)
+                    return 25;
+                else if (Modifikator >= 18)
+                    return 18;
+                else if (Modifikator >= 12)
+                    return 12;
+                else if (Modifikator >= 7)
+                    return 7;
+                else if (Modifikator >= 3)
+                    return 3;
+                return 0;
+            }
+            set
+            {
+                Modifikator = value;
+                OnChanged("SelectedMod");
+            }
+        }
 
         private ItemsPanelTemplate _probeErgebnisListePanel = null;
         public ItemsPanelTemplate ProbeErgebnisListePanel
@@ -343,6 +372,7 @@ namespace MeisterGeister.ViewModel.Proben
                 foreach (ProbeControlViewModel er in ProbeErgebnisListe)
                     er.Modifikator = _modifikator;
                 OnChanged("Modifikator");
+                OnChanged("SelectedMod");
                 OnChanged("ProbeErgebnisListe");
             }
         }

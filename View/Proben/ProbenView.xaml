@@ -79,37 +79,38 @@
                         </CheckBox.Content>
                     </CheckBox>
                     
-                    <ListBox Grid.Column="6" Margin="4" Height="35" Width="205" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" FontSize="10" ToolTip="Erschwernisse/Erleichterungen">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="-7" FontWeight="Bold" />
+                    <ListBox Grid.Column="6" Margin="4" Height="35"  Width="210" SelectedValue="{Binding SelectedMod}" SelectedValuePath="Tag" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" FontSize="10" 
+                             ToolTip="Erschwernisse/Erleichterungen" Foreground="#FF4F4F4F" SelectionChanged="ListBoxMods_SelectionChanged">
+                        <StackPanel Orientation="Horizontal" Tag="-7">
+                            <TextBlock Text="-7" FontWeight="Bold" Width="22" />
                             <TextBlock Text="für Ungeübte zu schaffen" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="-3" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" Tag="-3">
+                            <TextBlock Text="-3" FontWeight="Bold" Width="22" />
                             <TextBlock Text="in Fleisch und Blut übergegangen" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+/-0" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" Tag="0">
+                            <TextBlock Text="+/-0" FontWeight="Bold" Width="22" />
                             <TextBlock Text="alltägliche Routine" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+3" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" Tag="3">
+                            <TextBlock Text="+3" FontWeight="Bold" Width="22" />
                             <TextBlock Text="Fummelsarbeit" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+7" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" Tag="7">
+                            <TextBlock Text="+7" FontWeight="Bold" Width="22" />
                             <TextBlock Text="anspruchsvoll" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+12" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" Tag="12">
+                            <TextBlock Text="+12" FontWeight="Bold" Width="22" />
                             <TextBlock Text="wirklich schwierig" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+18" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" Tag="18">
+                            <TextBlock Text="+18" FontWeight="Bold" Width="22" />
                             <TextBlock Text="ohne notwendige Hilfsmittel" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+25" FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal" Tag="25">
+                            <TextBlock Text="+25" FontWeight="Bold" Width="22" />
                             <TextBlock Text="selbst mit Hilfsmittel fast unmöglich" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </ListBox>
