@@ -76,7 +76,7 @@ namespace MeisterGeister.Model
         {
             int be = 0;
 
-            string eBe = Talent.eBE;
+            string eBe = Talent == null ? string.Empty : Talent.eBE;
             if (string.IsNullOrEmpty(eBe))
                 be = 0;
             else if (eBe == "BE")

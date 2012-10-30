@@ -600,51 +600,55 @@ namespace MeisterGeister.ViewModel.Proben
         {
             _probeErgebnisListe.Clear();
             foreach (var item in HeldListe)
+                AddProbeItem(item);
+            
+            OnChanged("ProbeErgebnisListe");
+        }
+
+        private void AddProbeItem(Model.Held held)
+        {
+            ProbeControlViewModel vm = new ProbeControlViewModel();
+            vm.Orientation = SelectedAnzeigeOrientation;
+            vm.Held = held;
+            vm.Modifikator = Modifikator;
+            vm.Gewürfelt += ProbeControlGewürfelt;
+
+            if (SelectedProbe is Model.Talent)
             {
-                ProbeControlViewModel vm = new ProbeControlViewModel();
-                vm.Orientation = SelectedAnzeigeOrientation;
-                vm.Held = item;
-                vm.Modifikator = Modifikator;
-                vm.Gewürfelt += ProbeControlGewürfelt;
-
-                if (SelectedProbe is Model.Talent)
+                if ((SelectedProbe as Model.Talent).IsMetaTalent) // Meta-Talent
                 {
-                    if ((SelectedProbe as Model.Talent).IsMetaTalent) // Meta-Talent
-                    {
-                        MetaTalent mt = new MetaTalent((SelectedProbe as Model.Talent), item);
-                        vm.Probe = mt.Aktiviert ? mt : null;
-                    }
-                    else
-                        vm.Probe = item.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+                    MetaTalent mt = new MetaTalent((SelectedProbe as Model.Talent), held);
+                    vm.Probe = mt.Aktiviert ? mt : null;
+                }
+                else
+                    vm.Probe = held.Held_Talent.Where(t => t.Talent == SelectedProbe).FirstOrDefault();
+
+                if (vm.Probe != null)
+                    _probeErgebnisListe.Add(vm);
+            }
+            else if (SelectedProbe is Eigenschaft)
+            {
+                vm.Probe = held.Eigenschaft(SelectedProbe.Probenname);
+                if (vm.Probe != null)
+                    _probeErgebnisListe.Add(vm);
+            }
+            else if (SelectedProbe is Model.Zauber)
+            {
+                var zauberList = held.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).ToList();
+                for (int i = 0; i < zauberList.Count(); i++)
+                {
+                    vm = new ProbeControlViewModel();
+                    vm.Orientation = SelectedAnzeigeOrientation;
+                    vm.Held = held;
+                    vm.Modifikator = Modifikator;
+                    vm.Gewürfelt += ProbeControlGewürfelt;
+                    vm.Probe = zauberList[i];
+                    vm.NichtProben = i > 0;
 
                     if (vm.Probe != null)
                         _probeErgebnisListe.Add(vm);
-                }
-                else if (SelectedProbe is Eigenschaft)
-                {
-                    vm.Probe = item.Eigenschaft(SelectedProbe.Probenname);
-                    if (vm.Probe != null)
-                        _probeErgebnisListe.Add(vm);
-                }
-                else if (SelectedProbe is Model.Zauber)
-                {
-                    var zauberList = item.Held_Zauber.Where(z => z.Zauber == SelectedProbe).OrderByDescending(z => z.ZfW).ToList();
-                    for (int i = 0; i < zauberList.Count(); i++)
-                    {
-                        vm = new ProbeControlViewModel();
-                        vm.Orientation = SelectedAnzeigeOrientation;
-                        vm.Held = item;
-                        vm.Modifikator = Modifikator;
-                        vm.Gewürfelt += ProbeControlGewürfelt;
-                        vm.Probe = zauberList[i];
-                        vm.NichtProben = i > 0;
-
-                        if (vm.Probe != null)
-                            _probeErgebnisListe.Add(vm);
-                    }
                 }
             }
-            OnChanged("ProbeErgebnisListe");
         }
 
         private void Würfeln(object obj)
