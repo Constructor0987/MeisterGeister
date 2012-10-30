@@ -33,15 +33,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public int Initiative
         {
-            get { return KämpferInfo.Initiative + InitiativeMod; }
+            get { return ((KämpferInfo == null)?0:KämpferInfo.Initiative) + InitiativeMod; }
         }
         public int InitiativeBasis
         {
-            get { return KämpferInfo.InitiativeBasis; }
+            get { return ((KämpferInfo == null) ? 0 : KämpferInfo.InitiativeBasis); }
         }
         public string KämpferName
         {
-            get { return KämpferInfo.Kämpfer.Name; }
+            get { return ((KämpferInfo == null) ? "Effekt" : KämpferInfo.Kämpfer.Name); }
         }
 
 
@@ -74,7 +74,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public ManöverInfo(KämpferInfo ki, Manöver.Manöver m, int inimod)
         {
             KämpferInfo = ki;
-            ki.PropertyChanged += OnKämpferInfoChanged;
+            if(ki != null)
+                ki.PropertyChanged += OnKämpferInfoChanged;
             InitiativeMod = inimod;
             Manöver = m;
             Ausgeführt = false;
@@ -234,6 +235,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void Sort()
         {
             base.Sort(CompareInitiative);
+            OnCollectionChanged(NotifyCollectionChangedAction.Move, null);
             OnChanged("Sort");
         }
 
@@ -278,6 +280,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             if (CollectionChanged != null)
             {
+                var e = new NotifyCollectionChangedEventArgs(;
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
             }
         }

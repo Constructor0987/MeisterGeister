@@ -369,6 +369,7 @@
     <Compile Include="ViewModel\Kampf\Logic\INahkampfwaffe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Kampfstil.cs" />
     <Compile Include="ViewModel\Kampf\Logic\InitiativListe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\IHasWunden.cs" />
     <Compile Include="ViewModel\Kampf\Logic\KämpferInfo.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Attacke.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Angriffsaktion.cs" />
@@ -424,6 +425,7 @@
       <DependentUpon>EnergieControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\EnumItemsSource.cs" />
+    <Compile Include="View\General\EnumMatchToBooleanConverter.cs" />
     <Compile Include="View\General\ExterneVerknüpfungMenuItem.xaml.cs">
       <DependentUpon>ExterneVerknüpfungMenuItem.xaml</DependentUpon>
     </Compile>
@@ -479,6 +481,7 @@
     <Compile Include="View\General\ModInfoBox.xaml.cs">
       <DependentUpon>ModInfoBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\ValueConverterGroup.cs" />
     <Compile Include="View\General\ViewHelper.cs" />
     <Compile Include="View\General\WürfelValidationRule.cs" />
     <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">

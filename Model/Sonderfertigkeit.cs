@@ -56,7 +56,7 @@ namespace MeisterGeister.Model
                 ParseTree tree = parser.Parse(Vorraussetzungen);
                 if (tree.Errors.Count > 0)
                 {
-                    Debug.WriteLine("Fehler beim parsen der Vorraussetzungen ({0}) der Sonderfertigkeit {1}", Vorraussetzungen, Name);
+                    Debug.WriteLine("Fehler beim parsen der Voraussetzungen ({0}) der Sonderfertigkeit {1}", Vorraussetzungen, Name);
                     //Einfach mal true zurückgeben, damit keine Funktionalität eingeschränkt ist.
                     return true;
                 }

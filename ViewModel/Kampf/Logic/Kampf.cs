@@ -262,6 +262,48 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             
         }
 
+        /// <summary>
+        /// Trefferpunkte auf einen Kämpfer. Kümmert sich um Wunden und TP(A).
+        /// </summary>
+        /// <param name="k">Kämpfer</param>
+        /// <param name="tp">Trefferpunkte</param>
+        /// <param name="zone">Trefferzone</param>
+        /// <param name="verwundend">WS-2</param>
+        /// <param name="alsSP">Rüstung wird ignoriert</param>
+        /// <param name="alsTPA">als Ausdauerschaden</param>
+        public void Trefferpunkte(IKämpfer k, int tp, Trefferzone zone = Trefferzone.Unlokalisiert, TrefferpunkteOptions optionen = TrefferpunkteOptions.Default)
+        {
+            if(Kämpfer[k] == null)
+                return;
+            int rs = 0;
+            if((optionen & TrefferpunkteOptions.IgnoriertRüstung) != TrefferpunkteOptions.IgnoriertRüstung)
+                rs = k.RS[zone];
+            int spa = 0;
+            int sp = Math.Max(tp - rs, 0);
+            if ((optionen & TrefferpunkteOptions.Ausdauerschaden) == TrefferpunkteOptions.Ausdauerschaden)
+            {
+                spa = sp;
+                if ((optionen & TrefferpunkteOptions.AusdauerschadenMachtKeineEchtenSchadenspunkte) == TrefferpunkteOptions.AusdauerschadenMachtKeineEchtenSchadenspunkte)
+                    sp = 0;
+                else
+                    sp = (int)Math.Round(spa / 2.0, MidpointRounding.AwayFromZero);
+            }
+            k.LebensenergieAktuell -= sp;
+            k.AusdauerAktuell -= spa;
+            if ((optionen & TrefferpunkteOptions.KeineWunden) != TrefferpunkteOptions.KeineWunden)
+            {
+                int wsmod = 0 - ((optionen & TrefferpunkteOptions.VerringerteWundschwelle) == TrefferpunkteOptions.VerringerteWundschwelle ? 2 : 0) + ((optionen & TrefferpunkteOptions.Ausdauerschaden) == TrefferpunkteOptions.Ausdauerschaden ? 2 : 0);
+                int wunden = 0;
+                if (sp > k.Wundschwelle3 + wsmod)
+                    wunden = 3;
+                else if (sp > k.Wundschwelle2 + wsmod)
+                    wunden = 2;
+                else if (sp > k.Wundschwelle + wsmod)
+                    wunden = 1;
+                k.Wunden[zone] += wunden;
+            }
+        }
+
         public void Dispose()
         {
             //TODO ??: ich finde diese Lösung noch nicht optimal. Das geht spätestens schief, wenn zwei Kämpfe gleichzeitig geführt werden.
@@ -281,5 +323,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         #endregion
+    }
+
+    [Flags]
+    public enum TrefferpunkteOptions
+    {
+        Default = 0x00,
+        Ausdauerschaden = 0x01,
+        IgnoriertRüstung = 0x02,
+        VerringerteWundschwelle = 0x04,
+        KeineWunden = 0x08,
+        AusdauerschadenMachtKeineEchtenSchadenspunkte = 0x10
     }
 }

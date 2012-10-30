@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
-    public interface IKämpfer : INotifyPropertyChanged
+    public interface IKämpfer : INotifyPropertyChanged, IHasWunden, IHasZonenRs
     {
         //Allgemein
         string Name { get; }
@@ -57,7 +57,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int? BE { get; }
 
         int Wundschwelle { get; }
-        IWunden Wunden { get; }
+        int Wundschwelle2 { get; }
+        int Wundschwelle3 { get; }
+        new IWunden Wunden { get; }
         
         int Aktionen { get; } //maximale anzahl an Aktionen, die aufgeteilt werden können
         int FreieAktionen { get; set; }

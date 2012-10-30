@@ -15,7 +15,7 @@ using MeisterGeister.ViewModel.Helden.Logic;
 namespace MeisterGeister.Model
 {
     // Man kann Superklassen hinzufügen. Es sollten jedoch nicht die gleichen Eigenschaften, wie in der Datenbankklasse existieren.
-    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable, KampfLogic.IHasZonenRs
+    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable, KampfLogic.IHasZonenRs, IHasWunden
     {
         public Held() : base()
         {
@@ -1585,11 +1585,6 @@ namespace MeisterGeister.Model
                 return ausweichen;
             }
         }
-
-        //IWunden Wunden
-        //{
-        //    get { return null; }
-        //}
 
         //beschreibbar, da es von der INI abhängt. Die Initiative wird in Kampf gespeichert und verwaltet.
         private int _freieAktionen = 2;

@@ -36,7 +36,7 @@ namespace MeisterGeister.View.Kampf
             
             _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Initiative", System.ComponentModel.ListSortDirection.Descending));
             _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("InitiativeBasis", System.ComponentModel.ListSortDirection.Descending));
-            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("KämpferName", System.ComponentModel.ListSortDirection.Descending));
+            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("KämpferName", System.ComponentModel.ListSortDirection.Ascending));
         }
 
         
@@ -54,23 +54,6 @@ namespace MeisterGeister.View.Kampf
             }
             set { DataContext = value; }
         }
-
-        //void VM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "KämpferSelected")
-        //    {
-
-        //        var parent = ItemsControl.ItemsControlFromItemContainer(e.OriginalSource as TreeViewItem);
-        //        VM.KämpferSelected = parent is TreeView;
-        //    }
-        //}
-
-        //private void UpdateTreeSelection()
-        //{
-        //    if(VM.KämpferSelected)
-
-        //}
-
 
         private ViewModel.Kampf.Logic.Kampf _kampf = new ViewModel.Kampf.Logic.Kampf();
 

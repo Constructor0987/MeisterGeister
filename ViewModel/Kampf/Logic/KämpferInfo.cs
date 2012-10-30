@@ -155,7 +155,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public new void RemoveAll(Predicate<KämpferInfo> match)
         {
-            throw new NotImplementedException();
+            foreach (KämpferInfo k in this.Where(ki => match(ki)).ToList())
+                Remove(k);
         }
 
         public new void RemoveRange(int index, int range)
@@ -166,6 +167,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public void Remove(IKämpfer k)
         {
             Remove(this[k]);
+        }
+
+        public new void Clear()
+        {
+            foreach (KämpferInfo k in this.ToList())
+                Remove(k);
         }
         #endregion
 

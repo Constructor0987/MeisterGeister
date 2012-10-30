@@ -86,7 +86,35 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return kämpferSelected; }
             set { kämpferSelected = value; OnChanged("KämpferSelected"); }
         }
-        
+
+        private int schaden = 5;
+        public int Schaden
+        {
+            get { return schaden; }
+            set { schaden = value; OnChanged("Schaden"); }
+        }
+
+        private TrefferpunkteOptions wundschwellenOption = TrefferpunkteOptions.Default;
+        public TrefferpunkteOptions WundschwellenOption
+        {
+            get { return wundschwellenOption; }
+            set { wundschwellenOption = value; OnChanged("WundschwellenOption"); }
+        }
+
+        private TrefferpunkteOptions ausdauerSchadenMachtKeineSchadenspunkte = TrefferpunkteOptions.Default;
+        public TrefferpunkteOptions? AusdauerSchadenMachtKeineSchadenspunkte
+        {
+            get { return ausdauerSchadenMachtKeineSchadenspunkte; }
+            set { ausdauerSchadenMachtKeineSchadenspunkte = value ?? TrefferpunkteOptions.Default; OnChanged("AusdauerSchadenMachtKeineSchadenspunkte"); }
+        }
+
+        private Trefferzone selectedTrefferzone = Trefferzone.Unlokalisiert;
+        public Trefferzone SelectedTrefferzone
+        {
+            get { return selectedTrefferzone; }
+            set { selectedTrefferzone = value; OnChanged("SelectedTrefferzone"); }
+        }
+
 
         #region // ---- COMMANDS ----
 
@@ -128,8 +156,24 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void DeleteKämpfer(object obj)
         {
-            if(SelectedKämpferInfo != null)
+            if (SelectedKämpferInfo != null)
                 KämpferListe.Remove(SelectedKämpferInfo);
+        }
+
+        private Base.CommandBase onDeleteAllKämpfer = null;
+        public Base.CommandBase OnDeleteAllKämpfer
+        {
+            get
+            {
+                if (onDeleteAllKämpfer == null)
+                    onDeleteAllKämpfer = new Base.CommandBase(DeleteAllKämpfer, null);
+                return onDeleteAllKämpfer;
+            }
+        }
+
+        private void DeleteAllKämpfer(object obj)
+        {
+            KämpferListe.Clear();
         }
 
         private Base.CommandBase onShowGegnerView = null;
@@ -174,6 +218,27 @@ namespace MeisterGeister.ViewModel.Kampf
                 KämpferSelected = false;
                 SelectedManöverInfo = mi;
             }
+        }
+
+        private Base.CommandBase onTrefferpunkte = null;
+        public Base.CommandBase OnTrefferpunkte
+        {
+            get
+            {
+                if (onTrefferpunkte == null)
+                    onTrefferpunkte = new Base.CommandBase(Trefferpunkte, null);
+                return onTrefferpunkte;
+            }
+        }
+
+        private void Trefferpunkte(object obj)
+        {
+            if (SelectedKämpferInfo == null)
+                return;
+            TrefferpunkteOptions opt = TrefferpunkteOptions.Default;
+            if (obj is TrefferpunkteOptions)
+                opt = (TrefferpunkteOptions)obj;
+            Kampf.Trefferpunkte(SelectedKämpferInfo.Kämpfer, Schaden, SelectedTrefferzone, opt);
         }
 
         #endregion // ---- COMMANDS ----
@@ -465,5 +530,33 @@ namespace MeisterGeister.ViewModel.Kampf
         #endregion
 
         //Command NeueKampfrunde
+    }
+
+    public class TrefferpunkteOptionsConverter : System.Windows.Data.IMultiValueConverter
+    {
+
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            TrefferpunkteOptions opt = TrefferpunkteOptions.Default;
+            foreach (object o in values)
+            {
+                opt |= (TrefferpunkteOptions)o;
+            }
+            return opt;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            List<TrefferpunkteOptions> opt = new List<TrefferpunkteOptions>();
+            foreach (var o in Enum.GetValues(typeof(TrefferpunkteOptions)))
+            {
+                if (((TrefferpunkteOptions)value & (TrefferpunkteOptions)o) == (TrefferpunkteOptions)o)
+                    opt.Add((TrefferpunkteOptions)o);
+            }
+            if(opt.Count == 0)
+                return new object[] {TrefferpunkteOptions.Default};
+            return opt.Select(a => (object)a).ToArray();
+
+        }
     }
 }

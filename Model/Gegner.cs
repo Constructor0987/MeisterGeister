@@ -5,6 +5,7 @@ using System.Text;
 using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.Model.Extensions;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
@@ -186,9 +187,15 @@ namespace MeisterGeister.Model
             get { return MRKörper ?? 0; }
         }
 
-        public KampfLogic.IRüstungsschutz RS
+        private Rüstungsschutz _rs = null;
+        public IRüstungsschutz RS
         {
-            get { return null;  }
+            get
+            {
+                if (_rs == null)
+                    _rs = new Rüstungsschutz((Model.Gegner)this);
+                return _rs;
+            }
         }
 
         [DependentProperty("PA")]
@@ -208,9 +215,35 @@ namespace MeisterGeister.Model
             get { return (int)Math.Round(Konstitution / 2.0, MidpointRounding.AwayFromZero); }
         }
 
-        KampfLogic.IWunden KampfLogic.IKämpfer.Wunden
+        [DependentProperty("Konstitution")]
+        public int Wundschwelle2
         {
-            get { throw new NotImplementedException(); }
+            get { return Konstitution; }
+        }
+
+        [DependentProperty("Konstitution")]
+        public int Wundschwelle3
+        {
+            get { return (int)Math.Round(Konstitution * 1.5, MidpointRounding.AwayFromZero); }
+        }
+
+        private Wunden kämpferWunden = null;
+        public IWunden WundenByZone
+        {
+            get
+            {
+                if (kämpferWunden == null)
+                    kämpferWunden = new KampfLogic.Wunden((Model.Gegner)this);
+                return kämpferWunden;
+            }
+        }
+
+        IWunden IKämpfer.Wunden
+        {
+            get
+            {
+                return WundenByZone;
+            }
         }
 
 
@@ -336,7 +369,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                if(_aktionen == Int32.MinValue);
+                if(_aktionen == Int32.MinValue)
                     _aktionen = GegnerBase.Aktionen;
                 return _aktionen;
             }
@@ -672,6 +705,104 @@ namespace MeisterGeister.Model
             set
             {
                 RSBeinR = value ?? 0;
+            }
+        }
+        #endregion
+
+        #region IHasWunden
+        int? IHasWunden.WundenKopf
+        {
+            get
+            {
+                return WundenKopf;
+            }
+            set
+            {
+                WundenKopf = value ?? 0;
+            }
+        }
+
+        int? IHasWunden.WundenBrust
+        {
+            get
+            {
+                return WundenBrust;
+            }
+            set
+            {
+                WundenBrust = value ?? 0;
+            }
+        }
+
+        int? IHasWunden.WundenArmL
+        {
+            get
+            {
+                return WundenArmL;
+            }
+            set
+            {
+                WundenArmL = value ?? 0;
+            }
+        }
+
+        int? IHasWunden.WundenArmR
+        {
+            get
+            {
+                return WundenArmR;
+            }
+            set
+            {
+                WundenArmR = value ?? 0;
+            }
+        }
+
+        int? IHasWunden.WundenBauch
+        {
+            get
+            {
+                return WundenBauch;
+            }
+            set
+            {
+                WundenBauch = value ?? 0;
+            }
+        }
+
+        int? IHasWunden.WundenBeinL
+        {
+            get
+            {
+                return WundenBeinL;
+            }
+            set
+            {
+                WundenBeinL = value ?? 0;
+            }
+        }
+
+        int? IHasWunden.WundenBeinR
+        {
+            get
+            {
+                return WundenBeinR;
+            }
+            set
+            {
+                WundenBeinR = value ?? 0;
+            }
+        }
+
+        int? IHasWunden.Wunden
+        {
+            get
+            {
+                return Wunden;
+            }
+            set
+            {
+                Wunden = value ?? 0;
             }
         }
         #endregion
