@@ -27,10 +27,12 @@
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="SonderfertigkeitenTemplate">
-            <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
-                <TextBlock Margin="2,2,0,0" Text="{Binding Sonderfertigkeit.Name}" />
-                <TextBox Style="{StaticResource SonderfertigkeitWertItemStyle}" Margin="20,0,0,0" MaxLength="1200" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert der Sonderfertigkeit" />
-            </StackPanel>
+            <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#38A08350">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Sonderfertigkeit.Name}" />
+                    <TextBox Style="{StaticResource SonderfertigkeitWertItemStyle}" Margin="15,0,0,0" MaxLength="1200" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert der Sonderfertigkeit" />
+                </StackPanel>
+            </Border>
         </DataTemplate>
         <Style x:Key="GroupHeaderStyleSonderfertigkeiten" TargetType="{x:Type GroupItem}">
             <Setter Property="Template">
@@ -90,8 +92,14 @@
                 </Grid>
             </Border>
         </Expander>
-        
-        <ListBox Grid.Row="1" ItemsSource="{Binding Source={StaticResource SonderfertigkeitListeView}}" SelectedItem="{Binding SelectedHeldSonderfertigkeit}" ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding Source={StaticResource SonderfertigkeitListeView}}" SelectedItem="{Binding SelectedHeldSonderfertigkeit}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
             <ListBox.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyleSonderfertigkeiten}">
                     <GroupStyle.Panel>
