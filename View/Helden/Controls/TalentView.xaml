@@ -367,6 +367,8 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
@@ -381,8 +383,10 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="5" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="9" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KampfTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -401,6 +405,8 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
@@ -410,7 +416,9 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="4" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        <TextBlock Text="{Binding HeldTalent.Attacke}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding HeldTalent.Parade}" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="8" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                                             <Image.ToolTip>
                                                                 <StackPanel>
@@ -419,7 +427,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="7" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="9" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>

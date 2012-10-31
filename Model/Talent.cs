@@ -10,6 +10,11 @@ namespace MeisterGeister.Model
 {
     public partial class Talent : Probe
     {
+        public const string UNTERGRUPPE_NAHKAMPF = "Bewaffneter Nahkampf";
+        public const string UNTERGRUPPE_FERNKAMPF = "Fernkampf";
+        public const string UNTERGRUPPE_ATTECHNIK = "Bewaffnete AT-Technik";
+        public const string UNTERGRUPPE_WAFFENLOS = "Waffenloser Kampf";
+
         #region //---- PROBE ----
 
         [DependentProperty("Talentname")]

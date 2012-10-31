@@ -72,6 +72,52 @@ namespace MeisterGeister.Model
 
         #endregion //---- PROBE ----
 
+        #region // ---- Kampfwerte ----
+
+        [DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
+        public int Attacke
+        {
+            get
+            {
+                if (Held == null)
+                    return 0;
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK)
+                    return Held.Attacke + TaW.GetValueOrDefault();
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return Fernkampfwert;
+                return Held.Attacke + ZuteilungAT.GetValueOrDefault();
+            }
+        }
+
+        [DependentProperty("ZuteilungPA")]
+        public int Parade
+        {
+            get
+            {
+                if (Held == null || Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK
+                     || Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return 0;
+                return Held.Parade + ZuteilungPA.GetValueOrDefault();
+            }
+        }
+
+        [DependentProperty("TaW")]
+        public int Fernkampfwert
+        {
+            get
+            {
+                if (Held == null)
+                    return 0;
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return Held.FernkampfBasis + TaW.GetValueOrDefault();
+                return 0;
+            }
+        }
+
+        // TODO MT: AT/PA-Werte inkl. eBE
+
+        #endregion // ---- Kampfwerte ----
+
         public int BerechneEffBehinderung()
         {
             int be = 0;
