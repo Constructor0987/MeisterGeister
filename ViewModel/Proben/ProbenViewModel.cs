@@ -239,7 +239,7 @@ namespace MeisterGeister.ViewModel.Proben
             get { return _selectedProbe is Model.Zauber; }
         }
 
-        private bool _isAktivierteProben = false;
+        private bool _isAktivierteProben = true;
         public bool IsAktivierteProben
         {
             get { return _isAktivierteProben; }
