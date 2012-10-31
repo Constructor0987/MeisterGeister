@@ -10,6 +10,12 @@ namespace MeisterGeister.Model
 {
     public partial class Held_Talent : Probe, IHatHeld
     {
+        public Held_Talent()
+            : base()
+        {
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+        }
+
         #region //---- PROBE ----
 
         [DependentProperty("Talent")]
