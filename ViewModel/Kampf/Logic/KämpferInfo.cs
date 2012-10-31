@@ -82,7 +82,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public void Dispose()
         {
             if (Kämpfer != null)
+            {
                 Kämpfer.PropertyChanged -= Kämpfer_PropertyChanged;
+                Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
+            }
         }
     }
 

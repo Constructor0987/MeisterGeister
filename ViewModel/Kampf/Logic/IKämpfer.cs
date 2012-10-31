@@ -34,6 +34,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int KarmaenergieMax { get; }
         int KarmaenergieAktuell { get; set; }
 
+        bool Magiebegabt { get; }
+        bool Geweiht { get; }
+
         //Energie-Stati
         string LebensenergieStatus { get; }
         string LebensenergieStatusDetails { get; }

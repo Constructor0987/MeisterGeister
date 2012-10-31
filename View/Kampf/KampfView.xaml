@@ -21,7 +21,7 @@
         <Style x:Key="MagiebegabtStyle" TargetType="{x:Type FrameworkElement}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=KämpferInfo.Kämpfer.Magiebegabt}" Value="true">
+                <DataTrigger Binding="{Binding Path=SelectedKämpferInfo.Kämpfer.Magiebegabt}" Value="true">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>
@@ -29,7 +29,7 @@
         <Style x:Key="GeweihtStyle" TargetType="{x:Type FrameworkElement}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=KämpferInfo.Kämpfer.Geweiht}" Value="true">
+                <DataTrigger Binding="{Binding Path=SelectedKämpferInfo.Kämpfer.Geweiht}" Value="true">
                     <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </Style.Triggers>
@@ -268,7 +268,7 @@
                         </Button>
                     </StackPanel>
                     <TreeView Name="_treeInitiative" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
-                             TreeViewItem.Selected="InitiativeListe_TreeViewItemSelected" KeyUp="ListBoxKämpfer_KeyUp" MouseDown="ListBoxKämpfer_MouseDown" Background="Transparent" Padding="4,8" ItemContainerStyle="{StaticResource TreeViewItemStyle1}">
+                             TreeViewItem.Selected="InitiativeListe_TreeViewItemSelected" Background="Transparent" Padding="4,8" ItemContainerStyle="{StaticResource TreeViewItemStyle1}">
                         <e:Interaction.Behaviors>
                             <ViewGeneral:BindableSelectedItemBehavior SelectedItem="{Binding SelectedManöverInfo, Mode=TwoWay}" PreferNestedItems="{Binding KämpferSelected, Converter={StaticResource InverseBooleanConverter}}" />
                         </e:Interaction.Behaviors>
@@ -299,7 +299,7 @@
                                         <MenuItem Background="Black" Foreground="White" Header="Schwarz" Click="MenuItemKämpferFarbmarkierung_Click" />
                                         <MenuItem Background="White" Header="Weiß" Click="MenuItemKämpferFarbmarkierung_Click" />
                                     </MenuItem>
-                                    <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Als aktuellen Kämpfer setzen" Click="MenuItemKämpferAktuell_Click">
+                                    <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Als aktuellen Kämpfer setzen">
                                         <MenuItem.Icon>
                                             <Image Source="/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
                                         </MenuItem.Icon>
@@ -322,7 +322,7 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem Name="_menuItemListeLeeren" Height="28" Header="Liste leeren" Click="MenuItemListeLeeren_Click">
+                                    <MenuItem Name="_menuItemListeLeeren" Height="28" Header="Liste leeren" Command="{Binding OnDeleteAllKämpfer}">
                                         <MenuItem.Icon>
                                             <Image Source="/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="2" />
                                         </MenuItem.Icon>
@@ -402,7 +402,7 @@
                                     <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
                                     <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.LebensenergieMax}" ToolTip="Maximale Lebensenergie" />
                                     <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.LebensenergieAktuell, NotifyOnSourceUpdated=True}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" SourceUpdated="_textBoxLebensenergieAktuell_SourceUpdated" ShowButtons="True" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.LebensenergieAktuell}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" ShowButtons="True" />
                                     <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding SelectedKämpferInfo.Kämpfer}" />
                                 </StackPanel>
                                 <!-- Ausdauer -->
@@ -444,8 +444,8 @@
 
                             <ViewGeneral:IntBox Margin="0,31,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Kopf]}" ToolTip="Wunden (Kopf)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" MarkPlusValue="True" />
                             <ViewGeneral:IntBox Margin="0,27,9,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Unlokalisiert]}" ToolTip="Wunden (unlokalisiert)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,84,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Brust]}" ToolTip="Wunden (Brust)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,134,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Bauch]}" ToolTip="Wunden (Bauch)" FontWeight="Bold" SourceUpdated="_textBoxWunden_SourceUpdated" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,84,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Brust]}" ToolTip="Wunden (Brust)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,134,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Bauch]}" ToolTip="Wunden (Bauch)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
                             <ViewGeneral:IntBox Margin="0,104,102,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[ArmR]}" ToolTip="Wunden (rechter Arm)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
                             <ViewGeneral:IntBox Margin="0,104,9,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[ArmL]}" ToolTip="Wunden (linker Arm)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
                             <ViewGeneral:IntBox Margin="0,171,71,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[BeinR]}" ToolTip="Wunden (rechtes Bein)" FontWeight="Bold" MinValue="0" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
@@ -467,13 +467,21 @@
                             <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Vertical">
                                 <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
                                     <TextBlock Margin="2,6,2,2" Text="BE: " />
-                                    <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedItem.Behinderung, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" ToolTip="Behinderung" FontWeight="Bold" SourceUpdated="_textBoxBehinderung_SourceUpdated" NoBackground="True" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
                                     <TextBlock Margin="6,6,2,2" Text="WS: " />
-                                    <TextBlock Margin="2,6,2,2" Text="{Binding Path=SelectedItem.Wundschwellen, ElementName=_listBoxKämpfer}" FontWeight="Bold" ToolTip="Wundschwellen" />
+                                    <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} / {1} / {2}">
+                                                <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle" Mode="OneWay"/>
+                                                <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle2" Mode="OneWay"/>
+                                                <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle3" Mode="OneWay"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
                                 </StackPanel>
-                                <StackPanel Margin="6,0,0,2" Orientation="Horizontal" ToolTip="{Binding Path=SelectedItem.ModKampf_TextDetail, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" >
+                                <StackPanel Margin="6,0,0,2" Orientation="Horizontal" ToolTip="{Binding Path=SelectedItem.ModKampf_TextDetail}" >
                                     <TextBlock Margin="2,6,2,2" Text="Modifikatoren: " />
-                                    <TextBlock Margin="6,6,2,2" Text="{Binding Path=SelectedItem.ModKampf_Text, ElementName=_listBoxKämpfer, NotifyOnSourceUpdated=True}" FontWeight="Bold" />
+                                    <TextBlock Margin="6,6,2,2" Text="{Binding Path=SelectedItem.ModKampf_Text}" FontWeight="Bold" />
                                 </StackPanel>
                             </StackPanel>
                             <Grid Grid.Row="5" Grid.ColumnSpan="2" Margin="0,8,0,0">
@@ -502,7 +510,7 @@
                                         <Label Content="TP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </Button>
-                                <Button Grid.Row="0" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkte" Width="45" ToolTip="Schadenspunkte verrechnen" Click="ButtonSchadenspunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                <Button Grid.Row="0" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkte" Width="45" ToolTip="Schadenspunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                         Command="{Binding OnTrefferpunkte}">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
@@ -515,7 +523,7 @@
                                         <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </Button>
-                                <Button Grid.Row="0" Grid.Column="4" Margin="2" Style="{StaticResource MagiebegabtStyle}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" Click="ButtonAstralpunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <Button Grid.Row="0" Grid.Column="4" Margin="2" Style="{StaticResource MagiebegabtStyle}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Command="{Binding OnAstralenergieAbziehen}">
                                     <Border Background="BlueViolet">
                                         <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
@@ -552,7 +560,7 @@
                                         <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                 </Button>
-                                <Button Grid.Row="1" Grid.Column="4" Margin="2" Style="{StaticResource GeweihtStyle}" Name="_buttonKarmapunkte" Width="45" ToolTip="KaP abziehen" Click="ButtonKarmapunkte_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <Button Grid.Row="1" Grid.Column="4" Margin="2" Style="{StaticResource GeweihtStyle}" Name="_buttonKarmapunkte" Width="45" ToolTip="KaP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Command="{Binding OnKarmaenergieAbziehen}">
                                     <Border Background="Gold">
                                         <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
@@ -672,25 +680,25 @@
 
             <Border Grid.Row="3" Margin="2" Style="{DynamicResource ControlContentBorder}">
                 <ListBox Name="_listBoxAktionen" ToolTip="Aktionsliste" ItemTemplate="{StaticResource AktionListTemplate}" KeyUp="ListBoxAktionen_KeyUp" SelectionChanged="ListBoxAktionen_SelectionChanged"
-                     MouseDoubleClick="ListBoxAktionen_MouseDoubleClick" MouseDown="ListBoxAktionen_MouseDown" Background="Transparent" Padding="4,8">
+                     Background="Transparent" Padding="4,8">
                     <ListBox.BorderBrush>
                         <SolidColorBrush />
                     </ListBox.BorderBrush>
                     <ListBox.ContextMenu>
                         <ContextMenu Name="_contextMenuAktionen" Opened="ContextMenuAktionen_Opened">
                             <ContextMenu.Items>
-                                <MenuItem Name="_menuItemHandleAktionAlt" Height="28" Header="Alte Aktionen abschließen" Click="MenuItemHandleAktionAlt_Click">
+                                <MenuItem Name="_menuItemHandleAktionAlt" Height="28" Header="Alte Aktionen abschließen">
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/General/ok.png" Stretch="Fill" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Name="_menuItemAktionEntfernen" Height="28" Header="Aktion entfernen" Click="MenuItemAktionEntfernen_Click">
+                                <MenuItem Name="_menuItemAktionEntfernen" Height="28" Header="Aktion entfernen">
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" Margin="2" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />
-                                <MenuItem Name="_menuItemAktionListeLeeren" Height="28" Header="Liste leeren" Click="MenuItemAktionListeLeeren_Click">
+                                <MenuItem Name="_menuItemAktionListeLeeren" Height="28" Header="Liste leeren">
                                     <MenuItem.Icon>
                                         <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" Margin="2" />
                                     </MenuItem.Icon>

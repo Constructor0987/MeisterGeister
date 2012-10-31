@@ -340,6 +340,16 @@ namespace MeisterGeister.Model
         {
             get { return GegnerBase.GegnerBase_Angriff.Select(ga => (KampfLogic.IWaffe)ga).ToList(); }
         }
+
+        public bool Magiebegabt
+        {
+            get { return AstralenergieMax > 0; }
+        }
+
+        public bool Geweiht
+        {
+            get { return KarmaenergieMax > 0; }
+        }
         #endregion
 
         public override string ToString()

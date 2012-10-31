@@ -1540,9 +1540,10 @@ namespace MeisterGeister.Model
             get { return null; }
         }
 
+        //TODO ??: Wert der aktuellen Waffe verwenden.
         public int? PA
         {
-            get { return null; }
+            get { return Parade; }
         }
 
         public int MR

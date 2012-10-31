@@ -12,7 +12,7 @@ namespace MeisterGeister.ViewModel.Kampf
     public class KampfViewModel : Base.ViewModelBase
     {
         private K _kampf = null;
-        public KampfViewModel(Action<K> showGegnerView)
+        public KampfViewModel(Action<K> showGegnerView, Func<string, string, bool> confirm) : base(confirm, View.General.ViewHelper.ShowError)
         {
             this.showGegnerView = showGegnerView;
 
@@ -156,7 +156,7 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void DeleteKämpfer(object obj)
         {
-            if (SelectedKämpferInfo != null)
+            if (SelectedKämpferInfo != null && Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", SelectedKämpferInfo.Kämpfer.Name)))
                 KämpferListe.Remove(SelectedKämpferInfo);
         }
 
@@ -173,7 +173,8 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void DeleteAllKämpfer(object obj)
         {
-            KämpferListe.Clear();
+            if(Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
+                KämpferListe.Clear();
         }
 
         private Base.CommandBase onShowGegnerView = null;
@@ -239,6 +240,42 @@ namespace MeisterGeister.ViewModel.Kampf
             if (obj is TrefferpunkteOptions)
                 opt = (TrefferpunkteOptions)obj;
             Kampf.Trefferpunkte(SelectedKämpferInfo.Kämpfer, Schaden, SelectedTrefferzone, opt);
+        }
+
+        private Base.CommandBase onKarmaenergieAbziehen = null;
+        public Base.CommandBase OnKarmaenergieAbziehen
+        {
+            get
+            {
+                if (onKarmaenergieAbziehen == null)
+                    onKarmaenergieAbziehen = new Base.CommandBase(KarmaenergieAbziehen, null);
+                return onKarmaenergieAbziehen;
+            }
+        }
+
+        private void KarmaenergieAbziehen(object obj)
+        {
+            if (SelectedKämpferInfo == null)
+                return;
+            SelectedKämpferInfo.Kämpfer.KarmaenergieAktuell -= Math.Max(Schaden, 0);
+        }
+
+        private Base.CommandBase onAstralenergieAbziehen = null;
+        public Base.CommandBase OnAstralenergieAbziehen
+        {
+            get
+            {
+                if (onAstralenergieAbziehen == null)
+                    onAstralenergieAbziehen = new Base.CommandBase(AstralenergieAbziehen, null);
+                return onAstralenergieAbziehen;
+            }
+        }
+
+        private void AstralenergieAbziehen(object obj)
+        {
+            if (SelectedKämpferInfo == null)
+                return;
+            SelectedKämpferInfo.Kämpfer.AstralenergieAktuell -= Math.Max(Schaden, 0);
         }
 
         #endregion // ---- COMMANDS ----
