@@ -44,6 +44,11 @@ namespace MeisterGeister.Model
 
         #endregion //---- PROBE ----
 
+        public bool HatVoraussetzungen
+        {
+            get { return !String.IsNullOrEmpty(Voraussetzungen); }
+        }
+
         public List<string> Talentspezialisierungen(Held h)
         {
             //TODO ??: bei GUID Umstellung statt Sonderfertigkeit.Name evtl auf GUID prüfen

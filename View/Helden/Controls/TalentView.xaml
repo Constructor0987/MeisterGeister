@@ -367,21 +367,21 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT+" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA+" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="5" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="6" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="7" />
                                         </Grid>
                                     </Border>
@@ -401,7 +401,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -410,7 +410,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="4" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="6" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="7" />
                                                     </Grid>
                                                 </Border>
@@ -439,22 +447,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -475,7 +483,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -485,7 +493,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -514,22 +530,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -550,7 +566,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -560,7 +576,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -589,22 +613,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -625,7 +649,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -635,7 +659,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -664,22 +696,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -700,7 +732,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -710,7 +742,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -739,22 +779,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -775,7 +815,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -785,7 +825,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -814,22 +862,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -850,7 +898,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -860,7 +908,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -889,22 +945,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -925,7 +981,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -935,7 +991,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -964,22 +1028,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -1000,7 +1064,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -1010,7 +1074,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung, TargetNullValue=var}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>
@@ -1039,22 +1111,22 @@
                                                 <ColumnDefinition Width="32" />
                                                 <ColumnDefinition Width="65" />
                                                 <ColumnDefinition Width="40" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                 <Image.ToolTip>
                                                     <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Talent für weitere Aktionen."/></TextBlock>
                                                 </Image.ToolTip>
                                             </Image>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="0" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kat" Grid.Column="4" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Voraussetzungen" Grid.Column="7" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
                                         </Grid>
                                     </Border>
@@ -1075,7 +1147,7 @@
                                                             <ColumnDefinition Width="32" />
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="40" />
-                                                            <ColumnDefinition Width="80*" />
+                                                            <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
@@ -1085,7 +1157,15 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung, TargetNullValue=var}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding Talent.Voraussetzungen}" ToolTip="{Binding Talent.Voraussetzungen}" TextTrimming="CharacterEllipsis" Grid.Column="7" VerticalAlignment="Center" />
+                                                        <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                               Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image.ToolTip>
+                                                                <StackPanel>
+                                                                    <TextBlock Text="Voraussetzungen: " FontWeight="Bold" />
+                                                                    <TextBlock Text="{Binding Talent.Voraussetzungen}" />
+                                                                </StackPanel>
+                                                            </Image.ToolTip>
+                                                        </Image>
                                                         <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
                                                     </Grid>
                                                 </Border>

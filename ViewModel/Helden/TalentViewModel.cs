@@ -47,7 +47,7 @@ namespace MeisterGeister.ViewModel.Helden {
         }
         public List<TalentListeItem> KampfTalentListe
         {
-            get { return _kampfTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _kampfTalentListe == null ? new List<TalentListeItem>() : _kampfTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _kampfTalentListe = value; OnChanged("KampfTalentListe"); }
         }
         public List<TalentListeItem> KoerperTalentListe 

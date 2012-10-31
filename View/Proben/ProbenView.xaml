@@ -79,7 +79,7 @@
                         </CheckBox.Content>
                     </CheckBox>
                     
-                    <ListBox Grid.Column="6" Margin="4" Height="35"  Width="210" SelectedValue="{Binding SelectedMod}" SelectedValuePath="Tag" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" FontSize="10" 
+                    <ListBox Grid.Column="6" Margin="4" Height="35"  Width="210" Name="_listBoxMods" SelectedValue="{Binding SelectedMod}" SelectedValuePath="Tag" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" FontSize="10" 
                              ToolTip="Erschwernisse/Erleichterungen" Foreground="#FF4F4F4F" SelectionChanged="ListBoxMods_SelectionChanged">
                         <StackPanel Orientation="Horizontal" Tag="-7">
                             <TextBlock Text="-7" FontWeight="Bold" Width="22" />

@@ -48,6 +48,7 @@ namespace MeisterGeister.View.Proben
         {
             if (VM != null)
                 VM.Refresh();
+            _listBoxMods.ScrollIntoView(_listBoxMods.SelectedItem);
         }
 
         private void ListBoxMods_SelectionChanged(object sender, SelectionChangedEventArgs e)
