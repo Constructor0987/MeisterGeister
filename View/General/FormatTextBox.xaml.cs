@@ -139,6 +139,11 @@ namespace MeisterGeister.View.General
             MainView.ShowSpielerInfoText();
         }
 
+        private void btnSpielerInfoClose_Click(object sender, RoutedEventArgs e)
+        {
+            MainView.CloseSpielerFenster();
+        }
+
         public void ParseTextToFlowDoument(string text)
         {
             try

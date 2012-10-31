@@ -31,7 +31,12 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonSpielerInfoControl_Click(object sender, RoutedEventArgs e)
         {
-            MainView.ShowHideToggleSpielerFenster();
+            MainView.ShowSpielerFenster();
+        }
+
+        private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
+        {
+            MainView.CloseSpielerFenster();
         }
 
         private void ButtonOpenImg_Click(object sender, RoutedEventArgs e)

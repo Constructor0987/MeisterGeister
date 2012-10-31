@@ -595,6 +595,11 @@ namespace MeisterGeister.View.Kampf
             ShowSpielerInfo();
         }
 
+        private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
+        {
+            MainView.CloseSpielerFenster();
+        }
+
         private void ShowSpielerInfo()
         {
             KampfInfoView infoView = new KampfInfoView(VM.Kampf);

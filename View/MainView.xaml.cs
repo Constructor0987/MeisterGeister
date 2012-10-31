@@ -343,13 +343,17 @@ namespace MeisterGeister.View
         public static void ShowHideToggleSpielerFenster()
         {
             if (WindowSpieler != null)
-            {
                 CloseSpielerFenster();
-            }
             else
-            {
                 StarteSpielerFenster();
-            }
+        }
+
+        public static void ShowSpielerFenster()
+        {
+            if (WindowSpieler != null)
+                WindowSpieler.Show();
+            else
+                StarteSpielerFenster();
         }
 
         public static void CloseSpielerFenster()

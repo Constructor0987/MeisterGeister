@@ -376,6 +376,12 @@
                                 </Button.ToolTip>
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
                             </Button>
+                            <Button Height="28" ToolTip="Spieler-Fenster schließen." Click="btnSpielerInfoClose_Click">
+                                <Grid>
+                                    <Image Source="/Images/Icons/General/screen.png" />
+                                    <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                                </Grid>
+                            </Button>
                             <CheckBox x:Name="_checkBoxShowSelectedText" Margin="2" VerticalContentAlignment="Center" VerticalAlignment="Center" Content="Markierung" ToolTip="Nur markierten Text im Spieler-Fenster zeigen." />
                         </StackPanel>
                     </WrapPanel>

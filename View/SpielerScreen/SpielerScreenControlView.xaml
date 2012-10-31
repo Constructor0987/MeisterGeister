@@ -32,15 +32,23 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        
-        <Button Grid.Row="0" Grid.Column="1" Name="_buttonSpielerInfoControl" Margin="0,12,12,0" Height="45" VerticalAlignment="Top" Click="ButtonSpielerInfoControl_Click" HorizontalAlignment="Right" Width="45">
-            <Button.ToolTip>
-                <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
-            		Ein Fenster starten/schließen, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können.
-                </TextBlock>
-            </Button.ToolTip>
-            <Image Source="/Images/Icons/General/screen.png" />
-        </Button>
+
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Button Margin="0,12,12,0" Height="45" VerticalAlignment="Top" Click="ButtonSpielerInfoControl_Click" HorizontalAlignment="Right" Width="45">
+                <Button.ToolTip>
+                    <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
+            		    Ein leeres Fenster starten, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können.
+                    </TextBlock>
+                </Button.ToolTip>
+                <Image Source="/Images/Icons/General/screen.png" />
+            </Button>
+            <Button Margin="0,5,12,0" Height="45" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
+                <Grid>
+                    <Image Source="/Images/Icons/General/screen.png" />
+                    <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                </Grid>
+            </Button>
+        </StackPanel>
 
         <Expander Margin="12" IsExpanded="True">
             <Expander.Header>
@@ -58,25 +66,28 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
+                        <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/Images/Icons/pinsel.png" />
                                 <TextBlock Text="Bild öffnen" Margin="3,0" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Top" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
+                        <Button Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/Images/Icons/General/oeffnen.png" />
                                 <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Height="23" HorizontalAlignment="Left" Margin="229,0,0,0" VerticalAlignment="Top" Click="ButtonBildZeigen_Click">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/Images/Icons/General/screen.png" />
-                                <TextBlock Text="Zeige Spielern" Margin="3,0" VerticalAlignment="Center" />
-                            </StackPanel>
+                        <Button Height="32" HorizontalAlignment="Left" Margin="229,2,0,0" VerticalAlignment="Top" Click="ButtonBildZeigen_Click">
+                            <Image Source="/Images/Icons/General/screen.png" />
                         </Button>
-                        <CheckBox Grid.Column="0" Grid.Row="0" Margin="345,0,0,0" Name="_checkBoxMax" Content="Maximieren" VerticalAlignment="Center" VerticalContentAlignment="Center">
+                    <Button Height="32" HorizontalAlignment="Left" Margin="265,2,0,0" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
+                        <Grid>
+                            <Image Source="/Images/Icons/General/screen.png" />
+                            <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                        </Grid>
+                    </Button>
+                    <CheckBox Grid.Column="0" Grid.Row="0" Margin="305,0,0,0" Name="_checkBoxMax" Content="Auf Bildschirmgröße anpassen" IsChecked="True" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
                             <CheckBox.ToolTip>
                                 <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Bild auf maximale Größe vergrößern, andernfalls Origalgröße verwenden. Ist das Bild größer als der Bildschirm, wird es verkleinert." />
                             </CheckBox.ToolTip>

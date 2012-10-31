@@ -613,11 +613,11 @@
             </Grid.RowDefinitions>
             <Border Margin="2" Grid.Row="0" Style="{DynamicResource ControlContentBorder}">
                 <Grid>
-                    <Button Width="51" Height="47" HorizontalAlignment="Left" Margin="6,3,0,18" Name="_buttonArena" Click="ButtonArena_Click" ToolTip="Interaktiven Bodenplan öffnen">
+                    <Button Width="51" Height="55" HorizontalAlignment="Left" Margin="6,3,0,18" Name="_buttonArena" Click="ButtonArena_Click" ToolTip="Interaktiven Bodenplan öffnen">
                         <Image Source="/Images/Icons/bodenplan.png" Stretch="Uniform" />
                     </Button>
                     <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="6,0,0,2"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox>
-                    <Button Name="_buttonSpielerInfo" Height="47" Width="28"  Click="ButtonSpielerInfo_Click" Visibility="Visible" HorizontalAlignment="Right" Margin="0,3,180,18">
+                    <Button Name="_buttonSpielerInfo" Height="28" Width="28"  Click="ButtonSpielerInfo_Click" Visibility="Visible" Margin="59,3,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <Button.ToolTip>
                             <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
             		Den Spielern die INI-Liste in einem separaten Fenster zeigen.
@@ -625,6 +625,13 @@
                         </Button.ToolTip>
                         <Image Source="/Images/Icons/General/screen.png" />
                     </Button>
+                    <Button Height="28" Width="28" Margin="59,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
+                        <Grid>
+                            <Image Source="/Images/Icons/General/screen.png" />
+                            <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                        </Grid>
+                    </Button>
+
                     <TextBlock Margin="0,3,94,0" Name="_textBlockKampfrunde" Text="{Binding Kampfrunde}" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
                     <Button Content="Starten" Margin="0,4,6,0" Name="_buttonNeueKR" HorizontalAlignment="Right" Width="82" Click="ButtonNeueKampfrunde_Click" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
                     <Button Content="Neuer Kampf" Height="23" Margin="0,32,6,0" Name="_buttonNeuerKampf" VerticalAlignment="Top" Click="ButtonNeuerKampf_Click" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
