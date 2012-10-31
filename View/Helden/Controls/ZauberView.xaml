@@ -57,11 +57,41 @@
             <Expander.Header>
                 <TextBlock Text="Zauber" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <Grid>
-                    <DataGrid Name="_dataGridHeldZauber" AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000"
-                        ItemsSource="{Binding ZauberListe}" SelectedItem="{Binding SelectedHeldZauber}">
-                        <DataGrid.ContextMenu>
+            <ScrollViewer Name="scrollViewer">
+                <Border Style="{DynamicResource ControlContentBorder}">
+                <StackPanel>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="44" />
+                                <ColumnDefinition Width="44" />
+                                <ColumnDefinition Width="44" />
+                                <ColumnDefinition Width="44" />
+                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="120*" />
+                                <ColumnDefinition Width="100*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Zaubername" Grid.Column="0" />
+                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Image.ToolTip>
+                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Zauber für weitere Aktionen."/></TextBlock>
+                                </Image.ToolTip>
+                            </Image>
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kom." Grid.Column="4" />
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Rep." Grid.Column="5" />
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="ZfW" Grid.Column="6" />
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Merkmale" Grid.Column="7" />
+                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
+                        </Grid>
+                    </Border>
+                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding ZauberListe, IsAsync=True}" SelectedItem="{Binding SelectedHeldZauber}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                             Name="_listBoxHeldZauber" PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                        <ListBox.ContextMenu>
                             <ContextMenu Opened="ContextMenuZauber_Opened">
                                 <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
                                     <MenuItem.Icon>
@@ -86,115 +116,42 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                        </DataGrid.ContextMenu>
-                        <DataGrid.InputBindings>
+                            </ListBox.ContextMenu>
+                        <ListBox.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteZauber}" />
-                        </DataGrid.InputBindings>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Name}" IsReadOnly="True">
-                                <DataGridTextColumn.Header >
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Margin="8,0,0,0" Content="Zaubername"/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="32" Binding="{Binding Zauber.Eigenschaft1}" IsReadOnly="True" TextBlock.TextAlignment="Center">
-                                <DataGridTextColumn.Header >
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1"/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="32" Binding="{Binding Zauber.Eigenschaft2}" IsReadOnly="True" TextBlock.TextAlignment="Center">
-                                <DataGridTextColumn.Header >
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2"/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="32" Binding="{Binding Zauber.Eigenschaft3}" IsReadOnly="True">
-                                <DataGridTextColumn.Header >
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3"/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="43" Binding="{Binding Zauber.Komplex}" IsReadOnly="True" TextBlock.TextAlignment="Center">
-                                <DataGridTextColumn.Header >
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kom."/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Repräsentation}" IsReadOnly="True">
-                                <DataGridTextColumn.Header>
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Rep."/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                        <Setter Property="TextBlock.TextAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTemplateColumn Width="65">
-                                <DataGridTemplateColumn.Header>
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="ZfW"/>
-                                </DataGridTemplateColumn.Header>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Zauber.Merkmale}" IsReadOnly="True">
-                                <DataGridTextColumn.Header>
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Merkmale"/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Width="Auto" Binding="{Binding Bemerkung}">
-                                <DataGridTextColumn.Header>
-                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung"/>
-                                </DataGridTextColumn.Header>
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="VerticalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <Image.ToolTip>
-                            <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf einen Zauber für weitere Aktionen."/></TextBlock>
-                        </Image.ToolTip>
-                    </Image>
-                </Grid>
+                        </ListBox.InputBindings>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="44" />
+                                            <ColumnDefinition Width="44" />
+                                            <ColumnDefinition Width="44" />
+                                            <ColumnDefinition Width="44" />
+                                            <ColumnDefinition Width="65" />
+                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="120*" />
+                                            <ColumnDefinition Width="100*" />
+                                        </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Zauber.Name}" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" ToolTip="{Binding Zauber.Name}" />
+                                            <TextBlock Text="{Binding Zauber.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Zauber.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding Zauber.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Zauber.Komplex}" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Repräsentation}" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" />
+                                        <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" Grid.Column="6" />
+                                            <TextBlock Text="{Binding Zauber.Merkmale}" Grid.Column="7" TextTrimming="WordEllipsis" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="{Binding Zauber.Merkmale}" />
+                                        <TextBox Text="{Binding Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </Border>
+            </ScrollViewer>
         </Expander>
     </Grid>
 </UserControl>

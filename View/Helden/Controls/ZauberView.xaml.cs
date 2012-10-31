@@ -55,11 +55,17 @@ namespace MeisterGeister.View.Helden.Controls
         // TODO MT: Auf MVVM umstellen; evtl. mit CanExecute im Command
         private void ContextMenuZauber_Opened(object sender, RoutedEventArgs e)
         {
-            _menuItemZauberLöschen.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
-            _menuItemZauberWiki.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
-            _menuItemZauberGruppenProbe.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
-            _menuItemZauberProbe.IsEnabled = _dataGridHeldZauber.SelectedItem != null;
+            _menuItemZauberLöschen.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
+            _menuItemZauberWiki.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
+            _menuItemZauberGruppenProbe.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
+            _menuItemZauberProbe.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
         }
 
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+        }
+
+        
     }
 }

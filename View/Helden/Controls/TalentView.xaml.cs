@@ -75,6 +75,44 @@ namespace MeisterGeister.View.Helden.Controls {
             //    _menuItemTalentProben.IsEnabled = true;
             //}
         }
+
+        private void ListBoxTalent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _listBoxGaben.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxGesellschaft.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxHandwerk.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxKampf.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxKoerper.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxLiturgien.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxNatur.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxRituale.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxSprachen.SelectionChanged -= ListBoxTalent_SelectionChanged;
+            _listBoxWissen.SelectionChanged -= ListBoxTalent_SelectionChanged;
+
+            _listBoxGaben.SelectedItem = null;
+            _listBoxGesellschaft.SelectedItem = null;
+            _listBoxHandwerk.SelectedItem = null;
+            _listBoxKampf.SelectedItem = null;
+            _listBoxKoerper.SelectedItem = null;
+            _listBoxLiturgien.SelectedItem = null;
+            _listBoxNatur.SelectedItem = null;
+            _listBoxRituale.SelectedItem = null;
+            _listBoxSprachen.SelectedItem = null;
+            _listBoxWissen.SelectedItem = null;
+
+            (sender as ListBox).SelectedItem = e.AddedItems.Count > 0 ? e.AddedItems[0] : null;
+
+            _listBoxGaben.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxGesellschaft.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxHandwerk.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxKampf.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxKoerper.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxLiturgien.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxNatur.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxRituale.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxSprachen.SelectionChanged += ListBoxTalent_SelectionChanged;
+            _listBoxWissen.SelectionChanged += ListBoxTalent_SelectionChanged;
+        }
         
         private void brdKlicked(object sender, System.Windows.Input.MouseButtonEventArgs e) 
         {

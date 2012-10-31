@@ -52,47 +52,47 @@ namespace MeisterGeister.ViewModel.Helden {
         }
         public List<TalentListeItem> KoerperTalentListe 
         {
-            get { return _koerperTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _koerperTalentListe == null ? new List<TalentListeItem>() : _koerperTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _koerperTalentListe = value; OnChanged("KoerperTalentListe"); }
         }
         public List<TalentListeItem> GesellschaftTalentListe
         {
-            get { return _gesellschaftTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _gesellschaftTalentListe == null ? new List<TalentListeItem>() : _gesellschaftTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _gesellschaftTalentListe = value; OnChanged("GesellschaftTalentListe"); }
         }
         public List<TalentListeItem> NaturTalentListe
         {
-            get { return _naturTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _naturTalentListe == null ? new List<TalentListeItem>() : _naturTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _naturTalentListe = value; OnChanged("NaturTalentListe"); }
         }
         public List<TalentListeItem> WissenTalentListe
         {
-            get { return _wissenTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _wissenTalentListe == null ? new List<TalentListeItem>() : _wissenTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _wissenTalentListe = value; OnChanged("WissenTalentListe"); }
         }
         public List<TalentListeItem> SpracheTalentListe
         {
-            get { return _spracheTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _spracheTalentListe == null ? new List<TalentListeItem>() : _spracheTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _spracheTalentListe = value; OnChanged("SpracheTalentListe"); }
         }
         public List<TalentListeItem> HandwerkTalentListe
         {
-            get { return _handwerkTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _handwerkTalentListe == null ? new List<TalentListeItem>() : _handwerkTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _handwerkTalentListe = value; OnChanged("HandwerkTalentListe"); }
         }
         public List<TalentListeItem> GabenTalentListe
         {
-            get { return _gabenTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _gabenTalentListe == null ? new List<TalentListeItem>() : _gabenTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _gabenTalentListe = value; OnChanged("GabenTalentListe "); }
         }
         public List<TalentListeItem> RitualeTalentListe
         {
-            get { return _ritualeTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _ritualeTalentListe == null ? new List<TalentListeItem>() : _ritualeTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _ritualeTalentListe = value; OnChanged("RitualeTalentListe"); }
         }
         public List<TalentListeItem> LiturgienTalentListe
         {
-            get { return _liturgienTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
+            get { return _liturgienTalentListe == null ? new List<TalentListeItem>() : _liturgienTalentListe.OrderBy(t => t.Talent.Talentname).ToList(); }
             set { _liturgienTalentListe = value; OnChanged("LiturgienTalentListe"); }
         }
         //Selection

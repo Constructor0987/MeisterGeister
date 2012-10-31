@@ -365,7 +365,7 @@
                                                 <ColumnDefinition Width="66" />
                                                 <ColumnDefinition Width="66" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -386,7 +386,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KampfTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxKampf" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -399,7 +399,7 @@
                                                             <ColumnDefinition Width="66" />
                                                             <ColumnDefinition Width="66" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -445,7 +445,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -467,7 +467,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KoerperTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxKoerper" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -481,7 +481,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -528,7 +528,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -550,7 +550,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GesellschaftTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxGesellschaft" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -564,7 +564,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -611,7 +611,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -633,7 +633,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding NaturTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxNatur" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -647,7 +647,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -694,7 +694,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -716,7 +716,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding WissenTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxWissen" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -730,7 +730,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -777,7 +777,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -799,7 +799,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SpracheTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxSprachen" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -813,7 +813,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -860,7 +860,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -882,7 +882,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding HandwerkTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxHandwerk" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -896,7 +896,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -943,7 +943,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -965,7 +965,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GabenTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxGaben" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -979,7 +979,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -1026,7 +1026,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -1048,7 +1048,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding RitualeTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxRituale" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -1062,7 +1062,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
@@ -1109,7 +1109,7 @@
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="44" />
                                                 <ColumnDefinition Width="32" />
-                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
@@ -1131,7 +1131,7 @@
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding LiturgienTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
-                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
+                                             PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True" Name="_listBoxLiturgien" SelectionChanged="ListBoxTalent_SelectionChanged">
                                         <ListBox.InputBindings>
                                             <KeyBinding Key="Delete" Command="{Binding OnRemove}" />
                                         </ListBox.InputBindings>
@@ -1145,7 +1145,7 @@
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="44" />
                                                             <ColumnDefinition Width="32" />
-                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="70" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
