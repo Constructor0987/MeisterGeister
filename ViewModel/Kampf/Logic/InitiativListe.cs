@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -128,7 +129,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
     }
 
-    public class InitiativListe : List<ManöverInfo>, INotifyPropertyChanged, INotifyCollectionChanged
+    public class InitiativListe : ObservableCollection<ManöverInfo>, INotifyPropertyChanged//, INotifyCollectionChanged
     {
         public InitiativListe(Kampf kampf)
         {
@@ -158,7 +159,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //    Remove(minfo);
             base.Add(mi);
             mi.PropertyChanged += OnManöverInfoChanged;
-            OnCollectionChanged(NotifyCollectionChangedAction.Add, mi);
+            //OnCollectionChanged(NotifyCollectionChangedAction.Add, mi);
             Sort();
         }
 
@@ -183,7 +184,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             mi.PropertyChanged -= OnManöverInfoChanged;
             base.Remove(mi);
-            OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
+            //OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
         }
 
         public new void RemoveAt(int index)
@@ -191,7 +192,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             var mi = this[index];
             this[index].PropertyChanged -= OnManöverInfoChanged;
             base.RemoveAt(index);
-            OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
+            //OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
         }
 
         public new void RemoveAll(Predicate<ManöverInfo> match)
@@ -215,14 +216,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 mi.PropertyChanged -= OnManöverInfoChanged;
                 base.Remove(mi);
-                OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
+                //OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
             }
         }
 
         public new void Clear()
         {
             base.Clear();
-            OnCollectionChanged(NotifyCollectionChangedAction.Reset, null);
+            //OnCollectionChanged(NotifyCollectionChangedAction.Reset, null);
         }
         #endregion
 
@@ -232,10 +233,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Sort();
         }
 
-        public new void Sort()
+        public void Sort()
         {
-            base.Sort(CompareInitiative);
-            OnCollectionChanged(NotifyCollectionChangedAction.Move, null);
+            var l = Items.ToList();
+            l.Sort(CompareInitiative);
+            foreach (var item in l)
+            {
+                int i1 = IndexOf(item), i2 = l.IndexOf(item);
+                if(i1!=i2)
+                    Move(i1, i2);
+            }
+            //OnCollectionChanged(NotifyCollectionChangedAction.Move, null);
             OnChanged("Sort");
         }
 
@@ -276,15 +284,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         #endregion
 
-        private void OnCollectionChanged(NotifyCollectionChangedAction action, object element)
-        {
-            if (CollectionChanged != null)
-            {
-                var e = new NotifyCollectionChangedEventArgs(;
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
-            }
-        }
+        //private void OnCollectionChanged(NotifyCollectionChangedAction action, object element)
+        //{
+        //    if (CollectionChanged != null)
+        //    {
+        //        CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
+        //    }
+        //}
 
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        //public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }

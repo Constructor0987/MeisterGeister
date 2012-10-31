@@ -60,6 +60,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int Wundschwelle2 { get; }
         int Wundschwelle3 { get; }
         new IWunden Wunden { get; }
+        IWunden WundenByZone { get; }
         
         int Aktionen { get; } //maximale anzahl an Aktionen, die aufgeteilt werden können
         int FreieAktionen { get; set; }

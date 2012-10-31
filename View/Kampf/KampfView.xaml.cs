@@ -21,7 +21,6 @@ namespace MeisterGeister.View.Kampf
         public KampfView()
         {
             InitializeComponent();
-            //_listBoxKämpfer.DataContext = _kampf.Kämpfer;
             // TODO ??: Umstellen auf neues Kampf-Model
             //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
 
@@ -32,14 +31,7 @@ namespace MeisterGeister.View.Kampf
             //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
             //_comboBoxTrefferzone.SelectedIndex = 0;
             VM = new VM.KampfViewModel(View.General.ViewHelper.ShowGegnerView);
-            //VM.PropertyChanged += VM_PropertyChanged;
-            
-            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Initiative", System.ComponentModel.ListSortDirection.Descending));
-            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("InitiativeBasis", System.ComponentModel.ListSortDirection.Descending));
-            _treeInitiative.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("KämpferName", System.ComponentModel.ListSortDirection.Ascending));
         }
-
-        
 
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
