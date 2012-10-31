@@ -971,6 +971,8 @@ namespace MeisterGeister.Model
 
         public Talent AddTalent(Talent t, int wert, int? zuteilungAT, int? zuteilungPA)
         {
+            if (t == null)
+                return null;
             IEnumerable<Held_Talent> existierendeZuordnung = Held_Talent.Where(hta => hta.Talentname == t.Talentname && hta.HeldGUID == HeldGUID);
             if (existierendeZuordnung.Count() != 0)
             {
@@ -991,10 +993,44 @@ namespace MeisterGeister.Model
 
             Held_Talent.Add(ht);
 
-            // TODO ??: Abhängige VorNachteile und Sonderfertigkeiten automatisch einfügen.
+            // Abhängige VorNachteile und Sonderfertigkeiten automatisch einfügen.
             // TODO ??: Später ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+            if (t.Talentgruppe.TalentgruppeID == 9) // Gabe
+            {
+                AddVorNachteil(t.Talentname, null);
+            } // Falls Ritualkenntnis oder Liturgiekenntnis -> auch passende Sonderfertigkeit hinzufügen
+            else if (t.Talentgruppe.TalentgruppeID == 10 || t.Talentgruppe.TalentgruppeID == 11) // Ritualkenntnis, Liturgiekenntnis
+            {
+                AddSonderfertigkeit(t.Talentname);
+            }
 
             return t;
+        }
+
+        public void DeleteTalent(string talentname)
+        {
+            if (HatTalent(talentname))
+                DeleteTalent(Held_Talent.Where(h => h.Talentname == talentname).FirstOrDefault());
+        }
+
+        public void DeleteTalent(Held_Talent ht)
+        {
+            if (ht != null)
+            {
+                Talent t = ht.Talent;
+                Global.ContextHeld.Delete<Model.Held_Talent>(ht);
+
+                // Abhängige VorNachteile und Sonderfertigkeiten automatisch löschen.
+                // TODO ??: Später ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+                if (t.Talentgruppe.TalentgruppeID == 9) // Gabe
+                {
+                    DeleteVorNachteil(t.Talentname);
+                } // Falls Ritualkenntnis oder Liturgiekenntnis -> auch passende Sonderfertigkeit hinzufügen
+                else if (t.Talentgruppe.TalentgruppeID == 10 || t.Talentgruppe.TalentgruppeID == 11) // Ritualkenntnis, Liturgiekenntnis
+                {
+                    DeleteSonderfertigkeit(t.Talentname);
+                }
+            }
         }
 
         /// <summary>
@@ -1106,6 +1142,8 @@ namespace MeisterGeister.Model
 
         public Zauber AddZauber(Zauber z, int wert, string rep)
         {
+            if (z == null)
+                return null;
             IEnumerable<Held_Zauber> existierendeZuordnung = Held_Zauber.Where(hza => hza.ZauberID == z.ZauberID
                 && hza.Repräsentation == rep
                 && hza.HeldGUID == HeldGUID);
@@ -1226,8 +1264,22 @@ namespace MeisterGeister.Model
 
         #region Vor/Nachteile
 
+        public VorNachteil AddVorNachteil(string vorNachName, string wert)
+        {
+            return AddVorNachteil(Global.ContextHeld.Liste<VorNachteil>().Where(vn => vn.Name == vorNachName).FirstOrDefault(), wert);
+        }
+
         public VorNachteil AddVorNachteil(VorNachteil vn, string wert)
         {
+            if (vn == null)
+                return null;
+            IEnumerable<Held_VorNachteil> existierendeZuordnung = Held_VorNachteil.Where(heldvn => heldvn.VorNachteilID == vn.VorNachteilID && heldvn.HeldGUID == HeldGUID);
+            if (existierendeZuordnung.Count() != 0)
+            {
+                //Oder eine Exception werfen?
+                return existierendeZuordnung.First().VorNachteil;
+            }
+
             Held_VorNachteil hvn = new Model.Held_VorNachteil();
             hvn.HeldGUID = HeldGUID;
             hvn.Held = this;
@@ -1277,6 +1329,38 @@ namespace MeisterGeister.Model
                 AddTalent("Zwergennase", 3);
 
             return vn;                        
+        }
+
+        public void DeleteVorNachteil(string vnName)
+        {
+            if (HatVorNachteil(vnName))
+                DeleteVorNachteil(Held_VorNachteil.Where(h => h.VorNachteil.Name == vnName).FirstOrDefault());
+        }
+
+        public void DeleteVorNachteil(Held_VorNachteil hvn)
+        {
+            if (hvn != null)
+            {
+                string vnName = hvn.VorNachteil.Name;
+                Global.ContextHeld.Delete<Model.Held_VorNachteil>(hvn);
+
+                // Falls Gabe -> Talent mit löschen
+                // TODO ??: Ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+                if (hvn == null || hvn.VorNachteil == null)
+                    return;
+                if (vnName == VorNachteil.Empathie)
+                    DeleteTalent("Empathie");
+                else if (vnName == VorNachteil.Gefahreninstinkt)
+                    DeleteTalent("Gefahreninstinkt");
+                else if (vnName == VorNachteil.Geräuschhexerei)
+                    DeleteTalent("Geräuschhexerei");
+                else if (vnName == VorNachteil.Magiegespür)
+                    DeleteTalent("Magiegespür");
+                else if (vnName == VorNachteil.Prophezeien)
+                    DeleteTalent("Prophezeien");
+                else if (vnName == VorNachteil.Zwergennase)
+                    DeleteTalent("Zwergennase");
+            }
         }
 
         public bool HatVorNachteil(VorNachteil vn)
@@ -1364,25 +1448,82 @@ namespace MeisterGeister.Model
 
         #region Sonderfertigkeiten
 
-        public Sonderfertigkeit AddSonderfertigkeit(Sonderfertigkeit s, string wert)
+        public Sonderfertigkeit AddSonderfertigkeit(string sfName, string wert = null)
         {
+            return AddSonderfertigkeit(Global.ContextHeld.Liste<Sonderfertigkeit>().Where(sf => sf.Name == sfName).FirstOrDefault(), wert);
+        }
+
+        public Sonderfertigkeit AddSonderfertigkeit(Sonderfertigkeit sf, string wert = null)
+        {
+            if (sf == null)
+                return null;
+            IEnumerable<Held_Sonderfertigkeit> existierendeZuordnung = Held_Sonderfertigkeit.Where(heldsf => heldsf.SonderfertigkeitID == sf.SonderfertigkeitID && heldsf.HeldGUID == HeldGUID);
+            if (existierendeZuordnung.Count() != 0)
+            {
+                //Oder eine Exception werfen?
+                return existierendeZuordnung.First().Sonderfertigkeit;
+            }
+
             Held_Sonderfertigkeit hs = Global.ContextHeld.New<Held_Sonderfertigkeit>();            
             hs.HeldGUID = HeldGUID;
             hs.Held = this;
 
-            hs.SonderfertigkeitID = s.SonderfertigkeitID;
-            hs.Sonderfertigkeit = s;
+            hs.SonderfertigkeitID = sf.SonderfertigkeitID;
+            hs.Sonderfertigkeit = sf;
             
             hs.Wert = wert;
                         
             Held_Sonderfertigkeit.Add(hs);
 
-            // TODO ??: Abhängige Talente automatisch einfügen.
+            // Abhängige Talente automatisch einfügen.
             // TODO ??: Später ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+            // Falls Ritualkenntnis oder Liturgiekenntnis -> Talente automatisch einfügen
+            if (sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneAchaz || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneFerkina
+                || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneGjalsker || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneGoblin
+                || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneNivesen || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneOrk
+                || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneTrollzacker || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneWaldmenschen)
+            { // Schamanen...
+                AddTalent("Geister aufnehmen", 3);
+                AddTalent("Geister bannen", 3);
+                AddTalent("Geister binden", 3);
+                AddTalent("Geister rufen", 3);
+            } // Runenkunde...
+            else if (sf.Name == Sonderfertigkeit.Runenkunde)
+                AddTalent("Ritualkenntnis (Runenzauberei)", 3);
+            else if (sf.Name.StartsWith("Ritualkenntnis"))
+            { // Ritualkenntnis...
+                string tradition = sf.Name.Replace("Ritualkenntnis (", string.Empty).Replace(")", string.Empty);
+                AddTalent("Ritualkenntnis (" + tradition + ")", 3);
+            } // Liturgiekenntnis...
+            else if (sf.Name.StartsWith("Liturgiekenntnis"))
+            {
+                string kirche = sf.Name.Replace("Liturgiekenntnis (", string.Empty).Replace(")", string.Empty);
+                AddTalent("Liturgiekenntnis (" + kirche + ")", 3);
+            }
 
-            return s;
+            return sf;
         }
 
+        public void DeleteSonderfertigkeit(string sfName)
+        {
+            if (HatSonderfertigkeit(sfName))
+                DeleteSonderfertigkeit(Held_Sonderfertigkeit.Where(h => h.Sonderfertigkeit.Name == sfName).FirstOrDefault());
+        }
+
+        public void DeleteSonderfertigkeit(Held_Sonderfertigkeit hsf)
+        {
+            if (hsf != null)
+            {
+                string sfName = hsf.Sonderfertigkeit.Name;
+
+                Global.ContextHeld.Delete<Model.Held_Sonderfertigkeit>(hsf);
+
+                // Falls Ritualkenntnis oder Liturgiekenntnis -> Talent mit löschen
+                // TODO ??: Später ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
+                if (sfName.StartsWith("Ritualkenntnis") || sfName.StartsWith("Liturgiekenntnis"))
+                    DeleteTalent(sfName);
+            }
+        }
 
         /// <summary>
         /// Hat die Sonderfertigkeit.

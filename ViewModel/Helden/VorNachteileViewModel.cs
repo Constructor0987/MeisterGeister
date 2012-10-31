@@ -123,9 +123,9 @@ namespace MeisterGeister.ViewModel.Helden
         {
             Model.Held_VorNachteil h = SelectedHeldVorNachteil;
             if (h != null
-                && Confirm("Vor-/Nachteil löschen", String.Format("Soll der Vor-/Nachteil {0} wirklich vom Helden entfernt werden?", h.VorNachteil.Name))
-                && Global.ContextHeld.Delete<Model.Held_VorNachteil>(h))
+                && Confirm("Vor-/Nachteil löschen", String.Format("Soll der Vor-/Nachteil {0} wirklich vom Helden entfernt werden?", h.VorNachteil.Name)))
             {
+                SelectedHeld.DeleteVorNachteil(h);
                 SelectedHeldVorNachteil = null;
                 NotifyRefresh();
             }

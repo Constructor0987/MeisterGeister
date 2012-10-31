@@ -157,7 +157,6 @@ namespace MeisterGeister.ViewModel.Helden {
             if (!ListenToChangeEvents)
                 return;
 
-            //Global.SetIsBusy(true, "Talente werden geladen...");
             SelectedHeld = Global.SelectedHeld;
             ReInit();
             if (SelectedHeld != null) 
@@ -269,22 +268,11 @@ namespace MeisterGeister.ViewModel.Helden {
             OnChanged("GabenTalentListe");
             OnChanged("RitualeTalentListe");
             OnChanged("LiturgienTalentListe");
-
-            //Global.SetIsBusy(false);
         }        
         private void AddTalent(object obj) {
             if (TalentAuswahl != null && SelectedHeld != null)
             {
-                M.Held_Talent newTalent = new M.Held_Talent() {
-                    Held = SelectedHeld,
-                    HeldGUID = SelectedHeld.HeldGUID,
-                    Talent = TalentAuswahl,
-                    Talentname = TalentAuswahl.Talentname,
-                    TaW = 0,
-                    ZuteilungAT = 0,
-                    ZuteilungPA = 0
-                };
-                SelectedHeld.Held_Talent.Add(newTalent);
+                SelectedHeld.AddTalent(TalentAuswahl, 0);
                 SelectedHeldChanged();
                 TalentauswahlListe.Remove(TalentAuswahl);
                 TalentAuswahl = null;
@@ -298,9 +286,9 @@ namespace MeisterGeister.ViewModel.Helden {
                 h = SelectedTalentListeItem.HeldTalent;
 
             if (h != null
-                && Confirm("Talent löschen", String.Format("Soll das Talent '{0}' wirklich vom Helden entfernt werden?", h.Talent.Talentname))
-                && Global.ContextHeld.Delete<Model.Held_Talent>(h))
+                && Confirm("Talent löschen", String.Format("Soll das Talent '{0}' wirklich vom Helden entfernt werden?", h.Talent.Talentname)))
             {
+                SelectedHeld.DeleteTalent(h);
                 SelectedHeldChanged();
                 TalentauswahlListe.Add(h.Talent);
                 TalentAuswahl = null;

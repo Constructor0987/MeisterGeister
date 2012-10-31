@@ -102,9 +102,9 @@ namespace MeisterGeister.ViewModel.Helden
         {
             Model.Held_Sonderfertigkeit h = SelectedHeldSonderfertigkeit;
             if (h != null
-                && Confirm("Sonderfertigkeit löschen", String.Format("Soll die Sonderfertigkeit {0} wirklich vom Helden entfernt werden?", h.Sonderfertigkeit.Name))
-                && Global.ContextHeld.Delete<Model.Held_Sonderfertigkeit>(h))
+                && Confirm("Sonderfertigkeit löschen", String.Format("Soll die Sonderfertigkeit {0} wirklich vom Helden entfernt werden?", h.Sonderfertigkeit.Name)))
             {
+                SelectedHeld.DeleteSonderfertigkeit(h);
                 SelectedHeldSonderfertigkeit = null;
                 NotifyRefresh();
             }
