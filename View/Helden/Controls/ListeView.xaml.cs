@@ -52,12 +52,14 @@ namespace MeisterGeister.View.Helden.Controls
             _buttonHeldNeu.ContextMenu.IsOpen = true;
         }
 
+        // TODO ??: MVVM konform umbauen
         private void ListBoxHelden_Drop(object sender, System.Windows.DragEventArgs e)
         {
             if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
             {
                 string[] droppedFiles = e.Data.GetData(System.Windows.DataFormats.FileDrop, true) as string[];
 
+                Held importHeld = null;
                 foreach (string file in droppedFiles)
                 {
                     if (!file.EndsWith("xml"))
@@ -67,13 +69,16 @@ namespace MeisterGeister.View.Helden.Controls
                     }
                     try
                     {
-                        Held importHeld = VM.ImportHeld(file);
+                        Global.SetIsBusy(true, string.Format("{0} wird importiert...", file));
+                        importHeld = VM.ImportHeld(file);
                     }
                     catch (Exception ex)
                     {
                         ViewHelper.ShowError("Beim Import ist ein Fehler aufgetreten!", ex);
                     }
                 }
+                VM.SelectedHeld = importHeld;
+                Global.SetIsBusy(false);
             }
         }
 
