@@ -463,7 +463,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KoerperTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -546,7 +546,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GesellschaftTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -629,7 +629,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding NaturTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -712,7 +712,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding WissenTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -795,7 +795,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SpracheTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -878,7 +878,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding HandwerkTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -961,7 +961,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding GabenTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -1044,7 +1044,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding RitualeTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -1127,7 +1127,7 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TaW" Grid.Column="5" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="eBE" Grid.Column="6" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Notiz" Grid.Column="8" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding LiturgienTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
