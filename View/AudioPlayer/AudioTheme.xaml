@@ -6,7 +6,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="145" d:DesignWidth="237">
     <Grid Margin="5">
-        <ToggleButton Name="btnAudioTheme" ClickMode="Press" Background="{StaticResource CheckBoxFillNormal}" BorderThickness="3">            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55" />
+            <ColumnDefinition Width="163*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="56*" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        <Border Grid.RowSpan="4" Grid.ColumnSpan="2" Background="{StaticResource CheckBoxFillNormal}" BorderBrush="#FF707070"></Border>
+        <ToggleButton Name="btnAudioTheme" ClickMode="Press" Background="{StaticResource CheckBoxFillNormal}" BorderThickness="3" MouseEnter="btnAudioTheme_MouseEnter" MouseLeave="btnAudioTheme_MouseLeave" Click="btnAudioTheme_Click" Focusable="False" IsTabStop="False" UseLayoutRounding="False" Panel.ZIndex="10" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <ToggleButton.BindingGroup>
+                <BindingGroup Name="Themes" />
+            </ToggleButton.BindingGroup>
             <Grid Height="130" Width="218">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="55" />
@@ -18,18 +32,20 @@
                     <RowDefinition Height="20" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
-                <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png" Visibility="Hidden" Grid.ColumnSpan="2" Grid.RowSpan="2" />
-                <Button Name="btnPlayNext" Grid.Column="2" Height="23" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Top">
+                <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png" Visibility="Hidden" Grid.ColumnSpan="2" Grid.RowSpan="2" Tag="0" />
+                <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="14" />
+
+                <Button Name="btnPlayNext" Grid.Column="2" Height="23" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Top" Focusable="False" IsTabStop="False" Visibility="Collapsed">
                     <Grid>
                         <Image Source="/Images/Icons/General/play_next.png" VerticalAlignment="Center"/>
                     </Grid>
                 </Button>
-                <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="14" />
                 <Label Name="lblActBGTitel" Content="Aktiver Hintergrundtitel" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
-                <ProgressBar Name="pbarActBGTitel" Grid.Row="2" Margin="2" Grid.ColumnSpan="2" Cursor="Hand" />
-                <Label Name="lblVol" Content="Volume" Grid.Row="3" Grid.Column="0" Margin="1" />
-                <Slider Name="sldVol" Grid.Row="3" Grid.Column="1" Margin="1" Maximum="100" Value="50" LargeChange="10" SmallChange="1" />
+                
             </Grid>
         </ToggleButton>
+        <ProgressBar Name="pbarActBGTitel" Grid.Row="2" Margin="2" Grid.ColumnSpan="2" Cursor="Hand" ValueChanged="pbarActBGTitel_ValueChanged" />
+        <Label Name="lblVol" Content="Volume" Grid.Row="3" Grid.Column="0" Margin="1" />
+        <Slider Name="sldVol" Grid.Row="3" Grid.Column="1" Margin="1" Maximum="100" Value="50" LargeChange="10" SmallChange="1" />
     </Grid>
 </UserControl>

@@ -34,16 +34,21 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void LowerSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            double posLeft = (root.ActualWidth - 17) / (LowerSlider.Maximum / e.NewValue);
+
             UpperSlider.Value = Math.Max(UpperSlider.Value, LowerSlider.Value);
             UpperValue = UpperSlider.Value;
-            brdLine.Margin = new Thickness((this.Width / Maximum) * LowerValue, 0, this.Width - (this.Width / Maximum) * UpperValue, 0);
+
+            brdLine.Margin = new Thickness(posLeft, 0, brdLine.Margin.Right, 0);
         }
 
         private void UpperSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            double posRight = this.Width -17 - (root.ActualWidth -17) / (LowerSlider.Maximum / e.NewValue);
+
             LowerSlider.Value = Math.Min(UpperSlider.Value, LowerSlider.Value);
             LowerValue = LowerSlider.Value;
-            brdLine.Margin = new Thickness((this.Width / Maximum) * LowerValue, 0, this.Width - (this.Width / Maximum) * UpperValue, 0);
+            brdLine.Margin = new Thickness(brdLine.Margin.Left, 0, posRight, 0);  
         }
 
         public double Minimum

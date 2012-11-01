@@ -98,20 +98,55 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="549*" />
+            <RowDefinition Height="207*" />
+            <RowDefinition Height="334*" />
         </Grid.RowDefinitions>
 
         <Border Name="brdHintergrundOption" Grid.ColumnSpan="1" Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
             <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" />
         </Border>
-        <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2">
+        <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <TabItem Header="Themes" Name="tiUebersicht" >
+                <Grid Background="{StaticResource Background1}">
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6">
+                        <Grid Name="grdUebersicht">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="240" />
+                                <ColumnDefinition Width="240" />
+                                <ColumnDefinition Width="240" />
+                                <ColumnDefinition Width="240" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="46" />
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="10*" />
+                            </Grid.RowDefinitions>
+                            <Button Height="23" Name="btnUpdate" Click="btnUpdate_Click" Width="70" HorizontalAlignment="Left" Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="22" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="/Images/Icons/General/refresh.png" Name="btnImgUpdate" VerticalAlignment="Center" />
+                                    <Label Padding="0" Name="btnLblUpdate" Grid.Column="1" VerticalContentAlignment="Center">Update</Label>
+                                </Grid>
+                            </Button> 
+                            <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="4" />
+                        </Grid>
+
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
             <TabItem Header="Hintergrund" Name="tiHintergrund" Loaded="tiHintergrund_Loaded" GotFocus="tiHintergrund_GotFocus">
                 <Grid>
                     <Grid HorizontalAlignment="Stretch" Margin="10,10,0,0" VerticalAlignment="Stretch" Background="{StaticResource Background1}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="226" />
                             <ColumnDefinition Width="39" />
-                            <ColumnDefinition Width="433*" />
+                            <ColumnDefinition Width="433*" MinWidth="200" />
                             <ColumnDefinition Width="313" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -126,7 +161,7 @@
                         </Border>
                         <Slider Height="22" HorizontalAlignment="Right" Margin="0,20,31,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" VerticalAlignment="Top" Width="127" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" />
 
-                        <Border Grid.Column="3" Grid.Row="1" Height="220" HorizontalAlignment="Right" Name="border2" VerticalAlignment="Center" Width="310" Margin="0,102,0,101" Style="{DynamicResource ControlContentBorder}">
+                        <Border Grid.Column="3" Grid.Row="1" Height="220" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center">
                             <Grid Name="grdSongInfo" Width="284" Visibility="Hidden">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="39*" />
@@ -145,16 +180,16 @@
                                     <RowDefinition Height="30" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Label Content="" Grid.Row="1" Height="33" HorizontalAlignment="Left" Name="lblBgTitel" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
-                                <Label Content="" Grid.Row="2" Height="33" HorizontalAlignment="Left" Name="lblBgArtist" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
-                                <Label Content="" Grid.Row="3" Height="33" HorizontalAlignment="Left" Name="lblBgAlbum" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
-                                <Label Content="" Grid.Row="4" Height="33" HorizontalAlignment="Left" Name="lblBgJahr" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
-                                <Label Content="" Grid.Row="5" Height="33" HorizontalAlignment="Left" Name="lblBgGenre" VerticalAlignment="Top" Width="189" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2" />
-                                <Label Grid.Row="1" Content="Titel:" Height="33" HorizontalAlignment="Left" Margin="5,0,0,0" Name="lblCapTitel" VerticalAlignment="Top" Width="90" Grid.RowSpan="2" Grid.ColumnSpan="2" />
-                                <Label Grid.Row="2" Content="Interpret:" Height="27" HorizontalAlignment="Left" Margin="5,0,0,0" Name="lblCapArtist" VerticalAlignment="Top" Width="90" Grid.RowSpan="2" Grid.ColumnSpan="2" />
-                                <Label Grid.Row="3" Content="Album:" Height="30" HorizontalAlignment="Left" Margin="6,0,0,0" Name="lblCapAlbum" VerticalAlignment="Top" Width="89" Grid.ColumnSpan="2" />
-                                <Label Grid.Row="4" Content="Jahr:" Height="30" HorizontalAlignment="Left" Margin="6,0,0,0" Name="lblCapJahr" VerticalAlignment="Top" Width="89" Grid.ColumnSpan="2" />
-                                <Label Grid.Row="5" Content="Genre:" Height="30" HorizontalAlignment="Left" Margin="6,0,0,0" Name="lblCapGenre" VerticalAlignment="Top" Width="89" Grid.ColumnSpan="2" />
+                                <Label Content="" Grid.Row="1" Name="lblBgTitel" Grid.Column="2" Grid.ColumnSpan="2" FontWeight="Bold" />
+                                <Label Content="" Grid.Row="2" Name="lblBgArtist" Grid.Column="2" Grid.ColumnSpan="2" />
+                                <Label Content="" Grid.Row="3" Name="lblBgAlbum" Grid.Column="2" Grid.ColumnSpan="2" />
+                                <Label Content="" Grid.Row="4" Name="lblBgJahr" Grid.Column="2" Grid.ColumnSpan="2" />
+                                <Label Content="" Grid.Row="5" Name="lblBgGenre" Grid.Column="2" Grid.ColumnSpan="2" />
+                                <Label Grid.Row="1" Content="Titel:" Margin="3,0,0,0" Name="lblCapTitel" Padding="5,5,0,0" />
+                                <Label Grid.Row="2" Content="Interpret:" Margin="3,0,0,0" Name="lblCapArtist" Grid.ColumnSpan="2" />
+                                <Label Grid.Row="3" Content="Album:" Margin="3,0,0,0" Name="lblCapAlbum" Grid.ColumnSpan="2" />
+                                <Label Grid.Row="4" Content="Jahr:" Margin="3,0,0,0" Name="lblCapJahr" Grid.ColumnSpan="2" />
+                                <Label Grid.Row="5" Content="Genre:" Margin="3,0,0,0" Name="lblCapGenre" Grid.ColumnSpan="2" />
                                           
                                 <Label Grid.Row="6" Content="0:00" Height="25" HorizontalAlignment="Right" Name="lblBgTimeActual" VerticalAlignment="Top" Width="39" HorizontalContentAlignment="Right" />
                                 <Label Grid.Row="6" Content="-:--" HorizontalAlignment="Center" HorizontalContentAlignment="Right" Name="lblBgTimeMax" VerticalAlignment="Center" Grid.Column="3" />
@@ -166,7 +201,7 @@
                             </Grid>
                             
                         </Border>
-                        <Button Height="23" HorizontalAlignment="Left" Margin="0,20,0,0" Name="btnBGAbspielen" VerticalAlignment="Top" Width="90" ClickMode="Press" IsEnabled="False" AllowDrop="True" Tag="0" OverridesDefaultStyle="False" Click="btnBGAbspielen_Click" Grid.Column="1" Grid.ColumnSpan="2" >
+                        <Button Height="23" HorizontalAlignment="Left" Name="btnBGAbspielen" Width="90" ClickMode="Press" IsEnabled="False" AllowDrop="True" Tag="0" OverridesDefaultStyle="False" Click="btnBGAbspielen_Click" Grid.Column="1" Grid.ColumnSpan="2" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="22" />
@@ -176,7 +211,7 @@
                                 <Label Padding="0" Name="btnLblBGAbspielen" Grid.Column="1" VerticalContentAlignment="Center">Abspielen</Label>
                             </Grid>
                         </Button>
-                        <Button Grid.Column="2" Height="23" HorizontalAlignment="Left" Margin="60,20,0,0" Name="btnBGNext" VerticalAlignment="Top" Width="90" IsEnabled="False" Click="btnBGNext_Click" >
+                        <Button Grid.Column="2" Height="23" HorizontalAlignment="Left" Margin="60,0,0,0" Name="btnBGNext" Width="90" IsEnabled="False" Click="btnBGNext_Click" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="22" />
@@ -186,10 +221,10 @@
                                 <Label Padding="0" Content=" Nächster" Grid.Column="1" VerticalAlignment="Center" />
                             </Grid>
                         </Button>
-                        <ToggleButton Grid.Column="2" Height="25" Margin="60,0,0,0" Name="btnShuffle" VerticalAlignment="Top" Width="25" ClickMode="Press" IsEnabled="True" IsChecked="True" ToolTip="Shuffle-Mode" IsTabStop="False" Focusable="False" HorizontalAlignment="Left" Grid.Row="1">
+                        <ToggleButton Grid.Column="2" Height="25" Margin="165,0,0,0" Name="btnShuffle" Width="25" ClickMode="Press" Click="btnShuffle_Click" IsEnabled="True" IsChecked="True" ToolTip="Shuffle-Mode" IsTabStop="False" Focusable="False" HorizontalAlignment="Left" Grid.Row="0">
                             <Image Name="btnShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" />
                         </ToggleButton>                        
-                        <Expander Margin="0,40,0,10" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" IsExpanded="True" MinWidth="150">
+                        <Expander Margin="0,0,20,10" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" IsExpanded="True" MinWidth="150">
                             <Expander.Header>
                                 <TextBlock Text="Titel" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
@@ -200,7 +235,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Klänge" Name="tiKlang" Loaded="tiKlang_Loaded">
+            <TabItem Header="Playlist-Editor" Name="tiKlang" Loaded="tiKlang_Loaded">
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="154" />
@@ -269,7 +304,8 @@
                                                 <ColumnDefinition Width="21" />
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="72" />
-                                                
+                                                <ColumnDefinition Width="110" />
+
                                             </Grid.ColumnDefinitions>
                                             <ToggleButton Grid.Column="1" Height="21" HorizontalAlignment="Stretch" Margin="0,15,0,0" Name="btnKlangPause0" Click="btnKlangPause0_Click" VerticalAlignment="Bottom" Width="21" ClickMode="Press" IsEnabled="True" IsChecked="False" ToolTip="Pausiert alle Klänge in der Registerkarte" IsTabStop="False" Focusable="False">
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pause.png" Name="btnKlangStopImg0" />
@@ -301,6 +337,7 @@
                                             <Button Content="+" Height="22" HorizontalAlignment="Right" Margin="0,0,0,1" Name="btnTopPauseMinPlus0" VerticalAlignment="Bottom" Width="22" Grid.Column="11" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge erhöhen" Click="btnTopPauseMinPlus0_Click" IsTabStop="False" />
                                             <Button Content="-" Grid.Column="12" Grid.Row="1" Height="22" Margin="0,0,30,1" Name="btnTopPauseMaxMinus0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Pausenzeit aller variierbaren Klänge verringern" Click="btnTopPauseMaxMinus0_Click" IsTabStop="False" />
                                             <Button Content="+" Grid.Column="12" Grid.Row="1" Height="22" HorizontalAlignment="Right" Name="btnTopPauseMaxPlus0" VerticalAlignment="Bottom" Width="22" Margin="0,0,0,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge erhöhen" Click="btnTopPauseMaxPlus0_Click" IsTabStop="False" />
+                                            <Label Content="Geschwindigkeit" Grid.Column="13" Margin="0" Name="lblPlaySpeed0" Padding="0" VerticalAlignment="Center" Grid.RowSpan="1" Grid.Row="1" HorizontalContentAlignment="Center" />
                                         </Grid>
 
                                         <StackPanel Grid.Row="1" Name="spnlKlangRow0_X" Visibility="Hidden" VerticalAlignment="Top">
@@ -322,6 +359,7 @@
                                                     <ColumnDefinition Width="21" />
                                                     <ColumnDefinition Width="75" />
                                                     <ColumnDefinition Width="72" />
+                                                    <ColumnDefinition Width="110" />
                                                     
                                                 </Grid.ColumnDefinitions>
 
@@ -362,6 +400,9 @@
                                                 <Button Name="_btnPauseMaxPlus0_X" Width="18" Grid.Column="12" HorizontalAlignment="Right" Tag="200" Click="_btnPauseMaxPlus0_X_Click" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
+                                                <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="13" HorizontalAlignment="Left" Margin="8,3,0,0" />
+                                                <Slider Name="sldPlaySpeed0_X" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4" Grid.Column="13" HorizontalAlignment="Center" Width="45" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" />
+                                                <Image Source="/Images/Icons/General/hase.png" Grid.Column="13" HorizontalAlignment="Right" Margin="0,5,5,0" />
                                             </Grid>
                                         </StackPanel>
                                     </Grid>
@@ -449,6 +490,7 @@
                                                 <ColumnDefinition Width="21" />
                                                 <ColumnDefinition Width="75" />
                                                 <ColumnDefinition Width="72" />
+                                                <ColumnDefinition Width="110" />
                                             </Grid.ColumnDefinitions>
                                             <ToggleButton Grid.Column="1" Height="21" HorizontalAlignment="Stretch" Margin="0,15,0,0" Name="btnKlangPauseX" VerticalAlignment="Bottom" Width="21" Click="btnKlangPause0_Click" ClickMode="Press" IsEnabled="True" IsChecked="False" ToolTip="Pausiert alle Klänge in der Registerkarte" IsTabStop="False" Focusable="False">
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pause.png" Name="btnKlangStopImgX" />
@@ -480,6 +522,7 @@
                                             <Button Content="+" Height="22" HorizontalAlignment="Right" Margin="0,0,0,1" Name="btnTopPauseMinPlusX" VerticalAlignment="Bottom" Width="22" Grid.Column="11" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge erhöhen" />
                                             <Button Content="-" Grid.Column="12" Grid.Row="1" Height="22" Margin="0,0,30,1" Name="btnTopPauseMaxMinusX" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Pausenzeit aller variierbaren Klänge verringern" />
                                             <Button Content="+" Grid.Column="12" Grid.Row="1" Height="22" HorizontalAlignment="Right" Name="btnTopPauseMaxPlusX" VerticalAlignment="Bottom" Width="22" Margin="0,0,0,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge erhöhen" />
+                                            <Label Content="Geschwindigkeit" Grid.Column="13" Margin="0" Name="lblPlaySpeedX" Padding="0" VerticalAlignment="Center" Grid.RowSpan="1" Grid.Row="1" HorizontalContentAlignment="Center" />
                                         </Grid>
                                     </Grid>
                                 </ScrollViewer>
@@ -502,27 +545,85 @@
                     <Button Content="Liste löschen" HorizontalAlignment="Left" Name="btnPlaylistLoeschen" VerticalAlignment="Top" Height="23" Width="80" Margin="3,3,3,0" IsEnabled="False" Click="btnPlaylistLoeschen_Click" />
                 </Grid>            
             </TabItem>
-            <TabItem Header="Übersicht" Name="tiUebersicht" GotFocus="tiUebersicht_GotFocus" >
-                <Grid Background="{StaticResource Background1}">
-                    <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6">
-                        <Grid Name="grdUebersicht">
+            <TabItem Header="Theme-Creator" Name="tiThemeCreator" GotFocus="tiThemeCreator_GotFocus">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Background1}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="345" />
+                        <ColumnDefinition Width="135" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="240*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="56" />
+                        <RowDefinition Height="38*" />
+                    </Grid.RowDefinitions>
+                    <ListBox Margin="10" Name="listBox1" Grid.RowSpan="2" />
+                    <Button Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnNeuesTheme" VerticalAlignment="Center" Width="100" >
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="10*" />
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="46" />
-                                <RowDefinition Height="150" />
-                                <RowDefinition Height="150" />
-                                <RowDefinition Height="150" />
-                                <RowDefinition Height="10*" />
-                            </Grid.RowDefinitions>
-                            <Button Content="Update" Height="23" HorizontalAlignment="Left" Margin="86,12,0,0" Name="btnUpdate" Click="btnUpdate_Click" VerticalAlignment="Top" Width="75" />
+                            <Image Source="/Images/Icons/General/neu.png" Name="btnImgNeuesTheme" VerticalAlignment="Center" />
+                            <Label Padding="0" Name="btnLblNeuesTheme" Grid.Column="1" VerticalContentAlignment="Center">Neues Theme</Label>
                         </Grid>
-                    </ScrollViewer>
+                    </Button>
+                    <TextBox Background="{x:Null}" FontWeight="Bold" ForceCursor="True" Height="25" Name="tboxThemeBezeichnung" Style="{Binding}" Grid.Column="2" Margin="0,5" />
+                    <Button Grid.Column="3" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnThemeUebernehmen" VerticalAlignment="Center" Width="100" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="/Images/Icons/General/ok.png" Name="btnImgThemeUebernehmen" VerticalAlignment="Center" />
+                            <Label Padding="0" Name="btnLblThemeUebernehmen" Grid.Column="1" VerticalContentAlignment="Center">Übernehmen</Label>
+                        </Grid>
+                    </Button>
+                    <Border Grid.Row="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="120" />
+                                <RowDefinition Height="120" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Border Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="2" Margin="1">
+                                <Label Content="Klang-Playlists" Name="lblKlangPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" />
+                            </Border>
+                            <Grid Margin="5" Name="grdKlaenge" Grid.RowSpan="2" />
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="335*" />
+                            </Grid.RowDefinitions>
+                            <Border Style="{DynamicResource ControlContentBorder}" Margin="1">
+                                <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
+                            </Border>
+                            <Grid Grid.Row="1" Margin="5" Name="grdHintergrund">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="220" />
+                                    <ColumnDefinition Width="220" />
+                                    <ColumnDefinition Width="220" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="32*" />
+                                    <RowDefinition Height="120" />
+                                    <RowDefinition Height="120" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    
                 </Grid>
             </TabItem>
         </TabControl>

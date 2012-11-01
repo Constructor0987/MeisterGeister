@@ -5,7 +5,7 @@
 
     <UserControl.Resources>
         <ControlTemplate x:Key="simpleSliderMin" TargetType="{x:Type Slider}">
-            <Border SnapsToDevicePixels="true" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+            <Border SnapsToDevicePixels="true" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Name="brdSliderMin">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
