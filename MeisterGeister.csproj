@@ -414,6 +414,9 @@
     <Compile Include="View\AudioPlayer\AudioTheme.xaml.cs">
       <DependentUpon>AudioTheme.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\HitchPanel.xaml.cs">
+      <DependentUpon>HitchPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
       <DependentUpon>SliderRange.xaml</DependentUpon>
     </Compile>
@@ -747,6 +750,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AudioPlayer\AudioTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\HitchPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1175,6 +1182,9 @@
     <Resource Include="Images\Icons\General\play_grau.png" />
     <Resource Include="Images\Icons\General\sort.png" />
     <Resource Include="Images\Icons\nahkampf_03.png" />
+    <Resource Include="Images\Icons\General\hase.png" />
+    <Resource Include="Images\Icons\General\no_shuffle.png" />
+    <Resource Include="Images\Icons\General\schildkröte.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
