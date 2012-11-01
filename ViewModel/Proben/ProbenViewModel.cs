@@ -463,6 +463,8 @@ namespace MeisterGeister.ViewModel.Proben
         public ProbenViewModel(Func<string, string, bool> confirm, Action<string, Exception> showError)
             : base(confirm, showError)
         {
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+
             onWürfeln = new Base.CommandBase(Würfeln, null);
             Einstellungen.WuerfelSoundAbspielenChanged += WuerfelSoundAbspielenChanged;
             Global.GruppenProbeWürfeln += Global_GruppenProbeWürfeln;

@@ -81,6 +81,21 @@ namespace MeisterGeister.Model
         #region // ---- Kampfwerte ----
 
         [DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
+        public int AttackeBasisOhneMod
+        {
+            get
+            {
+                if (Held == null)
+                    return 0;
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK)
+                    return Held.AttackeBasisOhneMod + TaW.GetValueOrDefault();
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return FernkampfwertBasisOhneMod;
+                return Held.AttackeBasisOhneMod + ZuteilungAT.GetValueOrDefault();
+            }
+        }
+
+        [DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
         public int Attacke
         {
             get
@@ -96,6 +111,18 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("ZuteilungPA")]
+        public int ParadeBasisOhneMod
+        {
+            get
+            {
+                if (Held == null || Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK
+                     || Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return 0;
+                return Held.ParadeBasisOhneMod + ZuteilungPA.GetValueOrDefault();
+            }
+        }
+
+        [DependentProperty("ZuteilungPA")]
         public int Parade
         {
             get
@@ -104,6 +131,19 @@ namespace MeisterGeister.Model
                      || Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return 0;
                 return Held.Parade + ZuteilungPA.GetValueOrDefault();
+            }
+        }
+
+        [DependentProperty("TaW")]
+        public int FernkampfwertBasisOhneMod
+        {
+            get
+            {
+                if (Held == null)
+                    return 0;
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return Held.FernkampfBasisOhneMod + TaW.GetValueOrDefault();
+                return 0;
             }
         }
 

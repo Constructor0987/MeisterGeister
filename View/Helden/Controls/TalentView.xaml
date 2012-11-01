@@ -416,8 +416,52 @@
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="4" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding HeldTalent.Attacke}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <TextBlock Text="{Binding HeldTalent.Parade}" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        <Grid Grid.Column="6" HorizontalAlignment="Center">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.ToolTip>
+                                                                <MGControl:ModInfoBox ModListe="{Binding HeldTalent.Held.ModifikatorenListeAT}" WertName="AT-Wert" 
+                                                        StartWert="{Binding HeldTalent.AttackeBasisOhneMod}" Wert="{Binding HeldTalent.Attacke}" />
+                                                            </Grid.ToolTip>
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding HeldTalent.Attacke}" TextAlignment="Center" VerticalAlignment="Center" />
+                                                            <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
+                                                                <Image.Style>
+                                                                    <Style TargetType="Image">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding HeldTalent.Held.ModifikatorenListeAT.Count}" Value="0" >
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+                                                        </Grid>
+                                                        <Grid Grid.Column="7" HorizontalAlignment="Center">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.ToolTip>
+                                                                <MGControl:ModInfoBox ModListe="{Binding HeldTalent.Held.ModifikatorenListePA}" WertName="PA-Wert" 
+                                                        StartWert="{Binding HeldTalent.ParadeBasisOhneMod}" Wert="{Binding HeldTalent.Parade}" />
+                                                            </Grid.ToolTip>
+                                                            <TextBlock HorizontalAlignment="Center" Text="{Binding HeldTalent.Parade}" TextAlignment="Center" VerticalAlignment="Center" />
+                                                            <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
+                                                                <Image.Style>
+                                                                    <Style TargetType="Image">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding HeldTalent.Held.ModifikatorenListePA.Count}" Value="0" >
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+                                                        </Grid>
                                                         <Image Grid.Column="8" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                                             <Image.ToolTip>
