@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="MeisterGeister.View.AudioPlayer.HitchPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="220">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Border Background="{StaticResource CheckBoxFillNormal}" BorderBrush="#FF707070"></Border>
+        <ToggleButton Name="btnHitchPanel" ClickMode="Press" Background="{StaticResource CheckBoxFillNormal}" BorderThickness="3" Focusable="False" IsTabStop="False" Panel.ZIndex="10">
+            <ToggleButton.BindingGroup>
+                <BindingGroup Name="Themes" />
+            </ToggleButton.BindingGroup>
+            <Grid Height="80" Width="200">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
+                <Button Name="btnAngehakt" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="2">
+                    <Image Source="/Images/Icons/General/ok.png" VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
+        </ToggleButton>
+    </Grid>
+</UserControl>
