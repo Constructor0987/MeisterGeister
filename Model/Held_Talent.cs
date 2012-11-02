@@ -5,6 +5,8 @@ using System.Text;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
+using MeisterGeister.ViewModel.Kampf.Logic;
+using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
 namespace MeisterGeister.Model
 {
@@ -79,6 +81,43 @@ namespace MeisterGeister.Model
         #endregion //---- PROBE ----
 
         #region // ---- Kampfwerte ----
+
+        /// <summary>
+        /// Gibt an, ob bei dem Talent AT/PA-Punkte zugeteilt werden können.
+        /// </summary>
+        public bool IsZuteilbar
+        {
+            get
+            {
+                return Talent.Untergruppe != Talent.UNTERGRUPPE_ATTECHNIK
+                    && Talent.Untergruppe != Talent.UNTERGRUPPE_FERNKAMPF;
+            }
+        }
+
+        public bool HatAttacke
+        {
+            get
+            {
+                return Talent.Untergruppe != Talent.UNTERGRUPPE_FERNKAMPF;
+            }
+        }
+
+        public bool HatParade
+        {
+            get
+            {
+                return Talent.Untergruppe != Talent.UNTERGRUPPE_ATTECHNIK
+                    && Talent.Untergruppe != Talent.UNTERGRUPPE_FERNKAMPF;
+            }
+        }
+
+        public bool HatFernkampf
+        {
+            get
+            {
+                return Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF;
+            }
+        }
 
         [DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
         public int AttackeBasisOhneMod
@@ -157,6 +196,45 @@ namespace MeisterGeister.Model
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return Held.FernkampfBasis + TaW.GetValueOrDefault();
                 return 0;
+            }
+        }
+
+        [DependsOnModifikator(typeof(Mod.IModAT))]
+        public List<dynamic> ModifikatorenListeAT
+        {
+            get
+            {
+                if (Held == null)
+                    return new List<dynamic>();
+                List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                return list;
+            }
+        }
+
+        [DependsOnModifikator(typeof(Mod.IModPA))]
+        public List<dynamic> ModifikatorenListePA
+        {
+            get
+            {
+                if (Held == null)
+                    return new List<dynamic>();
+                List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                return list;
+            }
+        }
+
+        [DependsOnModifikator(typeof(Mod.IModFK))]
+        public List<dynamic> ModifikatorenListeFK
+        {
+            get
+            {
+                if (Held == null)
+                    return new List<dynamic>();
+                List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModFKBasis), FernkampfwertBasisOhneMod);
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModFK), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                return list;
             }
         }
 
