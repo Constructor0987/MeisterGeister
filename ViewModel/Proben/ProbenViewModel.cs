@@ -152,6 +152,7 @@ namespace MeisterGeister.ViewModel.Proben
 
         #region //---- EIGENSCHAFTEN & FELDER ----
 
+        [DependentProperty("FilteredProbeListe")]
         public List<Model.Held> HeldListe
         {
             get { return Global.ContextHeld.HeldenGruppeListe; }
@@ -474,9 +475,8 @@ namespace MeisterGeister.ViewModel.Proben
             _selectedSortierung = SortierungListe.FirstOrDefault();
 
             InitFilterListe();
-
-            Refresh();
             InitProbeListe();
+            Refresh();
             RefreshProbeErgebnisListe();
         }
 
@@ -524,12 +524,11 @@ namespace MeisterGeister.ViewModel.Proben
 
             // Probe-Favoriten
             LoadProbeFavoriten();
-
-            FilterProbeListe();
         }
 
         private void LoadProbeFavoriten()
         {
+            _probeFavoritenListe.Clear();
             if (!string.IsNullOrEmpty(Einstellungen.ProbenFavoriten))
             {
                 string[] favoriten = Einstellungen.ProbenFavoriten.Split('#');
@@ -566,8 +565,8 @@ namespace MeisterGeister.ViewModel.Proben
             if (IsAktivierteProben)
             { // nur aktivierte Proben
                 probeListe = ProbeListe.Where(p => p is Eigenschaft)
-                    .Concat(Global.ContextHeld.Liste<Model.Held_Talent>().Where(ht => ht.Held.AktiveHeldengruppe == true).Select(ht => (ht.Talent as Probe)).Distinct())
-                    .Concat(Global.ContextHeld.Liste<Model.Held_Zauber>().Where(hz => hz.Held.AktiveHeldengruppe == true).Select(hz => (hz.Zauber as Probe)).Distinct())
+                    .Concat(Global.ContextHeld.Liste<Model.Held_Talent>().Where(ht => ht.Held == null ? false : ht.Held.AktiveHeldengruppe == true).Select(ht => (ht.Talent as Probe)).Distinct())
+                    .Concat(Global.ContextHeld.Liste<Model.Held_Zauber>().Where(hz => hz.Held == null ? false : hz.Held.AktiveHeldengruppe == true).Select(hz => (hz.Zauber as Probe)).Distinct())
                     .ToList();
 
                 var liMeta = Global.ContextHeld.Liste<Model.Talent>().Where(p => p is Model.Talent && (p as Model.Talent).IsMetaTalent);
@@ -626,6 +625,7 @@ namespace MeisterGeister.ViewModel.Proben
         public void Refresh()
         {
             OnChanged("HeldListe");
+            FilterProbeListe();
         }
 
         private void RefreshProbeErgebnisListe()
