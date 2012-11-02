@@ -162,6 +162,8 @@ namespace MeisterGeister.ViewModel.Helden {
             if (SelectedHeld != null) 
             {
                 foreach (var item in SelectedHeld.Held_Talent) {
+                    if (item.Talent == null)
+                        break;
                     switch (item.Talent.TalentgruppeID) {
                         case 1:
                             TalentListeItem tmpKampf = new TalentListeItem() {

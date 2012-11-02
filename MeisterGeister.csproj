@@ -1185,6 +1185,7 @@
     <Resource Include="Images\Icons\General\hase.png" />
     <Resource Include="Images\Icons\General\no_shuffle.png" />
     <Resource Include="Images\Icons\General\schildkröte.png" />
+    <Resource Include="Images\Icons\General\info_rot.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

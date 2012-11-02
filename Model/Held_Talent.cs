@@ -119,6 +119,57 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("ZuteilungPA"), DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
+        public bool IsZuteilungOkay
+        {
+            get
+            {
+                if (!IsZuteilbar)
+                    return true;
+
+                if (TaW.GetValueOrDefault() > 0 && (ZuteilungAT.GetValueOrDefault() < 0 || ZuteilungPA.GetValueOrDefault() < 0))
+                    return false;
+
+                int zuteilDiff = TaW.GetValueOrDefault() - ZuteilungAT.GetValueOrDefault() - ZuteilungPA.GetValueOrDefault();
+                int zuteilDiff2 = ZuteilungAT.GetValueOrDefault() - ZuteilungPA.GetValueOrDefault();
+
+                return zuteilDiff == 0 && zuteilDiff2 >= -5 && zuteilDiff2 <= 5;
+            }
+        }
+
+        [DependentProperty("ZuteilungPA"), DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
+        public string ZuteilungHinweis
+        {
+            get
+            {
+                string hinweis = string.Empty;
+                if (!IsZuteilbar)
+                    return hinweis;
+
+                int zuteilDiff = TaW.GetValueOrDefault() - ZuteilungAT.GetValueOrDefault() - ZuteilungPA.GetValueOrDefault();
+
+                if (zuteilDiff > 0)
+                    hinweis = string.Format("Noch {0} TaP zuteilen!", zuteilDiff);
+                else if (zuteilDiff < 0)
+                    hinweis = string.Format("{0} TaP zu viel zugeteilt!", zuteilDiff * -1);
+
+                if ((ZuteilungAT.GetValueOrDefault() < 0 || ZuteilungPA.GetValueOrDefault() < 0) && TaW.GetValueOrDefault() >= 0)
+                {
+                    hinweis += string.IsNullOrEmpty(hinweis) ? string.Empty : Environment.NewLine;
+                    hinweis += "Bei einem positiven TaW dürfen keine negativen Punkte verteilt werden!";
+                }
+
+                int zuteilDiff2 = ZuteilungAT.GetValueOrDefault() - ZuteilungPA.GetValueOrDefault();
+                if (zuteilDiff2 > 5 || zuteilDiff2 < -5)
+                {
+                    hinweis += string.IsNullOrEmpty(hinweis) ? string.Empty : Environment.NewLine;
+                    hinweis += "Es dürfen maximal 5 Punkte Unteschied zwischen AT- und PA-Zuteilung sein!";
+                }
+
+                return hinweis;
+            }
+        }
+
         [DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
         public int AttackeBasisOhneMod
         {

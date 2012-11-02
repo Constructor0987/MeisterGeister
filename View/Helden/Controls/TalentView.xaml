@@ -393,8 +393,6 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" ToolTip="Paradewert">
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="16" Width="16" />
                                             </Label>
-                                            <!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT" Grid.Column="6" />-->
-                                            <!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA" Grid.Column="7" />-->
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="8" />
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="9" />
                                         </Grid>
@@ -407,6 +405,16 @@
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Background" Value="Transparent" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding HeldTalent.IsZuteilungOkay}" Value="False" >
+                                                                    <Setter Property="Background" Value="#99FD4545" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="220" />
@@ -420,7 +428,26 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <DockPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                                            <TextBlock Text="{Binding Talent.Talentname}" DockPanel.Dock="Left" />
+                                                            <Image Width="14" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                                                <Image.ToolTip>
+                                                                    <Border Background="#FFEC7D7D" Padding="10">
+                                                                        <TextBlock Text="{Binding HeldTalent.ZuteilungHinweis}" FontWeight="Bold" />
+                                                                    </Border>
+                                                                </Image.ToolTip>
+                                                                <Image.Style>
+                                                                    <Style TargetType="Image">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding HeldTalent.IsZuteilungOkay}" Value="False" >
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+                                                        </DockPanel>
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT}" Grid.Column="1" Visibility="{Binding HeldTalent.IsZuteilbar, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA}" Grid.Column="2" Visibility="{Binding HeldTalent.IsZuteilbar, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
