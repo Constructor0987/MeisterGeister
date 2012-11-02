@@ -726,6 +726,7 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Wundschwellen
+        [DependentProperty("Wundschwelle"), DependentProperty("Wundschwelle2"), DependentProperty("Wundschwelle3")]
         public string Wundschwellen
         {
             get
@@ -734,6 +735,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("Konstitution")]
         public int Wundschwelle
         {
             get
@@ -748,6 +750,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("Konstitution")]
         public int Wundschwelle2
         {
             get
@@ -762,6 +765,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("Konstitution")]
         public int Wundschwelle3
         {
             get

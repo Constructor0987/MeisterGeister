@@ -8,10 +8,11 @@ using System.Reflection;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Extensions;
+using System.ComponentModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
-    public class Manöver
+    public class Manöver : INotifyPropertyChanged
     {
         protected static Object syncRoot;
         protected static volatile List<Type> _manöverListe = null;
@@ -32,20 +33,37 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         protected Manöver(IKämpfer ausführender)
-            : this(ausführender, new Dictionary<IWaffe, IKämpfer>(1))
+            : this(ausführender, new Dictionary<IWaffe, IKämpfer>(1), 1)
+        {
+        }
+
+        protected Manöver(IKämpfer ausführender, double dauer)
+            : this(ausführender, new Dictionary<IWaffe, IKämpfer>(1), dauer)
         {
         }
 
         protected Manöver(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel)
-            : this(ausführender, new Dictionary<IWaffe, IKämpfer>() { { waffe, ziel } })
+            : this(ausführender, new Dictionary<IWaffe, IKämpfer>() { { waffe, ziel } }, 1)
+        {
+        }
+
+        protected Manöver(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel, double dauer)
+            : this(ausführender, new Dictionary<IWaffe, IKämpfer>() { { waffe, ziel } }, dauer)
         {
         }
 
         protected Manöver(IKämpfer ausführender, IDictionary<IWaffe, IKämpfer> waffe_ziel)
+            : this (ausführender, waffe_ziel, 1)
+        {
+        }
+
+        protected Manöver(IKämpfer ausführender, IDictionary<IWaffe, IKämpfer> waffe_ziel, double dauer)
         {
             Ansage = 0;
             Ausführender = ausführender;
             WaffeZiel = waffe_ziel;
+            Dauer = dauer;
+            VerbleibendeDauer = Dauer;
         }
 
         //felder/parameter
@@ -57,15 +75,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         public virtual String Literatur
         {
             get { return "WdS 59"; }
-        }
-
-        /// <summary>
-        /// Dauer des Manövers
-        /// </summary>
-        /// hiermit bin ich noch sehr unzufrieden. wie mache ich denn sowas wie ALLE aktionen und Reaktionen oder freie aktionen
-        public virtual int Dauer
-        {
-            get { return 1; }
         }
 
         /*
@@ -109,6 +118,36 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             get;
             set;
+        }
+
+        private double dauer = 1;
+        public virtual double Dauer
+        {
+            get { return dauer; }
+            set { 
+                dauer = value;
+                OnChanged("Dauer");
+            }
+        }
+
+        private double verbleibendeDauer = 1;
+        /// <summary>
+        /// Die Restdauer der Aktion in Aktionen.
+        /// </summary>
+        public double VerbleibendeDauer
+        {
+            get { return verbleibendeDauer; }
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                if (value == verbleibendeDauer)
+                    return;
+                verbleibendeDauer = value;
+                if(value == 0)
+                    Ausführender.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
+                OnChanged("VerbleibendeDauer");
+            }
         }
 
         public virtual int Erschwernis
@@ -156,8 +195,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         //sollte man sowas als Event machen?
         protected virtual void OnAktion()
         {
-            if (Dauer >= 1) //.Wert > 0 && Dauer.Einheit != Zeiteinheit.FreieAktion && Dauer.Einheit != Zeiteinheit.Keine)
-                Ausführender.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
+   
         }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        #endregion
     }
 }

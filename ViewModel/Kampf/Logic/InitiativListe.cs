@@ -8,127 +8,6 @@ using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
-    public class ManöverInfo : INotifyPropertyChanged, IDisposable
-    {
-        private KämpferInfo _kämpferInfo;
-
-        public KämpferInfo KämpferInfo
-        {
-            get { return _kämpferInfo; }
-            private set { _kämpferInfo = value; }
-        }
-
-        private int _inimod;
-        public int InitiativeMod
-        {
-            get
-            {
-                return _inimod;
-            }
-            set
-            {
-                _inimod = value;
-                OnChanged("Initiative");
-            }
-        }
-
-        public int Initiative
-        {
-            get { return ((KämpferInfo == null)?0:KämpferInfo.Initiative) + InitiativeMod; }
-        }
-        public int InitiativeBasis
-        {
-            get { return ((KämpferInfo == null) ? 0 : KämpferInfo.InitiativeBasis); }
-        }
-        public string KämpferName
-        {
-            get { return ((KämpferInfo == null) ? "Effekt" : KämpferInfo.Kämpfer.Name); }
-        }
-
-
-        private Manöver.Manöver manöver;
-        public Manöver.Manöver Manöver
-        {
-            get { return manöver; }
-            set { 
-                manöver = value;
-                OnChanged("Manöver"); OnChanged("IsAktion");
-            }
-        }
-
-        /// <summary>
-        /// Ein Hack um zwei Anzeigen in der InitiativListe (TreeView) zu bekommen.
-        /// </summary>
-        public ICollection<ManöverInfo> ThisAsList
-        {
-            get
-            {
-                return new List<ManöverInfo>() { this };
-            }
-        }
-
-        public bool IsAktion
-        {
-            get { return !(Manöver is Manöver.KeineAktion); }
-        }
-
-        public ManöverInfo(KämpferInfo ki, Manöver.Manöver m, int inimod)
-        {
-            KämpferInfo = ki;
-            if(ki != null)
-                ki.PropertyChanged += OnKämpferInfoChanged;
-            InitiativeMod = inimod;
-            Manöver = m;
-            Ausgeführt = false;
-        }
-
-        public bool Ausgeführt
-        {
-            get;
-            set; //private set; //sollte von einem Manöver-Event OnAusführung gesetzt werden
-        }
-
-        private bool isSelected = false;
-        public bool IsSelected
-        {
-            get { return isSelected; }
-            set { 
-                isSelected = value;
-                OnChanged("IsSelected");
-            }
-        }
-        
-
-        private void OnKämpferInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == "Initiative")
-                OnChanged("Initiative");
-            else if (args.PropertyName == "Angriffsaktionen")
-                OnChanged("Angriffsaktionen");
-            else if (args.PropertyName == "Name")
-                OnChanged("KämpferName");
-        }
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
-        #endregion
-
-        public void Dispose()
-        {
-            if (KämpferInfo != null)
-                KämpferInfo.PropertyChanged -= OnKämpferInfoChanged;
-        }
-    }
-
     public class InitiativListe : ObservableCollection<ManöverInfo>, INotifyPropertyChanged//, INotifyCollectionChanged
     {
         public InitiativListe(Kampf kampf)
@@ -151,29 +30,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { _kampf = value; }
         }
 
+        public void LöscheBeendeteManöver()
+        {
+            RemoveAll(mi => mi.Manöver.VerbleibendeDauer == 0);
+        }
+
         #region Add and Remove
         public new void Add(ManöverInfo mi)
         {
-            //hier werden alle KeineAktion-Manöver des Kämpfers entfernt. man könnte auch für jede mögliche Aktion ein KeineAktion-Manöver anlegen, dann müsste man hier wieder anpassen.
-            //foreach (ManöverInfo minfo in this.Where(m => m.KämpferInfo == mi.KämpferInfo && m.Manöver is Manöver.KeineAktion).ToList())
-            //    Remove(minfo);
             base.Add(mi);
             mi.PropertyChanged += OnManöverInfoChanged;
-            //OnCollectionChanged(NotifyCollectionChangedAction.Add, mi);
             Sort();
         }
-
-        //public void Add(IKämpfer k)
-        //{
-        //    Add(k, 1);
-        //}
-
-        //public void Add(IKämpfer k, int team)
-        //{
-        //    Add(new KämpferInfo(k) { Team = team });
-        //    k.Abwehraktionen = 1;
-        //    k.Angriffsaktionen = Math.Max(k.Aktionen - k.Abwehraktionen, 0);
-        //}
 
         public void Add(KämpferInfo ki, Manöver.Manöver m, int inimod)
         {
@@ -184,7 +52,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             mi.PropertyChanged -= OnManöverInfoChanged;
             base.Remove(mi);
-            //OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
         }
 
         public new void RemoveAt(int index)
@@ -192,17 +59,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             var mi = this[index];
             this[index].PropertyChanged -= OnManöverInfoChanged;
             base.RemoveAt(index);
-            //OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
-        }
-
-        public new void RemoveAll(Predicate<ManöverInfo> match)
-        {
-            throw new NotImplementedException();
-        }
-
-        public new void RemoveRange(int index, int range)
-        {
-            throw new NotImplementedException();
         }
 
         public void Remove(KämpferInfo ki)
@@ -216,14 +72,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 mi.PropertyChanged -= OnManöverInfoChanged;
                 base.Remove(mi);
-                //OnCollectionChanged(NotifyCollectionChangedAction.Remove, mi);
+            }
+        }
+
+        public void RemoveAll(Predicate<ManöverInfo> match)
+        {
+            foreach (ManöverInfo mi in Items.Where(mi => match(mi)).ToList())
+            {
+                Remove(mi);
             }
         }
 
         public new void Clear()
         {
+            foreach (ManöverInfo mi in Items)
+            {
+                mi.PropertyChanged -= OnManöverInfoChanged;
+            }
             base.Clear();
-            //OnCollectionChanged(NotifyCollectionChangedAction.Reset, null);
         }
         #endregion
 
@@ -243,7 +109,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if(i1!=i2)
                     Move(i1, i2);
             }
-            //OnCollectionChanged(NotifyCollectionChangedAction.Move, null);
             OnChanged("Sort");
         }
 
@@ -283,15 +148,5 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         #endregion
-
-        //private void OnCollectionChanged(NotifyCollectionChangedAction action, object element)
-        //{
-        //    if (CollectionChanged != null)
-        //    {
-        //        CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
-        //    }
-        //}
-
-        //public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }

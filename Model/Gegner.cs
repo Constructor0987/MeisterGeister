@@ -173,7 +173,11 @@ namespace MeisterGeister.Model
 
         public int? AT
         {
-            get { throw new NotImplementedException(); }
+            get {
+                //TODO JT: stattdessen selectedangriff verwenden
+                GegnerBase_Angriff ga = GegnerBase.GegnerBase_Angriff.FirstOrDefault();
+                return (ga == null)?0:ga.AT; 
+            }
         }
 
         int? KampfLogic.IKämpfer.PA

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
-
 using MeisterGeister.Logic.General;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 
@@ -11,7 +11,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
     /// <summary>
     /// Wunden abhängig vom Trefferzonen-Enum
     /// </summary>
-    public class Wunden : IWunden
+    public class Wunden : IWunden, INotifyPropertyChanged
     {
         private IHasWunden _held;
         public Wunden(IHasWunden held)
@@ -106,6 +106,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     value = 0;
                 if (value == this[zone])
                     return;
+                if (zone == Trefferzone.Zufall)
+                {
+                    this[TrefferzonenHelper.ZufallsZone()] = value;
+                    return;
+                }
                 Wesen w = _held as Wesen;
                 IKämpfer k = _held as IKämpfer;
                 if (w == null || k==null)
@@ -206,16 +211,27 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         }
                         _held.WundenBeinR = value;
                         break;
-                    case Trefferzone.Zufall:
-                        this[TrefferzonenHelper.ZufallsZone()] = value;
-                        break;
                     case Trefferzone.Unlokalisiert:
                     case Trefferzone.Gesamt:
                     default:
                         _held.Wunden = value;
                         break;
                 }
+                OnChanged("");
             }
         }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnChanged(String info, object sender = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(sender ?? this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        #endregion
     }
 }

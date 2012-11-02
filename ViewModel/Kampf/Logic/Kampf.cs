@@ -105,8 +105,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void NeueKampfrunde()
         {
+            //Alle Manöver, die noch nicht ausgeführt wurden
+            //TODO JT: entweder warnen
+            foreach (var mi in InitiativListe.Where(mi => mi.Ausgeführt == false))
+            {
+                //oder einfach als ausgeführt setzen
+                mi.Ausgeführt = true;
+            }
             //Alte Ansagen löschen
-            InitiativListe.Clear();
+            InitiativListe.LöscheBeendeteManöver();
             //Modifikatoren entfernen
             foreach (KämpferInfo ki in Kämpfer)
             {
@@ -202,6 +209,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void StandardAktionenSetzen(KämpferInfo ki)
         {
+            //löschen von Manövern, für die der falsche Kampfstil gewählt ist.
             if (ki.Kämpfer.Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
             {
                 foreach (var mi in InitiativListe.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).ToList())
@@ -216,16 +224,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Kämpfer.Angriffsaktionen)
             {
                 var manöver = geplanteAktionen.FirstOrDefault();
+                //Das letzte Manöver wird in KeineAktion umgewandelt um den Kämpfer weiterhin in der Liste zu haben.
                 if(ki.Kämpfer.Angriffsaktionen == 0 && geplanteAktionen.Count==1)
                 {
                     manöver.Manöver = new Manöver.KeineAktion(ki.Kämpfer);
                     break;
                 }
+                //alle anderen Manöver, die zuviel sind, löschen.
                 InitiativListe.Remove(manöver);
                 geplanteAktionen.Remove(manöver);
             }
+            //wenn die Liste ganz leer ist, füge KeineAktion hinzu
             if (ki.Kämpfer.Angriffsaktionen == 0 && InitiativListe.Where(mi => mi.KämpferInfo == ki).Count() == 0)
                 InitiativListe.Add(ki, new Manöver.KeineAktion(ki.Kämpfer), 0);
+            //TODO JT: die Formulierung der Bedingungen mehr an die Voraussetzungen von ZusätzlicheAngriffsaktion und TodVonLinks anpassen
+            //sonst wird das Ergänzen bald recht schwierig
             int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).Count();
             for (int i = geplanteAktionen.Count; i < ki.Kämpfer.Angriffsaktionen; i++)
             {
