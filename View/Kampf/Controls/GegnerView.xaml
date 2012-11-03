@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kampf"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
 	x:Name="UserControl" Background="{DynamicResource Background1}"
-	d:DesignWidth="600" d:DesignHeight="400">
+	d:DesignWidth="763.291" d:DesignHeight="543.038">
     <UserControl.Resources>
 
         <Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
@@ -220,18 +220,18 @@
                             </Grid.RowDefinitions>
                             <!-- Name, LE, AU, AE, KE, KO, INIBasis, INIZufall, MRGeist, MRKörper, PA, RSx, Aktionen, GS, GS2, GS3,  Bemerkung, Beschwörung, Beschwörungskosten, Bild, GW, Jagd, Kontrolle, Literatur, Setting, Tags  -->
                             <Label   Grid.Row="0" Grid.Column="0" Content="LE:" />
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="0" Grid.Column="3" Content="AU:" />
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="4" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="1" Grid.Column="0" Content="AE:" />
-                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="1" Grid.Column="3" Content="KE:" />
-                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="4" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
 
                             <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
-                            <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="2" Grid.Column="3" Content="INI-Zufall:" />
-                            <TextBox Grid.Row="2" Grid.Column="4" Margin="2">
+                            <TextBox Grid.Row="2" Grid.Column="4" Margin="2" MinWidth="100" HorizontalAlignment="Left">
                                 <Binding Path="SelectedGegnerBase.INIZufall">
                                     <Binding.ValidationRules>
                                         <ViewGeneral:WürfelValidationRule />
@@ -240,13 +240,13 @@
                             </TextBox>
 
                             <Label   Grid.Row="3" Grid.Column="0" Content="PA:" />
-                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="1" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="3" Grid.Column="3" Content="KO:" />
-                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="4" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
-                            <!-- TODO ZonenControl auf Klick um Details eintragen zu können -->
-                            <ViewGeneral:IntBox Grid.Row="4" Grid.Column="1" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" />
-                            <Button Grid.Row="4" Grid.Column="2" Height="24" Click="ButtonZonenRsControl_Click">
+                            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                            <ViewGeneral:IntBox MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" />
+                            <Button Height="24" Click="ButtonZonenRsControl_Click">
                                 <Image Margin="1" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
                                 <Button.ToolTip>
                                     <StackPanel Background="#389E804D">
@@ -269,6 +269,7 @@
                                     </StackPanel>
                                 </Button.ToolTip>
                             </Button>
+                            </StackPanel>
                             <Label   Grid.Row="4" Grid.Column="3" Content="MR:" />
                             <Grid Grid.Row="4" Grid.Column="4" >
                                 <Grid.ColumnDefinitions>
@@ -292,7 +293,7 @@
                                 <ViewGeneral:IntBox Grid.Column="2" Value="{Binding SelectedGegnerBase.GS3}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 3"/>
                             </Grid>
                             <Label   Grid.Row="5" Grid.Column="3" Content="Aktionen:" />
-                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="4" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
                         </Grid>
                     </Grid>
                 </Border>
@@ -399,16 +400,16 @@
                         </Grid.ColumnDefinitions>
                         <!-- Beschwörung, Beschwörungskosten, GW, Jagd, Kontrolle -->
                         <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
-                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                         <Label   Grid.Row="0" Grid.Column="2" Content="Kosten:" />
-                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" Value="{Binding SelectedGegnerBase.Beschwörungskosten}" Margin="2" ShowButtons="True" CanBeNull="True" />
+                        <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Beschwörungskosten}" Margin="2" ShowButtons="True" CanBeNull="True" />
                         <Label   Grid.Row="1" Grid.Column="0" Content="Kontrolle:" />
-                        <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Value="{Binding SelectedGegnerBase.Kontrolle}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Kontrolle}" Margin="2" ShowButtons="True" CanBeNull="True"/>
 
                         <Label   Grid.Row="2" Grid.Column="0" Content="Jagd:" />
-                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Value="{Binding SelectedGegnerBase.Jagd}" Margin="2" ShowButtons="True" CanBeNull="True"/>
+                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Jagd}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                         <Label   Grid.Row="2" Grid.Column="2" Content="GW:" />
-                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="3" Value="{Binding SelectedGegnerBase.GW}" Margin="2" ShowButtons="True" CanBeNull="True" />
+                        <ViewGeneral:IntBox Grid.Row="2" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.GW}" Margin="2" ShowButtons="True" CanBeNull="True" />
                     </Grid>
 
                 </Border>
