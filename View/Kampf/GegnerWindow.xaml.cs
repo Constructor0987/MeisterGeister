@@ -22,6 +22,8 @@ namespace MeisterGeister.View.Kampf
         {
             InitializeComponent();
 
+            _gegnerView.ListBox_DoubleClicked += ListBox_DoubleClicked;
+
             _kampf = kampf;
 
             if (App.Current.MainWindow != null)
@@ -32,22 +34,30 @@ namespace MeisterGeister.View.Kampf
             }
         }
 
+        private void ListBox_DoubleClicked(object sender, EventArgs e)
+        {
+            AddGegnerToKampf();
+        }
+
         private ViewModel.Kampf.Logic.Kampf _kampf;
 
         private void ButtonAddToKampf_Click(object sender, RoutedEventArgs e)
         {
+            AddGegnerToKampf();
+        }
+
+        private void AddGegnerToKampf()
+        {
             if (_kampf != null)
             {
                 Model.GegnerBase gegnerBase = _gegnerView.VM.SelectedGegnerBase;
-                
-                // TODO ??: Gegner aus GegnerBase erzeugen
-                Model.Gegner gegner = new Model.Gegner(gegnerBase);
-                Global.ContextHeld.Insert<Model.Gegner>(gegner);
-                //Model.Gegner gegner = Global.ContextHeld.New<Model.Gegner>();
-                //gegner.GegnerBaseGUID = gegnerBase.GegnerBaseGUID;
-                //gegner.GegnerBase = gegnerBase;
-                //gegnerBase.Gegner.Add(gegner);
-                _kampf.Kämpfer.Add(gegner, 2);
+
+                for (int i = 0; i < _intBoxGegnerAnzahl.Value; i++)
+                {
+                    Model.Gegner gegner = new Model.Gegner(gegnerBase);
+                    Global.ContextHeld.Insert<Model.Gegner>(gegner);
+                    _kampf.Kämpfer.Add(gegner, 2);
+                }
             }
         }
     }

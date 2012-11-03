@@ -51,7 +51,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListBox x:Name="_listBoxGegnerBase" Grid.Row="0" Padding="4" Background="Transparent" AllowDrop="True" 
-				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding GegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000" SelectionChanged="ListBoxGegnerBase_SelectionChanged">
+				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding GegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000" SelectionChanged="ListBoxGegnerBase_SelectionChanged" MouseDoubleClick="_listBoxGegnerBase_MouseDoubleClick">
                         <ListBox.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
                         </ListBox.InputBindings>
@@ -147,7 +147,8 @@
                 </Grid>
             </Border>
         </Grid>
-        <Grid Grid.Column="1">
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -441,6 +442,7 @@
                 </Border>
             </Expander>
         </Grid>
+        </ScrollViewer>
 
         <Border Name="_rsZonenRsControl" Grid.ColumnSpan="2" Background="#E57A7A7A" Visibility="Collapsed">
             <Grid>

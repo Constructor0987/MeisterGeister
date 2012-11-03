@@ -113,5 +113,12 @@ namespace MeisterGeister.View.Kampf.Controls
                 (sender as ListBox).ScrollIntoView(e.AddedItems.Count > 0 ? e.AddedItems[0] : null);
         }
 
+        private void _listBoxGegnerBase_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ListBox_DoubleClicked != null)
+                ListBox_DoubleClicked(sender, e);
+        }
+
+        public EventHandler ListBox_DoubleClicked;
 	}
 }
