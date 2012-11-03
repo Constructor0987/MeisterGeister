@@ -18,22 +18,6 @@
             <ViewGeneral:InverseBooleanConverter />
         </ViewGeneral:ValueConverterGroup>
         <VM:TrefferpunkteOptionsConverter x:Key="TrefferpunkteOptionsConverter" />
-        <Style x:Key="MagiebegabtStyle" TargetType="{x:Type FrameworkElement}">
-            <Setter Property="Visibility" Value="Collapsed" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=SelectedKämpferInfo.Kämpfer.Magiebegabt}" Value="true">
-                    <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="GeweihtStyle" TargetType="{x:Type FrameworkElement}">
-            <Setter Property="Visibility" Value="Collapsed" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=SelectedKämpferInfo.Kämpfer.Geweiht}" Value="true">
-                    <Setter Property="Visibility" Value="Visible" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
             <Setter Property="Opacity" Value="1.0" />
             <Setter Property="Background" Value="Transparent" />
@@ -414,7 +398,7 @@
                                     <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
                                 </StackPanel>
                                 <!-- Astralenergie -->
-                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource MagiebegabtStyle}">
+                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                     <TextBlock Text="AE:" Margin="2,6,2,2" Width="25" />
                                     <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.AstralenergieMax}" ToolTip="Maximale Astralenergie" />
                                     <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
@@ -422,7 +406,7 @@
                                     <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
                                 </StackPanel>
                                 <!-- Karmaenergie -->
-                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Style="{StaticResource GeweihtStyle}">
+                                <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                     <TextBlock Text="KE:" Margin="2,6,2,2" Width="25" />
                                     <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.KarmaenergieMax}" ToolTip="Maximale Karmaenergie" />
                                     <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
@@ -505,13 +489,11 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <Button Grid.Row="0" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkte" Padding="0" Width="45" ToolTip="Trefferpunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                        Command="{Binding OnTrefferpunkte}">
-                                    <Border Background="Firebrick">
-                                        <Label Content="TP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
+                                        Command="{Binding OnTrefferpunkte}" Background="Firebrick">
+                                    <Label Content="TP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Button>
                                 <Button Grid.Row="0" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkte" Width="45" ToolTip="Schadenspunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                        Command="{Binding OnTrefferpunkte}">
+                                        Command="{Binding OnTrefferpunkte}" Background="Firebrick">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
                                             <MultiBinding.Bindings>
@@ -519,14 +501,11 @@
                                             </MultiBinding.Bindings>
                                         </MultiBinding>
                                     </Button.CommandParameter>
-                                    <Border Background="Firebrick">
-                                        <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
+                                    <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Button>
-                                <Button Grid.Row="0" Grid.Column="4" Margin="2" Style="{StaticResource MagiebegabtStyle}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Command="{Binding OnAstralenergieAbziehen}">
-                                    <Border Background="BlueViolet">
-                                        <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
+                                <Button Grid.Row="0" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                        Command="{Binding OnAstralenergieAbziehen}" Background="BlueViolet">
+                                    <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Button>
                                 <StackPanel Grid.Row="1" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
                                     <ComboBox Name="_comboBoxTrefferzone" Margin="0,2,0,0" Width="109" ToolTip="Trefferzone" VerticalContentAlignment="Center"
@@ -534,7 +513,7 @@
                                     <CheckBox Margin="4,8,4,7" VerticalAlignment="Center" Name="_checkBoxAusdauerSchadenLeAbziehen" Content="-LeP" Background="SteelBlue" Foreground="DarkBlue" ToolTip="Halben Ausdauer-Schaden von der LE abziehen." IsChecked="{Binding Path=AusdauerSchadenMachtKeineSchadenspunkte, Mode=TwoWay, Converter={StaticResource EnumMatchThenInvert}, ConverterParameter=AusdauerschadenMachtKeineEchtenSchadenspunkte}" />
                                 </StackPanel>
                                 <Button Grid.Row="1" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkteAusdauer" ToolTip="Ausdauer-Trefferpunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45"
-                                        Command="{Binding OnTrefferpunkte}">
+                                        Command="{Binding OnTrefferpunkte}" Background="SteelBlue">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
                                             <MultiBinding.Bindings>
@@ -542,12 +521,10 @@
                                             </MultiBinding.Bindings>
                                         </MultiBinding>
                                     </Button.CommandParameter>
-                                    <Border Background="SteelBlue">
-                                        <Label Content="TP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
+                                    <Label Content="TP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Button>
                                 <Button Grid.Row="1" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkteAusdauer" ToolTip="Ausdauer-Schadenspunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45"
-                                        Command="{Binding OnTrefferpunkte}">
+                                        Command="{Binding OnTrefferpunkte}" Background="SteelBlue">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
                                             <MultiBinding.Bindings>
@@ -556,14 +533,11 @@
                                             </MultiBinding.Bindings>
                                         </MultiBinding>
                                     </Button.CommandParameter>
-                                    <Border Background="SteelBlue">
-                                        <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
+                                    <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Button>
-                                <Button Grid.Row="1" Grid.Column="4" Margin="2" Style="{StaticResource GeweihtStyle}" Name="_buttonKarmapunkte" Width="45" ToolTip="KaP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Command="{Binding OnKarmaenergieAbziehen}">
-                                    <Border Background="Gold">
-                                        <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
+                                <Button Grid.Row="1" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}" Width="45" ToolTip="KaP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                        Command="{Binding OnKarmaenergieAbziehen}" Background="Gold">
+                                    <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Button>
                             </Grid>
                             <TextBox Grid.Row="6" Grid.ColumnSpan="2" Margin="6,6,0,0" Text="{Binding Path=SelectedItem.Besonderheiten, ElementName=_listBoxKämpfer}" ToolTip="Besonderheiten" TextWrapping="Wrap" FontSize="10" AcceptsReturn="True">
