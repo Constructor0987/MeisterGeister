@@ -236,6 +236,7 @@ namespace MeisterGeister.ViewModel.Helden
                 Held h = Held.Import(fileName, true);
             }
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
+            Held.UpdateLists();
             LoadDaten();
 
             Global.SetIsBusy(false);

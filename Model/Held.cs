@@ -1920,7 +1920,8 @@ namespace MeisterGeister.Model
             Guid heldGuid = serialization.ImportHeld(pfad, newGuid);
             if (heldGuid == Guid.Empty)
                 return null;
-            Global.ContextHeld.UpdateList<Held>();
+            if (!batch)
+                UpdateLists();
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
 
@@ -1941,8 +1942,21 @@ namespace MeisterGeister.Model
             Guid heldGuid = serialization.CloneHeld(HeldGUID, newGuid);
             if (heldGuid == Guid.Empty)
                 return null;
-            Global.ContextHeld.UpdateList<Held>();
+            if(!batch)
+                UpdateLists();
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
+        }
+
+        public static void UpdateLists()
+        {
+            Global.ContextHeld.UpdateList<Held>();
+            Global.ContextHeld.UpdateList<Held_Talent>();
+            Global.ContextHeld.UpdateList<Held_Zauber>();
+            Global.ContextHeld.UpdateList<Held_Ausrüstung>();
+            Global.ContextHeld.UpdateList<Held_Inventar>();
+            Global.ContextHeld.UpdateList<Held_Munition>();
+            Global.ContextHeld.UpdateList<Held_Sonderfertigkeit>();
+            Global.ContextHeld.UpdateList<Held_VorNachteil>();
         }
         #endregion
 
