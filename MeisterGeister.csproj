@@ -422,6 +422,7 @@
       <DependentUpon>SliderRange.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\BindableSelectedItemBehavior.cs" />
+    <Compile Include="View\General\BooleanToVisibilityConverter.cs" />
     <Compile Include="View\General\DereGlobusLinkControl.xaml.cs">
       <DependentUpon>DereGlobusLinkControl.xaml</DependentUpon>
     </Compile>
@@ -1194,6 +1195,8 @@
     <Resource Include="Images\Icons\General\no_shuffle.png" />
     <Resource Include="Images\Icons\General\schildkröte.png" />
     <Resource Include="Images\Icons\General\info_rot.png" />
+    <Resource Include="Images\Icons\General\pfeil_oben_gruen.png" />
+    <Resource Include="Images\Icons\pfeil_unten_rot.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -55,5 +55,14 @@ namespace MeisterGeister.View.General
         }
         public static DependencyProperty WertProperty = DependencyProperty.Register("Wert", typeof(int), typeof(ModInfoBox),
                 new PropertyMetadata(0));
+
+        public bool IsErschwernis
+        {
+            get { return (bool)GetValue(IsErschwernisProperty); }
+            set { SetValue(IsErschwernisProperty, value); }
+        }
+        public static DependencyProperty IsErschwernisProperty = DependencyProperty.Register("IsErschwernis", typeof(bool), typeof(ModInfoBox),
+                new PropertyMetadata(false));
+
     }
 }

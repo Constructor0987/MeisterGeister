@@ -112,7 +112,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public int ApplyKLMod(int wert)
         {
-            return wert - 2;
+            return wert + 2;
         }
 
         public int ApplyINMod(int wert)

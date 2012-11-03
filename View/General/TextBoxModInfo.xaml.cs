@@ -46,7 +46,14 @@ namespace MeisterGeister.View.General
             set { SetValue(StartWertProperty, value); }
         }
         public static DependencyProperty StartWertProperty = DependencyProperty.Register("StartWert", typeof(int), typeof(TextBoxModInfo),
-                new PropertyMetadata(0));
+                new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.None, new PropertyChangedCallback(OnCurrentStartWertChanged)));
+
+        private static void OnCurrentStartWertChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxModInfo box = (TextBoxModInfo)d;
+            box.IsWertGesenkt = (int)e.NewValue > box.Wert;
+            box.IsWertGesteigert = (int)e.NewValue < box.Wert;
+        }
 
         public int Wert
         {
@@ -54,6 +61,37 @@ namespace MeisterGeister.View.General
             set { SetValue(WertProperty, value); }
         }
         public static DependencyProperty WertProperty = DependencyProperty.Register("Wert", typeof(int), typeof(TextBoxModInfo),
-                new PropertyMetadata(0));
+                new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.None, new PropertyChangedCallback(OnCurrentWertChanged)));
+        
+        private static void OnCurrentWertChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TextBoxModInfo box = (TextBoxModInfo)d;
+            box.IsWertGesenkt = box.StartWert > (int)e.NewValue;
+            box.IsWertGesteigert = box.StartWert < (int)e.NewValue;
+        }
+
+        public bool IsErschwernis
+        {
+            get { return (bool)GetValue(IsErschwernisProperty); }
+            set { SetValue(IsErschwernisProperty, value); }
+        }
+        public static DependencyProperty IsErschwernisProperty = DependencyProperty.Register("IsErschwernis", typeof(bool), typeof(TextBoxModInfo),
+                new PropertyMetadata(false));
+
+        public bool IsWertGesenkt
+        {
+            get { return (bool)GetValue(IsWertGesenktProperty); }
+            set { SetValue(IsWertGesenktProperty, value); }
+        }
+        public static DependencyProperty IsWertGesenktProperty = DependencyProperty.Register("IsWertGesenkt", typeof(bool), typeof(TextBoxModInfo),
+                new PropertyMetadata(false));
+
+        public bool IsWertGesteigert
+        {
+            get { return (bool)GetValue(IsWertGesteigertProperty); }
+            set { SetValue(IsWertGesteigertProperty, value); }
+        }
+        public static DependencyProperty IsWertGesteigertProperty = DependencyProperty.Register("IsWertGesteigert", typeof(bool), typeof(TextBoxModInfo),
+                new PropertyMetadata(false));
     }
 }

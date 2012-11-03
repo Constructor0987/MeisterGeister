@@ -3,8 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" Name="_modInfoBox" 
              d:DesignHeight="180" d:DesignWidth="250">
+    <UserControl.Resources>
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed" />
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanInvertedToVisibilityConverter" True="Collapsed" False="Visible" />
+    </UserControl.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,0,0,5">
             <TextBlock Text="{Binding ElementName=_modInfoBox, Path=WertName, StringFormat='\{0\}:'}" />
@@ -54,7 +59,8 @@
             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Width="15" Height="15" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="Aktueller Wert:" FontWeight="Bold" />
-                <TextBlock Text="{Binding ElementName=_modInfoBox, Path=Wert}" Margin="20,0,0,0" FontWeight="Bold" />
+                <TextBlock Text="{Binding ElementName=_modInfoBox, Path=Wert}" Margin="20,0,0,0" FontWeight="Bold" Visibility="{Binding ElementName=_modInfoBox, Path=IsErschwernis, Converter={StaticResource BooleanInvertedToVisibilityConverter}}" />
+                <TextBlock Text="{Binding ElementName=_modInfoBox, Path=Wert, StringFormat=\{0:+0;-0\}}" Margin="20,0,0,0" FontWeight="Bold" Visibility="{Binding ElementName=_modInfoBox, Path=IsErschwernis, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </StackPanel>
         </StackPanel>
     </StackPanel>

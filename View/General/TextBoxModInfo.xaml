@@ -5,6 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" Name="_textBoxModInfo" Tag="{Binding RelativeSource={x:Static RelativeSource.Self}}">
+    <UserControl.Resources>
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed" />
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanInvertedToVisibilityConverter" True="Collapsed" False="Visible" />
+    </UserControl.Resources>
     <Grid HorizontalAlignment="Center" Tag="{Binding Tag, ElementName=_textBoxModInfo}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -15,21 +19,46 @@
                 <ViewGeneral:ModInfoBox ModListe="{Binding PlacementTarget.Tag.ModListe, RelativeSource={RelativeSource AncestorType=ToolTip}}" 
                                         WertName="{Binding PlacementTarget.Tag.WertName, RelativeSource={RelativeSource AncestorType=ToolTip}}"
                                         StartWert="{Binding PlacementTarget.Tag.StartWert, RelativeSource={RelativeSource AncestorType=ToolTip}}"
-                                        Wert="{Binding PlacementTarget.Tag.Wert, RelativeSource={RelativeSource AncestorType=ToolTip}}"/>
+                                        Wert="{Binding PlacementTarget.Tag.Wert, RelativeSource={RelativeSource AncestorType=ToolTip}}"
+                                        IsErschwernis="{Binding PlacementTarget.Tag.IsErschwernis, RelativeSource={RelativeSource AncestorType=ToolTip}}" />
             </ToolTip>
         </Grid.ToolTip>
-        <TextBlock HorizontalAlignment="Center" Text="{Binding ElementName=_textBoxModInfo, Path=Wert}" TextAlignment="Center" VerticalAlignment="Center" />
-        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-            <Image.Style>
-                <Style TargetType="Image">
-                    <Setter Property="Visibility" Value="Visible" />
+        <TextBlock HorizontalAlignment="Center" Text="{Binding ElementName=_textBoxModInfo, Path=Wert}" TextAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsErschwernis, Converter={StaticResource BooleanInvertedToVisibilityConverter}}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=_textBoxModInfo, Path=ModListe.Count}" Value="0" >
-                            <Setter Property="Visibility" Value="Collapsed"/>
+                        <DataTrigger Binding="{Binding ElementName=_textBoxModInfo, Path=IsWertGesenkt}" Value="true" >
+                            <Setter Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=_textBoxModInfo, Path=IsWertGesteigert}" Value="true" >
+                            <Setter Property="Foreground" Value="Green"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Image.Style>
-        </Image>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Center" Text="{Binding ElementName=_textBoxModInfo, Path=Wert, StringFormat=\{0:+0;-0\}}" TextAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsErschwernis, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_textBoxModInfo, Path=IsWertGesenkt}" Value="true" >
+                            <Setter Property="Foreground" Value="Green"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=_textBoxModInfo, Path=IsWertGesteigert}" Value="true" >
+                            <Setter Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <Grid Grid.Column="1" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsErschwernis, Converter={StaticResource BooleanInvertedToVisibilityConverter}}">
+            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/pfeil_unten_rot.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesenkt, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesteigert, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
+        <Grid Grid.Column="1" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsErschwernis, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/pfeil_unten_rot.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesteigert, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesenkt, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
     </Grid>
 </UserControl>
