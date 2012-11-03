@@ -51,7 +51,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListBox x:Name="_listBoxGegnerBase" Grid.Row="0" Padding="4" Background="Transparent" AllowDrop="True" 
-				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding GegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000">
+				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding GegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000" SelectionChanged="ListBoxGegnerBase_SelectionChanged">
                         <ListBox.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
                         </ListBox.InputBindings>
