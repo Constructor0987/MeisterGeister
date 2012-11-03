@@ -153,7 +153,7 @@ namespace MeisterGeister.Model
             get
             {
                 List<dynamic> list = ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
-                list.AddRange(ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                list.AddRange(ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? AttackeBasisOhneMod : list.LastOrDefault().Wert));
                 return list;
             }
         }
@@ -163,7 +163,7 @@ namespace MeisterGeister.Model
             get
             {
                 List<dynamic> list = ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
-                list.AddRange(ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                list.AddRange(ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? ParadeBasisOhneMod : list.LastOrDefault().Wert));
                 return list;
             }
         }

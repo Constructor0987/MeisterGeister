@@ -53,314 +53,58 @@
                     <Label Grid.Column="5" Grid.Row="0" Margin="16,3,17,3" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="0" Grid.Row="1" Content="MU:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Mut" Value="{Binding SelectedHeld.MU}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeMU}" WertName="MU-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeMU}" WertName="MU-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.MU}" Wert="{Binding SelectedHeld.Mut}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Mut}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeMU.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
                     <Label Grid.Column="0" Grid.Row="2" Content="KL:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Klugheit" Value="{Binding SelectedHeld.KL}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeKL}" WertName="KL-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeKL}" WertName="KL-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.KL}" Wert="{Binding SelectedHeld.Klugheit}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Klugheit}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeKL.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
                     <Label Grid.Column="0" Grid.Row="3" Content="IN:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Intuition" Value="{Binding SelectedHeld.IN}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeIN}" WertName="IN-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeIN}" WertName="IN-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.IN}" Wert="{Binding SelectedHeld.Intuition}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Intuition}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeIN.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
                     <Label Grid.Column="0" Grid.Row="4" Content="CH:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="1" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Charisma" Value="{Binding SelectedHeld.CH}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeCH}" WertName="CH-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeCH}" WertName="CH-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.CH}" Wert="{Binding SelectedHeld.Charisma}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Charisma}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeCH.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
                     <Label Grid.Column="3" Grid.Row="1" Margin="3,3,0,3" Content="FF:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="1" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Fingerfertigkeit" Value="{Binding SelectedHeld.FF}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeFF}" WertName="FF-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeFF}" WertName="FF-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.FF}" Wert="{Binding SelectedHeld.Fingerfertigkeit}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Fingerfertigkeit}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeFF.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
                     <Label Grid.Column="3" Grid.Row="2" Margin="3,3,0,3" Content="GE:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Gewandtheit" Value="{Binding SelectedHeld.GE}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeGE}" WertName="GE-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeGE}" WertName="GE-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.GE}" Wert="{Binding SelectedHeld.Gewandtheit}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Gewandtheit}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeGE.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
                     <Label Grid.Column="3" Grid.Row="3" Margin="3,3,0,3" Content="KO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="3" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Konstitution" Value="{Binding SelectedHeld.KO}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeKO}" WertName="KO-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListeKO}" WertName="KO-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.KO}" Wert="{Binding SelectedHeld.Konstitution}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Konstitution}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeKO.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
                     <Label Grid.Column="3" Grid.Row="4" Margin="3,3,0,3" Content="KK:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="4" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Körperkraft" Value="{Binding SelectedHeld.KK}" VerticalAlignment="Center" Height="24" />
-                    <Grid Grid.Column="5" Grid.Row="4" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeKK}" WertName="KK-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="5" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeKK}" WertName="KK-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.KK}" Wert="{Binding SelectedHeld.Körperkraft}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Körperkraft}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeKK.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
 
                     <Label Grid.Column="7" Grid.Row="1" Margin="3,3,0,3" Content="INI-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="8" Grid.Row="1" HorizontalAlignment="Center" MinWidth="65" ShowButtons="True" ToolTip="Initiative-Modifikator durch Rasse/Kultur/Profession" Value="{Binding SelectedHeld.InitiativeModGen}" VerticalAlignment="Center" Height="24" />
                     <TextBlock Grid.Column="9" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding SelectedHeld.InitiativeBasisOhneMod}" TextAlignment="Center" VerticalAlignment="Center" />
-                    <Grid Grid.Column="10" Grid.Row="1" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeINIbasis}" WertName="INI-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="1" ModListe="{Binding SelectedHeld.ModifikatorenListeINIbasis}" WertName="INI-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.InitiativeBasisOhneMod}" Wert="{Binding SelectedHeld.InitiativeBasis}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.InitiativeBasis}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeINIbasis.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
-
                     <Label Grid.Column="8" Grid.Row="0" Content="Mod." ToolTip="Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="9" Grid.Row="0" Content="Wert" ToolTip="Wert ohne temporäre Modifikatoren" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic" />
                     <Label Grid.Column="10" Grid.Row="0" Content="Akt." HorizontalAlignment="Center" ToolTip="Aktueller Wert mit Modifikatoren" VerticalAlignment="Center" FontStyle="Italic" />
 
                     <Label Grid.Column="7" Grid.Row="2" Margin="3,3,0,3" Content="AT-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="2" HorizontalAlignment="Center" Text="{Binding SelectedHeld.AttackeBasisOhneMod}" TextAlignment="Center" ToolTip="Attacke-Basiswert" VerticalAlignment="Center" />
-                    <Grid Grid.Column="10" Grid.Row="2" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeAT}" WertName="AT-Wert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="2" ModListe="{Binding SelectedHeld.ModifikatorenListeAT}" WertName="AT-Wert" 
                                                         StartWert="{Binding SelectedHeld.AttackeBasisOhneMod}" Wert="{Binding SelectedHeld.Attacke}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Attacke}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeAT.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
-
                     <Label Grid.Column="7" Grid.Row="3" Margin="3,3,0,3" Content="PA-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding SelectedHeld.ParadeBasisOhneMod}" TextAlignment="Center" ToolTip="Parade-Basiswert" VerticalAlignment="Center" />
-                    <Grid Grid.Column="10" Grid.Row="3" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListePA}" WertName="PA-Wert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="3" ModListe="{Binding SelectedHeld.ModifikatorenListePA}" WertName="PA-Wert" 
                                                         StartWert="{Binding SelectedHeld.ParadeBasisOhneMod}" Wert="{Binding SelectedHeld.Parade}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Parade}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListePA.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
-
                     <Label Grid.Column="7" Grid.Row="4" Margin="3,3,0,3" Content="FK-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="4" HorizontalAlignment="Center" Text="{Binding SelectedHeld.FernkampfBasisOhneMod}" TextAlignment="Center" ToolTip="Fernkampf-Basiswert" VerticalAlignment="Center" />
-                    <Grid Grid.Column="10" Grid.Row="4" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeFKbasis}" WertName="FK-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeFKbasis}" WertName="FK-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.FernkampfBasisOhneMod}" Wert="{Binding SelectedHeld.FernkampfBasis}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.FernkampfBasis}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeFKbasis.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
-
                     <Label Grid.Column="0" Grid.Row="6" Content="WS:" HorizontalAlignment="Left" ToolTip="Wundschwelle" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="1" Grid.Row="6" Margin="6,0,0,0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding SelectedHeld.Wundschwellen}" TextAlignment="Center" ToolTip="Wundschwelle" />
                     <Label Grid.Column="3" Grid.Row="6" Margin="3,3,0,3" Content="SO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
@@ -370,30 +114,8 @@
                     <Label Grid.Column="7" Grid.Row="6" Margin="3,3,0,3" Content="MR:" HorizontalAlignment="Left" x:Name="_labelMR" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox x:Name="_intBoxMR" Grid.Column="8" Grid.Row="6" HorizontalAlignment="Center" MinWidth="65" ShowButtons="True" ToolTip="Magieresistenz-Modifikator durch Rasse/Kultur/Profession, Vor-/Nachteile, Zukauf, etc." Value="{Binding SelectedHeld.MR_Mod}" VerticalAlignment="Center" Height="24" />
                     <TextBlock Grid.Column="9" Grid.Row="6" HorizontalAlignment="Center" Text="{Binding SelectedHeld.MagieresistenzOhneMod}" TextAlignment="Center" ToolTip="Magieresistenz" VerticalAlignment="Center" />
-                    <Grid Grid.Column="10" Grid.Row="6" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.ToolTip>
-                            <ViewGeneral:ModInfoBox ModListe="{Binding SelectedHeld.ModifikatorenListeMR}" WertName="MR-Basiswert" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="6" ModListe="{Binding SelectedHeld.ModifikatorenListeMR}" WertName="MR-Basiswert" 
                                                         StartWert="{Binding SelectedHeld.MagieresistenzOhneMod}" Wert="{Binding SelectedHeld.Magieresistenz}" />
-                        </Grid.ToolTip>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedHeld.Magieresistenz}" TextAlignment="Center" VerticalAlignment="Center" />
-                        <Image Grid.Column="1" Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedHeld.ModifikatorenListeMR.Count}" Value="0" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </Grid>
-
                 </Grid>
             </Border>
         </Expander>

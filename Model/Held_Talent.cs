@@ -258,7 +258,7 @@ namespace MeisterGeister.Model
                 if (Held == null)
                     return new List<dynamic>();
                 List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
-                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? AttackeBasisOhneMod : list.LastOrDefault().Wert));
                 return list;
             }
         }
@@ -271,7 +271,7 @@ namespace MeisterGeister.Model
                 if (Held == null)
                     return new List<dynamic>();
                 List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
-                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? ParadeBasisOhneMod : list.LastOrDefault().Wert));
                 return list;
             }
         }
@@ -284,7 +284,7 @@ namespace MeisterGeister.Model
                 if (Held == null)
                     return new List<dynamic>();
                 List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModFKBasis), FernkampfwertBasisOhneMod);
-                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModFK), list.Count() == 0 ? 0 : list.LastOrDefault().Wert));
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModFK), list.Count() == 0 ? FernkampfwertBasisOhneMod : list.LastOrDefault().Wert));
                 return list;
             }
         }

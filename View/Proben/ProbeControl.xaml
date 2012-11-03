@@ -141,30 +141,8 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{Binding Name}" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="28" />
-                                <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.ToolTip>
-                                        <ViewGeneral:ModInfoBox ModListe="{Binding ModList}" WertName="{Binding Name}" 
-                                                            StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
-                                    </Grid.ToolTip>
-                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Wert}" TextAlignment="Center" VerticalAlignment="Center" />
-                                    <Image Grid.Column="1" Width="10" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png">
-                                        <Image.Style>
-                                            <Style TargetType="Image">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ModList.Count}" Value="0" >
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Image.Style>
-                                    </Image>
-                                </Grid>
-
+                                <ViewGeneral:TextBoxModInfo Grid.Column="0" Grid.Row="1" ModListe="{Binding ModList}" WertName="{Binding Name}" 
+                                                        StartWert="{Binding StartWert}" Wert="{Binding Wert}" />
                                 <Border Grid.Row="2" Width="24" Height="24">
                                     <Border.ToolTip>
                                         <StackPanel Width="225">
