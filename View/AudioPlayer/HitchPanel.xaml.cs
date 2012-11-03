@@ -23,5 +23,21 @@ namespace MeisterGeister.View.AudioPlayer
         {
             InitializeComponent();
         }
+
+        private void btnAngehakt_Click(object sender, RoutedEventArgs e)
+        {
+            BitmapImage logo = new BitmapImage();
+            if (btnAngehakt.IsChecked.Value)
+            {
+                logo.BeginInit();
+                logo.UriSource = new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/ok.png");
+                logo.EndInit();
+                btnImgAngehakt.Source = logo;
+            }
+            else
+                btnImgAngehakt.Source = null;
+
+            btnHitchPanel.IsChecked = btnAngehakt.IsChecked;
+        }
     }
 }

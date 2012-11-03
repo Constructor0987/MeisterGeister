@@ -107,7 +107,12 @@
         </Border>
         <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <TabItem Header="Themes" Name="tiUebersicht" >
-                <Grid Background="{StaticResource Background1}">
+                <Grid Background="{StaticResource Background1}" Name="grdThemes">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="200*" MinHeight="200"  />
+                        <RowDefinition Height="22" MinHeight="10" />
+                    </Grid.RowDefinitions>
+                    <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6">
                         <Grid Name="grdUebersicht">
                             <Grid.ColumnDefinitions>
@@ -120,9 +125,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="46" />
                                 <RowDefinition Height="150" />
-                                <RowDefinition Height="150" />
-                                <RowDefinition Height="150" />
-                                <RowDefinition Height="10*" />
+                                <RowDefinition Height="1" />
                             </Grid.RowDefinitions>
                             <Button Height="23" Name="btnUpdate" Click="btnUpdate_Click" Width="70" HorizontalAlignment="Left" Margin="5">
                                 <Grid>
@@ -134,10 +137,106 @@
                                     <Label Padding="0" Name="btnLblUpdate" Grid.Column="1" VerticalContentAlignment="Center">Update</Label>
                                 </Grid>
                             </Button> 
-                            <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="4" />
                         </Grid>
 
                     </ScrollViewer>
+                        <Expander Grid.Row="1" IsExpanded="False" IsEnabled="True" Name="exThemeEditor" Collapsed="exThemeEditor_Collapsed" Expanded="exThemeEditor_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Theme - Editor" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                                <Border Style="{DynamicResource ControlContentBorder}">
+                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Background1}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="300" />
+                                            <ColumnDefinition Width="135" />
+                                            <ColumnDefinition Width="300" />
+                                            <ColumnDefinition Width="240*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="40" />
+                                            <RowDefinition Height="56" />
+                                            <RowDefinition Height="38*" />
+                                        </Grid.RowDefinitions>
+                                        <Button Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnNeuesTheme" VerticalAlignment="Center" Width="100" >
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="22" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="/Images/Icons/General/neu.png" Name="btnImgNeuesTheme" VerticalAlignment="Center" />
+                                                <Label Padding="0" Name="btnLblNeuesTheme" Grid.Column="1" VerticalContentAlignment="Center">Neues Theme</Label>
+                                            </Grid>
+                                        </Button>
+                                        <TextBox Background="{x:Null}" FontWeight="Bold" ForceCursor="True" Height="25" Name="tboxThemeBezeichnung" Style="{Binding}" Grid.Column="2" Margin="0,5" />
+                                        <Button Grid.Column="3" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnThemeUebernehmen" VerticalAlignment="Center" Width="100" >
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="22" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="/Images/Icons/General/ok.png" Name="btnImgThemeUebernehmen" VerticalAlignment="Center" />
+                                                <Label Padding="0" Name="btnLblThemeUebernehmen" Grid.Column="1" VerticalContentAlignment="Center">Übernehmen</Label>
+                                            </Grid>
+                                        </Button>
+                                        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="35" />
+                                                    <RowDefinition Height="1*" />
+                                                </Grid.RowDefinitions>
+                                                <Border Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="3" Margin="1">
+                                                    <Label Content="Klang-Playlists" Name="lblKlangPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" />
+                                                </Border>
+                                                <Grid Grid.Row="1">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Visible" AllowDrop="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6">
+                                                        <Grid Grid.Row="1" Margin="5" Name="grdKlaenge">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="220" />
+                                                                <ColumnDefinition Width="220" />
+                                                                <ColumnDefinition Width="220" />
+                                                                <ColumnDefinition Width="1*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="120" />
+                                                                <RowDefinition Height="1*" />
+                                                            </Grid.RowDefinitions>
+
+                                                        </Grid>
+                                                    </ScrollViewer>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                        <Border Grid.Row="2" Grid.Column="0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="250*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="35" />
+                                                    <RowDefinition Height="300*" />
+                                                </Grid.RowDefinitions>
+                                                <Border Style="{DynamicResource ControlContentBorder}" Margin="1" Grid.ColumnSpan="2">
+                                                    <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
+                                                </Border>
+                                                <Grid Grid.Row="1">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Visible" AllowDrop="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6">
+                                                        <Grid Grid.Row="1" Margin="5" Name="grdHintergrund">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="220" />
+                                                                <ColumnDefinition Width="1*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="120" />
+                                                                <RowDefinition Height="1*" />
+                                                            </Grid.RowDefinitions>
+                                                        </Grid>
+                                                    </ScrollViewer>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                         </Expander>
                 </Grid>
             </TabItem>
             <TabItem Header="Hintergrund" Name="tiHintergrund" Loaded="tiHintergrund_Loaded" GotFocus="tiHintergrund_GotFocus">
@@ -544,87 +643,6 @@
                     <Button Content="Neue Liste" HorizontalAlignment="Right" Name="btnNeuePlaylist" VerticalAlignment="Top" Click="bntNeuePlaylist_Click" Height="23" Width="65" Margin="3,3,3,0" Visibility="Visible" />
                     <Button Content="Liste löschen" HorizontalAlignment="Left" Name="btnPlaylistLoeschen" VerticalAlignment="Top" Height="23" Width="80" Margin="3,3,3,0" IsEnabled="False" Click="btnPlaylistLoeschen_Click" />
                 </Grid>            
-            </TabItem>
-            <TabItem Header="Theme-Creator" Name="tiThemeCreator" GotFocus="tiThemeCreator_GotFocus">
-                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Background1}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="345" />
-                        <ColumnDefinition Width="135" />
-                        <ColumnDefinition Width="300" />
-                        <ColumnDefinition Width="240*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70" />
-                        <RowDefinition Height="56" />
-                        <RowDefinition Height="38*" />
-                    </Grid.RowDefinitions>
-                    <ListBox Margin="10" Name="listBox1" Grid.RowSpan="2" />
-                    <Button Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnNeuesTheme" VerticalAlignment="Center" Width="100" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="22" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="/Images/Icons/General/neu.png" Name="btnImgNeuesTheme" VerticalAlignment="Center" />
-                            <Label Padding="0" Name="btnLblNeuesTheme" Grid.Column="1" VerticalContentAlignment="Center">Neues Theme</Label>
-                        </Grid>
-                    </Button>
-                    <TextBox Background="{x:Null}" FontWeight="Bold" ForceCursor="True" Height="25" Name="tboxThemeBezeichnung" Style="{Binding}" Grid.Column="2" Margin="0,5" />
-                    <Button Grid.Column="3" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnThemeUebernehmen" VerticalAlignment="Center" Width="100" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="22" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="/Images/Icons/General/ok.png" Name="btnImgThemeUebernehmen" VerticalAlignment="Center" />
-                            <Label Padding="0" Name="btnLblThemeUebernehmen" Grid.Column="1" VerticalContentAlignment="Center">Übernehmen</Label>
-                        </Grid>
-                    </Button>
-                    <Border Grid.Row="2">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35" />
-                                <RowDefinition Height="120" />
-                                <RowDefinition Height="120" />
-                                <RowDefinition Height="1*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="220" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <Border Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="2" Margin="1">
-                                <Label Content="Klang-Playlists" Name="lblKlangPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" />
-                            </Border>
-                            <Grid Margin="5" Name="grdKlaenge" Grid.RowSpan="2" />
-                        </Grid>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="35" />
-                                <RowDefinition Height="335*" />
-                            </Grid.RowDefinitions>
-                            <Border Style="{DynamicResource ControlContentBorder}" Margin="1">
-                                <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
-                            </Border>
-                            <Grid Grid.Row="1" Margin="5" Name="grdHintergrund">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="220" />
-                                    <ColumnDefinition Width="220" />
-                                    <ColumnDefinition Width="220" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="32*" />
-                                    <RowDefinition Height="120" />
-                                    <RowDefinition Height="120" />
-                                    <RowDefinition Height="1*" />
-                                </Grid.RowDefinitions>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                    
-                </Grid>
             </TabItem>
         </TabControl>
         <Image Grid.RowSpan="2" Height="35" HorizontalAlignment="Left" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="35" Source="/DSA%20MeisterGeister;component/Images/Icons/General/info.png" MouseDown="image1_MouseDown" Cursor="Hand" FlowDirection="LeftToRight" Margin="10,0,0,0" ToolTip="Audio-Codec Informationen" />

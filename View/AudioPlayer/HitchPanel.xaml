@@ -25,9 +25,9 @@
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
-                <Button Name="btnAngehakt" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="2">
-                    <Image Source="/Images/Icons/General/ok.png" VerticalAlignment="Center"/>
-                </Button>
+                <ToggleButton Name="btnAngehakt" Height="30" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="2" Click="btnAngehakt_Click" ClickMode="Press">
+                    <Image Name="btnImgAngehakt" VerticalAlignment="Center"/>
+                </ToggleButton>
             </Grid>
         </ToggleButton>
     </Grid>
