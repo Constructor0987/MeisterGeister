@@ -396,7 +396,7 @@ namespace MeisterGeister.View.Arena
             try {
                 _heldIdHasPortrait[heldId] = LoadImage(new Uri(portraitFilename, UriKind.Absolute));
             } catch {                
-                _heldIdHasPortrait[heldId] = LoadImage(new Uri(@ArenaWindow.CREATURE_IMAGE_DIR + "question_mark_portrait.jpg", UriKind.Relative));
+                _heldIdHasPortrait[heldId] = LoadImage(new Uri(@ArenaWindow.ICON_DIR + "fragezeichen.png", UriKind.Relative));
             }
         }
 
@@ -409,7 +409,7 @@ namespace MeisterGeister.View.Arena
                     _gegnerNameHasPortrait[bestiarumName] = LoadImage(new Uri(portraitFilename, UriKind.Absolute));
                 }
                 catch {
-                    _gegnerNameHasPortrait[bestiarumName] = LoadImage(new Uri(@ArenaWindow.CREATURE_IMAGE_DIR + "question_mark_portrait.jpg", UriKind.Relative));
+                    _gegnerNameHasPortrait[bestiarumName] = LoadImage(new Uri(@ArenaWindow.ICON_DIR + "fragezeichen.png", UriKind.Relative));
                 }
             }
         }

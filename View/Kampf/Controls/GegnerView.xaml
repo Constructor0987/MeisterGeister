@@ -183,13 +183,13 @@
                                         <Binding Path="SelectedGegnerBase.Bild" IsAsync="True" Mode="OneWay">
                                             <Binding.FallbackValue>
                                                 <ImageSource>
-                                                    /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
-                                                </ImageSource>
+                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                    </ImageSource>
                                             </Binding.FallbackValue>
                                             <Binding.TargetNullValue>
                                                 <ImageSource>
-                                                    /DSA MeisterGeister;component/Images/Wesen/question_mark_portrait.jpg
-                                                </ImageSource>
+                                                        /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                    </ImageSource>
                                             </Binding.TargetNullValue>
                                         </Binding>
                                     </Image.Source>

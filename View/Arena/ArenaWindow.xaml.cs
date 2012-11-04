@@ -25,7 +25,6 @@ namespace MeisterGeister.View.Arena
         private static double CONTROL_WIDTH = 200;
 
         public static String ICON_DIR = "/Images/Icons/General/";
-        public static String CREATURE_IMAGE_DIR = "/Images/Wesen/";
         
         private Grid _mainGrid;
         private ArenaViewer _arenaViewer;
