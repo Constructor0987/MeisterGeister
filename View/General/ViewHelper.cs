@@ -127,7 +127,7 @@ namespace MeisterGeister.View.General
 
         public static string SelectImage()
         {
-            string path = string.Empty;
+            string path = null;
             if (System.Threading.Thread.CurrentThread.GetApartmentState() == System.Threading.ApartmentState.STA)
             {
                 View.General.SelectImageDialog dlg = new SelectImageDialog();

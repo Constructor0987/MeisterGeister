@@ -21,8 +21,15 @@ namespace MeisterGeister.View.General
         public SelectImageDialog()
         {
             InitializeComponent();
+            SelectedPath = null;
+            
         }
 
         public string SelectedPath { get; set; }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
     }
 }

@@ -4,6 +4,15 @@
          WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner"
         Title="Bild auswählen" Height="300" Width="300">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Margin="5" Style="{DynamicResource ControlContentBorder}">
+            <ListBox Name="_listBoxImages" Background="Transparent">
+                
+            </ListBox>
+        </Border>
+        <Button Grid.Row="1" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" />
     </Grid>
 </Window>

@@ -51,7 +51,8 @@ namespace MeisterGeister.ViewModel.Kampf
             if (SelectedGegnerBase != null && selectImage != null)
             {
                 string path = selectImage();
-                // TODO ??: Image zuweisen
+                if (path != null)
+                    SelectedGegnerBase.Bild = path;
             }
         }
 
