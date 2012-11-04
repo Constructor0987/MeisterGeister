@@ -24,7 +24,7 @@
                     <ViewGeneral:IntBox MinWidth="100" x:Name="_intBoxGegnerAnzahl" Margin="20,10,20,10" Value="1" MinValue="1" ShowButtons="True" ToolTip="Gegner Anzahl" />
                     <Button Margin="10,10,20,10" Click="ButtonAddToKampf_Click" ToolTip="Gegner in Kampf einfügen">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="28" Stretch="Fill" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Height="28" Stretch="Fill" />
                             <TextBlock Text="In Kampf einfügen" VerticalAlignment="Center" Margin="5,0,10,0" />
                         </StackPanel>
                     </Button>
