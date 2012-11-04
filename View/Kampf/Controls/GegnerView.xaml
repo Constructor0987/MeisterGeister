@@ -178,7 +178,10 @@
                             </Grid.RowDefinitions>
                             <!-- Name, AE, AU, Bemerkung, Beschwörung, Beschwörungskosten, Bild, GS, GS2, GS3, GW, INIBasis, INIZufall, Jagd, KE, KO, Kontrolle, LE, Literatur, MRGeist, MRKörper, PA, RSx, Setting, Tags, Aktionen  -->
                             <Border   Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="5" Width="80" Height="80" ToolTip="Klicken um ein Bild einzufügen..." Cursor="Hand">
-                                <Image>
+                                    <Border.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding OnSelectImage}" />
+                                    </Border.InputBindings>
+                                        <Image>
                                     <Image.Source>
                                         <Binding Path="SelectedGegnerBase.Bild" IsAsync="True" Mode="OneWay">
                                             <Binding.FallbackValue>

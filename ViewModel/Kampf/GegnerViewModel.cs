@@ -11,9 +11,11 @@ namespace MeisterGeister.ViewModel.Kampf
 {
     public class GegnerViewModel : Base.ViewModelBase
     {
-        public GegnerViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
+        public GegnerViewModel(Func<string> selectImage, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
+            this.selectImage = selectImage;
+
             LoadDaten();
         }
 
@@ -28,6 +30,32 @@ namespace MeisterGeister.ViewModel.Kampf
                     SelectedGegnerBase = GegnerBaseListe.Where(h => h.GegnerBaseGUID == tmp).FirstOrDefault();
             }
         }
+
+        #region Select Image
+
+        private Func<string> selectImage;
+
+        private Base.CommandBase onSelectImage = null;
+        public Base.CommandBase OnSelectImage
+        {
+            get
+            {
+                if (onSelectImage == null)
+                    onSelectImage = new Base.CommandBase(SelectImage, null);
+                return onSelectImage;
+            }
+        }
+
+        private void SelectImage(object sender)
+        {
+            if (SelectedGegnerBase != null && selectImage != null)
+            {
+                string path = selectImage();
+                // TODO ??: Image zuweisen
+            }
+        }
+
+        #endregion
 
         #region Bindable Properties
 

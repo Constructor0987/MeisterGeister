@@ -1,0 +1,9 @@
+﻿<Window x:Class="MeisterGeister.View.General.SelectImageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner"
+        Title="Bild auswählen" Height="300" Width="300">
+    <Grid>
+        
+    </Grid>
+</Window>

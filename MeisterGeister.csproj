@@ -486,6 +486,9 @@
     <Compile Include="View\General\ModInfoBox.xaml.cs">
       <DependentUpon>ModInfoBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\SelectImageDialog.xaml.cs">
+      <DependentUpon>SelectImageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\TextBoxModInfo.xaml.cs">
       <DependentUpon>TextBoxModInfo.xaml</DependentUpon>
     </Compile>
@@ -795,6 +798,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\General\ModInfoBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\SelectImageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

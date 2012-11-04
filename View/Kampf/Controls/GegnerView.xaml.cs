@@ -26,7 +26,7 @@ namespace MeisterGeister.View.Kampf.Controls
 		{
 			this.InitializeComponent();
             //VM an View Registrieren
-            VM = new VM.GegnerViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
+            VM = new VM.GegnerViewModel(ViewHelper.SelectImage, ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
         }
 
         /// <summary>
