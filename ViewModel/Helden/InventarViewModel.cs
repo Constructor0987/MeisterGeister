@@ -674,7 +674,6 @@ namespace MeisterGeister.ViewModel.Inventar {
         void AddSchild(object sender) {
             if (SelectedSchild != null && SelectedHeld != null) {
                 SchildItem tmp = HeldSchildImInventar.Where(s => s.EntityHA.Ausrüstung.Schild == SelectedSchild && s.EntityHA.HeldGUID == SelectedHeld.HeldGUID).FirstOrDefault();
-
                 SchildItem newItem = CreateItemVonSchild(SelectedSchild);
                 HeldSchildImInventar.Add(newItem);
                 OnChanged("HeldSchildImInventar");
@@ -692,7 +691,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("HeldRuestungImInventar");
                 IsRuestungVorhanden = Visibility.Visible;
                 Global.ContextInventar.InsertHeldAusruestung(newItem.EntityHA);
-                AktuellesGewicht += SelectedRuestung.Gewicht;
+                AktuellesGewicht += SelectedRuestung.Gewicht /2;
             }
         }
 
@@ -756,7 +755,7 @@ namespace MeisterGeister.ViewModel.Inventar {
 
                         HeldRuestungImInventar.Remove(item);
                         OnChanged("HeldRuestungImInventar");
-                        AktuellesGewicht -= item.EntityR.Gewicht;
+                        AktuellesGewicht -= item.EntityR.Gewicht /2;
                         if (HeldRuestungImInventar.Count() == 0) {
                             IsRuestungVorhanden = Visibility.Collapsed;
                         }
@@ -822,10 +821,9 @@ namespace MeisterGeister.ViewModel.Inventar {
             get { return trageort; }
             set {
                 trageort = value;
-                OnChanged("Trageort");
-                Global.ContextInventar.RemoveAusruestungVonHeld(EntityHA);
-                //EntityHA.Ort = value;                
-                Global.ContextInventar.InsertHeldAusruestung(EntityHA);
+                OnChanged("Trageort");                
+                //EntityHA.Trageort = new Model.Trageort() { ;                
+                Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
             }
         }
         public string Talente { get { return talente; } set { talente = value; OnChanged("Talente"); } }
