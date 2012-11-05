@@ -12,6 +12,9 @@ using System.ComponentModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
+    //TODO JT: überarbeiten
+    //Probe für ein Manöver wird am Anfang des Manövers ausgeführt.
+    //Wenn die VerbleibendeDauer auf 0 geht wird es angewandt.
     public class Manöver : INotifyPropertyChanged
     {
         protected static Object syncRoot;
@@ -156,7 +159,58 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         }
 
         //TODO: muss eine Probe für das UI anbieten
-        //public virtual Probe Probe ...
+        public virtual Probe Probe
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// Ausführen einer Aktion des Manövers.
+        /// Verbraucht Aktion(en) des Kämpfers.
+        /// </summary>
+        /// <returns></returns>
+        public virtual Probe Ausführen()
+        {
+            AktionenVerbrauchen();
+            VerbleibendeDauer--;
+            RaiseOnAusführung();
+            if(VerbleibendeDauer > 0)
+                return null;
+            return Probe;
+        }
+
+        /// <summary>
+        /// Die Anzahl der Angriffsaktionen, die verbraucht werden.
+        /// </suAusführender
+        public virtual int Angriffsaktionen
+        {
+            get { return 1; }
+        }
+
+        /// <summary>
+        /// Die Anzahl der Abwehraktionen, die verbraucht werden.
+        /// </suAusführender
+        public virtual int Abwehraktionen
+        {
+            get { return 0; }
+        }
+
+        /// <summary>
+        /// Die Anzahl der freien Aktionen, die verbraucht werden.
+        /// </suAusführender
+        public virtual int FreieAktionen
+        {
+            get { return 0; }
+        }
+
+        protected virtual void AktionenVerbrauchen()
+        {
+            if (Ausführender == null)
+                return;
+            Ausführender.VerbrauchteAngriffsaktionen += Angriffsaktionen;
+            Ausführender.VerbrauchteAbwehraktionen += Abwehraktionen;
+            Ausführender.VerbrauchteFreieAktionen += FreieAktionen;
+        }
 
         //eine weitere methode für den erfolg
         /// <summary>
@@ -196,6 +250,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         protected virtual void OnAktion()
         {
    
+        }
+
+        public delegate void OnAusführungEventHandler(object sender);
+        public event OnAusführungEventHandler OnAusführung;
+        protected void RaiseOnAusführung()
+        {
+            if (OnAusführung != null)
+                OnAusführung(this);
         }
 
         #region INotifyPropertyChanged

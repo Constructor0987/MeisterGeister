@@ -35,8 +35,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
+        public override int Abwehraktionen
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public override int Angriffsaktionen
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
         protected override void OnAktion()
         {
+            //TODO JT: Wenn AusdauerImKampf
             //Wenn Waffe schwerer als KK*10 Unzen
             // Ausführender.AusdauerAktuell--;
             //Wenn BE / 3 > 0

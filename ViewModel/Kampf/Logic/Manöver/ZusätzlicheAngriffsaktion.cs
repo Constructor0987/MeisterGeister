@@ -25,6 +25,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         {
             get { return "WdS 72 / TCD 156"; }
         }
-        //kombinierbar mit allen Manövern, die keinen automatische Erschwernis von > 4 haben
+        //kombinierbar mit allen Manövern, die keine automatische Erschwernis von > 4 haben
     }
 }

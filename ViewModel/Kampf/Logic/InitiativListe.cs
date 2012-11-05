@@ -95,8 +95,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void OnManöverInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
         {
-            if(args.PropertyName == "Initiative")
+            if (args.PropertyName == "Initiative")
                 Sort();
+            //else if (args.PropertyName == "Manöver")
+            //    OnChanged("Manöver"); //es muss ein event ausgelöst werden um die aktionen neu durchzuplanen.
         }
 
         public void Sort()

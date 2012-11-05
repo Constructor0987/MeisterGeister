@@ -84,9 +84,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public ManöverInfo Next()
         {
-            if (AktuelleAktion != null) //TODO JT: nur temporär, bis Manöver auch wirklich ausgeführt werden können
+            if (Kampfrunde < 1)
+                KampfBeginn();
+            if (AktuelleAktion != null && !AktuelleAktion.Ausgeführt)
             {
-                AktuelleAktion.Ausgeführt = true;
+                if (AktuelleAktion.Manöver != null)
+                {
+                    var probe = AktuelleAktion.Manöver.Ausführen();
+                    if (probe != null)
+                    {
+                        //TODO JT: Probe anzeigen und Erfolg oder Misserfolg auswerten.
+                        //Das ist keine gute idee. Eine Probe und die Parade muss auch schon angezeigt werden, wenn das Manöver nur ausgewählt wird.
+                        //Hier muss noch mehr am Konzept gearbeitet werden.
+                    }
+                }
                 UmwandelnMöglich = false;
             }
 
@@ -106,11 +117,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public void NeueKampfrunde()
         {
             //Alle Manöver, die noch nicht ausgeführt wurden
+            var nichtAusgeführt = InitiativListe.Where(mi => mi.Ausgeführt == false);
             //TODO JT: entweder warnen
-            foreach (var mi in InitiativListe.Where(mi => mi.Ausgeführt == false))
+            foreach (var mi in nichtAusgeführt)
             {
                 //oder einfach als ausgeführt setzen
-                mi.Ausgeführt = true;
+                if (mi.Manöver != null)
+                {
+                    var probe = mi.Manöver.Ausführen();
+                    //Siehe kommentar in next() ... das design ist mist.
+                    //Wenn die probe ignoriert wird passiert auch nichts weiter, auss dass die Verbleibenden Aktionen sinken.
+                }
+                else
+                    mi.Ausgeführt = true;
             }
             //Alte Ansagen löschen
             InitiativListe.LöscheBeendeteManöver();
@@ -119,6 +138,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
                 StandardAktionenSetzen(ki);
+                ki.Kämpfer.VerbrauchteAbwehraktionen = 0;
+                ki.Kämpfer.VerbrauchteAngriffsaktionen = 0;
+                ki.Kämpfer.VerbrauchteFreieAktionen = 0;
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)
             }
@@ -143,8 +165,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void KampfBeginn()
         {
-            //Globales Datum holen und mit Uhrzeit in Kampfbeginn abspeichern.
-            //Die Kampfzeit wird für neue Modifikatoren in Erstellt abgelegt.
+            //TODO JT: Globales Datum holen und mit Uhrzeit in Kampfbeginn abspeichern.
+            //TODO: Die Kampfzeit wird für neue Modifikatoren in Erstellt abgelegt.
+            Kampfrunde = 1;
         }
 
         public void KampfEnde()

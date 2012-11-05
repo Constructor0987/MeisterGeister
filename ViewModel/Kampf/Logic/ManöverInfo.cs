@@ -52,9 +52,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return manöver; }
             set
             {
+                if (manöver != null)
+                    manöver.OnAusführung -= manöver_OnAusführung;
                 manöver = value;
+                if (manöver != null)
+                    manöver.OnAusführung += manöver_OnAusführung;
                 OnChanged("Manöver"); OnChanged("IsAktion");
             }
+        }
+
+        void manöver_OnAusführung(object sender)
+        {
+            Ausgeführt = true;
         }
 
         /// <summary>
@@ -92,9 +101,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return ausgeführt; }
             //sollte von einem Manöver-Event OnAusführung gesetzt werden
             set {
-                ausgeführt = false;
-                if(Manöver != null)
-                Manöver.VerbleibendeDauer--;
+                ausgeführt = value;
                 OnChanged("Ausgeführt"); 
             }
         }

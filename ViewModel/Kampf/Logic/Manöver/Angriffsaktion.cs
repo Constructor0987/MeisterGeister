@@ -26,6 +26,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
         protected override void OnAktion()
         {
+            //TODO JT: Wenn AusdauerImKampf
             //Wenn Waffe schwerer als KK*10 Unzen
             // Ausführender.AusdauerAktuell--;
             //Wenn BE / 3 > 0

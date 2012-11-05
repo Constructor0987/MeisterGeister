@@ -12,6 +12,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 using Global = MeisterGeister.Global;
 using MeisterGeister.ViewModel.Kampf.Logic.Manöver;
 using MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using System.Diagnostics;
 
 namespace MeisterGeister_Tests
 {
@@ -132,7 +133,7 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
-        [Ignore] // Verhalten nicht mehr aktuell, wie der Test gerade geschrieben ist.
+        // Verhalten nicht mehr aktuell, wie der Test gerade geschrieben ist.
         public void ManöverTests()
         {
             Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();
@@ -152,44 +153,57 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(3, gero.Aktionen);
             Assert.AreEqual(3, zant.Aktionen);
 
-            kampf.NeueKampfrunde();
             //Jeder macht seine Aktion-Reaktion-Zuteilung
-            zant.Abwehraktionen = 1;
-            zant.Angriffsaktionen = 2;
+            zant.Abwehraktionen = 0;
+            Assert.AreEqual(3, zant.Angriffsaktionen);
             gero.Angriffsaktionen = 3;
-            gero.Abwehraktionen = 0;
+            Assert.AreEqual(0, gero.Abwehraktionen);
             Assert.AreEqual(gero.Aktionen, gero.Angriffsaktionen + gero.Abwehraktionen);
-            //nun werden aktionen geplant, diese phase beginnt automatisch mit der ersten geplanten aktion.
-            //der kampf sollte dann eventuell prüfen, ob auch alle kämpfer korrekte angaben zur umwandlung gemacht haben.
-            ManöverInfo[] mInfos = {
-                                       new ManöverInfo(kampf.Kämpfer[gero], new Attacke(gero), 0),
-                                       new ManöverInfo(kampf.Kämpfer[zant], new Attacke(zant), 0),
-                                       new ManöverInfo(kampf.Kämpfer[gero], new Attacke(gero), -4),
-                                       new ManöverInfo(kampf.Kämpfer[gero], new Attacke(gero), -8),
-                                       new ManöverInfo(kampf.Kämpfer[zant], new Attacke(zant), -8)
-                                   }; 
-            kampf.InitiativListe.Add(mInfos[1]);
-            //Assert.IsFalse(kampf.UmwandelnMöglich, "ab jetzt sind die Aktion-Reaktion-Zuteilungen gesperrt");
-            //ausser man hat Aufmerksamkeit oder Kampfgespür
-            //auch wenn der zant aufmerksamkeit hat, ist er nun geperrt, da seine erste aktion durch ist.
-            kampf.InitiativListe.Add(mInfos[4]);
-            kampf.InitiativListe.Add(mInfos[0]);
-            kampf.InitiativListe.Add(mInfos[2]);
-            kampf.InitiativListe.Add(mInfos[3]);
-            //Ini-Liste ist korrekt sortiert
-            for(int i=0; i<mInfos.Length; i++)
-                Assert.AreEqual(mInfos[i], kampf.InitiativListe[i], "Ini-Liste ist korrekt sortiert");
-
-            //zur ausführung.
-            ManöverInfo mi = null;
-            //kampf sollte hier wieder prüfen, ob ein kämpfer überhaupt keine aktionen angesagt hat und das eventuell melden
-            while((mi = kampf.Next()) != null)
-            {
-                Console.WriteLine(String.Format("In INI-Phase {0} führt {2} ein(e) {1} aus. Das dauert {3} Aktionen.", mi.Initiative, mi.Manöver.Name, mi.Manöver.Ausführender, mi.Manöver.Dauer));
-                mi.Ausgeführt = true;
-            }
-            
-            
+            //bei der Aktion-Reaktion-Zuteilung regaiert der Kampf und fügt entsprechende Standardaktionen hinzu.
+            Assert.AreEqual(3, kampf.InitiativListe.Where(mi => mi.KämpferInfo.Kämpfer == gero).Count());
+            Assert.AreEqual(3, kampf.InitiativListe.Where(mi => mi.KämpferInfo.Kämpfer == zant).Count());
+            //aktionenreihenfolge
+            IKämpfer[] reihenfolge = { gero, //21
+                                       zant, //18
+                                       gero, //17 Zusatzangriff BHK
+                                       zant, //14 Zusatzangriff Aktion+
+                                       gero, //13 umgewandelt
+                                       zant  //10 umgewandelt
+                                     };
+            Assert.AreEqual(reihenfolge, kampf.InitiativListe.Select(mi => mi.KämpferInfo.Kämpfer).ToArray(), "Aktionenreihenfolge");
+            //zur ausführung:
+            Assert.AreEqual(0, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(0, zant.VerbrauchteAngriffsaktionen);
+            var manöver = kampf.Next();
+            Assert.AreEqual(1, kampf.Kampfrunde);
+            Assert.AreEqual("Attacke", manöver.Manöver.Name);
+            Assert.AreEqual(21, manöver.Initiative);
+            manöver = kampf.Next();
+            Assert.AreEqual(1, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual("Attacke", manöver.Manöver.Name);
+            Assert.AreEqual(18, manöver.Initiative);
+            manöver = kampf.Next();
+            Assert.AreEqual(1, zant.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual("Zusätzliche Angriffsaktion", manöver.Manöver.Name);
+            Assert.AreEqual(17, manöver.Initiative);
+            manöver = kampf.Next();
+            Assert.AreEqual(2, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual("Attacke", manöver.Manöver.Name);
+            Assert.AreEqual(14, manöver.Initiative);
+            manöver = kampf.Next();
+            Assert.AreEqual(2, zant.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual("Attacke", manöver.Manöver.Name);
+            Assert.AreEqual(13, manöver.Initiative);
+            manöver = kampf.Next();
+            Assert.AreEqual(3, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual("Attacke", manöver.Manöver.Name);
+            Assert.AreEqual(10, manöver.Initiative);
+            manöver = kampf.Next();
+            //neue Kampfrunde
+            Assert.IsNull(manöver);
+            Assert.AreEqual(0, zant.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(0, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(2, kampf.Kampfrunde);
         }
 
         [Test]

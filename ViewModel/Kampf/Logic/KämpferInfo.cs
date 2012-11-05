@@ -144,6 +144,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void Remove(KämpferInfo ki)
         {
             ki.PropertyChanged -= OnKämpferInfoChanged;
+            _kämpfer_kämpferinfo.Remove(ki.Kämpfer);
             base.Remove(ki);
             OnCollectionChanged(NotifyCollectionChangedAction.Remove, ki);
         }
@@ -151,6 +152,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void RemoveAt(int index)
         {
             var removed = this[index];
+            _kämpfer_kämpferinfo.Remove(this[index].Kämpfer);
             this[index].PropertyChanged -= OnKämpferInfoChanged;
             base.RemoveAt(index);
             OnCollectionChanged(NotifyCollectionChangedAction.Remove, removed);

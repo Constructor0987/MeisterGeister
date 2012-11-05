@@ -140,7 +140,7 @@ namespace MeisterGeister.ViewModel.Kampf
                     KämpferListe.Add(held);
                 }
             }
-            var k = KämpferListe[0];
+            var k = KämpferListe.FirstOrDefault();
         }
 
         private Base.CommandBase onDeleteKämpfer = null;
