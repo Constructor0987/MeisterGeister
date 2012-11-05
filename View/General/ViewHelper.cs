@@ -45,6 +45,20 @@ namespace MeisterGeister.View.General
             return 0;
         }
 
+        public static string InputDialog(string caption, string msg)
+        {
+            string input = null;
+            InputWindow inBox = new InputWindow();
+            inBox.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+            inBox.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            inBox.Title = caption;
+            inBox.Beschreibung = msg;
+            inBox.ShowDialog();
+            if (inBox.OK_Click)
+                input = inBox.Wert;
+            return input;
+        }
+
         public static string ChooseFile(string title, string filename, bool saveFile, params string[] extensions)
         {
             FileDialog objDialog;

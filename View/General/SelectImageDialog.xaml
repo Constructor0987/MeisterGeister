@@ -2,17 +2,107 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner"
-        Title="Bild auswählen" Height="300" Width="300">
+        Title="Bild auswählen" Height="500" Width="620">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Margin="5" Style="{DynamicResource ControlContentBorder}">
-            <ListBox Name="_listBoxImages" Background="Transparent">
-                
-            </ListBox>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Expander Grid.Row="0" IsExpanded="{Binding IsDatei}">
+                    <Expander.Header>
+                        <TextBlock Text="Bild aus Datei" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding SelectedPathDatei}" />
+                            <Button DockPanel.Dock="Right" Height="23" Margin="2" Command="{Binding OnChooseFile}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
+                                    <TextBlock Margin="5,0" Text="Datei" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </DockPanel>
+                    </Border>
+                </Expander>
+
+                <Expander Grid.Row="1" IsExpanded="{Binding IsWebLink}">
+                    <Expander.Header>
+                        <TextBlock Text="Bild aus Weblink" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding SelectedPathWeb}" />
+                            <Button DockPanel.Dock="Right" Height="23" Margin="2" Command="{Binding OnChooseWebLink}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" />
+                                    <TextBlock Margin="5,0" Text="Web" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </DockPanel>
+                    </Border>
+                </Expander>
+
+                <Expander Grid.Row="2" IsExpanded="{Binding IsRessource}">
+                    <Expander.Header>
+                        <TextBlock Text="Bild aus MeisterGeister-Paket" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid Margin="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock TextWrapping="Wrap" TextAlignment="Justify" Text="Bilder mit freundlicher Unterstützung der Silver Style Studios, Macher des Browser-MMORPG Herokon-Online." FontSize="11" />
+                                <Image Grid.Column="1" Width="120" Margin="10,0,0,0" MouseDown="ImageHerokonOnline_MouseDown" Cursor="Hand" Source="/Images/Logos/HerokonOnline_Logo.png" ToolTip="http://www.herokon-online.com/" />
+                                <Image Grid.Column="2" Width="80" Margin="10,0,0,0" MouseDown="ImageHerokonOnline_MouseDown" Cursor="Hand" Source="/Images/Logos/SilverStyleStudios_Logo.png" ToolTip="http://www.herokon-online.com/" />
+                            </Grid>
+                            <ListBox Grid.Row="1" Background="Transparent" BorderThickness="0" ItemsSource="{Binding RessourceImageList}" SelectedItem="{Binding SelectedRessource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="4">
+                                        <Image Width="100" Height="100" Source="{Binding Path, IsAsync=True}" />
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" ToolTip="{Binding Name}" Width="100" TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        </Grid>
+                    </Border>
+                </Expander>
+            </Grid>
         </Border>
-        <Button Grid.Row="1" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" />
+        <Border Grid.Row="1" Style="{DynamicResource ControlContentBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Height="80" Width="80" Margin="5" HorizontalAlignment="Left" Source="{Binding SelectedPath, IsAsync=True}" ToolTip="Vorschau des ausgewählten Bilds." />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelectedPath}" Margin="5" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" ToolTip="Pfad zum ausgewählten Bild." />
+                <Button Grid.Row="1" Grid.Column="1" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" />
+            </Grid>
+        </Border>
     </Grid>
 </Window>
