@@ -116,13 +116,21 @@ namespace MeisterGeister.View.SpielerScreen
             System.Windows.Threading.DispatcherOperation op =
                 Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (System.Threading.ThreadStart)delegate()
             {
-                BitmapImage bmi = new BitmapImage();
-                bmi.BeginInit();
-                bmi.UriSource = new Uri(path, UriKind.Relative);
-                bmi.EndInit();
+                try
+                {
+                    BitmapImage bmi = new BitmapImage();
+                    bmi.BeginInit();
+                    bmi.CacheOption = BitmapCacheOption.OnLoad;
+                    bmi.UriSource = new Uri(path, UriKind.Relative);
+                    bmi.EndInit();
 
-                bmi.Freeze();		// freeze image source, used to move it across the thread
-                img.Source = bmi;
+                    bmi.Freeze();		// freeze image source, used to move it across the thread
+                    img.Source = bmi;
+                }
+                catch (Exception)
+                {
+                    System.Windows.MessageBox.Show("Bild konnte nicht geladn werden:\n" + path, "Bild laden");
+                }
             });
         }
 

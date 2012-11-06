@@ -8,6 +8,7 @@
              d:DesignHeight="498" d:DesignWidth="767" Background="{StaticResource Background1}">
     
     <UserControl.Resources>
+        <ViewGeneral:LoadCachedImageConverter x:Key="LoadCachedImageConverter" />
         <DataTemplate x:Key="ImageListBoxItemTemplate">
             <Grid ToolTip="{Binding Pfad}">
                 <Grid.ColumnDefinitions>
@@ -17,7 +18,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="28" />
                 </Grid.RowDefinitions>
-                <Image Grid.Column="0" Source="{Binding Pfad, IsAsync=True}" />
+                <Image Grid.Column="0" Source="{Binding Pfad, IsAsync=True, Converter={StaticResource LoadCachedImageConverter}}" />
                 <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="4,0,0,0" />
             </Grid>
         </DataTemplate>
@@ -78,7 +79,7 @@
                                 <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        <Button Height="32" HorizontalAlignment="Left" Margin="229,2,0,0" VerticalAlignment="Top" Click="ButtonBildZeigen_Click">
+                        <Button Height="32" HorizontalAlignment="Left" Margin="229,2,0,0" VerticalAlignment="Top" ToolTip="Spieler das Bild zeigen." Click="ButtonBildZeigen_Click">
                             <Image Source="/Images/Icons/General/screen.png" />
                         </Button>
                     <Button Height="32" HorizontalAlignment="Left" Margin="265,2,0,0" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
