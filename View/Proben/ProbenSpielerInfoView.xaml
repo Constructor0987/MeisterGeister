@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:Proben="clr-namespace:MeisterGeister.View.Proben"
-             mc:Ignorable="d" Margin="50" FontSize="15"
+             mc:Ignorable="d" Margin="5" FontSize="15"
              d:DesignHeight="451" d:DesignWidth="601"  Background="{StaticResource Background1}" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
