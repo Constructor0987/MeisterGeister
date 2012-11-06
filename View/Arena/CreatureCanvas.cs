@@ -121,7 +121,7 @@ namespace MeisterGeister.View.Arena
                  portrait = _arenaViewer.GetHeldPortrait(((Model.Held)_creature).HeldGUID);
           
             } else if (_creature is Model.Gegner){
-                portrait = _arenaViewer.GetGegnerPortrait(((Model.Gegner)_creature).Name);            
+                portrait = _arenaViewer.GetGegnerPortrait(((Model.Gegner)_creature).GegnerBase.Name);
             }
 
             if (portrait != null) {

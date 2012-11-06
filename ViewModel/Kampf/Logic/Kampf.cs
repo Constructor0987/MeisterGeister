@@ -168,6 +168,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //TODO JT: Globales Datum holen und mit Uhrzeit in Kampfbeginn abspeichern.
             //TODO: Die Kampfzeit wird für neue Modifikatoren in Erstellt abgelegt.
             Kampfrunde = 1;
+
+            if (OnNeueKampfrunde != null)
+                OnNeueKampfrunde(this, _kampfrunde);
         }
 
         public void KampfEnde()

@@ -26,6 +26,7 @@ namespace MeisterGeister.Model
             LebensenergieAktuell = LebensenergieMax;
             Name = gegnerBase.Name;
             Bild = gegnerBase.Bild;
+            Bemerkung = gegnerBase.Bemerkung;
         }
 
         #region IInitializable

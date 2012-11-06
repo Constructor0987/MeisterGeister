@@ -1677,9 +1677,10 @@ namespace MeisterGeister.Model
             return InitiativeBasis + (int)InitiativeZufall;
         }
 
+        // TODO ??: DB-Feld BildLink umbenennen
         public string Bild
         {
-            get { return null; }
+            get { return BildLink; }
         }
 
         public string Position
