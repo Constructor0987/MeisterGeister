@@ -1304,6 +1304,8 @@
     <Resource Include="Images\Wesen\zombie.png" />
     <Resource Include="Images\Wesen\zwerg.png" />
     <Resource Include="Images\Wesen\zyklop.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0058.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0057.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

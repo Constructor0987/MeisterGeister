@@ -215,6 +215,17 @@ namespace MeisterGeister.Daten
                     sqlCommands.Add(property.Name, property.GetValue(null, null).ToString());
             }
 
+            try
+            {
+                // prüft auf vorhandene Resourcen-Datei
+                string pfad = "/DSA MeisterGeister;component/Daten/Updateskripte/" + string.Format("UpdateTo_V{0}", version.ToString("D4")) + ".sql";
+
+                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri(pfad, UriKind.Relative)).Stream);
+                string skript = reader.ReadToEnd();
+                sqlCommands.Add(pfad, skript);
+            }
+            catch (Exception) { /* Exception unterdrücken */ }
+
             // Update-Commands ausführen
             SqlCeConnection connection = new SqlCeConnection(connectionString);
             SqlCeTransaction transaction = null;
@@ -224,7 +235,7 @@ namespace MeisterGeister.Daten
                 transaction = connection.BeginTransaction();
                 
                 foreach (var command in sqlCommands)
-                    ExecuteSqlCommand(command.Value, command.Key, connection, transaction, false, command.Key.EndsWith("_GO"));
+                    ExecuteSqlCommand(command.Value, command.Key, connection, transaction, false);
 
                 // Neue Versionsnummer setzen
                 UpdateTo_SetDatabaseVersion(version, connection);
@@ -246,7 +257,7 @@ namespace MeisterGeister.Daten
             }
         }
 
-        public static void ExecuteSqlCommand(string commands, string skriptName, SqlCeConnection connection, SqlCeTransaction transaction, bool closeConnection = true, bool splitWithGO = false)
+        public static void ExecuteSqlCommand(string commands, string skriptName, SqlCeConnection connection, SqlCeTransaction transaction, bool closeConnection = true)
         {
             try
             {
@@ -255,10 +266,8 @@ namespace MeisterGeister.Daten
                 command.Transaction = transaction;
 
                 string[] statements = null;
-                if (splitWithGO)
-                    statements = commands.Split(new string[] { "GO" + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                else
-                    statements = commands.Split(new string[] { ";" + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                statements = commands.Split(new string[] { "GO" + Environment.NewLine, ";" + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
                 if (connection.State == System.Data.ConnectionState.Closed)
                     connection.Open();
                 foreach (string statement in statements)
@@ -266,6 +275,8 @@ namespace MeisterGeister.Daten
                     string statementtrimmed = statement.Trim();
                     if (statementtrimmed.EndsWith(Environment.NewLine + "GO"))
                         statementtrimmed = statementtrimmed.Substring(0, statementtrimmed.Length - (Environment.NewLine + "GO").Length);
+                    if (statementtrimmed.EndsWith("GO"))
+                        statementtrimmed = statementtrimmed.Substring(0, statementtrimmed.Length - ("GO").Length);
                     if (statementtrimmed == string.Empty)
                     {
                         break;
