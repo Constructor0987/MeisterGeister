@@ -43,7 +43,7 @@ Partner und Unterstützer
 
 ******************************************
 Silver Style Studios (Herokon-Online)
-Die Silver Style Studios (http://www.silver-style-studios.com/), die Macher des Browser-MMORPG Herokon-Online (https://www.herokon-online.com/), haben die meisten der Icon-Grafiken in MeisterGeister für uns erstellt. Für diese Kooperation bedanken wir uns recht herzlich.
+Die Silver Style Studios (http://www.silver-style-studios.com/), die Macher des Browser-MMORPG Herokon-Online (https://www.herokon-online.com/), haben die meisten der Icon-Grafiken und Bilder in MeisterGeister für uns erstellt. Für diese Kooperation bedanken wir uns recht herzlich.
 
 DereGlobus-Projekt
 DSA MeisterGeister steht in enger Kooperation mit dem DereGlobus-Projekts (http://www.dereglobus.org/), um die Vorteile beider Projekte miteinander zu verknüpfen.
@@ -60,7 +60,7 @@ Lizenzhinweise
 MeisterGeister ist ein nicht-kommerzielles Fan-Projekt zum Pen&Paper Rollenspiel "Das Schwarze Auge". Das Programm darf frei verteilt, jedoch nicht verändert werden.
 
 Das Urheberrecht der MeisterGeister-Software und des gesamten Quellcodes und allen darin enthaltenen Dateien liegt beim MeisterGeister-Team (falls nicht anders angegeben):
-Projektgründer/Projektleiter: Markus Traut / Entwickler: Marianus Ifland, Fabian Kretzschmar, Michael Prim (ZooBot-Tool), Christopher Syben, Jonas Tampier, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Matthias Egenolf, Florian Oldach, Bruno Stentzler.
+Projektgründer: Markus Traut / 1. Projektleiter: Markus Traut, 2. Projektleiter: Jonas Tampier / Entwickler: Jürgen Bos, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Matthias Egenolf, Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann.
 
 Einige Icon-Grafiken wurden uns freundlicherweise vom DereGlobus-Projekts zur Verfügung gestellt. Diese unterliegen der DereGlobus-Lizenz (http://www.dereglobus.org/lizenz).
 
@@ -88,9 +88,9 @@ http://www.microsoft.com/downloads/details.aspx?displaylang=de&FamilyID=0a391abd
 
 
 
-Microsoft SQL Server Compact 4.0
+Microsoft SQL Server Compact 4.0 oder 4.0 SP1
 
-http://www.microsoft.com/downloads/de-de/details.aspx?FamilyID=E497988A-C93A-404C-B161-3A0B323DCE24&displayLang=de
+http://www.microsoft.com/de-de/download/details.aspx?id=30709
 
 
 
