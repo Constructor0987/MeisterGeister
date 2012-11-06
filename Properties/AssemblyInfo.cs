@@ -51,8 +51,8 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.9.1")]
-[assembly: AssemblyFileVersion("1.5.9.1")]
+[assembly: AssemblyVersion("1.5.10.1")]
+[assembly: AssemblyFileVersion("1.5.10.1")]
 
 // Dem Testprojekt den Zugriff auf die Interna erlauben.
 [assembly: InternalsVisibleTo("MeisterGeister_Tests")]

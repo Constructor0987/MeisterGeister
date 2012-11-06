@@ -595,7 +595,7 @@
             </Grid.RowDefinitions>
             <Border Margin="2" Grid.Row="0" Style="{DynamicResource ControlContentBorder}">
                 <Grid>
-                    <Button Width="51" Height="55" HorizontalAlignment="Left" Margin="6,3,0,18" Name="_buttonArena" Click="ButtonArena_Click" ToolTip="Interaktiven Bodenplan öffnen">
+                    <Button Width="51" Height="55" HorizontalAlignment="Left" Margin="6,3,0,18" Name="_buttonArena" Click="ButtonArena_Click" ToolTip="Bodenplan öffnen...">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Stretch="Uniform" />
                     </Button>
                     <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="6,0,0,2"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox>
