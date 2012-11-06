@@ -1205,7 +1205,6 @@
     <Resource Include="Images\Icons\General\schildkröte.png" />
     <Resource Include="Images\Icons\General\info_rot.png" />
     <Resource Include="Images\Icons\General\pfeil_oben_gruen.png" />
-    <Resource Include="Images\Icons\pfeil_unten_rot.png" />
     <Resource Include="Images\Icons\General\fragezeichen.png" />
     <Resource Include="Images\Wesen\achaz.png" />
     <Resource Include="Images\Wesen\adler.png" />
@@ -1306,6 +1305,9 @@
     <Resource Include="Images\Wesen\zyklop.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0058.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0057.sql" />
+    <Resource Include="Images\Icons\beidhändig.png" />
+    <Resource Include="Images\Icons\halbschwert.png" />
+    <Resource Include="Images\Icons\parierwaffe.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
