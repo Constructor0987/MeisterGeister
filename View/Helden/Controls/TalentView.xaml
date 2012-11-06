@@ -361,7 +361,7 @@
                                     <Border Style="{DynamicResource ControlContentBorder}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="220" />
+                                                <ColumnDefinition Width="170" />
                                                 <ColumnDefinition Width="66" />
                                                 <ColumnDefinition Width="66" />
                                                 <ColumnDefinition Width="32" />
@@ -369,6 +369,7 @@
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="40" />
                                                 <ColumnDefinition Width="40" />
+                                                <ColumnDefinition Width="80" />
                                                 <ColumnDefinition Width="20" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
@@ -393,8 +394,11 @@
                                             <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" ToolTip="Paradewert">
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="16" Width="16" />
                                             </Label>
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="8" />
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="9" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="8" ToolTip="Kampf-Werte inkl. BE">
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="16" Width="16" />
+                                            </Label>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="9" />
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="10" />
                                         </Grid>
                                     </Border>
                                     <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding KampfTalentListe, IsAsync=True}" SelectedItem="{Binding SelectedTalentListeItem}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
@@ -417,7 +421,7 @@
                                                     </Border.Style>
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="220" />
+                                                            <ColumnDefinition Width="170" />
                                                             <ColumnDefinition Width="66" />
                                                             <ColumnDefinition Width="66" />
                                                             <ColumnDefinition Width="32" />
@@ -425,6 +429,7 @@
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="40" />
                                                             <ColumnDefinition Width="40" />
+                                                            <ColumnDefinition Width="80" />
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
@@ -454,15 +459,34 @@
                                                         <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="4" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <MGControl:TextBoxModInfo Grid.Column="6" ModListe="{Binding HeldTalent.ModifikatorenListeFK}" WertName="FK-Wert" 
-                                                                                  StartWert="{Binding HeldTalent.FernkampfwertBasisOhneMod}" Wert="{Binding HeldTalent.Fernkampfwert}" 
+                                                                                  StartWert="{Binding HeldTalent.FernkampfwertBasisOhneMod}" Wert="{Binding HeldTalent.FernkampfwertOhneBE}" 
                                                                                   Visibility="{Binding HeldTalent.HatFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                                         <MGControl:TextBoxModInfo Grid.Column="6" ModListe="{Binding HeldTalent.ModifikatorenListeAT}" WertName="AT-Wert" 
-                                                                                  StartWert="{Binding HeldTalent.AttackeBasisOhneMod}" Wert="{Binding HeldTalent.Attacke}" 
+                                                                                  StartWert="{Binding HeldTalent.AttackeBasisOhneMod}" Wert="{Binding HeldTalent.AttackeOhneBE}" 
                                                                                   Visibility="{Binding HeldTalent.HatAttacke, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                                         <MGControl:TextBoxModInfo Grid.Column="7" ModListe="{Binding HeldTalent.ModifikatorenListePA}" WertName="PA-Wert" 
-                                                                                  StartWert="{Binding HeldTalent.ParadeBasisOhneMod}" Wert="{Binding HeldTalent.Parade}" 
+                                                                                  StartWert="{Binding HeldTalent.ParadeBasisOhneMod}" Wert="{Binding HeldTalent.ParadeOhneBE}" 
                                                                                   Visibility="{Binding HeldTalent.HatParade, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                                                        <Image Grid.Column="8" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        <StackPanel Grid.Column="8" Orientation="Horizontal" HorizontalAlignment="Center" ToolTip="FK-Wert inkl. BE"
+                                                                    Visibility="{Binding HeldTalent.HatFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
+                                                            <TextBlock Text="{Binding HeldTalent.Fernkampfwert}" Margin="2,0,0,0" VerticalAlignment="Center" FontWeight="Bold" />
+                                                        </StackPanel>
+                                                        <Grid Grid.Column="8" HorizontalAlignment="Center" ToolTip="AT/PA-Werte inkl. BE">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding HeldTalent.HatAttacke, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                                                <TextBlock Text="{Binding HeldTalent.Attacke}" Margin="2,0,0,0" VerticalAlignment="Center" FontWeight="Bold" />
+                                                            </StackPanel>
+                                                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding HeldTalent.HatParade, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
+                                                                <TextBlock Text="{Binding HeldTalent.Parade}" Margin="2,0,0,0" VerticalAlignment="Center" FontWeight="Bold" />
+                                                            </StackPanel>
+                                                        </Grid>
+                                                        <Image Grid.Column="9" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                                             <Image.ToolTip>
                                                                 <StackPanel>
@@ -471,7 +495,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="9" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="10" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>

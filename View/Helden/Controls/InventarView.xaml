@@ -377,7 +377,7 @@
                                     </StackPanel>
                                 </Grid>
                             </Grid>
-                            <!--<TextBlock Grid.Row="1" Grid.Column="0" Text="Gewicht 1/2 getragener Rüstung wird in dieser Version nicht berücksichtigt!" TextWrapping="Wrap" FontStyle="Italic" />-->
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="HINWEIS: Die Werte BE/RS fließen nocht nicht in andere Tools mit ein. Dazu müssen derzeit die Werte im Reiter 'Kampf' verwendet werden." TextWrapping="WrapWithOverflow" FontStyle="Italic" />
                         </Grid>
                     </Grid>
                 </Border>

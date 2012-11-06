@@ -186,7 +186,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("ZuteilungAT"), DependentProperty("TaW")]
-        public int Attacke
+        public int AttackeOhneBE
         {
             get
             {
@@ -195,8 +195,18 @@ namespace MeisterGeister.Model
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK)
                     return Held.Attacke + TaW.GetValueOrDefault();
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
-                    return Fernkampfwert;
+                    return FernkampfwertOhneBE;
                 return Held.Attacke + ZuteilungAT.GetValueOrDefault();
+            }
+        }
+
+        // TODO MT: eBE berücksichtigen
+        [DependentProperty("AttackeOhneBE")]
+        public int Attacke
+        {
+            get
+            {
+                return AttackeOhneBE;
             }
         }
 
@@ -213,7 +223,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("ZuteilungPA")]
-        public int Parade
+        public int ParadeOhneBE
         {
             get
             {
@@ -221,6 +231,16 @@ namespace MeisterGeister.Model
                      || Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return 0;
                 return Held.Parade + ZuteilungPA.GetValueOrDefault();
+            }
+        }
+
+        // TODO MT: eBE berücksichtigen
+        [DependentProperty("ParadeOhneBE")]
+        public int Parade
+        {
+            get
+            {
+                return ParadeOhneBE;
             }
         }
 
@@ -238,7 +258,7 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("TaW")]
-        public int Fernkampfwert
+        public int FernkampfwertOhneBE
         {
             get
             {
@@ -247,6 +267,16 @@ namespace MeisterGeister.Model
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return Held.FernkampfBasis + TaW.GetValueOrDefault();
                 return 0;
+            }
+        }
+
+        // TODO MT: eBE berücksichtigen
+        [DependentProperty("FernkampfwertOhneBE")]
+        public int Fernkampfwert
+        {
+            get
+            {
+                return FernkampfwertOhneBE;
             }
         }
 
@@ -288,8 +318,6 @@ namespace MeisterGeister.Model
                 return list;
             }
         }
-
-        // TODO MT: AT/PA-Werte inkl. eBE
 
         #endregion // ---- Kampfwerte ----
 

@@ -71,6 +71,7 @@
                                             </Grid>
                                             <Label Height="27" Margin="14,286,0,0" Content="Behinderung:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
                                             <ViewGeneral:IntBox Margin="101,287,0,0" Width="65" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" VerticalAlignment="Top" />
+                                            <TextBlock Margin="14,342,0,0" Text="HINWEIS: Die hier eingestellten Werte werden in anderen Tools berücksichtigt. Die Werte aus dem Inventar fließen derzeit nocht nicht in Berechnungen mit ein." TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" VerticalAlignment="Top" Height="81" Width="224" FontStyle="Italic" />
                                         </Grid>
                                     </Border>
                                 </Expander>
