@@ -25,8 +25,8 @@
                 <DataTrigger Binding="{Binding Path=Kampfunfähig}" Value="true">
                     <Setter Property="Opacity" Value="0.3" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Path=AktuellerKämpfer}" Value="true">
-                    <Setter Property="Background" Value="LightGreen" />
+                <DataTrigger Binding="{Binding Path=Ausgeführt}" Value="true">
+                    <Setter Property="Background" Value="#FFA5C1A5" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -243,11 +243,10 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,2,0,0">
-                        <CheckBox Name="_checkBoxShowAktionen" Content="Aktionen" Margin="5,3,0,3"  IsChecked="True" Height="19" ToolTip="Aktionen in Liste anzeigen" />
                         <Button Margin="6,0" Name="_buttonNächsterKämpfer" Command="{Binding OnNext}" Height="23" FontWeight="Bold" ToolTip="Wählt die nächste Aktion aus." HorizontalAlignment="Right">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" />
-                                <TextBlock Text="Weiter" VerticalAlignment="Center" />
+                                <TextBlock Text="Weiter" VerticalAlignment="Center" Margin="5,0,5,0" />
                             </StackPanel>
                         </Button>
                     </StackPanel>
