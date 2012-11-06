@@ -1327,7 +1327,7 @@
     <Resource Include="Images\Logos\facebook.png" />
     <Resource Include="Images\Logos\twitter.png" />
     <Content Include="Libs\Microsoft.Expression.Effects.dll" />
-    <Resource Include="Daten\InsertHandelsgut.txt" />
+    <Resource Include="Daten\Updateskripte\InsertHandelsgut.sql" />
     <Content Include="Libs\System.Windows.Interactivity.dll" />
     <Resource Include="Images\Texturen\papier2.jpg" />
     <Resource Include="Images\Icons\Extensions\pdf.png" />
