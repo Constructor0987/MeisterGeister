@@ -47,26 +47,6 @@ namespace MeisterGeister.View.Kampf
             set { DataContext = value; }
         }
 
-        private ViewModel.Kampf.Logic.Kampf _kampf = new ViewModel.Kampf.Logic.Kampf();
-
-        public ViewModel.Kampf.Logic.Kampf Kampf
-        {
-            get { return _kampf; }
-        }
-
-        public void HeldenEinfügen()
-        {
-            foreach (Model.Held held in Global.ContextHeld.HeldenGruppeListe)
-            {
-                _kampf.Kämpfer.Add(held);
-            }
-        }
-
-        public void ClearKämpferListe()
-        {
-            _kampf.Kämpfer.Clear();
-        }
-
         private void ButtonNeueKampfrunde_Click(object sender, RoutedEventArgs e)
         {
             NeueKampfrunde();
@@ -74,20 +54,12 @@ namespace MeisterGeister.View.Kampf
 
         private void NeueKampfrunde()
         {
-            _kampf.NeueKampfrunde();
-            if (_kampf.Kampfrunde > 0)
-                _buttonNeueKR.Content = "Neue KR";
-            else
-                _buttonNeueKR.Content = "Starten";
-            SetKampfrunde();
-        }
-
-        private void SetKampfrunde()
-        {
-            _textBlockKampfrunde.Text = _kampf.Kampfrunde.ToString();
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //_textBlockKampfZeit.Text = _kampf.KampfZeit.ToString();
-            //_kampf.AktionenListe.Sort();
+            //_kampf.NeueKampfrunde();
+            //if (_kampf.Kampfrunde > 0)
+            //    _buttonNeueKR.Content = "Neue KR";
+            //else
+                //_buttonNeueKR.Content = "Starten";
+            //SetKampfrunde();
         }
 
         private void ButtonNeuerKampf_Click(object sender, RoutedEventArgs e)
@@ -95,68 +67,13 @@ namespace MeisterGeister.View.Kampf
             if (MessageBox.Show("Soll ein neuer Kampf gestartet werden?", "Neuer Kampf", MessageBoxButton.YesNo)
                 == MessageBoxResult.Yes)
             {
-                _kampf.KampfEnde();
+                //_kampf.KampfEnde();
                 _buttonNeueKR.Content = "Starten";
                 //_listBoxKämpfer.DataContext = _kampf.Kämpfer;
                 // TODO ??: Umstellen auf neues Kampf-Model
                 //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
-                SetKampfrunde();
+                //SetKampfrunde();
             }
-        }
-
-        private void ButtonAktion_Click(object sender, RoutedEventArgs e)
-        {
-            AddAktion();
-        }
-
-        private void AddAktion()
-        {
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //Aktion ak = Aktion.Aktion1;
-            //if (_radioButtonAktion1.IsChecked == true)
-            //{
-            //    ak = Aktion.Aktion1;
-            //}
-            //else if (_radioButtonAktion2.IsChecked == true)
-            //{
-            //    ak = Aktion.Aktion2;
-            //}
-
-            //_kampf.AddAktion(_textBoxAktionQuelle.Text, _textBoxAktionName.Text,
-            //               _intBoxAktionDauer.Value ?? 0, _selectedKämpfer, ak);
-
-            //SortKämpfer();
-            //RefreshAktionen();
-        }
-
-        private void ListBoxAktionen_KeyUp(object sender, KeyEventArgs e)
-        {
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //if (_selectedAktion != null)
-            //{
-            //    switch (e.Key)
-            //    {
-            //        // Aktion löschen
-            //        case Key.Delete:
-            //            AktionEntfernen();
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //}
-        }
-
-        private void ListBoxAktionen_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //if (_listBoxAktionen.SelectedItem != null && _listBoxAktionen.SelectedItem is KampfAktion)
-            //{
-            //    _selectedAktion = (KampfAktion)_listBoxAktionen.SelectedItem;
-            //}
-            //else
-            //{
-            //    _selectedAktion = null;
-            //}
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
@@ -172,18 +89,6 @@ namespace MeisterGeister.View.Kampf
                 _menuItemKämpferFarbmarkierung.Visibility = System.Windows.Visibility.Visible;
                 _menuItemKämpferEntfernen.Visibility = System.Windows.Visibility.Visible;
                 _menuItemKämpferAktuell.Visibility = System.Windows.Visibility.Visible;
-            }
-        }
-
-        private void ContextMenuAktionen_Opened(object sender, RoutedEventArgs e)
-        {
-            if (_listBoxAktionen.SelectedItem == null)
-            {
-                _menuItemAktionEntfernen.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                _menuItemAktionEntfernen.Visibility = System.Windows.Visibility.Visible;
             }
         }
 

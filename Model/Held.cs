@@ -1659,6 +1659,13 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("Kampfwerte")]
+        public string Bemerkung
+        {
+            get { return Kampfwerte; }
+            set { Kampfwerte = value; OnChanged("Bemerkung"); }
+        }
+
         #region IKämpfer
         public int Initiative()
         {
