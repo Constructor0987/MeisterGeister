@@ -10,6 +10,9 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Margin="5" Style="{DynamicResource ControlContentBorder}">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -20,15 +23,19 @@
                         <TextBlock Text="Bild aus Datei" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
-                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
-                            <TextBlock DockPanel.Dock="Left" Text="{Binding SelectedPathDatei}" />
-                            <Button DockPanel.Dock="Right" Height="23" Margin="2" Command="{Binding OnChooseFile}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding SelectedPathDatei}" TextTrimming="CharacterEllipsis" />
+                            <Button Grid.Column="1" Height="23" Margin="2" Command="{Binding OnChooseFile}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
                                     <TextBlock Margin="5,0" Text="Datei" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
-                        </DockPanel>
+                        </Grid>
                     </Border>
                 </Expander>
 
@@ -37,15 +44,19 @@
                         <TextBlock Text="Bild aus Weblink" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
                     <Border Style="{DynamicResource ControlContentBorder}">
-                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
-                            <TextBlock DockPanel.Dock="Left" Text="{Binding SelectedPathWeb}" />
-                            <Button DockPanel.Dock="Right" Height="23" Margin="2" Command="{Binding OnChooseWebLink}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding SelectedPathWeb}" TextTrimming="CharacterEllipsis" />
+                            <Button Grid.Column="1" Height="23" Margin="2" Command="{Binding OnChooseWebLink}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" />
                                     <TextBlock Margin="5,0" Text="Web" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
-                        </DockPanel>
+                        </Grid>
                     </Border>
                 </Expander>
 
