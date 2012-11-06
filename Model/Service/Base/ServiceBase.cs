@@ -52,7 +52,7 @@ namespace MeisterGeister.Model.Service {
         public virtual bool Insert<T>(T aModelObject) where T : class {
             try {
                 Context.AddObject(typeof(T).Name, aModelObject);
-                Liste<T>().Add(aModelObject);
+                //Liste<T>().Add(aModelObject);
                 Save();
                 return true;
             } catch (Exception e) {
@@ -79,7 +79,7 @@ namespace MeisterGeister.Model.Service {
                 //Context.AttachTo(typeof(T).Name, aModelObject);
                 Context.DeleteObject(aModelObject);
                 Save();
-                Liste<T>().Remove(aModelObject);
+                //Liste<T>().Remove(aModelObject);
                 return true;
             } catch (Exception e) {
                 Debug.WriteLine(e.Message);
@@ -132,9 +132,10 @@ namespace MeisterGeister.Model.Service {
         protected static Dictionary<Type, Object> _lists = new Dictionary<Type, object>();
 
         public List<T> Liste<T>() where T :  class {
-            if (!ServiceBase._lists.ContainsKey(typeof(T)))
-                ServiceBase._lists.Add(typeof(T), LoadList<T>());
-            return ServiceBase._lists[typeof(T)] as List<T>;
+            //if (!ServiceBase._lists.ContainsKey(typeof(T)))
+            //    ServiceBase._lists.Add(typeof(T), LoadList<T>());
+            //return ServiceBase._lists[typeof(T)] as List<T>;
+            return LoadList<T>();
         }
 
         private List<T> LoadList<T>() where T: class {
@@ -143,10 +144,10 @@ namespace MeisterGeister.Model.Service {
 
         //Für Import
         public void UpdateList<T>() where T : class {
-            List<T> tmp = Liste<T>();
-            //Erhaltung des Objektes. So bleiben alle gespeicherten Referenzen in anderen Klassen korrekt.
-            tmp.Clear();
-            tmp.AddRange(LoadList<T>());
+            //List<T> tmp = Liste<T>();
+            ////Erhaltung des Objektes. So bleiben alle gespeicherten Referenzen in anderen Klassen korrekt.
+            //tmp.Clear();
+            //tmp.AddRange(LoadList<T>());
         }
 
         public virtual T New<T>() where T : class {
