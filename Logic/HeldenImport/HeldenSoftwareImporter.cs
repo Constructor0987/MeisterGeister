@@ -554,7 +554,7 @@ namespace MeisterGeister.Logic.HeldenImport
                     atBasis = Convert.ToInt32(atBasisNode.Attributes["value"].Value);
             if (paBasisNode != null)
                 if (paBasisNode.Attributes["value"] != null)
-                    paBasis = Convert.ToInt32(atBasisNode.Attributes["value"].Value);
+                    paBasis = Convert.ToInt32(paBasisNode.Attributes["value"].Value);
 
             XmlNodeList talente = _xmlDoc.SelectNodes("helden/held/talentliste/talent");
             if (talente.Count == 0)
