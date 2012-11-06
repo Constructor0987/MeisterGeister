@@ -200,13 +200,16 @@ namespace MeisterGeister.Model
             }
         }
 
-        // TODO MT: eBE berücksichtigen
         [DependentProperty("AttackeOhneBE")]
         public int Attacke
         {
             get
             {
-                return AttackeOhneBE;
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK)
+                    return AttackeOhneBE + BerechneEffBehinderung();
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return Fernkampfwert;
+                return AttackeOhneBE - (int)Math.Floor(BerechneEffBehinderung() / 2.0);
             }
         }
 
@@ -234,13 +237,12 @@ namespace MeisterGeister.Model
             }
         }
 
-        // TODO MT: eBE berücksichtigen
         [DependentProperty("ParadeOhneBE")]
         public int Parade
         {
             get
             {
-                return ParadeOhneBE;
+                return ParadeOhneBE - (int)Math.Ceiling(BerechneEffBehinderung() / 2.0);
             }
         }
 
@@ -270,13 +272,12 @@ namespace MeisterGeister.Model
             }
         }
 
-        // TODO MT: eBE berücksichtigen
         [DependentProperty("FernkampfwertOhneBE")]
         public int Fernkampfwert
         {
             get
             {
-                return FernkampfwertOhneBE;
+                return FernkampfwertOhneBE - BerechneEffBehinderung();
             }
         }
 

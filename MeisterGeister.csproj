@@ -1308,6 +1308,7 @@
     <Resource Include="Images\Icons\beidhändig.png" />
     <Resource Include="Images\Icons\halbschwert.png" />
     <Resource Include="Images\Icons\parierwaffe.png" />
+    <Resource Include="Images\Icons\General\pfeil_unten_rot.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

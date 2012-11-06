@@ -53,11 +53,11 @@
         </TextBlock>
 
         <Grid Grid.Column="1" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsErschwernis, Converter={StaticResource BooleanInvertedToVisibilityConverter}}">
-            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/pfeil_unten_rot.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesenkt, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_unten_rot.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesenkt, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesteigert, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
         <Grid Grid.Column="1" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsErschwernis, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/pfeil_unten_rot.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesteigert, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_unten_rot.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesteigert, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Image Width="14" Margin="4,0,0,4" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_oben_gruen.png" Visibility="{Binding ElementName=_textBoxModInfo, Path=IsWertGesenkt, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
     </Grid>
