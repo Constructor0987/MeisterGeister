@@ -1332,6 +1332,12 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0042.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0054.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0055.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0046.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0048.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0050.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0051.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0052.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0053.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
