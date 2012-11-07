@@ -136,7 +136,7 @@ namespace MeisterGeister.Daten
                     transaction = connection.BeginTransaction();
 
                     // lies die Insert-Befehle aus der Resourcen-Datei
-                    StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/InsertHandelsgut.sql", UriKind.Relative)).Stream);
+                    StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/InsertHandelsgut.sql", UriKind.Relative)).Stream, Encoding.UTF8);
                     string inserts = reader.ReadToEnd();
                     ExecuteSqlCommand(inserts, "InsertHandelsgut", connection, transaction, false);
                     if (transaction != null)
@@ -220,7 +220,7 @@ namespace MeisterGeister.Daten
                 // prüft auf vorhandene Resourcen-Datei
                 string pfad = "/DSA MeisterGeister;component/Daten/Updateskripte/" + string.Format("UpdateTo_V{0}", version.ToString("D4")) + ".sql";
 
-                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri(pfad, UriKind.Relative)).Stream);
+                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri(pfad, UriKind.Relative)).Stream, Encoding.UTF8);
                 string skript = reader.ReadToEnd();
                 sqlCommands.Add(pfad, skript);
             }
