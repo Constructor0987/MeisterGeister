@@ -9,7 +9,8 @@
              xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
-        <ViewGeneral:EnumItemsSource x:Key="KampfstilValues" Type="{x:Type KampfLogic:Kampfstil}" />
+        <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
+        <!--<ViewGeneral:EnumItemsSource x:Key="KampfstilValueConverter" Type="{x:Type KampfLogic:Kampfstil}" />-->
         <ViewGeneral:EnumItemsSource x:Key="TrefferzonenValues" Type="{x:Type KampfLogic:Trefferzone}" />
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
@@ -118,10 +119,25 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <ComboBox ItemsSource="{StaticResource KampfstilValues}" SelectedValue="{Binding KämpferInfo.Kämpfer.Kampfstil, Converter={StaticResource KampfstilValues}}" />
-                    <TextBlock Text="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>
-                    <Slider Minimum="0" Maximum="{Binding KämpferInfo.Kämpfer.Aktionen}" Value="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" IsSnapToTickEnabled="True" Width="40"/>
-                    <TextBlock Text="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ToolTip="Abwehraktionen"/>
+                    <ComboBox Width="45" Height="22" ItemsSource="{StaticResource KampfstilValues}" DisplayMemberPath="Name" SelectedValuePath="Stil" SelectedValue="{Binding KämpferInfo.Kämpfer.Kampfstil}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Bild}" Width="24" />
+                                    <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        <ComboBox.ToolTip>
+                            <StackPanel>
+                                <Label Content="Kampfstil" FontWeight="Bold" />
+                                <TextBlock Text="{Binding KämpferInfo.Kämpfer.Kampfstil}" />
+                            </StackPanel>
+                        </ComboBox.ToolTip>
+                    </ComboBox>
+                    <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>
+                    <Slider VerticalAlignment="Center" Margin="5,0,5,0" Minimum="0" Maximum="{Binding KämpferInfo.Kämpfer.Aktionen}" Value="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" IsSnapToTickEnabled="True" Width="40" ToolTip="Aktionen umwandeln" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ToolTip="Abwehraktionen"/>
                 </StackPanel>
             </StackPanel>
         </HierarchicalDataTemplate>

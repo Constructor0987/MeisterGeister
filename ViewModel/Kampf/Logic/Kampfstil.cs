@@ -80,6 +80,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             return stile;
         }
+
+    }
+
+    public class KampfstilListe : List<dynamic>
+    {
+        public KampfstilListe()
+        {
+            this.Add(new { Stil = Kampfstil.Keiner, Name = "Kein Kampfstil", Bild = "/DSA MeisterGeister;component/Images/Icons/nahkampf_03.png" });
+            this.Add(new { Stil = Kampfstil.Schildkampf, Name = "Schildkampf", Bild = "/DSA MeisterGeister;component/Images/Icons/nahkampf_02.png" });
+            this.Add(new { Stil = Kampfstil.Parierwaffenstil, Name = "Parierwaffen", Bild = "/DSA MeisterGeister;component/Images/Icons/parierwaffe.png" });
+            this.Add(new { Stil = Kampfstil.BeidhändigerKampf, Name = "Beidhändig", Bild = "/DSA MeisterGeister;component/Images/Icons/beidhändig.png" });
+            this.Add(new { Stil = Kampfstil.Halbschwert, Name = "Halbschwert", Bild = "/DSA MeisterGeister;component/Images/Icons/halbschwert.png" });
+        }
     }
 
     public enum Kampfstil
