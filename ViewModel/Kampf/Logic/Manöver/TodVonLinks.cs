@@ -7,11 +7,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class TodVonLinks : Angriffsaktion
     {
-        public TodVonLinks(IKämpfer ausführender)
+        public TodVonLinks(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public TodVonLinks(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel)
+        public TodVonLinks(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         {
         }

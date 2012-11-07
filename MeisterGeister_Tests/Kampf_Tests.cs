@@ -106,30 +106,30 @@ namespace MeisterGeister_Tests
             //beide hinzufügen
             kampf.Kämpfer.Add(gero); // Implizit Team 1
             kampf.Kämpfer[gero].Initiative = 21;
-            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.BeidhändigerKampf;
-            Assert.AreEqual(3, gero.Aktionen);
-            Assert.AreEqual(2, gero.Angriffsaktionen);
-            Assert.AreEqual(1, gero.Abwehraktionen);
-            gero.Angriffsaktionen = 3;
-            Assert.AreEqual(3, gero.Aktionen);
-            Assert.AreEqual(3, gero.Angriffsaktionen);
-            Assert.AreEqual(0, gero.Abwehraktionen);
-            gero.Angriffsaktionen = 0;
-            Assert.AreEqual(3, gero.Aktionen);
-            Assert.AreEqual(0, gero.Angriffsaktionen);
-            Assert.AreEqual(3, gero.Abwehraktionen);
-            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.Keiner;
-            Assert.AreEqual(2, gero.Aktionen);
-            Assert.AreEqual(gero.Aktionen, gero.Angriffsaktionen + gero.Abwehraktionen);
-            Assert.AreEqual(0, gero.Angriffsaktionen);
-            Assert.AreEqual(2, gero.Abwehraktionen);
-            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.BeidhändigerKampf;
-            gero.Angriffsaktionen = 2;
-            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.Keiner;
-            Assert.AreEqual(2, gero.Aktionen);
-            Assert.AreEqual(gero.Aktionen, gero.Angriffsaktionen + gero.Abwehraktionen);
-            Assert.AreEqual(1, gero.Angriffsaktionen);
-            Assert.AreEqual(1, gero.Abwehraktionen);
+            kampf.Kämpfer[gero].Kampfstil = Kampfstil.BeidhändigerKampf;
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Aktionen);
+            Assert.AreEqual(2, kampf.Kämpfer[gero].Angriffsaktionen);
+            Assert.AreEqual(1, kampf.Kämpfer[gero].Abwehraktionen);
+            kampf.Kämpfer[gero].Angriffsaktionen = 3;
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Aktionen);
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Angriffsaktionen);
+            Assert.AreEqual(0, kampf.Kämpfer[gero].Abwehraktionen);
+            kampf.Kämpfer[gero].Angriffsaktionen = 0;
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Aktionen);
+            Assert.AreEqual(0, kampf.Kämpfer[gero].Angriffsaktionen);
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Abwehraktionen);
+            kampf.Kämpfer[gero].Kampfstil = Kampfstil.Keiner;
+            Assert.AreEqual(2, kampf.Kämpfer[gero].Aktionen);
+            Assert.AreEqual(kampf.Kämpfer[gero].Aktionen, kampf.Kämpfer[gero].Angriffsaktionen + kampf.Kämpfer[gero].Abwehraktionen);
+            Assert.AreEqual(0, kampf.Kämpfer[gero].Angriffsaktionen);
+            Assert.AreEqual(2, kampf.Kämpfer[gero].Abwehraktionen);
+            kampf.Kämpfer[gero].Kampfstil = Kampfstil.BeidhändigerKampf;
+            kampf.Kämpfer[gero].Angriffsaktionen = 2;
+            kampf.Kämpfer[gero].Kampfstil = Kampfstil.Keiner;
+            Assert.AreEqual(2, kampf.Kämpfer[gero].Aktionen);
+            Assert.AreEqual(kampf.Kämpfer[gero].Aktionen, kampf.Kämpfer[gero].Angriffsaktionen + kampf.Kämpfer[gero].Abwehraktionen);
+            Assert.AreEqual(1, kampf.Kämpfer[gero].Angriffsaktionen);
+            Assert.AreEqual(1, kampf.Kämpfer[gero].Abwehraktionen);
         }
 
         [Test]
@@ -149,16 +149,16 @@ namespace MeisterGeister_Tests
             kampf.Kämpfer[gero].Initiative = 21;
             kampf.Kämpfer[zant].Initiative = 18;
 
-            kampf.Kämpfer[gero].Kämpfer.Kampfstil = Kampfstil.BeidhändigerKampf;
-            Assert.AreEqual(3, gero.Aktionen);
+            kampf.Kämpfer[gero].Kampfstil = Kampfstil.BeidhändigerKampf;
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Aktionen);
             Assert.AreEqual(3, zant.Aktionen);
 
             //Jeder macht seine Aktion-Reaktion-Zuteilung
-            zant.Abwehraktionen = 0;
-            Assert.AreEqual(3, zant.Angriffsaktionen);
-            gero.Angriffsaktionen = 3;
-            Assert.AreEqual(0, gero.Abwehraktionen);
-            Assert.AreEqual(gero.Aktionen, gero.Angriffsaktionen + gero.Abwehraktionen);
+            kampf.Kämpfer[zant].Abwehraktionen = 0;
+            Assert.AreEqual(3, kampf.Kämpfer[zant].Angriffsaktionen);
+            kampf.Kämpfer[gero].Angriffsaktionen = 3;
+            Assert.AreEqual(0, kampf.Kämpfer[gero].Abwehraktionen);
+            Assert.AreEqual(kampf.Kämpfer[gero].Aktionen, kampf.Kämpfer[gero].Angriffsaktionen + kampf.Kämpfer[gero].Abwehraktionen);
             //bei der Aktion-Reaktion-Zuteilung regaiert der Kampf und fügt entsprechende Standardaktionen hinzu.
             Assert.AreEqual(3, kampf.InitiativListe.Where(mi => mi.KämpferInfo.Kämpfer == gero).Count());
             Assert.AreEqual(3, kampf.InitiativListe.Where(mi => mi.KämpferInfo.Kämpfer == zant).Count());
@@ -172,38 +172,64 @@ namespace MeisterGeister_Tests
                                      };
             Assert.AreEqual(reihenfolge, kampf.InitiativListe.Select(mi => mi.KämpferInfo.Kämpfer).ToArray(), "Aktionenreihenfolge");
             //zur ausführung:
-            Assert.AreEqual(0, gero.VerbrauchteAngriffsaktionen);
-            Assert.AreEqual(0, zant.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(0, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(0, kampf.Kämpfer[zant].VerbrauchteAngriffsaktionen);
             var manöver = kampf.Next();
             Assert.AreEqual(1, kampf.Kampfrunde);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
             Assert.AreEqual(21, manöver.Initiative);
             manöver = kampf.Next();
-            Assert.AreEqual(1, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(1, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
             Assert.AreEqual(18, manöver.Initiative);
             manöver = kampf.Next();
-            Assert.AreEqual(1, zant.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(1, kampf.Kämpfer[zant].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Zusätzliche Angriffsaktion", manöver.Manöver.Name);
             Assert.AreEqual(17, manöver.Initiative);
             manöver = kampf.Next();
-            Assert.AreEqual(2, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(2, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
             Assert.AreEqual(14, manöver.Initiative);
             manöver = kampf.Next();
-            Assert.AreEqual(2, zant.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(2, kampf.Kämpfer[zant].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
             Assert.AreEqual(13, manöver.Initiative);
             manöver = kampf.Next();
-            Assert.AreEqual(3, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(3, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
             Assert.AreEqual("Attacke", manöver.Manöver.Name);
             Assert.AreEqual(10, manöver.Initiative);
             manöver = kampf.Next();
             //neue Kampfrunde
             Assert.IsNull(manöver);
-            Assert.AreEqual(0, zant.VerbrauchteAngriffsaktionen);
-            Assert.AreEqual(0, gero.VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(0, kampf.Kämpfer[zant].VerbrauchteAngriffsaktionen);
+            Assert.AreEqual(0, kampf.Kämpfer[gero].VerbrauchteAngriffsaktionen);
             Assert.AreEqual(2, kampf.Kampfrunde);
+        }
+
+        [Test]
+        // Verhalten nicht mehr aktuell, wie der Test gerade geschrieben ist.
+        public void LängerfristigeHandlungTest()
+        {
+            Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
+            Assert.IsNotNull(gero);
+            //einen Kampf anlegen
+            Kampf kampf = new Kampf();
+            //beide hinzufügen
+            kampf.Kämpfer.Add(gero); // Implizit Team 1
+            //INI Reihenfolge festlegen
+            kampf.Kämpfer[gero].Initiative = 21;
+            kampf.Kämpfer[gero].Kampfstil = Kampfstil.BeidhändigerKampf;
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Aktionen);
+            var m = kampf.InitiativListe[0].Manöver = new LängerfristigeHandlung(kampf.Kämpfer[gero], 3);
+            Assert.AreEqual(3, m.VerbleibendeDauer);
+            Assert.AreEqual(0, kampf.Kämpfer[gero].Abwehraktionen, "Ein Kämpfer in einer längerfristigen Handlung von min. 2 Aktionen hat keine Abwehraktionen diese KR");
+            Assert.AreEqual(m, kampf.InitiativListe[1].Manöver, "Die zweite Aktion wird automatisch festgelegt.");
+            kampf.Next(); kampf.Next();
+            Assert.AreEqual(2, m.VerbleibendeDauer);
+            kampf.Next();
+            Assert.AreEqual(1, m.VerbleibendeDauer);
+            Assert.AreEqual(2, kampf.Kampfrunde);
+            Assert.AreEqual(m, kampf.InitiativListe[0].Manöver, "Es bleibt eine Aktion Dauer -> Das Manöver ist in der Liste an Platz 0.");
         }
 
         [Test]

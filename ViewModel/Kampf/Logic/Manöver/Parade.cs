@@ -7,11 +7,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class Parade : Abwehraktion
     {
-        public Parade(IKämpfer ausführender)
+        public Parade(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public Parade(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel)
+        public Parade(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         {
         }

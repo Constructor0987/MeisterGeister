@@ -138,9 +138,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
                 StandardAktionenSetzen(ki);
-                ki.Kämpfer.VerbrauchteAbwehraktionen = 0;
-                ki.Kämpfer.VerbrauchteAngriffsaktionen = 0;
-                ki.Kämpfer.VerbrauchteFreieAktionen = 0;
+                ki.VerbrauchteAbwehraktionen = 0;
+                ki.VerbrauchteAngriffsaktionen = 0;
+                ki.VerbrauchteFreieAktionen = 0;
                 //Im UI sollten kämpfer ohne Ansage leicht an der Farbe erkennbar sein
                 //Kämpfer mit Aufmerksamkeit oder Kampfgespür müssen nicht markiert werden (höchstens mit einer leichten tönung)
             }
@@ -168,7 +168,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //TODO JT: Globales Datum holen und mit Uhrzeit in Kampfbeginn abspeichern.
             //TODO: Die Kampfzeit wird für neue Modifikatoren in Erstellt abgelegt.
             Kampfrunde = 1;
-
+            UmwandelnMöglich = true;
             if (OnNeueKampfrunde != null)
                 OnNeueKampfrunde(this, _kampfrunde);
         }
@@ -236,24 +236,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private void StandardAktionenSetzen(KämpferInfo ki)
         {
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist.
-            if (ki.Kämpfer.Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
+            if (ki.Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
             {
                 foreach (var mi in InitiativListe.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).ToList())
                     InitiativListe.Remove(mi);
             }
-            if (ki.Kämpfer.Kampfstil != Kampfstil.Parierwaffenstil)
+            if (ki.Kampfstil != Kampfstil.Parierwaffenstil)
             {
                 foreach (var mi in InitiativListe.Where(mi => mi.Manöver is Manöver.TodVonLinks).ToList())
                     InitiativListe.Remove(mi);
             }
             var geplanteAktionen = InitiativListe.Where(mi => mi.KämpferInfo == ki && mi.IsAktion).ToList().OrderBy(mi => mi.Initiative).ToList();
-            while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Kämpfer.Angriffsaktionen)
+            while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Angriffsaktionen)
             {
                 var manöver = geplanteAktionen.FirstOrDefault();
                 //Das letzte Manöver wird in KeineAktion umgewandelt um den Kämpfer weiterhin in der Liste zu haben.
-                if(ki.Kämpfer.Angriffsaktionen == 0 && geplanteAktionen.Count==1)
+                if(ki.Angriffsaktionen == 0 && geplanteAktionen.Count==1)
                 {
-                    manöver.Manöver = new Manöver.KeineAktion(ki.Kämpfer);
+                    manöver.Manöver = new Manöver.KeineAktion(ki);
                     break;
                 }
                 //alle anderen Manöver, die zuviel sind, löschen.
@@ -261,42 +261,46 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 geplanteAktionen.Remove(manöver);
             }
             //wenn die Liste ganz leer ist, füge KeineAktion hinzu
-            if (ki.Kämpfer.Angriffsaktionen == 0 && InitiativListe.Where(mi => mi.KämpferInfo == ki).Count() == 0)
-                InitiativListe.Add(ki, new Manöver.KeineAktion(ki.Kämpfer), 0);
+            if (ki.Angriffsaktionen == 0 && InitiativListe.Where(mi => mi.KämpferInfo == ki).Count() == 0)
+                InitiativListe.Add(ki, new Manöver.KeineAktion(ki), 0);
+
             //TODO JT: die Formulierung der Bedingungen mehr an die Voraussetzungen von ZusätzlicheAngriffsaktion und TodVonLinks anpassen
             //sonst wird das Ergänzen bald recht schwierig
             int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).Count();
-            for (int i = geplanteAktionen.Count; i < ki.Kämpfer.Angriffsaktionen; i++)
+            for (int i = geplanteAktionen.Count; i < ki.Angriffsaktionen; i++)
             {
                 if(i==0)
                 {
                     var m = InitiativListe.Where(mi => mi.KämpferInfo == ki && mi.Manöver is Manöver.KeineAktion).FirstOrDefault();
                     if (m == null)
-                        InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), 0);
+                        InitiativListe.Add(ki, new Manöver.Attacke(ki), 0);
                     else
-                        m.Manöver = new Manöver.Attacke(ki.Kämpfer); 
+                        m.Manöver = new Manöver.Attacke(ki); 
                 }
-                else if (ki.Kämpfer.Kampfstil == Kampfstil.BeidhändigerKampf && i>=1)
+                else if (ki.Kampfstil == Kampfstil.BeidhändigerKampf && i>=1)
                 {
+                    //normale Aktionen und zusatzaktionen getrennt zählen, dann ist es einfach
+                    //wenn noch keine Angriffsaktion da ist, dann Attacke bei i*-8
+                    //wenn schon eine Angriffsaktion in der Liste ist, und i<Aktionen, dann zusatzaktion bei erste Angriffsaktion-4. sonst Attacke bei -8
                     if (zusatzAktionen > 0 && i==2)
-                        InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), i * -4);
+                        InitiativListe.Add(ki, new Manöver.Attacke(ki), i * -4);
                     else
                     {
-                        InitiativListe.Add(ki, new Manöver.ZusätzlicheAngriffsaktion(ki.Kämpfer), (zusatzAktionen + 1) * -4);
+                        InitiativListe.Add(ki, new Manöver.ZusätzlicheAngriffsaktion(ki), (zusatzAktionen + 1) * -4);
                         zusatzAktionen++;
                     }
                 }
-                else if (i >= 1 && ki.Kämpfer.Kampfstil == Kampfstil.Parierwaffenstil)
+                else if (i >= 1 && ki.Kampfstil == Kampfstil.Parierwaffenstil)
                 {
                     if ( (ki.Kämpfer is Model.Gegner || (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links") )  && geplanteAktionen.Where(mi => mi.Manöver is Manöver.TodVonLinks).Count() == 0 )
-                        InitiativListe.Add(ki, new Manöver.TodVonLinks(ki.Kämpfer), Math.Min(i * -4, -8));
+                        InitiativListe.Add(ki, new Manöver.TodVonLinks(ki), Math.Min(i * -4, -8));
                     else
-                        InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), Math.Min(i * -4, -8));
+                        InitiativListe.Add(ki, new Manöver.Attacke(ki), Math.Min(i * -4, -8));
                 }
-                else if(ki.Kämpfer is Model.Gegner && ki.Kämpfer.Aktionen > 2)
-                    InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), i * -4);
+                else if(ki.Kämpfer is Model.Gegner && ki.Aktionen > 2)
+                    InitiativListe.Add(ki, new Manöver.Attacke(ki), i * -4);
                 else
-                    InitiativListe.Add(ki, new Manöver.Attacke(ki.Kämpfer), Math.Min(i * -4, -8));
+                    InitiativListe.Add(ki, new Manöver.Attacke(ki), Math.Min(i * -4, -8));
             }
             
         }

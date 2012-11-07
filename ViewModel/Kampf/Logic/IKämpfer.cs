@@ -65,19 +65,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         new IWunden Wunden { get; }
         IWunden WundenByZone { get; }
         
-        int Aktionen { get; } //maximale anzahl an Aktionen, die aufgeteilt werden können
-        int FreieAktionen { get; set; }
-        //Zuteilung der Aktionen in Angriffsaktionen und Abwehraktionen
-        int Angriffsaktionen { get; set; }
-        int Abwehraktionen { get; set; }
+        //int Aktionen { get; } //maximale anzahl an Aktionen, die aufgeteilt werden können
+        //int FreieAktionen { get; set; }
+        ////Zuteilung der Aktionen in Angriffsaktionen und Abwehraktionen
+        //int Angriffsaktionen { get; set; }
+        //int Abwehraktionen { get; set; }
 
-        int VerbrauchteAngriffsaktionen { get; set; }
-        int VerbrauchteAbwehraktionen { get; set; }
-        int VerbrauchteFreieAktionen { get; set; }
+        //int VerbrauchteAngriffsaktionen { get; set; }
+        //int VerbrauchteAbwehraktionen { get; set; }
+        //int VerbrauchteFreieAktionen { get; set; }
         
-        //Aktuellen Kampfstil abbilden. Halbschwert, Mercanario, Beidhändiger Kampf, Schildkampf, ...
-        Kampfstil Kampfstil { get; set; }
-        WaffenloserKampfstil WaffenloserKampfstil { get; set; }
+        ////Aktuellen Kampfstil abbilden. Halbschwert, Mercanario, Beidhändiger Kampf, Schildkampf, ...
+        //Kampfstil Kampfstil { get; set; }
+        //WaffenloserKampfstil WaffenloserKampfstil { get; set; }
 
         ObservableCollection<Modifikatoren.IModifikator> Modifikatoren { get; }
 

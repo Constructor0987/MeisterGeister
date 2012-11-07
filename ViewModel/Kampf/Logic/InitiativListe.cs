@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -33,6 +34,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public void LöscheBeendeteManöver()
         {
             RemoveAll(mi => mi.Manöver.VerbleibendeDauer == 0);
+            //Längerfristige Aktionen hier 1-2x neu einstellen.
+            var l = this.Distinct(new KeyEqualityComparer<ManöverInfo, Manöver.Manöver>(m => m.Manöver)).ToList();
+            Clear();
+            foreach (var mi in l)
+            {
+                Add(mi.KämpferInfo, mi.Manöver, 0);
+                if (mi.Manöver.VerbleibendeDauer >= 2)
+                    Add(mi.KämpferInfo, mi.Manöver, -8);
+            }
+            l = null;
         }
 
         #region Add and Remove
@@ -41,6 +52,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             base.Add(mi);
             mi.PropertyChanged += OnManöverInfoChanged;
             Sort();
+        }
+
+        public void Add(Manöver.Manöver m, int inimod)
+        {
+            Add(new ManöverInfo(m.Ausführender, m, inimod));
         }
 
         public void Add(KämpferInfo ki, Manöver.Manöver m, int inimod)

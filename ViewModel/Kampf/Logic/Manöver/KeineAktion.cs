@@ -7,7 +7,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class KeineAktion : Manöver
     {
-        public KeineAktion(IKämpfer ausführender)
+        public KeineAktion(KämpferInfo ausführender)
             : base(ausführender)
         { }
 

@@ -119,7 +119,7 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <ComboBox Width="45" Height="22" ItemsSource="{StaticResource KampfstilValues}" DisplayMemberPath="Name" SelectedValuePath="Stil" SelectedValue="{Binding KämpferInfo.Kämpfer.Kampfstil}">
+                    <ComboBox Width="45" Height="22" ItemsSource="{StaticResource KampfstilValues}" DisplayMemberPath="Name" SelectedValuePath="Stil" SelectedValue="{Binding KämpferInfo.Kampfstil}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -131,15 +131,15 @@
                         <ComboBox.ToolTip>
                             <StackPanel>
                                 <Label Content="Kampfstil" FontWeight="Bold" />
-                                <TextBlock Text="{Binding KämpferInfo.Kämpfer.Kampfstil}" />
+                                <TextBlock Text="{Binding KämpferInfo.Kampfstil}" />
                             </StackPanel>
                         </ComboBox.ToolTip>
                     </ComboBox>
-                    <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>
-                    <Slider VerticalAlignment="Center" Margin="5,0,5,0" Minimum="0" Maximum="{Binding KämpferInfo.Kämpfer.Aktionen}" Value="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" IsSnapToTickEnabled="True" Width="40" ToolTip="Aktionen umwandeln" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ToolTip="Abwehraktionen"/>
-                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
-                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                    <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding KämpferInfo.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>
+                    <Slider VerticalAlignment="Center" Margin="5,0,5,0" Minimum="0" Maximum="{Binding KämpferInfo.Aktionen}" Value="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" IsSnapToTickEnabled="True" Width="40" ToolTip="Aktionen umwandeln" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding KämpferInfo.Abwehraktionen}" ToolTip="Abwehraktionen"/>
+                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
                 </StackPanel>
             </StackPanel>
         </HierarchicalDataTemplate>

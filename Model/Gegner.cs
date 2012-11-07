@@ -32,7 +32,7 @@ namespace MeisterGeister.Model
         #region IInitializable
         public void Initialize()
         {
-            Angriffsaktionen = Aktionen - Abwehraktionen;
+            //Angriffsaktionen = Aktionen - Abwehraktionen;
         }
         #endregion
 
@@ -251,91 +251,6 @@ namespace MeisterGeister.Model
             }
         }
 
-
-        //beschreibbar, da es von der INI abhängt. Die Initiative wird in Kampf gespeichert und verwaltet.
-        private int _freieAktionen = 2;
-        public int FreieAktionen
-        {
-            get
-            {
-                return _freieAktionen;
-            }
-            set
-            {
-                _freieAktionen = value;
-            }
-        }
-
-        private int _angriffsaktionen = 1;
-
-        public int Angriffsaktionen
-        {
-            get { return _angriffsaktionen; }
-            set {
-                if (value > Aktionen)
-                    value = Aktionen;
-                _angriffsaktionen = Math.Max(value, 0);
-                _abwehraktionen = Aktionen - _angriffsaktionen;
-                //AktionenBerechnen();
-                _abwehraktionen = Aktionen - _angriffsaktionen;
-                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
-            }
-        }
-
-        private int _abwehraktionen = 1;
-
-        public int Abwehraktionen
-        {
-            get { return _abwehraktionen; }
-            set
-            {
-                if (value > Aktionen)
-                    value = Aktionen;
-                _abwehraktionen = Math.Max(value, 0);
-                _angriffsaktionen = Aktionen - _abwehraktionen;
-                //AktionenBerechnen();
-                _angriffsaktionen = Aktionen - _abwehraktionen;
-                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
-            }
-        }
-
-
-        private int _verbrauchteAngriffsaktionen = 0;
-
-        public int VerbrauchteAngriffsaktionen
-        {
-            get { return _verbrauchteAngriffsaktionen; }
-            set { _verbrauchteAngriffsaktionen = value; }
-        }
-
-        private int _verbrauchteAbwehraktionen = 0;
-
-        public int VerbrauchteAbwehraktionen
-        {
-            get { return _verbrauchteAbwehraktionen; }
-            set { _verbrauchteAbwehraktionen = value; }
-        }
-
-        private int _verbrauchteFreieAktionen = 0;
-
-        public int VerbrauchteFreieAktionen
-        {
-            get { return _verbrauchteFreieAktionen; }
-            set { _verbrauchteFreieAktionen = value; }
-        }
-
-        public KampfLogic.Kampfstil Kampfstil
-        {
-            get { return KampfLogic.Kampfstil.Keiner; }
-            set { }
-        }
-
-        public KampfLogic.WaffenloserKampfstil WaffenloserKampfstil
-        {
-            get { return KampfLogic.WaffenloserKampfstil.Raufen; }
-            set { }
-        }
-
         public List<KampfLogic.Manöver.Manöver> Manöver
         {
             get { throw new NotImplementedException(); }
@@ -391,13 +306,7 @@ namespace MeisterGeister.Model
             set
             {
                 _aktionen = value;
-                if (_aktionen < Abwehraktionen + Angriffsaktionen)
-                {
-                    if (Abwehraktionen + Angriffsaktionen == 0)
-                        Angriffsaktionen = 0;
-                    else
-                        Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
-                }
+                OnChanged("Aktionen");
             }
         }
 

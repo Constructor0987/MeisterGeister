@@ -35,32 +35,32 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
-        protected Manöver(IKämpfer ausführender)
-            : this(ausführender, new Dictionary<IWaffe, IKämpfer>(1), 1)
+        protected Manöver(KämpferInfo ausführender)
+            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>(1), 1)
         {
         }
 
-        protected Manöver(IKämpfer ausführender, double dauer)
-            : this(ausführender, new Dictionary<IWaffe, IKämpfer>(1), dauer)
+        protected Manöver(KämpferInfo ausführender, double dauer)
+            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>(1), dauer)
         {
         }
 
-        protected Manöver(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel)
-            : this(ausführender, new Dictionary<IWaffe, IKämpfer>() { { waffe, ziel } }, 1)
+        protected Manöver(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
+            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>() { { waffe, ziel } }, 1)
         {
         }
 
-        protected Manöver(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel, double dauer)
-            : this(ausführender, new Dictionary<IWaffe, IKämpfer>() { { waffe, ziel } }, dauer)
+        protected Manöver(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel, double dauer)
+            : this(ausführender, new Dictionary<IWaffe, KämpferInfo>() { { waffe, ziel } }, dauer)
         {
         }
 
-        protected Manöver(IKämpfer ausführender, IDictionary<IWaffe, IKämpfer> waffe_ziel)
+        protected Manöver(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel)
             : this (ausführender, waffe_ziel, 1)
         {
         }
 
-        protected Manöver(IKämpfer ausführender, IDictionary<IWaffe, IKämpfer> waffe_ziel, double dauer)
+        protected Manöver(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel, double dauer)
         {
             Ansage = 0;
             Ausführender = ausführender;
@@ -84,19 +84,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
          * ausführender, ziele, variable erschwernis (aufgeteilt in ansage und grunderschwernis,
          * so dass man den aufschlag bei misslingen für die nächste aktion erstellen kann)
          */
-        public virtual IKämpfer Ausführender
+        public virtual KämpferInfo Ausführender
         {
             get;
             private set;
         }
 
-        public virtual IDictionary<IWaffe, IKämpfer> WaffeZiel
+        public virtual IDictionary<IWaffe, KämpferInfo> WaffeZiel
         {
             get;
             private set;
         }
 
-        public virtual IEnumerable<IKämpfer> Ziele
+        public virtual IEnumerable<KämpferInfo> Ziele
         {
             get
             {
@@ -147,8 +147,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 if (value == verbleibendeDauer)
                     return;
                 verbleibendeDauer = value;
-                if(value == 0)
-                    Ausführender.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
+                if (value == 0 && Ausführender != null)
+                    Ausführender.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
                 OnChanged("VerbleibendeDauer");
             }
         }
@@ -231,9 +231,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             // Erschwernis als Malus bis zur nächsten Aktion.
             int malus = Erschwernis;
             // Klingentänzer haben nur die halbe Ansage als Malus
-            if (Ausführender is Model.Held)
+            if (Ausführender.Kämpfer is Model.Held)
             {
-                Model.Held h = Ausführender as Model.Held;
+                Model.Held h = Ausführender.Kämpfer as Model.Held;
                 if (h.HatSonderfertigkeitUndVoraussetzungen("Klingentänzer"))
                     malus = (int)Math.Round(malus / 2.0, MidpointRounding.AwayFromZero);
             }
@@ -241,7 +241,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             if (malus > 0)
             {
                 //TODO JT: Klasse MisslungenModifikator anlegen
-                //Ausführender.Modifikatoren.Add(new MisslungenModifikator(malus));
+                //Ausführender.Kämpfer.Modifikatoren.Add(new MisslungenModifikator(malus));
             }
             OnAktion();
         }

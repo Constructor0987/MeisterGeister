@@ -16,7 +16,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public IKämpfer Kämpfer
         {
             get { return _kämpfer; }
-            private set { _kämpfer = value; }
+            private set { _kämpfer = value; AktionenBerechnen(); 
+                OnChanged("Kämpfer"); 
+            }
         }
 
         private int _initiative;
@@ -30,7 +32,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 _initiative = value;
                 int bonus = Math.Max((int)Math.Floor((_initiative - 10) / 10.0), 0);
-                Kämpfer.FreieAktionen = 2 + bonus;
+                FreieAktionen = 2 + bonus;
                 Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
                 if (bonus > 0)
                     Kämpfer.Modifikatoren.Add(new Mod.PABonusDurchHoheIni(bonus));
@@ -47,14 +49,24 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public int Team
         {
             get { return _team; }
-            set { _team = value; }
+            set { _team = value; OnChanged("Team"); }
         }
 
-        public KämpferInfo(IKämpfer k)
+        private Kampf kampf;
+        public Kampf Kampf
+        {
+            get { return kampf; }
+            set { kampf = value; OnChanged("Kampf"); }
+        }
+
+        public KämpferInfo(IKämpfer k, Kampf kampf)
         {
             if (k == null)
                 throw new ArgumentNullException("IKämpfer k darf nicht null sein.");
+            if (kampf == null)
+                throw new ArgumentNullException("Kampf kampf darf nicht null sein.");
             Kämpfer = k;
+            Kampf = kampf;
             Kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             Team = 1;
             Initiative = k.Initiative();
@@ -65,6 +77,173 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             OnChanged(e.PropertyName);
         }
+
+        #region Aktionen
+        private int _aktionen = 2;
+        public int Aktionen
+        {
+            get
+            {
+                return _aktionen;
+            }
+            private set
+            {
+                if (_aktionen == value)
+                    return;
+                _aktionen = value;
+                if (_aktionen < Abwehraktionen + Angriffsaktionen)
+                {
+                    if (Abwehraktionen + Angriffsaktionen == 0)
+                        Angriffsaktionen = 0;
+                    else
+                        Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
+                }
+                //OnChanged("Aktionen");
+            }
+        }
+
+        private int _freieAktionen = 2;
+        public int FreieAktionen
+        {
+            get
+            {
+                return _freieAktionen;
+            }
+            private set
+            {
+                _freieAktionen = value;
+                OnChanged("FreieAktionen");
+            }
+        }
+
+        private int _angriffsaktionen = 1;
+        public int Angriffsaktionen
+        {
+            get { return _angriffsaktionen; }
+            set
+            {
+                if (value > Aktionen)
+                    value = Aktionen;
+                _angriffsaktionen = value;
+                _abwehraktionen = Aktionen - _angriffsaktionen;
+                AktionenBerechnen();
+                _abwehraktionen = Aktionen - _angriffsaktionen;
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            }
+        }
+
+        private int _abwehraktionen = 1;
+        public int Abwehraktionen
+        {
+            get { return _abwehraktionen; }
+            set
+            {
+                if (value > Aktionen)
+                    value = Aktionen;
+                _abwehraktionen = value;
+                _angriffsaktionen = Aktionen - _abwehraktionen;
+                AktionenBerechnen();
+                _angriffsaktionen = Aktionen - _abwehraktionen;
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            }
+        }
+
+        private int _verbrauchteAngriffsaktionen = 0;
+        public int VerbrauchteAngriffsaktionen
+        {
+            get { return _verbrauchteAngriffsaktionen; }
+            set { _verbrauchteAngriffsaktionen = value; }
+        }
+
+        private int _verbrauchteAbwehraktionen = 0;
+        public int VerbrauchteAbwehraktionen
+        {
+            get { return _verbrauchteAbwehraktionen; }
+            set { _verbrauchteAbwehraktionen = value; }
+        }
+
+        private int _verbrauchteFreieAktionen = 0;
+        public int VerbrauchteFreieAktionen
+        {
+            get { return _verbrauchteFreieAktionen; }
+            set { _verbrauchteFreieAktionen = value; }
+        }
+
+        private void AktionenBerechnen()
+        {
+            bool parierwaffenII = false;
+            if (Kämpfer is Model.Gegner)
+            {
+                Aktionen = (Kämpfer as Model.Gegner).Aktionen;
+                if (Aktionen != Abwehraktionen + Angriffsaktionen)
+                {
+                    if (Abwehraktionen + Angriffsaktionen == 0)
+                    {
+                        _angriffsaktionen = 0; _abwehraktionen = Aktionen;
+                    }
+                    else
+                    {
+                        _angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
+                        _abwehraktionen = Aktionen - _angriffsaktionen;
+                    }
+                }
+            }
+            //TODO JT: Sicherstellen, dass auch zwei Waffen geführt werden
+            else if (Kampfstil == Kampfstil.BeidhändigerKampf && ((Kämpfer is Model.Held) && (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Beidhändiger Kampf II")))
+            {
+                Aktionen = 3;
+                if (Abwehraktionen + Angriffsaktionen < 3)
+                    _angriffsaktionen = Aktionen - Abwehraktionen;
+            }
+            else if (Kampfstil == Kampfstil.Schildkampf && ((Kämpfer is Model.Held) && (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Schildkampf II") && Abwehraktionen >= 1))
+            {
+                if (Angriffsaktionen >= 2)
+                    Aktionen = 2;
+                else
+                    Aktionen = 3;
+                if (Abwehraktionen + Angriffsaktionen < 3)
+                    _abwehraktionen = Aktionen - Angriffsaktionen;
+            }
+            else if (Kampfstil == Kampfstil.Parierwaffenstil && ((Kämpfer is Model.Held) && (parierwaffenII = (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Parierwaffen II") && Abwehraktionen >= 1 || (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Tod von Links") && Angriffsaktionen >= 1)))
+            {
+                Aktionen = 3;
+                if (Abwehraktionen + Angriffsaktionen < 3)
+                    if (parierwaffenII)
+                        _abwehraktionen = Aktionen - Angriffsaktionen;
+                    else
+                        _angriffsaktionen = Aktionen - Abwehraktionen;
+            }
+            else
+            {
+                Aktionen = 2;
+                if (Abwehraktionen + Angriffsaktionen < 2)
+                    _angriffsaktionen = _abwehraktionen = 1;
+            }
+            //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
+        }
+
+        private Kampfstil _kampfstil;
+        public Kampfstil Kampfstil
+        {
+            get { return _kampfstil; }
+            set
+            {
+                if (_kampfstil == value)
+                    return;
+                _kampfstil = value;
+                AktionenBerechnen();
+                OnChanged("Kampfstil");
+                OnChanged("Abwehraktionen"); OnChanged("Angriffsaktionen"); OnChanged("Aktionen");
+            }
+        }
+
+        private WaffenloserKampfstil _waffenloserKampfstil;
+        public WaffenloserKampfstil WaffenloserKampfstil
+        {
+            get { return _waffenloserKampfstil; }
+            set { _waffenloserKampfstil = value; }
+        }
+        #endregion
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -136,9 +315,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void Add(IKämpfer k, int team)
         {
-            Add(new KämpferInfo(k) { Team = team });
-            k.Abwehraktionen = 1;
-            k.Angriffsaktionen = Math.Max(k.Aktionen - k.Abwehraktionen, 0);
+            var ki = new KämpferInfo(k, Kampf) { Team = team };
+            Add(ki);
+            ki.Abwehraktionen = 1;
+            ki.Angriffsaktionen = Math.Max(ki.Aktionen - ki.Abwehraktionen, 0);
         }
 
         public new void Remove(KämpferInfo ki)

@@ -7,15 +7,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class Abwehraktion : Manöver
     {
-        public Abwehraktion(IKämpfer ausführender)
+        public Abwehraktion(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public Abwehraktion(IKämpfer ausführender, IDictionary<IWaffe, IKämpfer> waffe_ziel)
+        public Abwehraktion(KämpferInfo ausführender, IDictionary<IWaffe, KämpferInfo> waffe_ziel)
             : base(ausführender, waffe_ziel)
         { }
 
-        public Abwehraktion(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel)
+        public Abwehraktion(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         { }
 

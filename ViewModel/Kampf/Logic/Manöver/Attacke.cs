@@ -7,11 +7,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class Attacke : Angriffsaktion
     {
-        public Attacke(IKämpfer ausführender)
+        public Attacke(KämpferInfo ausführender)
             : base(ausführender)
         { }
 
-        public Attacke(IKämpfer ausführender, IWaffe waffe, IKämpfer ziel)
+        public Attacke(KämpferInfo ausführender, IWaffe waffe, KämpferInfo ziel)
             : base(ausführender, waffe, ziel)
         {
         }

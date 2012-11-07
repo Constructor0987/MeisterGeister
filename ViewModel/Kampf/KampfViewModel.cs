@@ -136,7 +136,7 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 if (!KämpferListe.Kämpfer.Contains(held))
                 {
-                    ki = new KämpferInfo(held);
+                    ki = new KämpferInfo(held, Kampf);
                     KämpferListe.Add(held);
                 }
             }

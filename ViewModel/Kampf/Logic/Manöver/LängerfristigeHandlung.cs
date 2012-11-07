@@ -8,8 +8,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
     public class LängerfristigeHandlung : Manöver
     {
-        public LängerfristigeHandlung(IKämpfer ausführender)
-            : base(ausführender)
+        public LängerfristigeHandlung(KämpferInfo ausführender, double dauer)
+            : base(ausführender, dauer)
         {
             //this.PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
