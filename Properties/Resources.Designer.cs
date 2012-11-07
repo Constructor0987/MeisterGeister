@@ -61,33 +61,6 @@ namespace MeisterGeister.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
-        ///&lt;DatabaseDSADataSet xmlns=&quot;http://tempuri.org/DatabaseDSADataSet.xsd&quot;&gt;
-        ///  &lt;Held&gt;
-        ///    &lt;Name&gt;Hartmann von Falkenstein&lt;/Name&gt;
-        ///    &lt;MU&gt;16&lt;/MU&gt;
-        ///    &lt;KL&gt;12&lt;/KL&gt;
-        ///    &lt;IN&gt;15&lt;/IN&gt;
-        ///    &lt;CH&gt;17&lt;/CH&gt;
-        ///    &lt;FF&gt;10&lt;/FF&gt;
-        ///    &lt;GE&gt;14&lt;/GE&gt;
-        ///    &lt;KO&gt;17&lt;/KO&gt;
-        ///    &lt;KK&gt;17&lt;/KK&gt;
-        ///    &lt;HeldGUID&gt;00000000-0000-0000-0000-000000000001&lt;/HeldGUID&gt;
-        ///    &lt;BE&gt;0&lt;/BE&gt;
-        ///    &lt;INI_Mod&gt;0&lt;/INI_Mod&gt;
-        ///    &lt;LE_Mod&gt;13&lt;/LE_Mod&gt;
-        ///    &lt;LE_Aktuell&gt;39&lt;/LE_Aktuell&gt;
-        ///    &lt;AU_Mod&gt;19&lt;/AU_Mod&gt;
-        ///    &lt;AU_Aktuell&gt;43&lt;/AU_ [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
-        /// </summary>
-        internal static string demoHelden {
-            get {
-                return ResourceManager.GetString("demoHelden", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ALTER TABLE Held_Talent DROP CONSTRAINT Talent_FK;
         ///ALTER TABLE Held_Talent ADD CONSTRAINT Talent_FK FOREIGN KEY (Talentname) REFERENCES Talent (Talentname) ON DELETE cascade ON UPDATE cascade; ähnelt.
         /// </summary>

@@ -1339,7 +1339,6 @@
     <Content Include="Libs\Microsoft.Expression.Interactions.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Daten\DatabaseDSA.sdf" />
-    <Resource Include="Daten\demoHelden.xml" />
     <Resource Include="Images\Icons\General\question.png" />
     <Resource Include="Images\Texturen\papier.jpg" />
     <Resource Include="Images\Icons\General\screen.png" />
