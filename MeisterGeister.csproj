@@ -1316,6 +1316,11 @@
     <Resource Include="Images\Icons\halbschwert.png" />
     <Resource Include="Images\Icons\parierwaffe.png" />
     <Resource Include="Images\Icons\General\pfeil_unten_rot.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0056.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0002.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0003.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0004.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0005.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
