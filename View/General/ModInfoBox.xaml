@@ -40,12 +40,34 @@
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsWertGesenkt}" Value="true" >
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=_modInfoBox, Path=IsErschwernis}" Value="false" />
+                                        <Condition Binding="{Binding IsWertGesenkt}" Value="true" />
+                                    </MultiDataTrigger.Conditions>
                                     <Setter Property="Foreground" Value="Red"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding IsWertGesteigert}" Value="true" >
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=_modInfoBox, Path=IsErschwernis}" Value="false" />
+                                        <Condition Binding="{Binding IsWertGesteigert}" Value="true" />
+                                    </MultiDataTrigger.Conditions>
                                     <Setter Property="Foreground" Value="Green"/>
-                                </DataTrigger>
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=_modInfoBox, Path=IsErschwernis}" Value="true" />
+                                        <Condition Binding="{Binding IsWertGesenkt}" Value="true" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="Green"/>
+                                </MultiDataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=_modInfoBox, Path=IsErschwernis}" Value="true" />
+                                        <Condition Binding="{Binding IsWertGesteigert}" Value="true" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.CellStyle>

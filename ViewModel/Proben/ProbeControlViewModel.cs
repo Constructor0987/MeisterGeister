@@ -316,6 +316,11 @@ namespace MeisterGeister.ViewModel.Proben
                 }
             }
 
+            // Refresh, damit die UI aktulisiert wird
+            OnChanged("Held");
+            OnChanged("Probe");
+            OnChanged("ModListProben");
+
             // Sound abspielen
             if (!LockSoundAbspielen && MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();

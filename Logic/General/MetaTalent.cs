@@ -29,7 +29,7 @@ namespace MeisterGeister.Logic.General
             set
             {
                 _werte = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
             }
         }
 

@@ -43,6 +43,14 @@ namespace MeisterGeister.View.General
             set;
         }
 
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+        public static DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(IntBox),
+                new PropertyMetadata(false));
+
         public bool NoMouseWheel
         {
             get { return (bool)GetValue(NoMouseWheelProperty); }
@@ -189,17 +197,19 @@ namespace MeisterGeister.View.General
 
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
-            IncreaseValue();
+            if (!IsReadOnly)
+                IncreaseValue();
         }
 
         private void ButtonMinus_Click(object sender, RoutedEventArgs e)
         {
-            DecreaseValue();
+            if (!IsReadOnly)
+                DecreaseValue();
         }
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (!NoMouseWheel)
+            if (!NoMouseWheel && !IsReadOnly)
             {
                 if (e.Delta < 0)
                     DecreaseValue();
@@ -221,10 +231,13 @@ namespace MeisterGeister.View.General
 
         private void _textBoxInt_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Up)
-                IncreaseValue();
-            else if (e.Key == Key.Down)
-                DecreaseValue();
+            if (!IsReadOnly)
+            {
+                if (e.Key == Key.Up)
+                    IncreaseValue();
+                else if (e.Key == Key.Down)
+                    DecreaseValue();
+            }
         }
 
         private void _textBoxInt_GotFocus(object sender, RoutedEventArgs e)
@@ -250,6 +263,5 @@ namespace MeisterGeister.View.General
             // Wert zurück in TextBox schreiben, falls Value korrigiert wurde
             (sender as TextBox).Text = Value.ToString();
         }
-
     }
 }

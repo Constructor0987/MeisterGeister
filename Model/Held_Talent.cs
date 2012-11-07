@@ -48,7 +48,7 @@ namespace MeisterGeister.Model
             set
             {
                 _werte = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
                 OnChanged("Werte");
             }
         }
@@ -63,7 +63,7 @@ namespace MeisterGeister.Model
             set
             {
                 TaW = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
                 OnChanged("Fertigkeitswert");
             }
         }

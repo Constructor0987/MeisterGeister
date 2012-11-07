@@ -40,7 +40,7 @@ namespace MeisterGeister.Model
             set
             {
                 _werte = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
                 OnChanged("Werte");
             }
         }
@@ -55,7 +55,7 @@ namespace MeisterGeister.Model
             set
             {
                 ZfW = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
                 OnChanged("Fertigkeitswert");
             }
         }

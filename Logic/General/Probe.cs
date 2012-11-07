@@ -19,7 +19,7 @@ namespace MeisterGeister.Logic.General
             set 
             { 
                 _werte = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
             }
         }
 
@@ -29,7 +29,7 @@ namespace MeisterGeister.Logic.General
             get { return _modifikator; }
             set { 
                 _modifikator = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
             }
         }
 
@@ -53,7 +53,7 @@ namespace MeisterGeister.Logic.General
             set
             {
                 _isBehinderung = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
             }
         }
 
@@ -73,7 +73,7 @@ namespace MeisterGeister.Logic.General
             get { return _fertigkeitswert; }
             set { 
                 _fertigkeitswert = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
             }
         }
 
@@ -110,7 +110,7 @@ namespace MeisterGeister.Logic.General
         public double Erfolgschance {
             get
             {
-                if (!_chanceBerechnet)
+                //if (!_chanceBerechnet)
                     ErfolgsChanceBerechnen();
                 return _erfolgsschance;
             }
@@ -119,7 +119,7 @@ namespace MeisterGeister.Logic.General
         {
             get
             {
-                if (!_chanceBerechnet)
+                //if (!_chanceBerechnet)
                     ErfolgsChanceBerechnen();
                 return _erwartungswert;
             }
@@ -250,7 +250,7 @@ namespace MeisterGeister.Logic.General
 
         private double _erfolgsschance = 0;
         private double _erwartungswert = 0;
-        protected bool _chanceBerechnet = false;
+        //protected bool _chanceBerechnet = false;
 
         private double ErfolgsChanceBerechnen()
         {
@@ -263,7 +263,7 @@ namespace MeisterGeister.Logic.General
 
         private double ErfolgsChancheBerechnen(int wertEff)
         {
-            _chanceBerechnet = true;
+            //_chanceBerechnet = true;
 
             _erwartungswert = wertEff - 10.5;
 
@@ -322,7 +322,7 @@ namespace MeisterGeister.Logic.General
             }
             _erfolgsschance = (1d / 8000d * (success));
             _erwartungswert = tapsum / success;
-            _chanceBerechnet = true;
+            //_chanceBerechnet = true;
             return _erfolgsschance;
         }
 

@@ -10,8 +10,6 @@ namespace MeisterGeister.View.Proben
     /// </summary>
     public partial class ProbeControl : UserControl
     {
-        // TODO MT: Erfolgswahrscheinlichkeit hinzufügen
-
         #region //---- KONSTRUKTOR ----
 
         public ProbeControl()
@@ -90,7 +88,9 @@ namespace MeisterGeister.View.Proben
         {
             ProbeControl control = (ProbeControl)d;
             control._würfelButton.Visibility = (bool)e.NewValue ? Visibility.Hidden : Visibility.Visible;
-            // TODO ??: IntBoxen auf ReadOnly setzen
+            control._intBoxMod.IsReadOnly = (bool)e.NewValue;
+            control._intBoxMod.NoBackground = (bool)e.NewValue;
+            control._intBoxMod.NoMouseWheel = (bool)e.NewValue;
         }
 
         #endregion //---- DEPENDENCY PROPERTIES ----

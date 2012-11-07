@@ -173,7 +173,7 @@ namespace MeisterGeister.ViewModel.Helden.Logic
             set
             {
                 _werte = value;
-                _chanceBerechnet = false;
+                //_chanceBerechnet = false;
             }
         }
 
