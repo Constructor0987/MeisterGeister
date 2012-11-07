@@ -52,6 +52,32 @@ namespace MeisterGeister.View.General
         {
             System.Diagnostics.Process.Start("http://www.herokon-online.com/");
         }
+
+        private void ListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender != null && !(sender is ListBox))
+                return;
+
+            ListBox listBox = sender as ListBox;
+            string key = e.Key.ToString();
+            key = key.Replace("NumPad", string.Empty)
+                .Replace("OemQuotes", "Ä").Replace("Oem1", "Ü").Replace("Oem3", "Ö");
+            if (key.Length == 2 && key.StartsWith("D"))
+                key = key.Replace("D", string.Empty);
+            try
+            {
+                foreach (dynamic item in listBox.Items)
+                {
+                    if (item.Name.StartsWith(key))
+                    {
+                        listBox.SelectedItem = item;
+                        listBox.ScrollIntoView(item);
+                        break;
+                    }
+                }
+            }
+            catch (Exception) { }
+        }
     }
 
     /// <summary>
