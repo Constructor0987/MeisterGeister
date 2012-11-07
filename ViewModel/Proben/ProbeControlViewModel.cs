@@ -136,7 +136,6 @@ namespace MeisterGeister.ViewModel.Proben
             }
         }
 
-
         public int ModifikatorProben
         {
             get
@@ -319,6 +318,7 @@ namespace MeisterGeister.ViewModel.Proben
             // Refresh, damit die UI aktulisiert wird
             OnChanged("Held");
             OnChanged("Probe");
+            OnChanged("ModifikatorProben");
             OnChanged("ModListProben");
 
             // Sound abspielen

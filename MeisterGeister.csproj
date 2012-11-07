@@ -483,6 +483,9 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\ImageDuplicator.xaml.cs">
+      <DependentUpon>ImageDuplicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\InverseBooleanConverter.cs" />
     <Compile Include="View\General\LoadCachedImageConverter.cs" />
     <Compile Include="View\General\ModInfoBox.xaml.cs">
@@ -796,6 +799,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Basar\BasarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\ImageDuplicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -138,6 +138,8 @@
                     <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>
                     <Slider VerticalAlignment="Center" Margin="5,0,5,0" Minimum="0" Maximum="{Binding KämpferInfo.Kämpfer.Aktionen}" Value="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" IsSnapToTickEnabled="True" Width="40" ToolTip="Aktionen umwandeln" />
                     <TextBlock VerticalAlignment="Center" Text="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ToolTip="Abwehraktionen"/>
+                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Kämpfer.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Kämpfer.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
                 </StackPanel>
             </StackPanel>
         </HierarchicalDataTemplate>
@@ -272,6 +274,7 @@
                                     <TextBlock Text="Weiter" VerticalAlignment="Center" Margin="5,0,5,0" />
                                 </StackPanel>
                             </Button>
+                            
                         </StackPanel>
                         <TreeView Name="_treeInitiative" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
                              TreeViewItem.Selected="InitiativeListe_TreeViewItemSelected" Background="Transparent" Padding="4,8" ItemContainerStyle="{StaticResource TreeViewItemStyle1}">

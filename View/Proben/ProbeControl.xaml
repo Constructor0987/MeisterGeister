@@ -176,7 +176,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal" Width="100" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Proben-Modifikator">
+                <StackPanel Orientation="Horizontal" Width="105" Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Proben-Modifikator">
                     <TextBlock Text="Mod:" VerticalAlignment="Center" />
                     <ViewGeneral:IntBox x:Name="_intBoxMod" Value="{Binding Modifikator}" Margin="5,0,0,0" MinWidth="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" 
                                         NoBackground="False" IsReadOnly="{Binding ElementName=userControl, Path=IsReadOnly}" />
