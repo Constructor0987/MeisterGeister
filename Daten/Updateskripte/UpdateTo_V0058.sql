@@ -1,5 +1,5 @@
 ﻿-- Regel: Ausdauer im Kampf
-INSERT INTO Regeln (Name, Typ, Beschreibung) VALUES ('AusdauerImKampf', 'Optional', 'Kampf: Ausdauerverlust (WdS 83)');
+INSERT INTO Regeln (Name, Anwenden, Typ, Beschreibung) VALUES ('AusdauerImKampf', 1, 'Optional', 'Kampf: Ausdauerverlust (WdS 83)');
 
 -- Miserable Eigenschaft bugfix, Tags für Ausrüstung, Handelsgut Name not null
 UPDATE [VorNachteil] set Vorteil=0, Nachteil=1, Typ='Nachteile' where VorNachteilID Between 340 and 347;
