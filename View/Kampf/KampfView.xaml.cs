@@ -10,6 +10,8 @@ using MeisterGeister.Logic.Settings;
 using MeisterGeister.View.Arena;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using VM = MeisterGeister.ViewModel.Kampf;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -114,15 +116,9 @@ namespace MeisterGeister.View.Kampf
             }
         }
 
-        private void MenuItemKämpferFarbmarkierung_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //_selectedKämpfer.Farbmarkierung = ((MenuItem)sender).Background;
-        }
-
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
-            // TODO ??: Umstellen auf neues Kampf-Model
+            // TODO ??: In Command verschieben
             ViewModel.Kampf.Logic.Kampf k = VM.Kampf;
             ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
             arenaWindow.Width = 1200;
@@ -150,6 +146,38 @@ namespace MeisterGeister.View.Kampf
         {
             var parent = ItemsControl.ItemsControlFromItemContainer(e.OriginalSource as TreeViewItem);
             VM.KämpferSelected = parent is TreeView;
+        }
+
+        void TreeViewItem_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject);
+
+            if (treeViewItem != null)
+            {
+                treeViewItem.IsSelected = true;
+                e.Handled = true;
+            }
+        }
+
+        static T VisualUpwardSearch<T>(DependencyObject source) where T : DependencyObject
+        {
+            DependencyObject returnVal = source;
+
+            while (returnVal != null && !(returnVal is T))
+            {
+                DependencyObject tempReturnVal = null;
+                if (returnVal is Visual || returnVal is Visual3D)
+                {
+                    tempReturnVal = VisualTreeHelper.GetParent(returnVal);
+                }
+                if (tempReturnVal == null)
+                {
+                    returnVal = LogicalTreeHelper.GetParent(returnVal);
+                }
+                else returnVal = tempReturnVal;
+            }
+
+            return returnVal as T;
         }
 
     }

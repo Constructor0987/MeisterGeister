@@ -80,7 +80,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Path=InitiativeInfo}" Margin="8,2,0,0" ToolTip="{Binding Path=InitiativeInfoDetails}" />
                     <ViewGeneral:WürfelControl x:Name="_würfelControlInitiative" Ergebnis="{Binding Path=InitiativeWurf}" ErgebnisText="INI-Wurf" Würfel="{Binding Path=InitiativeZufall}" Height="23" Width="23" Margin="2,0,0,0" WürfelGeändert="WürfelControlInitiative_WürfelGeändert" />
-                    <Rectangle Margin="4" Width="15" Height="15" Fill="{Binding Path=Farbmarkierung}" />
+                    <!--<Rectangle Margin="4" Width="15" Height="15" Fill="{Binding Path=Farbmarkierung}" />-->
                     <!--
                     <TextBlock Text="Aktionen:" Margin="8,2,0,0" />
                     <TextBlock Text="{Binding Path=AktionenVerbleibend}" Margin="4,2,0,0" ToolTip="Noch nicht verbrauchte Aktionen in aktueller Kampfrunde." />
@@ -103,8 +103,9 @@
             </StackPanel>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="InitiativeListTemplate" ItemsSource="{Binding ThisAsList}" ItemTemplate="{StaticResource InitiativeListManöverTemplate}">
-            <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" >
+            <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}">
                 <StackPanel Orientation="Horizontal">
+                    <Rectangle Margin="4" Width="15" Height="15" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
                     <TextBlock Text="{Binding Initiative}" Width="20" Margin="0,0,2,0" />
                     <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
                 </StackPanel>
@@ -189,12 +190,13 @@
             <Setter Property="Padding" Value="1,0,0,0"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
             <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
+            <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TreeViewItem}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition MinWidth="19" Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
@@ -294,19 +296,19 @@
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
-                                            <MenuItem Background="Transparent" Header="Transparent" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Blue" Header="Blau" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="DarkBlue" Header="Dunkelblau" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Green" Header="Grün" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="DarkGreen" Header="Dunkelgrün" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Orange" Header="Orange" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Red" Header="Rot" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="DarkRed" Header="Dunkelrot" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Gold" Header="Gold" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Magenta" Header="Magenta" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Brown" Header="Braun" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="Black" Foreground="White" Header="Schwarz" Click="MenuItemKämpferFarbmarkierung_Click" />
-                                            <MenuItem Background="White" Header="Weiß" Click="MenuItemKämpferFarbmarkierung_Click" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Transparent" Background="Transparent" Header="Transparent" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Blue" Background="Blue" Header="Blau" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="DarkBlue" Background="DarkBlue" Header="Dunkelblau" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Green" Background="Green" Header="Grün" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="DarkGreen" Background="DarkGreen" Header="Dunkelgrün" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Orange" Background="Orange" Header="Orange" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Red" Background="Red" Header="Rot" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="DarkRed" Background="DarkRed" Header="Dunkelrot" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Gold" Background="Gold" Header="Gold" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Magenta" Background="Magenta" Header="Magenta" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Brown" Background="Brown" Header="Braun" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Black" Background="Black" Foreground="White" Header="Schwarz" />
+                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="White" Background="White" Header="Weiß" />
                                         </MenuItem>
                                         <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Als aktuellen Kämpfer setzen">
                                             <MenuItem.Icon>

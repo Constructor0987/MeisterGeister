@@ -270,6 +270,14 @@ namespace MeisterGeister.Model
         {
             get { return KarmaenergieMax > 0; }
         }
+
+        private System.Windows.Media.Brush _farbmarkierung = System.Windows.Media.Brushes.Transparent;
+        public System.Windows.Media.Brush Farbmarkierung
+        {
+            get { return _farbmarkierung; }
+            set { _farbmarkierung = value; OnChanged("Farbmarkierung"); }
+        }
+
         #endregion
 
         public override string ToString()

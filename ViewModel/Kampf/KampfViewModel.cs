@@ -177,6 +177,28 @@ namespace MeisterGeister.ViewModel.Kampf
                 KämpferListe.Clear();
         }
 
+        private Base.CommandBase onEinfärbenKämpfer = null;
+        public Base.CommandBase OnEinfärbenKämpfer
+        {
+            get
+            {
+                if (onEinfärbenKämpfer == null)
+                    onEinfärbenKämpfer = new Base.CommandBase(EinfärbenKämpfer, null);
+                return onEinfärbenKämpfer;
+            }
+        }
+
+        private void EinfärbenKämpfer(object obj)
+        {
+            if (SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null && obj != null)
+            {
+                System.Windows.Media.BrushConverter conv = new System.Windows.Media.BrushConverter();
+                System.Windows.Media.SolidColorBrush brush = conv.ConvertFromString(obj.ToString()) as System.Windows.Media.SolidColorBrush;
+                SelectedKämpferInfo.Kämpfer.Farbmarkierung = brush;
+            }
+
+        }
+
         private Base.CommandBase onShowGegnerView = null;
         public Base.CommandBase OnShowGegnerView
         {
