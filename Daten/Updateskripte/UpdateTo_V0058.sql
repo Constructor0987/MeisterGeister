@@ -1,4 +1,7 @@
-﻿-- Miserable Eigenschaft bugfix, Tags für Ausrüstung, Handelsgut Name not null
+﻿-- Regel: Ausdauer im Kampf
+INSERT INTO Regeln (Name, Typ, Beschreibung) VALUES ('AusdauerImKampf', 'Optional', 'Kampf: Ausdauerverlust (WdS 83)');
+
+-- Miserable Eigenschaft bugfix, Tags für Ausrüstung, Handelsgut Name not null
 UPDATE [VorNachteil] set Vorteil=0, Nachteil=1, Typ='Nachteile' where VorNachteilID Between 340 and 347;
 ALTER TABLE [Ausrüstung] Add Tags ntext NULL;
 DELETE FROM [Handelsgut];

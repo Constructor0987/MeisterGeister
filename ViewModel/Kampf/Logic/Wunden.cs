@@ -51,8 +51,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 // TODO ??: Dialog MVVM-konform aufrufen
                 int count = neu - alt;
                 string wundeText = count > 1 ? "Wunden" : "Wunde";
-                //TODO ??: if(MeisterGeister.Logic.Settings.Regeln.AusdauerVerlustDurchWunden)
-                return View.General.ViewHelper.ShowWürfelDialog(count + "W6", string.Format("Ausdauer-Schaden durch {0} {1}.", count, wundeText)); //WdS 83
+                if (MeisterGeister.Logic.Settings.Regeln.AusdauerImKampf)
+                    return View.General.ViewHelper.ShowWürfelDialog(count + "W6", string.Format("Ausdauer-Schaden durch {0} {1}.", count, wundeText)); //WdS 83
             }
             return 0;
         }

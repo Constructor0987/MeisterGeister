@@ -17,7 +17,7 @@ namespace MeisterGeister.Logic.Settings
             get
             {
                 var t = _regelnListe.Where(n => n.Name == "DunkleZeiten").FirstOrDefault();
-                return t.Anwenden.Value;
+                return t == null ? true : t.Anwenden.Value;
             }
         }
 
@@ -26,7 +26,7 @@ namespace MeisterGeister.Logic.Settings
             get
             {
                 var t = _regelnListe.Where(n => n.Name == "EigenschaftenProbePatzerGlück").FirstOrDefault();
-                return t.Anwenden.Value;
+                return t == null ? true : t.Anwenden.Value;
             }
         }
 
@@ -35,7 +35,7 @@ namespace MeisterGeister.Logic.Settings
             get
             {
                 var t = _regelnListe.Where(n => n.Name == "TPKK").FirstOrDefault();
-                return t.Anwenden.Value;
+                return t == null ? true : t.Anwenden.Value;
             }
         }
 
@@ -44,7 +44,7 @@ namespace MeisterGeister.Logic.Settings
             get
             {
                 var t = _regelnListe.Where(n => n.Name == "NiedrigeLE").FirstOrDefault();
-                return t.Anwenden.Value;
+                return t == null ? true : t.Anwenden.Value;
             }
         }
 
@@ -53,7 +53,16 @@ namespace MeisterGeister.Logic.Settings
             get
             {
                 var t = _regelnListe.Where(n => n.Name == "NiedrigeAU").FirstOrDefault();
-                return t.Anwenden.Value;
+                return t == null ? true : t.Anwenden.Value;
+            }
+        }
+
+        public static bool AusdauerImKampf
+        {
+            get
+            {
+                var t = _regelnListe.Where(n => n.Name == "AusdauerImKampf").FirstOrDefault();
+                return t == null ? true : t.Anwenden.Value;
             }
         }
     }
