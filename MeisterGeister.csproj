@@ -1370,6 +1370,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0027.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0028.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0029.sql" />
+    <Resource Include="Images\Icons\gegner_kopieren.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
