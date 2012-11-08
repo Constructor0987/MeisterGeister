@@ -97,6 +97,23 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         //Commands
         private Base.CommandBase _onBauZauberzeichen;
         private Base.CommandBase _onAktivierungZauberzeichen;
+
+        private Base.CommandBase onClearSelectedHeld = null;
+        public Base.CommandBase OnClearSelectedHeld
+        {
+            get
+            {
+                if (onClearSelectedHeld == null)
+                    onClearSelectedHeld = new Base.CommandBase(ClearSelectedHeld, null);
+                return onClearSelectedHeld;
+            }
+        }
+
+        private void ClearSelectedHeld(object obj)
+        {
+            SelectedHeld = null;
+        }
+
         #endregion
 
         #region //-Runen--

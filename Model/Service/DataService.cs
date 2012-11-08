@@ -91,7 +91,7 @@ namespace MeisterGeister.Model.Service {
         public List<Zauberzeichen> LoadZauberzeichenByHeld(Model.Held held)
         {
             if (held == null)
-                return new List<Zauberzeichen>();
+                return Liste<Zauberzeichen>().Where(z => z.Typ == "Arkanoglyphe").ToList();
             List<Zauberzeichen> zauberzeichen = Liste<Held>().Where(h=>h.HeldGUID==held.HeldGUID).Join(Context.Held_Sonderfertigkeit,h=>h.HeldGUID,hs=>hs.HeldGUID,(h,hs)=>hs)
                 .Join(Context.Sonderfertigkeit,hs=>hs.SonderfertigkeitID,s=>s.SonderfertigkeitID,(hs,s)=>s)
                 .Join(Context.Zauberzeichen, s=>s.SonderfertigkeitID, zz=>zz.SonderfertigkeitID,(s,zz)=>zz).Where(z=>z.Typ=="Arkanoglyphe").ToList();
@@ -101,7 +101,7 @@ namespace MeisterGeister.Model.Service {
         public List<Zauberzeichen> LoadKreiseByHeld(Held held)
         {
             if (held == null)
-                return new List<Zauberzeichen>();
+                return Liste<Zauberzeichen>().Where(z => z.Typ == "Bannkreis" || z.Typ == "Schutzkreis").ToList();
             List<Zauberzeichen> kreise = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
                 .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitID, s => s.SonderfertigkeitID, (hs, s) => s)
                 .Join(Context.Zauberzeichen, s => s.SonderfertigkeitID, zz => zz.SonderfertigkeitID, (s, zz) => zz).Where(z => z.Typ == "Bannkreis" || z.Typ == "Schutzkreis").ToList();
@@ -111,7 +111,7 @@ namespace MeisterGeister.Model.Service {
         public List<Zauberzeichen> LoadRunenByHeld(Held held)
         {
             if (held == null)
-                return new List<Zauberzeichen>();
+                return Liste<Zauberzeichen>().Where(z => z.Typ == "Rune").ToList();
             List<Zauberzeichen> runen = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
                 .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitID, s => s.SonderfertigkeitID, (hs, s) => s)
                 .Join(Context.Zauberzeichen, s => s.SonderfertigkeitID, zz => zz.SonderfertigkeitID, (s, zz) => zz).Where(z => z.Typ == "Rune").ToList();
@@ -137,7 +137,7 @@ namespace MeisterGeister.Model.Service {
         public List<Talent> LoadZauberzeichenTalenteByHeld(Held held)
         {
             if (held == null)
-                return new List<Talent>();
+                return Liste<Talent>().Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst").ToList();
             List<Talent> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
                 .Join(Context.Talent, ht => ht.Talentname, t => t.Talentname, (ht, t) => t).Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst").ToList();
             return talente;
@@ -146,7 +146,7 @@ namespace MeisterGeister.Model.Service {
         public List<Talent> LoadRunenTalenteByHeld(Held held)
         {
             if (held == null)
-                return new List<Talent>();
+                return Liste<Talent>().Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst" || t.Talentname == "Tätowieren").ToList();
             List<Talent> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
                 .Join(Context.Talent, ht => ht.Talentname, t => t.Talentname, (ht, t) => t).Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst" || t.Talentname == "Tätowieren").ToList();
             return talente;

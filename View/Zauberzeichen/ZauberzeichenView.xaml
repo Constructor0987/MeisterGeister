@@ -26,6 +26,9 @@
                                     <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die eine passende Sonderfertigkeit (z.B. Zauberzeichen) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                                 </ComboBox.ToolTip>
                         </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
                     </StackPanel>
 
                     <Expander Margin="2" IsExpanded="True">
@@ -35,7 +38,7 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
                                 <TextBlock Text="Zauberzeichen:" />
-                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding ZauberzeichenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedZauberzeichen}" ToolTip="Es können nur die Zauberzeichen ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding ZauberzeichenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedZauberzeichen}" ToolTip="Bei gewähltem Helden, werden nur die Zauberzeichen angezeigt, die der Held als Sonderfertigkeit besitzt." />
                                 <TextBlock Text="Größe Zeichenträger:" />
                                 <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding GrößenZeichenträgerListeZauberzeichen}"  SelectedItem="{Binding SelectedGrößeZeichenträgerZauberzeichen}" />
                                 <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenZauberzeichen}" IsEnabled="{Binding IsEnabledSpontanzeichenZauberzeichen}"/>
@@ -134,7 +137,7 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Expander Grid.Column="2" Margin="2" IsExpanded="True">
+                <Expander Grid.Column="2" Margin="2" IsExpanded="True" MinWidth="320">
                     <Expander.Header>
                         <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -208,7 +211,8 @@
                                 <TextBlock Text="Zusatzzeichen"  Grid.Row="17" />
                                 <ListBox ItemsSource="{Binding ZusatzzeichenListeZauberzeichen}" Grid.Row="20" Grid.Column="2" Background="Beige"/>
                             </Grid>
-                            <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
+                            <!-- TODO ??: Zauberzeichen Canvas -->
+                            <!--<TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>-->
                         </StackPanel>
                     </Border>
                 </Expander>
@@ -227,13 +231,13 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
                         <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.Background>
-                                <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                            </ComboBox.Background>
                             <ComboBox.ToolTip>
                                 <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die eine passende Sonderfertigkeit (z.B. Zauberzeichen) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                             </ComboBox.ToolTip>
                         </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
                     </StackPanel>
                     <Expander Margin="2" IsExpanded="True">
                         <Expander.Header>
@@ -242,7 +246,7 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
                                 <TextBlock Text="Kreise:" />
-                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding KreiseListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedKreis}" ToolTip="Es können nur die Kreise ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding KreiseListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedKreis}" ToolTip="Bei gewähltem Helden, werden nur die Kreise angezeigt, die der Held als Sonderfertigkeit besitzt." />
                                 <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenKreise}" IsEnabled="{Binding IsEnabledSpontanzeichenKreise}"/>
                             </StackPanel>
                         </Border>
@@ -338,7 +342,7 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Expander Grid.Column="2" Margin="2" IsExpanded="True">
+                <Expander Grid.Column="2" Margin="2" IsExpanded="True" MinWidth="320">
                     <Expander.Header>
                         <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -418,7 +422,8 @@
                                 <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="2">
                                 </StackPanel>
                             </Grid>
-                            <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
+                            <!-- TODO ??: Zauberzeichen Canvas -->
+                            <!--<TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>-->
                         </StackPanel>
                     </Border>
                 </Expander>
@@ -437,13 +442,13 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
                         <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
-                            <ComboBox.Background>
-                                <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                            </ComboBox.Background>
                             <ComboBox.ToolTip>
                                 <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die eine passende Sonderfertigkeit (z.B. Rundenkunde) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
                             </ComboBox.ToolTip>
                         </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
                     </StackPanel>
                     <Expander Margin="2" IsExpanded="True">
                         <Expander.Header>
@@ -452,7 +457,7 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
                                 <TextBlock Text="Runen:" />
-                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding RunenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRune}" ToolTip="Es können nur die Runen ausgewählt werden, die der Held als Sonderfertigkeit besitzt." />
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding RunenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRune}" ToolTip="Bei gewähltem Helden, werden nur die Runen angezeigt, die der Held als Sonderfertigkeit besitzt." />
                                 <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenRunen}" IsEnabled="{Binding IsEnabledSpontanzeichenRunen}"/>
                             </StackPanel>
                         </Border>
@@ -531,7 +536,7 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Expander Grid.Column="2" Margin="2" IsExpanded="True">
+                <Expander Grid.Column="2" Margin="2" IsExpanded="True" MinWidth="320">
                     <Expander.Header>
                         <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -607,7 +612,8 @@
                                 <StackPanel Orientation="Vertical" Grid.Row="20" Grid.Column="2">
                                 </StackPanel>
                             </Grid>
-                            <TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>
+                            <!-- TODO ??: Zeuberzeichen Canvas-->
+                            <!--<TextBlock Text="hier Zauberzeichen Canvas mit DnD; /n TODO schrift?" Margin="20,20,20,10" FontWeight="Bold"/>-->
                         </StackPanel>
                     </Border>
                 </Expander>
