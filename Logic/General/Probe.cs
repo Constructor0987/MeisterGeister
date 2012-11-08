@@ -234,13 +234,14 @@ namespace MeisterGeister.Logic.General
             // Bei Doppel1 oder Dreifach1 eine SE (WdS 162)
             // TODO ??: Eventuell User per YesNo-Dialog fragen?
             string held = "Unbekannt";
-            if (this is IHatHeld)
+            if (this is IHatHeld && (this as IHatHeld).Held != null)
                 held = (this as IHatHeld).Held.Name;
             string seTxt = string.Format("{0} - {1} - Spezielle Erfahrung in {2} (TaW {3}) für {4} ({5} Einsen)",
                 DateTime.Now.ToString("g"), MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort(),
                 Probenname, Fertigkeitswert, held, einsen);
 
-            Global.ContextNotizen.NotizErfahrungen.AppendText("\n" + seTxt + "\n");
+            if (Global.ContextNotizen != null)
+                Global.ContextNotizen.NotizErfahrungen.AppendText("\n" + seTxt + "\n");
 
             if (SpezielleErfahrung != null)
                 SpezielleErfahrung(seTxt, new EventArgs());
