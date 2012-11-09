@@ -12,7 +12,7 @@ namespace MeisterGeister.Model.Service {
 
         public List<Model.Talent> TalentListe
         {
-            get { return Liste<Talent>(); }
+            get { return Liste<Talent>().Where(t => t.TalentgruppeID != 0).ToList(); }
         }
 
         #endregion

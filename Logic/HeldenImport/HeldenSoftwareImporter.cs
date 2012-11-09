@@ -367,7 +367,7 @@ namespace MeisterGeister.Logic.HeldenImport
 
             if (bild != null)
             {
-                _held.BildLink = bild.Attributes["value"].Value;
+                _held.Bild = bild.Attributes["value"].Value;
             }
 
             // Eigenschaften
@@ -520,7 +520,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 {
                     Held_Zauber hz = new Held_Zauber();
                     hz.HeldGUID = _held.HeldGUID;
-                    hz.ZauberID = z.ZauberID;
+                    hz.ZauberGUID = z.ZauberGUID;
                     hz.Repräsentation = rep;
                     hz.ZfW = wert;
                     hz.Bemerkung = bemerkung;
@@ -599,7 +599,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 {
                     Held_Talent ht = new Held_Talent();
                     ht.HeldGUID = _held.HeldGUID;
-                    ht.Talentname = t.Talentname;
+                    ht.TalentGUID = t.TalentGUID;
                     ht.TaW = wert;
                     ht.ZuteilungAT = atZuteilung;
                     ht.ZuteilungPA = paZuteilung;
@@ -615,7 +615,7 @@ namespace MeisterGeister.Logic.HeldenImport
                         {
                             Held_Talent ht = new Held_Talent();
                             ht.HeldGUID = _held.HeldGUID;
-                            ht.Talentname = t.Talentname;
+                            ht.TalentGUID = t.TalentGUID;
                             ht.TaW = wert;
                             ht.ZuteilungAT = atZuteilung;
                             ht.ZuteilungPA = paZuteilung;
@@ -826,12 +826,12 @@ namespace MeisterGeister.Logic.HeldenImport
             VorNachteil vn = Global.ContextHeld.LoadVorNachteilByName(vorNachteilName);
             if (vn != null)
             {
-                Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilID == vn.VorNachteilID).FirstOrDefault();
+                Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilGUID == vn.VorNachteilGUID).FirstOrDefault();
                 if (hvn == null)
                 {
                     hvn = new Held_VorNachteil();
                     hvn.HeldGUID = _held.HeldGUID;
-                    hvn.VorNachteilID = vn.VorNachteilID;
+                    hvn.VorNachteilGUID = vn.VorNachteilGUID;
                     hvn.Wert = wertString;
                     _held.Held_VorNachteil.Add(hvn);
                 }
@@ -856,12 +856,12 @@ namespace MeisterGeister.Logic.HeldenImport
             if (sf != null)
             {
                 Held_Sonderfertigkeit hs = null;
-                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitID == sf.SonderfertigkeitID).FirstOrDefault();
+                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID).FirstOrDefault();
                 if (hs == null)
                 {
                     hs = new Held_Sonderfertigkeit();
                     hs.HeldGUID = _held.HeldGUID;
-                    hs.SonderfertigkeitID = sf.SonderfertigkeitID;
+                    hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
                     hs.Wert = wertString;
                     _held.Held_Sonderfertigkeit.Add(hs);
                 }

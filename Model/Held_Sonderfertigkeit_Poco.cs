@@ -55,23 +55,23 @@ namespace MeisterGeister.Model
         private System.Guid _heldGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int SonderfertigkeitID
+        public virtual System.Guid SonderfertigkeitGUID
         {
-            get { return _sonderfertigkeitID; }
+            get { return _sonderfertigkeitGUID; }
             set
             {
-                if (_sonderfertigkeitID != value)
+                if (_sonderfertigkeitGUID != value)
                 {
-                    if (Sonderfertigkeit != null && Sonderfertigkeit.SonderfertigkeitID != value)
+                    if (Sonderfertigkeit != null && Sonderfertigkeit.SonderfertigkeitGUID != value)
                     {
                         Sonderfertigkeit = null;
                     }
-                    _sonderfertigkeitID = value;
+                    _sonderfertigkeitGUID = value;
                 }
             }
     
         }
-        private int _sonderfertigkeitID;
+        private System.Guid _sonderfertigkeitGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Wert
@@ -161,9 +161,9 @@ namespace MeisterGeister.Model
                 {
                     Sonderfertigkeit.Held_Sonderfertigkeit.Add(this);
                 }
-                if (SonderfertigkeitID != Sonderfertigkeit.SonderfertigkeitID)
+                if (SonderfertigkeitGUID != Sonderfertigkeit.SonderfertigkeitGUID)
                 {
-                    SonderfertigkeitID = Sonderfertigkeit.SonderfertigkeitID;
+                    SonderfertigkeitGUID = Sonderfertigkeit.SonderfertigkeitGUID;
                 }
             }
         }

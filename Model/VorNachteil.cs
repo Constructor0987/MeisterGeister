@@ -7,10 +7,9 @@ namespace MeisterGeister.Model
 {
     public partial class VorNachteil
     {
-        private const int maxid = 412;
         public bool Usergenerated
         {
-            get { return VorNachteilID > maxid; }
+            get { return !VorNachteilGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
         public const string Eisern = "Eisern";

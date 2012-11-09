@@ -62,6 +62,19 @@ namespace MeisterGeister.Model
         private string _name;
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual string Typ
+        {
+            get { return _typ; }
+            set
+    		{ 
+    			_typ = value;
+    			OnChanged("Typ");
+    		}
+    
+        }
+        private string _typ;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual string Bild
         {
             get { return _bild; }

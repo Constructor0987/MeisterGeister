@@ -123,6 +123,39 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Audio_Playlist_Titel> _audio_Playlist_Titel;
+    
+    	[DataMember]
+        public virtual ICollection<Audio_Theme_Playlist> Audio_Theme_Playlist
+        {
+            get
+            {
+                if (_audio_Theme_Playlist == null)
+                {
+                    var newCollection = new FixupCollection<Audio_Theme_Playlist>();
+                    newCollection.CollectionChanged += FixupAudio_Theme_Playlist;
+                    _audio_Theme_Playlist = newCollection;
+                }
+                return _audio_Theme_Playlist;
+            }
+            set
+            {
+                if (!ReferenceEquals(_audio_Theme_Playlist, value))
+                {
+                    var previousValue = _audio_Theme_Playlist as FixupCollection<Audio_Theme_Playlist>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAudio_Theme_Playlist;
+                    }
+                    _audio_Theme_Playlist = value;
+                    var newValue = value as FixupCollection<Audio_Theme_Playlist>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAudio_Theme_Playlist;
+                    }
+                }
+            }
+        }
+        private ICollection<Audio_Theme_Playlist> _audio_Theme_Playlist;
 
         #endregion
 
@@ -142,6 +175,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Audio_Playlist_Titel item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Audio_Playlist, this))
+                    {
+                        item.Audio_Playlist = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupAudio_Theme_Playlist(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Audio_Theme_Playlist");
+            if (e.NewItems != null)
+            {
+                foreach (Audio_Theme_Playlist item in e.NewItems)
+                {
+                    item.Audio_Playlist = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Audio_Theme_Playlist item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Audio_Playlist, this))
                     {

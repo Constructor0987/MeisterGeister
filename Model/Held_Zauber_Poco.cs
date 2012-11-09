@@ -55,23 +55,23 @@ namespace MeisterGeister.Model
         private System.Guid _heldGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int ZauberID
+        public virtual System.Guid ZauberGUID
         {
-            get { return _zauberID; }
+            get { return _zauberGUID; }
             set
             {
-                if (_zauberID != value)
+                if (_zauberGUID != value)
                 {
-                    if (Zauber != null && Zauber.ZauberID != value)
+                    if (Zauber != null && Zauber.ZauberGUID != value)
                     {
                         Zauber = null;
                     }
-                    _zauberID = value;
+                    _zauberGUID = value;
                 }
             }
     
         }
-        private int _zauberID;
+        private System.Guid _zauberGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<int> ZfW
@@ -187,9 +187,9 @@ namespace MeisterGeister.Model
                 {
                     Zauber.Held_Zauber.Add(this);
                 }
-                if (ZauberID != Zauber.ZauberID)
+                if (ZauberGUID != Zauber.ZauberGUID)
                 {
-                    ZauberID = Zauber.ZauberID;
+                    ZauberGUID = Zauber.ZauberGUID;
                 }
             }
         }

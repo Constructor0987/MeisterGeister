@@ -75,23 +75,23 @@ namespace MeisterGeister.Model
         private string _typ;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int SonderfertigkeitID
+        public virtual System.Guid SonderfertigkeitGUID
         {
-            get { return _sonderfertigkeitID; }
+            get { return _sonderfertigkeitGUID; }
             set
             {
-                if (_sonderfertigkeitID != value)
+                if (_sonderfertigkeitGUID != value)
                 {
-                    if (Sonderfertigkeit != null && Sonderfertigkeit.SonderfertigkeitID != value)
+                    if (Sonderfertigkeit != null && Sonderfertigkeit.SonderfertigkeitGUID != value)
                     {
                         Sonderfertigkeit = null;
                     }
-                    _sonderfertigkeitID = value;
+                    _sonderfertigkeitGUID = value;
                 }
             }
     
         }
-        private int _sonderfertigkeitID;
+        private System.Guid _sonderfertigkeitGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int Lernkosten
@@ -248,9 +248,9 @@ namespace MeisterGeister.Model
                 {
                     Sonderfertigkeit.Zauberzeichen.Add(this);
                 }
-                if (SonderfertigkeitID != Sonderfertigkeit.SonderfertigkeitID)
+                if (SonderfertigkeitGUID != Sonderfertigkeit.SonderfertigkeitGUID)
                 {
-                    SonderfertigkeitID = Sonderfertigkeit.SonderfertigkeitID;
+                    SonderfertigkeitGUID = Sonderfertigkeit.SonderfertigkeitGUID;
                 }
             }
         }

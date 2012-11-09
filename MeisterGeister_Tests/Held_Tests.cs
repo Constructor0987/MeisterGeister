@@ -42,7 +42,7 @@ namespace MeisterGeister_Tests
             testHeld1.KE_Mod = 24;
             testHeld1.KE_Aktuell = 24;
             testHeld1.MR_Mod = -2;
-            testHeld1.BildLink = "http://www.wiki-aventurica.de/images/a/aa/SC_Hartmann_von_Falkenstein.jpg";
+            testHeld1.Bild = "http://www.wiki-aventurica.de/images/a/aa/SC_Hartmann_von_Falkenstein.jpg";
             testHeld1.Rasse = "Mittelländer";
             testHeld1.Kultur = "Mittelländische Landbevölkerung (Landadel)";
             testHeld1.Profession = "Ritter alten Schlages/ Fasarer Gladiator";
@@ -76,7 +76,7 @@ namespace MeisterGeister_Tests
             testHeld2.KE_Mod = 24;
             testHeld2.KE_Aktuell = 24;
             testHeld2.MR_Mod = -2;
-            testHeld2.BildLink = "http://www.wiki-aventurica.de/images/a/aa/SC_Hartmann_von_Falkenstein.jpg";
+            testHeld2.Bild = "http://www.wiki-aventurica.de/images/a/aa/SC_Hartmann_von_Falkenstein.jpg";
             testHeld2.Rasse = "Mittelländer";
             testHeld2.Kultur = "Zweite Kultur";
             testHeld2.Profession = "Zweite Profession";

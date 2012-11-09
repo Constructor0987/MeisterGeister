@@ -94,6 +94,240 @@ namespace MeisterGeister.Model
         private string _bild;
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual int ATMod
+        {
+            get { return _aTMod; }
+            set
+    		{ 
+    			_aTMod = value;
+    			OnChanged("ATMod");
+    		}
+    
+        }
+        private int _aTMod;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int INIBasis
+        {
+            get { return _iNIBasis; }
+            set
+    		{ 
+    			_iNIBasis = value;
+    			OnChanged("INIBasis");
+    		}
+    
+        }
+        private int _iNIBasis;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int PA
+        {
+            get { return _pA; }
+            set
+    		{ 
+    			_pA = value;
+    			OnChanged("PA");
+    		}
+    
+        }
+        private int _pA;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int LE
+        {
+            get { return _lE; }
+            set
+    		{ 
+    			_lE = value;
+    			OnChanged("LE");
+    		}
+    
+        }
+        private int _lE;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int AU
+        {
+            get { return _aU; }
+            set
+    		{ 
+    			_aU = value;
+    			OnChanged("AU");
+    		}
+    
+        }
+        private int _aU;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int AE
+        {
+            get { return _aE; }
+            set
+    		{ 
+    			_aE = value;
+    			OnChanged("AE");
+    		}
+    
+        }
+        private int _aE;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int KE
+        {
+            get { return _kE; }
+            set
+    		{ 
+    			_kE = value;
+    			OnChanged("KE");
+    		}
+    
+        }
+        private int _kE;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int KO
+        {
+            get { return _kO; }
+            set
+    		{ 
+    			_kO = value;
+    			OnChanged("KO");
+    		}
+    
+        }
+        private int _kO;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int MRGeist
+        {
+            get { return _mRGeist; }
+            set
+    		{ 
+    			_mRGeist = value;
+    			OnChanged("MRGeist");
+    		}
+    
+        }
+        private int _mRGeist;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> MRKörper
+        {
+            get { return _mRKörper; }
+            set
+    		{ 
+    			_mRKörper = value;
+    			OnChanged("MRKörper");
+    		}
+    
+        }
+        private Nullable<int> _mRKörper;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSKopf
+        {
+            get { return _rSKopf; }
+            set
+    		{ 
+    			_rSKopf = value;
+    			OnChanged("RSKopf");
+    		}
+    
+        }
+        private int _rSKopf;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSBrust
+        {
+            get { return _rSBrust; }
+            set
+    		{ 
+    			_rSBrust = value;
+    			OnChanged("RSBrust");
+    		}
+    
+        }
+        private int _rSBrust;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSRücken
+        {
+            get { return _rSRücken; }
+            set
+    		{ 
+    			_rSRücken = value;
+    			OnChanged("RSRücken");
+    		}
+    
+        }
+        private int _rSRücken;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSArmL
+        {
+            get { return _rSArmL; }
+            set
+    		{ 
+    			_rSArmL = value;
+    			OnChanged("RSArmL");
+    		}
+    
+        }
+        private int _rSArmL;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSArmR
+        {
+            get { return _rSArmR; }
+            set
+    		{ 
+    			_rSArmR = value;
+    			OnChanged("RSArmR");
+    		}
+    
+        }
+        private int _rSArmR;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSBauch
+        {
+            get { return _rSBauch; }
+            set
+    		{ 
+    			_rSBauch = value;
+    			OnChanged("RSBauch");
+    		}
+    
+        }
+        private int _rSBauch;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSBeinL
+        {
+            get { return _rSBeinL; }
+            set
+    		{ 
+    			_rSBeinL = value;
+    			OnChanged("RSBeinL");
+    		}
+    
+        }
+        private int _rSBeinL;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int RSBeinR
+        {
+            get { return _rSBeinR; }
+            set
+    		{ 
+    			_rSBeinR = value;
+    			OnChanged("RSBeinR");
+    		}
+    
+        }
+        private int _rSBeinR;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual int LEAktuell
         {
             get { return _lEAktuell; }

@@ -255,7 +255,7 @@ namespace MeisterGeister.ViewModel.Helden {
 
                 //Load Talentauswahl VS HeldTalentListe
                 if (SelectedHeld != null) {
-                    TalentauswahlListe = Global.ContextTalent.TalentListe.Where(item => SelectedHeld.Held_Talent.Where(t => t.Talent == item).Count() <= 0 && item.TalentgruppeID != 8).OrderBy(item => item.Talentname).ToList();
+                    TalentauswahlListe = Global.ContextTalent.TalentListe.Where(item => SelectedHeld.Held_Talent.Where(t => t.Talent == item).Count() <= 0 && item.TalentgruppeID != 8 && item.TalentgruppeID != 0).OrderBy(item => item.Talentname).ToList();
                 }
             }
 

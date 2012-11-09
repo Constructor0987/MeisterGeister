@@ -18,6 +18,16 @@ namespace MeisterGeister.Model
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
+        [DependentProperty("Talent")]
+        public string Talentname
+        {
+            get { return Talent.Talentname; }
+            set {
+                Talent.Talentname = value;
+                OnChanged("Talentname");
+            }
+        }
+
         #region //---- PROBE ----
 
         [DependentProperty("Talent")]

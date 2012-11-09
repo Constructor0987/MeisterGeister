@@ -348,19 +348,6 @@ namespace MeisterGeister.Model
         private Nullable<bool> _proben;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string BildLink
-        {
-            get { return _bildLink; }
-            set
-    		{ 
-    			_bildLink = value;
-    			OnChanged("BildLink");
-    		}
-    
-        }
-        private string _bildLink;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Rasse
         {
             get { return _rasse; }
@@ -413,7 +400,7 @@ namespace MeisterGeister.Model
         private string _notizen;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> WundenKopf
+        public virtual int WundenKopf
         {
             get { return _wundenKopf; }
             set
@@ -423,10 +410,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _wundenKopf;
+        private int _wundenKopf;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> WundenBrust
+        public virtual int WundenBrust
         {
             get { return _wundenBrust; }
             set
@@ -436,10 +423,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _wundenBrust;
+        private int _wundenBrust;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> WundenArmL
+        public virtual int WundenArmL
         {
             get { return _wundenArmL; }
             set
@@ -449,10 +436,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _wundenArmL;
+        private int _wundenArmL;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> WundenArmR
+        public virtual int WundenArmR
         {
             get { return _wundenArmR; }
             set
@@ -462,10 +449,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _wundenArmR;
+        private int _wundenArmR;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> WundenBauch
+        public virtual int WundenBauch
         {
             get { return _wundenBauch; }
             set
@@ -475,10 +462,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _wundenBauch;
+        private int _wundenBauch;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> WundenBeinL
+        public virtual int WundenBeinL
         {
             get { return _wundenBeinL; }
             set
@@ -488,10 +475,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _wundenBeinL;
+        private int _wundenBeinL;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> WundenBeinR
+        public virtual int WundenBeinR
         {
             get { return _wundenBeinR; }
             set
@@ -501,10 +488,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _wundenBeinR;
+        private int _wundenBeinR;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSKopf
+        public virtual int RSKopf
         {
             get { return _rSKopf; }
             set
@@ -514,10 +501,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSKopf;
+        private int _rSKopf;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSBrust
+        public virtual int RSBrust
         {
             get { return _rSBrust; }
             set
@@ -527,10 +514,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSBrust;
+        private int _rSBrust;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSRücken
+        public virtual int RSRücken
         {
             get { return _rSRücken; }
             set
@@ -540,10 +527,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSRücken;
+        private int _rSRücken;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSArmL
+        public virtual int RSArmL
         {
             get { return _rSArmL; }
             set
@@ -553,10 +540,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSArmL;
+        private int _rSArmL;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSArmR
+        public virtual int RSArmR
         {
             get { return _rSArmR; }
             set
@@ -566,10 +553,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSArmR;
+        private int _rSArmR;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSBauch
+        public virtual int RSBauch
         {
             get { return _rSBauch; }
             set
@@ -579,10 +566,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSBauch;
+        private int _rSBauch;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSBeinL
+        public virtual int RSBeinL
         {
             get { return _rSBeinL; }
             set
@@ -592,10 +579,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSBeinL;
+        private int _rSBeinL;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> RSBeinR
+        public virtual int RSBeinR
         {
             get { return _rSBeinR; }
             set
@@ -605,7 +592,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _rSBeinR;
+        private int _rSBeinR;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<int> SO
@@ -632,6 +619,19 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _heldGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Bild
+        {
+            get { return _bild; }
+            set
+    		{ 
+    			_bild = value;
+    			OnChanged("Bild");
+    		}
+    
+        }
+        private string _bild;
 
         #endregion
 

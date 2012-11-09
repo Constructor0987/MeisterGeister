@@ -48,6 +48,18 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
+        public void ListeTest()
+        {
+            Assert.DoesNotThrow(LoadListen);
+        }
+
+        void LoadListen()
+        {
+            var zauber = Global.ContextHeld.Liste<Zauber>();
+            var gegnerBase = Global.ContextHeld.Liste<GegnerBase>();
+        }
+
+        [Test]
         public void CloneTest()
         {
             int a = Global.ContextHeld.Liste<Held>().Count;

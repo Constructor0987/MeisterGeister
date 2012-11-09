@@ -36,23 +36,23 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Talentname
+        public virtual System.Guid TalentGUID
         {
-            get { return _talentname; }
+            get { return _talentGUID; }
             set
             {
-                if (_talentname != value)
+                if (_talentGUID != value)
                 {
-                    if (Talent != null && Talent.Talentname != value)
+                    if (Talent != null && Talent.TalentGUID != value)
                     {
                         Talent = null;
                     }
-                    _talentname = value;
+                    _talentGUID = value;
                 }
             }
     
         }
-        private string _talentname;
+        private System.Guid _talentGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<int> TaW
@@ -200,9 +200,9 @@ namespace MeisterGeister.Model
                 {
                     Talent.Held_Talent.Add(this);
                 }
-                if (Talentname != Talent.Talentname)
+                if (TalentGUID != Talent.TalentGUID)
                 {
-                    Talentname = Talent.Talentname;
+                    TalentGUID = Talent.TalentGUID;
                 }
             }
         }

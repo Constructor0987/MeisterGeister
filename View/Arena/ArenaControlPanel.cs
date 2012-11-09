@@ -118,7 +118,7 @@ namespace MeisterGeister.View.Arena
             foreach (var item in Global.ContextHeld.HeldenGruppeListe)
 	        {
                 _heroAdder.Items.Add(new CreatureNameIdPair(item.Name, item.HeldGUID));
-                _arenaViewer.AddHeldPortrait(item.HeldGUID, item.BildLink);
+                _arenaViewer.AddHeldPortrait(item.HeldGUID, item.Bild);
             }            
         }
         

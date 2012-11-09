@@ -103,6 +103,18 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Audio_Playlist_Titel> _audio_Playlist_Titel;
     
+        public ObjectSet<Audio_Theme> Audio_Theme
+        {
+            get { return _audio_Theme  ?? (_audio_Theme = CreateObjectSet<Audio_Theme>("Audio_Theme")); }
+        }
+        private ObjectSet<Audio_Theme> _audio_Theme;
+    
+        public ObjectSet<Audio_Theme_Playlist> Audio_Theme_Playlist
+        {
+            get { return _audio_Theme_Playlist  ?? (_audio_Theme_Playlist = CreateObjectSet<Audio_Theme_Playlist>("Audio_Theme_Playlist")); }
+        }
+        private ObjectSet<Audio_Theme_Playlist> _audio_Theme_Playlist;
+    
         public ObjectSet<Audio_Titel> Audio_Titel
         {
             get { return _audio_Titel  ?? (_audio_Titel = CreateObjectSet<Audio_Titel>("Audio_Titel")); }
@@ -372,6 +384,10 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Audio_Playlist;
     		if(typeof(T) == typeof(Audio_Playlist_Titel))
     				return (ObjectSet<T>)(Object)Audio_Playlist_Titel;
+    		if(typeof(T) == typeof(Audio_Theme))
+    				return (ObjectSet<T>)(Object)Audio_Theme;
+    		if(typeof(T) == typeof(Audio_Theme_Playlist))
+    				return (ObjectSet<T>)(Object)Audio_Theme_Playlist;
     		if(typeof(T) == typeof(Audio_Titel))
     				return (ObjectSet<T>)(Object)Audio_Titel;
     		if(typeof(T) == typeof(Ausrüstung))

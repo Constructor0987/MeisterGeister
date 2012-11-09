@@ -52,7 +52,8 @@ namespace MeisterGeister.Model.Service {
             tmp.Ausrüstung = aWaffe.Ausrüstung;
             tmp.AusrüstungGUID = aWaffe.Ausrüstung.AusrüstungGUID;
 
-            tmp.Talentname = aWaffe.Talent.FirstOrDefault().Talentname;
+            tmp.Talent = aWaffe.Talent.FirstOrDefault();
+            tmp.TalentGUID = aWaffe.Talent.FirstOrDefault().TalentGUID;
             tmp.Angelegt = false;
             tmp.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             tmp.Anzahl = 1;

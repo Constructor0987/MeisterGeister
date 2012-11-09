@@ -963,7 +963,7 @@ namespace MeisterGeister.Model
         {
             if (t == null)
                 return null;
-            IEnumerable<Held_Talent> existierendeZuordnung = Held_Talent.Where(hta => hta.Talentname == t.Talentname && hta.HeldGUID == HeldGUID);
+            IEnumerable<Held_Talent> existierendeZuordnung = Held_Talent.Where(hta => hta.TalentGUID == t.TalentGUID && hta.HeldGUID == HeldGUID);
             if (existierendeZuordnung.Count() != 0)
             {
                 //Oder eine Exception werfen?
@@ -974,7 +974,7 @@ namespace MeisterGeister.Model
             ht.HeldGUID = HeldGUID;
             ht.Held = this;
 
-            ht.Talentname = t.Talentname;
+            ht.TalentGUID = t.TalentGUID;
             ht.Talent = t;
 
             ht.TaW = wert;
@@ -1000,7 +1000,7 @@ namespace MeisterGeister.Model
         public void DeleteTalent(string talentname)
         {
             if (HatTalent(talentname))
-                DeleteTalent(Held_Talent.Where(h => h.Talentname == talentname).FirstOrDefault());
+                DeleteTalent(Held_Talent.Where(h => h.Talent.Talentname == talentname).FirstOrDefault());
         }
 
         public void DeleteTalent(Held_Talent ht)
@@ -1028,7 +1028,7 @@ namespace MeisterGeister.Model
         /// </summary>
         public int Talentwert(string talentName, bool nurPositiv)
         {
-            Model.Held_Talent ht = Held_Talent.Where(h => h.Talentname == talentName).FirstOrDefault();
+            Model.Held_Talent ht = Held_Talent.Where(h => h.Talent.Talentname == talentName).FirstOrDefault();
             if(ht == null)
                 return 0;
             int taw = ht.TaW ?? 0;
@@ -1117,7 +1117,7 @@ namespace MeisterGeister.Model
 
         public void AddBasisTalente()
         {
-            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis").ToList())
+            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis" && t.TalentgruppeID != 0).ToList())
             {
                 if (t.TalentgruppeID != 1)
                     AddTalent(t, 0);
@@ -1134,7 +1134,7 @@ namespace MeisterGeister.Model
         {
             if (z == null)
                 return null;
-            IEnumerable<Held_Zauber> existierendeZuordnung = Held_Zauber.Where(hza => hza.ZauberID == z.ZauberID
+            IEnumerable<Held_Zauber> existierendeZuordnung = Held_Zauber.Where(hza => hza.ZauberGUID == z.ZauberGUID
                 && hza.Repräsentation == rep
                 && hza.HeldGUID == HeldGUID);
             if (existierendeZuordnung.Count() != 0)
@@ -1147,7 +1147,7 @@ namespace MeisterGeister.Model
             hz.HeldGUID = HeldGUID;
             hz.Held = this;
 
-            hz.ZauberID = z.ZauberID;
+            hz.ZauberGUID = z.ZauberGUID;
             hz.Zauber = z;
 
             hz.ZfW = wert;
@@ -1263,7 +1263,7 @@ namespace MeisterGeister.Model
         {
             if (vn == null)
                 return null;
-            IEnumerable<Held_VorNachteil> existierendeZuordnung = Held_VorNachteil.Where(heldvn => heldvn.VorNachteilID == vn.VorNachteilID && heldvn.HeldGUID == HeldGUID);
+            IEnumerable<Held_VorNachteil> existierendeZuordnung = Held_VorNachteil.Where(heldvn => heldvn.VorNachteilGUID == vn.VorNachteilGUID && heldvn.HeldGUID == HeldGUID);
             if (existierendeZuordnung.Count() != 0)
             {
                 //Oder eine Exception werfen?
@@ -1274,7 +1274,7 @@ namespace MeisterGeister.Model
             hvn.HeldGUID = HeldGUID;
             hvn.Held = this;
 
-            hvn.VorNachteilID = vn.VorNachteilID;
+            hvn.VorNachteilGUID = vn.VorNachteilGUID;
             hvn.VorNachteil = vn;
             
             hvn.Wert = wert;
@@ -1447,7 +1447,7 @@ namespace MeisterGeister.Model
         {
             if (sf == null)
                 return null;
-            IEnumerable<Held_Sonderfertigkeit> existierendeZuordnung = Held_Sonderfertigkeit.Where(heldsf => heldsf.SonderfertigkeitID == sf.SonderfertigkeitID && heldsf.HeldGUID == HeldGUID);
+            IEnumerable<Held_Sonderfertigkeit> existierendeZuordnung = Held_Sonderfertigkeit.Where(heldsf => heldsf.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && heldsf.HeldGUID == HeldGUID);
             if (existierendeZuordnung.Count() != 0)
             {
                 //Oder eine Exception werfen?
@@ -1458,7 +1458,7 @@ namespace MeisterGeister.Model
             hs.HeldGUID = HeldGUID;
             hs.Held = this;
 
-            hs.SonderfertigkeitID = sf.SonderfertigkeitID;
+            hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
             hs.Sonderfertigkeit = sf;
             
             hs.Wert = wert;
@@ -1663,7 +1663,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return Held_Talent.Where(ht => ht.Talent.IsKampfTalent).OrderByDescending(ht => ht.TaW).ThenBy(ht => ht.Talentname).ToList();
+                return Held_Talent.Where(ht => ht.Talent.IsKampfTalent).OrderByDescending(ht => ht.TaW).ThenBy(ht => ht.Talent.Talentname).ToList();
             }
         }
 
@@ -1678,12 +1678,6 @@ namespace MeisterGeister.Model
         public int InitiativeMax()
         {
             return InitiativeBasis + (int)InitiativeZufall;
-        }
-
-        // TODO ??: DB-Feld BildLink umbenennen
-        public string Bild
-        {
-            get { return BildLink; }
         }
 
         public string Position
@@ -1863,6 +1857,20 @@ namespace MeisterGeister.Model
             return Name;
         }
 
+        #endregion
+
+        #region IHasWunden
+        int IHasWunden.Wunden
+        {
+            get
+            {
+                return this.Wunden ?? 0;
+            }
+            set
+            {
+                this.Wunden = value;
+            }
+        }
         #endregion
     }
 }

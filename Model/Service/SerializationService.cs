@@ -84,13 +84,13 @@ namespace MeisterGeister.Model.Service
                 from a in Context.GegnerBase_Kampfregel where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-000") || !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-000")  select a,
                 //später mit Guid:
                 from a in Context.Held_Sonderfertigkeit select a,
-                from a in Context.Sonderfertigkeit where a.SonderfertigkeitID > 1107 select a,
+                from a in Context.Sonderfertigkeit where !a.SonderfertigkeitGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
                 from a in Context.Held_VorNachteil select a,
-                from a in Context.VorNachteil where a.VorNachteilID > 361 select a,
+                from a in Context.VorNachteil where !a.VorNachteilGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
                 from a in Context.Held_Talent select a,
                 //Talent nicht, da es da keine Möglichkeit gibt userdaten zu finden.
                 from a in Context.Held_Zauber select a,
-                from a in Context.Zauber where a.ZauberID > 343 select a,
+                from a in Context.Zauber where !a.ZauberGUID.StringConvert().StartsWith("00000000-0000-0000-000") select a,
             };
             IEnumerable<object> results;
             foreach (IQueryable<object> q in queries)

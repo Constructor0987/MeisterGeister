@@ -41,21 +41,13 @@ namespace MeisterGeister.Model
             get { return _heldGUID; }
             set
             {
-                try
+                if (_heldGUID != value)
                 {
-                    _settingFK = true;
-                    if (_heldGUID != value)
+                    if (Held != null && Held.HeldGUID != value)
                     {
-                        if (Held != null && Held.HeldGUID != value)
-                        {
-                            Held = null;
-                        }
-                        _heldGUID = value;
+                        Held = null;
                     }
-                }
-                finally
-                {
-                    _settingFK = false;
+                    _heldGUID = value;
                 }
             }
     
@@ -81,21 +73,13 @@ namespace MeisterGeister.Model
             get { return _ausrüstungGUID; }
             set
             {
-                try
+                if (_ausrüstungGUID != value)
                 {
-                    _settingFK = true;
-                    if (_ausrüstungGUID != value)
+                    if (Ausrüstung != null && Ausrüstung.AusrüstungGUID != value)
                     {
-                        if (Ausrüstung != null && Ausrüstung.AusrüstungGUID != value)
-                        {
-                            Ausrüstung = null;
-                        }
-                        _ausrüstungGUID = value;
+                        Ausrüstung = null;
                     }
-                }
-                finally
-                {
-                    _settingFK = false;
+                    _ausrüstungGUID = value;
                 }
             }
     
@@ -103,31 +87,23 @@ namespace MeisterGeister.Model
         private System.Guid _ausrüstungGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Talentname
+        public virtual System.Guid TalentGUID
         {
-            get { return _talentname; }
+            get { return _talentGUID; }
             set
             {
-                try
+                if (_talentGUID != value)
                 {
-                    _settingFK = true;
-                    if (_talentname != value)
+                    if (Talent != null && Talent.TalentGUID != value)
                     {
-                        if (Talent != null && Talent.Talentname != value)
-                        {
-                            Talent = null;
-                        }
-                        _talentname = value;
+                        Talent = null;
                     }
-                }
-                finally
-                {
-                    _settingFK = false;
+                    _talentGUID = value;
                 }
             }
     
         }
-        private string _talentname;
+        private System.Guid _talentGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<int> Anzahl
@@ -161,21 +137,13 @@ namespace MeisterGeister.Model
             get { return _trageortGUID; }
             set
             {
-                try
+                if (_trageortGUID != value)
                 {
-                    _settingFK = true;
-                    if (_trageortGUID != value)
+                    if (Trageort != null && Trageort.TrageortGUID != value)
                     {
-                        if (Trageort != null && Trageort.TrageortGUID != value)
-                        {
-                            Trageort = null;
-                        }
-                        _trageortGUID = value;
+                        Trageort = null;
                     }
-                }
-                finally
-                {
-                    _settingFK = false;
+                    _trageortGUID = value;
                 }
             }
     
@@ -254,8 +222,6 @@ namespace MeisterGeister.Model
 
         #region Association Fixup
     
-        private bool _settingFK = false;
-    
         private void FixupAusrüstung(Ausrüstung previousValue)
         {
     		OnChanged("Ausrüstung");
@@ -312,14 +278,10 @@ namespace MeisterGeister.Model
                 {
                     Talent.Held_Ausrüstung.Add(this);
                 }
-                if (Talentname != Talent.Talentname)
+                if (TalentGUID != Talent.TalentGUID)
                 {
-                    Talentname = Talent.Talentname;
+                    TalentGUID = Talent.TalentGUID;
                 }
-            }
-            else if (!_settingFK)
-            {
-                Talentname = null;
             }
         }
     

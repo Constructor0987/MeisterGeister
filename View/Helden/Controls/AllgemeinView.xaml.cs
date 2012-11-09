@@ -71,27 +71,27 @@ namespace MeisterGeister.View.Helden.Controls
                 dlg.Filter = "Bild (*.BMP;*.GIF;*.JPG;*.JPEG;*.JPE;*.JFIF;*.PNG;*.TIF;*.TIFF)|*.BMP;*.GIF;*.JPG;*.JPEG;*.JPE;*.JFIF;*.PNG;*.TIF;*.TIFF";
 
                 if (dlg.ShowDialog() == DialogResult.OK)
-                    VM.SelectedHeld.BildLink = dlg.FileName;
+                    VM.SelectedHeld.Bild = dlg.FileName;
 
             }
         }
         private void ButtonBildLinkDelete_Click(object sender, RoutedEventArgs e)
         {
             if (VM.SelectedHeld != null)
-                VM.SelectedHeld.BildLink = null;
+                VM.SelectedHeld.Bild = null;
         }
         private void Bild_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (VM.SelectedHeld != null
-                && !string.IsNullOrWhiteSpace(VM.SelectedHeld.BildLink))
+                && !string.IsNullOrWhiteSpace(VM.SelectedHeld.Bild))
             {
                 try
                 {
-                    System.Diagnostics.Process.Start(VM.SelectedHeld.BildLink);
+                    System.Diagnostics.Process.Start(VM.SelectedHeld.Bild);
                 }
                 catch (Exception)
                 {
-                    System.Windows.MessageBox.Show(string.Format("Das Bild '{0}' konnte nicht geöffnet werden.", (this.DataContext as VM.AllgemeinViewModel).SelectedHeld.BildLink), "Bild");
+                    System.Windows.MessageBox.Show(string.Format("Das Bild '{0}' konnte nicht geöffnet werden.", (this.DataContext as VM.AllgemeinViewModel).SelectedHeld.Bild), "Bild");
                 }
 
             }
@@ -117,7 +117,7 @@ namespace MeisterGeister.View.Helden.Controls
                 inBox.Beschreibung = "Bitte den vollständigen Link zum Bild des Charakters angeben.";
                 inBox.ShowDialog();
                 if (inBox.OK_Click)
-                    VM.SelectedHeld.BildLink = inBox.Wert;
+                    VM.SelectedHeld.Bild = inBox.Wert;
             }
         }
         #endregion

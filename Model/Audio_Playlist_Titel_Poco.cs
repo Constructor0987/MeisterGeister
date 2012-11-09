@@ -189,6 +189,58 @@ namespace MeisterGeister.Model
     
         }
         private long _pauseMax;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual double Speed
+        {
+            get { return _speed; }
+            set
+    		{ 
+    			_speed = value;
+    			OnChanged("Speed");
+    		}
+    
+        }
+        private double _speed;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool TeilAbspielen
+        {
+            get { return _teilAbspielen; }
+            set
+    		{ 
+    			_teilAbspielen = value;
+    			OnChanged("TeilAbspielen");
+    		}
+    
+        }
+        private bool _teilAbspielen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> TeilStart
+        {
+            get { return _teilStart; }
+            set
+    		{ 
+    			_teilStart = value;
+    			OnChanged("TeilStart");
+    		}
+    
+        }
+        private Nullable<double> _teilStart;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> TeilEnde
+        {
+            get { return _teilEnde; }
+            set
+    		{ 
+    			_teilEnde = value;
+    			OnChanged("TeilEnde");
+    		}
+    
+        }
+        private Nullable<double> _teilEnde;
 
         #endregion
 

@@ -55,23 +55,23 @@ namespace MeisterGeister.Model
         private System.Guid _heldGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int VorNachteilID
+        public virtual System.Guid VorNachteilGUID
         {
-            get { return _vorNachteilID; }
+            get { return _vorNachteilGUID; }
             set
             {
-                if (_vorNachteilID != value)
+                if (_vorNachteilGUID != value)
                 {
-                    if (VorNachteil != null && VorNachteil.VorNachteilID != value)
+                    if (VorNachteil != null && VorNachteil.VorNachteilGUID != value)
                     {
                         VorNachteil = null;
                     }
-                    _vorNachteilID = value;
+                    _vorNachteilGUID = value;
                 }
             }
     
         }
-        private int _vorNachteilID;
+        private System.Guid _vorNachteilGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Wert
@@ -161,9 +161,9 @@ namespace MeisterGeister.Model
                 {
                     VorNachteil.Held_VorNachteil.Add(this);
                 }
-                if (VorNachteilID != VorNachteil.VorNachteilID)
+                if (VorNachteilGUID != VorNachteil.VorNachteilGUID)
                 {
-                    VorNachteilID = VorNachteil.VorNachteilID;
+                    VorNachteilGUID = VorNachteil.VorNachteilGUID;
                 }
             }
         }

@@ -36,6 +36,19 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual System.Guid TalentGUID
+        {
+            get { return _talentGUID; }
+            set
+    		{ 
+    			_talentGUID = value;
+    			OnChanged("TalentGUID");
+    		}
+    
+        }
+        private System.Guid _talentGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual string Talentname
         {
             get { return _talentname; }

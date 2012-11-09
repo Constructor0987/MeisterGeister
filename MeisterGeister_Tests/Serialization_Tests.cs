@@ -42,7 +42,7 @@ namespace MeisterGeister_Tests
             Guid heldGuid = h1.HeldGUID;
             Held_Sonderfertigkeit hs = new Held_Sonderfertigkeit();
             hs.HeldGUID = h1.HeldGUID;
-            hs.SonderfertigkeitID = Global.ContextHeld.LoadSonderfertigkeitByName("Kampfreflexe").SonderfertigkeitID;
+            hs.SonderfertigkeitGUID = Global.ContextHeld.LoadSonderfertigkeitByName("Kampfreflexe").SonderfertigkeitGUID;
             h1.Held_Sonderfertigkeit.Add(hs);
             Assert.IsTrue(serializer.InsertOrUpdateHeld(h1));
             Assert.IsFalse(heldGuid == Guid.Empty);
@@ -99,7 +99,7 @@ namespace MeisterGeister_Tests
             Assert.IsNotNull(h2);
             Assert.AreEqual(h1.HeldGUID, h2.HeldGUID);
             Assert.IsNotNull(h2.Held_Sonderfertigkeit);
-            Assert.AreEqual(s1.SonderfertigkeitID, h2.Held_Sonderfertigkeit.First().Sonderfertigkeit.SonderfertigkeitID);
+            Assert.AreEqual(s1.SonderfertigkeitGUID, h2.Held_Sonderfertigkeit.First().Sonderfertigkeit.SonderfertigkeitGUID);
             
             /*
             //Wie Demo-Helden

@@ -77,27 +77,27 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 switch (zone)
                 {
                     case Trefferzone.Kopf:
-                        return _held.WundenKopf ?? 0;
+                        return _held.WundenKopf;
                     case Trefferzone.Brust:
                     case Trefferzone.Rücken:
-                        return _held.WundenBrust ?? 0;
+                        return _held.WundenBrust;
                     case Trefferzone.ArmL:
-                        return _held.WundenArmL ?? 0;
+                        return _held.WundenArmL;
                     case Trefferzone.ArmR:
-                        return _held.WundenArmR ?? 0;
+                        return _held.WundenArmR;
                     case Trefferzone.Bauch:
-                        return _held.WundenBauch ?? 0;
+                        return _held.WundenBauch;
                     case Trefferzone.BeinL:
-                        return _held.WundenBeinL ?? 0;
+                        return _held.WundenBeinL;
                     case Trefferzone.BeinR:
-                        return _held.WundenBeinR ?? 0;
+                        return _held.WundenBeinR;
                     case Trefferzone.Unlokalisiert:
-                        return _held.Wunden ?? 0;
+                        return _held.Wunden;
                     case Trefferzone.Zufall:
                         return this[TrefferzonenHelper.ZufallsZone()];
                     case Trefferzone.Gesamt:
                     default:
-                        return _held.Wunden ?? 0;
+                        return _held.Wunden;
                 }
             }
             set
@@ -125,7 +125,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 switch (zone)
                 {
                     case Trefferzone.Kopf:
-                        if (value > (_held.WundenKopf ?? 0))
+                        if (value > _held.WundenKopf)
                         {
                             if (mehrAlsDreiWunden)
                             {
@@ -140,9 +140,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         break;
                     case Trefferzone.Rücken:
                     case Trefferzone.Brust:
-                        if (value > (_held.WundenBrust ?? 0))
+                        if (value > _held.WundenBrust)
                         {
-                            int count = value - (_held.WundenBrust ?? 0);
+                            int count = value - _held.WundenBrust;
                             string wundeText = count > 1 ? "Wunden" : "Wunde";
 
                             // TODO ??: Dialog MVVM-konform aufrufen
@@ -156,7 +156,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _held.WundenBrust = value;
                         break;
                     case Trefferzone.ArmL:
-                        if (value > (_held.WundenArmL ?? 0))
+                        if (value > _held.WundenArmL)
                         {
                             if (mehrAlsDreiWunden)
                             {
@@ -166,7 +166,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _held.WundenArmL = value;
                         break;
                     case Trefferzone.ArmR:
-                        if (value > (_held.WundenArmR ?? 0))
+                        if (value > _held.WundenArmR)
                         {
                             if (mehrAlsDreiWunden)
                             {
@@ -176,9 +176,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _held.WundenArmR = value;
                         break;
                     case Trefferzone.Bauch:
-                        if (value > (_held.WundenBauch ?? 0))
+                        if (value > _held.WundenBauch)
                         {
-                            int count = value - (_held.WundenBauch ?? 0);
+                            int count = value - _held.WundenBauch;
                             string wundeText = count > 1 ? "Wunden" : "Wunde";
 
                             // TODO ??: Dialog MVVM-konform aufrufen
@@ -192,7 +192,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _held.WundenBauch = value;
                         break;
                     case Trefferzone.BeinL:
-                        if (value > (_held.WundenBeinL ?? 0))
+                        if (value > _held.WundenBeinL)
                         {
                             if (mehrAlsDreiWunden)
                             {
@@ -202,7 +202,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _held.WundenBeinL = value;
                         break;
                     case Trefferzone.BeinR:
-                        if (value > (_held.WundenBeinR ?? 0))
+                        if (value > _held.WundenBeinR)
                         {
                             if (mehrAlsDreiWunden)
                             {

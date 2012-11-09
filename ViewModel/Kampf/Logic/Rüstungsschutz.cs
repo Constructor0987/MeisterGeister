@@ -26,21 +26,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 switch (zone)
                 {
                     case Trefferzone.Kopf:
-                        return _wesen.RSKopf ?? 0;
+                        return _wesen.RSKopf;
                     case Trefferzone.Brust:
-                        return _wesen.RSBrust ?? 0;
+                        return _wesen.RSBrust;
                     case Trefferzone.Rücken:
-                        return _wesen.RSRücken ?? 0;
+                        return _wesen.RSRücken;
                     case Trefferzone.ArmL:
-                        return _wesen.RSArmL ?? 0;
+                        return _wesen.RSArmL;
                     case Trefferzone.ArmR:
-                        return _wesen.RSArmR ?? 0;
+                        return _wesen.RSArmR;
                     case Trefferzone.Bauch:
-                        return _wesen.RSBauch ?? 0;
+                        return _wesen.RSBauch;
                     case Trefferzone.BeinL:
-                        return _wesen.RSBeinL ?? 0;
+                        return _wesen.RSBeinL;
                     case Trefferzone.BeinR:
-                        return _wesen.RSBeinR ?? 0;
+                        return _wesen.RSBeinR;
                     case Trefferzone.Unlokalisiert:
                         return GesamtRS;
                     case Trefferzone.Zufall:

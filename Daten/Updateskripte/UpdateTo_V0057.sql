@@ -76,6 +76,7 @@ GO
 CREATE TABLE [GegnerBase] (
 	[GegnerBaseGUID] uniqueidentifier NOT NULL DEFAULT newid(), 
 	[Name] nvarchar(100) NOT NULL, 
+	[Typ] nvarchar(100), 
 	[Bild] nvarchar(500), 
 	[INIBasis] int NOT NULL DEFAULT 0, 
 	[INIZufall] nvarchar(10) NOT NULL DEFAULT '1W6', 
@@ -117,6 +118,24 @@ CREATE TABLE [Gegner] (
 	[GegnerBaseGUID] uniqueidentifier NOT NULL DEFAULT '00000000-0000-0000-0000-000000000000',
 	[Name] nvarchar(100) NOT NULL, 
 	[Bild] nvarchar(500), 
+	[ATMod] int NOT NULL DEFAULT 0, 
+	[INIBasis] int NOT NULL DEFAULT 0, 
+	[PA] int NOT NULL DEFAULT 0, 
+	[LE] int NOT NULL DEFAULT 0, 
+	[AU] int NOT NULL DEFAULT 0, 
+	[AE] int NOT NULL DEFAULT 0, 
+	[KE] int NOT NULL DEFAULT 0, 
+	[KO] int NOT NULL DEFAULT 0, 
+	[MRGeist] int NOT NULL DEFAULT 0, 
+	[MRKörper] int,
+	[RSKopf] int NOT NULL DEFAULT 0, 
+	[RSBrust] int NOT NULL DEFAULT 0, 
+	[RSRücken] int NOT NULL DEFAULT 0, 
+	[RSArmL] int NOT NULL DEFAULT 0, 
+	[RSArmR] int NOT NULL DEFAULT 0, 
+	[RSBauch] int NOT NULL DEFAULT 0, 
+	[RSBeinL] int NOT NULL DEFAULT 0, 
+	[RSBeinR] int NOT NULL DEFAULT 0, 
 	[LEAktuell] int NOT NULL DEFAULT 0, 
 	[AUAktuell] int NOT NULL DEFAULT 0, 
 	[AEAktuell] int NOT NULL DEFAULT 0, 
@@ -221,4 +240,7 @@ SELECT [Name]
 		,[Quelle]                      as Literatur
 		,'Aventurien' as Setting
 	FROM [Bestiarium]
+GO
+
+DROP TABLE [Bestiarium]
 GO

@@ -99,9 +99,9 @@
                             </Button>
                             <Grid Grid.Column="0" Grid.Row="1" Margin="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="Bild_MouseDown">
                                     <TextBlock FontSize="10" HorizontalAlignment="Center" MaxWidth="150" Opacity="0" Text="{Binding SelectedHeld.BildLink}" TextWrapping="Wrap" VerticalAlignment="Center" />
-                                    <Image HorizontalAlignment="Center" x:Name="_imageHeldBild" ToolTip="{Binding SelectedHeld.BildLink, FallbackValue='Bild einfügen über Buttons...', TargetNullValue='Bild einfügen über Buttons...'}" VerticalAlignment="Center">
+                                    <Image HorizontalAlignment="Center" x:Name="_imageHeldBild" ToolTip="{Binding SelectedHeld.Bild, FallbackValue='Bild einfügen über Buttons...', TargetNullValue='Bild einfügen über Buttons...'}" VerticalAlignment="Center">
                                         <Image.Source>
-                                            <Binding Path="SelectedHeld.BildLink" IsAsync="True" Mode="OneWay">
+                                            <Binding Path="SelectedHeld.Bild" IsAsync="True" Mode="OneWay">
                                                 <Binding.FallbackValue>
                                                     <ImageSource>
                                                     /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png

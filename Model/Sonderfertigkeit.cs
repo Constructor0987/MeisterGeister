@@ -10,10 +10,9 @@ namespace MeisterGeister.Model
 {
     public partial class Sonderfertigkeit
     {
-        private const int maxid = 1412;
         public bool Usergenerated
         {
-            get { return SonderfertigkeitID > maxid; }
+            get { return !SonderfertigkeitGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
         public const string Aufmerksamkeit = "Aufmerksamkeit";

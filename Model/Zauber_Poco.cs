@@ -36,19 +36,6 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int ZauberID
-        {
-            get { return _zauberID; }
-            set
-    		{ 
-    			_zauberID = value;
-    			OnChanged("ZauberID");
-    		}
-    
-        }
-        private int _zauberID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Name
         {
             get { return _name; }
@@ -164,6 +151,19 @@ namespace MeisterGeister.Model
     
         }
         private string _setting;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual System.Guid ZauberGUID
+        {
+            get { return _zauberGUID; }
+            set
+    		{ 
+    			_zauberGUID = value;
+    			OnChanged("ZauberGUID");
+    		}
+    
+        }
+        private System.Guid _zauberGUID;
 
         #endregion
 

@@ -497,7 +497,7 @@ namespace MeisterGeister.ViewModel.Inventar {
 
             if (aAusruestung.Talente.Count() > 0) {
                 tmp.Talent = aAusruestung.Talente.FirstOrDefault();
-                tmp.Talentname = aAusruestung.Talente.FirstOrDefault().Talentname;
+                tmp.TalentGUID = aAusruestung.Talente.FirstOrDefault().TalentGUID;
             }
 
             tmp.Angelegt = false;

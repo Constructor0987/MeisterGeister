@@ -119,7 +119,7 @@ namespace MeisterGeister.Logic.General
             else
             {
                 IEnumerable<Talent> ht;
-                ht = Global.ContextHeld.Liste<Talent>().Where(t => t.Talentname == talent);
+                ht = Global.ContextHeld.Liste<Talent>().Where(t => t.Talentname == talent && t.TalentgruppeID != 0);
                 talentListe.Add(ht.Count() > 0 ? ht.First() : null);
             }
         }

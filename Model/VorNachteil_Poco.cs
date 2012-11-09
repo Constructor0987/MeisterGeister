@@ -36,19 +36,6 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int VorNachteilID
-        {
-            get { return _vorNachteilID; }
-            set
-    		{ 
-    			_vorNachteilID = value;
-    			OnChanged("VorNachteilID");
-    		}
-    
-        }
-        private int _vorNachteilID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Name
         {
             get { return _name; }
@@ -138,6 +125,19 @@ namespace MeisterGeister.Model
     
         }
         private string _setting;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual System.Guid VorNachteilGUID
+        {
+            get { return _vorNachteilGUID; }
+            set
+    		{ 
+    			_vorNachteilGUID = value;
+    			OnChanged("VorNachteilGUID");
+    		}
+    
+        }
+        private System.Guid _vorNachteilGUID;
 
         #endregion
 
