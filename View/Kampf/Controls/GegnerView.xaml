@@ -119,7 +119,14 @@
                         </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Name}">
+                                    <TextBlock.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock Text="Eindeutige Gegner-ID:" FontStyle="Italic" />
+                                            <TextBlock Text="{Binding GegnerBaseGUID}" />
+                                        </StackPanel>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -333,7 +340,11 @@
                         <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
                         <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                         -->
-                            <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding AngriffAddName}" Grid.ColumnSpan="2" ToolTip="Name eines neuen Angriffs eingeben..." />
+                            <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding AngriffAddName}" Grid.ColumnSpan="2" ToolTip="Name eines neuen Angriffs eingeben..." PreviewKeyDown="TextBoxAngriffName_PreviewKeyDown">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding OnNewAngriff}" />
+                                </TextBox.InputBindings>
+                            </TextBox>
                             <Button Grid.Row="0" Grid.Column="2"  Height="23" Width="25" ToolTip="Neuern Angriff einfügen" Command="{Binding OnNewAngriff}">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                             </Button>

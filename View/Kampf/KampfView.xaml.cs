@@ -87,7 +87,7 @@ namespace MeisterGeister.View.Kampf
 
         private void ShowSpielerInfo()
         {
-            KampfInfoView infoView = new KampfInfoView(VM.Kampf);
+            KampfInfoView infoView = new KampfInfoView(VM);
             MainView.ShowSpielerInfo(infoView);
         }
 

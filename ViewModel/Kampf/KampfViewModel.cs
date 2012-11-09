@@ -270,6 +270,24 @@ namespace MeisterGeister.ViewModel.Kampf
             Kampf.KampfNeuStarten();
         }
 
+        private Base.CommandBase onAktionAusführen = null;
+        public Base.CommandBase OnAktionAusführen
+        {
+            get
+            {
+                if (onAktionAusführen == null)
+                    onAktionAusführen = new Base.CommandBase(AktionAusführen, null);
+                return onAktionAusführen;
+            }
+        }
+
+        private void AktionAusführen(object obj)
+        {
+            if (SelectedManöverInfo == null || SelectedManöverInfo.Manöver == null)
+                return;
+            SelectedManöverInfo.Manöver.Ausführen();
+        }
+
         private Base.CommandBase onTrefferpunkte = null;
         public Base.CommandBase OnTrefferpunkte
         {

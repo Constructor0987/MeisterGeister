@@ -44,7 +44,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ItemsControl Grid.Column="0" Margin="5,5,0,5" Name="_listBoxKämpfer" DataContext="{Binding KämpferListe}" Padding="30, 20" ItemTemplate="{StaticResource KämpferListTemplate}" ItemsSource="{Binding UpdateSourceTrigger=PropertyChanged}"
+        <ItemsControl Grid.Column="0" Margin="5,5,0,5" Padding="30, 20" ItemTemplate="{StaticResource KämpferListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
                       Background="{StaticResource BackgroundPergamentHoch}" FontSize="18">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -55,9 +55,9 @@
         <Grid Grid.Column="1">
             <StackPanel Margin="5" Background="{StaticResource BackgroundPergamentHoch}" Height="Auto" VerticalAlignment="Top">
                 <TextBlock Text="Kampfrunde:" TextAlignment="Center" FontSize="18" Margin="4,5,4,0" />
-                <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampfrunde}" Margin="4" TextAlignment="Center" FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
+                <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" Margin="4" TextAlignment="Center" FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
                 <TextBlock Text="Zeit:" TextAlignment="Center" FontSize="18" Margin="4,0" />
-                <TextBlock Text="{Binding KampfZeit}" TextAlignment="Center" Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
+                <TextBlock Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
             </StackPanel>
         </Grid>
     </Grid>

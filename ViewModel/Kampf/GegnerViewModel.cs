@@ -171,6 +171,10 @@ namespace MeisterGeister.ViewModel.Kampf
             ga.Name = AngriffAddName;
             ga.GegnerBaseGUID = SelectedGegnerBase.GegnerBaseGUID;
             ga.GegnerBase = SelectedGegnerBase;
+            
+            // Default-Werte
+            ga.DK = "N"; ga.TPWürfelAnzahl = 1; ga.TPWürfel = 6;
+
             SelectedGegnerBase.GegnerBase_Angriff.Add(ga);
             SaveGegner();
             //Aktualisieren

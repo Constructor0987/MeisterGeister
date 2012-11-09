@@ -120,5 +120,11 @@ namespace MeisterGeister.View.Kampf.Controls
         }
 
         public EventHandler ListBox_DoubleClicked;
+
+        private void TextBoxAngriffName_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && sender != null && sender is TextBox)
+                (sender as TextBox).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+        }
 	}
 }
