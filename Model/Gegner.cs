@@ -21,9 +21,26 @@ namespace MeisterGeister.Model
         {
             GegnerBaseGUID = gegnerBase.GegnerBaseGUID;
             GegnerBase = gegnerBase;
+            AE = gegnerBase.AE;
             AstralenergieAktuell = AstralenergieMax;
+            AU = gegnerBase.AU;
             AusdauerAktuell = AusdauerMax;
+            LE = gegnerBase.LE;
             LebensenergieAktuell = LebensenergieMax;
+            KE = gegnerBase.KE;
+            KarmaenergieAktuell = KarmaenergieMax;
+            INIBasis = gegnerBase.INIBasis;
+            KO = gegnerBase.KO;
+            MRGeist = gegnerBase.MRGeist;
+            MRKörper = gegnerBase.MRKörper;
+            RSArmL = gegnerBase.RSArmL;
+            RSArmR = gegnerBase.RSArmR;
+            RSBauch = gegnerBase.RSBauch;
+            RSBeinL = gegnerBase.RSBeinL;
+            RSBeinR = gegnerBase.RSBeinR;
+            RSBrust = gegnerBase.RSBrust;
+            RSKopf = gegnerBase.RSKopf;
+            RSRücken = gegnerBase.RSRücken;
             Name = gegnerBase.Name;
             Bild = gegnerBase.Bild;
             Bemerkung = gegnerBase.Bemerkung;
