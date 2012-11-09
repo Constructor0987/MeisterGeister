@@ -513,15 +513,17 @@
                             </Border>
                         </Expander>
 
-                        <StackPanel Grid.Row="0" Margin="6,0,0,0" Orientation="Horizontal" ToolTip="Initiative (INI)">
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png" Width="20" Height="20" />
+                        <StackPanel Grid.Row="0" Margin="6,0,0,0" Orientation="Horizontal">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png" Width="20" Height="20" ToolTip="Initiative (INI)" />
+                            <TextBlock Text="INI-Basis:" Margin="4,6,4,2" />
+                            <TextBlock Text="{Binding Path=SelectedKämpferInfo.InitiativeBasis, FallbackValue=0}" TextAlignment="Center" Margin="2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" />
                             <TextBlock Text="INI (Aktuell):" Margin="4,6,4,2" />
                             <ViewGeneral:IntBox Margin="2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Initiative}" ToolTip="Initiative" FontWeight="Bold" ShowButtons="True" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Vertical">
                             <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
-                                <TextBlock Margin="2,6,2,2" Text="BE: " />
+                                <TextBlock Margin="4,6,2,2" Text="BE: " />
                                 <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
                                 <TextBlock Margin="10,6,2,2" Text="WS: " />
                                 <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen" MinWidth="80">
@@ -610,6 +612,23 @@
                             </Button>
                         </Grid>
 
+                        <Expander IsExpanded="True" Margin="5" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Expander.Header>
+                                <TextBlock Text="Modifikatoren" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}" MinHeight="25">
+                                <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SelectedKämpferInfo.Kämpfer.Modifikatoren}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" HorizontalAlignment="Left" />
+                                                <TextBlock DockPanel.Dock="Right" Text="{Binding Auswirkung}" HorizontalAlignment="Right" Margin="4,0,4,0" FontStyle="Italic" Foreground="#FF6C6C6C" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </Expander>
                     </Grid>
                 </Grid>
             </Border>
