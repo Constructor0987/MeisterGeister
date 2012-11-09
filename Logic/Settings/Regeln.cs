@@ -10,7 +10,15 @@ namespace MeisterGeister.Logic.Settings
     static class Regeln
     {
         //Entitylisten
-        private static List<Model.Regeln> _regelnListe = Global.ContextRegeln.RegelnListe;
+        private static List<Model.Regeln> _regelnListe = null;
+
+        static Regeln()
+        {
+            if (Global.ContextRegeln != null)
+                _regelnListe = Global.ContextRegeln.RegelnListe;
+            else
+                _regelnListe = new List<Model.Regeln>();
+        }
 
         public static bool SettingDunkleZeiten
         {
