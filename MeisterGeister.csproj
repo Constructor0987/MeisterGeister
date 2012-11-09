@@ -767,6 +767,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\AudioPlayer\GlasButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\AudioPlayer\HitchPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1371,6 +1375,11 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0028.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0029.sql" />
     <Resource Include="Images\Icons\gegner_kopieren.png" />
+    <Resource Include="Images\Icons\General\play_prev.png" />
+    <Resource Include="Images\Icons\General\play_stop-grau.png" />
+    <Resource Include="Images\Icons\General\repeat.png" />
+    <Resource Include="Images\Icons\General\speaker-mute.png" />
+    <Resource Include="Images\Icons\General\speaker.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
