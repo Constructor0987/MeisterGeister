@@ -25,6 +25,6 @@
                 <ViewGeneral:IntBox Margin="0,0,10,0" MinWidth="65" ToolTip="Ergebnis" Value="{Binding Ergebnis}" ShowButtons="True"  />
             </StackPanel>
         </Border>
-        <Button Grid.Row="2" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" />
+        <Button Grid.Row="2" Content="OK" Width="55" Margin="15" HorizontalAlignment="Right" Click="OkButton_Click" IsDefault="True" />
     </Grid>
 </Window>
