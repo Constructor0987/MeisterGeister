@@ -49,35 +49,6 @@ namespace MeisterGeister.View.Kampf
             set { DataContext = value; }
         }
 
-        private void ButtonNeueKampfrunde_Click(object sender, RoutedEventArgs e)
-        {
-            NeueKampfrunde();
-        }
-
-        private void NeueKampfrunde()
-        {
-            //_kampf.NeueKampfrunde();
-            //if (_kampf.Kampfrunde > 0)
-            //    _buttonNeueKR.Content = "Neue KR";
-            //else
-                //_buttonNeueKR.Content = "Starten";
-            //SetKampfrunde();
-        }
-
-        private void ButtonNeuerKampf_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Soll ein neuer Kampf gestartet werden?", "Neuer Kampf", MessageBoxButton.YesNo)
-                == MessageBoxResult.Yes)
-            {
-                //_kampf.KampfEnde();
-                _buttonNeueKR.Content = "Starten";
-                //_listBoxKämpfer.DataContext = _kampf.Kämpfer;
-                // TODO ??: Umstellen auf neues Kampf-Model
-                //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
-                //SetKampfrunde();
-            }
-        }
-
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             if (_treeInitiative.SelectedItem == null)
@@ -91,28 +62,6 @@ namespace MeisterGeister.View.Kampf
                 _menuItemKämpferFarbmarkierung.Visibility = System.Windows.Visibility.Visible;
                 _menuItemKämpferEntfernen.Visibility = System.Windows.Visibility.Visible;
                 _menuItemKämpferAktuell.Visibility = System.Windows.Visibility.Visible;
-            }
-        }
-
-        private void NächsterKämpferRollover_EventHandler(object sender, EventArgs e)
-        {
-            var res = MessageBoxResult.Yes;
-            if (!Einstellungen.FrageNeueKampfrundeAbstellen)
-                res = MessageBox.Show("Soll eine neue KR begonnen werden?\n(Diese Frage kann unter Einstellungen abgeschaltet werden.)",
-                    "Ende der Kämpfer-Liste", MessageBoxButton.YesNoCancel);
-            switch (res)
-            {
-                case MessageBoxResult.Cancel:
-                    // TODO ??: Umstellen auf neues Kampf-Model    
-                //_kampf.VorherigerKämpfer();
-                    break;
-                case MessageBoxResult.No:
-                    break;
-                case MessageBoxResult.Yes:
-                    NeueKampfrunde();
-                    break;
-                default:
-                    break;
             }
         }
 

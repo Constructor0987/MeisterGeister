@@ -276,7 +276,7 @@
                                     <TextBlock Text="Weiter" VerticalAlignment="Center" Margin="5,0,5,0" />
                                 </StackPanel>
                             </Button>
-                            
+
                         </StackPanel>
                         <TreeView Name="_treeInitiative" Grid.Row="1" Margin="2,2,2,2" ItemsSource="{Binding InitiativListe}" ItemTemplate="{StaticResource InitiativeListTemplate}" 
                              TreeViewItem.Selected="InitiativeListe_TreeViewItemSelected" Background="Transparent" Padding="4,8" ItemContainerStyle="{StaticResource TreeViewItemStyle1}">
@@ -374,19 +374,10 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="130" />
                     </Grid.ColumnDefinitions>
                     <TextBox Margin="6,6,2,2" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.Name}" ToolTip="Name des Kämpfers" FontWeight="Bold" VerticalAlignment="Top" >
                         <TextBox.BorderBrush>
@@ -486,103 +477,145 @@
                         </Grid>
                     </Grid>
 
-                    <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="6,0,0,0" Orientation="Horizontal" >
-                        <TextBlock Text="INI:" Margin="2,6,2,2" />
-                        <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Initiative}" ToolTip="Initiative" FontWeight="Bold" ShowButtons="True" />
-                        <TextBlock Margin="2,6,2,2" Text="PA: " />
-                        <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Vertical">
-                        <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
-                            <TextBlock Margin="2,6,2,2" Text="BE: " />
-                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
-                            <TextBlock Margin="6,6,2,2" Text="WS: " />
-                            <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0} / {1} / {2}">
-                                        <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle" Mode="OneWay"/>
-                                        <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle2" Mode="OneWay"/>
-                                        <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle3" Mode="OneWay"/>
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                        <StackPanel Margin="6,0,0,2" Orientation="Horizontal" ToolTip="{Binding Path=SelectedItem.ModKampf_TextDetail}" >
-                            <TextBlock Margin="2,6,2,2" Text="Modifikatoren: " />
-                            <TextBlock Margin="6,6,2,2" Text="{Binding Path=SelectedItem.ModKampf_Text}" FontWeight="Bold" />
-                        </StackPanel>
-                    </StackPanel>
-                    <Grid Grid.Row="5" Grid.ColumnSpan="2" Margin="0,8,0,0">
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="90" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition MinWidth="400" Width="Auto" />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ViewGeneral:IntBox Grid.Row="0" Grid.RowSpan="2" Margin="8,0,4,0" x:Name="_intBoxSchaden" Value="{Binding Schaden}" ShowButtons="True" MinWidth="60" Height="Auto" ToolTip="SP/TP bzw. Abzug AE/KE" FontSize="16" />
-                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
-                            <StackPanel Margin="0" ToolTip="Wunden-Art" Orientation="Horizontal">
-                                <RadioButton GroupName="Wundschwelle" Name="_radioButtonWundschwelleNormal" VerticalAlignment="Center" Content="Normal" ToolTip="Mormale Wundschwelle." IsChecked="{Binding Path=WundschwellenOption, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Default}" />
-                                <RadioButton GroupName="Wundschwelle" Name="_radioButtonWundschwelleGesenkt" VerticalAlignment="Center" Content="WS -2" ToolTip="Wundschwelle um 2 gesenkt (Pfeil, Bolzen, Gezielter Stich, Todesstoß, etc.)." Margin="4,0,0,0" IsChecked="{Binding Path=WundschwellenOption, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=VerringerteWundschwelle}"/>
-                                <RadioButton GroupName="Wundschwelle" Name="_radioButtonWundeKeine" VerticalAlignment="Center" Content="Keine" ToolTip="Keine Wunden." Margin="4,0,0,0" IsChecked="{Binding Path=WundschwellenOption, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=KeineWunden}" />
+
+                        <Expander Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Margin="5,0" IsExpanded="True">
+                            <Expander.Header>
+                                <TextBlock Text="Kampfwerte" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}" Height="100">
+                                <ListBox ItemsSource="{Binding Path=SelectedKämpferInfo.Kämpfer.Kampftalente}" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Talentname}" MinWidth="150" />
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" ToolTip="FK-Wert inkl. BE" Visibility="{Binding HatFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
+                                                    <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="FK-Wert"
+                                                                                  StartWert="{Binding FernkampfwertOhneMod}" Wert="{Binding Fernkampfwert}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding HatAttacke, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                                    <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding AttackeOhneMod}" Wert="{Binding Attacke}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding HatParade, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
+                                                    <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
+                                                                                  StartWert="{Binding ParadeOhneMod}" Wert="{Binding Parade}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                        </Expander>
+
+                        <StackPanel Grid.Row="0" Margin="6,0,0,0" Orientation="Horizontal" >
+                            <TextBlock Text="INI:" Margin="2,6,2,2" />
+                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Initiative}" ToolTip="Initiative" FontWeight="Bold" ShowButtons="True" />
+                            <TextBlock Margin="2,6,2,2" Text="PA: " />
+                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Vertical">
+                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
+                                <TextBlock Margin="2,6,2,2" Text="BE: " />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
+                                <TextBlock Margin="6,6,2,2" Text="WS: " />
+                                <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} / {1} / {2}">
+                                            <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle" Mode="OneWay"/>
+                                            <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle2" Mode="OneWay"/>
+                                            <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle3" Mode="OneWay"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </StackPanel>
                         </StackPanel>
-                        <Button Grid.Row="0" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkte" Padding="0" Width="45" ToolTip="Trefferpunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                        <Grid Grid.Row="2" Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.RowSpan="2" Margin="8,0,4,0" x:Name="_intBoxSchaden" Value="{Binding Schaden}" ShowButtons="True" MinWidth="60" Height="Auto" ToolTip="SP/TP bzw. Abzug AE/KE" FontSize="16" />
+                            <StackPanel Grid.Row="0" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
+                                <StackPanel Margin="0" ToolTip="Wunden-Art" Orientation="Horizontal">
+                                    <RadioButton GroupName="Wundschwelle" Name="_radioButtonWundschwelleNormal" VerticalAlignment="Center" Content="Normal" ToolTip="Mormale Wundschwelle." IsChecked="{Binding Path=WundschwellenOption, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Default}" />
+                                    <RadioButton GroupName="Wundschwelle" Name="_radioButtonWundschwelleGesenkt" VerticalAlignment="Center" Content="WS -2" ToolTip="Wundschwelle um 2 gesenkt (Pfeil, Bolzen, Gezielter Stich, Todesstoß, etc.)." Margin="4,0,0,0" IsChecked="{Binding Path=WundschwellenOption, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=VerringerteWundschwelle}"/>
+                                    <RadioButton GroupName="Wundschwelle" Name="_radioButtonWundeKeine" VerticalAlignment="Center" Content="Keine" ToolTip="Keine Wunden." Margin="4,0,0,0" IsChecked="{Binding Path=WundschwellenOption, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=KeineWunden}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <Button Grid.Row="0" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkte" Padding="0" Width="45" ToolTip="Trefferpunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                         Command="{Binding OnTrefferpunkte}" Background="Firebrick">
-                            <Label Content="TP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Button>
-                        <Button Grid.Row="0" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkte" Width="45" ToolTip="Schadenspunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                <Label Content="TP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkte" Width="45" ToolTip="Schadenspunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                         Command="{Binding OnTrefferpunkte}" Background="Firebrick">
-                            <Button.CommandParameter>
-                                <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
-                                    <MultiBinding.Bindings>
-                                        <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.IgnoriertRüstung}" Mode="OneWay"/>
-                                    </MultiBinding.Bindings>
-                                </MultiBinding>
-                            </Button.CommandParameter>
-                            <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Button>
-                        <Button Grid.Row="0" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                <Button.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
+                                        <MultiBinding.Bindings>
+                                            <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.IgnoriertRüstung}" Mode="OneWay"/>
+                                        </MultiBinding.Bindings>
+                                    </MultiBinding>
+                                </Button.CommandParameter>
+                                <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                         Command="{Binding OnAstralenergieAbziehen}" Background="BlueViolet">
-                            <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Button>
-                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
-                            <ComboBox Name="_comboBoxTrefferzone" Margin="0,2,0,0" Width="109" ToolTip="Trefferzone" VerticalContentAlignment="Center"
+                                <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Button>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="6,0,0,0" Orientation="Horizontal">
+                                <ComboBox Name="_comboBoxTrefferzone" Margin="0,2,0,0" Width="109" ToolTip="Trefferzone" VerticalContentAlignment="Center"
                                               ItemsSource="{StaticResource TrefferzonenValues}" SelectedValue="{Binding SelectedTrefferzone, Converter={StaticResource TrefferzonenValues}}" />
-                            <CheckBox Margin="4,8,4,7" VerticalAlignment="Center" Name="_checkBoxAusdauerSchadenLeAbziehen" Content="-LeP" Background="SteelBlue" Foreground="DarkBlue" ToolTip="Halben Ausdauer-Schaden von der LE abziehen." IsChecked="{Binding Path=AusdauerSchadenMachtKeineSchadenspunkte, Mode=TwoWay, Converter={StaticResource EnumMatchThenInvert}, ConverterParameter=AusdauerschadenMachtKeineEchtenSchadenspunkte}" />
-                        </StackPanel>
-                        <Button Grid.Row="1" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkteAusdauer" ToolTip="Ausdauer-Trefferpunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45"
+                                <CheckBox Margin="4,8,4,7" VerticalAlignment="Center" Name="_checkBoxAusdauerSchadenLeAbziehen" Content="-LeP" Background="SteelBlue" Foreground="DarkBlue" ToolTip="Halben Ausdauer-Schaden von der LE abziehen." IsChecked="{Binding Path=AusdauerSchadenMachtKeineSchadenspunkte, Mode=TwoWay, Converter={StaticResource EnumMatchThenInvert}, ConverterParameter=AusdauerschadenMachtKeineEchtenSchadenspunkte}" />
+                            </StackPanel>
+                            <Button Grid.Row="1" Grid.Column="2" Margin="2" Name="_buttonTrefferpunkteAusdauer" ToolTip="Ausdauer-Trefferpunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45"
                                         Command="{Binding OnTrefferpunkte}" Background="SteelBlue">
-                            <Button.CommandParameter>
-                                <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
-                                    <MultiBinding.Bindings>
-                                        <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.Ausdauerschaden}"/>
-                                    </MultiBinding.Bindings>
-                                </MultiBinding>
-                            </Button.CommandParameter>
-                            <Label Content="TP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Button>
-                        <Button Grid.Row="1" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkteAusdauer" ToolTip="Ausdauer-Schadenspunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45"
+                                <Button.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
+                                        <MultiBinding.Bindings>
+                                            <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.Ausdauerschaden}"/>
+                                        </MultiBinding.Bindings>
+                                    </MultiBinding>
+                                </Button.CommandParameter>
+                                <Label Content="TP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="3" Margin="2" Name="_buttonSchadenspunkteAusdauer" ToolTip="Ausdauer-Schadenspunkte verrechnen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="45"
                                         Command="{Binding OnTrefferpunkte}" Background="SteelBlue">
-                            <Button.CommandParameter>
-                                <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
-                                    <MultiBinding.Bindings>
-                                        <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.IgnoriertRüstung}"/>
-                                        <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.Ausdauerschaden}"/>
-                                    </MultiBinding.Bindings>
-                                </MultiBinding>
-                            </Button.CommandParameter>
-                            <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Button>
-                        <Button Grid.Row="1" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}" Width="45" ToolTip="KaP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                <Button.CommandParameter>
+                                    <MultiBinding Converter="{StaticResource TrefferpunkteOptionsConverter}">
+                                        <MultiBinding.Bindings>
+                                            <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.IgnoriertRüstung}"/>
+                                            <Binding Source="{x:Static KampfLogic:TrefferpunkteOptions.Ausdauerschaden}"/>
+                                        </MultiBinding.Bindings>
+                                    </MultiBinding>
+                                </Button.CommandParameter>
+                                <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}" Width="45" ToolTip="KaP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                         Command="{Binding OnKarmaenergieAbziehen}" Background="Gold">
-                            <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Button>
+                                <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Button>
+                        </Grid>
+
                     </Grid>
                 </Grid>
             </Border>
@@ -669,12 +702,12 @@
                         </Grid>
 
                         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                            <TextBlock Margin="4" Name="_textBlockKampfrunde" Text="{Binding Kampfrunde}" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
-                            <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="4" Name="_textBlockKampfZeit" Padding="0" Text="00:00:00" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
+                            <TextBlock Margin="4" Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
+                            <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="4" Padding="0" Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
                         </StackPanel>
 
-                        <Button Grid.Column="2" Grid.Row="0" Content="Starten" Margin="4" Name="_buttonNeueKR" HorizontalAlignment="Right" Width="82" Click="ButtonNeueKampfrunde_Click" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
-                        <Button Grid.Column="2" Grid.Row="1" Content="Neuer Kampf" Height="23" Margin="4" Name="_buttonNeuerKampf" VerticalAlignment="Top" Click="ButtonNeuerKampf_Click" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
+                        <Button Grid.Column="2" Grid.Row="0" Content="Neue KR" Margin="4" HorizontalAlignment="Right" Width="82" Command="{Binding OnNextKampfrunde}" Height="23" VerticalAlignment="Top" FontWeight="Bold" />
+                        <Button Grid.Column="2" Grid.Row="1" Content="Neuer Kampf" Height="23" Margin="4" VerticalAlignment="Top" Command="{Binding OnNewKampf}" HorizontalAlignment="Right" Width="82" Opacity="0.7" ToolTip="Einen neuen Kampf beginnen." />
                     </Grid>
                 </Border>
             </Expander>

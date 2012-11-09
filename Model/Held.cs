@@ -44,19 +44,6 @@ namespace MeisterGeister.Model
         }
         #endregion
 
-        [DependentProperty("Name")]
-        public string Kurzname
-        {
-            get
-            {
-                string[] namenTeile = Name.Trim().Split(' ');
-                if (namenTeile.Length > 0)
-                    return namenTeile[0];
-                else
-                    return Name;
-            }
-        }
-
         #region Modifikatorlisten
 
         [DependsOnModifikator(typeof(Mod.IModMU))]
@@ -954,7 +941,6 @@ namespace MeisterGeister.Model
         }
 
         #endregion
-        // TODO ??: Übernahme der anderen Methoden aus dem alten Held
 
         #region Talente
 
@@ -1619,11 +1605,17 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region Behinderung
+
         public int Behinderung
         {
             get { return BE ?? 0; }
             set { BE = value; }
         }
+
+        #endregion
+
+        #region Bewegung / Geschwindigkeit
 
         [DependentProperty("BaseGE")]
         public int GeschwindigkeitOhneMod
@@ -1659,12 +1651,23 @@ namespace MeisterGeister.Model
             }
         }
 
-        [DependentProperty("Kampfwerte")]
-        public string Bemerkung
+        #endregion
+
+        #region Kampfwerte
+
+        /// <summary>
+        /// Gibt alle Kampftalente des Helden als Liste zurück.
+        /// </summary>
+        [DependsOnModifikator(typeof(Mod.IModifikator))]
+        public List<Model.Held_Talent> Kampftalente
         {
-            get { return Kampfwerte; }
-            set { Kampfwerte = value; OnChanged("Bemerkung"); }
+            get
+            {
+                return Held_Talent.Where(ht => ht.Talent.IsKampfTalent).OrderByDescending(ht => ht.TaW).ThenBy(ht => ht.Talentname).ToList();
+            }
         }
+
+        #endregion
 
         #region IKämpfer
         public int Initiative()
@@ -1833,11 +1836,33 @@ namespace MeisterGeister.Model
         }
         #endregion
 
+        #region Sonstiges
+
+        [DependentProperty("Name")]
+        public string Kurzname
+        {
+            get
+            {
+                string[] namenTeile = Name.Trim().Split(' ');
+                if (namenTeile.Length > 0)
+                    return namenTeile[0];
+                else
+                    return Name;
+            }
+        }
+
+        [DependentProperty("Kampfwerte")]
+        public string Bemerkung
+        {
+            get { return Kampfwerte; }
+            set { Kampfwerte = value; OnChanged("Bemerkung"); }
+        }
+
         public override string ToString()
         {
             return Name;
         }
 
-
+        #endregion
     }
 }

@@ -165,7 +165,7 @@ namespace MeisterGeister.ViewModel.Helden {
                     if (item.Talent == null)
                         break;
                     switch (item.Talent.TalentgruppeID) {
-                        case 1:
+                        case M.Talent.GRUPPE_KAMPF:
                             TalentListeItem tmpKampf = new TalentListeItem() {
                                 HeldTalent = item,
                                 Talent = item.Talent
@@ -221,7 +221,7 @@ namespace MeisterGeister.ViewModel.Helden {
                             tmpSprache.RemoveItem += (s, e) => { RemoveTalent(s); };
                             _spracheTalentListe.Add(tmpSprache);
                             break;
-                        case 8:
+                        case M.Talent.GRUPPE_META:
                             //Meta ID = 10
                             break;
                         case 9:

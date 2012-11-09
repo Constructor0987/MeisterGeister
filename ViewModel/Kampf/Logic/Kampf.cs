@@ -68,7 +68,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _kampfrunde; }
             private set { 
                 _kampfrunde = value;
+                Kampfzeit = new TimeSpan(0, 0, 3 * Math.Max(value - 1, 0));
                 OnChanged("Kampfrunde");
+            }
+        }
+
+        private TimeSpan _kampfzeit = new TimeSpan();
+        public TimeSpan Kampfzeit
+        {
+            get { return _kampfzeit; }
+            private set
+            {
+                _kampfzeit = value;
+                OnChanged("Kampfzeit");
             }
         }
 
@@ -163,6 +175,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             private set { _umwandelnMöglich = value; OnChanged("UmwandelnMöglich"); }
         }
 
+        public void KampfNeuStarten()
+        {
+            NeueKampfrunde(); // KR abschließen
+            KampfEnde();
+
+            // INI neu ermitteln
+            foreach (var kämpferInfo in Kämpfer)
+            {
+                if (kämpferInfo != null)
+                    kämpferInfo.Initiative = kämpferInfo.Kämpfer.Initiative();
+            }
+            Kampfrunde = 0;
+        }
+
         public void KampfBeginn()
         {
             //TODO JT: Globales Datum holen und mit Uhrzeit in Kampfbeginn abspeichern.
@@ -175,8 +201,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void KampfEnde()
         {
-            foreach (IKämpfer ki in Kämpfer)
-                ki.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampf);
+            foreach (var ki in Kämpfer)
+                ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampf);
         }
 
         public void Orientieren(IKämpfer k)

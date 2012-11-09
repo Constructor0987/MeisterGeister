@@ -15,6 +15,9 @@ namespace MeisterGeister.Model
         public const string UNTERGRUPPE_ATTECHNIK = "Bewaffnete AT-Technik";
         public const string UNTERGRUPPE_WAFFENLOS = "Waffenloser Kampf";
 
+        public const int GRUPPE_KAMPF = 1;
+        public const int GRUPPE_META = 8;
+
         #region //---- PROBE ----
 
         [DependentProperty("Talentname")]
@@ -73,7 +76,12 @@ namespace MeisterGeister.Model
 
         public bool IsMetaTalent
         {
-            get { return TalentgruppeID == 8; }
+            get { return TalentgruppeID == GRUPPE_META; }
+        }
+
+        public bool IsKampfTalent
+        {
+            get { return TalentgruppeID == GRUPPE_KAMPF; }
         }
     }
 }

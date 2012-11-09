@@ -200,6 +200,19 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("AttackeBasisOhneMod")]
+        public int AttackeOhneMod
+        {
+            get
+            {
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK)
+                    return AttackeBasisOhneMod + BerechneEffBehinderung();
+                if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
+                    return FernkampfwertOhneMod;
+                return AttackeBasisOhneMod - (int)Math.Floor(BerechneEffBehinderung() / 2.0);
+            }
+        }
+
         [DependentProperty("AttackeOhneBE")]
         public int Attacke
         {
@@ -237,6 +250,15 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("ParadeBasisOhneMod")]
+        public int ParadeOhneMod
+        {
+            get
+            {
+                return ParadeBasisOhneMod - (int)Math.Ceiling(BerechneEffBehinderung() / 2.0);
+            }
+        }
+
         [DependentProperty("ParadeOhneBE")]
         public int Parade
         {
@@ -269,6 +291,15 @@ namespace MeisterGeister.Model
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return Held.FernkampfBasis + TaW.GetValueOrDefault();
                 return 0;
+            }
+        }
+
+        [DependentProperty("FernkampfwertBasisOhneMod")]
+        public int FernkampfwertOhneMod
+        {
+            get
+            {
+                return FernkampfwertBasisOhneMod - BerechneEffBehinderung();
             }
         }
 

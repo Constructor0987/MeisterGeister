@@ -48,7 +48,7 @@ namespace MeisterGeister.View.Kampf
 
         private void AddGegnerToKampf()
         {
-            if (_kampf != null)
+            if (_kampf != null && _gegnerView.VM.SelectedGegnerBase != null)
             {
                 Model.GegnerBase gegnerBase = _gegnerView.VM.SelectedGegnerBase;
 

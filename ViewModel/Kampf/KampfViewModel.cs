@@ -49,11 +49,6 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return Kampf != null ? Kampf.InitiativListe : null; }
         }
 
-        public int Kampfrunde
-        {
-            get { return Kampf != null ? Kampf.Kampfrunde : 0; }
-        }
-        
         public float INIPhase
         {
             get { return Kampf != null ? Kampf.Kampfrunde : 0; }
@@ -241,6 +236,38 @@ namespace MeisterGeister.ViewModel.Kampf
                 KämpferSelected = false;
                 SelectedManöverInfo = mi;
             }
+        }
+
+        private Base.CommandBase onNextKampfrunde = null;
+        public Base.CommandBase OnNextKampfrunde
+        {
+            get
+            {
+                if (onNextKampfrunde == null)
+                    onNextKampfrunde = new Base.CommandBase(NextKampfrunde, null);
+                return onNextKampfrunde;
+            }
+        }
+
+        private void NextKampfrunde(object obj)
+        {
+            Kampf.NeueKampfrunde();
+        }
+
+        private Base.CommandBase onNewKampf = null;
+        public Base.CommandBase OnNewKampf
+        {
+            get
+            {
+                if (onNewKampf == null)
+                    onNewKampf = new Base.CommandBase(NewKampf, null);
+                return onNewKampf;
+            }
+        }
+
+        private void NewKampf(object obj)
+        {
+            Kampf.KampfNeuStarten();
         }
 
         private Base.CommandBase onTrefferpunkte = null;
