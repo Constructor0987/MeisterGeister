@@ -445,6 +445,8 @@
 
                         <Grid Grid.Row="0" Grid.Column="1" Margin="5">
                             <!-- Wunden und Rüstungsschutz -->
+                            <Image Margin="0,5,9,0" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" ToolTip="Wunden" Height="28" Width="28" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                            <Image Margin="0,35,9,0" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png" ToolTip="Rüstungsschutz" Height="28" Width="28" VerticalAlignment="Top" HorizontalAlignment="Left" />
                             <Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Height="213" ToolTip="Wunden und Rüstungsschutz" VerticalAlignment="Top" HorizontalAlignment="Right" Width="133" Grid.RowSpan="1" />
                             <ViewGeneral:IntBox Margin="0,5,9,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[Gesamt]}" ToolTip="Rüstungsschutz (Gesamt)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
                             <ViewGeneral:IntBox Margin="0,9,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[Kopf]}" ToolTip="Rüstungsschutz (Kopf)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
@@ -511,18 +513,18 @@
                             </Border>
                         </Expander>
 
-                        <StackPanel Grid.Row="0" Margin="6,0,0,0" Orientation="Horizontal" >
-                            <TextBlock Text="INI:" Margin="2,6,2,2" />
-                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Initiative}" ToolTip="Initiative" FontWeight="Bold" ShowButtons="True" />
-                            <TextBlock Margin="2,6,2,2" Text="PA: " />
-                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
+                        <StackPanel Grid.Row="0" Margin="6,0,0,0" Orientation="Horizontal" ToolTip="Initiative (INI)">
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png" Width="20" Height="20" />
+                            <TextBlock Text="INI (Aktuell):" Margin="4,6,4,2" />
+                            <ViewGeneral:IntBox Margin="2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Initiative}" ToolTip="Initiative" FontWeight="Bold" ShowButtons="True" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Vertical">
                             <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
                                 <TextBlock Margin="2,6,2,2" Text="BE: " />
                                 <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
-                                <TextBlock Margin="6,6,2,2" Text="WS: " />
-                                <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen">
+                                <TextBlock Margin="10,6,2,2" Text="WS: " />
+                                <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen" MinWidth="80">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} / {1} / {2}">
                                             <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle" Mode="OneWay"/>
@@ -531,6 +533,8 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
+                                <TextBlock Margin="10,6,2,2" Text="PA: " />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
                             </StackPanel>
                         </StackPanel>
                         <Grid Grid.Row="2" Margin="0,8,0,0">
@@ -671,7 +675,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Button Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="51" Height="55" HorizontalAlignment="Left" Margin="4" Name="_buttonArena" Click="ButtonArena_Click" ToolTip="Bodenplan öffnen...">
+                            <Button Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="51" Height="55" HorizontalAlignment="Left" Margin="4" Background="DarkGreen" Click="ButtonArena_Click" ToolTip="Bodenplan öffnen...">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Stretch="Uniform" />
                             </Button>
                             <CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox>
