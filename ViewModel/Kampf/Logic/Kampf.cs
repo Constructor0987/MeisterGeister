@@ -56,7 +56,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public float INIPhase
         {
             get { return _iniphase; }
-            set { _iniphase = value; OnChanged("Initiative"); }
+            set { _iniphase = value; OnChanged("INIPhase"); }
         }
 
         public delegate void NeueKampfrundeEventHandler(object sender, int kampfrunde);

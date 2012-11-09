@@ -50,8 +50,28 @@
             <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}" Margin="0,2">
                 <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Initiative}" Width="20" Margin="0,0,2,0" />
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                        <StackPanel.ToolTip>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" />
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding KämpferInfo.Kämpfer.InitiativeBasis}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
+                                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding KämpferInfo.Initiative}" />
+                            </Grid>
+                        </StackPanel.ToolTip>
+                        <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Width="24" Height="24" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
+                            <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,2,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" />
+                        </Grid>
                         <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -657,7 +677,20 @@
                         </Grid>
 
                         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                            <TextBlock Margin="4" Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" TextAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." HorizontalAlignment="Right" Width="82" Padding="0" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top" />
+                            <Grid Width="82" Background="#FFDBDBDB" Height="43" VerticalAlignment="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="0" Text="KR" TextAlignment="Center" FontSize="10" />
+                                <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="0" Text="{Binding Kampf.Kampfrunde, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="22" ToolTip="Aktuelle Kampfrunde." />
+                                <TextBlock Margin="0,1,0,0" Grid.Row="0" Grid.Column="1" Text="Phase" TextAlignment="Center" FontSize="10" />
+                                <TextBlock Margin="4,0" Grid.Row="1" Grid.Column="1" Text="{Binding Kampf.INIPhase, FallbackValue=0}" TextAlignment="Center" VerticalAlignment="Center" FontSize="16" ToolTip="Aktuelle INI-Phase." />
+                            </Grid>
                             <TextBlock Background="#FFDBDBDB" FontSize="12" Height="17" HorizontalAlignment="Right" Margin="4" Padding="0" Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" ToolTip="Verstrichene Zeit." VerticalAlignment="Top" Width="82" />
                         </StackPanel>
 
