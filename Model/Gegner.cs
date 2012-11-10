@@ -56,12 +56,12 @@ namespace MeisterGeister.Model
         #region IKämpfer
         public int Initiative()
         {
-            return INIBasis + Logic.General.Würfel.Parse(INIZufall);
+            return INIBasis - BE.GetValueOrDefault() + Logic.General.Würfel.Parse(INIZufall);
         }
 
         public int InitiativeMax()
         {
-            return INIBasis + Logic.General.Würfel.Parse(INIZufall, false);
+            return INIBasis - BE.GetValueOrDefault() + Logic.General.Würfel.Parse(INIZufall, false);
         }
 
         [DependentProperty("INIBasis")]

@@ -62,8 +62,13 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" />
-                                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding KämpferInfo.Kämpfer.InitiativeBasis}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" FontWeight="Bold" Text="INI-Basis:" Margin="0,0,2,2" VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding KämpferInfo.Kämpfer.InitiativeBasis}" VerticalAlignment="Center" />
+                                    <TextBlock Margin="4,6,2,2" Text="- BE " />
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
+                                    <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding KämpferInfo.Kämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" VerticalAlignment="Center" />
+                                </StackPanel>
                                 <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
                                 <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding KämpferInfo.Initiative}" />
                             </Grid>
@@ -519,14 +524,14 @@
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png" Width="20" Height="20" ToolTip="Initiative (INI)" />
                             <TextBlock Text="INI-Basis:" Margin="4,6,4,2" />
                             <TextBlock Text="{Binding Path=SelectedKämpferInfo.InitiativeBasis, FallbackValue=0}" TextAlignment="Center" Margin="2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" />
+                            <TextBlock Margin="4,6,2,2" Text="- BE " />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
+                            <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
                             <TextBlock Text="INI (Aktuell):" Margin="4,6,4,2" />
                             <ViewGeneral:IntBox Margin="2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Initiative}" ToolTip="Initiative" FontWeight="Bold" ShowButtons="True" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Vertical">
                             <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
-                                <TextBlock Margin="4,6,2,2" Text="BE: " />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
                                 <TextBlock Margin="10,6,2,2" Text="WS: " />
                                 <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen" MinWidth="80">
                                     <TextBlock.Text>
