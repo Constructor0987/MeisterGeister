@@ -1675,9 +1675,13 @@ namespace MeisterGeister.Model
         {
             get { return _initiativeWurf; }
         }
-        public int Initiative()
+        public int Initiative(bool dialog = false)
         {
-            _initiativeWurf = RandomNumberGenerator.Wurf(InitiativeZufall);
+            // TODO ??: Dialog MVVM-konform aufrufen
+            if (dialog)
+                _initiativeWurf = View.General.ViewHelper.ShowWürfelDialog(InitiativeZufall, "Iinitiative Würfel-Wurf");
+            else
+                _initiativeWurf = RandomNumberGenerator.Wurf(InitiativeZufall);
             return InitiativeBasis - Behinderung + InitiativeWurf;
         }
 

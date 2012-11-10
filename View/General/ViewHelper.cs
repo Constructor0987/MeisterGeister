@@ -133,6 +133,32 @@ namespace MeisterGeister.View.General
             return ergebnis;
         }
 
+        public static int ShowWürfelDialog(WürfelEnum würfel, string infoText = "")
+        {
+            string w = string.Empty;
+            switch (würfel)
+            {
+                case WürfelEnum._1W3:
+                    w = "1W3";
+                    break;
+                case WürfelEnum._1W6:
+                    w = "1W6";
+                    break;
+                case WürfelEnum._2W6:
+                    w = "2W6";
+                    break;
+                case WürfelEnum._1W10:
+                    w = "1W10";
+                    break;
+                case WürfelEnum._1W20:
+                    w = "1W20";
+                    break;
+                default:
+                    break;
+            }
+            return ShowWürfelDialog(w, infoText);
+        }
+
         public static void ShowGegnerView(ViewModel.Kampf.Logic.Kampf kampf)
         {
             GegnerWindow win = new GegnerWindow(kampf);

@@ -49,7 +49,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //int INI { get; }
         int InitiativeBasis { get; }
         int InitiativeWurf { get; }
-        int Initiative();
+        int Initiative(bool dialog = false);
         int InitiativeMax();
         //int Orientieren();
         int? AT { get; } //Hauptwaffe Standardattackewert

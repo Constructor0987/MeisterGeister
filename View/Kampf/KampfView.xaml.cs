@@ -53,12 +53,14 @@ namespace MeisterGeister.View.Kampf
         {
             if (_treeInitiative.SelectedItem == null)
             {
+                _menuItemKämpferInitiaveWürfeln.Visibility = System.Windows.Visibility.Collapsed;
                 _menuItemKämpferFarbmarkierung.Visibility = System.Windows.Visibility.Collapsed;
                 _menuItemKämpferEntfernen.Visibility = System.Windows.Visibility.Collapsed;
                 _menuItemKämpferAktuell.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {
+                _menuItemKämpferInitiaveWürfeln.Visibility = System.Windows.Visibility.Visible;
                 _menuItemKämpferFarbmarkierung.Visibility = System.Windows.Visibility.Visible;
                 _menuItemKämpferEntfernen.Visibility = System.Windows.Visibility.Visible;
                 _menuItemKämpferAktuell.Visibility = System.Windows.Visibility.Visible;

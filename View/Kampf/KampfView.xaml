@@ -291,6 +291,12 @@
                             <TreeView.ContextMenu>
                                 <ContextMenu Opened="ContextMenu_Opened">
                                     <ContextMenu.Items>
+                                        <MenuItem Name="_menuItemKämpferInitiaveWürfeln" Height="28" Header="INI neu würfeln..." Command="{Binding OnInitiativeWürfeln}">
+                                            <MenuItem.Icon>
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <Separator />
                                         <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" Header="Farbmarkierung setzen...">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />

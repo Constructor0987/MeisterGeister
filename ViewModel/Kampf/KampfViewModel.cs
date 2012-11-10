@@ -354,6 +354,24 @@ namespace MeisterGeister.ViewModel.Kampf
             SelectedKämpferInfo.Kämpfer.AstralenergieAktuell -= Math.Max(Schaden, 0);
         }
 
+        private Base.CommandBase onInitiativeWürfeln = null;
+        public Base.CommandBase OnInitiativeWürfeln
+        {
+            get
+            {
+                if (onInitiativeWürfeln == null)
+                    onInitiativeWürfeln = new Base.CommandBase(InitiativeWürfeln, null);
+                return onInitiativeWürfeln;
+            }
+        }
+
+        private void InitiativeWürfeln(object obj)
+        {
+            if (SelectedKämpferInfo == null || SelectedKämpfer == null)
+                return;
+            SelectedKämpferInfo.Initiative = SelectedKämpfer.Initiative(true);
+        }
+
         #endregion // ---- COMMANDS ----
 
         #region Subklassen

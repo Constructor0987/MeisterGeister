@@ -59,9 +59,13 @@ namespace MeisterGeister.Model
         {
             get { return _initiativeWurf; }
         }
-        public int Initiative()
+        public int Initiative(bool dialog = false)
         {
-            _initiativeWurf = Logic.General.Würfel.Parse(INIZufall);
+            // TODO ??: Dialog MVVM-konform aufrufen
+            if (dialog)
+                _initiativeWurf = View.General.ViewHelper.ShowWürfelDialog(INIZufall, "Iinitiative Würfel-Wurf");
+            else
+                _initiativeWurf = Logic.General.Würfel.Parse(INIZufall);
             return INIBasis - BE.GetValueOrDefault() + InitiativeWurf;
         }
 
