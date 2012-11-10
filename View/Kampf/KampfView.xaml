@@ -74,7 +74,7 @@
                         </Grid>
                         <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
                                Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
-                        <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}"/>
+                        <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel.Style>
@@ -371,7 +371,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="130" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Margin="6,6,2,2" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.Name}" ToolTip="Name des Kämpfers" FontWeight="Bold" VerticalAlignment="Top" >
+                    <TextBox Margin="6,6,2,2" Text="{Binding SelectedKämpfer.Name}" ToolTip="Name des Kämpfers" FontWeight="Bold" VerticalAlignment="Top" >
                         <TextBox.BorderBrush>
                             <SolidColorBrush />
                         </TextBox.BorderBrush>
@@ -381,7 +381,7 @@
                     </TextBox>
                     <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Margin="5" Height="120" Width="120" VerticalAlignment="Top">
                         <Image.Source>
-                            <Binding Path="SelectedKämpferInfo.Kämpfer.Bild" IsAsync="True" Mode="OneWay">
+                            <Binding Path="SelectedKämpfer.Bild" IsAsync="True" Mode="OneWay">
                                 <Binding.FallbackValue>
                                     <ImageSource>
                                         /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
@@ -405,37 +405,37 @@
                             <!-- Lebensenergie -->
                             <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
                                 <TextBlock Text="LE:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.LebensenergieMax}" ToolTip="Maximale Lebensenergie" />
+                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpfer.LebensenergieMax}" ToolTip="Maximale Lebensenergie" />
                                 <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.LebensenergieAktuell}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding SelectedKämpferInfo.Kämpfer}" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpfer.LebensenergieAktuell}" ToolTip="Aktuelle Lebensenergie" FontWeight="Bold" ShowButtons="True" />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlLebensenergie" Energie="Lebensenergie" SelectedKämpfer="{Binding SelectedKämpfer}" />
                             </StackPanel>
                             <!-- Ausdauer -->
                             <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
                                 <TextBlock Text="AU:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.AusdauerMax}" ToolTip="Maximale Ausdauer" />
+                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding SelectedKämpfer.AusdauerMax}" ToolTip="Maximale Ausdauer" />
                                 <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.AusdauerAktuell}" ToolTip="Aktuelle Ausdauer" FontWeight="Bold" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding SelectedKämpfer.AusdauerAktuell}" ToolTip="Aktuelle Ausdauer" FontWeight="Bold" ShowButtons="True" />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlAusdauer" Energie="Ausdauer" SelectedKämpfer="{Binding SelectedKämpfer}" />
                             </StackPanel>
                             <!-- Astralenergie -->
-                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Visibility="{Binding SelectedKämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                 <TextBlock Text="AE:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.AstralenergieMax}" ToolTip="Maximale Astralenergie" />
+                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding SelectedKämpfer.AstralenergieMax}" ToolTip="Maximale Astralenergie" />
                                 <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.AstralenergieAktuell}" ToolTip="Aktuelle Astralenergie" FontWeight="Bold" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpfer.AstralenergieAktuell}" ToolTip="Aktuelle Astralenergie" FontWeight="Bold" ShowButtons="True" />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlAstralenergie" Energie="Astralenergie" SelectedKämpfer="{Binding Path=SelectedKämpfer}" />
                             </StackPanel>
                             <!-- Karmaenergie -->
-                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" Visibility="{Binding SelectedKämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                 <TextBlock Text="KE:" Margin="2,6,2,2" Width="25" />
-                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.KarmaenergieMax}" ToolTip="Maximale Karmaenergie" />
+                                <TextBlock Margin="6,6,2,2" MinWidth="25" Text="{Binding Path=SelectedKämpfer.KarmaenergieMax}" ToolTip="Maximale Karmaenergie" />
                                 <TextBlock Text=" / " HorizontalAlignment="Left" Margin="0,6,0,2" />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.KarmaenergieAktuell}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" ShowButtons="True" />
-                                <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding Path=SelectedKämpferInfo.Kämpfer}" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" MinWidth="60" Value="{Binding Path=SelectedKämpfer.KarmaenergieAktuell}" ToolTip="Aktuelle Karmaenergie" FontWeight="Bold" ShowButtons="True" />
+                                <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding Path=SelectedKämpfer}" />
                             </StackPanel>
 
-                            <TextBox Margin="4" Text="{Binding Path=SelectedKämpferInfo.Kämpfer.Bemerkung}" ToolTip="Bemerkungen" TextWrapping="Wrap" AcceptsReturn="True">
+                            <TextBox Margin="4" Text="{Binding Path=SelectedKämpfer.Bemerkung}" ToolTip="Bemerkungen" TextWrapping="Wrap" AcceptsReturn="True">
                                 <TextBox.BorderBrush>
                                     <SolidColorBrush />
                                 </TextBox.BorderBrush>
@@ -450,24 +450,24 @@
                             <Image Margin="0,5,9,0" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" ToolTip="Wunden" Height="28" Width="28" VerticalAlignment="Top" HorizontalAlignment="Left" />
                             <Image Margin="0,35,9,0" Source="/DSA MeisterGeister;component/Images/Icons/schaden.png" ToolTip="Rüstungsschutz" Height="28" Width="28" VerticalAlignment="Top" HorizontalAlignment="Left" />
                             <Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Height="213" ToolTip="Wunden und Rüstungsschutz" VerticalAlignment="Top" HorizontalAlignment="Right" Width="133" Grid.RowSpan="1" />
-                            <ViewGeneral:IntBox Margin="0,5,9,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[Gesamt]}" ToolTip="Rüstungsschutz (Gesamt)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,9,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[Kopf]}" ToolTip="Rüstungsschutz (Kopf)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,61,67,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[Brust]}" ToolTip="Rüstungsschutz (Brust)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,61,43,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[Rücken]}" ToolTip="Rüstungsschutz (Rücken)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,112,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[Bauch]}" ToolTip="Rüstungsschutz (Bauch)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,81,102,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[ArmR]}" ToolTip="Rüstungsschutz (rechter Arm)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,81,9,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[ArmL]}" ToolTip="Rüstungsschutz (linker Arm)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,171,92,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[BeinR]}" ToolTip="Rüstungsschutz (rechtes Bein)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
-                            <ViewGeneral:IntBox Margin="0,171,21,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.RS[BeinL]}" ToolTip="Rüstungsschutz (linkes Bein)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,5,9,0" Value="{Binding Path=SelectedKämpfer.RS[Gesamt]}" ToolTip="Rüstungsschutz (Gesamt)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,9,56,0" Value="{Binding Path=SelectedKämpfer.RS[Kopf]}" ToolTip="Rüstungsschutz (Kopf)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,61,67,0" Value="{Binding Path=SelectedKämpfer.RS[Brust]}" ToolTip="Rüstungsschutz (Brust)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,61,43,0" Value="{Binding Path=SelectedKämpfer.RS[Rücken]}" ToolTip="Rüstungsschutz (Rücken)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,112,56,0" Value="{Binding Path=SelectedKämpfer.RS[Bauch]}" ToolTip="Rüstungsschutz (Bauch)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,81,102,0" Value="{Binding Path=SelectedKämpfer.RS[ArmR]}" ToolTip="Rüstungsschutz (rechter Arm)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,81,9,0" Value="{Binding Path=SelectedKämpfer.RS[ArmL]}" ToolTip="Rüstungsschutz (linker Arm)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,171,92,0" Value="{Binding Path=SelectedKämpfer.RS[BeinR]}" ToolTip="Rüstungsschutz (rechtes Bein)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
+                            <ViewGeneral:IntBox Margin="0,171,21,0" Value="{Binding Path=SelectedKämpfer.RS[BeinL]}" ToolTip="Rüstungsschutz (linkes Bein)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" WeissAufSchwarz="True" />
 
-                            <ViewGeneral:IntBox Margin="0,31,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Kopf]}" ToolTip="Wunden (Kopf)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,27,9,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Unlokalisiert]}" ToolTip="Wunden (unlokalisiert)" FontWeight="Bold" MinValue="0" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,84,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Brust]}" ToolTip="Wunden (Brust)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,134,56,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[Bauch]}" ToolTip="Wunden (Bauch)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,104,102,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[ArmR]}" ToolTip="Wunden (rechter Arm)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,104,9,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[ArmL]}" ToolTip="Wunden (linker Arm)" FontWeight="Bold" MinValue="0" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,171,71,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[BeinR]}" ToolTip="Wunden (rechtes Bein)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
-                            <ViewGeneral:IntBox Margin="0,171,42,0" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.WundenByZone[BeinL]}" ToolTip="Wunden (linkes Bein)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" Width="23" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,31,56,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[Kopf]}" ToolTip="Wunden (Kopf)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" Width="23" HorizontalAlignment="Right" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,27,9,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[Unlokalisiert]}" ToolTip="Wunden (unlokalisiert)" FontWeight="Bold" MinValue="0" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,84,56,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[Brust]}" ToolTip="Wunden (Brust)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,134,56,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[Bauch]}" ToolTip="Wunden (Bauch)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,104,102,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[ArmR]}" ToolTip="Wunden (rechter Arm)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,104,9,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[ArmL]}" ToolTip="Wunden (linker Arm)" FontWeight="Bold" MinValue="0" Width="23" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,171,71,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[BeinR]}" ToolTip="Wunden (rechtes Bein)" FontWeight="Bold" MinValue="0" HorizontalAlignment="Right" Width="23" Height="23" VerticalAlignment="Top" MarkPlusValue="True" />
+                            <ViewGeneral:IntBox Margin="0,171,42,0" Value="{Binding Path=SelectedKämpfer.WundenByZone[BeinL]}" ToolTip="Wunden (linkes Bein)" FontWeight="Bold" MinValue="0" Height="23" VerticalAlignment="Top" HorizontalAlignment="Right" Width="23" MarkPlusValue="True" />
                         </Grid>
                     </Grid>
 
@@ -488,7 +488,7 @@
                                 <TextBlock Text="Kampfwerte" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" Height="100">
-                                <ListBox ItemsSource="{Binding Path=SelectedKämpferInfo.Kämpfer.Kampftalente, IsAsync=True}" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <ListBox ItemsSource="{Binding Path=SelectedKämpfer.Kampftalente, IsAsync=True}" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -526,19 +526,19 @@
                             <StackPanel Margin="6,0,0,0" Orientation="Horizontal">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
                                 <TextBlock Margin="4,6,2,2" Text="BE: " />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpfer.BE, Mode=OneWay}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" />
                                 <TextBlock Margin="10,6,2,2" Text="WS: " />
                                 <TextBlock Margin="2,6,2,2" FontWeight="Bold" ToolTip="Wundschwellen" MinWidth="80">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} / {1} / {2}">
-                                            <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle" Mode="OneWay"/>
-                                            <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle2" Mode="OneWay"/>
-                                            <Binding Path="SelectedKämpferInfo.Kämpfer.Wundschwelle3" Mode="OneWay"/>
+                                            <Binding Path="SelectedKämpfer.Wundschwelle" Mode="OneWay"/>
+                                            <Binding Path="SelectedKämpfer.Wundschwelle2" Mode="OneWay"/>
+                                            <Binding Path="SelectedKämpfer.Wundschwelle3" Mode="OneWay"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
                                 <TextBlock Margin="10,6,2,2" Text="PA: " />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpferInfo.Kämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
+                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
                             </StackPanel>
                         </StackPanel>
                         <Grid Grid.Row="2" Margin="0,8,0,0">
@@ -576,7 +576,7 @@
                                 </Button.CommandParameter>
                                 <Label Content="SP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Button>
-                            <Button Grid.Row="0" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                            <Button Grid.Row="0" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpfer.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}}" Name="_buttonAstralpunkte" Width="45" ToolTip="AsP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                         Command="{Binding OnAstralenergieAbziehen}" Background="BlueViolet">
                                 <Label Content="AsP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Button>
@@ -608,7 +608,7 @@
                                 </Button.CommandParameter>
                                 <Label Content="SP(A)" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Button>
-                            <Button Grid.Row="1" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpferInfo.Kämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}" Width="45" ToolTip="KaP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                            <Button Grid.Row="1" Grid.Column="4" Margin="2" Visibility="{Binding SelectedKämpfer.Geweiht, Converter={StaticResource BooleanToVisibilityConverter1}}" Width="45" ToolTip="KaP abziehen" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                         Command="{Binding OnKarmaenergieAbziehen}" Background="Gold">
                                 <Label Content="KaP" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Button>
@@ -619,7 +619,7 @@
                                 <TextBlock Text="Modifikatoren" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" MinHeight="25">
-                                <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SelectedKämpferInfo.Kämpfer.Modifikatoren}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
+                                <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding SelectedKämpfer.Modifikatoren}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <DockPanel>

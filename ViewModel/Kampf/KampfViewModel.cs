@@ -59,6 +59,11 @@ namespace MeisterGeister.ViewModel.Kampf
             get { return Kampf != null ? Kampf.Kämpfer : null; }
         }
 
+        public IKämpfer SelectedKämpfer
+        {
+            get { return (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null; }
+        }
+
         public KämpferInfo SelectedKämpferInfo
         {
             get { return (SelectedManöverInfo != null) ? SelectedManöverInfo.KämpferInfo : null; }
@@ -69,7 +74,11 @@ namespace MeisterGeister.ViewModel.Kampf
         public ManöverInfo SelectedManöverInfo
         {
             get { return _selectedManöverInfo; }
-            set { _selectedManöverInfo = value; OnChanged("SelectedManöverInfo"); OnChanged("SelectedKämpferInfo"); }
+            set 
+            { 
+                _selectedManöverInfo = value;
+                OnChanged("SelectedManöverInfo"); OnChanged("SelectedKämpferInfo"); OnChanged("SelectedKämpfer");
+            }
         }
         
         private bool kämpferSelected = false;
