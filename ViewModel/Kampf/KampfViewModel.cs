@@ -372,6 +372,26 @@ namespace MeisterGeister.ViewModel.Kampf
             SelectedKämpferInfo.Initiative = SelectedKämpfer.Initiative(true);
         }
 
+        private Base.CommandBase onOrientieren = null;
+        public Base.CommandBase OnOrientieren
+        {
+            get
+            {
+                if (onOrientieren == null)
+                    onOrientieren = new Base.CommandBase(Orientieren, null);
+                return onOrientieren;
+            }
+        }
+
+        private void Orientieren(object obj)
+        {
+            if (SelectedKämpferInfo == null || SelectedKämpfer == null)
+                return;
+            int? ini = SelectedKämpfer.Orientieren(true);
+            if (ini.HasValue)
+                SelectedKämpferInfo.Initiative = ini.Value;
+        }
+
         #endregion // ---- COMMANDS ----
 
         #region Subklassen

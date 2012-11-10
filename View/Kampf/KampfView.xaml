@@ -69,7 +69,7 @@
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
                                     <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding KämpferInfo.Kämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" VerticalAlignment="Center" />
                                 </StackPanel>
-                                <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="INI gewürfelt:" Margin="0,0,2,2" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="INI gewürfelt:" Margin="0,0,5,2" />
                                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding KämpferInfo.Kämpfer.InitiativeWurf}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
                                 <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding KämpferInfo.Initiative}" />
@@ -291,12 +291,6 @@
                             <TreeView.ContextMenu>
                                 <ContextMenu Opened="ContextMenu_Opened">
                                     <ContextMenu.Items>
-                                        <MenuItem Name="_menuItemKämpferInitiaveWürfeln" Height="28" Header="INI neu würfeln..." Command="{Binding OnInitiativeWürfeln}">
-                                            <MenuItem.Icon>
-                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <Separator />
                                         <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" Header="Farbmarkierung setzen...">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
@@ -318,6 +312,17 @@
                                         <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Aktion ausführen" Command="{Binding OnAktionAusführen}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <Separator />
+                                        <MenuItem Name="_menuItemKämpferInitiaveWürfeln" Height="28" Header="INI neu würfeln..." Command="{Binding OnInitiativeWürfeln}">
+                                            <MenuItem.Icon>
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Name="_menuItemKämpferOrientieren" Height="28" Header="Orientieren..." Command="{Binding OnOrientieren}">
+                                            <MenuItem.Icon>
+                                                <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
                                         </MenuItem>
                                         <Separator />

@@ -6,6 +6,8 @@ using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.Model.Extensions;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.Logic.General;
+using MeisterGeister.ViewModel.Helden.Logic;
 
 namespace MeisterGeister.Model
 {
@@ -63,7 +65,11 @@ namespace MeisterGeister.Model
         {
             // TODO ??: Dialog MVVM-konform aufrufen
             if (dialog)
-                _initiativeWurf = View.General.ViewHelper.ShowWürfelDialog(INIZufall, "Iinitiative Würfel-Wurf");
+            {
+                int wurf = View.General.ViewHelper.ShowWürfelDialog(INIZufall, "Iinitiative Würfel-Wurf");
+                if (wurf != 0)
+                    _initiativeWurf = wurf;
+            }
             else
                 _initiativeWurf = Logic.General.Würfel.Parse(INIZufall);
             return INIBasis - BE.GetValueOrDefault() + InitiativeWurf;
@@ -73,6 +79,20 @@ namespace MeisterGeister.Model
         {
             _initiativeWurf = Logic.General.Würfel.Parse(INIZufall, false);
             return INIBasis - BE.GetValueOrDefault() + InitiativeWurf;
+        }
+
+        public int? Orientieren(bool dialog = false)
+        {
+            // TODO ??: Was ist mit Aufmerksamkeit und Kriegskunst bei Gegnern?
+            // TODO ??: Gegner haben keine IN. Wert kann derzeit im Proben-Dialog nicht geändert werden.
+            ProbenErgebnis ergebnis;
+            if (dialog) // TODO ??: Dialog MVVM-konform aufrufen
+                ergebnis = View.General.ViewHelper.ShowProbeDialog(new Eigenschaft("IN", 10), null);
+            else
+                ergebnis = new Eigenschaft("IN", 10).Würfeln();
+            if (ergebnis.Gelungen)
+                return InitiativeMax();
+            return null;
         }
 
         [DependentProperty("INIBasis")]

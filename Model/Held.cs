@@ -1679,7 +1679,11 @@ namespace MeisterGeister.Model
         {
             // TODO ??: Dialog MVVM-konform aufrufen
             if (dialog)
-                _initiativeWurf = View.General.ViewHelper.ShowWürfelDialog(InitiativeZufall, "Iinitiative Würfel-Wurf");
+            {
+                int wurf = View.General.ViewHelper.ShowWürfelDialog(InitiativeZufall, "Iinitiative Würfel-Wurf");
+                if (wurf != 0)
+                    _initiativeWurf = wurf;
+            }
             else
                 _initiativeWurf = RandomNumberGenerator.Wurf(InitiativeZufall);
             return InitiativeBasis - Behinderung + InitiativeWurf;
@@ -1689,6 +1693,26 @@ namespace MeisterGeister.Model
         {
             _initiativeWurf = (int)InitiativeZufall;
             return InitiativeBasis - Behinderung + InitiativeWurf;
+        }
+
+        // WdS 55
+        public int? Orientieren(bool dialog = false)
+        {
+            // Mit SF Aufmerksamkeit keine Probe nötig
+            if (HatSonderfertigkeitUndVoraussetzungen("Aufmerksamkeit"))
+                return InitiativeMax();
+
+            int mod = (int)Math.Floor(Talentwert("Kriegskunst") / 2.0) * -1;
+            Eigenschaft intuition = Eigenschaft("IN");
+            intuition.Modifikator = mod;
+            ProbenErgebnis ergebnis;
+            if (dialog) // TODO ??: Dialog MVVM-konform aufrufen
+                ergebnis = View.General.ViewHelper.ShowProbeDialog(intuition, this);
+            else
+                ergebnis = intuition.Würfeln();
+            if (ergebnis.Gelungen)
+                return InitiativeMax();
+            return null;
         }
 
         public string Position

@@ -51,7 +51,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int InitiativeWurf { get; }
         int Initiative(bool dialog = false);
         int InitiativeMax();
-        //int Orientieren();
+        int? Orientieren(bool dialog = false);
         int? AT { get; } //Hauptwaffe Standardattackewert
         int? PA { get; }
 
