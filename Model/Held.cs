@@ -1670,14 +1670,21 @@ namespace MeisterGeister.Model
         #endregion
 
         #region IKämpfer
+        private int _initiativeWurf = 0;
+        public int InitiativeWurf
+        {
+            get { return _initiativeWurf; }
+        }
         public int Initiative()
         {
-            return InitiativeBasis - Behinderung + RandomNumberGenerator.Wurf(InitiativeZufall);
+            _initiativeWurf = RandomNumberGenerator.Wurf(InitiativeZufall);
+            return InitiativeBasis - Behinderung + InitiativeWurf;
         }
 
         public int InitiativeMax()
         {
-            return InitiativeBasis - Behinderung + (int)InitiativeZufall;
+            _initiativeWurf = (int)InitiativeZufall;
+            return InitiativeBasis - Behinderung + InitiativeWurf;
         }
 
         public string Position

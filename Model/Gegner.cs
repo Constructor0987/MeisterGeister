@@ -54,14 +54,21 @@ namespace MeisterGeister.Model
         #endregion
 
         #region IKämpfer
+        private int _initiativeWurf = 0;
+        public int InitiativeWurf
+        {
+            get { return _initiativeWurf; }
+        }
         public int Initiative()
         {
-            return INIBasis - BE.GetValueOrDefault() + Logic.General.Würfel.Parse(INIZufall);
+            _initiativeWurf = Logic.General.Würfel.Parse(INIZufall);
+            return INIBasis - BE.GetValueOrDefault() + InitiativeWurf;
         }
 
         public int InitiativeMax()
         {
-            return INIBasis - BE.GetValueOrDefault() + Logic.General.Würfel.Parse(INIZufall, false);
+            _initiativeWurf = Logic.General.Würfel.Parse(INIZufall, false);
+            return INIBasis - BE.GetValueOrDefault() + InitiativeWurf;
         }
 
         [DependentProperty("INIBasis")]
@@ -226,9 +233,11 @@ namespace MeisterGeister.Model
             get { return ((KampfLogic.IKämpfer)this).PA; }
         }
 
+        private int? _be;
         public int? BE
         {
-            get { return 0; }
+            get { return _be; }
+            set { _be = value; OnChanged("BE"); }
         }
 
         [DependentProperty("Konstitution")]

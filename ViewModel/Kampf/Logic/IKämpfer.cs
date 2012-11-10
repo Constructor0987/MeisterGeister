@@ -48,6 +48,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //Kampf relevantes
         //int INI { get; }
         int InitiativeBasis { get; }
+        int InitiativeWurf { get; }
         int Initiative();
         int InitiativeMax();
         //int Orientieren();

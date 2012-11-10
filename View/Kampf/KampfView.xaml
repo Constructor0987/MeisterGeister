@@ -69,6 +69,8 @@
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Width="20" Height="20" />
                                     <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding KämpferInfo.Kämpfer.BE}" ToolTip="Behinderung" FontWeight="Bold" NoBackground="True" VerticalAlignment="Center" />
                                 </StackPanel>
+                                <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold" Text="INI gewürfelt:" Margin="0,0,2,2" />
+                                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding KämpferInfo.Kämpfer.InitiativeWurf}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" FontWeight="Bold" Text="INI-Aktuell:" Margin="0,0,2,2" />
                                 <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding KämpferInfo.Initiative}" />
                             </Grid>
