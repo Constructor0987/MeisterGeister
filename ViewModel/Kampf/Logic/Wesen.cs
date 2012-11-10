@@ -240,6 +240,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public bool IsGegner
+        {
+            get { return this is Model.Gegner; }
+        }
+
+        public bool IsHeld
+        {
+            get { return this is Model.Held; }
+        }
+
         #region Events und resultierende Modifikatoren
 
         //Events auf setter, die im DB-Model stehen.

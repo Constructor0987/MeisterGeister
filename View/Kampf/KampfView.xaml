@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MeisterGeister.View.Kampf.KampfView"
+﻿<UserControl x:Name="userControl" x:Class="MeisterGeister.View.Kampf.KampfView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -506,7 +506,9 @@
                                 <TextBlock Text="Kampfwerte" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" Height="100">
-                                <ListBox ItemsSource="{Binding Path=SelectedKämpfer.Kampftalente, IsAsync=True}" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <Grid>
+                                <ListBox ItemsSource="{Binding Path=SelectedKämpfer.Kampftalente, IsAsync=True}" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         Visibility="{Binding SelectedKämpfer.IsHeld, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
@@ -530,6 +532,37 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
+                                    <ListBox ItemsSource="{Binding Path=SelectedKämpfer.Angriffe, IsAsync=True}" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         Visibility="{Binding SelectedKämpfer.IsGegner, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name}" MinWidth="150" />
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                                            <TextBlock Text="{Binding AT}" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
+                                                            <TextBlock Text="{Binding ElementName=userControl, Path=VM.SelectedKämpfer.PA}" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
+                                                        <TextBlock Text="TP " FontWeight="Bold" />
+                                                        <TextBlock Text="{Binding TPWürfelAnzahl}" Margin="2,0,0,0" />
+                                                        <TextBlock Text="W" />
+                                                        <TextBlock Text="{Binding TPWürfel}" />
+                                                        <TextBlock Text="+" />
+                                                        <TextBlock Text="{Binding TPBonus}" />
+                                                        <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
+                                                        <TextBlock Text="{Binding DK}" Margin="2,0,0,0" />
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </Grid>
                             </Border>
                         </Expander>
 

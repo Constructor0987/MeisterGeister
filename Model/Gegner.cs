@@ -311,6 +311,11 @@ namespace MeisterGeister.Model
             get { return GegnerBase.GegnerBase_Angriff.Select(ga => (KampfLogic.IWaffe)ga).ToList(); }
         }
 
+        public IList<GegnerBase_Angriff> Angriffe
+        {
+            get { return GegnerBase.GegnerBase_Angriff.ToList(); }
+        }
+
         public bool Magiebegabt
         {
             get { return AstralenergieMax > 0; }
