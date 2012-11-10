@@ -43,6 +43,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         string AusdauerStatus { get; }
         string AusdauerStatusDetails { get; }
 
+        bool Kampfunfähig { get; }
+
         //Kampf relevantes
         //int INI { get; }
         int InitiativeBasis { get; }

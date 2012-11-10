@@ -72,6 +72,8 @@
                             <Image Width="24" Height="24" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
                             <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,4,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" />
                         </Grid>
+                        <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
+                               Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                         <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -177,8 +179,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
+                                <!--<ColumnDefinition Width="*"/>-->
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>

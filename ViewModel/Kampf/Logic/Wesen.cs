@@ -229,6 +229,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        [DependsOnModifikator(typeof(Mod.AusdauerKampfunfähigModifikator))]
+        [DependsOnModifikator(typeof(Mod.LebensenergieKampfunfähigModifikator))]
+        public bool Kampfunfähig
+        {
+            get
+            {
+                return Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0
+                    || Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0;
+            }
+        }
+
         #region Events und resultierende Modifikatoren
 
         //Events auf setter, die im DB-Model stehen.
