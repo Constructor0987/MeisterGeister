@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 {
-    public class NiedrigeLebensenergieModifikator : Modifikator, IModAlleEigenschaftsProben, IModAlleProben, IModGS
+    public class NiedrigeLebensenergieModifikator : Modifikator, IModAlleEigenschaftsProben, IModAlleProben, IModAT, IModPA, IModGS
     {
         public override string Name
         {
@@ -32,13 +32,23 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             return wert + 1;
         }
 
+        public int ApplyATMod(int wert)
+        {
+            return wert - 1;
+        }
+
+        public int ApplyPAMod(int wert)
+        {
+            return wert - 1;
+        }
+
         public int ApplyGSMod(int wert)
         {
             return Math.Max(1, wert - 1);
         }
     }
 
-    public class NiedrigeAusdauerModifikator : Modifikator, IModAlleEigenschaftsProben, IModAlleProben
+    public class NiedrigeAusdauerModifikator : Modifikator, IModAlleEigenschaftsProben, IModAlleProben, IModAT, IModPA
     {
         public override string Name
         {
@@ -63,6 +73,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         public int ApplyAlleEigenschaftsProbenMod(int wert)
         {
             return wert + 1;
+        }
+
+        public int ApplyATMod(int wert)
+        {
+            return wert - 1;
+        }
+
+        public int ApplyPAMod(int wert)
+        {
+            return wert - 1;
         }
     }
 
