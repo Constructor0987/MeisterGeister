@@ -47,5 +47,24 @@ namespace MeisterGeister.Model
         {
             get { return !ZauberGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
+
+        public string Repräsentationen
+        {
+            get
+            {
+                var a_s = Zauber_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return null;
+                return a_s.Repräsentationen;
+            }
+            set
+            {
+                var a_s = Zauber_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return;
+                a_s.Repräsentationen = value;
+                OnChanged("Repräsentationen");
+            }
+        }
     }
 }

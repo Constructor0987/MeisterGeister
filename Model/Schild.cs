@@ -82,18 +82,6 @@ namespace MeisterGeister.Model
             }
         }
 
-        public string Setting
-        {
-            get
-            {
-                return Ausrüstung.Setting;
-            }
-            set
-            {
-                Ausrüstung.Setting = value;
-            }
-        }
-
         public string Bemerkung
         {
             get

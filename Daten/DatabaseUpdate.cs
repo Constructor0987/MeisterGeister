@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 59;
+        public const int DatenbankVersionAktuell = 60;
 
         /// <summary>
         /// Das zuletzt ausgeführte Update-Skript.
@@ -125,33 +125,11 @@ namespace MeisterGeister.Daten
 
                 // Updates durchführen
                 for (int i = ((int)UserDatabaseVersion + 1); i <= DatenbankVersionAktuell; i++)
+                {
+                    //die letzte Version mit dem Handelsgüter-Skript.
+                    if (DatenbankVersionAktuell >= 60 && i == 60)
+                        HandelsgüterEinfügen(connectionString);
                     UpdateDatabase(i, connectionString);
-
-                // Handelsgüter einfügen
-                SqlCeConnection connection = new SqlCeConnection(connectionString);
-                SqlCeTransaction transaction = null;
-                try
-                {
-                    connection.Open();
-                    transaction = connection.BeginTransaction();
-
-                    // lies die Insert-Befehle aus der Resourcen-Datei
-                    StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/InsertHandelsgut.sql", UriKind.Relative)).Stream, Encoding.UTF8);
-                    string inserts = reader.ReadToEnd();
-                    ExecuteSqlCommand(inserts, "InsertHandelsgut", connection, transaction, false);
-                    if (transaction != null)
-                        transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    if (transaction != null)
-                        transaction.Rollback();
-                    throw;
-                }
-                finally
-                {
-                    if (connection != null)
-                        connection.Close();
                 }
 
                 // Datenbank optimieren
@@ -160,6 +138,36 @@ namespace MeisterGeister.Daten
                 return DatabaseUpdateResult.DatenbankUpdateOK;
             }
             return DatabaseUpdateResult.DatenbankVersionOK; // kein Update erforderlich
+        }
+
+        static void HandelsgüterEinfügen(string connectionString)
+        {
+            // Handelsgüter einfügen
+            SqlCeConnection connection = new SqlCeConnection(connectionString);
+            SqlCeTransaction transaction = null;
+            try
+            {
+                connection.Open();
+                transaction = connection.BeginTransaction();
+
+                // lies die Insert-Befehle aus der Resourcen-Datei
+                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/InsertHandelsgut.sql", UriKind.Relative)).Stream, Encoding.UTF8);
+                string inserts = reader.ReadToEnd();
+                ExecuteSqlCommand(inserts, "InsertHandelsgut", connection, transaction, false);
+                if (transaction != null)
+                    transaction.Commit();
+            }
+            catch (Exception)
+            {
+                if (transaction != null)
+                    transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
         }
 
         /// <summary>

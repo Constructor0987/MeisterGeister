@@ -62,19 +62,6 @@ namespace MeisterGeister.Model
         private string _name;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Preis
-        {
-            get { return _preis; }
-            set
-    		{ 
-    			_preis = value;
-    			OnChanged("Preis");
-    		}
-    
-        }
-        private string _preis;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual Nullable<double> Gewicht
         {
             get { return _gewicht; }
@@ -151,19 +138,70 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Setting
-        {
-            get { return _setting; }
-            set
-    		{ 
-    			_setting = value;
-    			OnChanged("Setting");
-    		}
+
+        #endregion
+
+        #region Navigation Properties
     
+    	[DataMember]
+        public virtual ICollection<Handelsgut_Setting> Handelsgut_Setting
+        {
+            get
+            {
+                if (_handelsgut_Setting == null)
+                {
+                    var newCollection = new FixupCollection<Handelsgut_Setting>();
+                    newCollection.CollectionChanged += FixupHandelsgut_Setting;
+                    _handelsgut_Setting = newCollection;
+                }
+                return _handelsgut_Setting;
+            }
+            set
+            {
+                if (!ReferenceEquals(_handelsgut_Setting, value))
+                {
+                    var previousValue = _handelsgut_Setting as FixupCollection<Handelsgut_Setting>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHandelsgut_Setting;
+                    }
+                    _handelsgut_Setting = value;
+                    var newValue = value as FixupCollection<Handelsgut_Setting>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHandelsgut_Setting;
+                    }
+                }
+            }
         }
-        private string _setting;
+        private ICollection<Handelsgut_Setting> _handelsgut_Setting;
+
+        #endregion
+
+        #region Association Fixup
+    
+        private void FixupHandelsgut_Setting(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Handelsgut_Setting");
+            if (e.NewItems != null)
+            {
+                foreach (Handelsgut_Setting item in e.NewItems)
+                {
+                    item.Handelsgut = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Handelsgut_Setting item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Handelsgut, this))
+                    {
+                        item.Handelsgut = null;
+                    }
+                }
+            }
+        }
 
         #endregion
 

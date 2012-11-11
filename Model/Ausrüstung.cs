@@ -33,5 +33,42 @@ namespace MeisterGeister.Model
                 return _talente;
             }
         }
+
+        public double Preis
+        {
+            get {
+                var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return 0;
+                return a_s.Preis;
+            }
+            set
+            {
+                var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return;
+                a_s.Preis = value;
+                OnChanged("Preis");
+            }
+        }
+
+        public string Verbreitung
+        {
+            get
+            {
+                var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return null;
+                return a_s.Verbreitung;
+            }
+            set
+            {
+                var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return;
+                a_s.Verbreitung = value;
+                OnChanged("Verbreitung");
+            }
+        }
     }
 }

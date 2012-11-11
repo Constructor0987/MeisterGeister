@@ -127,6 +127,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Ausrüstung> _ausrüstung;
     
+        public ObjectSet<Ausrüstung_Setting> Ausrüstung_Setting
+        {
+            get { return _ausrüstung_Setting  ?? (_ausrüstung_Setting = CreateObjectSet<Ausrüstung_Setting>("Ausrüstung_Setting")); }
+        }
+        private ObjectSet<Ausrüstung_Setting> _ausrüstung_Setting;
+    
         public ObjectSet<Einstellungen> Einstellungen
         {
             get { return _einstellungen  ?? (_einstellungen = CreateObjectSet<Einstellungen>("Einstellungen")); }
@@ -174,6 +180,12 @@ namespace MeisterGeister.Model
             get { return _handelsgut  ?? (_handelsgut = CreateObjectSet<Handelsgut>("Handelsgut")); }
         }
         private ObjectSet<Handelsgut> _handelsgut;
+    
+        public ObjectSet<Handelsgut_Setting> Handelsgut_Setting
+        {
+            get { return _handelsgut_Setting  ?? (_handelsgut_Setting = CreateObjectSet<Handelsgut_Setting>("Handelsgut_Setting")); }
+        }
+        private ObjectSet<Handelsgut_Setting> _handelsgut_Setting;
     
         public ObjectSet<Held> Held
         {
@@ -313,11 +325,23 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Schild> _schild;
     
+        public ObjectSet<Setting> Setting
+        {
+            get { return _setting  ?? (_setting = CreateObjectSet<Setting>("Setting")); }
+        }
+        private ObjectSet<Setting> _setting;
+    
         public ObjectSet<Sonderfertigkeit> Sonderfertigkeit
         {
             get { return _sonderfertigkeit  ?? (_sonderfertigkeit = CreateObjectSet<Sonderfertigkeit>("Sonderfertigkeit")); }
         }
         private ObjectSet<Sonderfertigkeit> _sonderfertigkeit;
+    
+        public ObjectSet<Sonderfertigkeit_Setting> Sonderfertigkeit_Setting
+        {
+            get { return _sonderfertigkeit_Setting  ?? (_sonderfertigkeit_Setting = CreateObjectSet<Sonderfertigkeit_Setting>("Sonderfertigkeit_Setting")); }
+        }
+        private ObjectSet<Sonderfertigkeit_Setting> _sonderfertigkeit_Setting;
     
         public ObjectSet<Talent> Talent
         {
@@ -361,11 +385,23 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Zauber> _zauber;
     
+        public ObjectSet<Zauber_Setting> Zauber_Setting
+        {
+            get { return _zauber_Setting  ?? (_zauber_Setting = CreateObjectSet<Zauber_Setting>("Zauber_Setting")); }
+        }
+        private ObjectSet<Zauber_Setting> _zauber_Setting;
+    
         public ObjectSet<Zauberzeichen> Zauberzeichen
         {
             get { return _zauberzeichen  ?? (_zauberzeichen = CreateObjectSet<Zauberzeichen>("Zauberzeichen")); }
         }
         private ObjectSet<Zauberzeichen> _zauberzeichen;
+    
+        public ObjectSet<Zauberzeichen_Setting> Zauberzeichen_Setting
+        {
+            get { return _zauberzeichen_Setting  ?? (_zauberzeichen_Setting = CreateObjectSet<Zauberzeichen_Setting>("Zauberzeichen_Setting")); }
+        }
+        private ObjectSet<Zauberzeichen_Setting> _zauberzeichen_Setting;
 
         #endregion
 
@@ -392,6 +428,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Audio_Titel;
     		if(typeof(T) == typeof(Ausrüstung))
     				return (ObjectSet<T>)(Object)Ausrüstung;
+    		if(typeof(T) == typeof(Ausrüstung_Setting))
+    				return (ObjectSet<T>)(Object)Ausrüstung_Setting;
     		if(typeof(T) == typeof(Einstellungen))
     				return (ObjectSet<T>)(Object)Einstellungen;
     		if(typeof(T) == typeof(Farbe))
@@ -408,6 +446,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)GegnerBase_Kampfregel;
     		if(typeof(T) == typeof(Handelsgut))
     				return (ObjectSet<T>)(Object)Handelsgut;
+    		if(typeof(T) == typeof(Handelsgut_Setting))
+    				return (ObjectSet<T>)(Object)Handelsgut_Setting;
     		if(typeof(T) == typeof(Held))
     				return (ObjectSet<T>)(Object)Held;
     		if(typeof(T) == typeof(Held_Ausrüstung))
@@ -454,8 +494,12 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Rüstung;
     		if(typeof(T) == typeof(Schild))
     				return (ObjectSet<T>)(Object)Schild;
+    		if(typeof(T) == typeof(Setting))
+    				return (ObjectSet<T>)(Object)Setting;
     		if(typeof(T) == typeof(Sonderfertigkeit))
     				return (ObjectSet<T>)(Object)Sonderfertigkeit;
+    		if(typeof(T) == typeof(Sonderfertigkeit_Setting))
+    				return (ObjectSet<T>)(Object)Sonderfertigkeit_Setting;
     		if(typeof(T) == typeof(Talent))
     				return (ObjectSet<T>)(Object)Talent;
     		if(typeof(T) == typeof(Talentgruppe))
@@ -470,8 +514,12 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Waffe;
     		if(typeof(T) == typeof(Zauber))
     				return (ObjectSet<T>)(Object)Zauber;
+    		if(typeof(T) == typeof(Zauber_Setting))
+    				return (ObjectSet<T>)(Object)Zauber_Setting;
     		if(typeof(T) == typeof(Zauberzeichen))
     				return (ObjectSet<T>)(Object)Zauberzeichen;
+    		if(typeof(T) == typeof(Zauberzeichen_Setting))
+    				return (ObjectSet<T>)(Object)Zauberzeichen_Setting;
     		return null;
     	}
     	

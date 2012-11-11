@@ -37,12 +37,6 @@ namespace MeisterGeister.ViewModel.Inventar.Logic
             set;
         }
 
-        string Setting
-        {
-            get;
-            set;
-        }
-
         string Bemerkung
         {
             get;

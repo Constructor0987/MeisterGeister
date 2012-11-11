@@ -138,6 +138,19 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _vorNachteilGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Literatur
+        {
+            get { return _literatur; }
+            set
+    		{ 
+    			_literatur = value;
+    			OnChanged("Literatur");
+    		}
+    
+        }
+        private string _literatur;
 
         #endregion
 

@@ -48,20 +48,39 @@ namespace MeisterGeister.Model
         public bool CheckVoraussetzungen(Held held)
         {
             //Parsen und verifizieren der Vorraussetzung-Property
-            if (Vorraussetzungen != null)
+            if (Voraussetzungen != null)
             {
                 Scanner scanner = new Scanner();
                 Parser parser = new Parser(scanner);
-                ParseTree tree = parser.Parse(Vorraussetzungen);
+                ParseTree tree = parser.Parse(Voraussetzungen);
                 if (tree.Errors.Count > 0)
                 {
-                    Debug.WriteLine("Fehler beim parsen der Voraussetzungen ({0}) der Sonderfertigkeit {1}", Vorraussetzungen, Name);
+                    Debug.WriteLine("Fehler beim parsen der Voraussetzungen ({0}) der Sonderfertigkeit {1}", Voraussetzungen, Name);
                     //Einfach mal true zurückgeben, damit keine Funktionalität eingeschränkt ist.
                     return true;
                 }
                 return (bool)tree.Eval(held);
             }
             return true;
+        }
+
+        public string Verbreitung
+        {
+            get
+            {
+                var a_s = Sonderfertigkeit_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return null;
+                return a_s.Verbreitung;
+            }
+            set
+            {
+                var a_s = Sonderfertigkeit_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    return;
+                a_s.Verbreitung = value;
+                OnChanged("Verbreitung");
+            }
         }
     }
 }

@@ -62,19 +62,6 @@ namespace MeisterGeister.Model
         private string _name;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual double Preis
-        {
-            get { return _preis; }
-            set
-    		{ 
-    			_preis = value;
-    			OnChanged("Preis");
-    		}
-    
-        }
-        private double _preis;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual int Gewicht
         {
             get { return _gewicht; }
@@ -88,19 +75,6 @@ namespace MeisterGeister.Model
         private int _gewicht;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Verbreitung
-        {
-            get { return _verbreitung; }
-            set
-    		{ 
-    			_verbreitung = value;
-    			OnChanged("Verbreitung");
-    		}
-    
-        }
-        private string _verbreitung;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Literatur
         {
             get { return _literatur; }
@@ -112,19 +86,6 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Setting
-        {
-            get { return _setting; }
-            set
-    		{ 
-    			_setting = value;
-    			OnChanged("Setting");
-    		}
-    
-        }
-        private string _setting;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Bemerkung
@@ -155,6 +116,39 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Navigation Properties
+    
+    	[DataMember]
+        public virtual ICollection<Ausrüstung_Setting> Ausrüstung_Setting
+        {
+            get
+            {
+                if (_ausrüstung_Setting == null)
+                {
+                    var newCollection = new FixupCollection<Ausrüstung_Setting>();
+                    newCollection.CollectionChanged += FixupAusrüstung_Setting;
+                    _ausrüstung_Setting = newCollection;
+                }
+                return _ausrüstung_Setting;
+            }
+            set
+            {
+                if (!ReferenceEquals(_ausrüstung_Setting, value))
+                {
+                    var previousValue = _ausrüstung_Setting as FixupCollection<Ausrüstung_Setting>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAusrüstung_Setting;
+                    }
+                    _ausrüstung_Setting = value;
+                    var newValue = value as FixupCollection<Ausrüstung_Setting>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAusrüstung_Setting;
+                    }
+                }
+            }
+        }
+        private ICollection<Ausrüstung_Setting> _ausrüstung_Setting;
     
     	[DataMember]
         public virtual Fernkampfwaffe Fernkampfwaffe
@@ -310,6 +304,29 @@ namespace MeisterGeister.Model
             if (Waffe != null)
             {
                 Waffe.Ausrüstung = this;
+            }
+        }
+    
+        private void FixupAusrüstung_Setting(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Ausrüstung_Setting");
+            if (e.NewItems != null)
+            {
+                foreach (Ausrüstung_Setting item in e.NewItems)
+                {
+                    item.Ausrüstung = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Ausrüstung_Setting item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Ausrüstung, this))
+                    {
+                        item.Ausrüstung = null;
+                    }
+                }
             }
         }
     

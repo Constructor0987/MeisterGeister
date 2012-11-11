@@ -36,17 +36,17 @@ namespace MeisterGeister_Tests
         {
             Sonderfertigkeit kg = Global.ContextHeld.New<Sonderfertigkeit>();
             kg.Name = "Kampfgespür";
-            kg.Vorraussetzungen = "IN 15, SF Aufmerksamkeit, SF Kampfreflexe";
+            kg.Voraussetzungen = "IN 15, SF Aufmerksamkeit, SF Kampfreflexe";
             kg.HatWert = false;
 
             Sonderfertigkeit kr = Global.ContextHeld.New<Sonderfertigkeit>();
             kr.Name = "Kampfreflexe";
-            kr.Vorraussetzungen = "INI 10";
+            kr.Voraussetzungen = "INI 10";
             kr.HatWert = false;
 
             Sonderfertigkeit auf = Global.ContextHeld.New<Sonderfertigkeit>();
             auf.Name = "Aufmerksamkeit";
-            auf.Vorraussetzungen = "IN 12";
+            auf.Voraussetzungen = "IN 12";
             auf.HatWert = false;
 
             Held h = Global.ContextHeld.New<Held>();

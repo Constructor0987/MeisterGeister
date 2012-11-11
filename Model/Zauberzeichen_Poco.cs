@@ -159,19 +159,6 @@ namespace MeisterGeister.Model
         private string _bemerkung;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Verbreitung
-        {
-            get { return _verbreitung; }
-            set
-    		{ 
-    			_verbreitung = value;
-    			OnChanged("Verbreitung");
-    		}
-    
-        }
-        private string _verbreitung;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Komponenten
         {
             get { return _komponenten; }
@@ -196,19 +183,6 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Setting
-        {
-            get { return _setting; }
-            set
-    		{ 
-    			_setting = value;
-    			OnChanged("Setting");
-    		}
-    
-        }
-        private string _setting;
 
         #endregion
 
@@ -229,6 +203,39 @@ namespace MeisterGeister.Model
             }
         }
         private Sonderfertigkeit _sonderfertigkeit;
+    
+    	[DataMember]
+        public virtual ICollection<Zauberzeichen_Setting> Zauberzeichen_Setting
+        {
+            get
+            {
+                if (_zauberzeichen_Setting == null)
+                {
+                    var newCollection = new FixupCollection<Zauberzeichen_Setting>();
+                    newCollection.CollectionChanged += FixupZauberzeichen_Setting;
+                    _zauberzeichen_Setting = newCollection;
+                }
+                return _zauberzeichen_Setting;
+            }
+            set
+            {
+                if (!ReferenceEquals(_zauberzeichen_Setting, value))
+                {
+                    var previousValue = _zauberzeichen_Setting as FixupCollection<Zauberzeichen_Setting>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupZauberzeichen_Setting;
+                    }
+                    _zauberzeichen_Setting = value;
+                    var newValue = value as FixupCollection<Zauberzeichen_Setting>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupZauberzeichen_Setting;
+                    }
+                }
+            }
+        }
+        private ICollection<Zauberzeichen_Setting> _zauberzeichen_Setting;
 
         #endregion
 
@@ -251,6 +258,29 @@ namespace MeisterGeister.Model
                 if (SonderfertigkeitGUID != Sonderfertigkeit.SonderfertigkeitGUID)
                 {
                     SonderfertigkeitGUID = Sonderfertigkeit.SonderfertigkeitGUID;
+                }
+            }
+        }
+    
+        private void FixupZauberzeichen_Setting(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Zauberzeichen_Setting");
+            if (e.NewItems != null)
+            {
+                foreach (Zauberzeichen_Setting item in e.NewItems)
+                {
+                    item.Zauberzeichen = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Zauberzeichen_Setting item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Zauberzeichen, this))
+                    {
+                        item.Zauberzeichen = null;
+                    }
                 }
             }
         }

@@ -75,32 +75,6 @@ namespace MeisterGeister.Model
         private string _typ;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Setting
-        {
-            get { return _setting; }
-            set
-    		{ 
-    			_setting = value;
-    			OnChanged("Setting");
-    		}
-    
-        }
-        private string _setting;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string Vorraussetzungen
-        {
-            get { return _vorraussetzungen; }
-            set
-    		{ 
-    			_vorraussetzungen = value;
-    			OnChanged("Vorraussetzungen");
-    		}
-    
-        }
-        private string _vorraussetzungen;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Literatur
         {
             get { return _literatur; }
@@ -125,6 +99,19 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _sonderfertigkeitGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Voraussetzungen
+        {
+            get { return _voraussetzungen; }
+            set
+    		{ 
+    			_voraussetzungen = value;
+    			OnChanged("Voraussetzungen");
+    		}
+    
+        }
+        private string _voraussetzungen;
 
         #endregion
 
@@ -162,6 +149,39 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Held_Sonderfertigkeit> _held_Sonderfertigkeit;
+    
+    	[DataMember]
+        public virtual ICollection<Sonderfertigkeit_Setting> Sonderfertigkeit_Setting
+        {
+            get
+            {
+                if (_sonderfertigkeit_Setting == null)
+                {
+                    var newCollection = new FixupCollection<Sonderfertigkeit_Setting>();
+                    newCollection.CollectionChanged += FixupSonderfertigkeit_Setting;
+                    _sonderfertigkeit_Setting = newCollection;
+                }
+                return _sonderfertigkeit_Setting;
+            }
+            set
+            {
+                if (!ReferenceEquals(_sonderfertigkeit_Setting, value))
+                {
+                    var previousValue = _sonderfertigkeit_Setting as FixupCollection<Sonderfertigkeit_Setting>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupSonderfertigkeit_Setting;
+                    }
+                    _sonderfertigkeit_Setting = value;
+                    var newValue = value as FixupCollection<Sonderfertigkeit_Setting>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupSonderfertigkeit_Setting;
+                    }
+                }
+            }
+        }
+        private ICollection<Sonderfertigkeit_Setting> _sonderfertigkeit_Setting;
     
     	[DataMember]
         public virtual ICollection<Zauberzeichen> Zauberzeichen
@@ -214,6 +234,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Held_Sonderfertigkeit item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Sonderfertigkeit, this))
+                    {
+                        item.Sonderfertigkeit = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupSonderfertigkeit_Setting(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Sonderfertigkeit_Setting");
+            if (e.NewItems != null)
+            {
+                foreach (Sonderfertigkeit_Setting item in e.NewItems)
+                {
+                    item.Sonderfertigkeit = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Sonderfertigkeit_Setting item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Sonderfertigkeit, this))
                     {
