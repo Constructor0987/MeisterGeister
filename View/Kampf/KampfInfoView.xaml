@@ -4,37 +4,119 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              mc:Ignorable="d" 
              d:DesignHeight="306" d:DesignWidth="484"
              Background="Transparent">
     <UserControl.Resources>
+        <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
         <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
-            <Setter Property="Opacity" Value="1.0" />
             <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Opacity" Value="1.0" />
+            <Setter Property="TextElement.FontStyle" Value="Normal" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=Kampfunfähig}" Value="true">
-                    <Setter Property="Opacity" Value="0.3" />
+                <DataTrigger Binding="{Binding Path=KämpferInfo.Kämpfer.Kampfunfähig}" Value="true">
+                    <Setter Property="Opacity" Value="0.5" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Path=AktuellerKämpfer}" Value="true">
-                    <Setter Property="Background" Value="LightGreen" />
+                <DataTrigger Binding="{Binding Path=Ausgeführt}" Value="true">
+                    <Setter Property="TextElement.FontStyle" Value="Italic" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsAktuell}" Value="true">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#CC239E1D" Offset="0"/>
+                                <GradientStop Color="Transparent" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="KämpferListItemNameStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="Black" />
             <Style.Triggers>
-                <DataTrigger Binding="{Binding Path=KampfPartei}" Value="2">
+                <DataTrigger Binding="{Binding Path=KämpferInfo.Team}" Value="2">
                     <Setter Property="Foreground" Value="Sienna" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <DataTemplate x:Key="KämpferListTemplate">
-            <StackPanel Orientation="Vertical" Style="{StaticResource KämpferListItemStyle}" Margin="5,0" >
-                <TextBlock Text="{Binding Path=Kurzname}" FontWeight="Bold"  Style="{StaticResource KämpferListItemNameStyle}"/>
-                <StackPanel Orientation="Horizontal" >
-                    <TextBlock Text="{Binding Path=InitiativeInfo}" Margin="8,2,0,0" />
-                    <ViewGeneral:WürfelControl x:Name="_würfelControlInitiative" Ergebnis="{Binding Path=InitiativeWurf}" ErgebnisText="INI-Wurf" Würfel="{Binding Path=InitiativeZufall}" Height="25" Width="25" Margin="2,0,0,0" IsEnabled="False" />
-                    <Rectangle Margin="4" Width="15" Height="15" Fill="{Binding Path=Farbmarkierung}" />
+        <DataTemplate x:Key="InitiativeListTemplate">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}" Margin="0,2">
+                    <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                            <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Width="28" Height="28" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
+                                <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" />
+                            </Grid>
+                            <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
+                                   Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
+                            <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding KämpferInfo.Kämpfer.HinweisText}" FontSize="11" VerticalAlignment="Center" Margin="4,0,0,2">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding KämpferInfo.Kämpfer.HinweisText.Length}" Value="0">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Style>
+                                <Style>
+                                    <Setter Property="StackPanel.Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding InitiativeMod}" Value="0">
+                                            <Setter Property="StackPanel.Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <ComboBox Width="45" Height="22" ItemsSource="{StaticResource KampfstilValues}" DisplayMemberPath="Name" SelectedValuePath="Stil" SelectedValue="{Binding KämpferInfo.Kampfstil}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{Binding Bild}" Width="24" />
+                                            <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png">
+                                <ViewGeneral:ImageDuplicator.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding KämpferInfo.Angriffsaktionen}" />
+                                        <TextBlock Text="Angriffsaktion(en)" Margin="2,0" />
+                                    </StackPanel>
+                                </ViewGeneral:ImageDuplicator.ToolTip>
+                            </ViewGeneral:ImageDuplicator>
+                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png">
+                                <ViewGeneral:ImageDuplicator.ToolTip>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding KämpferInfo.Abwehraktionen}" />
+                                        <TextBlock Text="Abwehraktion(en)" Margin="2,0" />
+                                    </StackPanel>
+                                </ViewGeneral:ImageDuplicator.ToolTip>
+                            </ViewGeneral:ImageDuplicator>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}">
+                    <Rectangle Margin="4,0" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                    <TextBlock Text="{Binding Manöver.Name}" FontSize="16" />
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
@@ -44,7 +126,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ItemsControl Grid.Column="0" Margin="5,5,0,5" Padding="30, 20" ItemTemplate="{StaticResource KämpferListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
+        <ItemsControl Grid.Column="0" Margin="5,5,0,5" Padding="30, 20" ItemTemplate="{StaticResource InitiativeListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
                       Background="{StaticResource BackgroundPergamentHoch}" FontSize="18">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
