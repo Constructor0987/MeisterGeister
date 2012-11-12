@@ -571,11 +571,7 @@
                                                     </StackPanel>
                                                     <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
                                                         <TextBlock Text="TP " FontWeight="Bold" />
-                                                        <TextBlock Text="{Binding TPWürfelAnzahl}" Margin="2,0,0,0" />
-                                                        <TextBlock Text="W" />
-                                                        <TextBlock Text="{Binding TPWürfel}" />
-                                                        <TextBlock Text="+" />
-                                                        <TextBlock Text="{Binding TPBonus}" />
+                                                        <TextBlock Text="{Binding TP}" Margin="2,0,0,0" />
                                                         <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
                                                         <TextBlock Text="{Binding DK}" Margin="2,0,0,0" />
                                                     </StackPanel>
