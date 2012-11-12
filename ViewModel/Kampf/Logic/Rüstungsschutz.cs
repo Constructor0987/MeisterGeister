@@ -83,6 +83,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         break;
                     //Ändern des Gesamt-RS sollte automatisch die Werte in einer Zone setzen
                     case Trefferzone.Gesamt:
+                        if (this[Trefferzone.Gesamt] == value)
+                            break;
                         for (int i = 0; i < (int)Trefferzone.Unlokalisiert; i++)
                             this[(Trefferzone)i] = value;
                         break;
