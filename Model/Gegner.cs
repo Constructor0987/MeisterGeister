@@ -342,6 +342,13 @@ namespace MeisterGeister.Model
             set { _farbmarkierung = value; OnChanged("Farbmarkierung"); }
         }
 
+        private string _hinweisText = string.Empty;
+        public string HinweisText
+        {
+            get { return _hinweisText; }
+            set { _hinweisText = value; OnChanged("HinweisText"); }
+        }
+
         #endregion
 
         #region Parade

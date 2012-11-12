@@ -25,11 +25,10 @@
             <Setter Property="TextElement.FontStyle" Value="Normal" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=KämpferInfo.Kämpfer.Kampfunfähig}" Value="true">
-                    <Setter Property="Opacity" Value="0.3" />
+                    <Setter Property="Opacity" Value="0.5" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=Ausgeführt}" Value="true">
                     <Setter Property="TextElement.FontStyle" Value="Italic" />
-                    <Setter Property="Opacity" Value="0.5" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=IsAktuell}" Value="true">
                     <Setter Property="Background">
@@ -102,6 +101,17 @@
                                Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                         <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                     </StackPanel>
+                    <TextBlock Text="{Binding KämpferInfo.Kämpfer.HinweisText}" FontSize="11" VerticalAlignment="Center" Margin="4,0,0,2">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding KämpferInfo.Kämpfer.HinweisText.Length}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel.Style>
                             <Style>
@@ -472,6 +482,11 @@
                                 <ViewGeneral:EnergieControl x:Name="_energieControlKarmaenergie" Energie="Karmaenergie" SelectedKämpfer="{Binding Path=SelectedKämpfer}" />
                             </StackPanel>
 
+                            <StackPanel Orientation="Horizontal" Margin="4" ToolTip="Der Hinweis-Text wird in der INI-Liste angezeigt.">
+                                <TextBlock Text="Hinweis-Text:" FontWeight="Bold" VerticalAlignment="Center" />
+                                <TextBox HorizontalAlignment="Stretch" Width="250" Margin="4,0,0,0" Text="{Binding SelectedKämpfer.HinweisText}"/>
+                            </StackPanel>
+                            
                             <TextBox Margin="4" Text="{Binding Path=SelectedKämpfer.Bemerkung}" ToolTip="Bemerkungen" TextWrapping="Wrap" AcceptsReturn="True">
                                 <TextBox.BorderBrush>
                                     <SolidColorBrush />

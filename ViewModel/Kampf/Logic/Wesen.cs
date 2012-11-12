@@ -151,6 +151,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
         #endregion
 
+        #region Energie Stati
+
         public string GetLebensenergieStatus()
         {
                 IKämpfer k = this as IKämpfer;
@@ -239,6 +241,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     || Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0;
             }
         }
+
+        #endregion
 
         public bool IsGegner
         {
