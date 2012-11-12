@@ -56,6 +56,8 @@
             <StackPanel Margin="5" Background="{StaticResource BackgroundPergamentHoch}" Height="Auto" VerticalAlignment="Top">
                 <TextBlock Text="Kampfrunde:" TextAlignment="Center" FontSize="18" Margin="4,5,4,0" />
                 <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" Margin="4" TextAlignment="Center" FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
+                <TextBlock Text="INI-Phase:" TextAlignment="Center" FontSize="18" Margin="4,5,4,0" />
+                <TextBlock Text="{Binding Kampf.INIPhase}" Margin="4" TextAlignment="Center" FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
                 <TextBlock Text="Zeit:" TextAlignment="Center" FontSize="18" Margin="4,0" />
                 <TextBlock Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
             </StackPanel>

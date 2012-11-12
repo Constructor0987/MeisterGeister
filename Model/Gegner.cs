@@ -8,6 +8,7 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel.Helden.Logic;
+using System.ComponentModel;
 
 namespace MeisterGeister.Model
 {
@@ -43,6 +44,7 @@ namespace MeisterGeister.Model
             RSBrust = gegnerBase.RSBrust;
             RSKopf = gegnerBase.RSKopf;
             RSRücken = gegnerBase.RSRücken;
+            PA = gegnerBase.PA;
             Name = gegnerBase.Name;
             Bild = gegnerBase.Bild;
             Bemerkung = gegnerBase.Bemerkung;
@@ -311,9 +313,16 @@ namespace MeisterGeister.Model
             get { return GegnerBase.GegnerBase_Angriff.Select(ga => (KampfLogic.IWaffe)ga).ToList(); }
         }
 
-        public IList<GegnerBase_Angriff> Angriffe
+        [DependsOnModifikator(typeof(Mod.IModifikator))]
+        public IList<Gegner_Angriff> Angriffe
         {
-            get { return GegnerBase.GegnerBase_Angriff.ToList(); }
+            get 
+            {
+                IList<Gegner_Angriff> angriffe = new List<Gegner_Angriff>();
+                foreach (var item in GegnerBase.GegnerBase_Angriff)
+                    angriffe.Add(new Gegner_Angriff(item, this));
+                return angriffe;
+            }
         }
 
         public bool Magiebegabt
@@ -331,6 +340,40 @@ namespace MeisterGeister.Model
         {
             get { return _farbmarkierung; }
             set { _farbmarkierung = value; OnChanged("Farbmarkierung"); }
+        }
+
+        #endregion
+
+        #region Parade
+
+        /// <summary>
+        /// Grund-PA-Wert inkl. Abzüge.
+        /// </summary>
+        [DependentProperty("PA")]
+        [DependsOnModifikator(typeof(Mod.IModPA))]
+        public int Parade
+        {
+            get
+            {
+                int v = PA;
+                if (Modifikatoren != null)
+                {
+                    Modifikatoren.Where(m => m is Mod.IModPABasis).Select(m => (Mod.IModPABasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPABasisMod(v));
+                    Modifikatoren.Where(m => m is Mod.IModPA).Select(m => (Mod.IModPA)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPAMod(v));
+                }
+                return v;
+            }
+        }
+
+        [DependsOnModifikator(typeof(Mod.IModPA))]
+        public List<dynamic> ModifikatorenListePA
+        {
+            get
+            {
+                List<dynamic> list = ModifikatorenListe(typeof(Mod.IModPABasis), PA);
+                list.AddRange(ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? PA : list.LastOrDefault().Wert));
+                return list;
+            }
         }
 
         #endregion
@@ -454,4 +497,82 @@ namespace MeisterGeister.Model
         }
         #endregion
     }
+
+    #region Gegner_Angriff
+
+    public class Gegner_Angriff : INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
+
+        #endregion
+
+        public Gegner_Angriff(GegnerBase_Angriff angriff, Gegner gegner)
+        {
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+            Base_Angriff = angriff;
+            Gegner = gegner;
+        }
+
+        public GegnerBase_Angriff Base_Angriff { get; set; }
+        private Gegner Gegner { get; set; }
+
+        public string Name { get { return Base_Angriff.Name; } }
+
+        public int AT { get { return Base_Angriff.AT; } }
+
+        public string Bemerkung { get { return Base_Angriff.Bemerkung; } }
+
+        public string DK { get { return Base_Angriff.DK; } }
+
+        public string TP 
+        { 
+            get 
+            { 
+                return string.Format("{0}W{1}+{2}", Base_Angriff.TPWürfelAnzahl, Base_Angriff.TPWürfel, Base_Angriff.TPBonus);
+            }
+        }
+
+        /// <summary>
+        /// Grund-PA-Wert inkl. Abzüge.
+        /// </summary>
+        [DependentProperty("AT")]
+        [DependsOnModifikator(typeof(Mod.IModAT))]
+        public int Attacke
+        {
+            get
+            {
+                int v = AT;
+                if (Gegner.Modifikatoren != null)
+                {
+                    Gegner.Modifikatoren.Where(m => m is Mod.IModATBasis).Select(m => (Mod.IModATBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATBasisMod(v));
+                    Gegner.Modifikatoren.Where(m => m is Mod.IModAT).Select(m => (Mod.IModAT)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATMod(v));
+                }
+                return v;
+            }
+        }
+
+        [DependsOnModifikator(typeof(Mod.IModAT))]
+        public List<dynamic> ModifikatorenListeAT
+        {
+            get
+            {
+                List<dynamic> list = Gegner.ModifikatorenListe(typeof(Mod.IModATBasis), AT);
+                list.AddRange(Gegner.ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? AT : list.LastOrDefault().Wert));
+                return list;
+            }
+        }
+
+    }
+
+    #endregion
 }
+
