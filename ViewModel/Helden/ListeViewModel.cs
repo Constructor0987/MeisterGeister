@@ -79,7 +79,7 @@ namespace MeisterGeister.ViewModel.Helden
             SelectedHeld = null;
             if (Global.ContextHeld != null)
             {
-                HeldListe = Global.ContextHeld.Liste<Held>().OrderBy(h => h.Name).ToList();
+                HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ToList();
                 if(tmp != Guid.Empty)
                     SelectedHeld = HeldListe.Where(h => h.HeldGUID == tmp).FirstOrDefault();
             }
