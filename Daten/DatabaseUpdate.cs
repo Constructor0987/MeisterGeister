@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 60;
+        public const int DatenbankVersionAktuell = 61;
 
         /// <summary>
         /// Das zuletzt ausgeführte Update-Skript.

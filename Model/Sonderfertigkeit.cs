@@ -64,11 +64,26 @@ namespace MeisterGeister.Model
             return true;
         }
 
+        public Setting Setting
+        {
+            get
+            {
+                var a_s = Sonderfertigkeit_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Sonderfertigkeit_Setting.FirstOrDefault();
+                if (a_s == null)
+                    return null;
+                return a_s.Setting;
+            }
+        }
+
         public string Verbreitung
         {
             get
             {
                 var a_s = Sonderfertigkeit_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Sonderfertigkeit_Setting.FirstOrDefault();
                 if (a_s == null)
                     return null;
                 return a_s.Verbreitung;
@@ -76,6 +91,8 @@ namespace MeisterGeister.Model
             set
             {
                 var a_s = Sonderfertigkeit_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Sonderfertigkeit_Setting.FirstOrDefault();
                 if (a_s == null)
                     return;
                 a_s.Verbreitung = value;

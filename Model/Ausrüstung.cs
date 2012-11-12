@@ -34,10 +34,25 @@ namespace MeisterGeister.Model
             }
         }
 
+        public Setting Setting
+        {
+            get
+            {
+                var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Ausrüstung_Setting.FirstOrDefault();
+                if (a_s == null)
+                    return null;
+                return a_s.Setting;
+            }
+        }
+
         public double Preis
         {
             get {
                 var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Ausrüstung_Setting.FirstOrDefault();
                 if (a_s == null)
                     return 0;
                 return a_s.Preis;
@@ -45,6 +60,8 @@ namespace MeisterGeister.Model
             set
             {
                 var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Ausrüstung_Setting.FirstOrDefault();
                 if (a_s == null)
                     return;
                 a_s.Preis = value;
@@ -58,12 +75,16 @@ namespace MeisterGeister.Model
             {
                 var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
                 if (a_s == null)
+                    a_s = Ausrüstung_Setting.FirstOrDefault();
+                if (a_s == null)
                     return null;
                 return a_s.Verbreitung;
             }
             set
             {
                 var a_s = Ausrüstung_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Ausrüstung_Setting.FirstOrDefault();
                 if (a_s == null)
                     return;
                 a_s.Verbreitung = value;

@@ -508,9 +508,9 @@ namespace MeisterGeister.ViewModel.NscGenerator
         {
             //if (!(Geschlecht == "m" && kultur.Variante.EndsWith("-Frau") || Geschlecht == "w" && kultur.Variante.EndsWith("-Mann")))
             
-            if (rasse.Name == "keine Rasse")
+            if (rasse == null || rasse.Name == "keine Rasse")
             {
-                if (kultur.Name == "keine Kultur") // gen Rasse() -> gen kultur(Rasse);
+                if (kultur == null || kultur.Name == "keine Kultur") // gen Rasse() -> gen kultur(Rasse);
                 {
                     List<Model.Rasse> rassen = Global.ContextNsc.getRasseVarianten(geschlecht);
                     Rasse = rassen[RandomNumberGenerator.Generator.Next(rassen.Count)];
@@ -527,18 +527,24 @@ namespace MeisterGeister.ViewModel.NscGenerator
             }
             else
             {
-                if (kultur.Name == "keine Kultur") // gen Rasse(Rasse) -> gen kultur(Rasse);
+                if (kultur == null || kultur.Name == "keine Kultur") // gen Rasse(Rasse) -> gen kultur(Rasse);
                 {
                     List<Model.Rasse> rassen = Global.ContextNsc.getRasseVariantenByRasse(rasse);
                     Rasse = rassen[RandomNumberGenerator.Generator.Next(rassen.Count)];
                     List<Model.Kultur> kulturen = Global.ContextNsc.getKulturVariantenByRasseVariante(Rasse);
-                    Kultur = kulturen[RandomNumberGenerator.Generator.Next(kulturen.Count)];
+                    if (kulturen.Count > 0)
+                    {
+                        Kultur = kulturen[RandomNumberGenerator.Generator.Next(kulturen.Count)];
+                    }
                 }
                 else // Rasse = rasse -> genKultur(kultur);
                 {
                     Rasse = rasse;
                     List<Model.Kultur> kulturen = Global.ContextNsc.getKulturVariantenByKultur(kultur);
-                    Kultur = kulturen[RandomNumberGenerator.Generator.Next(kulturen.Count)];
+                    if (kulturen.Count > 0)
+                    {
+                        Kultur = kulturen[RandomNumberGenerator.Generator.Next(kulturen.Count)];
+                    }
                 }
             }
             //TODO MP: remove Quickfix

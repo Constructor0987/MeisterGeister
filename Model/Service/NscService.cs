@@ -68,7 +68,8 @@ namespace MeisterGeister.Model.Service
 
         public List<Rasse> getRassenNameDistinct()
         {
-            List<Rasse> ret = Liste<Rasse>().OrderBy(o => o.Name).GroupBy(r => r.Name).Select(grp => grp.First()).ToList();
+            //nur rassen mit kulturen mit namen
+            List<Rasse> ret = Liste<Rasse>().Where(r => r.Rasse_Kultur.Any(rk => rk.Kultur.Kultur_Name.Any())).OrderBy(o => o.Name).GroupBy(r => r.Name).Select(grp => grp.First()).ToList();
             ret.OrderBy(k => k.Name);
             ret.Insert(0, new Rasse() { Name = "keine Rasse" });
             return ret;
@@ -76,24 +77,26 @@ namespace MeisterGeister.Model.Service
 
         public List<Kultur> getKulturenDistinct()
         {
-            List<Kultur> ret = Liste<Kultur>().OrderBy(o=>o.Name).GroupBy(r => r.Name).Select(grp => grp.First()).ToList();
+            //nur kulturen mit namen
+            List<Kultur> ret = Liste<Kultur>().Where(k => k.Kultur_Name.Any()).OrderBy(o=>o.Name).GroupBy(r => r.Name).Select(grp => grp.First()).ToList();
             ret.Insert(0, new Kultur() { Name = "keine Kultur" });
             return ret;
         }
 
         public List<Rasse> getRasseVarianten(string geschlecht)
         {
-            List<Rasse> rassen =new List<Rasse>();
+            //nur rassen mit kulturen mit namen
+            var rassen = Liste<Rasse>().Where(r => r.Rasse_Kultur.Any(rk => rk.Kultur.Kultur_Name.Any()));
             //handle Orks & Goblins
                 if (geschlecht == "m")
                 {
-                     rassen = Liste<Rasse>().Where(r=>!r.Variante.EndsWith("-Frau")).ToList();
+                     rassen = rassen.Where(r => !r.Variante.EndsWith("-Frau"));
                 }
                     else
                 {
-                    rassen = Liste<Rasse>().Where(r => !r.Variante.EndsWith("-Mann")).ToList();
+                    rassen = rassen.Where(r => !r.Variante.EndsWith("-Mann"));
                 }
-            return rassen;
+            return rassen.ToList();
         }
 
         public List<string> getProfessionenNamenDistinct()
@@ -116,7 +119,7 @@ namespace MeisterGeister.Model.Service
 
         public List<Kultur> getKulturenByRasseName(Rasse rasse, bool unüblicheKulturen)
         {
-            List<Rasse> rassen = Liste<Rasse>().Where(k => k.Name == rasse.Name).ToList();
+            List<Rasse> rassen = Liste<Rasse>().Where(r => r.Name == rasse.Name).ToList();
             List<Rasse_Kultur> rasse_kultur = new List<Rasse_Kultur>();
             List<Rasse_Kultur> rasse_kulturUnüblich = new List<Rasse_Kultur>();
             //übliche Kulturen wählen
@@ -149,19 +152,19 @@ namespace MeisterGeister.Model.Service
 
         public List<Kultur> getKulturVariantenByKultur(Kultur kultur)
         {
-            return Liste<Kultur>().Where(k => k.Name == kultur.Name).ToList();
+            return Liste<Kultur>().Where(k => k.Name == kultur.Name && k.Kultur_Name.Any()).ToList();
         }
 
         public List<Rasse> getRasseVariantenByRasse(Rasse rasse)
         {
-            return Liste<Rasse>().Where(k => k.Name == rasse.Name).ToList();
+            return Liste<Rasse>().Where(r => r.Name == rasse.Name && r.Rasse_Kultur.Any(rk => rk.Kultur.Kultur_Name.Any())).ToList();
         }
 
-        public List<Kultur> getKulturVariantenByRasseVariante(Rasse rasse)
+        public List<Kultur> getKulturVariantenByRasseVariante(Rasse rasse, bool unüblich = false)
         {
             //eventuell nur die möglichen Filtern...
-          List<Kultur> kulturen = Liste<Rasse_Kultur>().Where(rk => rk.RasseGUID == rasse.RasseGUID && rk.Unüblich == false)
-                .Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
+            List<Kultur> kulturen = Liste<Rasse_Kultur>().Where(rk => rk.RasseGUID == rasse.RasseGUID && (unüblich || (!unüblich && rk.Unüblich == false)))
+                .Join(Context.Kultur.Where(k => k.Kultur_Name.Any()) , rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
             kulturen.OrderBy(k => k.Name);
 
             //kulturen.Insert(0, new Kultur() { Name = "keine Kultur" });
@@ -170,11 +173,11 @@ namespace MeisterGeister.Model.Service
         public List<Kultur> getKulturVariantenAllByRasseVariante(Rasse rasse)
         {
             List<Kultur> kulturen = Liste<Rasse_Kultur>().Where(rk => rk.RasseGUID == rasse.RasseGUID && rk.Unüblich == false)
-                .Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
+                .Join(Context.Kultur.Where(k => k.Kultur_Name.Any()) , rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
             kulturen.OrderBy(k => k.Name);
 
            List<Kultur> kulturenUnüblich = Liste<Rasse_Kultur>().Where(rk => rk.RasseGUID == rasse.RasseGUID && rk.Unüblich == true)
-                .Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
+                .Join(Context.Kultur.Where(k => k.Kultur_Name.Any()), rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
             kulturenUnüblich.OrderBy(k => k.Name);
             kulturen.AddRange(kulturenUnüblich);
 
@@ -277,8 +280,14 @@ namespace MeisterGeister.Model.Service
 
         public List<Rasse> getRasseByKulturName(Kultur kultur)
         {
+            List<Rasse> rassen = new List<Rasse>();
             Kultur kulturBase = Liste<Kultur>().Where(k => k.Name == kultur.Name && k.Variante.StartsWith(kultur.Name)).FirstOrDefault();
-            List<Rasse> rassen = Liste<Rasse_Kultur>().Where(rk => rk.KulturGUID == kulturBase.KulturGUID)
+            if (kulturBase == null)
+            {
+                rassen.Insert(0, new Rasse() { Name = "keine Rasse" });
+                return rassen;
+            }
+            rassen = Liste<Rasse_Kultur>().Where(rk => rk.KulturGUID == kulturBase.KulturGUID)
                 .Join(Context.Rasse, rk => rk.RasseGUID, r => r.RasseGUID, (rk, r) => r).OrderBy(o => o.Name).GroupBy(r => r.Name).Select(grp => grp.First()).ToList();
 
             rassen.Insert(0, new Rasse() { Name = "keine Rasse" });

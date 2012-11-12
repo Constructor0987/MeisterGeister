@@ -14,11 +14,26 @@ namespace MeisterGeister.Model
             get { return !HandelsgutGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
+        public Setting Setting
+        {
+            get
+            {
+                var a_s = Handelsgut_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Handelsgut_Setting.FirstOrDefault();
+                if (a_s == null)
+                    return null;
+                return a_s.Setting;
+            }
+        }
+
         public string Preis
         {
             get
             {
                 var a_s = Handelsgut_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Handelsgut_Setting.FirstOrDefault();
                 if (a_s == null)
                     return null;
                 return a_s.Preis;
@@ -26,6 +41,8 @@ namespace MeisterGeister.Model
             set
             {
                 var a_s = Handelsgut_Setting.Where(s => s.SettingGUID == Setting.AktuellesSettingGUID).FirstOrDefault();
+                if (a_s == null)
+                    a_s = Handelsgut_Setting.FirstOrDefault();
                 if (a_s == null)
                     return;
                 a_s.Preis = value;

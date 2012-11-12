@@ -36,6 +36,8 @@ namespace MeisterGeister.Model.Service
         //TODO MP: Adelstitel einfügen
         public string createName(string geschlecht, Kultur kultur)
         {
+            if (kultur == null)
+                throw new ArgumentNullException("kultur darf nicht null sein.");
             //TODO MP: keine Holberker in Personengenerator?!
             //Kultur kann mehrere Namensherkünfte haben, z.B. Mittelländische Landbevölkerung kann sein: Garehtisch, Weiden und Albernia
             List<string> kulturNamen = Liste<Kultur>().Where(k => k.Name == kultur.Name).Join(Context.Kultur_Name, k => k, kn => kn.Kultur, (k, kn) => kn).Select(s => s.Herkunft).Distinct().ToList();

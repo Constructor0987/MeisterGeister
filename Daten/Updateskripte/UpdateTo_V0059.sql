@@ -107,9 +107,23 @@ ALTER TABLE [Held_Zauber] ADD CONSTRAINT Zauber_FK FOREIGN KEY ([ZauberGUID])
 		ON UPDATE CASCADE ON DELETE CASCADE
 GO
 
-ALTER TABLE [Sonderfertigkeit] ADD [SonderfertigkeitGUID] uniqueidentifier NOT NULL  ROWGUIDCOL default newid()
+CREATE TABLE [Sonderfertigkeit2] (
+	[SonderfertigkeitID] int NOT NULL IDENTITY,
+	[SonderfertigkeitIDVorher] int NOT NULL,
+	[SonderfertigkeitGUID] uniqueidentifier NOT NULL DEFAULT newid(), 
+	[Name] nvarchar(100), 
+	[HatWert] bit DEFAULT 0, 
+	[Typ] nvarchar(100) DEFAULT 'Kampf', 
+	[Literatur] nvarchar(300), 
+	[Setting] nvarchar(500), 
+	[Vorraussetzungen] ntext
+)
 GO
-UPDATE [Sonderfertigkeit] SET [SonderfertigkeitGUID]='00000000-0000-0000-005F-' + Replicate('0', 12-LEN([SonderfertigkeitID])) + CAST([SonderfertigkeitID] as nvarchar)
+
+INSERT INTO Sonderfertigkeit2 ([SonderfertigkeitIDVorher], [Name], [HatWert], [Typ], [Literatur], [Vorraussetzungen], [Setting])
+SELECT [SonderfertigkeitID], [Name], [HatWert], [Typ], [Literatur], [Vorraussetzungen], [Setting] FROM Sonderfertigkeit ORDER By SonderfertigkeitID
+GO
+UPDATE [Sonderfertigkeit2] SET [SonderfertigkeitGUID]='00000000-0000-0000-005F-' + Replicate('0', 12-LEN([SonderfertigkeitID])) + CAST([SonderfertigkeitID] as nvarchar)
 GO
 
 CREATE TABLE [Held_Sonderfertigkeit2] (
@@ -120,8 +134,9 @@ CREATE TABLE [Held_Sonderfertigkeit2] (
 GO
 
 INSERT INTO [Held_Sonderfertigkeit2] ([HeldGUID],[SonderfertigkeitGUID],[Wert])
-SELECT [HeldGUID],[SonderfertigkeitGUID],[Wert] FROM [Held_Sonderfertigkeit] as T, Sonderfertigkeit as A WHERE T.SonderfertigkeitID=A.SonderfertigkeitID
+SELECT [HeldGUID],[SonderfertigkeitGUID],[Wert] FROM [Held_Sonderfertigkeit] as T, Sonderfertigkeit2 as A WHERE T.SonderfertigkeitID=A.SonderfertigkeitIDVorher
 GO
+
 DROP TABLE [Held_Sonderfertigkeit]
 GO
 sp_rename 'Held_Sonderfertigkeit2', 'Held_Sonderfertigkeit'
@@ -152,7 +167,7 @@ CREATE TABLE [Zauberzeichen2] (
 GO
 INSERT INTO [Zauberzeichen2]
 	([ZauberzeichenGUID],[Name],[Typ],[SonderfertigkeitGUID],[Lernkosten],[Komplexität],[Merkmal],[ReichweitenDivisor],[Bemerkung],[Verbreitung],[Komponenten],[Literatur],[Setting])
-	Select [ZauberzeichenGUID],T.[Name],T.[Typ],[SonderfertigkeitGUID],[Lernkosten],[Komplexität],[Merkmal],[ReichweitenDivisor],[Bemerkung],[Verbreitung],[Komponenten],T.[Literatur],T.[Setting] FROM [Zauberzeichen] T, [Sonderfertigkeit] A Where T.[SonderfertigkeitID]=A.[SonderfertigkeitID]
+	Select [ZauberzeichenGUID],T.[Name],T.[Typ],[SonderfertigkeitGUID],[Lernkosten],[Komplexität],[Merkmal],[ReichweitenDivisor],[Bemerkung],[Verbreitung],[Komponenten],T.[Literatur],T.[Setting] FROM [Zauberzeichen] T, [Sonderfertigkeit2] A Where T.[SonderfertigkeitID]=A.[SonderfertigkeitIDVorher]
 GO
 
 DROP TABLE [Zauberzeichen]
@@ -162,11 +177,14 @@ GO
 ALTER TABLE [Zauberzeichen] ADD CONSTRAINT [PK_Zauberzeichen] PRIMARY KEY ([ZauberzeichenGUID])
 GO
 
-ALTER TABLE [Sonderfertigkeit] DROP CONSTRAINT [PK_Sonderfertigkeit]
+
+ALTER TABLE [Sonderfertigkeit2] DROP COLUMN SonderfertigkeitID
 GO
-ALTER TABLE [Sonderfertigkeit] DROP CONSTRAINT [UQ__Sonderfertigkeit__00000000000000EE]
+ALTER TABLE [Sonderfertigkeit2] DROP COLUMN SonderfertigkeitIDVorher
 GO
-ALTER TABLE [Sonderfertigkeit] DROP COLUMN [SonderfertigkeitID]
+DROP TABLE Sonderfertigkeit
+GO
+sp_rename 'Sonderfertigkeit2', 'Sonderfertigkeit'
 GO
 ALTER TABLE [Sonderfertigkeit] ADD CONSTRAINT [PK_Sonderfertigkeit] PRIMARY KEY ([SonderfertigkeitGUID])
 GO
@@ -179,6 +197,7 @@ ALTER TABLE [Held_Sonderfertigkeit] ADD CONSTRAINT Held_Sonderfertigkeit_Sonderf
 GO
 ALTER TABLE [Zauberzeichen] ADD CONSTRAINT FK_Zauberzeichen_Sonderfertigkeit FOREIGN KEY ([SonderfertigkeitGUID])
 		REFERENCES Sonderfertigkeit ([SonderfertigkeitGUID])
+		ON UPDATE CASCADE ON DELETE CASCADE
 GO
 
 

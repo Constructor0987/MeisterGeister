@@ -13,5 +13,10 @@ namespace MeisterGeister.Model
             get { return aktuellesSettingGUID; }
             set { aktuellesSettingGUID = value; }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
