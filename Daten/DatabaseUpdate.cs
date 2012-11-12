@@ -140,6 +140,14 @@ namespace MeisterGeister.Daten
             return DatabaseUpdateResult.DatenbankVersionOK; // kein Update erforderlich
         }
 
+        static string DropPrimaryKeySql(string tableName, string connectionString)
+        {
+            string keyName = (string)GetScalarFromDatabase(String.Format("SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = '{0}'", tableName), connectionString);
+            if (keyName == null)
+                throw new InvalidDataException(String.Format("Für die Tabelle {0} konnte kein Primärschlüssel gefunden werden.", tableName));
+            return String.Format("ALTER TABLE {0} DROP CONSTRAINT {1}", tableName, keyName);
+        }
+
         static void HandelsgüterEinfügen(string connectionString)
         {
             // Handelsgüter einfügen
@@ -234,6 +242,15 @@ namespace MeisterGeister.Daten
                     sqlCommands.Add(pfad, skript);
             }
             catch (Exception) { /* Exception unterdrücken */ }
+
+            //Sonderbehandlung wegen nichteindeutiger Key-Benennung
+            if (version == 59)
+            {
+                sqlCommands.Add("",
+                    "ALTER TABLE Held_Zauber DROP CONSTRAINT Zauber_FK" + Environment.NewLine + "GO" + Environment.NewLine
+                    + DropPrimaryKeySql("Zauber", connectionString) + Environment.NewLine + "GO" + Environment.NewLine
+                    );
+            }
 
             // Update-Commands ausführen
             SqlCeConnection connection = new SqlCeConnection(connectionString);
