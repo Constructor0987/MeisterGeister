@@ -350,6 +350,7 @@ namespace MeisterGeister.Model
         /// Grund-PA-Wert inkl. Abzüge.
         /// </summary>
         [DependentProperty("PA")]
+        [DependsOnModifikator(typeof(Mod.IModPABasis))]
         [DependsOnModifikator(typeof(Mod.IModPA))]
         public int Parade
         {
@@ -365,6 +366,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependsOnModifikator(typeof(Mod.IModPABasis))]
         [DependsOnModifikator(typeof(Mod.IModPA))]
         public List<dynamic> ModifikatorenListePA
         {
@@ -545,6 +547,7 @@ namespace MeisterGeister.Model
         /// Grund-PA-Wert inkl. Abzüge.
         /// </summary>
         [DependentProperty("AT")]
+        [DependsOnModifikator(typeof(Mod.IModATBasis))]
         [DependsOnModifikator(typeof(Mod.IModAT))]
         public int Attacke
         {
@@ -560,6 +563,7 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependsOnModifikator(typeof(Mod.IModATBasis))]
         [DependsOnModifikator(typeof(Mod.IModAT))]
         public List<dynamic> ModifikatorenListeAT
         {
