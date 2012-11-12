@@ -117,6 +117,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public bool IsAktuell
+        {
+            get
+            {
+                if (KämpferInfo == null || KämpferInfo.Kampf == null)
+                    return false;
+                return this == KämpferInfo.Kampf.AktuelleAktion;
+            }
+        }
 
         private void OnKämpferInfoChanged(object o, System.ComponentModel.PropertyChangedEventArgs args)
         {

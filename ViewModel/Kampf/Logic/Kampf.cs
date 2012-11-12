@@ -91,6 +91,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { 
                 aktuelleAktion = value;
                 OnChanged("AktuelleAktion");
+                // NotifyChanged IsAktuell
+                foreach (ManöverInfo mi in InitiativListe)
+                {
+                    mi.OnChanged("IsAktuell");
+                    if (mi.KämpferInfo != null)
+                        mi.KämpferInfo.OnChanged("IsAktuell");
+                }
+
             }
         }
 

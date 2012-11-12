@@ -20,6 +20,7 @@
         </ViewGeneral:ValueConverterGroup>
         <VM:TrefferpunkteOptionsConverter x:Key="TrefferpunkteOptionsConverter" />
         <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Opacity" Value="1.0" />
             <Setter Property="TextElement.FontStyle" Value="Normal" />
             <Style.Triggers>
@@ -29,6 +30,24 @@
                 <DataTrigger Binding="{Binding Path=Ausgeführt}" Value="true">
                     <Setter Property="TextElement.FontStyle" Value="Italic" />
                     <Setter Property="Opacity" Value="0.5" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsAktuell}" Value="true">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                        <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="#CC239E1D" Offset="0"/>
+                                <GradientStop Color="Transparent" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

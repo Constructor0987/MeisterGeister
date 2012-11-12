@@ -59,6 +59,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { kampf = value; OnChanged("Kampf"); }
         }
 
+        public bool IsAktuell
+        {
+            get 
+            {
+                if (Kampf == null || Kampf.AktuelleAktion == null)
+                    return false;
+                return this == Kampf.AktuelleAktion.KämpferInfo; 
+            }
+        }
+
         public KämpferInfo(IKämpfer k, Kampf kampf)
         {
             if (k == null)
