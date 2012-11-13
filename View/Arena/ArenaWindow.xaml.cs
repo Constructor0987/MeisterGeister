@@ -30,11 +30,15 @@ namespace MeisterGeister.View.Arena
         private ArenaViewer _arenaViewer;
         private ArenaControlPanel _arenaControlPane;
 
+        private ViewModel.Kampf.Logic.Kampf _kampf;
+
         private ScrollViewer _arenaSV;
 
-        public ArenaWindow(MeisterGeister.ViewModel.Kampf.Logic.Kampf kampf)
+        public ArenaWindow(ViewModel.Kampf.Logic.Kampf kampf)
         {
             InitializeComponent();
+
+            _kampf = kampf;
 
             Debug.Listeners.Clear();
             Debug.Listeners.Add(new TextWriterTraceListener(System.Console.Out));           
@@ -53,8 +57,8 @@ namespace MeisterGeister.View.Arena
             _arenaViewer.Arena = arena;
 
             if (kampf != null) {
-                _arenaViewer.Arena.Populate(kampf);
-                _arenaControlPane.OnArenaPopulated(kampf);
+                _arenaViewer.Arena.Populate(_kampf);
+                _arenaControlPane.OnArenaPopulated(_kampf);
             }
 
             _arenaViewer.DrawArena();

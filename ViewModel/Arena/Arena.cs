@@ -26,6 +26,8 @@ namespace MeisterGeister.ViewModel.Arena
         private Dictionary<Model.Gegner, int> _gegnerIndex;
         private int _nextEnemyIndex = 1;
 
+        private ViewModel.Kampf.Logic.Kampf _kampf;
+
         public Arena(int width, int height) {
             _width = width;
             _height = height;
@@ -74,6 +76,9 @@ namespace MeisterGeister.ViewModel.Arena
                 _gegner.Remove((Model.Gegner)creature);
 
             _positionen.Remove(creature);
+
+            // aus Kampf entfernen
+            _kampf.Kämpfer.Remove(creature);
         }
 
         public HashSet<Model.Held> Heroes
@@ -107,9 +112,11 @@ namespace MeisterGeister.ViewModel.Arena
             return false;
         }
 
-        public void Populate(MeisterGeister.ViewModel.Kampf.Logic.Kampf kampf)
+        public void Populate(ViewModel.Kampf.Logic.Kampf kampf)
         {
-            foreach (KämpferInfo kämpferInfo in kampf.Kämpfer) {
+            _kampf = kampf;
+
+            foreach (KämpferInfo kämpferInfo in _kampf.Kämpfer) {
                 if (kämpferInfo.Kämpfer is Model.Held)
                 {
                     AddHeld((Model.Held)kämpferInfo.Kämpfer, new Point(10, 10));

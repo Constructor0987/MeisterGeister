@@ -28,6 +28,8 @@ namespace MeisterGeister.View.Arena
         private ComboBox _enemyAdder;
         private Button _newArenaButton;
 
+        private ViewModel.Kampf.Logic.Kampf _kampf;
+
         public ArenaControlPanel(double width, double height, ArenaViewer arenaViewer, ArenaWindow arenaWindow) {
             Width = width;
             Height = height;
@@ -152,6 +154,7 @@ namespace MeisterGeister.View.Arena
 
                 if (pair != null && !_arenaViewer.Arena.ContainsHeldWidthId(pair.Id)) {
                     Model.Held held = Global.ContextHeld.LoadHeldByGUID(pair.Id);
+                    _kampf.Kämpfer.Add(held);
                     _arenaViewer.Arena.AddHeld(held, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                     _arenaViewer.DrawArena();
                     _heroAdder.SelectedIndex = 0;
@@ -166,7 +169,10 @@ namespace MeisterGeister.View.Arena
                 CreatureNameIdPair pair = (CreatureNameIdPair)_enemyAdder.SelectedItem;
 
                 if (pair != null) {
-                    Model.Gegner gegner = new Model.Gegner() { Name = pair.Name };
+                    Model.GegnerBase gegnerBase = Global.ContextHeld.Liste<Model.GegnerBase>().Where(g => g.GegnerBaseGUID == pair.Id).FirstOrDefault();
+                    Model.Gegner gegner = new Model.Gegner(gegnerBase);
+                    Global.ContextHeld.Insert<Model.Gegner>(gegner);
+                    _kampf.Kämpfer.Add(gegner, 2);
                     _arenaViewer.Arena.AddGegner(gegner, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
                     _arenaViewer.DrawArena();
                     _enemyAdder.SelectedIndex = 0;
@@ -206,12 +212,13 @@ namespace MeisterGeister.View.Arena
             }
         }
 
-        public void OnArenaPopulated(MeisterGeister.ViewModel.Kampf.Logic.Kampf kampf)
+        public void OnArenaPopulated(ViewModel.Kampf.Logic.Kampf kampf)
         {
+            _kampf = kampf;
 
             List<Guid> heldIds = new List<Guid>();
             
-            foreach (KämpferInfo kämpferInfo in kampf.Kämpfer) {
+            foreach (KämpferInfo kämpferInfo in _kampf.Kämpfer) {
                 if (kämpferInfo.Kämpfer is Model.Held)
                 {
                     heldIds.Add(((Model.Held)kämpferInfo.Kämpfer).HeldGUID);        
