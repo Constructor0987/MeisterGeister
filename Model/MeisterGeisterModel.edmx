@@ -913,16 +913,17 @@
           </Key>
           <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Aktiv" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Sonderfertigkeit">
           <Key>
             <PropertyRef Name="SonderfertigkeitGUID" />
           </Key>
+          <Property Name="SonderfertigkeitGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="HatWert" Type="bit" />
           <Property Name="Typ" Type="nvarchar" MaxLength="100" />
           <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
-          <Property Name="SonderfertigkeitGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Voraussetzungen" Type="ntext" />
         </EntityType>
         <EntityType Name="Sonderfertigkeit_Setting">
@@ -1660,7 +1661,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Zauberzeichen_Sonderfertigkeit">
-          <End Role="Sonderfertigkeit" Type="DatabaseDSAModel.Store.Sonderfertigkeit" Multiplicity="1" />
+          <End Role="Sonderfertigkeit" Type="DatabaseDSAModel.Store.Sonderfertigkeit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Zauberzeichen" Type="DatabaseDSAModel.Store.Zauberzeichen" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sonderfertigkeit">
@@ -1823,17 +1826,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="upper"
-                      Aggregate="false"
-                      BuiltIn="true"
-                      NiladicFunction="false"
-                      IsComposable="true"
-                      ParameterTypeSemantics="AllowImplicitConversion"
-                      ReturnType="nvarchar">
-          <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
-        </Function>
-      </Schema>
-    </edmx:StorageModels>
+      <Function Name="upper"
+          Aggregate="false"
+          BuiltIn="true"
+          NiladicFunction="false"
+          IsComposable="true"
+          ParameterTypeSemantics="AllowImplicitConversion"
+          ReturnType="nvarchar">
+        <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
+      </Function>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseDSAModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -2810,6 +2812,7 @@
           <NavigationProperty Name="Sonderfertigkeit_Setting" Relationship="DatabaseDSAModel.fk_SonderfertigkeitSetting_Setting" FromRole="Setting" ToRole="Sonderfertigkeit_Setting" />
           <NavigationProperty Name="Zauber_Setting" Relationship="DatabaseDSAModel.fk_ZauberSetting_Setting" FromRole="Setting" ToRole="Zauber_Setting" />
           <NavigationProperty Name="Zauberzeichen_Setting" Relationship="DatabaseDSAModel.fk_ZauberzeichenSetting_Setting" FromRole="Setting" ToRole="Zauberzeichen_Setting" />
+          <Property Type="Boolean" Name="Aktiv" Nullable="false" />
         </EntityType>
         <EntityType Name="Sonderfertigkeit">
           <Key>
@@ -4330,6 +4333,7 @@
           <EntitySetMapping Name="Setting">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Setting">
               <MappingFragment StoreEntitySet="Setting">
+                <ScalarProperty Name="Aktiv" ColumnName="Aktiv" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
               </MappingFragment>

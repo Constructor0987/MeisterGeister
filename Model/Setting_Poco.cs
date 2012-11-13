@@ -60,6 +60,19 @@ namespace MeisterGeister.Model
     
         }
         private string _name;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool Aktiv
+        {
+            get { return _aktiv; }
+            set
+    		{ 
+    			_aktiv = value;
+    			OnChanged("Aktiv");
+    		}
+    
+        }
+        private bool _aktiv;
 
         #endregion
 
