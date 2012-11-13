@@ -1599,7 +1599,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return Global.ContextHeld.Liste<Sonderfertigkeit>().Where(sf => sf.CheckVoraussetzungen(this) ).Except(Sonderfertigkeiten.Keys).OrderBy(sf => sf.Name).ToList();
+                return Global.ContextHeld.Liste<Sonderfertigkeit>().Except(Sonderfertigkeiten.Keys).OrderBy(sf => sf.Name).ToList();
             }
         }
 
