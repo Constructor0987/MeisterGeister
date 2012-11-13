@@ -1411,6 +1411,7 @@
     <Resource Include="Images\Icons\General\speaker.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0061.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0062.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0063.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
