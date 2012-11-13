@@ -69,5 +69,41 @@ namespace MeisterGeister.Model
                 return _rs;
             }
         }
+
+        public void ParseBemerkung()
+        {
+            var g = this;
+            if (g.Bemerkung != null && g.Bemerkung.Trim() != String.Empty)
+                foreach (string zeile in g.Bemerkung.Split(new char[] { '\n' }))
+                {
+                    GegnerBase_Angriff ga = Model.GegnerBase_Angriff.Parse(zeile);
+                    if (ga != null)
+                    {
+                        string name = ga.Name; int i = 1;
+                        while (g.GegnerBase_Angriff.Where(gba => gba.Name == name).Count() > 0)
+                            name = String.Format("{0} ({1})", ga.Name, ++i);
+                        g.GegnerBase_Angriff.Add(ga);
+                    }
+                    else
+                    {
+                        Dictionary<string, int> erschwernisse;
+                        IEnumerable<Kampfregel> kampfregeln = Kampfregel.Parse(zeile, out erschwernisse);
+                        if (kampfregeln != null && kampfregeln.Count() > 0)
+                            foreach (Kampfregel kr in kampfregeln)
+                            {
+                                if (g.GegnerBase_Kampfregel.Where(gbkr => gbkr.KampfregelGUID == kr.KampfregelGUID).Count() == 0)
+                                {
+                                    string eName = erschwernisse.Keys.Where(e => kr.Name.ToUpperInvariant().Contains(e.ToUpperInvariant())).FirstOrDefault();
+                                    var gkr = new GegnerBase_Kampfregel();
+                                    gkr.KampfregelGUID = kr.KampfregelGUID;
+                                    gkr.GegnerBaseGUID = g.GegnerBaseGUID;
+                                    if (eName != null)
+                                        gkr.Erschwernis = erschwernisse[eName];
+                                    g.GegnerBase_Kampfregel.Add(gkr);
+                                }
+                            }
+                    }
+                }
+        }
     }
 }

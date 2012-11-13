@@ -497,49 +497,50 @@ namespace MeisterGeister.ViewModel.Kampf
         }
         #endregion
 
+        #region Parse Bemerkung
+        private Base.CommandBase onParseBemerkung = null;
+        public Base.CommandBase OnParseBemerkung
+        {
+            get {
+                if (onParseBemerkung == null)
+                    onParseBemerkung = new Base.CommandBase(ParseBemerkung, null);
+                return onParseBemerkung; 
+            }
+        }
+
+        private Base.CommandBase onParseBemerkungAll = null;
+        public Base.CommandBase OnParseBemerkungAll
+        {
+            get
+            {
+                if (onParseBemerkungAll == null)
+                    onParseBemerkungAll = new Base.CommandBase(ParseBemerkungAll, null);
+                return onParseBemerkungAll;
+            }
+        }
+
+        private void ParseBemerkungAll(object sender)
+        {
+            foreach (GegnerBase g in GegnerBaseListe)
+            {
+                if (!g.GegnerBase_Angriff.Any())
+                    g.ParseBemerkung();
+            }
+        }
+
+        private void ParseBemerkung(object sender)
+        {
+            if (SelectedGegnerBase == null)
+                return;
+            SelectedGegnerBase.ParseBemerkung();
+        }
+        #endregion
+
         #region private Methoden
         private void SaveGegner()
         {
             if (SelectedGegnerBase != null)
                 Global.ContextHeld.Update<GegnerBase>(SelectedGegnerBase);
-        }
-
-        private void ParseBemerkungen()
-        {
-            foreach (GegnerBase g in GegnerBaseListe)
-            {
-                if (g.Bemerkung != null && g.Bemerkung.Trim() != String.Empty)
-                    foreach (string zeile in g.Bemerkung.Split(new char[] { '\n' }))
-                    {
-                        GegnerBase_Angriff ga = GegnerBase_Angriff.Parse(zeile);
-                        if (ga != null)
-                        {
-                            string name = ga.Name; int i = 1;
-                            while (g.GegnerBase_Angriff.Where(gba => gba.Name == name).Count() > 0)
-                                name = String.Format("{0} ({1})", ga.Name, ++i);
-                            g.GegnerBase_Angriff.Add(ga);
-                        }
-                        else
-                        {
-                            Dictionary<string, int> erschwernisse;
-                            IEnumerable<Kampfregel> kampfregeln = Kampfregel.Parse(zeile, out erschwernisse);
-                            if (kampfregeln != null && kampfregeln.Count() > 0)
-                                foreach (Kampfregel kr in kampfregeln)
-                                {
-                                    if (g.GegnerBase_Kampfregel.Where(gbkr => gbkr.KampfregelGUID == kr.KampfregelGUID).Count() == 0)
-                                    {
-                                        string eName = erschwernisse.Keys.Where(e => kr.Name.ToUpperInvariant().Contains(e.ToUpperInvariant())).FirstOrDefault();
-                                        var gkr = new GegnerBase_Kampfregel();
-                                        gkr.KampfregelGUID = kr.KampfregelGUID;
-                                        gkr.GegnerBaseGUID = g.GegnerBaseGUID;
-                                        if (eName != null)
-                                            gkr.Erschwernis = erschwernisse[eName];
-                                        g.GegnerBase_Kampfregel.Add(gkr);
-                                    }
-                                }
-                        }
-                    }
-            }
         }
         #endregion
     }
