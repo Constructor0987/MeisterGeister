@@ -14,7 +14,8 @@ namespace MeisterGeister.Model.Service
 
         public List<Model.VorNachteil> VorNachteilListe
         {
-            get { return Liste<VorNachteil>(); }
+            get { return Liste<VorNachteil>()
+                .Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name))).ToList(); }
         }
 
         #endregion

@@ -27,6 +27,15 @@ namespace MeisterGeister.Model.Service {
 
         #region //----- DATENBANKABFRAGEN ----
 
+        public List<Model.Sonderfertigkeit> SonderfertigkeitListe
+        {
+            get
+            {
+                return Liste<Sonderfertigkeit>()
+                    .Where(s => s.Sonderfertigkeit_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList();
+            }
+        }
+
         public Held LoadHeldByName(string aName) {
             var tmp = Context.Held.Where(held => held.Name == aName).FirstOrDefault();
             return tmp;
