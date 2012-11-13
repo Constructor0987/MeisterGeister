@@ -25,6 +25,7 @@ BRCLOSE 	->  @"[\)\]]";
 NOT           -> @"!";
 ODER          -> @"\|";
 UND           -> @",";
+LIKE		-> @"%";
 SF		-> @"SF";
 V		-> @"V";
 N		-> @"N";
@@ -40,7 +41,7 @@ INI		-> @"INI";
 AT		-> @"AT";
 PA		-> @"PA";
 FK		-> @"FK";
-WORT          -> @"[a-zA-ZäüößÄÜÖûÛ'/\-]+\:?";
+WORT          -> @"[a-zA-ZäüößÄÜÖûÛ'/\-%]+\:?";
 QUOTE	     -> @"\""";
 EOF         -> @"^$";
 WHITESPACE  -> @"\s+";
@@ -111,7 +112,7 @@ Wert -> QUOTE (NUMBER | Text) QUOTE WHITESPACE?
 
 //Atome und deren Werte
 
-Eigenschaft -> (INI | KL | IN | CH | MU | KK | KO | GE | FF | AT | PA | FK) WHITESPACE NUMBER
+Eigenschaft -> (INI | KL | IN | CH | MU | KK | KO | GE | FF | AT | PA | FK) WHITESPACE NUMBER //;/*
 {
 //	return true;
 
@@ -147,19 +148,11 @@ Eigenschaft -> (INI | KL | IN | CH | MU | KK | KO | GE | FF | AT | PA | FK) WHIT
 		return held.InitiativeBasisOhneSonderfertigkeiten >= wert;
 	return held.ParadeBasis >= wert;
 };
+//*/
 
 
-Sonderfertigkeit -> SF WHITESPACE Text Wert?
+Sonderfertigkeit -> SF LIKE? WHITESPACE Text Wert? //;/*
 {
-/*	if(Convert.ToString($Text).Equals("Elementarharmonisierte Aura (Fels/Luft)"))
-		return false;
-	if(Convert.ToString($Text).Equals("Kraftlinienmagie II"))
-		return true;
-//	throw new ArgumentException("y" + Convert.ToString($Text) + "X");
-	if(Convert.ToString($Text).Equals("Merkmalskenntnis (Dämonisch (Tasfarelel))"))
-		return true;
-	return false;
-*/
 	MeisterGeister.Model.Held held = null;
 	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
 		held = (MeisterGeister.Model.Held)paramlist[0];
@@ -169,11 +162,13 @@ Sonderfertigkeit -> SF WHITESPACE Text Wert?
 	string wert = null;
 	if($Wert != null)
 		wert = Convert.ToString($Wert);
-	return held.HatSonderfertigkeitUndVoraussetzungen(sfName, wert);
+	bool exact = ($LIKE == null);
+	return held.HatSonderfertigkeitUndVoraussetzungen(sfName, wert, exact);
 
 };
+//*/
 
-Vorteil -> V WHITESPACE Text Wert?
+Vorteil -> V LIKE? WHITESPACE Text Wert? //;/*
 {
 	MeisterGeister.Model.Held held = null;
 	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
@@ -184,10 +179,12 @@ Vorteil -> V WHITESPACE Text Wert?
 	string wert = null;
 	if($Wert != null)
 		wert = Convert.ToString($Wert);
-	return held.HatVorNachteil(vName, wert);
+	bool exact = ($LIKE == null);
+	return held.HatVorNachteil(vName, wert, exact);
 };
+//*/
 
-Nachteil -> N WHITESPACE Text Wert?
+Nachteil -> N LIKE? WHITESPACE Text Wert? //;/*
 {
 	MeisterGeister.Model.Held held = null;
 	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
@@ -198,10 +195,12 @@ Nachteil -> N WHITESPACE Text Wert?
 	string wert = null;
 	if($Wert != null)
 		wert = Convert.ToString($Wert);
-	return held.HatVorNachteil(vName, wert);
+	bool exact = ($LIKE == null);
+	return held.HatVorNachteil(vName, wert, exact);
 };
+//*/
 
-TalentZauber -> Text NUMBER
+TalentZauber -> Text NUMBER //;/*
 {
 //	return true;
 
@@ -213,6 +212,7 @@ TalentZauber -> Text NUMBER
 	string tName = Convert.ToString($Text);
 	int wert = Convert.ToInt32($NUMBER);
 	if (tName.ToUpperInvariant().Equals(tName))
-		return held.HatZauber(tName, wert);
-	return held.HatTalent(tName, wert);
+		return held.HatZauber(tName, wert, false);
+	return held.HatTalent(tName, wert, false);
 };
+//*/

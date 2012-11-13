@@ -1026,23 +1026,26 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Der TaW eines Talentes.
         /// </summary>
-        public int Talentwert(string talentName, bool nurPositiv)
+        public int Talentwert(string talentName, bool nurPositiv, bool exactMatch = true)
         {
-            Model.Held_Talent ht = Held_Talent.Where(h => h.Talent.Talentname == talentName).FirstOrDefault();
-            if(ht == null)
-                return 0;
-            int taw = ht.TaW ?? 0;
-            if (Modifikatoren != null)
+            int maxtaw = 0;
+            foreach (Model.Held_Talent ht in Held_Talent.Where(h => (exactMatch && h.Talent.Talentname == talentName) || (!exactMatch && h.Talent.Talentname.StartsWith(talentName))))
             {
-                List<Mod.IModTalentwert> l = Modifikatoren.Where(m => m is Mod.IModTalentwert).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
-                foreach(Mod.IModTalentwert m in l)
+                int taw = ht.TaW ?? 0;
+                if (Modifikatoren != null)
                 {
-                    int tawneu = m.ApplyTalentwertMod(taw);
-                    if(!nurPositiv || tawneu > taw)
-                        taw = tawneu;
+                    List<Mod.IModTalentwert> l = Modifikatoren.Where(m => m is Mod.IModTalentwert).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
+                    foreach (Mod.IModTalentwert m in l)
+                    {
+                        int tawneu = m.ApplyTalentwertMod(taw);
+                        if (!nurPositiv || tawneu > taw)
+                            taw = tawneu;
+                    }
                 }
+                if (maxtaw < taw)
+                    maxtaw = taw;
             }
-            return taw;
+            return maxtaw;
         }
 
         /// <summary>
@@ -1072,9 +1075,9 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat mindestens den angegebenen TaW
         /// </summary>
-        public bool HatTalent(string talentname, int taw)
+        public bool HatTalent(string talentname, int taw, bool exactMatch=true)
         {
-            if (!HatTalent(talentname))
+            if (!HatTalent(talentname, exactMatch))
                 return false;
             if(taw == int.MinValue)
                 return true;
@@ -1086,9 +1089,9 @@ namespace MeisterGeister.Model
             return Held_Talent.Where(ht => ht.Talent == t).Count() > 0;
         }
 
-        public bool HatTalent(string talentname)
+        public bool HatTalent(string talentname, bool exactMatch = true)
         {
-            return Held_Talent.Where(ht => ht.Talent.Talentname == talentname).Count() > 0;
+            return Held_Talent.Where(ht => (exactMatch && ht.Talent.Talentname == talentname) || (!exactMatch && ht.Talent.Talentname.StartsWith(talentname))).Count() > 0;
         }
 
         /// <summary>
@@ -1168,27 +1171,27 @@ namespace MeisterGeister.Model
             return Held_Zauber.Where(hz => hz.Zauber == z && hz.Repräsentation == rep).Count() > 0;
         }
 
-        public bool HatZauber(string zaubername)
+        public bool HatZauber(string zaubername, bool exactMatch = true)
         {
-            return Held_Zauber.Where(hz => hz.Zauber.Name.ToUpperInvariant() == zaubername.ToUpperInvariant()).Count() > 0;
+            return Held_Zauber.Where(hz => (exactMatch && hz.Zauber.Name.ToUpperInvariant() == zaubername.ToUpperInvariant()) || (!exactMatch && hz.Zauber.Name.ToUpperInvariant().StartsWith(zaubername.ToUpperInvariant())) ).Count() > 0;
         }
 
         //TODO JT: Eventuell auch nur auf den anfang des Zaubernamens abprüfen
-        public bool HatZauber(string zaubername, int zfw)
+        public bool HatZauber(string zaubername, int zfw, bool exactMatch = true)
         {
-            if (!HatZauber(zaubername))
+            if (!HatZauber(zaubername, exactMatch))
                 return false;
             if (zfw == int.MinValue)
                 return true;
-            return Zauberfertigkeitswert(zaubername, true) >= zfw;
+            return Zauberfertigkeitswert(zaubername, true, exactMatch) >= zfw;
         }
 
         /// <summary>
         /// Der ZfW eines Zaubers.
         /// </summary>
-        public int Zauberfertigkeitswert(string zauberName, bool nurPositiv = false)
+        public int Zauberfertigkeitswert(string zauberName, bool nurPositiv = false, bool exactMatch = true)
         {
-            Model.Held_Zauber hz = Held_Zauber.Where(h => h.Zauber.Name.ToUpperInvariant() == zauberName.ToUpperInvariant()).FirstOrDefault();
+            Model.Held_Zauber hz = Held_Zauber.Where(h => (exactMatch && h.Zauber.Name.ToUpperInvariant() == zauberName.ToUpperInvariant()) || (!exactMatch && h.Zauber.Name.ToUpperInvariant().StartsWith(zauberName.ToUpperInvariant()))).FirstOrDefault();
             if (hz == null)
                 return 0;
             int zfw = hz.ZfW ?? 0;
@@ -1358,33 +1361,55 @@ namespace MeisterGeister.Model
             return Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil == vn).Count() > 0;
         }
 
-        public bool HatVorNachteil(string vn)
+        public bool HatVorNachteil(string vn, bool exactMatch = true)
         {
-            return HatVorNachteil(vn, null);
+            return HatVorNachteil(vn, null, exactMatch);
         }
 
-        public bool HatVorNachteil(string vn, string wert)
+        public bool HatVorNachteil(string vn, string wert, bool exactMatch = true)
         {
-            
-            Held_VorNachteil hvn = Held_VorNachteil.Where(hvn2 => hvn2.VorNachteil != null && hvn2.VorNachteil.Name == vn).FirstOrDefault();
-            //Wert abprüfen
-            if (hvn != null && wert != null && (hvn.VorNachteil.HatWert ?? false))
+            string m1 = vn, m2 = string.Empty;
+            if (!exactMatch)
             {
-                if (hvn.VorNachteil.WertTyp != null && hvn.VorNachteil.WertTyp.ToLowerInvariant() == "int")
+                var a = vn.Split('%');
+                if (a.Length > 2)
                 {
-                    int expected, actual;
-                    if (int.TryParse(wert, out expected) && int.TryParse(hvn.Wert, out actual))
-                        return actual >= expected;
-                    else
-                    {
-                        System.Diagnostics.Debug.WriteLine("Fehler beim Parsen des Wertes {0} oder {1} zu einem Integer. HatVorNachteil({2},{0})", wert, hvn.Wert, vn);
-                        return false;
-                    }
+                    m1 = a[0];
+                    m2 = a[1];
                 }
-                else
-                    return hvn.Wert == wert;
             }
-            return hvn != null;
+            List<Held_VorNachteil> hvnList = Held_VorNachteil.Where(hvn2 => hvn2.VorNachteil != null && ((exactMatch && hvn2.VorNachteil.Name == vn)
+                || (
+                    !exactMatch && hvn2.VorNachteil.Name.StartsWith(m1)
+                    && (m2 == string.Empty || hvn2.VorNachteil.Name.EndsWith(m2))
+                    )
+                )).ToList();
+            foreach (var hvn in hvnList)
+            {
+                //Wert abprüfen
+                if (wert != null && (hvn.VorNachteil.HatWert ?? false))
+                {
+                    if (hvn.VorNachteil.WertTyp != null && hvn.VorNachteil.WertTyp.ToLowerInvariant() == "int")
+                    {
+                        int expected, actual;
+                        if (int.TryParse(wert, out expected) && int.TryParse(hvn.Wert, out actual))
+                        {
+                            if (actual >= expected)
+                                return true;
+                            continue;
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("Fehler beim Parsen des Wertes {0} oder {1} zu einem Integer. HatVorNachteil({2},{0})", wert, hvn.Wert, vn);
+                            continue;
+                        }
+                    }
+                    else if(hvn.Wert == wert)
+                        return true;
+                }
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -1526,11 +1551,25 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit mit bestimmtem Wert.
         /// </summary>
-        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert = null)
+        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert = null, bool exactMatch = true)
         {
-            IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit.Name == sonderfertigkeit);
+            string m1 = sonderfertigkeit, m2 = string.Empty;
+            if (!exactMatch)
+            {
+                var a = sonderfertigkeit.Split('%');
+                if (a.Length > 2)
+                {
+                    m1 = a[0];
+                    m2 = a[1];
+                }
+            }
+            IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && ((exactMatch && hs.Sonderfertigkeit.Name == sonderfertigkeit)
+                || (!exactMatch && hs.Sonderfertigkeit.Name.StartsWith(m1))
+                && (m2 == string.Empty || hs.Sonderfertigkeit.Name.EndsWith(m2))
+                ));
             if (hso.Count() == 0)
                 return false;
+            //rekursiv die voraussetzungen prüfen
             foreach (Held_Sonderfertigkeit hs in hso)
             {
                 //Wert prüfen
@@ -1554,9 +1593,22 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit mit bestimmtem Wert inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, string wert)
+        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, string wert, bool exactMatch = true)
         {
-            IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit.Name == sonderfertigkeit);
+            string m1 = sonderfertigkeit, m2 = string.Empty;
+            if (!exactMatch)
+            {
+                var a = sonderfertigkeit.Split('%');
+                if (a.Length > 2)
+                {
+                    m1 = a[0];
+                    m2 = a[1];
+                }
+            }
+            IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && ((exactMatch && hs.Sonderfertigkeit.Name == sonderfertigkeit)
+                || (!exactMatch && hs.Sonderfertigkeit.Name.StartsWith(m1))
+                && (m2 == string.Empty || hs.Sonderfertigkeit.Name.EndsWith(m2))
+                ));
             if(hso.Count() == 0)
                 return false;
             //rekursiv die voraussetzungen prüfen
@@ -1574,7 +1626,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit)
+        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, bool exactMatch = true)
         {
             return HatSonderfertigkeitUndVoraussetzungen(sonderfertigkeit, null);
         }

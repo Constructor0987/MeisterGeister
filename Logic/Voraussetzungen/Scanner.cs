@@ -58,6 +58,10 @@ namespace MeisterGeister.Logic.Voraussetzungen
             Patterns.Add(TokenType.UND, regex);
             Tokens.Add(TokenType.UND);
 
+            regex = new Regex(@"%", RegexOptions.Compiled);
+            Patterns.Add(TokenType.LIKE, regex);
+            Tokens.Add(TokenType.LIKE);
+
             regex = new Regex(@"SF", RegexOptions.Compiled);
             Patterns.Add(TokenType.SF, regex);
             Tokens.Add(TokenType.SF);
@@ -118,7 +122,7 @@ namespace MeisterGeister.Logic.Voraussetzungen
             Patterns.Add(TokenType.FK, regex);
             Tokens.Add(TokenType.FK);
 
-            regex = new Regex(@"[a-zA-ZäüößÄÜÖûÛ'/\-]+\:?", RegexOptions.Compiled);
+            regex = new Regex(@"[a-zA-ZäüößÄÜÖûÛ'/\-%]+\:?", RegexOptions.Compiled);
             Patterns.Add(TokenType.WORT, regex);
             Tokens.Add(TokenType.WORT);
 
@@ -277,25 +281,26 @@ namespace MeisterGeister.Logic.Voraussetzungen
             NOT     = 16,
             ODER    = 17,
             UND     = 18,
-            SF      = 19,
-            V       = 20,
-            N       = 21,
-            KL      = 22,
-            IN      = 23,
-            CH      = 24,
-            MU      = 25,
-            KK      = 26,
-            KO      = 27,
-            GE      = 28,
-            FF      = 29,
-            INI     = 30,
-            AT      = 31,
-            PA      = 32,
-            FK      = 33,
-            WORT    = 34,
-            QUOTE   = 35,
-            EOF     = 36,
-            WHITESPACE= 37
+            LIKE    = 19,
+            SF      = 20,
+            V       = 21,
+            N       = 22,
+            KL      = 23,
+            IN      = 24,
+            CH      = 25,
+            MU      = 26,
+            KK      = 27,
+            KO      = 28,
+            GE      = 29,
+            FF      = 30,
+            INI     = 31,
+            AT      = 32,
+            PA      = 33,
+            FK      = 34,
+            WORT    = 35,
+            QUOTE   = 36,
+            EOF     = 37,
+            WHITESPACE= 38
     }
 
     public class Token

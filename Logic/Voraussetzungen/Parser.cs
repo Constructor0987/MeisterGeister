@@ -640,6 +640,20 @@ namespace MeisterGeister.Logic.Voraussetzungen
             }
 
             
+            tok = scanner.LookAhead(TokenType.LIKE);
+            if (tok.Type == TokenType.LIKE)
+            {
+                tok = scanner.Scan(TokenType.LIKE);
+                n = node.CreateNode(tok, tok.ToString() );
+                node.Token.UpdateRange(tok);
+                node.Nodes.Add(n);
+                if (tok.Type != TokenType.LIKE) {
+                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.LIKE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                    return;
+                }
+            }
+
+            
             tok = scanner.Scan(TokenType.WHITESPACE);
             n = node.CreateNode(tok, tok.ToString() );
             node.Token.UpdateRange(tok);
@@ -681,6 +695,20 @@ namespace MeisterGeister.Logic.Voraussetzungen
             }
 
             
+            tok = scanner.LookAhead(TokenType.LIKE);
+            if (tok.Type == TokenType.LIKE)
+            {
+                tok = scanner.Scan(TokenType.LIKE);
+                n = node.CreateNode(tok, tok.ToString() );
+                node.Token.UpdateRange(tok);
+                node.Nodes.Add(n);
+                if (tok.Type != TokenType.LIKE) {
+                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.LIKE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                    return;
+                }
+            }
+
+            
             tok = scanner.Scan(TokenType.WHITESPACE);
             n = node.CreateNode(tok, tok.ToString() );
             node.Token.UpdateRange(tok);
@@ -719,6 +747,20 @@ namespace MeisterGeister.Logic.Voraussetzungen
             if (tok.Type != TokenType.N) {
                 tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.N.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
                 return;
+            }
+
+            
+            tok = scanner.LookAhead(TokenType.LIKE);
+            if (tok.Type == TokenType.LIKE)
+            {
+                tok = scanner.Scan(TokenType.LIKE);
+                n = node.CreateNode(tok, tok.ToString() );
+                node.Token.UpdateRange(tok);
+                node.Nodes.Add(n);
+                if (tok.Type != TokenType.LIKE) {
+                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.LIKE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                    return;
+                }
             }
 
             

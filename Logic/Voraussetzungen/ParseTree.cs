@@ -309,16 +309,7 @@ namespace MeisterGeister.Logic.Voraussetzungen
 
         protected virtual object EvalSonderfertigkeit(ParseTree tree, params object[] paramlist)
         {
-            /*	if(Convert.ToString(this.GetValue(tree, TokenType.Text, 0, paramlist)).Equals("Elementarharmonisierte Aura (Fels/Luft)"))
-        		return false;
-        	if(Convert.ToString(this.GetValue(tree, TokenType.Text, 0, paramlist)).Equals("Kraftlinienmagie II"))
-        		return true;
-        //	throw new ArgumentException("y" + Convert.ToString(this.GetValue(tree, TokenType.Text, 0, paramlist)) + "X");
-        	if(Convert.ToString(this.GetValue(tree, TokenType.Text, 0, paramlist)).Equals("Merkmalskenntnis (Dämonisch (Tasfarelel))"))
-        		return true;
-        	return false;
-        */
-        	MeisterGeister.Model.Held held = null;
+            MeisterGeister.Model.Held held = null;
         	if(paramlist != null && paramlist.Length > 0  && paramlist[0] is MeisterGeister.Model.Held) 
         		held = (MeisterGeister.Model.Held)paramlist[0];
         	if(held == null)
@@ -327,7 +318,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
         	string wert = null;
         	if(this.GetValue(tree, TokenType.Wert, 0, paramlist) != null)
         		wert = Convert.ToString(this.GetValue(tree, TokenType.Wert, 0, paramlist));
-        	return held.HatSonderfertigkeitUndVoraussetzungen(sfName, wert);
+        	bool exact = (this.GetValue(tree, TokenType.LIKE, 0, paramlist) == null);
+        	return held.HatSonderfertigkeitUndVoraussetzungen(sfName, wert, exact);
         }
 
         protected virtual object EvalVorteil(ParseTree tree, params object[] paramlist)
@@ -341,7 +333,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
         	string wert = null;
         	if(this.GetValue(tree, TokenType.Wert, 0, paramlist) != null)
         		wert = Convert.ToString(this.GetValue(tree, TokenType.Wert, 0, paramlist));
-        	return held.HatVorNachteil(vName, wert);
+        	bool exact = (this.GetValue(tree, TokenType.LIKE, 0, paramlist) == null);
+        	return held.HatVorNachteil(vName, wert, exact);
         }
 
         protected virtual object EvalNachteil(ParseTree tree, params object[] paramlist)
@@ -355,7 +348,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
         	string wert = null;
         	if(this.GetValue(tree, TokenType.Wert, 0, paramlist) != null)
         		wert = Convert.ToString(this.GetValue(tree, TokenType.Wert, 0, paramlist));
-        	return held.HatVorNachteil(vName, wert);
+        	bool exact = (this.GetValue(tree, TokenType.LIKE, 0, paramlist) == null);
+        	return held.HatVorNachteil(vName, wert, exact);
         }
 
         protected virtual object EvalTalentZauber(ParseTree tree, params object[] paramlist)
@@ -370,8 +364,8 @@ namespace MeisterGeister.Logic.Voraussetzungen
         	string tName = Convert.ToString(this.GetValue(tree, TokenType.Text, 0, paramlist));
         	int wert = Convert.ToInt32(this.GetValue(tree, TokenType.NUMBER, 0, paramlist));
         	if (tName.ToUpperInvariant().Equals(tName))
-        		return held.HatZauber(tName, wert);
-        	return held.HatTalent(tName, wert);
+        		return held.HatZauber(tName, wert, false);
+        	return held.HatTalent(tName, wert, false);
         }
 
 
