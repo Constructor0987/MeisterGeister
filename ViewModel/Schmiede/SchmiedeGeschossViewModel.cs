@@ -200,7 +200,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == null) return;
                 _selectedFernkampfwaffe = value;
                 OnChanged("SelectedFernkampfwaffe");
-                MunitionListe = Global.ContextFernkampfwaffe.Liste<Model.Munition>().Where(m => m.Art == _selectedFernkampfwaffe.Munitionsart).ToList();
+                MunitionListe = Global.ContextInventar.MunitionListe.Where(m => m.Art == _selectedFernkampfwaffe.Munitionsart).ToList();
                 SelectedMunition = MunitionListe.First();
             }
         }
@@ -293,7 +293,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             OnChanged("FernkampfwaffeTalentListe");
             FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => (w.Munitionsart == MUNITIONSTYPBOLZEN || w.Munitionsart == MUNITIONSTYPPFEIL) && !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("FernkampfwaffeListe");
-            MunitionListe.AddRange(Global.ContextFernkampfwaffe.Liste<Model.Munition>().Where(m => (m.Art == MUNITIONSTYPBOLZEN || m.Art == MUNITIONSTYPPFEIL)));
+            MunitionListe.AddRange(Global.ContextInventar.MunitionListe.Where(m => (m.Art == MUNITIONSTYPBOLZEN || m.Art == MUNITIONSTYPPFEIL)));
             OnChanged("MunitionListe");
         }
 

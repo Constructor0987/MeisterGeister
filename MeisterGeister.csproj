@@ -483,7 +483,6 @@
     <Compile Include="Logic\Umrechner\Zeit.cs" />
     <Compile Include="ViewModel\Basar\Logic\IHandelsgut.cs" />
     <Compile Include="Model\Fernkampfwaffe.cs" />
-    <Compile Include="Model\Service\FernkampfwaffeService.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Behinderung.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWunden.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IRüstungsschutz.cs" />

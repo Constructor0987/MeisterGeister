@@ -218,7 +218,7 @@ namespace MeisterGeister.ViewModel.Basar
         {
             HandelsgutListe = Global.ContextHandelsgut == null ? new List<Model.Handelsgut>() : Global.ContextHandelsgut.HandelsgüterListe;
             WaffeListe = Global.ContextWaffe == null ? new List<Model.Waffe>() : Global.ContextWaffe.WaffeListe;
-            FernkampfwaffeListe = Global.ContextFernkampfwaffe == null ? new List<Model.Fernkampfwaffe>() : Global.ContextFernkampfwaffe.FernkampfwaffeListe;
+            FernkampfwaffeListe = Global.ContextInventar == null ? new List<Model.Fernkampfwaffe>() : Global.ContextInventar.FernkampfwaffeListe;
             SchildListe = Global.ContextSchild == null ? new List<Model.Schild>() : Global.ContextSchild.SchildListe;
             RüstungListe = Global.ContextRüstung == null ? new List<Model.Rüstung>() : Global.ContextRüstung.RüstungListe;
 

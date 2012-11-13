@@ -11,26 +11,34 @@ namespace MeisterGeister.Model.Service {
         #region //EIGENSCHAFTEN
 
         public List<Model.Ausrüstung> AusruestungListe {
-            get { return Liste<Ausrüstung>(); }
+            get { return Liste<Ausrüstung>().Where(s => s.Ausrüstung_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList(); }
         }
         public List<Model.Held_Ausrüstung> HeldZuAusruestungListe {
             get { return Liste<Held_Ausrüstung>(); }
         }
         public List<Model.Waffe> WaffeListe {
-            get { return Liste<Waffe>(); }
+            get { return Liste<Waffe>().Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList(); }
         }
 
         public List<Model.Schild> SchildListe {
-            get { return Liste<Schild>(); }
+            get { 
+                return Liste<Schild>().Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList();
+            }
         }
 
         public List<Model.Fernkampfwaffe> FernkampfwaffeListe {
-            get { return Liste<Fernkampfwaffe>(); }
+            get { return Liste<Fernkampfwaffe>().Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList(); }
         }
 
         public List<Model.Rüstung> RuestungListe {
-            get { return Liste<Rüstung>(); }
+            get { return Liste<Rüstung>().Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList(); }
         }
+
+        public List<Model.Munition> MunitionListe
+        {
+            get { return Liste<Munition>().Where(t => Setting.AktiveSettings.Any(s => (t.Setting ?? "Aventurien").Contains(s.Name)) ).ToList(); }
+        }
+
         public List<Model.Trageort> TrageortListe {
             get { return Liste<Trageort>(); }
         }

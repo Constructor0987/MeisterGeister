@@ -411,7 +411,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == null) return;
                 _selectedFernkampfwaffe = value;
                 OnChanged("SelectedFernkampfwaffe");
-                _erstellteFernkampfwaffe = Global.ContextFernkampfwaffe.Clone<Model.Fernkampfwaffe>(_selectedFernkampfwaffe);
+                _erstellteFernkampfwaffe = Global.ContextInventar.Clone<Model.Fernkampfwaffe>(_selectedFernkampfwaffe);
                 _erstellteFernkampfwaffe.FernkampfwaffeGUID = Guid.Empty;
                 Model.Ausrüstung ausr = Global.ContextWaffe.Clone<Model.Ausrüstung>(_selectedFernkampfwaffe.Ausrüstung);
                 ausr.AusrüstungGUID = Guid.Empty;
