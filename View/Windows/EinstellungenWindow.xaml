@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MeisterGeister.View.Windows.EinstellungenWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Einstellungen" Height="419" Width="466" Icon="/Images/Icons/mechanik.png" Loaded="Window_Loaded" Background="{StaticResource Background1}" Closed="Window_Closed"
+        Title="Einstellungen" Height="441.32" Width="695.724" Icon="/Images/Icons/mechanik.png" Loaded="Window_Loaded" Background="{StaticResource Background1}" Closed="Window_Closed"
         TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <DataTemplate x:Key="RegelnListTemplate">
@@ -21,6 +21,11 @@
                     <ComboBoxItem Content="DSA4.1" />
                 </ComboBox>
             </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
             <Expander Margin="4" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Regel-Optionen" Style="{DynamicResource TextTitel}" />
@@ -37,32 +42,55 @@
                 </Border>
             </Expander>
 
+            <Expander Margin="4" Grid.Column="1" IsExpanded="True">
+                <Expander.Header>
+                    <TextBlock Text="Settings" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <StackPanel>
+                        <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" Width="200" TextWrapping="Wrap" FontStyle="Italic" />
+                        <ListBox Name="_listBoxSettings" BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="4" Orientation="Horizontal">
+                                        <CheckBox Margin="2" IsChecked="{Binding Anwenden}" />
+                                        <TextBlock Margin="4,0,0,0" Text="{Binding Name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </Expander>
+            </Grid>
+
             <Expander Margin="4" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
-                <ListBox BorderThickness="0">
-                    <ListBox.Background>
-                        <SolidColorBrush />
-                    </ListBox.Background>
-                    <StackPanel Margin="4" Orientation="Horizontal">
-                        <CheckBox Name="_checkBoxFrageNeueKampfrundeAbstellen" Margin="2" Checked="_checkBoxFrageNeueKampfrundeAbstellen_Checked" Unchecked="_checkBoxFrageNeueKampfrundeAbstellen_Unchecked" />
-                        <TextBlock Margin="4,0,0,0" Text="Ende der Kämpfer-Liste (Frage): Soll eine neue KR begonnen werden? (Abstellen)" Width="398" TextWrapping="WrapWithOverflow" />
-                    </StackPanel>
-                    <StackPanel Margin="4" Orientation="Horizontal">
-                        <CheckBox Name="_checkBoxJingleAbstellen" Margin="2" VerticalAlignment="Center" Checked="CheckBoxJingleAbstellen_Checked" Unchecked="CheckBoxJingleAbstellen_Unchecked" />
-                        <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="Jingle beim Programmstart abstellen?" TextWrapping="WrapWithOverflow" />
-                        <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
-                            <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
-                        </Button>
-                        <TextBlock Margin="15,0,5,0" VerticalAlignment="Center">
+                    <ListBox BorderThickness="0">
+                        <ListBox.Background>
+                            <SolidColorBrush />
+                        </ListBox.Background>
+                        <StackPanel Margin="4" Orientation="Horizontal">
+                            <CheckBox Name="_checkBoxFrageNeueKampfrundeAbstellen" Margin="2" Checked="_checkBoxFrageNeueKampfrundeAbstellen_Checked" Unchecked="_checkBoxFrageNeueKampfrundeAbstellen_Unchecked" />
+                            <TextBlock Margin="4,0,0,0" Text="Ende der Kämpfer-Liste (Frage): Soll eine neue KR begonnen werden? (Abstellen)" Width="398" TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+                        <StackPanel Margin="4" Orientation="Horizontal">
+                            <CheckBox Name="_checkBoxJingleAbstellen" Margin="2" VerticalAlignment="Center" Checked="CheckBoxJingleAbstellen_Checked" Unchecked="CheckBoxJingleAbstellen_Unchecked" />
+                            <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="Jingle beim Programmstart abstellen?" TextWrapping="WrapWithOverflow" />
+                            <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
+                                <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
+                            </Button>
+                            <TextBlock Margin="15,0,5,0" VerticalAlignment="Center">
                             <Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate">Mehr Infos zum Jingle.</Hyperlink>
-                        </TextBlock>
-                    </StackPanel>
-                </ListBox>
-                    </Border>
+                            </TextBlock>
+                        </StackPanel>
+                    </ListBox>
+                </Border>
             </Expander>
+            
         </StackPanel>
     </Grid>
 </Window>

@@ -28,6 +28,8 @@ namespace MeisterGeister.View.Windows
 
             // DataContext setzen
             DataContext = Global.ContextRegeln.RegelnListe;
+
+            _listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
