@@ -171,6 +171,12 @@
     <Content Include="Daten\TestDBs\Wulf2_DatabaseDSA.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Daten\TestDBs\Wulf3_DatabaseDSA.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\TestDBs\Wulf4_DatabaseDSA.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
