@@ -47,6 +47,9 @@ namespace MeisterGeister.Model
 
         public bool CheckVoraussetzungen(Held held)
         {
+            // TODO ??: Prüfung der Sonderfertigkeiten wird derzeit abgebrochen, da es zu langsam ist
+            return true;
+
             //Parsen und verifizieren der Vorraussetzung-Property
             if (Voraussetzungen != null)
             {
