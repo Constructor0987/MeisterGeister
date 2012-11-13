@@ -221,12 +221,7 @@ namespace MeisterGeister.Model.Service {
         
         public Gegner CreateGegnerInstance(GegnerBase gegnerBase)
         {
-            Gegner g = New<Gegner>();
-            g.GegnerBaseGUID = gegnerBase.GegnerBaseGUID;
-            g.GegnerBase = gegnerBase;
-            g.Name = gegnerBase.Name;
-            g.Bild = gegnerBase.Bild;
-            g.Bemerkung = gegnerBase.Bemerkung;
+            Gegner g = new Gegner(gegnerBase);
             Insert<Gegner>(g);
             return g;
         }
