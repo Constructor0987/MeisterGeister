@@ -82,6 +82,7 @@ namespace MeisterGeister.Model
                         string name = ga.Name; int i = 1;
                         while (g.GegnerBase_Angriff.Where(gba => gba.Name == name).Count() > 0)
                             name = String.Format("{0} ({1})", ga.Name, ++i);
+                        ga.Name = name;
                         g.GegnerBase_Angriff.Add(ga);
                     }
                     else

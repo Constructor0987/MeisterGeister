@@ -526,6 +526,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 if (!g.GegnerBase_Angriff.Any())
                     g.ParseBemerkung();
             }
+            OnChanged("AngriffListe");
         }
 
         private void ParseBemerkung(object sender)
@@ -533,6 +534,7 @@ namespace MeisterGeister.ViewModel.Kampf
             if (SelectedGegnerBase == null)
                 return;
             SelectedGegnerBase.ParseBemerkung();
+            OnChanged("AngriffListe");
         }
         #endregion
 
