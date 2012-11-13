@@ -45,8 +45,9 @@
                         <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
                         <TextBox Text="{Binding Trageort, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                     </StackPanel>-->
-                        <TextBlock Grid.Column="0" Text="{Binding EntityNW.Gewicht}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding EntityNW.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding EntityNW.Gewicht}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityNW.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding TP}"  TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="5" Text="{Binding TPKK}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>                        
                         <TextBlock Grid.Column="6" Text="{Binding EntityNW.BF}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -80,8 +81,9 @@
                             <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
                             -<TextBox Text="{Binding Trageort.Name, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         </StackPanel>-->
-                        <TextBlock Grid.Column="0" Text="{Binding Gewicht}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Gewicht}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="3" Text="{Binding TP}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Grid.ColumnSpan="2" Text="{Binding EntityFW.Reichweiten}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="6" Grid.ColumnSpan="2" Text="{Binding EntityFW.TPReichweiten}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -113,8 +115,9 @@
                             <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
                             -<TextBox Text="{Binding Trageort.Name, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         </StackPanel>-->
-                        <TextBlock Grid.Column="0" Text="{Binding EntityS.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding EntityS.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding EntityS.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityS.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding EntityS.Größe}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="5" Text="{Binding WM}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="6" Text="{Binding EntityS.INI}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -143,8 +146,9 @@
                             <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
                             <TextBox Text="{Binding Trageort.Name, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         </StackPanel>-->
-                        <TextBlock Grid.Column="0" Text="{Binding EntityR.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding EntityR.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>                                                
+                        <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding EntityR.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityR.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>                                                
                         <TextBlock Grid.Column="3" Text="{Binding EntityR.RS}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding EntityR.BE}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
@@ -877,8 +881,9 @@
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen" Grid.Column="0"/>-->
-                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="0" />
-										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="1" Grid.ColumnSpan="3"  />
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="1" />
+										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="2"  />
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP" Grid.Column="4" />
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP/KK" Grid.Column="5" />                                        
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="BF" Grid.Column="6" />
@@ -917,8 +922,9 @@
                             				<ColumnDefinition />                            				
                             			</Grid.ColumnDefinitions>
                             			<!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen" Grid.Column="0" />-->
-                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="0" />
-										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="1" Grid.ColumnSpan="2" />
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
+                            			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="1" />
+										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
                             			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP" Grid.Column="3" />
                             			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Reichweiten" Grid.Column="4" Grid.ColumnSpan="2" />
                             			<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP+" Grid.Column="6" Grid.ColumnSpan="2" />                            		
@@ -958,8 +964,9 @@
                                             <ColumnDefinition />                                            
                                         </Grid.ColumnDefinitions>
                                         <!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen"  Grid.Column="0" />-->
-                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="0" />
-										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"  Grid.Column="1" Grid.ColumnSpan="3" />                                                                                
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
+										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"  Grid.Column="2" Grid.ColumnSpan="2" />
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Größe"  Grid.Column="4" />
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="WM"  Grid.Column="5" />
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="INI"  Grid.Column="6" />
@@ -993,8 +1000,9 @@
                                             <ColumnDefinition />                                            
                                         </Grid.ColumnDefinitions>
                                         <!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen"  Grid.Column="0" />-->
-                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="0" />
-										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="1" Grid.ColumnSpan="2"   />										
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
+                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
+										<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="RS"  Grid.Column="3" />
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="BE"  Grid.Column="4" />
                                         

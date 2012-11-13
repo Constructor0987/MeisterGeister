@@ -651,6 +651,16 @@ namespace MeisterGeister.ViewModel.Inventar {
 
         void AddNahkampfwaffe(object sender) {
             if (SelectedNahkampfwaffe != null && SelectedHeld != null) {
+                foreach (var item in HeldNahkampfWaffeImInventar)
+                {
+                    if (item.EntityNW.WaffeGUID == SelectedNahkampfwaffe.WaffeGUID)
+                    {
+                        item.EntityHA.Anzahl++;
+                        OnChanged("HeldNahkampfWaffeImInventar");
+                        AktuellesGewicht += SelectedNahkampfwaffe.Gewicht;
+                        return;
+                    }
+                }
                 NahkampfItem newItem = CreateItemVonNahkampfwaffe(SelectedNahkampfwaffe);
                 HeldNahkampfWaffeImInventar.Add(newItem);
                 OnChanged("HeldNahkampfWaffeImInventar");
@@ -661,8 +671,17 @@ namespace MeisterGeister.ViewModel.Inventar {
         }
         void AddFernkampfwaffe(object sender) {
             if (SelectedFernkampfwaffe != null && SelectedHeld != null) {
+                foreach (var item in HeldFernkampfwaffeImInventar)
+                {
+                    if (item.EntityFW.FernkampfwaffeGUID == SelectedFernkampfwaffe.FernkampfwaffeGUID)
+                    {
+                        item.EntityHA.Anzahl++;
+                        OnChanged("HeldFernkampfwaffeImInventar");
+                        AktuellesGewicht += SelectedFernkampfwaffe.Gewicht;
+                        return;
+                    }
+                }
                 FernkampfItem tmp = HeldFernkampfwaffeImInventar.Where(w => w.EntityHA.Ausrüstung.Fernkampfwaffe == SelectedFernkampfwaffe && w.EntityHA.HeldGUID == SelectedHeld.HeldGUID).FirstOrDefault();
-
                 FernkampfItem newItem = CreateItemVonFernkampfwaffe(SelectedFernkampfwaffe);
                 HeldFernkampfwaffeImInventar.Add(newItem);
                 OnChanged("HeldFernkampfwaffeImInventar");
@@ -673,6 +692,16 @@ namespace MeisterGeister.ViewModel.Inventar {
         }
         void AddSchild(object sender) {
             if (SelectedSchild != null && SelectedHeld != null) {
+                foreach (var item in HeldSchildImInventar)
+                {
+                    if (item.EntityS.SchildGUID == SelectedSchild.SchildGUID)
+                    {
+                        item.EntityHA.Anzahl++;
+                        OnChanged("HeldSchildImInventar");
+                        AktuellesGewicht += SelectedSchild.Gewicht;
+                        return;
+                    }
+                }
                 SchildItem tmp = HeldSchildImInventar.Where(s => s.EntityHA.Ausrüstung.Schild == SelectedSchild && s.EntityHA.HeldGUID == SelectedHeld.HeldGUID).FirstOrDefault();
                 SchildItem newItem = CreateItemVonSchild(SelectedSchild);
                 HeldSchildImInventar.Add(newItem);
@@ -684,8 +713,17 @@ namespace MeisterGeister.ViewModel.Inventar {
         }
         void AddRuestung(object sender) {
             if (SelectedRuestung != null && SelectedHeld != null) {
+                foreach (var item in HeldRuestungImInventar)
+                {
+                    if (item.EntityR.RüstungGUID == SelectedRuestung.RüstungGUID)
+                    {
+                        item.EntityHA.Anzahl++;
+                        OnChanged("HeldRuestungImInventar");
+                        AktuellesGewicht += SelectedRuestung.Gewicht /2;
+                        return;
+                    }
+                }
                 RuestungItem tmp = HeldRuestungImInventar.Where(s => s.EntityHA.Ausrüstung.Rüstung == SelectedRuestung && s.EntityHA.HeldGUID == SelectedHeld.HeldGUID).FirstOrDefault();
-
                 RuestungItem newItem = CreateItemVonRuestung(SelectedRuestung);
                 HeldRuestungImInventar.Add(newItem);
                 OnChanged("HeldRuestungImInventar");
@@ -705,6 +743,18 @@ namespace MeisterGeister.ViewModel.Inventar {
                 if (sender is NahkampfItem) {
                     NahkampfItem item = HeldNahkampfWaffeImInventar.Where(value => value == (sender as NahkampfItem)).FirstOrDefault();
                     if (item != null) {
+                        foreach (var invItem in HeldNahkampfWaffeImInventar)
+                        {
+                            if (invItem.EntityNW.WaffeGUID == item.EntityNW.WaffeGUID)
+                            {
+                                if (item.EntityHA.Anzahl <= 1)
+                                    break;
+                                item.EntityHA.Anzahl--;
+                                OnChanged("HeldNahkampfWaffeImInventar");
+                                AktuellesGewicht -= item.EntityNW.Gewicht;
+                                return;
+                            }
+                        }
                         HeldNahkampfWaffeImInventar.Remove(item);
                         OnChanged("HeldNahkampfWaffeImInventar");
                         AktuellesGewicht -= item.EntityNW.Gewicht;
@@ -719,8 +769,18 @@ namespace MeisterGeister.ViewModel.Inventar {
                 if (sender is FernkampfItem) {
                     FernkampfItem item = HeldFernkampfwaffeImInventar.Where(value => value == (sender as FernkampfItem)).FirstOrDefault();
                     if (item != null) {
-
-
+                        foreach (var invItem in HeldFernkampfwaffeImInventar)
+                        {
+                            if (invItem.EntityFW.FernkampfwaffeGUID == item.EntityFW.FernkampfwaffeGUID)
+                            {
+                                if (item.EntityHA.Anzahl <= 1)
+                                    break;
+                                item.EntityHA.Anzahl--;
+                                OnChanged("HeldFernkampfwaffeImInventar");
+                                AktuellesGewicht -= item.EntityFW.Gewicht;
+                                return;
+                            }
+                        }
                         HeldFernkampfwaffeImInventar.Remove(item);
                         OnChanged("HeldFernkampfwaffeImInventar");
                         AktuellesGewicht -= item.EntityFW.Gewicht;
@@ -735,8 +795,18 @@ namespace MeisterGeister.ViewModel.Inventar {
                 if (sender is SchildItem) {
                     SchildItem item = HeldSchildImInventar.Where(value => value == (sender as SchildItem)).FirstOrDefault();
                     if (item != null) {
-
-
+                        foreach (var invItem in HeldSchildImInventar)
+                        {
+                            if (invItem.EntityS.SchildGUID == item.EntityS.SchildGUID)
+                            {
+                                if (item.EntityHA.Anzahl <= 1)
+                                    break;
+                                item.EntityHA.Anzahl--;
+                                OnChanged("HeldSchildImInventar");
+                                AktuellesGewicht -= item.EntityS.Gewicht;
+                                return;
+                            }
+                        }
                         HeldSchildImInventar.Remove(item);
                         OnChanged("HeldSchildImInventar");
                         AktuellesGewicht -= item.EntityS.Gewicht;
@@ -752,7 +822,18 @@ namespace MeisterGeister.ViewModel.Inventar {
                 if (sender is RuestungItem) {
                     RuestungItem item = HeldRuestungImInventar.Where(value => value == (sender as RuestungItem)).FirstOrDefault();
                     if (item != null) {
-
+                        foreach (var invItem in HeldRuestungImInventar)
+                        {
+                            if (invItem.EntityR.RüstungGUID == item.EntityR.RüstungGUID)
+                            {
+                                if (item.EntityHA.Anzahl <= 1)
+                                    break;
+                                item.EntityHA.Anzahl--;
+                                OnChanged("HeldRuestungImInventar");
+                                AktuellesGewicht -= item.EntityR.Gewicht / 2;
+                                return;
+                            }
+                        }
                         HeldRuestungImInventar.Remove(item);
                         OnChanged("HeldRuestungImInventar");
                         AktuellesGewicht -= item.EntityR.Gewicht /2;
