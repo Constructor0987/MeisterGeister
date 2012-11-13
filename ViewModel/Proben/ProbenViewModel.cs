@@ -518,9 +518,9 @@ namespace MeisterGeister.ViewModel.Proben
             // Eigenschaften hinzufügen
             ProbeListe.AddRange(Eigenschaft.EigenschaftenListe);
             // Talente hinzufügen
-            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Talent>());
+            ProbeListe.AddRange(Global.ContextTalent.TalentListe);
             // Zauber hinzufügen
-            ProbeListe.AddRange(Global.ContextHeld.Liste<Model.Zauber>());
+            ProbeListe.AddRange(Global.ContextZauber.ZauberListe);
 
             // Probe-Favoriten
             LoadProbeFavoriten();

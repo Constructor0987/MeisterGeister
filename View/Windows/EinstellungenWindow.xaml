@@ -53,7 +53,7 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="4" Orientation="Horizontal">
-                                        <CheckBox Margin="2" IsChecked="{Binding Anwenden}" />
+                                        <CheckBox Margin="2" IsChecked="{Binding Aktiv}" />
                                         <TextBlock Margin="4,0,0,0" Text="{Binding Name}" />
                                     </StackPanel>
                                 </DataTemplate>
