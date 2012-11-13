@@ -33,6 +33,9 @@ namespace MeisterGeister.View.Kampf
             //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
             //_comboBoxTrefferzone.SelectedIndex = 0;
             VM = new VM.KampfViewModel(View.General.ViewHelper.ShowGegnerView, View.General.ViewHelper.Confirm);
+
+            View.General.EnumItemsSource tpValues = (View.General.EnumItemsSource)Resources["TrefferzonenValues"];
+            tpValues.Remove("Gesamt");
         }
 
         /// <summary>

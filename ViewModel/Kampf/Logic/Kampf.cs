@@ -352,6 +352,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             if(Kämpfer[k] == null)
                 return;
+
+            if (zone == Trefferzone.Zufall)
+                zone = TrefferzonenHelper.ZufallsZone();
             int rs = 0;
             if((optionen & TrefferpunkteOptions.IgnoriertRüstung) != TrefferpunkteOptions.IgnoriertRüstung)
                 rs = k.RS[zone];
