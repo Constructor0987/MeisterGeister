@@ -103,7 +103,7 @@ namespace MeisterGeister.Model
             int wAnzahl = 1, wSeiten = 6, tpBonus = 0;
             if(m.Groups[1] != null)
                 Int32.TryParse(m.Groups[1].Captures[0].Value, out wAnzahl);
-            if (m.Groups[2] != null)
+            if (m.Groups[2] != null && m.Groups[2].Captures.Count > 0)
                 Int32.TryParse(m.Groups[2].Captures[0].Value, out wSeiten);
             if (m.Groups[3] != null)
             {
