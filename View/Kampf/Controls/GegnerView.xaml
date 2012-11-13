@@ -115,6 +115,12 @@
                                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <Separator />
+                                <MenuItem Height="28" Command="{Binding OnParseBemerkungAll}" Header="Angriffe aus Bemerkung..." ToolTip="Bei allen Gegnern Angriffe aus Bemerkungs-Feld erstellen.">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/notiz.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </ListBox.ContextMenu>
                         <ListBox.ItemTemplate>
@@ -329,9 +335,10 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="129*"></ColumnDefinition>
-                                <ColumnDefinition Width="242*"/>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="129*" />
+                                <ColumnDefinition Width="242*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <!-- SelectedGegnerBase.GegnerBase_Angriff, AngriffAddName (als Prompt?), Add und Delete Commands, SelectedAngriff,
                             Name, AT, Bemerkung, Distanzklasse oder DK(DB-Wert), Reichweite, TPBonus, TPWürfel, TPWürfelAnzahl
@@ -348,7 +355,10 @@
                             <Button Grid.Row="0" Grid.Column="2"  Height="23" Width="25" ToolTip="Neuern Angriff einfügen" Command="{Binding OnNewAngriff}">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                             </Button>
-                            <DataGrid Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding AngriffListe}" SelectedItem="{Binding SelectedAngriff}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000">
+                            <Button Grid.Row="0" Grid.Column="3" Margin="12,0,4,0" Height="23" Width="25" ToolTip="Angriffe aus Bemerkung erstellen..." Command="{Binding OnParseBemerkung}">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/notiz.png" Stretch="Fill" />
+                            </Button>
+                            <DataGrid Grid.Row="1" Grid.ColumnSpan="4" ItemsSource="{Binding AngriffListe}" SelectedItem="{Binding SelectedAngriff}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserSortColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" RowBackground="Transparent" BorderBrush="#00000000">
                                 <DataGrid.InputBindings>
                                     <KeyBinding Key="Delete" Command="{Binding OnDeleteAngriff}" />
                                 </DataGrid.InputBindings>
