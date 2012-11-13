@@ -20,15 +20,6 @@ namespace MeisterGeister.Logic.Settings
                 _regelnListe = new List<Model.Regeln>();
         }
 
-        public static bool SettingDunkleZeiten
-        {
-            get
-            {
-                var t = _regelnListe.Where(n => n.Name == "DunkleZeiten").FirstOrDefault();
-                return t == null ? true : t.Anwenden.Value;
-            }
-        }
-
         public static bool EigenschaftenProbePatzerGlück
         {
             get
