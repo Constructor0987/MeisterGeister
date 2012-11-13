@@ -18,5 +18,10 @@ namespace MeisterGeister.Model
         {
             return Name;
         }
+
+        public static List<Setting> AktiveSettings
+        {
+            get { return Global.ContextHeld.Liste<Setting>().Where(s => s.Aktiv == true).ToList(); }
+        }
     }
 }
