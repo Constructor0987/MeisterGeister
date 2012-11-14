@@ -5,15 +5,18 @@ using System.Text;
 // Eigene Usings
 using BasarLogic = MeisterGeister.ViewModel.Basar.Logic;
 using InventarLogic = MeisterGeister.ViewModel.Inventar.Logic;
+using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Rüstung : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung
+    public partial class Rüstung : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IHasZonenRs
     {
         public Rüstung()
         {
             Ausrüstung = new Ausrüstung();
             Ausrüstung.AusrüstungGUID = RüstungGUID = Guid.NewGuid();
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
         public bool Usergenerated
@@ -233,5 +236,126 @@ namespace MeisterGeister.Model
         }
 
         #endregion
+
+        #region IHasZonenRs
+        [DependentProperty("Kopf")]
+        public int RSKopf
+        {
+            get
+            {
+                return Kopf ?? 0;
+            }
+            set
+            {
+                Kopf = value;
+            }
+        }
+
+        [DependentProperty("Brust")]
+        public int RSBrust
+        {
+            get
+            {
+                return Brust ?? 0;
+            }
+            set
+            {
+                Brust = value;
+            }
+        }
+
+        [DependentProperty("Rücken")]
+        public int RSRücken
+        {
+            get
+            {
+                return Rücken ?? 0;
+            }
+            set
+            {
+                Rücken = value;
+            }
+        }
+
+        [DependentProperty("LArm")]
+        public int RSArmL
+        {
+            get
+            {
+                return LArm ?? 0;
+            }
+            set
+            {
+                LArm = value;
+            }
+        }
+
+        [DependentProperty("RArm")]
+        public int RSArmR
+        {
+            get
+            {
+                return RArm ?? 0;
+            }
+            set
+            {
+                RArm = value;
+            }
+        }
+
+        [DependentProperty("Bauch")]
+        public int RSBauch
+        {
+            get
+            {
+                return Bauch ?? 0;
+            }
+            set
+            {
+                Bauch = value;
+            }
+        }
+
+        [DependentProperty("LBein")]
+        public int RSBeinL
+        {
+            get
+            {
+                return LBein ?? 0;
+            }
+            set
+            {
+                LBein = value;
+            }
+        }
+
+        [DependentProperty("RBein")]
+        public int RSBeinR
+        {
+            get
+            {
+                return RBein ?? 0;
+            }
+            set
+            {
+                RBein = value;
+            }
+        }
+        #endregion
+
+        public static KampfLogic.IRüstungsschutz operator +(Rüstung a, KampfLogic.IRüstungsschutz b)
+        {
+            return KampfLogic.Rüstungsschutz.Add(new KampfLogic.Rüstungsschutz(a), b);
+        }
+
+        public static KampfLogic.IRüstungsschutz operator -(Rüstung a, KampfLogic.IRüstungsschutz b)
+        {
+            return KampfLogic.Rüstungsschutz.Substract(new KampfLogic.Rüstungsschutz(a), b);
+        }
+
+        public static KampfLogic.IRüstungsschutz operator *(Rüstung a, double b)
+        {
+            return KampfLogic.Rüstungsschutz.Multiply(new KampfLogic.Rüstungsschutz(a), b);
+        }
     }
 }

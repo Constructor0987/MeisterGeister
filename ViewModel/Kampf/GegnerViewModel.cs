@@ -176,6 +176,52 @@ namespace MeisterGeister.ViewModel.Kampf
 
         #endregion
 
+        #region RS Add/Delete
+        private Base.CommandBase onAddRüstung = null;
+        public Base.CommandBase OnAddRüstung
+        {
+            get
+            {
+                if (onAddRüstung == null)
+                    onAddRüstung = new Base.CommandBase(AddRüstung, null);
+                return onAddRüstung;
+            }
+        }
+
+        private void AddRüstung(object args)
+        {
+            if (SelectedGegnerBase == null || SelectedRüstung == null)
+                return;
+            var rs = SelectedGegnerBase.RS as Rüstungsschutz;
+            if (rs == null)
+                return;
+            var rsneu = SelectedRüstung + rs;
+            rs.SetValues(rsneu);
+        }
+
+        private Base.CommandBase onRemoveRüstung = null;
+        public Base.CommandBase OnRemoveRüstung
+        {
+            get
+            {
+                if (onRemoveRüstung == null)
+                    onRemoveRüstung = new Base.CommandBase(RemoveRüstung, null);
+                return onRemoveRüstung;
+            }
+        }
+
+        private void RemoveRüstung(object args)
+        {
+            if (SelectedGegnerBase == null || SelectedRüstung == null)
+                return;
+            var rs = SelectedGegnerBase.RS as Rüstungsschutz;
+            if (rs == null)
+                return;
+            var rsneu = rs - new Rüstungsschutz(SelectedRüstung);
+            rs.SetValues(rsneu);
+        }
+        #endregion
+
         #region Gegner_Angriff Add and Delete Commands
         private Base.CommandBase onNewAngriff = null;
         public Base.CommandBase OnNewAngriff

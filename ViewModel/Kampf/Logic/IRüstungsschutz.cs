@@ -2,5 +2,6 @@
 {
     public interface IRüstungsschutz : ITrefferzonenIndexer<int>
     {
+        void SetValues(IRüstungsschutz a);
     }
 }
