@@ -94,7 +94,16 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<bool>("JingleAbstellen", false);
+                if (Global.IsInitialized)
+                    return GetOrCreateEinstellung<bool>("JingleAbstellen", false);
+                try
+                {
+                    return Convert.ToBoolean(Daten.DatabaseUpdate.GetScalarFromDatabase("SELECT WertBool FROM Einstellungen WHERE Name = 'JingleAbstellen'", 
+                        MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString));
+                }
+                catch (Exception) { ; }
+
+                return false;
             }
             set
             {

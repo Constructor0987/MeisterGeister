@@ -10,19 +10,33 @@ namespace MeisterGeister.Logic.General
 
         public static void PlayFile(String url)
         {
+            if (!IsMediaPlayerAvailable)
+                return;
+
             try
             {
                 if (_player == null)
+                {
                     _player = new MediaPlayer();
-                
+                }
                 _player.MediaFailed += new EventHandler<ExceptionEventArgs>(Player_MediaFailed);
+                _player.MediaEnded += new EventHandler(Player_JingleEnded);
 
                 _player.Open(new Uri(url));
                 _player.Play();
             }
             catch (Exception ex)
             {
-                var errWin = new MsgWindow("Audio Fehler", "Der Audio Player hat einen Fehler verursacht.", ex);
+                string msg = "Der Audio Player hat einen Fehler verursacht.";
+
+                if (ex is System.Windows.Media.InvalidWmpVersionException)
+                {
+                    IsMediaPlayerAvailable = false;
+                    msg += "\nWindows Media Player ab Version 10 ist erforderlich, um die Audio-Funktionen von MeisterGeister zu nutzen.";
+                    msg += "\nDie Audio-Funktionen werden für diese Sitzung deaktiviert.";
+                }
+
+                var errWin = new MsgWindow("Audio Fehler", msg, ex);
                 errWin.ShowDialog();
                 errWin.Close();
             }
@@ -33,19 +47,29 @@ namespace MeisterGeister.Logic.General
             App.CloseSplashScreen();
         }
 
+        private static bool IsMediaPlayerAvailable = true;
+
         static void Player_MediaFailed(object sender, ExceptionEventArgs e)
         {
-            var errWin = new MsgWindow("Audio Fehler", "Der Audio Player hat einen Fehler verursacht.", e.ErrorException);
+            if (!IsMediaPlayerAvailable)
+                return;
+
+            string msg = "Der Audio Player hat einen Fehler verursacht.";
+
+            if (e.ErrorException is System.Windows.Media.InvalidWmpVersionException)
+            {
+                IsMediaPlayerAvailable = false;
+                msg += "\nWindows Media Player ab Version 10 ist erforderlich, um die Audio-Funktionen von MeisterGeister zu nutzen.";
+                msg += "\nDie Audio-Funktionen werden für diese Sitzung deaktiviert.";
+            }
+
+            var errWin = new MsgWindow("Audio Fehler", msg, e.ErrorException);
             errWin.ShowDialog();
             errWin.Close();
         }
 
         public static void PlayJingle()
         {
-            if (_player == null)
-                _player = new MediaPlayer();
-            _player.MediaEnded += new EventHandler(Player_JingleEnded);
-
             PlayFile(Environment.CurrentDirectory + @"\Audio\meistergeister.wav");
         }
 
