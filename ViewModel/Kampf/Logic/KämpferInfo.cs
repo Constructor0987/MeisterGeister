@@ -91,7 +91,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void Kämpfer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "InitiativeBasis" || e.PropertyName == "InitiativeBasis")
+            if (e.PropertyName == "InitiativeBasis" || e.PropertyName == "InitiativeWurf")
             {
                 Initiative = InitiativeBasis + InitiativeWurf;
                 OnChanged(e.PropertyName);
