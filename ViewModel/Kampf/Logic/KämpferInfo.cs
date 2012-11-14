@@ -6,6 +6,7 @@ using System.ComponentModel;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.Specialized;
+using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -31,7 +32,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set
             {
                 _initiative = value;
-                int bonus = Math.Max((int)Math.Floor((_initiative - 10) / 10.0), 0);
+                int bonus = Math.Max((int)Math.Floor((_initiative - 11) / 10.0), 0);
                 FreieAktionen = 2 + bonus;
                 Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
                 if (bonus > 0)
@@ -43,6 +44,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public int InitiativeBasis
         {
             get { return Kämpfer.InitiativeBasis; }
+        }
+
+        public int InitiativeWurf
+        {
+            get { return Kämpfer.InitiativeWurf; }
         }
 
         private int _team;
@@ -80,12 +86,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Kämpfer.PropertyChanged += Kämpfer_PropertyChanged;
             Team = 1;
             Initiative = k.Initiative();
-
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
         private void Kämpfer_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            OnChanged(e.PropertyName);
+            if (e.PropertyName == "InitiativeBasis" || e.PropertyName == "InitiativeBasis")
+            {
+                Initiative = InitiativeBasis + InitiativeWurf;
+                OnChanged(e.PropertyName);
+            }
         }
 
         #region Aktionen
@@ -275,6 +285,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Kämpfer.PropertyChanged -= Kämpfer_PropertyChanged;
                 Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
             }
+            PropertyChanged -= DependentProperty.PropagateINotifyProperyChanged;
         }
     }
 

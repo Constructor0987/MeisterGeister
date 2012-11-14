@@ -770,6 +770,7 @@ namespace MeisterGeister.Model
 
         #region Initiative
 
+        [DependentProperty("InitiativeModGen"), DependentProperty("MU"), DependentProperty("IN"), DependentProperty("GE")]
         public int InitiativeBasisOhneSonderfertigkeiten
         {
             get
@@ -778,7 +779,7 @@ namespace MeisterGeister.Model
             }
         }
 
-        [DependentProperty("INI_Mod"), DependentProperty("MU"), DependentProperty("IN"), DependentProperty("GE")]
+        [DependentProperty("InitiativeBasisOhneSonderfertigkeiten")]
         public int InitiativeBasisOhneMod
         {
             get
