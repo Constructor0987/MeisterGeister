@@ -53,6 +53,17 @@ namespace MeisterGeister_Tests
             Assert.AreEqual("Kampfreflexe", h2.Held_Sonderfertigkeit.FirstOrDefault().Sonderfertigkeit.Name);
         }
 
+        [Test]
+        public void ListSerialization()
+        {
+            List<int> a = new List<int>();
+            for(int i=0; i<10; i++)
+                a.Add(i);
+            var s = SerializationService.SerializeObject<List<int>>(a);
+            var o = SerializationService.DeserializeObject<List<int>>(s);
+            Assert.AreEqual(a, o);
+        }
+
         //[Test]
         //public void Exportheld()
         //{
