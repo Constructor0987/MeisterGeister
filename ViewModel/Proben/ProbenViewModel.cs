@@ -536,7 +536,7 @@ namespace MeisterGeister.ViewModel.Proben
                 {
                     if (name != string.Empty)
                     {
-                        Probe p = ProbeListe.Where(item => item.Probenname == name).First();
+                        Probe p = ProbeListe.Where(item => item.Probenname == name).FirstOrDefault();
                         if (p != null)
                             _probeFavoritenListe.Add(p);
                     }
