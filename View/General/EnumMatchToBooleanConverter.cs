@@ -30,7 +30,7 @@ namespace MeisterGeister.View.General
 
             bool useValue = (bool)value;
             string targetValue = parameter.ToString();
-            if(targetType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+            if(targetType.IsGenericType && targetType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
                 targetType = Nullable.GetUnderlyingType(targetType);
             if (useValue)
                 return Enum.Parse(targetType, targetValue);
