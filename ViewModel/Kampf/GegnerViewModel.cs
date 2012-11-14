@@ -243,6 +243,11 @@ namespace MeisterGeister.ViewModel.Kampf
                 PopUp("Der Name für einen neuen Angriff darf nicht leer sein.");
                 return;
             }
+            if (SelectedWaffe != null)
+            {
+                NewAngriffFromWaffe(SelectedWaffe);
+                return;
+            }
             GegnerBase_Angriff ga = Global.ContextHeld.New<GegnerBase_Angriff>();
             ga.Name = AngriffAddName;
             // Default-Werte
@@ -280,12 +285,12 @@ namespace MeisterGeister.ViewModel.Kampf
             if (SelectedGegnerBase == null || ga == null)
                 return null;
             var g = SelectedGegnerBase;
-            ga.GegnerBaseGUID = g.GegnerBaseGUID;
-            ga.GegnerBase = g;
-            string name = ga.Name; int i = 1;
+            string name = ga.Name; int i = 0;
             while (g.GegnerBase_Angriff.Any(gba => gba.Name == name))
                 name = String.Format("{0} ({1})", ga.Name, ++i);
             ga.Name = name;
+            ga.GegnerBaseGUID = g.GegnerBaseGUID;
+            ga.GegnerBase = g;
             SelectedGegnerBase.GegnerBase_Angriff.Add(ga);
             SaveGegner();
             OnChanged("AngriffListe");

@@ -347,11 +347,11 @@
                         <Label   Grid.Row="0" Grid.Column="0" Content="Beschwörung:" />
                         <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" Value="{Binding SelectedGegnerBase.Beschwörung}" Margin="2" ShowButtons="True" CanBeNull="True"/>
                         -->
-                            <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding AngriffAddName}" Grid.ColumnSpan="2" ToolTip="Name eines neuen Angriffs eingeben..." PreviewKeyDown="TextBoxAngriffName_PreviewKeyDown">
-                                <TextBox.InputBindings>
+                            <ComboBox Grid.Row="0" Grid.Column="0" Text="{Binding AngriffAddName}" SelectedItem="{Binding SelectedWaffe}" SelectedValuePath="Name" DisplayMemberPath="Name" ItemsSource="{Binding WaffenListe}" Grid.ColumnSpan="2" ToolTip="Name eines neuen Angriffs eingeben..." PreviewKeyDown="TextBoxAngriffName_PreviewKeyDown" IsEditable="True">
+                                <ComboBox.InputBindings>
                                     <KeyBinding Key="Enter" Command="{Binding OnNewAngriff}" />
-                                </TextBox.InputBindings>
-                            </TextBox>
+                                </ComboBox.InputBindings>
+                            </ComboBox>
                             <Button Grid.Row="0" Grid.Column="2"  Height="23" Width="25" ToolTip="Neuern Angriff einfügen" Command="{Binding OnNewAngriff}">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                             </Button>

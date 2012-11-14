@@ -56,8 +56,8 @@ namespace MeisterGeister.View.Kampf
                 {
                     Model.Gegner gegner = new Model.Gegner(gegnerBase);
                     var name = gegner.Name;
-                    int j = 1;
-                    while (_kampf.Kämpfer.Where(k => k.Kämpfer.Name == name).Count() > 0)
+                    int j = 0;
+                    while (_kampf.Kämpfer.Any(k => k.Kämpfer.Name == name))
                         name = String.Format("{0} ({1})", gegner.Name, ++j);
                     gegner.Name = name;
                     Global.ContextHeld.Insert<Model.Gegner>(gegner);
