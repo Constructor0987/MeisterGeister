@@ -225,11 +225,6 @@ namespace MeisterGeister.Daten
             // Ermitteln, ob es Update-Commands in den Resources gibt
             Type resourcesType = Type.GetType("MeisterGeister.Properties.Resources");
             System.Collections.Generic.SortedList<string, string> sqlCommands = new System.Collections.Generic.SortedList<string, string>();
-            foreach (var property in resourcesType.GetProperties(BindingFlags.Static | BindingFlags.NonPublic))
-            {
-                if (property.Name.StartsWith(string.Format("UpdateTo_V{0}", version.ToString("D4"))))
-                    sqlCommands.Add(property.Name, property.GetValue(null, null).ToString());
-            }
 
             try
             {
