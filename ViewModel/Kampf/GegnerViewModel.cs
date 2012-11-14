@@ -46,7 +46,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void SelectImage(object sender)
+        private void SelectImage(object args)
         {
             if (SelectedGegnerBase != null && selectImage != null)
             {
@@ -144,6 +144,36 @@ namespace MeisterGeister.ViewModel.Kampf
             set { angriffAddName = value; }
         }
 
+        public List<Ausrüstung> WaffenListe
+        {
+            get { return Global.ContextInventar.AusruestungListe.Where(a => a.Waffe != null || a.Fernkampfwaffe != null).OrderBy(a => a.Name).ToList(); }
+        }
+
+        private Ausrüstung selectedWaffe;
+        public Ausrüstung SelectedWaffe
+        {
+            get { return selectedWaffe; }
+            set { 
+                selectedWaffe = value;
+                OnChanged("SelectedWaffe");
+            }
+        }
+        
+        public List<Rüstung> RüstungsListe
+        {
+            get { return Global.ContextInventar.RuestungListe.OrderBy(a => a.Name).ToList(); }
+        }
+
+        private Rüstung selectedRüstung;
+        public Rüstung SelectedRüstung
+        {
+            get { return selectedRüstung; }
+            set { 
+                selectedRüstung = value;
+                OnChanged("SelectedRüstung");
+            }
+        }
+
         #endregion
 
         #region Gegner_Angriff Add and Delete Commands
@@ -158,28 +188,62 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void NewAngriff(object sender)
+        private void NewAngriff(object args)
         {
             if (SelectedGegnerBase == null)
                 return;
-            if (AngriffAddName == null || AngriffAddName == String.Empty || SelectedGegnerBase.GegnerBase_Angriff.Where(g => g.Name == AngriffAddName).Count() > 0)
+            if (AngriffAddName == null || AngriffAddName == String.Empty)
             {
-                PopUp("Der Name für einen neuen Angriff darf weder leer noch bereits verwendet sein.");
+                PopUp("Der Name für einen neuen Angriff darf nicht leer sein.");
                 return;
             }
             GegnerBase_Angriff ga = Global.ContextHeld.New<GegnerBase_Angriff>();
             ga.Name = AngriffAddName;
-            ga.GegnerBaseGUID = SelectedGegnerBase.GegnerBaseGUID;
-            ga.GegnerBase = SelectedGegnerBase;
-            
             // Default-Werte
-            ga.DK = "N"; ga.TPWürfelAnzahl = 1; ga.TPWürfel = 6;
+            ga.DK = "N"; ga.TPWürfelAnzahl = 1; ga.TPWürfel = 6; ga.AT = 10;
 
+            AddAngriff(ga);
+        }
+
+        private Base.CommandBase onNewAngriffFromWaffe = null;
+        public Base.CommandBase OnNewAngriffFromWaffe
+        {
+            get
+            {
+                if (onNewAngriffFromWaffe == null)
+                    onNewAngriffFromWaffe = new Base.CommandBase(NewAngriffFromWaffe, null);
+                return onNewAngriffFromWaffe;
+            }
+        }
+
+        private void NewAngriffFromWaffe(object args)
+        {
+            var ausr = args as Model.Ausrüstung;
+            if (ausr == null)
+                ausr = selectedWaffe;
+            if (ausr == null)
+                return;
+            if (ausr.Waffe != null)
+                AddAngriff(GegnerBase_Angriff.FromWaffe(ausr.Waffe));
+            if (ausr.Fernkampfwaffe != null)
+                AddAngriff(GegnerBase_Angriff.FromFernkampfwaffe(ausr.Fernkampfwaffe));
+        }
+
+        private GegnerBase_Angriff AddAngriff(GegnerBase_Angriff ga)
+        {
+            if (SelectedGegnerBase == null || ga == null)
+                return null;
+            var g = SelectedGegnerBase;
+            ga.GegnerBaseGUID = g.GegnerBaseGUID;
+            ga.GegnerBase = g;
+            string name = ga.Name; int i = 1;
+            while (g.GegnerBase_Angriff.Where(gba => gba.Name == name).Count() > 0)
+                name = String.Format("{0} ({1})", ga.Name, ++i);
+            ga.Name = name;
             SelectedGegnerBase.GegnerBase_Angriff.Add(ga);
             SaveGegner();
-            //Aktualisieren
-            //OnChanged("SelectedGegnerBase");
             OnChanged("AngriffListe");
+            return ga;
         }
 
         private Base.CommandBase onDeleteAngriff = null;
@@ -193,7 +257,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void DeleteAngriff(object sender)
+        private void DeleteAngriff(object args)
         {
             GegnerBase_Angriff h = SelectedAngriff;
             if (h != null && SelectedGegnerBase != null)
@@ -223,7 +287,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void NewKampfregel(object sender)
+        private void NewKampfregel(object args)
         {
             Kampfregel kr = Global.ContextHeld.New<Kampfregel>();
             Global.ContextHeld.Insert<Kampfregel>(kr);
@@ -243,7 +307,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void AddGegnerKampfregel(object sender)
+        private void AddGegnerKampfregel(object args)
         {
             if (SelectedAddKampfregel == null || SelectedGegnerBase == null)
                 return;
@@ -274,7 +338,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void DeleteKampfregel(object sender)
+        private void DeleteKampfregel(object args)
         {
             Kampfregel h = SelectedKampfregel;
             if (h != null && h.Usergenerated)
@@ -300,7 +364,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void DeleteGegnerKampfregel(object sender)
+        private void DeleteGegnerKampfregel(object args)
         {
             if (SelectedGegnerKampfregel == null || SelectedGegnerBase == null)
                 return;
@@ -330,7 +394,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void NewGegnerBase(object sender)
+        private void NewGegnerBase(object args)
         {
             GegnerBase h = Global.ContextHeld.New<GegnerBase>();
             if (Global.ContextHeld.Insert<GegnerBase>(h))
@@ -352,7 +416,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void DeleteGegnerBase(object sender)
+        private void DeleteGegnerBase(object args)
         {
             GegnerBase h = SelectedGegnerBase;
             if (h != null)
@@ -378,7 +442,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
         //        public string ExportGegnerBase(string pfad)
-        private void ExportGegnerBase(object sender)
+        private void ExportGegnerBase(object args)
         {
             GegnerBase h = SelectedGegnerBase;
             if (h != null)
@@ -411,7 +475,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 return onImportGegnerBase;
             }
         }
-        public void ImportGegnerBaseCommand(object sender)
+        public void ImportGegnerBaseCommand(object args)
         {
             string pfad = ChooseFile("Gegner importieren", "", false, "xml");
             if (pfad != null)
@@ -475,7 +539,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 return onCloneGegnerBase;
             }
         }
-        private void CloneGegnerBase(object sender)
+        private void CloneGegnerBase(object args)
         {
             if (SelectedGegnerBase != null)
             {
@@ -519,7 +583,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void ParseBemerkungAll(object sender)
+        private void ParseBemerkungAll(object args)
         {
             foreach (GegnerBase g in GegnerBaseListe)
             {
@@ -529,7 +593,7 @@ namespace MeisterGeister.ViewModel.Kampf
             OnChanged("AngriffListe");
         }
 
-        private void ParseBemerkung(object sender)
+        private void ParseBemerkung(object args)
         {
             if (SelectedGegnerBase == null)
                 return;

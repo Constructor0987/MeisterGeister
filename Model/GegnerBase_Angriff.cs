@@ -78,6 +78,36 @@ namespace MeisterGeister.Model
         }
         #endregion
 
+        public static GegnerBase_Angriff FromWaffe(Waffe waffe)
+        {
+            if (waffe == null)
+                return null;
+            GegnerBase_Angriff ga = new GegnerBase_Angriff();
+            ga.Name = waffe.Name;
+            ga.AT = 10;
+            ga.Bemerkung = waffe.Bemerkung;
+            ga.Distanzklasse = waffe.Distanzklasse;
+            ga.TPBonus = waffe.TPBonus;
+            ga.TPWürfel = waffe.TPWürfel;
+            ga.TPWürfelAnzahl = waffe.TPWürfelAnzahl;
+            return ga;
+        }
+
+        public static GegnerBase_Angriff FromFernkampfwaffe(Fernkampfwaffe waffe)
+        {
+            if (waffe == null)
+                return null;
+            GegnerBase_Angriff ga = new GegnerBase_Angriff();
+            ga.Name = waffe.Name;
+            ga.AT = 10;
+            ga.Bemerkung = waffe.Bemerkung;
+            ga.Reichweite = waffe.RWSehrWeit;
+            ga.TPWürfel = waffe.TPWürfel ?? 0;
+            ga.TPWürfelAnzahl = waffe.TPWürfelAnzahl ?? 0;
+            ga.TPBonus = waffe.TPBonus ?? 0;
+            return ga;
+        }
+
         private static Regex
                 reName = new Regex("^((?!(AT|PA|TP|DK))[\\w]+(?:\\s+(?!(AT|PA|TP|DK|:))[\\w]+)*)", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
                 reAttacke = new Regex("(?<![\\w\\d])(?:AT|FK)\\s+(\\d+)(?!\\w)", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
