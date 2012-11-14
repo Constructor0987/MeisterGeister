@@ -283,7 +283,7 @@ namespace MeisterGeister.ViewModel.Kampf
             ga.GegnerBaseGUID = g.GegnerBaseGUID;
             ga.GegnerBase = g;
             string name = ga.Name; int i = 1;
-            while (g.GegnerBase_Angriff.Where(gba => gba.Name == name).Count() > 0)
+            while (g.GegnerBase_Angriff.Any(gba => gba.Name == name))
                 name = String.Format("{0} ({1})", ga.Name, ++i);
             ga.Name = name;
             SelectedGegnerBase.GegnerBase_Angriff.Add(ga);
