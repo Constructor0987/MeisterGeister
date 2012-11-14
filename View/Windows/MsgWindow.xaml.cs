@@ -128,7 +128,11 @@ namespace MeisterGeister.View.Windows
 
         private string GetVersionString()
         {
-            return string.Format("Version: {0} / {1}", App.GetVersionString(App.GetVersionProgramm()), DatabaseUpdate.DatenbankVersionAktuell);
+            string intern = string.Empty;
+#if INTERN
+            intern = "INTERN";
+#endif
+            return string.Format("Version: {0} / {1}   {2}", App.GetVersionString(App.GetVersionProgramm()), DatabaseUpdate.DatenbankVersionAktuell, intern);
         }
 
         private string GetHilfeString()
@@ -157,11 +161,11 @@ namespace MeisterGeister.View.Windows
 
             string auflösung = SystemParameters.PrimaryScreenWidth.ToString() + "x" + SystemParameters.PrimaryScreenHeight.ToString()
                 + " (" + SystemParameters.FullPrimaryScreenWidth.ToString() + "x" + SystemParameters.FullPrimaryScreenHeight.ToString() + ")";
-
-            return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nArbeitsverzeichnis: {4}\nMeisterGeister-Verzeichnis {5}\nProzessoranzahl: {6}\nWorkingSet: {7}"
-                + "\nRenderingebene: {8}\nAuflösung: {9}\nBildschirme: {10}",
-                Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), Environment.CurrentDirectory, System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),
-                Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length);
+            
+            return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nSQL-CE-Version: {4}\nArbeitsverzeichnis: {5}\nMeisterGeister-Verzeichnis {6}\nProzessoranzahl: {7}\nWorkingSet: {8}"
+                + "\nRenderingebene: {9}\nAuflösung: {10}\nBildschirme: {11}",
+                Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), App.SqlCompactVersion == null ? "-" : App.SqlCompactVersion.ToString(), Environment.CurrentDirectory, 
+                System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length);
         }
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)

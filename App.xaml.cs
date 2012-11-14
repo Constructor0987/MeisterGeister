@@ -28,6 +28,8 @@ namespace MeisterGeister {
         /// </summary>
         static StartupWindow _splashScreen = new StartupWindow();
 
+        public static object SqlCompactVersion = "-";
+
         public App() {
 #if !DEBUG
             this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
@@ -75,13 +77,13 @@ namespace MeisterGeister {
             }
 
             // SQL-Server Compact Version prüfen
-            object sqlCompactVersion = "-";
-            sqlCompactVersion = Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v4.0", "Version", "-");
+            SqlCompactVersion = "-";
+            SqlCompactVersion = Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v4.0", "Version", "-");
             string sqlCompactVersionNeeded = "4.0.8"; //4.0.8482.1 oder 4.0.8876.1
-            if (sqlCompactVersion == null || !sqlCompactVersion.ToString().StartsWith(sqlCompactVersionNeeded))
+            if (SqlCompactVersion == null || !SqlCompactVersion.ToString().StartsWith(sqlCompactVersionNeeded))
             {
                 string msg = "Es ist keine, eine falsche oder eine beschädigte Microsoft SQL Server Compact Edition installiert.\n"
-                    + "Installiert:\t" + sqlCompactVersion
+                    + "Installiert:\t" + SqlCompactVersion
                     + "\nBenötigt:\t\t" + sqlCompactVersionNeeded + "\n\nDie benötigte Edition kann unter folgendem Link heruntergeladen werden:\n\n"
                     + @"http://www.microsoft.com/downloads/de-de/details.aspx?familyid=033cfb76-5382-44fb-bc7e-b3c8174832e2&displaylang=de";
                 MsgWindow errWin = new MsgWindow("Datenbank-Fehler", msg);
