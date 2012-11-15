@@ -3780,7 +3780,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void AktualisiereThemeGruppe()
         {
-            List<Audio_Theme> AudioThemes = Global.ContextAudio.LoadAllThemes();            
+     /*       List<Audio_Theme> AudioThemes = Global.ContextAudio.LoadAllThemes();            
             int AnzThemes = AudioThemes.Count;
 
             AktualisiereThemeEditor();
@@ -3848,7 +3848,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 //Theme hinzufügen
                 _ThemeGruppe.Add(_ThemeGrp);
             }
-        }
+      */  }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -3922,7 +3922,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void btnBGthemeAngehakt_Checked(object sender, RoutedEventArgs e)
         {
-            if (!AktThemeGruppe.IstActiv)
+  /*          if (!AktThemeGruppe.IstActiv)
                 AktThemeGruppe.ThemeName = (tboxThemeBezeichnung.Text != "") ? tboxThemeBezeichnung.Text : "Neue Themegruppe";
 
             for (int i = 0; i < ThemeLstBGPanel.Count; i++)
@@ -3935,18 +3935,18 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             AktThemeGruppe.IstActiv = true;
             AktThemeGruppe.HGThemePlaylist.Audio_Playlist = Global.ContextAudio.PlaylistListe.Find(t => t.Audio_PlaylistGUID.Equals((sender as ToggleButton).Tag));
-        }
+   */     }
 
         private void btnBGthemeAngehakt_UnChecked(object sender, RoutedEventArgs e)
         {
-            AktThemeGruppe.IstActiv = false;
+     /*       AktThemeGruppe.IstActiv = false;
             AktThemeGruppe.ThemeName = tboxThemeBezeichnung.Text != "" ? tboxThemeBezeichnung.Text : "Neue Themegruppe";
             AktThemeGruppe.HGThemePlaylist.Audio_Playlist = null;
-        }
+   */     }
 
         private void btnKlangThemeAngehakt_Checked(object sender, RoutedEventArgs e)
         {
-            if (!AktThemeGruppe.IstActiv)
+  /*          if (!AktThemeGruppe.IstActiv)
             {
                 AktThemeGruppe.IstActiv = true;
                 AktThemeGruppe.ThemeName = tboxThemeBezeichnung.Text != "" ? tboxThemeBezeichnung.Text : "Neue Themegruppe";
@@ -3954,18 +3954,18 @@ namespace MeisterGeister.View.AudioPlayer {
             Audio_Theme_Playlist aThemePlaylist = new Audio_Theme_Playlist();
             aThemePlaylist.Audio_Playlist = Global.ContextAudio.PlaylistListe.Find(t => t.Audio_PlaylistGUID.Equals((sender as ToggleButton).Tag));
             AktThemeGruppe.KlangeThemePlaylist.Add(aThemePlaylist);
-        }
+     */   }
 
         private void btnKlangThemeAngehakt_UnChecked(object sender, RoutedEventArgs e)
         {
-            AktThemeGruppe.KlangeThemePlaylist.Remove(
-                AktThemeGruppe.KlangeThemePlaylist.Where(t => t.Audio_PlaylistGUID.Equals((sender as ToggleButton).Tag)).First());
+   //         AktThemeGruppe.KlangeThemePlaylist.Remove(
+   //             AktThemeGruppe.KlangeThemePlaylist.Where(t => t.Audio_PlaylistGUID.Equals((sender as ToggleButton).Tag)).First());
         }
 
 
         private void btnThemeUebernehmen_Click(object sender, RoutedEventArgs e)
         {
-            AktThemeGruppe.dbAudioTheme.Name = tboxThemeBezeichnung.Text;
+      /*      AktThemeGruppe.dbAudioTheme.Name = tboxThemeBezeichnung.Text;
             ThemeGruppe thgrp = _ThemeGruppe.Find(t => t.dbAudioTheme.Name == AktThemeGruppe.dbAudioTheme.Name);
             try
             {
@@ -3999,7 +3999,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         aThemeKlangPlayList.Audio_Playlist = AktThemeGruppe.KlangeThemePlaylist[i].Audio_Playlist;
                         aThemeKlangPlayList.Audio_ThemeGUID = aTheme.Audio_ThemeGUID;
                         aThemeKlangPlayList.Audio_PlaylistGUID = AktThemeGruppe.KlangeThemePlaylist[i].Audio_Playlist.Audio_PlaylistGUID;
-                        
+                  
                         if (thgrp == null)
                             Global.ContextAudio.Insert<Audio_Theme_Playlist>(aThemeKlangPlayList);   
                         else
@@ -4012,7 +4012,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 var errWin = new MsgWindow("Datenbankfehler", "AudioTheme schon vorhanden. Bitte wiederholen Sie den Vorgang und wählen einen anderen Titel");
                 errWin.ShowDialog();
                 errWin.Close();
-            }
+            }*/
         }
 
     }
