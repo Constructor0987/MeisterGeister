@@ -25,13 +25,13 @@ namespace MeisterGeister.View.AudioPlayer
 
             this.Loaded += Slider_Loaded;
         }
-
+        
         void Slider_Loaded(object sender, RoutedEventArgs e)
         {
             LowerSlider.ValueChanged += LowerSlider_ValueChanged;
             UpperSlider.ValueChanged += UpperSlider_ValueChanged;
         }
-
+        
         private void LowerSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             double posLeft = (root.ActualWidth - 17) / (LowerSlider.Maximum / e.NewValue);
