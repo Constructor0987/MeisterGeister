@@ -268,6 +268,7 @@
     <Compile Include="Model\Kampfregel.cs" />
     <Compile Include="Model\GegnerBase.cs" />
     <Compile Include="Model\Audio_Theme.cs" />
+    <Compile Include="Model\Audio_Theme_Playlist.cs" />
     <Compile Include="Model\Zauberzeichen.cs" />
     <Compile Include="Model\Notizen.cs" />
     <Compile Include="Model\Service\AudioService.cs" />
@@ -440,6 +441,9 @@
     </Compile>
     <Compile Include="View\AudioPlayer\AudioTheme.xaml.cs">
       <DependentUpon>AudioTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\AudioZeile.xaml.cs">
+      <DependentUpon>AudioZeile.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\HitchPanel.xaml.cs">
       <DependentUpon>HitchPanel.xaml</DependentUpon>
@@ -787,6 +791,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AudioPlayer\AudioTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\AudioZeile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
