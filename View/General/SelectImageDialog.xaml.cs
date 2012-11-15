@@ -41,6 +41,7 @@ namespace MeisterGeister.View.General
         public string SelectedPath
         {
             get { return VM.SelectedPath; }
+            set { VM.SelectedPath = value; }
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -77,6 +78,12 @@ namespace MeisterGeister.View.General
                 }
             }
             catch (Exception) { }
+        }
+
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedPath = string.Empty;
+            DialogResult = true;
         }
     }
 
