@@ -184,9 +184,6 @@
     <Compile Include="Model\Audio_Playlist_Titel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Audio_Theme_Playlist_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Audio_Theme_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -270,6 +267,7 @@
     <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Kampfregel.cs" />
     <Compile Include="Model\GegnerBase.cs" />
+    <Compile Include="Model\Audio_Theme.cs" />
     <Compile Include="Model\Zauberzeichen.cs" />
     <Compile Include="Model\Notizen.cs" />
     <Compile Include="Model\Service\AudioService.cs" />
@@ -1411,6 +1409,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0061.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0062.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0063.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0064.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -63,5 +63,72 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region Navigation Properties
+    
+    	[DataMember]
+        public virtual ICollection<Audio_Playlist> Audio_Playlist
+        {
+            get
+            {
+                if (_audio_Playlist == null)
+                {
+                    var newCollection = new FixupCollection<Audio_Playlist>();
+                    newCollection.CollectionChanged += FixupAudio_Playlist;
+                    _audio_Playlist = newCollection;
+                }
+                return _audio_Playlist;
+            }
+            set
+            {
+                if (!ReferenceEquals(_audio_Playlist, value))
+                {
+                    var previousValue = _audio_Playlist as FixupCollection<Audio_Playlist>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAudio_Playlist;
+                    }
+                    _audio_Playlist = value;
+                    var newValue = value as FixupCollection<Audio_Playlist>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAudio_Playlist;
+                    }
+                }
+            }
+        }
+        private ICollection<Audio_Playlist> _audio_Playlist;
+
+        #endregion
+
+        #region Association Fixup
+    
+        private void FixupAudio_Playlist(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Audio_Playlist");
+            if (e.NewItems != null)
+            {
+                foreach (Audio_Playlist item in e.NewItems)
+                {
+                    if (!item.Audio_Theme.Contains(this))
+                    {
+                        item.Audio_Theme.Add(this);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Audio_Playlist item in e.OldItems)
+                {
+                    if (item.Audio_Theme.Contains(this))
+                    {
+                        item.Audio_Theme.Remove(this);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
     }
 }

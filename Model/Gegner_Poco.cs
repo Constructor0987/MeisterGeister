@@ -495,6 +495,58 @@ namespace MeisterGeister.Model
     
         }
         private string _bemerkung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Aktionen
+        {
+            get { return _aktionen; }
+            set
+    		{ 
+    			_aktionen = value;
+    			OnChanged("Aktionen");
+    		}
+    
+        }
+        private int _aktionen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int GS
+        {
+            get { return _gS; }
+            set
+    		{ 
+    			_gS = value;
+    			OnChanged("GS");
+    		}
+    
+        }
+        private int _gS;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> GS2
+        {
+            get { return _gS2; }
+            set
+    		{ 
+    			_gS2 = value;
+    			OnChanged("GS2");
+    		}
+    
+        }
+        private Nullable<int> _gS2;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> GS3
+        {
+            get { return _gS3; }
+            set
+    		{ 
+    			_gS3 = value;
+    			OnChanged("GS3");
+    		}
+    
+        }
+        private Nullable<int> _gS3;
 
         #endregion
 

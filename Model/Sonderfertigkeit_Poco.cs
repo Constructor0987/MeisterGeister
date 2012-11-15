@@ -36,6 +36,19 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual System.Guid SonderfertigkeitGUID
+        {
+            get { return _sonderfertigkeitGUID; }
+            set
+    		{ 
+    			_sonderfertigkeitGUID = value;
+    			OnChanged("SonderfertigkeitGUID");
+    		}
+    
+        }
+        private System.Guid _sonderfertigkeitGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual string Name
         {
             get { return _name; }
@@ -86,19 +99,6 @@ namespace MeisterGeister.Model
     
         }
         private string _literatur;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual System.Guid SonderfertigkeitGUID
-        {
-            get { return _sonderfertigkeitGUID; }
-            set
-    		{ 
-    			_sonderfertigkeitGUID = value;
-    			OnChanged("SonderfertigkeitGUID");
-    		}
-    
-        }
-        private System.Guid _sonderfertigkeitGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Voraussetzungen

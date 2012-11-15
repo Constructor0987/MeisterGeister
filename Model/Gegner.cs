@@ -36,6 +36,10 @@ namespace MeisterGeister.Model
             KO = gegnerBase.KO;
             MRGeist = gegnerBase.MRGeist;
             MRKörper = gegnerBase.MRKörper;
+            GS = gegnerBase.GS;
+            GS2 = gegnerBase.GS2;
+            GS3 = gegnerBase.GS3;
+            Aktionen = gegnerBase.Aktionen;
             RSArmL = gegnerBase.RSArmL;
             RSArmR = gegnerBase.RSArmR;
             RSBauch = gegnerBase.RSBauch;
@@ -398,46 +402,6 @@ namespace MeisterGeister.Model
             get
             {
                 return GegnerBase.INIZufall;
-            }
-        }
-
-        private int _aktionen = Int32.MinValue;
-        public int Aktionen
-        {
-            get
-            {
-                if(_aktionen == Int32.MinValue)
-                    _aktionen = GegnerBase.Aktionen;
-                return _aktionen;
-            }
-            set
-            {
-                _aktionen = value;
-                OnChanged("Aktionen");
-            }
-        }
-
-        public int GS
-        {
-            get
-            {
-                return GegnerBase.GS;
-            }
-        }
-
-        public int? GS2
-        {
-            get
-            {
-                return GegnerBase.GS2;
-            }
-        }
-
-        public int? GS3
-        {
-            get
-            {
-                return GegnerBase.GS3;
             }
         }
 
