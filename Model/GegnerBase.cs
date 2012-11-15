@@ -74,7 +74,7 @@ namespace MeisterGeister.Model
         {
             var g = this;
             if (g.Bemerkung != null && g.Bemerkung.Trim() != String.Empty)
-                foreach (string zeile in g.Bemerkung.Split(new char[] { '\n' }))
+                foreach (string zeile in g.Bemerkung.Split(new char[] { '\n', '\r' }))
                 {
                     GegnerBase_Angriff ga = Model.GegnerBase_Angriff.Parse(zeile);
                     if (ga != null)
