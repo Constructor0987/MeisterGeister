@@ -225,13 +225,18 @@ namespace MeisterGeister.Logic.HeldenImport
             _talentMapping.Add("heilkunde: wunden", "heilkunde wunden");
             _talentMapping.Add("kartografie", "kartographie");
             _talentMapping.Add("sprachen kennen (alt-imperial/aureliani)", "sprachen kennen (aureliani)");
+            _talentMapping.Add("sprachen kennen (alt-imperial)", "sprachen kennen (aureliani)");
+            _talentMapping.Add("sprachen kennen (alt-güldenländisch)", "sprachen kennen (aureliani)");
             _talentMapping.Add("sprachen kennen (urtulamidya)", "sprachen kennen (ur-tulamidya)");
             _talentMapping.Add("lesen/schreiben ((alt-)imperiale zeichen)", "lesen/schreiben (imperiale zeichen)");
-            _talentMapping.Add("lesen/schreiben (altes amulashtra)", "lesen/schreiben (amulashtra)");
+            _talentMapping.Add("sprachen kennen (angramm)", "sprachen kennen (angram)");
+            //_talentMapping.Add("lesen/schreiben (altes amulashtra)", "lesen/schreiben (amulashtra)");
             _talentMapping.Add("lesen/schreiben (chrmk)", "lesen/schreiben (chrmk/zelemja)");
+            _talentMapping.Add("lesen/schreiben (zelemja)", "lesen/schreiben (chrmk/zelemja)");
             _talentMapping.Add("lesen/schreiben (chuchas)", "lesen/schreiben (chuchas/yash-hualay-glyphen)");
             _talentMapping.Add("lesen/schreiben (gimaril-glyphen)", "lesen/schreiben (gimaril)");
             _talentMapping.Add("lesen/schreiben (urtulamidya)", "lesen/schreiben (ur-tulamidya)");
+            _talentMapping.Add("lesen/schreiben (angramm)", "lesen/schreiben (angram)");
             _talentMapping.Add("ritualkenntnis: gildenmagie", "ritualkenntnis (gildenmagie)");
             _talentMapping.Add("ritualkenntnis: kristallomantie", "ritualkenntnis (kristallomantie)");
             _talentMapping.Add("ritualkenntnis: scharlatan", "ritualkenntnis (scharlatanerie)");
@@ -562,7 +567,6 @@ namespace MeisterGeister.Logic.HeldenImport
 
             foreach (XmlNode talent in talente)
             {
-                bool added = false;
                 talentName = talent.Attributes["name"].Value;
 
                 // Kampfwerte
@@ -595,6 +599,9 @@ namespace MeisterGeister.Logic.HeldenImport
                     wert = 0;
 
                 Talent t = Global.ContextHeld.LoadTalentByName(talentName);
+                if (t == null)
+                    if (_talentMapping.ContainsKey(talentName.ToLowerInvariant())) // Talent wurde nicht gefunden, evtl. Konvertierung möglich
+                        t = Global.ContextHeld.LoadTalentByName(_talentMapping[talentName.ToLowerInvariant()]);
                 if (t != null)
                 {
                     Held_Talent ht = new Held_Talent();
@@ -603,32 +610,14 @@ namespace MeisterGeister.Logic.HeldenImport
                     ht.TaW = wert;
                     ht.ZuteilungAT = atZuteilung;
                     ht.ZuteilungPA = paZuteilung;
-                    _held.Held_Talent.Add(ht);
-                    added = true;
-                }
-                else
-                { // Talent wurde nicht gefunden, evtl. Konvertierung möglich
-                    if (_talentMapping.ContainsKey(talentName.ToLowerInvariant()))
+                    if (_held.Held_Talent.Any(_ht => ht.TalentGUID == _ht.TalentGUID))
                     {
-                        t = Global.ContextHeld.LoadTalentByName(_talentMapping[talentName.ToLowerInvariant()]);
-                        if (t != null)
-                        {
-                            Held_Talent ht = new Held_Talent();
-                            ht.HeldGUID = _held.HeldGUID;
-                            ht.TalentGUID = t.TalentGUID;
-                            ht.TaW = wert;
-                            ht.ZuteilungAT = atZuteilung;
-                            ht.ZuteilungPA = paZuteilung;
-                            _held.Held_Talent.Add(ht);
-                            added = true;
-                        }
-                        else
-                            added = false;
+                        AddImportLog(ImportTypen.Talent, talentName, wert, _importLog);
+                        continue;
                     }
-                    else
-                        added = false;
+                    _held.Held_Talent.Add(ht);
                 }
-                if (!added) // Import nicht möglich
+                else // Import nicht möglich
                     AddImportLog(ImportTypen.Talent, talentName, wert, _importLog);
             }
         }
