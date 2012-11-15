@@ -38,6 +38,16 @@ namespace MeisterGeister.Model.Service {
 
         #region //----- DATENBANKABFRAGEN ----
 
+        public List<Audio_Theme_Playlist> LoadThemePlaylist_ByTheme(Audio_Theme aTheme)
+        {
+            return null;
+        }
+
+        public List<Audio_Theme> LoadAllThemes()       
+        {
+            return null;
+        }
+
         public List<Audio_Titel> LoadTitelByPlaylist(Audio_Playlist aPlaylist)
         {
             List<Audio_Titel> tmp = Context.Audio_Playlist_Titel
