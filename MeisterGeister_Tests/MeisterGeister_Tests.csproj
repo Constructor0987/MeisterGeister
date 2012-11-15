@@ -135,6 +135,9 @@
     <Content Include="Daten\TestDBs\DatabaseDSA_Test.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Daten\TestDBs\Eshmael_DatabaseDSA.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Daten\TestDBs\Joker_DatabaseDSA.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
