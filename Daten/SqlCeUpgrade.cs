@@ -55,7 +55,7 @@ namespace MeisterGeister.Daten
             int versionLONGWORD = 0;
             try
             {
-                using (var fs = new FileStream(filename, FileMode.Open))
+                using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     fs.Seek(16, SeekOrigin.Begin);
                     using (BinaryReader reader = new BinaryReader(fs))
