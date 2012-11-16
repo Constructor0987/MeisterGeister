@@ -330,6 +330,10 @@
                                 <Image Source="/Images/Icons/General/add.png" />
                             </Button>
                             <TextBox Grid.Column="3" HorizontalContentAlignment="Left" Name="tboxklangsongparallel" Text="0" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallel_TextChanged" IsEnabled="True" Visibility="Hidden" />
+
+                            <Button Height="30" HorizontalAlignment="Right" Name="btnKlangSave" Width="30" ToolTip="Speichern der aktuellen Playliste" IsVisibleChanged="btnKlangSave_IsVisibleChanged" Click="btnKlangSave_Click" Grid.Column="6" VerticalAlignment="Center" Margin="0,0,60,0" TabIndex="1" Visibility="Hidden">
+                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speichern.png" />
+                            </Button>
                             
                             <Button Height="30" HorizontalAlignment="Right" Name="btnKlangOpen" Width="30" IsEnabled="True" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Click="btnKlangOpen_Click" Grid.Column="6" VerticalAlignment="Center" Margin="0,0,20,0" TabIndex="1">
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" Name="btnKlangOpenImg0" />

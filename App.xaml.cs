@@ -35,7 +35,7 @@ namespace MeisterGeister {
             this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 #endif
             // Startup-Fenster anzeigen (schließt sich automatisch)
-            _splashScreen.Show();
+   //         _splashScreen.Show();
 
             // Windows-Forms-Controls Windows-Theme aktivieren
             System.Windows.Forms.Application.EnableVisualStyles();

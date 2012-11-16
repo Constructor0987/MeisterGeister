@@ -26,6 +26,11 @@ namespace MeisterGeister.Model.Service {
             get { return Liste<Audio_Playlist_Titel>(); }
         }
 
+        public List<Model.Audio_Theme> ThemeListe
+        {
+            get { return Liste<Audio_Theme>(); }
+        }
+
         #endregion
 
         #region //----- KONSTRUKTOR ----
@@ -38,14 +43,59 @@ namespace MeisterGeister.Model.Service {
 
         #region //----- DATENBANKABFRAGEN ----
 
-        public List<Audio_Theme_Playlist> LoadThemePlaylist_ByTheme(Audio_Theme aTheme)
+
+        public List<Audio_Theme> LoadAllThemes()
         {
-            return null;
+            List<Audio_Theme> tmp = Context.Audio_Theme.ToList();
+            return tmp;
+        }        
+
+        public List<Audio_Theme> LoadThemesByGUID(Guid Audio_Theme_GUID)
+        {
+            List<Audio_Theme> tmp = Context.Audio_Theme
+                .Where(pt => pt.Audio_ThemeGUID == Audio_Theme_GUID).ToList();
+            return tmp;
         }
 
-        public List<Audio_Theme> LoadAllThemes()       
+     /*   public List<Audio_Theme_Playlist> LoadThemePlaylist_ByTheme(Audio_Theme aTheme)
         {
-            return null;
+            List<Audio_Theme_Playlist> tmp = Context.Audio_Theme_Playlist
+                .Where(pt => pt.Audio_ThemeGUID == aTheme.Audio_ThemeGUID)
+                    .Select(pt => pt).ToList();
+            return tmp;
+        }
+
+        public List<Audio_Theme_Playlist> LoadThemePlaylist_ByGuid(Guid Audio_Theme_GUID)
+        {
+            List<Audio_Theme_Playlist> tmp = Context.Audio_Theme_Playlist
+                .Where(pt => pt.Audio_ThemeGUID == Audio_Theme_GUID)
+                    .Select(pt => pt).ToList();
+            return tmp;
+        }
+        */
+        public bool AddTheme(string Themename, out Audio_Theme aTheme)
+        {
+            aTheme = New<Audio_Theme>();
+            aTheme.Name = Themename;
+            //insert, update renew
+                        
+            return Insert<Audio_Theme>(aTheme);
+        }
+        
+        
+        public bool AddAudioTitelToPlaylist(Audio_Playlist aPlaylist, Audio_Titel aTitel, out Audio_Playlist_Titel aPlaylistTitel)
+        {
+            aPlaylistTitel = New<Audio_Playlist_Titel>();
+            aPlaylistTitel.Audio_Playlist = aPlaylist;
+            aPlaylistTitel.Audio_PlaylistGUID = aPlaylist.Audio_PlaylistGUID;
+            //insert, update renew
+
+            aPlaylistTitel.Audio_Titel = aTitel;
+            aPlaylistTitel.Audio_TitelGUID = aTitel.Audio_TitelGUID;
+
+            aPlaylistTitel.Aktiv = true;
+
+            return Insert<Audio_Playlist_Titel>(aPlaylistTitel);
         }
 
         public List<Audio_Titel> LoadTitelByPlaylist(Audio_Playlist aPlaylist)
@@ -64,6 +114,7 @@ namespace MeisterGeister.Model.Service {
             return tmp;
         }
 
+
         public List<Audio_Playlist_Titel> LoadPlaylist_TitelByPlaylist(Audio_Playlist aPlaylist, Audio_Titel aTitel)
         {
             List<Audio_Playlist_Titel> tmp = Context.Audio_Playlist_Titel
@@ -78,6 +129,7 @@ namespace MeisterGeister.Model.Service {
             Audio_Playlist_Titel tmp;
             return AddTitelToPlaylist(aPlaylist, aTitel, out tmp);
         }
+
 
 
         public bool AddTitelToPlaylist(Audio_Playlist aPlaylist, Audio_Titel aTitel, out Audio_Playlist_Titel aPlaylistTitel)
