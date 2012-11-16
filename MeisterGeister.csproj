@@ -97,7 +97,10 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ares.MeisterGeisterPlugin, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL" />
+    <Reference Include="Ares.MeisterGeisterPlugin, Version=1.3.0.0, Culture=neutral, PublicKeyToken=9d390e07c24a1b09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Ares.MeisterGeisterPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="ArtefaktGenerator, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="DG-Suche, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -441,9 +444,6 @@
     </Compile>
     <Compile Include="View\AudioPlayer\AudioTheme.xaml.cs">
       <DependentUpon>AudioTheme.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AudioPlayer\AudioZeile.xaml.cs">
-      <DependentUpon>AudioZeile.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\HitchPanel.xaml.cs">
       <DependentUpon>HitchPanel.xaml</DependentUpon>
@@ -791,10 +791,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AudioPlayer\AudioTheme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\AudioPlayer\AudioZeile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
