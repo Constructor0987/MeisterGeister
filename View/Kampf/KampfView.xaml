@@ -385,12 +385,6 @@
                             <Image.ToolTip>
                                 <StackPanel>
                                     <TextBlock Height="Auto" TextWrapping="Wrap" Width="200">Rechtsklick für weitere Funktionen.</TextBlock>
-                                    <StackPanel Margin="0,6,0,0" Orientation="Horizontal">
-                                        <Image Width="24" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" VerticalAlignment="Top" />
-                                        <TextBlock Margin="4,0,0,0" Height="Auto" TextWrapping="Wrap" Width="200">
-                                    Rechtsklick auf den INI-Würfel, um das Ergebnis zu ändern. Mit einem Doppelklick wird neu gewürfelt.
-                                        </TextBlock>
-                                    </StackPanel>
                                 </StackPanel>
                             </Image.ToolTip>
                         </Image>
