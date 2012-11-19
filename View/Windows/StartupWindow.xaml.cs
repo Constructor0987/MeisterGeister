@@ -38,7 +38,8 @@ namespace MeisterGeister.View.Windows
         {
             _closeTimer.Stop();
             this.Close();
-            Application.Current.MainWindow.Opacity = 1;
+            if (Application.Current.MainWindow != null)
+                Application.Current.MainWindow.Opacity = 1;
         }
 
         private DispatcherTimer _closeTimer = new DispatcherTimer();

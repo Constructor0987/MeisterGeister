@@ -34,8 +34,15 @@ namespace MeisterGeister {
 #if !DEBUG
             this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 #endif
+
+            // Prüfen, ob MG von einem Netzlaufwerk gestartet wird
+            if (CheckNetzlaufwerk())
+                return;
+
+#if !DEBUG
             // Startup-Fenster anzeigen (schließt sich automatisch)
-   //         _splashScreen.Show();
+            _splashScreen.Show();
+#endif
 
             // Windows-Forms-Controls Windows-Theme aktivieren
             System.Windows.Forms.Application.EnableVisualStyles();
@@ -161,6 +168,31 @@ namespace MeisterGeister {
 
             // Restliche Daten aus Datenbank laden
             LoadDataFromDatabase();
+        }
+
+        private bool CheckNetzlaufwerk()
+        {
+            string dirRoot = System.IO.Directory.GetDirectoryRoot(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+            bool isNetzlaufwerk = true;
+
+            try
+            {
+                System.IO.DriveInfo driveInfo = new System.IO.DriveInfo(dirRoot);
+                isNetzlaufwerk = (driveInfo.DriveType == DriveType.Network);
+            }
+            catch (Exception) { }
+
+            if (isNetzlaufwerk)
+            {
+                if (MessageBox.Show("MeisterGeister wird von einem Netzlaufwerk gestartet. Leider wird die Verwendung eines Netzlaufwerks nicht zuverlässig unterstützt. Es wird empfohlen eine lokale Festplatte zu nutzen."
+                    + "\n\n   Trotzdem starten (OK)      Beenden (Abbruch)", "Starten von Netzlaufwerk", 
+                    MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel) == MessageBoxResult.Cancel)
+                {
+                    Shutdown();
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void LoadDataFromDatabase() {
