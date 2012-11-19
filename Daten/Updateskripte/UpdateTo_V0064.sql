@@ -14,4 +14,5 @@ GO
 ALTER TABLE Gegner ADD GS3 int NULL
 GO
 
-
+UPDATE GegnerBase SET Aktionen = 2 WHERE Aktionen = 0 OR Aktionen is NULL
+GO

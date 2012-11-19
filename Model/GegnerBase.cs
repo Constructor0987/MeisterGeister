@@ -13,6 +13,8 @@ namespace MeisterGeister.Model
             GegnerBaseGUID = Guid.NewGuid();
             Name = "Neuer Gegner";
             INIZufall = "1W6";
+            GS = 8;
+            Aktionen = 2;
         }
 
         public bool Usergenerated

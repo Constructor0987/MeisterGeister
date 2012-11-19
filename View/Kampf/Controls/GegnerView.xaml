@@ -226,7 +226,7 @@
                                 <!-- TODO AutoComplete für Tags -->
                                 <TextBox Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags}" Margin="2" />
                                 <Label   Grid.Row="2" Grid.Column="1" Content="Bemerkung:" />
-                                <TextBox Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Bemerkung}" Margin="2" />
+                                <TextBox Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Bemerkung}" Margin="2" AcceptsReturn="True" />
                             </Grid>
                             <Grid Margin="5,0,5,5" Grid.Row="1">
                                 <Grid.ColumnDefinitions>
