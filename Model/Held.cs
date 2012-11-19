@@ -1310,7 +1310,7 @@ namespace MeisterGeister.Model
             // abhängige Talente automatisch einfügen
             // TODO ??: Ins Datenmodell einbauen. Eigenes DB-Feld mit Talentabhängigkeit.
             if (vn.Name == VorNachteil.Empathie)
-                AddTalent("Empathie5", 3);
+                AddTalent("Empathie", 3);
             else if (vn.Name == VorNachteil.Gefahreninstinkt)
                 AddTalent("Gefahreninstinkt", 3);
             else if (vn.Name == VorNachteil.Geräuschhexerei)
