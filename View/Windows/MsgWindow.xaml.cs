@@ -100,17 +100,17 @@ namespace MeisterGeister.View.Windows
                 }
                 msg += "\nStatus: " + webEx.Status.ToString();
             }
-            else if (ex is System.IO.FileLoadException)
+            if (ex is System.IO.FileLoadException)
             {
                 System.IO.FileLoadException fiLoEx = (System.IO.FileLoadException)ex;
                 msg += "\nFileName: " + fiLoEx.FileName;
                 msg += "\nFusionLog: " + fiLoEx.FusionLog;
             }
-            else if (ex is System.PlatformNotSupportedException && ex.StackTrace.Contains("System.Data.SqlServerCe.SqlCeSHA256.Initialize()"))
+            if (ex is System.PlatformNotSupportedException && ex.StackTrace.Contains("System.Data.SqlServerCe.SqlCeSHA256.Initialize()"))
             {
                 msg += "\n\nHINWEIS: Falls als Betriebssystem Windows XP verwendet wird, muss das Service Pack 3 installiert sein! Dies behebt evtl. diesen Fehler.\n\n";
             }
-            else if (ex is System.Data.SqlServerCe.SqlCeException)
+            if (ex is System.Data.SqlServerCe.SqlCeException)
             {
                 System.Data.SqlServerCe.SqlCeException exDet = (System.Data.SqlServerCe.SqlCeException)ex;
                 msg += "\nErrorCode: " + exDet.ErrorCode;
@@ -122,6 +122,13 @@ namespace MeisterGeister.View.Windows
                     foreach (System.Data.SqlServerCe.SqlCeError item in exDet.Errors)
                         msg += "\n  " + ((item != null) ? item.ToString() : "null");
                 }
+            }
+            if (ex is System.Data.UpdateException)
+            {
+                System.Data.UpdateException exDet = (System.Data.UpdateException)ex;
+                msg += "\nStateEntries: ";
+                foreach (var item in exDet.StateEntries)
+                    msg += item.State + " - " + (item.Entity ?? "null") + "\n   ";
             }
             return msg;
         }
