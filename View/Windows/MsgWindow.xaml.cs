@@ -159,13 +159,23 @@ namespace MeisterGeister.View.Windows
                     break;
             }
 
+            string dirRoot = System.IO.Directory.GetDirectoryRoot(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+            string driveInfoText = dirRoot + " (Name), UNC (Typ)";
+
+            try
+            {
+                System.IO.DriveInfo driveInfo = new System.IO.DriveInfo(dirRoot);
+                driveInfoText = string.Format("{0} (Name), {1} (Format), {2} (Typ)", driveInfo.Name, driveInfo.DriveFormat, driveInfo.DriveType);
+            }
+            catch (Exception) { }
+
             string auflösung = SystemParameters.PrimaryScreenWidth.ToString() + "x" + SystemParameters.PrimaryScreenHeight.ToString()
                 + " (" + SystemParameters.FullPrimaryScreenWidth.ToString() + "x" + SystemParameters.FullPrimaryScreenHeight.ToString() + ")";
             
-            return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nSQL-CE-Version: {4}\nArbeitsverzeichnis: {5}\nMeisterGeister-Verzeichnis {6}\nProzessoranzahl: {7}\nWorkingSet: {8}"
-                + "\nRenderingebene: {9}\nAuflösung: {10}\nBildschirme: {11}",
-                Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), App.SqlCompactVersion == null ? "-" : App.SqlCompactVersion.ToString(), Environment.CurrentDirectory, 
-                System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length);
+            return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nSQL-CE-Version: {4}\nArbeitsverzeichnis: {5}\nMeisterGeister-Verzeichnis: {6}"
+                + "\nLaufwerk: {7}\nProzessoranzahl: {8}\nWorkingSet: {9}\nRenderingebene: {10}\nAuflösung: {11}\nBildschirme: {12}",
+                Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), App.SqlCompactVersion == null ? "-" : App.SqlCompactVersion.ToString(), Environment.CurrentDirectory,
+                System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), driveInfoText, Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length);
         }
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
