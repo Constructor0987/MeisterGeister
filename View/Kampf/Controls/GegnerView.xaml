@@ -498,23 +498,69 @@
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Margin="50,50,50,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Zonen-RS schließen." Click="ButtonCloseZonenRsControl_Click">
-                    <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
-                </Button>
-                <Grid Grid.Column="1" Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Grid.Background>
-                        <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
-                    </Grid.Background>
-                    <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                    <ViewGeneral:IntBox Margin="159,20,6,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" />
-                    <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedGegnerBase.RS[Kopf]}" />
-                    <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedGegnerBase.RS[Brust]}" />
-                    <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedGegnerBase.RS[Rücken]}" />
-                    <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedGegnerBase.RS[ArmR]}" />
-                    <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedGegnerBase.RS[ArmL]}" />
-                    <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedGegnerBase.RS[Bauch]}" />
-                    <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
-                    <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="400"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="1" Margin="50,50,50,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Zonen-RS schließen." Click="ButtonCloseZonenRsControl_Click">
+                        <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
+                    </Button>
+                    <Grid Grid.Column="1" Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.Background>
+                            <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                        </Grid.Background>
+                        <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
+                        <ViewGeneral:IntBox Margin="159,20,6,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" />
+                        <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedGegnerBase.RS[Kopf]}" />
+                        <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedGegnerBase.RS[Brust]}" />
+                        <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedGegnerBase.RS[Rücken]}" />
+                        <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedGegnerBase.RS[ArmR]}" />
+                        <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedGegnerBase.RS[ArmL]}" />
+                        <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedGegnerBase.RS[Bauch]}" />
+                        <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
+                        <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" >
+                        <ComboBox ItemsSource="{Binding RüstungsListe}" SelectedItem="{Binding SelectedRüstung}" SelectedValuePath="Name" MinWidth="150">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Name}" />
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="10"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding RSKopf}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding RSBrust}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding RSRücken}" />
+                                            <TextBlock Grid.Column="3" Text="{Binding RSBauch}" />
+                                            <TextBlock Grid.Column="4" Text="{Binding RSArmL}" />
+                                            <TextBlock Grid.Column="5" Text="{Binding RSArmR}" />
+                                            <TextBlock Grid.Column="6" Text="{Binding RSBeinL}" />
+                                            <TextBlock Grid.Column="7" Text="{Binding RSBeinR}" />
+                                            <TextBlock Grid.Column="8" Text="{Binding RSGesamt}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button ToolTip="Rüstung entfernen" Command="{Binding OnRemoveRüstung}">
+                            <Image Source="/Images/Icons/General/entf_02.png" Height="25" />
+                        </Button>
+                        <Button ToolTip="Rüstung hinzufügen" Command="{Binding OnAddRüstung}">
+                            <Image Source="/Images/Icons/General/add.png" Height="25" />
+                        </Button>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Border>

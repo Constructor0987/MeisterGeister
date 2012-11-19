@@ -371,6 +371,7 @@
     </Compile>
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
+    <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
@@ -1421,6 +1422,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0062.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0063.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0064.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0065.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

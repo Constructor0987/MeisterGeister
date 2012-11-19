@@ -124,6 +124,11 @@ namespace MeisterGeister.Model
             return gesamtBE;
         }
 
+        public double? RSGesamt
+        {
+            get { return BerechneGesamtRS(); }
+        }
+
         #region //---- IAusrüstung ----
         public string Name
         {
