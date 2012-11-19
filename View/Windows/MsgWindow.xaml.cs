@@ -71,6 +71,18 @@ namespace MeisterGeister.View.Windows
                     msg += "\n  " + ((item.Key != null) ? item.Key.ToString() : "null") + ": " + ((item.Value != null) ? item.Value.ToString() : "null");
             }
 
+            // aktuelle Anwendungssituation
+            try
+            {
+                msg += "\n\nAktuelles Tool: " + ((App.Current.MainWindow as MainView)._tabControlMain.SelectedItem as View.General.TabItemControl).Titel;
+            }
+            catch (Exception) { }
+            try
+            {
+                msg += "\nOffene Tools: " + Logic.Settings.Einstellungen.StartTabs;
+            }
+            catch (Exception) {  }
+
             // Syteminformationen
             msg += "\n\n" + GetSysInfoString();
             _textBoxMsg.Text = msg;
