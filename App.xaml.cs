@@ -185,7 +185,7 @@ namespace MeisterGeister {
             if (isNetzlaufwerk)
             {
                 if (MessageBox.Show("MeisterGeister wird von einem Netzlaufwerk gestartet. Leider wird die Verwendung eines Netzlaufwerks nicht zuverlässig unterstützt. Es wird empfohlen eine lokale Festplatte zu nutzen."
-                    + "\n\n   Trotzdem starten (OK)      Beenden (Abbruch)", "Starten von Netzlaufwerk", 
+                    + "\n\n   Trotzdem starten (OK)      Beenden (Abbrechen)", "Starten von Netzlaufwerk", 
                     MessageBoxButton.OKCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel) == MessageBoxResult.Cancel)
                 {
                     Shutdown();
