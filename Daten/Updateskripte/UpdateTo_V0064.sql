@@ -17,5 +17,7 @@ GO
 UPDATE GegnerBase SET Aktionen = 2 WHERE Aktionen = 0 OR Aktionen is NULL
 GO
 
+Alter TABLE [Held] ALTER COLUMN [Kampfwerte] DROP DEFAULT
+GO
 Alter TABLE [Held] ALTER COLUMN [Kampfwerte] ntext
 GO
