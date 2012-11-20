@@ -186,6 +186,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid Margin="5,5,5,0" Grid.Row="0">
                                 <Grid.ColumnDefinitions>
@@ -230,10 +231,46 @@
                             </Grid>
                             <Grid Margin="5,0,5,5" Grid.Row="1">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="64" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="64" />
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <DockPanel Grid.Row="0" Grid.Column="0">
+                                    <Label   DockPanel.Dock="Left" Content="LE:" />
+                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Firebrick" Margin="4" Width="10" />
+                                </DockPanel>
+                                <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
+                                <DockPanel Grid.Row="0" Grid.Column="2">
+                                    <Label   DockPanel.Dock="Left" Content="AU:" />
+                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="SteelBlue" Margin="4" Width="10" />
+                                </DockPanel>
+                                <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
+                                <DockPanel Grid.Row="1" Grid.Column="0">
+                                    <Label   DockPanel.Dock="Left" Content="AE:" />
+                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="BlueViolet" Margin="4" Width="10" />
+                                </DockPanel>
+                                <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
+                                <DockPanel Grid.Row="1" Grid.Column="2">
+                                    <Label   DockPanel.Dock="Left" Content="KE:" />
+                                    <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Gold" Margin="4" Width="10" />
+                                </DockPanel>
+                                <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
+                                <Label   Grid.Row="0" Grid.Column="4" Content="Literatur:" />
+                                <TextBox Grid.Row="0" Grid.Column="5" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Literatur}" Margin="2" />
+                            </Grid>
+                            <Grid Margin="5,0,5,5" Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="64" />
+                                    <ColumnDefinition />
                                     <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="64" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
@@ -244,16 +281,6 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <!-- Name, LE, AU, AE, KE, KO, INIBasis, INIZufall, MRGeist, MRKörper, PA, RSx, Aktionen, GS, GS2, GS3,  Bemerkung, Beschwörung, Beschwörungskosten, Bild, GW, Jagd, Kontrolle, Literatur, Setting, Tags  -->
-                                <Label   Grid.Row="0" Grid.Column="0" Content="LE:" />
-                                <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
-                                <Label   Grid.Row="0" Grid.Column="3" Content="AU:" />
-                                <ViewGeneral:IntBox Grid.Row="0" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
-                                <Label   Grid.Row="1" Grid.Column="0" Content="AE:" />
-                                <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
-                                <Label   Grid.Row="1" Grid.Column="3" Content="KE:" />
-                                <ViewGeneral:IntBox Grid.Row="1" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
-
                                 <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
                                 <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
                                 <Label   Grid.Row="2" Grid.Column="3" Content="INI-Zufall:" />
@@ -492,7 +519,7 @@
             </Grid>
         </ScrollViewer>
 
-        <Border Name="_rsZonenRsControl" Grid.ColumnSpan="2" Background="#E57A7A7A" Visibility="Collapsed">
+        <Border Name="_rsZonenRsControl" Grid.ColumnSpan="2" Background="#E57A7A7A" Visibility="Hidden">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
@@ -522,44 +549,50 @@
                         <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
                         <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
                     </Grid>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" >
-                        <ComboBox ItemsSource="{Binding RüstungsListe}" SelectedItem="{Binding SelectedRüstung}" SelectedValuePath="Name" MinWidth="150">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding Name}" />
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                                <ColumnDefinition Width="10"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{Binding RSKopf}" />
-                                            <TextBlock Grid.Column="1" Text="{Binding RSBrust}" />
-                                            <TextBlock Grid.Column="2" Text="{Binding RSRücken}" />
-                                            <TextBlock Grid.Column="3" Text="{Binding RSBauch}" />
-                                            <TextBlock Grid.Column="4" Text="{Binding RSArmL}" />
-                                            <TextBlock Grid.Column="5" Text="{Binding RSArmR}" />
-                                            <TextBlock Grid.Column="6" Text="{Binding RSBeinL}" />
-                                            <TextBlock Grid.Column="7" Text="{Binding RSBeinR}" />
-                                            <TextBlock Grid.Column="8" Text="{Binding RSGesamt}" />
-                                        </Grid>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Button ToolTip="Rüstung entfernen" Command="{Binding OnRemoveRüstung}">
-                            <Image Source="/Images/Icons/General/entf_02.png" Height="25" />
-                        </Button>
-                        <Button ToolTip="Rüstung hinzufügen" Command="{Binding OnAddRüstung}">
-                            <Image Source="/Images/Icons/General/add.png" Height="25" />
-                        </Button>
+                    <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Center" >
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                            <Label Content="Rüstungsschutz aus Rüstung:" VerticalAlignment="Center" />
+                            <ComboBox ItemsSource="{Binding RüstungsListe}" SelectedItem="{Binding SelectedRüstung}" SelectedValuePath="Name" MinWidth="180" MinHeight="32">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="Zonen-RS: " FontStyle="Italic" />
+                                                <TextBlock Grid.Column="1" Text="{Binding RSKopf}" />
+                                                <TextBlock Grid.Column="2" Text="{Binding RSBrust}" />
+                                                <TextBlock Grid.Column="3" Text="{Binding RSRücken}" />
+                                                <TextBlock Grid.Column="4" Text="{Binding RSBauch}" />
+                                                <TextBlock Grid.Column="5" Text="{Binding RSArmL}" />
+                                                <TextBlock Grid.Column="6" Text="{Binding RSArmR}" />
+                                                <TextBlock Grid.Column="7" Text="{Binding RSBeinL}" />
+                                                <TextBlock Grid.Column="8" Text="{Binding RSBeinR}" />
+                                                <TextBlock Grid.Column="9" Text="{Binding RSGesamt}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button ToolTip="Rüstung entfernen" Command="{Binding OnRemoveRüstung}">
+                                <Image Source="/Images/Icons/General/entf_02.png" Height="25" />
+                            </Button>
+                            <Button ToolTip="Rüstung hinzufügen" Command="{Binding OnAddRüstung}">
+                                <Image Source="/Images/Icons/General/add.png" Height="25" />
+                            </Button>
+                        </StackPanel>
+                        <TextBlock Margin="5" FontSize="10" FontStyle="Italic" Text="Hinweis: Die Rüstung wird nicht in einem Inventar gespeichert, sondern nur die Werte verrechnet. Welche Rüstung angelegt wurde, wird im Bemerkungsfeld gespeichert." MaxWidth="450" TextWrapping="Wrap" TextAlignment="Center" />
                     </StackPanel>
                 </Grid>
             </Grid>

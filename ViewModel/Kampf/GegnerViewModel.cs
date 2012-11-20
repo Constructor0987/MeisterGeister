@@ -197,6 +197,9 @@ namespace MeisterGeister.ViewModel.Kampf
                 return;
             var rsneu = SelectedRüstung + rs;
             rs.SetValues(rsneu);
+
+            // Rüstung in Bemerkung speichern
+            SelectedGegnerBase.Bemerkung += string.Format("\n{0} (Rüstung)", SelectedRüstung.Name);
         }
 
         private Base.CommandBase onRemoveRüstung = null;
@@ -219,6 +222,9 @@ namespace MeisterGeister.ViewModel.Kampf
                 return;
             var rsneu = rs - new Rüstungsschutz(SelectedRüstung);
             rs.SetValues(rsneu);
+
+            // Rüstung aus Bemerkung löschen
+            SelectedGegnerBase.Bemerkung = SelectedGegnerBase.Bemerkung.Replace(string.Format("\n{0} (Rüstung)", SelectedRüstung.Name), string.Empty);
         }
         #endregion
 
