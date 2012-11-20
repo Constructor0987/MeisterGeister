@@ -80,7 +80,7 @@
                                 <Image Grid.Column="1" Width="120" Margin="10,0,0,0" MouseDown="ImageHerokonOnline_MouseDown" Cursor="Hand" Source="/Images/Logos/HerokonOnline_Logo.png" ToolTip="http://www.herokon-online.com/" />
                                 <Image Grid.Column="2" Width="80" Margin="10,0,0,0" MouseDown="ImageHerokonOnline_MouseDown" Cursor="Hand" Source="/Images/Logos/SilverStyleStudios_Logo.png" ToolTip="http://www.herokon-online.com/" />
                             </Grid>
-                            <ListBox Grid.Row="1" Background="Transparent" BorderThickness="0" ItemsSource="{Binding RessourceImageList}" SelectedItem="{Binding SelectedRessource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" KeyDown="ListBox_KeyDown">
+                            <ListBox Grid.Row="1" Background="Transparent" BorderThickness="0" ItemsSource="{Binding RessourceImageList}" SelectedItem="{Binding SelectedRessource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" KeyDown="ListBox_KeyDown" MouseDoubleClick="ListBox_MouseDoubleClick">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel IsItemsHost="True" />

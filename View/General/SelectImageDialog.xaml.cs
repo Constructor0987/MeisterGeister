@@ -85,6 +85,11 @@ namespace MeisterGeister.View.General
             SelectedPath = string.Empty;
             DialogResult = true;
         }
+
+        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DialogResult = true;
+        }
     }
 
     /// <summary>
