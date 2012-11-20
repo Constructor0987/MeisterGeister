@@ -155,9 +155,16 @@ namespace MeisterGeister.Model.Service
             return Liste<Kultur>().Where(k => k.Name == kultur.Name && k.Kultur_Name.Any()).ToList();
         }
 
-        public List<Rasse> getRasseVariantenByRasse(Rasse rasse)
+        public List<Rasse> getRasseVariantenByRasse(Rasse rasse, string geschlecht = "")
         {
-            return Liste<Rasse>().Where(r => r.Name == rasse.Name && r.Rasse_Kultur.Any(rk => rk.Kultur.Kultur_Name.Any())).ToList();
+            var rassen = Liste<Rasse>().Where(r => r.Name == rasse.Name && r.Rasse_Kultur.Any(rk => rk.Kultur.Kultur_Name.Any()));
+            //handle Orks & Goblins
+            if (geschlecht == "m")
+                rassen = rassen.Where(r => !r.Variante.EndsWith("-Frau"));
+            else if (geschlecht == "w")
+                rassen = rassen.Where(r => !r.Variante.EndsWith("-Mann"));
+
+            return rassen.ToList();
         }
 
         public List<Kultur> getKulturVariantenByRasseVariante(Rasse rasse, bool unüblich = false)

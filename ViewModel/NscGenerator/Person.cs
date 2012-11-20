@@ -529,7 +529,7 @@ namespace MeisterGeister.ViewModel.NscGenerator
             {
                 if (kultur == null || kultur.Name == "keine Kultur") // gen Rasse(Rasse) -> gen kultur(Rasse);
                 {
-                    List<Model.Rasse> rassen = Global.ContextNsc.getRasseVariantenByRasse(rasse);
+                    List<Model.Rasse> rassen = Global.ContextNsc.getRasseVariantenByRasse(rasse, geschlecht);
                     Rasse = rassen[RandomNumberGenerator.Generator.Next(rassen.Count)];
                     List<Model.Kultur> kulturen = Global.ContextNsc.getKulturVariantenByRasseVariante(Rasse);
                     if (kulturen.Count > 0)
@@ -548,8 +548,8 @@ namespace MeisterGeister.ViewModel.NscGenerator
                 }
             }
             //TODO MP: remove Quickfix
-           if ((Rasse.Name == "Goblin" || Rasse.Name=="Ork")&&Rasse.Variante.EndsWith("-Mann")) Geschlecht = "m";
-           else if ((Rasse.Name == "Goblin" || Rasse.Name == "Ork") && Rasse.Variante.EndsWith("-Frau")) Geschlecht = "w";
+           //if ((Rasse.Name == "Goblin" || Rasse.Name=="Ork")&&Rasse.Variante.EndsWith("-Mann")) Geschlecht = "m";
+           //else if ((Rasse.Name == "Goblin" || Rasse.Name == "Ork") && Rasse.Variante.EndsWith("-Frau")) Geschlecht = "w";
         }
 
         private void setGeschlecht(string geschlecht)
