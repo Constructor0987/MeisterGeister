@@ -6,8 +6,8 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              mc:Ignorable="d" 
-             d:DesignHeight="306" d:DesignWidth="484"
-             Background="Transparent">
+             d:DesignHeight="306" d:DesignWidth="669"
+             Background="{StaticResource Background1}">
     <UserControl.Resources>
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
         <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
@@ -142,27 +142,49 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ItemsControl Grid.Column="0" Margin="5,5,0,5" Padding="30, 20" ItemTemplate="{StaticResource InitiativeListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
-                      Background="{StaticResource BackgroundPergamentHoch}" FontSize="18">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-        <Grid Grid.Column="1">
-            <StackPanel Margin="5" Background="{StaticResource BackgroundPergamentHoch}" Height="Auto" VerticalAlignment="Top">
-                <TextBlock Text="Kampfrunde:" TextAlignment="Center" FontSize="18" Margin="4,5,4,0" />
-                <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" Margin="4" TextAlignment="Center" FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
-                <TextBlock Text="INI-Phase:" TextAlignment="Center" FontSize="18" Margin="4,5,4,0" />
-                <TextBlock Text="{Binding Kampf.INIPhase}" Margin="4" TextAlignment="Center" FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
-                <TextBlock Text="Zeit:" TextAlignment="Center" FontSize="18" Margin="4,0" />
-                <TextBlock Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
-            </StackPanel>
-        </Grid>
+
+        <Expander Grid.Column="0" Grid.Row="0" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Kampfrunden-Überblick" />
+                </StackPanel>
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
+                <StackPanel Margin="5" Height="Auto" VerticalAlignment="Top" Orientation="Horizontal">
+                    <TextBlock Text="Kampfrunde:" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="4,5,4,0" />
+                    <TextBlock Name="_textBlockKampfrunde" Text="{Binding Kampf.Kampfrunde}" Margin="4" TextAlignment="Center" VerticalAlignment="Center"  FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
+                    <TextBlock Text="INI-Phase:" TextAlignment="Center" VerticalAlignment="Center"  FontSize="18" Margin="4,5,4,0" />
+                    <TextBlock Text="{Binding Kampf.INIPhase}" Margin="4" TextAlignment="Center" VerticalAlignment="Center"  FontSize="32" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" FontWeight="Bold" />
+                    <TextBlock Text="Zeit:" TextAlignment="Center" VerticalAlignment="Center"  FontSize="18" Margin="4,0" />
+                    <TextBlock Text="{Binding Kampf.Kampfzeit}" TextAlignment="Center" VerticalAlignment="Center"  Margin="4" FontSize="28" Width="110" Padding="0" Background="#FFDBDBDB" Height="43" />
+                </StackPanel>
+            </Border>
+        </Expander>
+
+        <Expander Grid.Column="0" Grid.Row="1" IsExpanded="True" Margin="5,5,5,0">
+            <Expander.Header>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Initiative-Liste" />
+                </StackPanel>
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
+                <ItemsControl Padding="30, 20" ItemTemplate="{StaticResource InitiativeListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
+                      Background="Transparent" FontSize="18">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Border>
+        </Expander>
     </Grid>
 </UserControl>
