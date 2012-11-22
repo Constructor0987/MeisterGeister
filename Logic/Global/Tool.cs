@@ -137,7 +137,7 @@ namespace MeisterGeister
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.AresPlayer.AresPlayerView)
             });
-#if (DEBUG || INTERN) // im Release-Modus ausblenden
+#if (DEBUG || INTERN || TEST) // im Release-Modus ausblenden
             ToolListe.Add("Alchimie", new Tool()
             {
                 Name = "Alchimie",

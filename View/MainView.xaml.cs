@@ -93,16 +93,16 @@ namespace MeisterGeister.View
             _labelVersion.Content = string.Format("V {0} / {1}", App.GetVersionString(App.GetVersionProgramm()),
                 DatabaseUpdate.DatenbankVersionAktuell);
 
-#if !(DEBUG || INTERN)
+#if !(DEBUG || INTERN || TEST)
             _menuItemAudioPlayer.Visibility = System.Windows.Visibility.Collapsed;
             _menuItemAbenteuer.Visibility = System.Windows.Visibility.Collapsed;
             _menuItemAlchimie.Visibility = System.Windows.Visibility.Collapsed;
 #endif
 
-#if BETA
+#if TEST
             _labelVersion.Foreground = Brushes.Red;
             _labelVersion.Background = Brushes.LightYellow;
-            _labelVersion.Content += " BETA";
+            _labelVersion.Content += " Test";
 #endif
 #if INTERN
             _labelVersion.Foreground = Brushes.Red;
@@ -565,8 +565,10 @@ namespace MeisterGeister.View
 #endif
             App.CloseSplashScreen();
 
-#if BETA
-            MessageBox.Show("ACHTUNG: Dies ist eine Beta-Version!\n" + App.GetVersionString(App.GetVersionProgramm()), "BETA-Version");
+#if TEST
+            MessageBox.Show("ACHTUNG: Dies ist eine interne Test-Version!\n"
+                      + "\nSie ist nicht mit dem normalen Release-Zweig kompatibel und dient nur internen Testzwecken!", "Test-Version",
+                      MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
         }
 

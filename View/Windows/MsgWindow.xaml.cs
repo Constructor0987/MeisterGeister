@@ -151,6 +151,9 @@ namespace MeisterGeister.View.Windows
 #if INTERN
             intern = "INTERN";
 #endif
+#if TEST
+            intern = "TEST";
+#endif
             return string.Format("Version: {0} / {1}   {2}", App.GetVersionString(App.GetVersionProgramm()), DatabaseUpdate.DatenbankVersionAktuell, intern);
         }
 
