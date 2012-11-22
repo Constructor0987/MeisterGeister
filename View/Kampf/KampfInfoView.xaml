@@ -50,75 +50,93 @@
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="InitiativeListTemplate">
-            <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}" Margin="0,2">
-                    <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
-                            <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Image Width="28" Margin="0,6,0,0" Height="28" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
-                                <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16" TextAlignment="Center" />
-                            </Grid>
-                            <TextBlock Margin="0,6,2,0" Text="{Binding KämpferInfo.Kämpfer.InitiativeWurf, StringFormat='(\{0\})'}" FontSize="16" />
-                            <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
+            <StackPanel Orientation="Horizontal">
+                <Image Margin="3" Height="65" Width="65" VerticalAlignment="Top">
+                    <Image.Source>
+                        <Binding Path="KämpferInfo.Kämpfer.Bild" IsAsync="True" Mode="OneWay">
+                            <Binding.FallbackValue>
+                                <ImageSource>
+                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                </ImageSource>
+                            </Binding.FallbackValue>
+                            <Binding.TargetNullValue>
+                                <ImageSource>
+                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                </ImageSource>
+                            </Binding.TargetNullValue>
+                        </Binding>
+                    </Image.Source>
+                </Image>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}" Margin="0,2">
+                        <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
+                                <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image Width="28" Margin="0,6,0,0" Height="28" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
+                                    <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16" TextAlignment="Center" />
+                                </Grid>
+                                <TextBlock Margin="0,6,2,0" Text="{Binding KämpferInfo.Kämpfer.InitiativeWurf, StringFormat='(\{0\})'}" FontSize="16" />
+                                <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
                                    Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
-                            <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="4,0,0,0"/>
-                        </StackPanel>
-                        <TextBlock Text="{Binding KämpferInfo.Kämpfer.HinweisText}" FontSize="14" VerticalAlignment="Center" Margin="4,0,0,2">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding KämpferInfo.Kämpfer.HinweisText.Length}" Value="0">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel.Style>
-                                <Style>
-                                    <Setter Property="StackPanel.Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding InitiativeMod}" Value="0">
-                                            <Setter Property="StackPanel.Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Style>
-                            <ComboBox Width="45" Height="22" ItemsSource="{StaticResource KampfstilValues}" DisplayMemberPath="Name" SelectedValuePath="Stil" SelectedValue="{Binding KämpferInfo.Kampfstil}"
+                                <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding KämpferInfo.Kämpfer.HinweisText}" FontSize="14" VerticalAlignment="Center" Margin="4,0,0,2">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding KämpferInfo.Kämpfer.HinweisText.Length}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel.Style>
+                                    <Style>
+                                        <Setter Property="StackPanel.Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding InitiativeMod}" Value="0">
+                                                <Setter Property="StackPanel.Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <ComboBox Width="45" Height="22" ItemsSource="{StaticResource KampfstilValues}" DisplayMemberPath="Name" SelectedValuePath="Stil" SelectedValue="{Binding KämpferInfo.Kampfstil}"
                                       BorderThickness="0">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="{Binding Bild}" Width="24" />
+                                                <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png">
+                                    <ViewGeneral:ImageDuplicator.ToolTip>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="{Binding Bild}" Width="24" />
-                                            <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding KämpferInfo.Angriffsaktionen}" />
+                                            <TextBlock Text="Angriffsaktion(en)" Margin="2,0" />
                                         </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png">
-                                <ViewGeneral:ImageDuplicator.ToolTip>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding KämpferInfo.Angriffsaktionen}" />
-                                        <TextBlock Text="Angriffsaktion(en)" Margin="2,0" />
-                                    </StackPanel>
-                                </ViewGeneral:ImageDuplicator.ToolTip>
-                            </ViewGeneral:ImageDuplicator>
-                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png">
-                                <ViewGeneral:ImageDuplicator.ToolTip>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding KämpferInfo.Abwehraktionen}" />
-                                        <TextBlock Text="Abwehraktion(en)" Margin="2,0" />
-                                    </StackPanel>
-                                </ViewGeneral:ImageDuplicator.ToolTip>
-                            </ViewGeneral:ImageDuplicator>
+                                    </ViewGeneral:ImageDuplicator.ToolTip>
+                                </ViewGeneral:ImageDuplicator>
+                                <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png">
+                                    <ViewGeneral:ImageDuplicator.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding KämpferInfo.Abwehraktionen}" />
+                                            <TextBlock Text="Abwehraktion(en)" Margin="2,0" />
+                                        </StackPanel>
+                                    </ViewGeneral:ImageDuplicator.ToolTip>
+                                </ViewGeneral:ImageDuplicator>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}">
-                    <Rectangle Margin="4,0" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
-                    <TextBlock Text="{Binding Manöver.Name}" FontSize="16" />
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}">
+                        <Rectangle Margin="4,0" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                        <TextBlock Text="{Binding Manöver.Name}" FontSize="16" />
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
