@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 64;
+        public const int DatenbankVersionAktuell = 65;
 
         /// <summary>
         /// Das zuletzt ausgeführte Update-Skript.
@@ -278,6 +278,15 @@ namespace MeisterGeister.Daten
             }
         }
 
+        private static string StripSqlComments(string skript)
+        {
+            if (skript == null)
+                return skript;
+            var r = new System.Text.RegularExpressions.Regex(@"(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|(--.*)");
+            skript = r.Replace(skript, string.Empty);
+            return skript;
+        }
+
         public static void ExecuteSqlCommand(string commands, string skriptName, SqlCeConnection connection, SqlCeTransaction transaction, bool closeConnection = true)
         {
             try
@@ -285,6 +294,8 @@ namespace MeisterGeister.Daten
                 SqlCeCommand command = new SqlCeCommand();
                 command.Connection = connection;
                 command.Transaction = transaction;
+
+                commands = StripSqlComments(commands);
 
                 string[] statements = null;
                 statements = commands.Split(new string[] { "GO" + Environment.NewLine, ";" + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
