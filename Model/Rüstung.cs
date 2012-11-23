@@ -212,7 +212,7 @@ namespace MeisterGeister.Model
 
         string BasarLogic.IHandelsgut.Tags
         {
-            get { return Gruppe; }
+            get { return Gruppe + (string.IsNullOrEmpty(Ausrüstung.Tags) ? string.Empty : ", " + Ausrüstung.Tags); }
         }
 
         double? BasarLogic.IHandelsgut.Gewicht

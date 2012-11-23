@@ -31,7 +31,7 @@ namespace MeisterGeister.Model
                     else
                         t += ", " + item.Talentname;
                 }
-                return t;
+                return t + (string.IsNullOrEmpty(Ausrüstung.Tags) ? string.Empty : ", " + Ausrüstung.Tags);
             }
         }
 
