@@ -20,7 +20,9 @@ namespace MeisterGeister.ViewModel.Schmiede
         const string RÜSTUNGGRUPPEKLEIDUNG = "Kleidung";
         const string RÜSTUNGGRUPPELEDER = "Lederrüstungen";
         const string RÜSTUNGGRUPPEPLATTE = "Plattenrüstungen";
-        const string RÜSTUNGGRUPPEKETTESCHUPPE = "Kette/Schuppe";
+        const string RÜSTUNGGRUPPEHERVORRAGENDEKETTE = "Hervorragende Kette";
+        const string RÜSTUNGGRUPPEKETTE = "Kette";
+        const string RÜSTUNGGRUPPESCHUPPE = "Schuppe";
 
         //Felder
         private int _probePunkte;
@@ -174,7 +176,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (_selectedRüstung == null) return;
             ProbePunkte = (int)Math.Round((_selectedRüstung.gRS.HasValue ? _selectedRüstung.gRS.Value : 0)* 7,0);
             ProbeErschwernis = 0;
-            if (SelectedRüstung.MeisterlicheRüstung())
+            if (SelectedRüstung.HervorragendeKette())
             {
                 ProbeErschwernis = 5;
                 ProbePunkte *= 2;
@@ -185,8 +187,14 @@ namespace MeisterGeister.ViewModel.Schmiede
                 case RÜSTUNGGRUPPEEXOTISCH :
                     ProbeErschwernis = 7;
                     break;
-                case RÜSTUNGGRUPPEKETTESCHUPPE :
-                    ProbeDauerInZe = SelectedRüstung.MeisterlicheRüstung() ? 24 : 16;
+                case RÜSTUNGGRUPPESCHUPPE :
+                    ProbeDauerInZe = 16;
+                    break;
+                case RÜSTUNGGRUPPEKETTE :
+                    ProbeDauerInZe = 16;
+                    break;
+                case RÜSTUNGGRUPPEHERVORRAGENDEKETTE :
+                    ProbeDauerInZe = 24;
                     break;
                 case RÜSTUNGGRUPPEPLATTE:
                     ProbeDauerInZe = 8;

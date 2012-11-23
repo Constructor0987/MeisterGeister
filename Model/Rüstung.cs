@@ -68,55 +68,9 @@ namespace MeisterGeister.Model
             get { return !RüstungGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
-        public bool BehinderungSteigtDurchSchwereTreffer()// todo: entfernen (-> Steif)
+        public bool HervorragendeKette()
         {
-            String thisGuid = RüstungGUID.ToString();
-            return thisGuid == "00000000-0000-0000-0004-000000000014" //Bronzeharnisch
-                || thisGuid == "00000000-0000-0000-0004-000000000020" //Eisenmantel
-                || thisGuid == "00000000-0000-0000-0004-000000000022" //Fünflagenharnisch
-                || thisGuid == "00000000-0000-0000-0004-000000000024" //Garether Platte
-                || thisGuid == "00000000-0000-0000-0004-000000000026" //Gladiatorenschulter
-                || thisGuid == "00000000-0000-0000-0004-000000000028" //Horasischer Reiterharnisch
-                || thisGuid == "00000000-0000-0000-0004-000000000025" //Gestechrüstung
-                || thisGuid == "00000000-0000-0000-0004-000000000041" //Kürass
-                || thisGuid == "00000000-0000-0000-0004-000000000042" //Kusliker Lamellar
-                || thisGuid == "00000000-0000-0000-0004-000000000043" //Lederharnisch
-                || thisGuid == "00000000-0000-0000-0004-000000000049" //Leichte Platte
-                || thisGuid == "00000000-0000-0000-0004-000000000051" //Mammutonpanzer
-                || thisGuid == "00000000-0000-0000-0004-000000000052" //Maraskanischer Hartholzharnisch
-                || thisGuid == "00000000-0000-0000-0004-000000000064" //Schup­penpanzer, lang
-                || thisGuid == "00000000-0000-0000-0004-000000000065" //Schup­penpanzer, lang
-                || thisGuid == "00000000-0000-0000-0004-000000000046" //Lederzeug
-                || thisGuid == "00000000-0000-0000-0004-000000000004" //Armschinen, Leder
-                || thisGuid == "00000000-0000-0000-0004-000000000009" //Beinschienen, Leder
-                || thisGuid == "00000000-0000-0000-0004-000000000003" //Armschienen, Bronze
-                || thisGuid == "00000000-0000-0000-0004-000000000005" //Armschienen, Stahl
-                || thisGuid == "00000000-0000-0000-0004-000000000008" //Beinschienen, Bronze
-                || thisGuid == "00000000-0000-0000-0004-000000000010" //Beinschienen, Stahl
-                || thisGuid == "00000000-0000-0000-0004-000000000060" //Plattenzeug
-                || thisGuid == "00000000-0000-0000-0004-000000000055" //Panzerbein
-                || thisGuid == "00000000-0000-0000-0004-000000000056" //Panzerhandschuhe, Paar
-                || thisGuid == "00000000-0000-0000-0004-000000000057" //Panzerschuh
-                || thisGuid == "00000000-0000-0000-0004-000000000058" //Plattenarme
-                || thisGuid == "00000000-0000-0000-0004-000000000059"; //Plattenschultern
-        }
-
-        public bool MeisterlicheRüstung()// TODO -> aus Gruppe auslesen
-        {
-            String thisGuid = RüstungGUID.ToString();
-            return thisGuid == "00000000-0000-0000-0004-000000000144" //meisterliche Kettenbeinlinge, Paar
-                || thisGuid == "00000000-0000-0000-0004-000000000145" //meisterliche Kettenhandschuhe, Paar
-                || thisGuid == "00000000-0000-0000-0004-000000000146" //meisterliche Kettenhaube
-                || thisGuid == "00000000-0000-0000-0004-000000000147" //meisterliches Kettenzeug
-                || thisGuid == "00000000-0000-0000-0004-000000000148" //meisterliche Kettenhaube, mit Gesichtsschutz
-                || thisGuid == "00000000-0000-0000-0004-000000000149" //meisterliches Kettenhemd, 1/2 Arm
-                || thisGuid == "00000000-0000-0000-0004-000000000150" //meisterliches Kettenhemd, lang
-                || thisGuid == "00000000-0000-0000-0004-000000000151" //meisterlicher Kettenmantel
-                || thisGuid == "00000000-0000-0000-0004-000000000152" //meisterliche Kettenweste
-                || thisGuid == "00000000-0000-0000-0004-000000000153" //meisterlicher Ringelpanzer
-                || thisGuid == "00000000-0000-0000-0004-000000000154" //meisterlicher Spiegelpanzer
-                || thisGuid == "00000000-0000-0000-0004-000000000156" //meisterlicher Kettenkragen
-                || thisGuid == "00000000-0000-0000-0004-000000000157"; //meisterliche Löwenmähne
+            return this.Gruppe == "Hervorragende Kette";
         }
 
         /// <summary>
