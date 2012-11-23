@@ -198,32 +198,6 @@ namespace MeisterGeister.Model
         private Nullable<int> _rBein;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<double> gRS
-        {
-            get { return _gRS; }
-            set
-    		{ 
-    			_gRS = value;
-    			OnChanged("gRS");
-    		}
-    
-        }
-        private Nullable<double> _gRS;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual Nullable<double> gBE
-        {
-            get { return _gBE; }
-            set
-    		{ 
-    			_gBE = value;
-    			OnChanged("gBE");
-    		}
-    
-        }
-        private Nullable<double> _gBE;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual Nullable<int> RS
         {
             get { return _rS; }
@@ -248,6 +222,19 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<int> _bE;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool Steif
+        {
+            get { return _steif; }
+            set
+    		{ 
+    			_steif = value;
+    			OnChanged("Steif");
+    		}
+    
+        }
+        private bool _steif;
 
         #endregion
 

@@ -112,6 +112,19 @@ namespace MeisterGeister.Model
         private System.Guid _trageortGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual bool Gehärtet
+        {
+            get { return _gehärtet; }
+            set
+    		{ 
+    			_gehärtet = value;
+    			OnChanged("Gehärtet");
+    		}
+    
+        }
+        private bool _gehärtet;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual Nullable<int> Anzahl
         {
             get { return _anzahl; }

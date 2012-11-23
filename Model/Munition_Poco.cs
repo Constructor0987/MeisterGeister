@@ -151,6 +151,19 @@ namespace MeisterGeister.Model
     
         }
         private string _spitze;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool Härtbar
+        {
+            get { return _härtbar; }
+            set
+    		{ 
+    			_härtbar = value;
+    			OnChanged("Härtbar");
+    		}
+    
+        }
+        private bool _härtbar;
 
         #endregion
 
