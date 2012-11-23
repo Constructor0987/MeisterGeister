@@ -970,7 +970,7 @@ namespace MeisterGeister.Logic.HeldenImport
             System.IO.StreamReader sr = null;
             try
             {
-                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                fs = System.IO.File.OpenRead(xmlFile);
                 sr = new System.IO.StreamReader(fs);
                 for (int i = 1; i <= 7 && !sr.EndOfStream; i++)
                 {
@@ -1125,7 +1125,7 @@ namespace MeisterGeister.Logic.HeldenImport
                         hi.InventarGUID = i.InventarGUID;
                         hi.Anzahl = anzahl;
                         hi.Angelegt = false;
-                        hi.Ort = "Rucksack";
+                        hi.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
                         if(isnew)
                             hi.Inventar = i;
                         _held.Held_Inventar.Add(hi);

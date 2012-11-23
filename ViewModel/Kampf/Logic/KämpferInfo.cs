@@ -22,6 +22,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        #region Initiative
         private int _initiative;
         public int Initiative
         {
@@ -50,6 +51,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             get { return Kämpfer.InitiativeWurf; }
         }
+        #endregion
 
         private int _team;
         public int Team

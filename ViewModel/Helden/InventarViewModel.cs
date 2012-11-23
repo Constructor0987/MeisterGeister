@@ -551,7 +551,8 @@ namespace MeisterGeister.ViewModel.Inventar {
 
             AktuellesGewicht = 0;
             if (SelectedHeld != null) {
-                AktuelleTragkraft = (SelectedHeld.KK ?? 0) * 40;
+                AktuelleTragkraft = SelectedHeld.Tragkraft;
+                AktuellesGewicht = SelectedHeld.BerechneAusrüstungsGewicht();
             } else {
                 AktuelleTragkraft = 0;
                 AktuellesGewichtInProzentZuTragkraft = 0;
@@ -565,7 +566,6 @@ namespace MeisterGeister.ViewModel.Inventar {
                     NahkampfItem value = new NahkampfItem(item, item.Ausrüstung.Waffe);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldNahkampfWaffeImInventar.Add(value);
-                    AktuellesGewicht += value.EntityNW.Gewicht * value.EntityHA.Anzahl ?? 0;
                 }
                 if ((SelectedFilterIndex == 0 ||
                     SelectedFilterIndex == 1) &&
@@ -587,7 +587,6 @@ namespace MeisterGeister.ViewModel.Inventar {
                     SchildItem value = new SchildItem(item, item.Ausrüstung.Schild);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldSchildImInventar.Add(value);
-                    AktuellesGewicht += value.EntityS.Gewicht * value.EntityHA.Anzahl ?? 0;
                 }
                 if ((SelectedFilterIndex == 0 ||
                     SelectedFilterIndex == 3) &&
@@ -609,7 +608,6 @@ namespace MeisterGeister.ViewModel.Inventar {
                     FernkampfItem value = new FernkampfItem(item, item.Ausrüstung.Fernkampfwaffe);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldFernkampfwaffeImInventar.Add(value);
-                    AktuellesGewicht += value.EntityFW.Gewicht * value.EntityHA.Anzahl ?? 0;
                 }
                 if ((SelectedFilterIndex == 0 ||
                     SelectedFilterIndex == 2) && HeldFernkampfwaffeImInventar.Count() > 0) {
@@ -630,7 +628,6 @@ namespace MeisterGeister.ViewModel.Inventar {
                     RuestungItem value = new RuestungItem(item, item.Ausrüstung.Rüstung);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldRuestungImInventar.Add(value);
-                    AktuellesGewicht += value.EntityR.Gewicht * value.EntityHA.Anzahl ?? 0;
                 }
                 if ((SelectedFilterIndex == 0 ||
                     SelectedFilterIndex == 4) &&

@@ -168,6 +168,10 @@
             <End Role="Inventar" EntitySet="Inventar" />
             <End Role="Held_Inventar" EntitySet="Held_Inventar" />
           </AssociationSet>
+          <AssociationSet Name="fk_HeldInventar_TrageortGUID" Association="DatabaseDSAModel.Store.fk_HeldInventar_TrageortGUID">
+            <End Role="Trageort" EntitySet="Trageort" />
+            <End Role="Held_Inventar" EntitySet="Held_Inventar" />
+          </AssociationSet>
           <AssociationSet Name="fk_HeldMunition_Fernkampfwaffe" Association="DatabaseDSAModel.Store.fk_HeldMunition_Fernkampfwaffe">
             <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
             <End Role="Held_Munition" EntitySet="Held_Munition" />
@@ -178,6 +182,10 @@
           </AssociationSet>
           <AssociationSet Name="fk_HeldMunition_Munition" Association="DatabaseDSAModel.Store.fk_HeldMunition_Munition">
             <End Role="Munition" EntitySet="Munition" />
+            <End Role="Held_Munition" EntitySet="Held_Munition" />
+          </AssociationSet>
+          <AssociationSet Name="fk_HeldMunition_TrageortGUID" Association="DatabaseDSAModel.Store.fk_HeldMunition_TrageortGUID">
+            <End Role="Trageort" EntitySet="Trageort" />
             <End Role="Held_Munition" EntitySet="Held_Munition" />
           </AssociationSet>
           <AssociationSet Name="fk_KulturName_Kultur" Association="DatabaseDSAModel.Store.fk_KulturName_Kultur">
@@ -605,7 +613,7 @@
           <Property Name="KE_Mod" Type="int" />
           <Property Name="KE_Aktuell" Type="int" />
           <Property Name="MR_Mod" Type="int" />
-          <Property Name="Kampfwerte" Type="nvarchar" MaxLength="500" />
+          <Property Name="Kampfwerte" Type="ntext" />
           <Property Name="Wunden" Type="int" />
           <Property Name="AktiveHeldengruppe" Type="bit" />
           <Property Name="Proben" Type="bit" />
@@ -649,12 +657,12 @@
         <EntityType Name="Held_Inventar">
           <Key>
             <PropertyRef Name="HeldGUID" />
-            <PropertyRef Name="Ort" />
+            <PropertyRef Name="TrageortGUID" />
             <PropertyRef Name="InventarGUID" />
           </Key>
           <Property Name="HeldGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Angelegt" Type="bit" Nullable="false" />
-          <Property Name="Ort" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="TrageortGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="InventarGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Anzahl" Type="int" />
         </EntityType>
@@ -663,12 +671,12 @@
             <PropertyRef Name="HeldGUID" />
             <PropertyRef Name="FernkampfwaffeGUID" />
             <PropertyRef Name="MunitionGUID" />
-            <PropertyRef Name="Ort" />
+            <PropertyRef Name="TrageortGUID" />
           </Key>
           <Property Name="HeldGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FernkampfwaffeGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="MunitionGUID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Ort" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="TrageortGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Anzahl" Type="int" />
         </EntityType>
         <EntityType Name="Held_Sonderfertigkeit">
@@ -1430,6 +1438,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_HeldInventar_TrageortGUID">
+          <End Role="Trageort" Type="DatabaseDSAModel.Store.Trageort" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Held_Inventar" Type="DatabaseDSAModel.Store.Held_Inventar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trageort">
+              <PropertyRef Name="TrageortGUID" />
+            </Principal>
+            <Dependent Role="Held_Inventar">
+              <PropertyRef Name="TrageortGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_HeldMunition_Fernkampfwaffe">
           <End Role="Fernkampfwaffe" Type="DatabaseDSAModel.Store.Fernkampfwaffe" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1469,6 +1491,20 @@
             </Principal>
             <Dependent Role="Held_Munition">
               <PropertyRef Name="MunitionGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_HeldMunition_TrageortGUID">
+          <End Role="Trageort" Type="DatabaseDSAModel.Store.Trageort" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Held_Munition" Type="DatabaseDSAModel.Store.Held_Munition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trageort">
+              <PropertyRef Name="TrageortGUID" />
+            </Principal>
+            <Dependent Role="Held_Munition">
+              <PropertyRef Name="TrageortGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2050,8 +2086,16 @@
             <End Role="Inventar" EntitySet="Inventar" />
             <End Role="Held_Inventar" EntitySet="Held_Inventar" />
           </AssociationSet>
+          <AssociationSet Name="fk_HeldInventar_TrageortGUID" Association="DatabaseDSAModel.fk_HeldInventar_TrageortGUID">
+            <End Role="Trageort" EntitySet="Trageort" />
+            <End Role="Held_Inventar" EntitySet="Held_Inventar" />
+          </AssociationSet>
           <AssociationSet Name="fk_HeldMunition_Munition" Association="DatabaseDSAModel.fk_HeldMunition_Munition">
             <End Role="Munition" EntitySet="Munition" />
+            <End Role="Held_Munition" EntitySet="Held_Munition" />
+          </AssociationSet>
+          <AssociationSet Name="fk_HeldMunition_TrageortGUID" Association="DatabaseDSAModel.fk_HeldMunition_TrageortGUID">
+            <End Role="Trageort" EntitySet="Trageort" />
             <End Role="Held_Munition" EntitySet="Held_Munition" />
           </AssociationSet>
           <AssociationSet Name="Held_Sonderfertigkeit_SonderfertigkeitFK" Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK">
@@ -2471,7 +2515,7 @@
           <Property Type="Int32" Name="KE_Mod" />
           <Property Type="Int32" Name="KE_Aktuell" />
           <Property Type="Int32" Name="MR_Mod" />
-          <Property Type="String" Name="Kampfwerte" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Kampfwerte" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Wunden" />
           <Property Type="Boolean" Name="AktiveHeldengruppe" />
           <Property Type="Boolean" Name="Proben" />
@@ -2526,32 +2570,34 @@
         <EntityType Name="Held_Inventar">
           <Key>
             <PropertyRef Name="HeldGUID" />
-            <PropertyRef Name="Ort" />
+            <PropertyRef Name="TrageortGUID" />
             <PropertyRef Name="InventarGUID" />
           </Key>
           <Property Type="Guid" Name="HeldGUID" Nullable="false" />
           <Property Type="Boolean" Name="Angelegt" Nullable="false" />
-          <Property Type="String" Name="Ort" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="TrageortGUID" Nullable="false" />
           <Property Type="Guid" Name="InventarGUID" Nullable="false" />
           <Property Type="Int32" Name="Anzahl" />
           <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.fk_HeldInventar_Held" FromRole="Held_Inventar" ToRole="Held" />
           <NavigationProperty Name="Inventar" Relationship="DatabaseDSAModel.fk_HeldInventar_Inventar" FromRole="Held_Inventar" ToRole="Inventar" />
+          <NavigationProperty Name="Trageort" Relationship="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" FromRole="Held_Inventar" ToRole="Trageort" />
         </EntityType>
         <EntityType Name="Held_Munition">
           <Key>
             <PropertyRef Name="HeldGUID" />
             <PropertyRef Name="FernkampfwaffeGUID" />
             <PropertyRef Name="MunitionGUID" />
-            <PropertyRef Name="Ort" />
+            <PropertyRef Name="TrageortGUID" />
           </Key>
           <Property Type="Guid" Name="HeldGUID" Nullable="false" />
           <Property Type="Guid" Name="FernkampfwaffeGUID" Nullable="false" />
           <Property Type="Guid" Name="MunitionGUID" Nullable="false" />
-          <Property Type="String" Name="Ort" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="TrageortGUID" Nullable="false" />
           <Property Type="Int32" Name="Anzahl" />
           <NavigationProperty Name="Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" FromRole="Held_Munition" ToRole="Fernkampfwaffe" />
           <NavigationProperty Name="Held" Relationship="DatabaseDSAModel.fk_HeldMunition_Held" FromRole="Held_Munition" ToRole="Held" />
           <NavigationProperty Name="Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_Munition" FromRole="Held_Munition" ToRole="Munition" />
+          <NavigationProperty Name="Trageort" Relationship="DatabaseDSAModel.fk_HeldMunition_TrageortGUID" FromRole="Held_Munition" ToRole="Trageort" />
         </EntityType>
         <EntityType Name="Held_Sonderfertigkeit">
           <Key>
@@ -2899,6 +2945,8 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Double" Name="TragkraftFaktor" Nullable="false" />
           <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_TrageortGUID" FromRole="Trageort" ToRole="Held_Ausrüstung" />
+          <NavigationProperty Name="Held_Inventar" Relationship="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" FromRole="Trageort" ToRole="Held_Inventar" />
+          <NavigationProperty Name="Held_Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_TrageortGUID" FromRole="Trageort" ToRole="Held_Munition" />
         </EntityType>
         <EntityType Name="Version">
           <Key>
@@ -3452,6 +3500,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_HeldInventar_TrageortGUID">
+          <End Type="DatabaseDSAModel.Trageort" Role="Trageort" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.Held_Inventar" Role="Held_Inventar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trageort">
+              <PropertyRef Name="TrageortGUID" />
+            </Principal>
+            <Dependent Role="Held_Inventar">
+              <PropertyRef Name="TrageortGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_HeldMunition_Munition">
           <End Type="DatabaseDSAModel.Munition" Role="Munition" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3463,6 +3525,20 @@
             </Principal>
             <Dependent Role="Held_Munition">
               <PropertyRef Name="MunitionGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_HeldMunition_TrageortGUID">
+          <End Type="DatabaseDSAModel.Trageort" Role="Trageort" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.Held_Munition" Role="Held_Munition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trageort">
+              <PropertyRef Name="TrageortGUID" />
+            </Principal>
+            <Dependent Role="Held_Munition">
+              <PropertyRef Name="TrageortGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4066,7 +4142,7 @@
               <MappingFragment StoreEntitySet="Held_Inventar">
                 <ScalarProperty Name="Anzahl" ColumnName="Anzahl" />
                 <ScalarProperty Name="InventarGUID" ColumnName="InventarGUID" />
-                <ScalarProperty Name="Ort" ColumnName="Ort" />
+                <ScalarProperty Name="TrageortGUID" ColumnName="TrageortGUID" />
                 <ScalarProperty Name="Angelegt" ColumnName="Angelegt" />
                 <ScalarProperty Name="HeldGUID" ColumnName="HeldGUID" />
               </MappingFragment>
@@ -4076,7 +4152,7 @@
             <EntityTypeMapping TypeName="DatabaseDSAModel.Held_Munition">
               <MappingFragment StoreEntitySet="Held_Munition">
                 <ScalarProperty Name="Anzahl" ColumnName="Anzahl" />
-                <ScalarProperty Name="Ort" ColumnName="Ort" />
+                <ScalarProperty Name="TrageortGUID" ColumnName="TrageortGUID" />
                 <ScalarProperty Name="MunitionGUID" ColumnName="MunitionGUID" />
                 <ScalarProperty Name="FernkampfwaffeGUID" ColumnName="FernkampfwaffeGUID" />
                 <ScalarProperty Name="HeldGUID" ColumnName="HeldGUID" />
@@ -4543,61 +4619,61 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="MeisterGeisterModel" ZoomLevel="94">
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="1.5904700558588234" PointY="7.448193851601423" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="3.9201474841312263" PointY="18.275094160006891" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="3.3615444709367792" PointY="11.873215472266644" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="5.2527591573320143" PointY="19.744375774517831" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="8.4776072150457686" PointY="17.318372630196798" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="10.750243914662974" PointY="12.937779447500491" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="8.8556485384961832" PointY="18.177142583847576" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="9.8505348422799877" PointY="5.2318518484159613" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="9.314057930053238" PointY="6.1356321750840319" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="9.836724455392325" PointY="20.526065642259113" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellungen" Width="1.5" PointX="9.4812813296361274" PointY="1.4173013127489487" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="10.916244629265854" PointY="14.317850909343852" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="11.184702805795103" PointY="0.45428867659265582" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="9.7343547799318824" PointY="18.063858740992778" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="0.95284378945494241" PointY="7.28685988825134" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="5.5369467630688778" PointY="29.780974357286922" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="0.30682157739383242" PointY="30.746827542198275" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="3.5325434093980785" PointY="21.690777088371469" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="3.5610353143704288" PointY="11.609069501799098" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="6.0706306854591841" PointY="19.682314285860542" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="8.3960246594604211" PointY="28.267818359782833" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="5.8728996114213476" PointY="28.179462952622895" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="10.879068357348007" PointY="20.070012176441967" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="2.7476866109053075" PointY="14.673598281421512" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="6.0001772297547094" PointY="1.1218735729911706" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="10.151664006594412" PointY="5.7488245245762286" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="7.0668900343900969" PointY="24.468114253351519" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="2.4817922182762029" PointY="2.8239521695412471" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="3.8768280650846787" PointY="28.135875715006087" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="7.6684575042074812" PointY="8.5098299125720889" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="6.718101022168109" PointY="27.943499011892591" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="6.4512971259892442" PointY="15.320092685204042" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="0.95744297325492056" PointY="30.88634274848101" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="4.5448457154188517" PointY="24.868235227124874" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="3.2838850595447631" PointY="4.5773158243751695" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="10.400909128785557" PointY="13.228418311676204" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="8.2302313801973277" PointY="6.5489509285189911" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="11.301249956386746" PointY="29.01559851924684" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="6.6585883808595074" PointY="0.93052272541938474" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Regeln" Width="1.5" PointX="6.490125733655935" PointY="9.7558619723449755" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="9.4226716428169368" PointY="11.284681131730173" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="0.77376979811758262" PointY="1.4190431988886758" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="4.58090845149984" PointY="9.0163668436074467" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="4.100975349592499" PointY="8.3500766196987" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="9.04826811004815" PointY="6.5961635888536287" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="4.2572133430546213" PointY="13.360218456648392" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="8.68494355896718" PointY="7.6785185819857373" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.6627668350295941" PointY="26.445900080001866" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="4.1491347589293186" PointY="0.34097294525288646" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="9.6098556339786647" PointY="30.124506204447012" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="2.9814088507468854" PointY="14.458929068622613" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="2.2187142959883035" PointY="11.423156788304056" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="2.0197934610861323" PointY="13.842685705908894" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="5.925577816518758" PointY="12.296089163187933" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="9.874292888620074" PointY="9.602514062823035" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="8.8861182261659373" PointY="19.780190804870887" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="0.772945650281825" PointY="29.64480662236214" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="1.7764984228538809" PointY="30.52914160421544" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="9.3649089249618864" PointY="17.56075117809733" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="10.948019256325448" PointY="21.074964115896712" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="0.49340863176314564" PointY="11.881127690841037" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="9.1347006192126781" PointY="22.356497104445705" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="4.1843884234243953" PointY="19.039424666687577" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="7.0499457768397154" PointY="27.626108569850263" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="10.398283039405142" PointY="13.934930301241078" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellungen" Width="1.5" PointX="9.86029301484129" PointY="17.637985073792741" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="4.7660695317974637" PointY="11.754527380575672" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="2.756554262133573" PointY="24.586615260963615" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="0.29742468721113385" PointY="5.5697096761175011" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="5.3264467089094438" PointY="30.753586217180633" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="6.7713771195948951" PointY="7.604623649085231" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="11.255269875403155" PointY="16.002816148103594" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="7.2636679798661117" PointY="19.797910923044157" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="5.4185656855900612" PointY="23.7689327261266" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="7.9151300973795022" PointY="12.077028622886646" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="1.0704426844932338" PointY="30.196469753140804" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="9.539589463518741" PointY="19.689435997833236" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="1.3670752986180947" PointY="0.35156250016370905" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="5.0311645199689847" PointY="24.630195390726531" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="0.93242869755831959" PointY="28.973056776902197" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="2.9017407553744228" PointY="26.683490989116716" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="7.4892917142665443" PointY="2.4592492144830755" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="6.5991318647745683" PointY="6.0583301959830944" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="2.6515020200291195" PointY="22.306661020175863" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="8.36024822125223" PointY="12.150713866646735" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="11.151003414369654" PointY="19.403380790447528" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="1.2588349828770546" PointY="30.441131799687227" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="1.1317344238663718" PointY="25.711132702283159" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="5.2001530086622356" PointY="8.3563855031302126" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="1.1200184343010273" PointY="23.360458206087564" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="1.7212185644177807" PointY="27.030922678779309" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="2.4446606163143461" PointY="15.651726148860401" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="4.1551561784721711" PointY="28.097644953102641" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="9.074654939153536" PointY="25.020082753626667" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Regeln" Width="1.5" PointX="3.0408724690977822" PointY="6.99924886552582" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="4.1888162028923706" PointY="8.16293710850316" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="1.1562124309857433" PointY="17.230801113522986" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="8.6308540760683137" PointY="23.373514663136337" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="7.3624421541404175" PointY="27.554803786592" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="11.40192419076428" PointY="13.31145108365987" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="4.7727145761124392" PointY="24.142847474730967" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="0.55310155104524528" PointY="8.9562997263652733" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="5.3778823192128362" PointY="15.451133034867763" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="10.064841174550747" PointY="26.997773436362749" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="6.2518040753210915" PointY="9.9344014273650956" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="6.9316829288991553" PointY="5.06005321678708" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="8.11630483722142" PointY="11.126018320734621" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="9.1436777269205436" PointY="12.707052668885819" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="7.5616485046044222" PointY="4.31971842251705" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="8.7670622769589812" PointY="21.500040019629541" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerEreignis_Szene" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachEreignis" />
@@ -4631,7 +4707,9 @@
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Talent" />
         <AssociationConnector Association="DatabaseDSAModel.fk_TrageortGUID" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Inventar" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Munition" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_TrageortGUID" />
         <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK" />
         <AssociationConnector Association="DatabaseDSAModel.Talent_FK" />
         <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" />

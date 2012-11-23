@@ -1423,6 +1423,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0063.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0064.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0065.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0066.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

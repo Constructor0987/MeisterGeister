@@ -68,17 +68,23 @@ namespace MeisterGeister.Model
         private bool _angelegt;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual string Ort
+        public virtual System.Guid TrageortGUID
         {
-            get { return _ort; }
+            get { return _trageortGUID; }
             set
-    		{ 
-    			_ort = value;
-    			OnChanged("Ort");
-    		}
+            {
+                if (_trageortGUID != value)
+                {
+                    if (Trageort != null && Trageort.TrageortGUID != value)
+                    {
+                        Trageort = null;
+                    }
+                    _trageortGUID = value;
+                }
+            }
     
         }
-        private string _ort;
+        private System.Guid _trageortGUID;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual System.Guid InventarGUID
@@ -147,6 +153,22 @@ namespace MeisterGeister.Model
             }
         }
         private Inventar _inventar;
+    
+    	[DataMember]
+        public virtual Trageort Trageort
+        {
+            get { return _trageort; }
+            set
+            {
+                if (!ReferenceEquals(_trageort, value))
+                {
+                    var previousValue = _trageort;
+                    _trageort = value;
+                    FixupTrageort(previousValue);
+                }
+            }
+        }
+        private Trageort _trageort;
 
         #endregion
 
@@ -190,6 +212,27 @@ namespace MeisterGeister.Model
                 if (InventarGUID != Inventar.InventarGUID)
                 {
                     InventarGUID = Inventar.InventarGUID;
+                }
+            }
+        }
+    
+        private void FixupTrageort(Trageort previousValue)
+        {
+    		OnChanged("Trageort");
+            if (previousValue != null && previousValue.Held_Inventar.Contains(this))
+            {
+                previousValue.Held_Inventar.Remove(this);
+            }
+    
+            if (Trageort != null)
+            {
+                if (!Trageort.Held_Inventar.Contains(this))
+                {
+                    Trageort.Held_Inventar.Add(this);
+                }
+                if (TrageortGUID != Trageort.TrageortGUID)
+                {
+                    TrageortGUID = Trageort.TrageortGUID;
                 }
             }
         }

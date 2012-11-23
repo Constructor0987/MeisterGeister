@@ -101,10 +101,10 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(1, h.Held_Sonderfertigkeit.Count);
 
             //waffe laden
-            Waffe waffe = MeisterGeister.Global.ContextWaffe.WaffeListe.Where(w => w.Name == "Beil").First();
+            Waffe waffe = MeisterGeister.Global.ContextInventar.WaffeListe.Where(w => w.Name == "Beil").First();
             Assert.IsNotNull(waffe);
-            //Insert mit AutoID - geht ab SQL CE 4.0.
-            Assert.IsTrue(MeisterGeister.Global.ContextWaffe.InsertHeldWaffe(h, waffe));
+            //Insert mit AutoID - geht ab SQL CE 4.0. - deaktiviert - soll in einen anderen Service
+            //Assert.IsTrue(MeisterGeister.Global.ContextWaffe.InsertHeldWaffe(h, waffe));
 
             //Speichern
             Global.ContextHeld.Save();
@@ -112,7 +112,7 @@ namespace MeisterGeister_Tests
 
         }
 
-        // leider werden IDs nicht aktualisiert.
+        // leider werden IDs nicht aktualisiert. Es funktioniert nur als Export/Import, wie im Helden umgesetzt.
         [Test]
         [Ignore]
         public void IDUpdate()

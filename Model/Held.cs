@@ -1356,7 +1356,7 @@ namespace MeisterGeister.Model
                     DeleteTalent("Prophezeien");
                 else if (vnName == VorNachteil.Zwergennase)
                     DeleteTalent("Zwergennase");
-                else if (vnName == VorNachteil.TierempathieAlle || (vnName == VorNachteil.TierempathieSpeziell)
+                else if (vnName == VorNachteil.TierempathieAlle || vnName == VorNachteil.TierempathieSpeziell)
                     DeleteTalent("Tierempathie");
             }
         }
@@ -1662,12 +1662,18 @@ namespace MeisterGeister.Model
 
         #endregion
 
-        #region Behinderung
+        #region Behinderung und Tragkraft
 
         public int Behinderung
         {
             get { return BE ?? 0; }
             set { BE = value; }
+        }
+
+        [DependentProperty("Körperkraft")]
+        public int Tragkraft
+        {
+            get { return Körperkraft * 40; }
         }
 
         #endregion
@@ -1969,6 +1975,43 @@ namespace MeisterGeister.Model
             {
                 this.Wunden = value;
             }
+        }
+        #endregion
+
+        #region Inventar und Ausrüstung
+        double? ausrüstungsGewicht = null;
+        private double AusrüstungsGewicht
+        {
+            get {
+                if (ausrüstungsGewicht == null)
+                    BerechneAusrüstungsGewicht();
+                return ausrüstungsGewicht ?? 0.0;
+            }
+            set { 
+                ausrüstungsGewicht = value;
+                OnChanged("AusrüstungsGewicht");
+            }
+        }
+
+        public double BerechneAusrüstungsGewicht()
+        {
+            double g = 0.0;
+            foreach(Held_Ausrüstung ha in Held_Ausrüstung)
+            {
+                double effGewicht = ha.Trageort.TragkraftFaktor * ha.Ausrüstung.Gewicht * (ha.Anzahl ?? 0);
+                if (ha.Angelegt && ha.Ausrüstung.Rüstung != null)
+                    effGewicht /= 2.0;
+                g += effGewicht;
+            }
+            foreach (var hi in Held_Inventar)
+            {
+                g += hi.Trageort.TragkraftFaktor * (hi.Inventar.Gewicht ?? 0) * (hi.Anzahl ?? 0);
+            }
+            foreach (var hm in Held_Munition)
+            {
+                g += hm.Trageort.TragkraftFaktor * (hm.Fernkampfwaffe.Munitionsgewicht ?? 0) * (hm.Anzahl ?? 0);
+            }
+            return AusrüstungsGewicht = g;
         }
         #endregion
     }

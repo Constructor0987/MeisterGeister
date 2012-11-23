@@ -110,6 +110,72 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Held_Ausrüstung> _held_Ausrüstung;
+    
+    	[DataMember]
+        public virtual ICollection<Held_Inventar> Held_Inventar
+        {
+            get
+            {
+                if (_held_Inventar == null)
+                {
+                    var newCollection = new FixupCollection<Held_Inventar>();
+                    newCollection.CollectionChanged += FixupHeld_Inventar;
+                    _held_Inventar = newCollection;
+                }
+                return _held_Inventar;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Inventar, value))
+                {
+                    var previousValue = _held_Inventar as FixupCollection<Held_Inventar>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Inventar;
+                    }
+                    _held_Inventar = value;
+                    var newValue = value as FixupCollection<Held_Inventar>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Inventar;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Inventar> _held_Inventar;
+    
+    	[DataMember]
+        public virtual ICollection<Held_Munition> Held_Munition
+        {
+            get
+            {
+                if (_held_Munition == null)
+                {
+                    var newCollection = new FixupCollection<Held_Munition>();
+                    newCollection.CollectionChanged += FixupHeld_Munition;
+                    _held_Munition = newCollection;
+                }
+                return _held_Munition;
+            }
+            set
+            {
+                if (!ReferenceEquals(_held_Munition, value))
+                {
+                    var previousValue = _held_Munition as FixupCollection<Held_Munition>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupHeld_Munition;
+                    }
+                    _held_Munition = value;
+                    var newValue = value as FixupCollection<Held_Munition>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupHeld_Munition;
+                    }
+                }
+            }
+        }
+        private ICollection<Held_Munition> _held_Munition;
 
         #endregion
 
@@ -129,6 +195,52 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Held_Ausrüstung item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Trageort, this))
+                    {
+                        item.Trageort = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupHeld_Inventar(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Inventar");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Inventar item in e.NewItems)
+                {
+                    item.Trageort = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Inventar item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Trageort, this))
+                    {
+                        item.Trageort = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupHeld_Munition(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Held_Munition");
+            if (e.NewItems != null)
+            {
+                foreach (Held_Munition item in e.NewItems)
+                {
+                    item.Trageort = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Held_Munition item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Trageort, this))
                     {

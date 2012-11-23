@@ -283,6 +283,15 @@ namespace MeisterGeister.ViewModel.Helden
             Held importHeld = null;
             if(!System.IO.File.Exists(pfad))
                 throw new System.IO.FileNotFoundException("Die Datei konnte nicht gefunden werden.", pfad);
+            try
+            {
+                var fs = System.IO.File.OpenRead(pfad);
+                fs.Close();
+            }
+            catch
+            {
+                throw new ArgumentException(String.Format("Die Datei {0} konnte nicht geöffnet werden.", pfad));
+            }
             bool isHeldenSoftware = false;
             if (HeldenSoftwareImporter.IsHeldenSoftwareFile(pfad))
             {
