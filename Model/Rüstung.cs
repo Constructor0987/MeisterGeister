@@ -12,6 +12,9 @@ namespace MeisterGeister.Model
 {
     public partial class Rüstung : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IHasZonenRs
     {
+
+        private static int _gRSDivisor = 20;
+
         public Rüstung()
         {
             Ausrüstung = new Ausrüstung();
@@ -19,12 +22,53 @@ namespace MeisterGeister.Model
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 
+        /// <summary>
+        /// Gibt die gRS im Zonensystem zurück
+        /// </summary>
+        /// <returns>gRS oder null</returns>
+        public Nullable<double> gRS
+        {
+            get {
+                if (ZonenrüstungswerteVorhanden())
+                {
+                    return (2 * (Kopf.Value + LBein.Value + RBein.Value) + 4 * (Bauch.Value + Brust.Value + Rücken.Value) + (LArm.Value + RArm.Value)) / _gRSDivisor;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gibt die gBE im Zonensystem zurück
+        /// </summary>
+        /// <returns>rBE oder null</returns>
+        public Nullable<double> gBE
+        {
+            get {
+                Nullable<double> gesamtBE = this.gRS;
+                if (gesamtBE.HasValue)
+                {
+                    if (this.Art == "Z")
+                    {
+                        gesamtBE /= (Math.Pow(2, (this.Verarbeitung.HasValue ? this.Verarbeitung.Value : 0)));
+                    }
+                    else
+                    {
+                        gesamtBE = Math.Max(0.0, gesamtBE.Value - (this.Verarbeitung.HasValue ? this.Verarbeitung.Value : 0));
+                    }
+                }
+                return gesamtBE;
+            }
+        }
+
         public bool Usergenerated
         {
             get { return !RüstungGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
-        public bool BehinderungSteigtDurchSchwereTreffer()
+        public bool BehinderungSteigtDurchSchwereTreffer()// todo: entfernen (-> Steif)
         {
             String thisGuid = RüstungGUID.ToString();
             return thisGuid == "00000000-0000-0000-0004-000000000014" //Bronzeharnisch
@@ -57,7 +101,7 @@ namespace MeisterGeister.Model
                 || thisGuid == "00000000-0000-0000-0004-000000000059"; //Plattenschultern
         }
 
-        public bool MeisterlicheRüstung()
+        public bool MeisterlicheRüstung()// TODO -> aus Gruppe auslesen
         {
             String thisGuid = RüstungGUID.ToString();
             return thisGuid == "00000000-0000-0000-0004-000000000144" //meisterliche Kettenbeinlinge, Paar
@@ -83,50 +127,6 @@ namespace MeisterGeister.Model
         public bool ZonenrüstungswerteVorhanden()
         {
             return (Kopf.HasValue && Brust.HasValue && Bauch.HasValue && Rücken.HasValue && RBein.HasValue && LBein.HasValue && LArm.HasValue && RArm.HasValue);
-        }
-
-        /// <summary>
-        /// Berechnet den gRS im Zonensystem
-        /// </summary>
-        /// <param name="gRSDivisor">optional, 20 falls nicht angegeben (WdS110)</param>
-        /// <returns>gRS oder null</returns>
-        public Nullable<double> BerechneGesamtRS(int gRSDivisor = 20)
-        {
-            if (ZonenrüstungswerteVorhanden())
-            {
-                return (2 * (Kopf.Value + LBein.Value + RBein.Value) + 4 * (Bauch.Value + Brust.Value + Rücken.Value) + (LArm.Value + RArm.Value)) / gRSDivisor;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Berechnet die gBE im Zonensystem
-        /// </summary>
-        /// <param name="gRSDivisor">optional, 20 falls nicht angegeben (WdS110)</param>
-        /// <returns>gBE oder null</returns>
-        public Nullable<double> BerechneGesamtBE(int gRSDivisor = 20)
-        {
-            Nullable<double> gesamtBE = BerechneGesamtRS(gRSDivisor);
-            if (gesamtBE.HasValue && this.Verarbeitung.HasValue)
-            {
-                if (this.Art == "Z")
-                {
-                    gesamtBE /= (Math.Pow(2, this.Verarbeitung.Value));
-                }
-                else
-                {
-                    gesamtBE = Math.Max(0.0, gesamtBE.Value - this.Verarbeitung.Value);
-                }
-            }
-            return gesamtBE;
-        }
-
-        public double? RSGesamt
-        {
-            get { return BerechneGesamtRS(); }
         }
 
         #region //---- IAusrüstung ----
