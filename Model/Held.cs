@@ -2011,7 +2011,8 @@ namespace MeisterGeister.Model
             {
                 g += hm.Trageort.TragkraftFaktor * (hm.Fernkampfwaffe.Munitionsgewicht ?? 0) * (hm.Anzahl ?? 0);
             }
-            return AusrüstungsGewicht = g;
+            ausrüstungsGewicht = g;
+            return g;
         }
         #endregion
     }
