@@ -1321,6 +1321,8 @@ namespace MeisterGeister.Model
                 AddTalent("Prophezeien", 3);
             else if (vn.Name == VorNachteil.Zwergennase)
                 AddTalent("Zwergennase", 3);
+            else if (vn.Name == VorNachteil.TierempathieAlle || vn.Name == VorNachteil.TierempathieSpeziell)
+                AddTalent("Tierempathie", 3);
 
             return vn;                        
         }
@@ -1354,6 +1356,8 @@ namespace MeisterGeister.Model
                     DeleteTalent("Prophezeien");
                 else if (vnName == VorNachteil.Zwergennase)
                     DeleteTalent("Zwergennase");
+                else if (vnName == VorNachteil.TierempathieAlle || (vnName == VorNachteil.TierempathieSpeziell)
+                    DeleteTalent("Tierempathie");
             }
         }
 

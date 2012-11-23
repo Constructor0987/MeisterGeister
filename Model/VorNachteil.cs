@@ -24,6 +24,8 @@ namespace MeisterGeister.Model
         public const string Magiegespür = "Magiegespür";
         public const string Prophezeien = "Prophezeien";
         public const string Zwergennase = "Zwergennase";
+        public const string TierempathieAlle = "Tierempathie (alle)";
+        public const string TierempathieSpeziell = "Tierempathie (speziell)";
 
         // Geweiht
         public const string GeweihtZwölfgöttlicheKirche = "Geweiht [zwölfgöttliche Kirche]";
