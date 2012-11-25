@@ -49,7 +49,7 @@ namespace MeisterGeister.Model
         {
             // TODO ??: Prüfung der Sonderfertigkeiten wird derzeit abgebrochen, da es zu langsam ist
             return true;
-
+#pragma warning disable 0162
             //Parsen und verifizieren der Vorraussetzung-Property
             if (Voraussetzungen != null)
             {
@@ -65,6 +65,7 @@ namespace MeisterGeister.Model
                 return (bool)tree.Eval(held);
             }
             return true;
+#pragma warning restore 0162
         }
 
         public Setting Setting

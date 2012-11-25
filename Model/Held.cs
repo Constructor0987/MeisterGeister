@@ -1610,10 +1610,17 @@ namespace MeisterGeister.Model
                     m2 = a[1];
                 }
             }
-            IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && ((exactMatch && hs.Sonderfertigkeit.Name == sonderfertigkeit)
-                || (!exactMatch && hs.Sonderfertigkeit.Name.StartsWith(m1))
-                && (m2 == string.Empty || hs.Sonderfertigkeit.Name.EndsWith(m2))
-                ));
+            IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null &&
+                (
+                    (exactMatch && hs.Sonderfertigkeit.Name == sonderfertigkeit)
+                    || 
+                    (
+                        !exactMatch && hs.Sonderfertigkeit.Name.StartsWith(m1)
+                        && 
+                        (m2 == string.Empty || hs.Sonderfertigkeit.Name.EndsWith(m2))
+                    )
+                )
+            );
             if(hso.Count() == 0)
                 return false;
             //rekursiv die voraussetzungen prüfen

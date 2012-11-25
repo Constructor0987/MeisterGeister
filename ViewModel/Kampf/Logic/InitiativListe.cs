@@ -115,6 +115,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Sort();
             //else if (args.PropertyName == "Manöver")
             //    OnChanged("Manöver"); //es muss ein event ausgelöst werden um die aktionen neu durchzuplanen.
+            //TODO JT: wenn das manöver eine längerfristige Aktion ist oder eine dauer > 1 hat oder mehr als nur eine Angriffsaktion verbraucht,
+            // dann  werden alle nachfolgenden manöverinfos gelöscht und u.u. ein zweites ManöverInfo mit diesem Manöver eingestellt.
+            //Danach StandardaktionenSetzen
+            //
         }
 
         public void Sort()
@@ -155,13 +159,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
+        public new event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnChanged(String info)
+        public void OnChanged(String info, object source = null)
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
+                if (source == null)
+                    source = this;
+                PropertyChanged(source, new PropertyChangedEventArgs(info));
             }
         }
 

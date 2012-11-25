@@ -133,7 +133,6 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
-        // Verhalten nicht mehr aktuell, wie der Test gerade geschrieben ist.
         public void ManöverTests()
         {
             Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();

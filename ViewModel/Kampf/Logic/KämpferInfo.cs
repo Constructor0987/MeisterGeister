@@ -265,6 +265,102 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _waffenloserKampfstil; }
             set { _waffenloserKampfstil = value; }
         }
+
+        public List<ManöverInfo> ManöverInfos
+        {
+            get { return Kampf.InitiativListe.Where(mi => mi.KämpferInfo == this).OrderByDescending(mi => mi.Initiative).ToList(); }
+        }
+
+        private void DeleteManöver(ref List<ManöverInfo> geplanteAktionen)
+        {
+            var ki = this;
+            //löschen von Manövern, für die der falsche Kampfstil gewählt ist.
+            if (ki.Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
+            {
+                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).ToList())
+                    Kampf.InitiativListe.Remove(mi);
+            }
+            if (ki.Kampfstil != Kampfstil.Parierwaffenstil)
+            {
+                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.TodVonLinks).ToList())
+                    Kampf.InitiativListe.Remove(mi);
+            }
+            while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Angriffsaktionen)
+            {
+                var manöver = geplanteAktionen.FirstOrDefault();
+                //Das letzte Manöver wird in KeineAktion umgewandelt um den Kämpfer weiterhin in der Liste zu haben.
+                if (ki.Angriffsaktionen == 0 && geplanteAktionen.Count == 1)
+                {
+                    manöver.Manöver = new Manöver.KeineAktion(ki);
+                    break;
+                }
+                //alle anderen Manöver, die zuviel sind, löschen.
+                Kampf.InitiativListe.Remove(manöver);
+                geplanteAktionen.Remove(manöver);
+            }
+            //wenn die Liste ganz leer ist, füge KeineAktion hinzu
+            if (ki.Angriffsaktionen == 0 && Kampf.InitiativListe.Where(mi => mi.KämpferInfo == ki).Count() == 0)
+                Kampf.InitiativListe.Add(ki, new Manöver.KeineAktion(ki), 0);
+        }
+
+        public void StandardAktionenSetzen()
+        {
+            var ki = this;
+            var geplanteAktionen = ManöverInfos.Where(mi => mi.IsAktion).ToList().OrderBy(mi => mi.Initiative).ToList();
+            //löschen von Manövern, für die der falsche Kampfstil gewählt ist. oder für die zu wenig aktionen vorhanden sind.
+            DeleteManöver(ref geplanteAktionen);
+
+            int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).Count();
+            for (int i = geplanteAktionen.Count; i < ki.Angriffsaktionen; i++)
+            {
+                if (i == 0)
+                {
+                    var m = ManöverInfos.Where(mi => mi.Manöver is Manöver.KeineAktion).FirstOrDefault();
+                    if (m == null)
+                        Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), 0);
+                    else
+                        m.Manöver = new Manöver.Attacke(ki);
+                }
+                else // i>=1
+                {
+                    var ersterAngriff = ki.ManöverInfos.Where(mi => mi.Manöver is Manöver.Angriffsaktion).FirstOrDefault();
+                    if (ki.Kampfstil == Kampfstil.BeidhändigerKampf)
+                    {
+                        //normale Aktionen und zusatzaktionen getrennt zählen, dann ist es einfach
+                        //wenn noch keine Angriffsaktion da ist, dann Attacke bei i*-8
+                        //wenn schon eine Angriffsaktion in der Liste ist, und i<Aktionen, dann zusatzaktion bei erste Angriffsaktion-4. sonst Attacke bei -8
+                        if (ersterAngriff == null)
+                        {
+                            Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), Math.Min(i * -4, -8));
+                        }
+                        else
+                        if (ersterAngriff != null)
+                        {
+                            if (zusatzAktionen > 0 && ki.Abwehraktionen==0 && i==ki.Angriffsaktionen-1) //es wurde umgewandelt.
+                                Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), -8);
+                            else
+                            {
+                                //4 ini-phasen nach dem ersten angriff
+                                Kampf.InitiativListe.Add(ki, new Manöver.ZusätzlicheAngriffsaktion(ki), ersterAngriff.InitiativeMod + (zusatzAktionen + 1) * -4);
+                                zusatzAktionen++;
+                            }
+                        }
+                    }
+                    else if (ki.Kampfstil == Kampfstil.Parierwaffenstil)
+                    {
+                        if (ersterAngriff != null && (ki.Kämpfer is Model.Gegner || (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")) && geplanteAktionen.Where(mi => mi.Manöver is Manöver.TodVonLinks).Count() == 0)
+                            Kampf.InitiativListe.Add(ki, new Manöver.TodVonLinks(ki), Math.Min(i * -4, -8));
+                        else
+                            Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), Math.Min(i * -4, -8));
+                    }
+                    else if (ki.Kämpfer is Model.Gegner && ki.Aktionen > 2)
+                        Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), i * -4);
+                    else
+                        Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), Math.Min(i * -4, -8));
+                }
+            }
+
+        }
         #endregion
 
         #region INotifyPropertyChanged
