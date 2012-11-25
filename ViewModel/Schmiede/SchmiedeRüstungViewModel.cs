@@ -23,6 +23,7 @@ namespace MeisterGeister.ViewModel.Schmiede
         const string RÜSTUNGGRUPPEHERVORRAGENDEKETTE = "Hervorragende Kette";
         const string RÜSTUNGGRUPPEKETTE = "Kette";
         const string RÜSTUNGGRUPPESCHUPPE = "Schuppe";
+        const string FILTERDEAKTIVIEREN = "Alle";
 
         //Felder
         private int _probePunkte;
@@ -34,7 +35,9 @@ namespace MeisterGeister.ViewModel.Schmiede
         
         //Listen + SelectedItems
         private Model.Rüstung _selectedRüstung;
+        private String _selectedRüstungTyp;
         private List<Model.Rüstung> _rüstungListe = new List<Model.Rüstung>();
+        private List<String> _rüstungTypenListe = new List<string>();
 
         #endregion
 
@@ -123,6 +126,24 @@ namespace MeisterGeister.ViewModel.Schmiede
             }
         }
 
+        public String SelectedRüstungTyp
+        {
+            get { return _selectedRüstungTyp; }
+            set
+            {
+                _selectedRüstungTyp = value;
+                if (value != FILTERDEAKTIVIEREN)
+                {
+                    RüstungListe = Global.ContextInventar.RuestungListe.Where(r => r.Gruppe.Contains(value)).ToList();
+                }
+                else
+                {
+                    RüstungListe = Global.ContextInventar.RuestungListe.ToList();
+                }
+                OnChanged("SelectedRüstungTyp");
+            }
+        }
+
         //Listen
         public List<Model.Rüstung> RüstungListe
         {
@@ -131,6 +152,16 @@ namespace MeisterGeister.ViewModel.Schmiede
             {
                 _rüstungListe = value;
                 OnChanged("RüstungListe");
+            }
+        }
+
+        public List<String> RüstungTypenListe
+        {
+            get { return _rüstungTypenListe; }
+            set
+            {
+                _rüstungTypenListe = value;
+                OnChanged("RüstungTypenListe");
             }
         }
 
@@ -152,8 +183,11 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         private void Init()
         {
-            RüstungListe = Global.ContextInventar.RuestungListe;
+            RüstungListe.AddRange(Global.ContextInventar.RuestungListe.Where(w => !RüstungListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("RüstungListe");
+            RüstungTypenListe.Add(FILTERDEAKTIVIEREN);
+            RüstungTypenListe.AddRange(Global.ContextInventar.RuestungListe.Where(r => !RüstungTypenListe.Contains(r.Gruppe)).Select(r => r.Gruppe));
+            OnChanged("RüstungTypenListe");
         }
 
         public void Refresh()

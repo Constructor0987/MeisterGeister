@@ -18,6 +18,14 @@
 
 		<Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
 			<StackPanel Orientation="Vertical" VerticalAlignment="Top">
+				<TextBlock Margin="5" Text="Rüstungsgruppe:" />
+                <ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=RüstungTypenListe}" SelectedItem="{Binding Path=SelectedRüstungTyp}">
+					<ComboBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<VirtualizingStackPanel />
+						</ItemsPanelTemplate>
+					</ComboBox.ItemsPanel>
+				</ComboBox>
 				<TextBlock Margin="5" Text="Rüstung:" />
 				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=RüstungListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedRüstung}">
 					<ComboBox.ItemsPanel>
