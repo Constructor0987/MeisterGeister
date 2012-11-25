@@ -38,7 +38,7 @@
 				<StackPanel Orientation="Vertical">
 					<TextBlock Margin="5" Text="Typ:" />
 					<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=MunitionListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedMunition}" />
-                    <CheckBox Content="gehärtet"  />
+                    <CheckBox Margin="5,0,5,0" Content="gehärtet" IsChecked="{Binding GeschossHärten}" IsEnabled="{Binding IstGeschossHärtbar}"  />
 				</StackPanel>
 			</StackPanel>
 		</Border>

@@ -31,6 +31,9 @@ namespace MeisterGeister.ViewModel.Schmiede
         //Felder
         private int _anzahl;
 
+        private bool _istGeschossHärtbar;
+        private bool _geschossHärten;
+
         private double _munitionspreis;
 
         private int _probePunkte;
@@ -69,6 +72,31 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == _anzahl) return;
                 _anzahl = value;
                 OnChanged("Anzahl");
+            }
+        }
+
+        public Boolean IstGeschossHärtbar
+        {
+            get { return _istGeschossHärtbar; }
+            private set
+            {
+                if (_istGeschossHärtbar == value) return;
+                if (!value) GeschossHärten = false;
+                _istGeschossHärtbar = value;
+                OnChanged("IstGeschossHärtbar");
+            }
+
+        }
+
+        public Boolean GeschossHärten
+        {
+            get { return _geschossHärten; }
+            set
+            {
+                if (!_istGeschossHärtbar) return;
+                _geschossHärten = value;
+                OnChanged("GeschossHärten");
+                BerechneGeschoss();
             }
         }
 
@@ -232,6 +260,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == null) return;
                 _selectedMunition = value;
                 OnChanged("SelectedMunition");
+                IstGeschossHärtbar = _selectedMunition.HärtbarNachSetting;
                 BerechneGeschoss();
             }
         }

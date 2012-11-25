@@ -23,10 +23,22 @@ namespace MeisterGeister.Model
         /// <returns>true oder false</returns>
         public bool HärtbarNachSetting
         {
+            // Nur im Myranor-Setting gibt es diverse gehärtete Pfeile / Bolzen
+            // in allen anderen Settings nur Jagd/Kriegs-Bolzen/Pfeile
             get {
-                return this.Härtbar;
-                //TODO: Bei Setting Aventurien sind nur Kriegspfeile und Bolzen härtbar;
-                // Schmiede: Probe fest +4, Preis zusätzlich *4
+                if (Model.Setting.AktiveSettings.Any(s => s.Name == "Myranor")){
+                    return this.Härtbar;
+                }else{
+                    switch (this.MunitionGUID.ToString())
+                    {
+                        case "00000000-0000-0000-000f-000000000003":  //  Jagdpfeil
+                        case "00000000-0000-0000-000f-000000000004":  // Kriegspfeil
+                        case "00000000-0000-0000-000f-000000000011":  // Jagdbolzen
+                        case "00000000-0000-0000-000f-000000000012":  // Kriegsbolzen
+                            return true;
+                        default: return false; 
+                    }
+                }
             }
         }
     }
