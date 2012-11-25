@@ -413,7 +413,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 OnChanged("SelectedFernkampfwaffe");
                 _erstellteFernkampfwaffe = Global.ContextInventar.Clone<Model.Fernkampfwaffe>(_selectedFernkampfwaffe);
                 _erstellteFernkampfwaffe.FernkampfwaffeGUID = Guid.Empty;
-                Model.Ausrüstung ausr = Global.ContextWaffe.Clone<Model.Ausrüstung>(_selectedFernkampfwaffe.Ausrüstung);
+                Model.Ausrüstung ausr = Global.ContextInventar.Clone<Model.Ausrüstung>(_selectedFernkampfwaffe.Ausrüstung);
                 ausr.AusrüstungGUID = Guid.Empty;
                 _erstellteFernkampfwaffe.Ausrüstung = ausr;
                 ausr.Fernkampfwaffe = _erstellteFernkampfwaffe;
@@ -421,7 +421,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (_selectedFernkampfwaffe.Ausrüstung.Waffe != null)
                 {
                     _selectedNahkampfwaffe = _selectedFernkampfwaffe.Ausrüstung.Waffe;
-                    _erstellteNahkampfwaffe = Global.ContextWaffe.Clone<Model.Waffe>(_selectedNahkampfwaffe);
+                    _erstellteNahkampfwaffe = Global.ContextInventar.Clone<Model.Waffe>(_selectedNahkampfwaffe);
                     _erstellteNahkampfwaffe.WaffeGUID = Guid.Empty;
                     // Auskommentiert bis Waffe später wirklich in die DB eingetragen wird
                     //foreach (Model.Talent t in _selectedNahkampfwaffe.Talent)

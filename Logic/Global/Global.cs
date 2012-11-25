@@ -17,10 +17,6 @@ namespace MeisterGeister
         public static Service.DataService ContextHeld;
         public static Service.InventarService ContextInventar;
         public static Service.KampfService ContextKampf;
-        //TODO ??: aus der Schmiede die Referenz entfernen, dann löschen
-        public static Service.WaffeService ContextWaffe;
-        public static Service.SchildService ContextSchild;
-        public static Service.RüstungService ContextRüstung;
         public static Service.TalentService ContextTalent;
         public static Service.HandelsgutService ContextHandelsgut;
         public static Service.NscService ContextNsc;
@@ -126,11 +122,6 @@ namespace MeisterGeister
             ContextHeld = new Service.DataService();
             ContextInventar = new Service.InventarService();
             ContextKampf = new Service.KampfService();
-            //TODO ??: Services besser gruppieren
-            ContextWaffe = new Service.WaffeService();
-            ContextSchild = new Service.SchildService();
-            ContextRüstung = new Service.RüstungService();
-
             ContextTalent = new Service.TalentService();
             ContextVorNachteil = new Service.VorNachteilService();
             ContextHandelsgut = new Service.HandelsgutService();

@@ -213,9 +213,9 @@ namespace MeisterGeister.ViewModel.Schmiede
                 if (value == null) return;
                 _selectedNahkampfwaffe = value;
                 OnChanged("SelectedNahkampfwaffe");
-                _erstellteNahkampfwaffe = Global.ContextWaffe.Clone<Model.Waffe>(_selectedNahkampfwaffe);
+                _erstellteNahkampfwaffe = Global.ContextInventar.Clone<Model.Waffe>(_selectedNahkampfwaffe);
                 _erstellteNahkampfwaffe.WaffeGUID = Guid.Empty;
-                Model.Ausrüstung ausr = Global.ContextWaffe.Clone<Model.Ausrüstung>(_selectedNahkampfwaffe.Ausrüstung);
+                Model.Ausrüstung ausr = Global.ContextInventar.Clone<Model.Ausrüstung>(_selectedNahkampfwaffe.Ausrüstung);
                 ausr.AusrüstungGUID = Guid.Empty;
                 _erstellteNahkampfwaffe.Ausrüstung = ausr;
                 // Auskommentiert bis Waffe später wirklich in die DB eingetragen wird

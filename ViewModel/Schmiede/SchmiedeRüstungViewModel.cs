@@ -152,7 +152,7 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         private void Init()
         {
-            RüstungListe = Global.ContextRüstung.RüstungListe;
+            RüstungListe = Global.ContextInventar.RuestungListe;
             OnChanged("RüstungListe");
         }
 
