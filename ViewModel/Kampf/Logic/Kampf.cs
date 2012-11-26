@@ -319,9 +319,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void Dispose()
         {
-            //TODO ??: ich finde diese Lösung noch nicht optimal. Das geht spätestens schief, wenn zwei Kämpfe gleichzeitig geführt werden.
+            //TODO ??: ich finde diese Lösung noch nicht optimal. Das geht schief, wenn man speichern und laden möchte.
             //Alle Gegenerinstanzen löschen
-            Global.ContextHeld.DeleteAll<Model.Gegner>();
+            foreach (var k in Kämpfer.Where(ki => ki.Kämpfer is Model.Gegner).Select(ki => ki.Kämpfer).ToList())
+            {
+                Kämpfer.Remove(k);
+            }
         }
 
         #region INotifyPropertyChanged

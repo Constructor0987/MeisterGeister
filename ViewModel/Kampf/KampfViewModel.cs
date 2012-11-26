@@ -315,6 +315,7 @@ namespace MeisterGeister.ViewModel.Kampf
             TrefferpunkteOptions opt = TrefferpunkteOptions.Default;
             if (obj is TrefferpunkteOptions)
                 opt = (TrefferpunkteOptions)obj;
+            opt |= WundschwellenOption | ausdauerSchadenMachtKeineSchadenspunkte;
             Kampf.Trefferpunkte(SelectedKämpferInfo.Kämpfer, Schaden, SelectedTrefferzone, opt);
         }
 

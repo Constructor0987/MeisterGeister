@@ -444,6 +444,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             ki.PropertyChanged -= OnKämpferInfoChanged;
             _kämpfer_kämpferinfo.Remove(ki.Kämpfer);
+            //TODO JT: sobald ein Kampf abgespeichert werden kann muss dies weg
+            Model.Gegner g = ki.Kämpfer as Model.Gegner;
+            if (g != null)
+                Global.ContextKampf.Delete<Model.Gegner>(g);
+
             base.Remove(ki);
             OnCollectionChanged(NotifyCollectionChangedAction.Remove, ki);
         }
@@ -451,8 +456,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public new void RemoveAt(int index)
         {
             var removed = this[index];
-            _kämpfer_kämpferinfo.Remove(this[index].Kämpfer);
-            this[index].PropertyChanged -= OnKämpferInfoChanged;
+            removed.PropertyChanged -= OnKämpferInfoChanged;
+            _kämpfer_kämpferinfo.Remove(removed.Kämpfer);
+            //TODO JT: sobald ein Kampf abgespeichert werden kann muss dies weg
+            Model.Gegner g = removed.Kämpfer as Model.Gegner;
+            if (g != null)
+                Global.ContextKampf.Delete<Model.Gegner>(g);
+
             base.RemoveAt(index);
             OnCollectionChanged(NotifyCollectionChangedAction.Remove, removed);
         }
