@@ -23,7 +23,14 @@ namespace MeisterGeister.View.General
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.UriSource = new Uri(value.ToString());
-            image.EndInit();
+            try
+            {
+                image.EndInit();
+            }
+            catch (Exception)
+            {
+                return new BitmapImage();
+            }
 
             return image;
         }
