@@ -73,8 +73,8 @@
                     <Menu x:Name="_menuTools"  FontSize="15" VerticalAlignment="Top" Height="30" Background="Transparent">
                         <MenuItem Header="Wege des Meisters" Margin="2" BorderThickness="1" BorderBrush="#389E804D" Background="#FFBEB3A3">
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Helden-Verwaltung" Tag="Helden" ToolTip="Helden-Verwaltung"  >
-                                <MenuItem.Icon>
-                                    <Image Source="/Images/Icons/helden.png" Margin="2" />
+                                <MenuItem.Icon>                                                                           
+                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/helden.png" Margin="2" Stretch="UniformToFill"/>
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Proben-Tool" Tag="Proben" ToolTip="Proben-Tool"  >
