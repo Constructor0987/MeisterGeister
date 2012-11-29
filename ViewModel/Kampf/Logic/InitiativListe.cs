@@ -113,12 +113,25 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         {
             if (args.PropertyName == "Initiative")
                 Sort();
-            //else if (args.PropertyName == "Manöver")
-            //    OnChanged("Manöver"); //es muss ein event ausgelöst werden um die aktionen neu durchzuplanen.
-            //TODO JT: wenn das manöver eine längerfristige Aktion ist oder eine dauer > 1 hat oder mehr als nur eine Angriffsaktion verbraucht,
-            // dann  werden alle nachfolgenden manöverinfos gelöscht und u.u. ein zweites ManöverInfo mit diesem Manöver eingestellt.
-            //Danach StandardaktionenSetzen
-            //
+            else if (args.PropertyName == "Manöver")
+            {
+                var mi = o as ManöverInfo;
+                if (mi == null)
+                    return;
+                //TODO JT: wenn das manöver eine längerfristige Aktion ist oder eine dauer > 1 hat oder mehr als nur eine Angriffsaktion verbraucht,
+                if (mi.KämpferInfo != null && ( mi.Manöver is Manöver.LängerfristigeHandlung || mi.Manöver.VerbleibendeDauer > 1 || mi.Manöver.Angriffsaktionen > 1))
+                {
+                    // dann  werden alle nachfolgenden manöverinfos gelöscht
+                    RemoveAll(i => i.KämpferInfo != null && i.KämpferInfo == mi.KämpferInfo && i.Initiative < mi.Initiative);
+
+                    //evtl sollte man folgendes besser auch in StandardAktionenSetzen machen
+                    //und u.U. ein zweites ManöverInfo mit diesem Manöver eingestellt.
+                    //if(mi.Manöver.VerbleibendeDauer > 1)
+                    
+                    //Danach StandardaktionenSetzen
+                    mi.KämpferInfo.StandardAktionenSetzen();
+                }
+            }
         }
 
         public void Sort()

@@ -38,7 +38,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.PABonusDurchHoheIni);
                 if (bonus > 0)
                     Kämpfer.Modifikatoren.Add(new Mod.PABonusDurchHoheIni(bonus));
-                //TODO JT: Wenn INI < 0 -> Kämpfer verliert eine (Angriffs)Aktion
+                //Wenn INI < 0 -> Kämpfer verliert eine (Angriffs)Aktion
+                AktionenBerechnen();
+                OnChanged("Angriffsaktionen"); OnChanged("Abwehraktionen"); OnChanged("Aktionen");
                 OnChanged("Initiative");
             }
         }
@@ -110,6 +112,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             private set
             {
+                if (value < 0)
+                    value = 0;
                 if (_aktionen == value)
                     return;
                 _aktionen = value;
@@ -120,7 +124,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     else
                         Angriffsaktionen = (int)Math.Round(Math.Min((double)Angriffsaktionen / (double)(Abwehraktionen + Angriffsaktionen), 1) * Aktionen, MidpointRounding.AwayFromZero);
                 }
-                //OnChanged("Aktionen");
+                //OnChanged("Aktionen"); absichtlich nicht.
             }
         }
 
@@ -144,6 +148,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _angriffsaktionen; }
             set
             {
+                if (value < 0)
+                    value = 0;
                 if (value > Aktionen)
                     value = Aktionen;
                 _angriffsaktionen = value;
@@ -160,6 +166,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get { return _abwehraktionen; }
             set
             {
+                if (value < 0)
+                    value = 0;
                 if (value > Aktionen)
                     value = Aktionen;
                 _abwehraktionen = value;
@@ -193,10 +201,32 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private void AktionenBerechnen()
         {
-            bool parierwaffenII = false;
+            int aktionen = 2;
+            if (Initiative < 0)
+            {
+                aktionen = 1;
+            }
+            var m = ManöverInfos.Where(mi => mi.Manöver is Manöver.LängerfristigeHandlung && mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Initiative).FirstOrDefault();
+            if (m != null) //wenn man eine LängerfristigeHandlung Dauer >= 2 ausführt, dann 
+            {
+                if (m.InitiativeMod == 0)
+                {
+                    //als erste Aktion: Angriffsaktionen = Math.Min(Math.Max(VerbleibendeDauer, 2), Aktionen)
+                    Aktionen = aktionen;
+                    _angriffsaktionen = Math.Min(2, Aktionen);
+                    _abwehraktionen = 0;
+                    return;
+                }
+                //als zweite Aktion: Abwehraktionen = 0
+                _abwehraktionen = 0;
+            }
+
+            bool parierwaffenII = false; bool todVonLinks = false;
             if (Kämpfer is Model.Gegner)
             {
                 Aktionen = (Kämpfer as Model.Gegner).Aktionen;
+                if (Initiative < 0)
+                    Aktionen--;
                 if (Aktionen != Abwehraktionen + Angriffsaktionen)
                 {
                     if (Abwehraktionen + Angriffsaktionen == 0)
@@ -209,27 +239,70 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _abwehraktionen = Aktionen - _angriffsaktionen;
                     }
                 }
+                return;
             }
             //TODO JT: Sicherstellen, dass auch zwei Waffen geführt werden
             else if (Kampfstil == Kampfstil.BeidhändigerKampf && ((Kämpfer is Model.Held) && (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Beidhändiger Kampf II")))
             {
-                Aktionen = 3;
-                if (Abwehraktionen + Angriffsaktionen < 3)
+                if (Initiative < 0) //ini < 0: 2 Paraden, 2 akt
+                {
+                    Aktionen = 2;
+                    _abwehraktionen = 2;
+                }
+                else
+                    Aktionen = 3;
+                if (Initiative < 4) //ini < 4: min 2 paraden, 3 akt
+                    _abwehraktionen = Math.Max(Abwehraktionen, 2);
+                if (Initiative < 8) //ini < 8: min 1 parade, 3 akt
+                    _abwehraktionen = Math.Max(Abwehraktionen, 1);
+                
+                if (Abwehraktionen + Angriffsaktionen != Aktionen)
                     _angriffsaktionen = Aktionen - Abwehraktionen;
+
             }
             else if (Kampfstil == Kampfstil.Schildkampf && ((Kämpfer is Model.Held) && (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Schildkampf II") && Abwehraktionen >= 1))
             {
-                if (Angriffsaktionen >= 2)
-                    Aktionen = 2;
+                if (Angriffsaktionen >= 2 && Initiative >= 8)
+                    Aktionen = 2; //danach ist es automatisch 2/0
                 else
+                    Aktionen = 3; //hier 1/2
+
+                if (Initiative < 0) //ini < 0: 2 Paraden, 2 akt
+                {
+                    Aktionen = 2;
+                    _angriffsaktionen = 0;
+                }
+                else if (Initiative < 8) //ini < 8: min 2 paraden, 3 akt
+                {
                     Aktionen = 3;
-                if (Abwehraktionen + Angriffsaktionen < 3)
+                    _abwehraktionen = Math.Max(2, Abwehraktionen);
+                    _angriffsaktionen = Aktionen - Abwehraktionen;
+                }
+
+                if (Abwehraktionen + Angriffsaktionen != Aktionen)
                     _abwehraktionen = Aktionen - Angriffsaktionen;
             }
-            else if (Kampfstil == Kampfstil.Parierwaffenstil && ((Kämpfer is Model.Held) && (parierwaffenII = (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Parierwaffen II") && Abwehraktionen >= 1 || (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Tod von Links") && Angriffsaktionen >= 1)))
+            else if (Kampfstil == Kampfstil.Parierwaffenstil && (Kämpfer is Model.Held) && (((parierwaffenII = (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Parierwaffen II")) && Abwehraktionen >= 1) || ((todVonLinks = (Kämpfer as Model.Held).HatSonderfertigkeitUndVoraussetzungen("Tod von Links")) && Angriffsaktionen >= 1)))
             {
                 Aktionen = 3;
-                if (Abwehraktionen + Angriffsaktionen < 3)
+                //ini < 0: 2 Paraden, 2 akt
+                if (Initiative < 0)
+                {
+                    if (parierwaffenII)
+                        Aktionen = 2;
+                    else
+                        Aktionen = 1;
+                    _abwehraktionen = Aktionen;
+                    _angriffsaktionen = 0;
+                }
+                else if (Initiative < 8) //ini < 8: min 1 parade, 2 oder 3 akt
+                {
+                    if (!parierwaffenII)
+                        Aktionen = 2;
+                    _abwehraktionen = Math.Max(parierwaffenII?2:1, Abwehraktionen);
+                    _angriffsaktionen = Aktionen - Abwehraktionen;
+                }
+                if (Abwehraktionen + Angriffsaktionen != Aktionen)
                     if (parierwaffenII)
                         _abwehraktionen = Aktionen - Angriffsaktionen;
                     else
@@ -238,8 +311,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             else
             {
                 Aktionen = 2;
-                if (Abwehraktionen + Angriffsaktionen < 2)
-                    _angriffsaktionen = _abwehraktionen = 1;
+                if (Initiative < 0) //ini < 0: 1 Parade, 1 akt
+                {
+                    Aktionen = 1;
+                    _abwehraktionen = 1;
+                }
+                else if (Initiative < 8) //ini < 8: min 1 parade
+                    _abwehraktionen = Math.Max(1, Abwehraktionen);
+                if (Abwehraktionen + Angriffsaktionen != Aktionen)
+                {
+                    _abwehraktionen = 1;
+                    _angriffsaktionen = Aktionen - Abwehraktionen;
+                }
             }
             //TODO JT: Myranor: Mehrhändig hinzufügen sicherstellen, dass auch entsprechend viele Waffen geführt werden
         }
@@ -268,21 +351,42 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public List<ManöverInfo> ManöverInfos
         {
-            get { return Kampf.InitiativListe.Where(mi => mi.KämpferInfo == this).OrderByDescending(mi => mi.Initiative).ToList(); }
+            get {
+                if (Kampf == null)
+                    return new List<ManöverInfo>();
+                return Kampf.InitiativListe.Where(mi => mi.KämpferInfo == this).OrderByDescending(mi => mi.Initiative).ToList(); 
+            }
         }
 
         private void DeleteManöver(ref List<ManöverInfo> geplanteAktionen)
         {
             var ki = this;
+            //manöver mit negativer INI löschen
+            foreach (var mi in ManöverInfos.Where(mi => mi.Initiative < 0 && mi.InitiativeMod != 0).ToList())
+                Kampf.InitiativListe.Remove(mi);
+
+            var ersterAngriff = ki.ManöverInfos.Where(mi => mi.Manöver is Manöver.Angriffsaktion).FirstOrDefault();
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist.
             if (ki.Kampfstil != Kampfstil.BeidhändigerKampf) //oder mehrhändig
             {
                 foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).ToList())
                     Kampf.InitiativListe.Remove(mi);
             }
+            else
+            {
+                //ZusätzlicheAngriffsaktion löschen, für die die Bedingungen nicht erfüllt sind
+                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion && (ersterAngriff == null || mi.Initiative > ersterAngriff.Initiative-4)).ToList())
+                    Kampf.InitiativListe.Remove(mi);
+            }
             if (ki.Kampfstil != Kampfstil.Parierwaffenstil)
             {
                 foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.TodVonLinks).ToList())
+                    Kampf.InitiativListe.Remove(mi);
+            }
+            else
+            {
+                //TodVonLinks löschen, für die die Bedingungen nicht erfüllt sind
+                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.TodVonLinks && (ersterAngriff == null || mi.Initiative > ersterAngriff.Initiative - 8)).ToList())
                     Kampf.InitiativListe.Remove(mi);
             }
             while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Angriffsaktionen)
