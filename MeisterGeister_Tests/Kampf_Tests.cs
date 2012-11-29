@@ -229,6 +229,12 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(1, m.VerbleibendeDauer);
             Assert.AreEqual(2, kampf.Kampfrunde);
             Assert.AreEqual(m, kampf.InitiativListe[0].Manöver, "Es bleibt eine Aktion Dauer -> Das Manöver ist in der Liste an Platz 0.");
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Aktionen, "Wieder 3 Aktionen");
+            Assert.AreEqual(3, kampf.Kämpfer[gero].Angriffsaktionen, "Wieder 3 Angriffsaktionen");
+            Assert.AreEqual("Attacke", kampf.InitiativListe[1].Manöver.Name, "Noch ein normaler Angriff");
+            Assert.AreEqual(-8, kampf.InitiativListe[1].InitiativeMod);
+            Assert.AreEqual("Zusätzliche Angriffsaktion", kampf.InitiativListe[2].Manöver.Name, "Und eine Zusatzattacke");
+            Assert.AreEqual(-12, kampf.InitiativListe[2].InitiativeMod);
         }
 
         [Test]

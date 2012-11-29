@@ -158,7 +158,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             foreach (KämpferInfo ki in Kämpfer)
             {
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
+                
+                ki.AktionenBerechnen();
                 StandardAktionenSetzen(ki);
+
                 ki.VerbrauchteAbwehraktionen = 0;
                 ki.VerbrauchteAngriffsaktionen = 0;
                 ki.VerbrauchteFreieAktionen = 0;
