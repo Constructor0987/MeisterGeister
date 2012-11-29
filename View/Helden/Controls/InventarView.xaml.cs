@@ -56,6 +56,33 @@ namespace MeisterGeister.View.Helden.Controls
             if (VM != null)
                 VM.ListenToChangeEvents = IsVisible;
         }
-
+        #region Events
+        #region --UI
+        private void brdKlicked(object sender, RoutedEventArgs e) {
+            switch ((sender as Border).Name) {
+                case "borderAll":
+                    VM.SelectedFilterIndex = 0;
+                    break;
+                case "borderNahkampf":
+                    VM.SelectedFilterIndex = 1;
+                    break;
+                case "borderFernkampf":
+                    VM.SelectedFilterIndex = 2;
+                    break;
+                case "borderSchild":
+                    VM.SelectedFilterIndex = 3;
+                    break;
+                case "borderRuestung":
+                    VM.SelectedFilterIndex = 4;
+                    break;
+                case "borderSonstiges":
+                    VM.SelectedFilterIndex = 5;
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
+        #endregion
     }
 }
