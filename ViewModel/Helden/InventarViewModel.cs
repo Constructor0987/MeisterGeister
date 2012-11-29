@@ -33,7 +33,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         private bool isFernkampfwaffeSelected;
         private bool isSchildSelected;
         private bool isRuestungSelected;
-        private int selectedFilterIndex;
+        private int selectedFilterIndex = 0;
 
         private Model.Held selectedHeld;
         private Model.Talent selectedNahkampfwaffeTalent;
@@ -424,6 +424,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             onAddRuestung = new Base.CommandBase(AddRuestung, null);
 
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+            SelectedFilterIndex = 0;
         }
 
         #endregion
