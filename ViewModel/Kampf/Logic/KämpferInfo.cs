@@ -199,7 +199,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { _verbrauchteFreieAktionen = value; }
         }
 
-        private void AktionenBerechnen()
+        public void AktionenBerechnen()
         {
             int aktionen = 2;
             if (Initiative < 0)
@@ -413,6 +413,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             var geplanteAktionen = ManöverInfos.Where(mi => mi.IsAktion).ToList().OrderBy(mi => mi.Initiative).ToList();
             //löschen von Manövern, für die der falsche Kampfstil gewählt ist. oder für die zu wenig aktionen vorhanden sind.
             DeleteManöver(ref geplanteAktionen);
+            var lfh = ManöverInfos.Where(mi => mi.Manöver is Manöver.LängerfristigeHandlung && mi.Manöver.VerbleibendeDauer >= 2).OrderBy(mi => mi.Initiative).FirstOrDefault();
+            if (lfh != null)
+            {
+                if (lfh.InitiativeMod != 0) //zweite aktion
+                    return;
+                if(Aktionen > 1)
+                    Kampf.InitiativListe.Add(ki, lfh.Manöver, -8);
+                return;
+            }
 
             int zusatzAktionen = geplanteAktionen.Where(mi => mi.Manöver is Manöver.ZusätzlicheAngriffsaktion).Count();
             for (int i = geplanteAktionen.Count; i < ki.Angriffsaktionen; i++)

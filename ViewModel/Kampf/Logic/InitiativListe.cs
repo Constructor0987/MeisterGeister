@@ -124,12 +124,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     // dann  werden alle nachfolgenden manöverinfos gelöscht
                     RemoveAll(i => i.KämpferInfo != null && i.KämpferInfo == mi.KämpferInfo && i.Initiative < mi.Initiative);
 
-                    //evtl sollte man folgendes besser auch in StandardAktionenSetzen machen
-                    //und u.U. ein zweites ManöverInfo mit diesem Manöver eingestellt.
-                    //if(mi.Manöver.VerbleibendeDauer > 1)
-                    
-                    //Danach StandardaktionenSetzen
-                    mi.KämpferInfo.StandardAktionenSetzen();
+                    //Danach Aktionen berechnen und StandardaktionenSetzen
+                    mi.KämpferInfo.AktionenBerechnen();
                 }
             }
         }

@@ -206,8 +206,6 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
-        [Ignore]
-        // Verhalten nicht mehr aktuell, wie der Test gerade geschrieben ist.
         public void LängerfristigeHandlungTest()
         {
             Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
@@ -224,9 +222,10 @@ namespace MeisterGeister_Tests
             Assert.AreEqual(3, m.VerbleibendeDauer);
             Assert.AreEqual(0, kampf.Kämpfer[gero].Abwehraktionen, "Ein Kämpfer in einer längerfristigen Handlung von min. 2 Aktionen hat keine Abwehraktionen diese KR");
             Assert.AreEqual(m, kampf.InitiativListe[1].Manöver, "Die zweite Aktion wird automatisch festgelegt.");
-            kampf.Next(); kampf.Next();
+            kampf.Next(); //sprung zur ersten aktion
+            kampf.Next(); //sprung zur zweiten aktion - aktion 1 ausgeführt
             Assert.AreEqual(2, m.VerbleibendeDauer);
-            kampf.Next();
+            kampf.Next(); //neue kampfrunde - aktion 2 ausgeführt
             Assert.AreEqual(1, m.VerbleibendeDauer);
             Assert.AreEqual(2, kampf.Kampfrunde);
             Assert.AreEqual(m, kampf.InitiativListe[0].Manöver, "Es bleibt eine Aktion Dauer -> Das Manöver ist in der Liste an Platz 0.");

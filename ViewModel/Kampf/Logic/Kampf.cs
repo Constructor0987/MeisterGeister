@@ -108,16 +108,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 KampfBeginn();
             if (AktuelleAktion != null && !AktuelleAktion.Ausgeführt)
             {
-                if (AktuelleAktion.Manöver != null)
-                {
-                    var probe = AktuelleAktion.Manöver.Ausführen();
-                    if (probe != null)
-                    {
-                        //TODO JT: Probe anzeigen und Erfolg oder Misserfolg auswerten.
-                        //Das ist keine gute idee. Eine Probe und die Parade muss auch schon angezeigt werden, wenn das Manöver nur ausgewählt wird.
-                        //Hier muss noch mehr am Konzept gearbeitet werden.
-                    }
-                }
+                AktuelleAktion.Ausgeführt = true;
+                //if (AktuelleAktion.Manöver != null)
+                //{
+                //    var probe = AktuelleAktion.Manöver.Ausführen();
+                //    if (probe != null)
+                //    {
+                //        //TODO JT: Probe anzeigen und Erfolg oder Misserfolg auswerten.
+                //        //Das ist keine gute idee. Eine Probe und die Parade muss auch schon angezeigt werden, wenn das Manöver nur ausgewählt wird.
+                //        //Hier muss noch mehr am Konzept gearbeitet werden.
+                //    }
+                //}
                 UmwandelnMöglich = false;
             }
 
