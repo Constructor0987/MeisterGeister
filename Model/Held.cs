@@ -2006,6 +2006,7 @@ namespace MeisterGeister.Model
             foreach(Held_Ausrüstung ha in Held_Ausrüstung)
             {
                 double effGewicht = ha.Trageort.TragkraftFaktor * ha.Ausrüstung.Gewicht * (ha.Anzahl ?? 0);
+                //TODO DW: Angelegt wird noch nicht berücksichtigt, keine UI steuerung aktl
                 //ha.Angelegt &&  einstweilen nicht relevant, alle items im Inv sind angelegt bis "Trageort" umgesetzt
                 if (ha.Ausrüstung.Rüstung != null)
                     effGewicht /= 2.0;

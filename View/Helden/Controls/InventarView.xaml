@@ -233,6 +233,78 @@
                 <TextBlock Text="{Binding WM}"/>
             </StackPanel>
         </DataTemplate>
+        <Storyboard x:Key="FilterAllEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="imageAll">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterAllLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="imageAll">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterNahkampfEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterNahkampfLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterFernkampfEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterFernkampfLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterSchildEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterSchildLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterRuestungEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterRuestungLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterSonstigesEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="FilterSonstigesLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image4">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="0"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
 
     </UserControl.Resources>
     <UserControl.Triggers>
@@ -241,6 +313,42 @@
         </EventTrigger>
         <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="SkipRuestungToDetail">
             <BeginStoryboard x:Name="HeldRuestungToContent_BeginStoryboard" Storyboard="{StaticResource HeldRuestungToContent}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderAll">
+        	<BeginStoryboard x:Name="FilterAllEnter_BeginStoryboard" Storyboard="{StaticResource FilterAllEnter}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="borderAll">
+        	<BeginStoryboard x:Name="FilterAllLeave_BeginStoryboard" Storyboard="{StaticResource FilterAllLeave}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderNahkampf">
+        	<BeginStoryboard Storyboard="{StaticResource FilterNahkampfEnter}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="borderNahkampf">
+        	<BeginStoryboard x:Name="FilterNahkampfLeave_BeginStoryboard" Storyboard="{StaticResource FilterNahkampfLeave}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderFernkampf">
+        	<BeginStoryboard Storyboard="{StaticResource FilterFernkampfEnter}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="borderFernkampf">
+        	<BeginStoryboard x:Name="FilterFernkampfLeave_BeginStoryboard" Storyboard="{StaticResource FilterFernkampfLeave}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderSchild">
+        	<BeginStoryboard Storyboard="{StaticResource FilterSchildEnter}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="borderSchild">
+        	<BeginStoryboard x:Name="FilterSchildLeave_BeginStoryboard" Storyboard="{StaticResource FilterSchildLeave}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderRuestung">
+        	<BeginStoryboard Storyboard="{StaticResource FilterRuestungEnter}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="borderRuestung">
+        	<BeginStoryboard x:Name="FilterRuestungLeave_BeginStoryboard" Storyboard="{StaticResource FilterRuestungLeave}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="borderSonstiges">
+        	<BeginStoryboard Storyboard="{StaticResource FilterSonstigesEnter}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="borderSonstiges">
+        	<BeginStoryboard x:Name="FilterSonstigesLeave_BeginStoryboard" Storyboard="{StaticResource FilterSonstigesLeave}"/>
         </EventTrigger>
     </UserControl.Triggers>
 
