@@ -33,17 +33,58 @@
         </Grid.ColumnDefinitions>
         
         <Border Name="brdHintergrundOption" Grid.ColumnSpan="1" Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
-            <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" />
+            <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" Click="rbtnGleichSpielen_Click" />
         </Border>
         <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
-            <TabItem Header="Themes" Name="tiUebersicht" GotFocus="tiUebersicht_GotFocus" >
+            <TabItem Header="Themes" Name="tiUebersicht" >
                 <Grid Background="{StaticResource Background1}" Name="grdThemes">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="200*" MinHeight="200"  />
-                        <RowDefinition Height="22" MinHeight="10" />
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="1*" MinHeight="160" />
+                        <RowDefinition Height="Auto" MinHeight="22" />
                     </Grid.RowDefinitions>
-                    <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                    <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="240" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Name="brdThemeTop" Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="5" />
+                    <Button Height="30" Grid.Column="2" Name="btnThemeUpdate" Click="btnThemeUpdate_Click" Width="120" HorizontalAlignment="Right" Margin="5" IsTabStop="False" Focusable="False">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="/Images/Icons/General/refresh.png" Name="btnImgUpdate" VerticalAlignment="Center" />
+                            <Label Padding="0" Name="btnLblUpdate" Grid.Column="1" VerticalContentAlignment="Center">Update Themes</Label>
+                        </Grid>
+                    </Button>
+                    <Button Name="btnThemeNeu" Height="33" HorizontalAlignment="Left" VerticalAlignment="Center" Click="btnThemeNeu_Click"  Width="110" Margin="10,0,0,0" Visibility="Hidden" Focusable="False" IsTabStop="False">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="/Images/Icons/General/neu.png" Name="btnImgThemeNeu" VerticalAlignment="Center" />
+                            <Label Padding="0" Name="btnLblThemeNeu" Grid.Column="1" VerticalContentAlignment="Center">Neues Theme</Label>
+                        </Grid>
+                    </Button>
+                    <Button Name="btnThemeLöschen" Height="33" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Click="btnThemeLöschen_Click"  Width="120" Visibility="Hidden" Focusable="False" IsTabStop="False">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Name="btnImgThemeLöschen" VerticalAlignment="Center" />
+                            <Label Padding="0" Name="btnLblThemeLöschen" Grid.Column="1" VerticalContentAlignment="Center">Theme löschen</Label>
+                        </Grid>
+                    </Button>
+                    <Label Content="Name" Grid.Column="1" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Name="ThemeBezeichnung" HorizontalAlignment="Right" Visibility="{Binding ElementName=tboxThemeBezeichnung, Path=Visibility}" />
+                    <TextBox Background="{x:Null}" FontWeight="Bold" ForceCursor="True" Height="25" Width="240" Name="tboxThemeBezeichnung" Style="{Binding}" Grid.Column="2" Margin="0,5" Visibility="Hidden" KeyUp="tboxThemeBezeichnung_KeyUp" HorizontalAlignment="Left" />
+
+
+                    <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.ColumnSpan="4" />
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6" Grid.Row="1" Grid.ColumnSpan="4">
                         <Grid Name="grdUebersicht">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="240" />
@@ -53,29 +94,16 @@
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="46" />
                                 <RowDefinition Height="150" />
-                                <RowDefinition Height="1" />
-                            </Grid.RowDefinitions>
-                            <Button Height="30" Name="btnUpdate" Click="btnUpdate_Click" Width="120" HorizontalAlignment="Left" Margin="5">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="22" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="/Images/Icons/General/refresh.png" Name="btnImgUpdate" VerticalAlignment="Center" />
-                                    <Label Padding="0" Name="btnLblUpdate" Grid.Column="1" VerticalContentAlignment="Center">Update Themes</Label>
-                                </Grid>
-                            </Button> 
+                            </Grid.RowDefinitions>                            
                         </Grid>
-
                     </ScrollViewer>
-                      <Expander Grid.Row="1" IsExpanded="False" IsEnabled="True" Name="exThemeEditor" Collapsed="exThemeEditor_Collapsed" Expanded="exThemeEditor_Expanded">
+                    <Expander Grid.Row="2" IsExpanded="False" IsEnabled="False" Name="exThemeEditor" Grid.ColumnSpan="4">
                         <Expander.Header>
                             <TextBlock Text="Theme - Editor" Style="{DynamicResource TextTitel}" />
                         </Expander.Header> 
                                 <Border Style="{DynamicResource ControlContentBorder}">
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Background1}">
+                                    <Grid Name="grdThemeEditor" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Background1}" >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="280" />
                                             <ColumnDefinition Width="135" />
@@ -83,32 +111,11 @@
                                             <ColumnDefinition Width="240*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="40" />
                                             <RowDefinition Height="16" />
                                             <RowDefinition Height="38*" />
                                         </Grid.RowDefinitions>
-                                        <Button Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnNeuesTheme" VerticalAlignment="Center" Width="100" >
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="22" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Icons/General/neu.png" Name="btnImgNeuesTheme" VerticalAlignment="Center" />
-                                                <Label Padding="0" Name="btnLblNeuesTheme" Grid.Column="1" VerticalContentAlignment="Center">Neues Theme</Label>
-                                            </Grid>
-                                        </Button>
-                                        <TextBox Background="{x:Null}" FontWeight="Bold" ForceCursor="True" Height="25" Name="tboxThemeBezeichnung" Style="{Binding}" Grid.Column="2" Margin="0,5" />
-                                        <Button Grid.Column="3" Height="23" HorizontalAlignment="Left" Margin="16,6" Name="btnThemeUebernehmen" VerticalAlignment="Center" Width="100" Click="btnThemeUebernehmen_Click" >
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="22" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Icons/General/ok.png" Name="btnImgThemeUebernehmen" VerticalAlignment="Center" />
-                                                <Label Padding="0" Name="btnLblThemeUebernehmen" Grid.Column="1" VerticalContentAlignment="Center">Übernehmen</Label>
-                                            </Grid>
-                                        </Button>
-                                        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+                                        
+                                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="35" />
@@ -130,13 +137,12 @@
                                                                 <RowDefinition Height="50" />
                                                                 <RowDefinition Height="1*" />
                                                             </Grid.RowDefinitions>
-
                                                         </Grid>
                                                     </ScrollViewer>
                                                 </Grid>
                                             </Grid>
                                         </Border>
-                                        <Border Grid.Row="2" Grid.Column="0">
+                                        <Border Grid.Row="1" Grid.Column="0">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="230*" />
@@ -217,7 +223,7 @@
                                     <Image Name="btnImgBGSpeaker" Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" />
                                 </Button>
 
-                                <Slider Height="22" Margin="300,0,0,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" Width="100" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" />
+                                <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" />
                                 
                             </Grid>
                         </Border>
@@ -329,7 +335,7 @@
                             <Button Grid.Column="3" HorizontalAlignment="Left" Margin="50,10,0,8" Name="btnSongParPlus" Tag="1" Width="18" Click="btnSongParPlus_Click" Visibility="Hidden" Focusable="False" IsTabStop="False">
                                 <Image Source="/Images/Icons/General/add.png" />
                             </Button>
-                            <TextBox Grid.Column="3" HorizontalContentAlignment="Left" Name="tboxklangsongparallel" Text="0" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallel_TextChanged" IsEnabled="True" Visibility="Hidden" />
+                            <TextBox Grid.Column="3" HorizontalContentAlignment="Left" Name="tboxklangsongparallel" Text="1" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallel_TextChanged" IsEnabled="True" Visibility="Hidden" />
 
                             <Button Height="30" HorizontalAlignment="Right" Name="btnKlangSave" Width="30" ToolTip="Speichern der aktuellen Playliste" IsVisibleChanged="btnKlangSave_IsVisibleChanged" Click="btnKlangSave_Click" Grid.Column="6" VerticalAlignment="Center" Margin="0,0,60,0" TabIndex="1" Visibility="Hidden">
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speichern.png" />
@@ -432,16 +438,16 @@
                                                 <ProgressBar Name="pbarTitel0_X" Height="18" Margin="15,0,0,3" Grid.Column="2" VerticalAlignment="Bottom" Grid.ColumnSpan="1" />
                                                 <CheckBox Name="chkTitel0_X" Content="chkTitel0" Height="20" Margin="0,2,0,0" Grid.Column="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" IsChecked="False" Click="chkTitel0_0_Click" IsTabStop="False" />
                                                 <Label Name="lblDauer0_X" Content="-:--" Grid.Column="3" Height="14" Margin="5,3,0,6" Padding="0" HorizontalContentAlignment="Center" />
-                                                <Slider Name="sldKlangVol0_X"  Grid.Column="4" Height="23" Margin="6,0,4,0" Value="50" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" />
+                                                <Slider Name="sldKlangVol0_X"  Grid.Column="4" Height="23" Margin="6,0,4,0" Value="{Binding Path=ZeileVMVolume}" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" />
                                                 <CheckBox Name="chkVolMove0_X" Height="14" Margin="0,6,0,4" Grid.Column="5" Width="14" Click="chkVolMove0_0_Click" Tag="0" IsTabStop="False" />
-                                                <TextBox Name="tboxVolMin0_X" Grid.Column="6" Text="0" HorizontalContentAlignment="Center" Margin="0,0,36,0" Tag="0" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" KeyDown="tboxVolMin0_X_KeyDown"/>
+                                                <TextBox Name="tboxVolMin0_X" Grid.Column="6" Text="0" HorizontalContentAlignment="Center" Margin="0,0,36,0" Tag="0" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxVolMin0_X_LostFocus"/>
                                                 <Button Name="_btnVolMinMinus0_X" Width="18" Grid.Column="6" HorizontalAlignment="Right" Margin="18,0" Click="_btnVolMinMinus0_X_Click" Tag="-5" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
                                                 <Button Name="_btnVolMinPlus0_X" Width="18" Grid.Column="6" HorizontalAlignment="Right" Click="_btnVolMinPlus0_X_Click" Tag="5" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
-                                                <TextBox Name="tboxVolMax0_X" Grid.Column="7" Margin="0,0,36,0" Text="100" HorizontalContentAlignment="Center" DataContext="{Binding}" MaxLength="3" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" Tag="0" KeyDown="tboxVolMax0_X_KeyDown" />
+                                                <TextBox Name="tboxVolMax0_X" Grid.Column="7" Margin="0,0,36,0" Text="100" HorizontalContentAlignment="Center" DataContext="{Binding}" MaxLength="3" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" Tag="0" LostFocus="tboxVolMax0_X_LostFocus" />
                                                 <Button Name="_btnVolMaxMinus0_X" Width="18" Grid.Column="7" HorizontalAlignment="Right" Margin="18,0" Click="_btnVolMaxMinus0_X_Click" Tag="-5" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
@@ -451,14 +457,14 @@
 
                                                 <Slider Name="sldKlangPause0_X" Grid.Column="9" Height="23" Margin="6,0,4,0" Value="1000" Maximum="10000" Interval="50" LargeChange="500" SmallChange="100" ToolTip="1000 ms" TickFrequency="10" />
                                                 <CheckBox Name="chkKlangPauseMove0_X" Height="14" Margin="0,6,0,4" Grid.Column="10" Width="14" Click="chkKlangPauseMove0_0_Click" Tag="0" IsTabStop="False" />
-                                                <TextBox Name="tboxPauseMin0_X" Grid.Column="11" Margin="0,0,36,0" Text="0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" KeyDown="tboxPauseMin0_X_KeyDown" Tag="0" />
+                                                <TextBox Name="tboxPauseMin0_X" Grid.Column="11" Margin="0,0,36,0" Text="0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxPauseMin0_X_LostFocus" Tag="0" />
                                                 <Button Name="_btnPauseMinMinus0_X" Grid.Column="11" Margin="39,0,18,0" Click="_btnPauseMinMinus0_X_Click" Tag="-200" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
                                                 <Button Name="_btnPauseMinPlus0_X" Grid.Column="11" Tag="200" Click="_btnPauseMinPlus0_X_Click" Margin="57,0,0,0" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
-                                                <TextBox Name="tboxPauseMax0_X" Grid.Column="12" Margin="0,0,36,0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" KeyDown="tboxPauseMax0_X_KeyDown" Tag="0" Text=" 3" />
+                                                <TextBox Name="tboxPauseMax0_X" Grid.Column="12" Margin="0,0,36,0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxPauseMax0_X_LostFocus" Tag="0" Text=" 3" />
                                                 <Button Name="_btnPauseMaxMinus0_X" Width="18" Grid.Column="12" HorizontalAlignment="Right" Margin="18,0" Tag="-200" Click="_btnPauseMaxMinus0_X_Click" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>

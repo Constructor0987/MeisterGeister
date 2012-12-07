@@ -3,10 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.AudioPlayer
 {
+    class ZeileVM : INotifyPropertyChanged
+    {
+        // property changed event
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private double _volume = 50;
+
+        private void OnPropertyChanged(String property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+        }
+
+        public double AktLautstärke
+        {
+            get { return _volume; }
+            set
+            {
+                _volume = value;
+                OnPropertyChanged("ZeileVMVolume");
+            }
+        }
+    }
+
+
+
+
     public class AudioPlayer : Base.ViewModelBase
     {
         public AudioPlayer()
