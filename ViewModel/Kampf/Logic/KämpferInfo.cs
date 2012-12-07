@@ -302,6 +302,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     _abwehraktionen = Math.Max(parierwaffenII?2:1, Abwehraktionen);
                     _angriffsaktionen = Aktionen - Abwehraktionen;
                 }
+                if (Aktionen == 3 && Abwehraktionen == 0) // tod von links darf nur verwendet werden, wenn nicht umgewandelt wurde
+                    Aktionen = 2;
                 if (Abwehraktionen + Angriffsaktionen != Aktionen)
                     if (parierwaffenII)
                         _abwehraktionen = Aktionen - Angriffsaktionen;
@@ -386,7 +388,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             else
             {
                 //TodVonLinks löschen, für die die Bedingungen nicht erfüllt sind
-                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.TodVonLinks && (ersterAngriff == null || mi.Initiative > ersterAngriff.Initiative - 8)).ToList())
+                foreach (var mi in ManöverInfos.Where(mi => mi.Manöver is Manöver.TodVonLinks && (Abwehraktionen != 1 || ersterAngriff == null || mi.Initiative > ersterAngriff.Initiative - 8)).ToList())
                     Kampf.InitiativListe.Remove(mi);
             }
             while (geplanteAktionen.Count >= 1 && geplanteAktionen.Count > ki.Angriffsaktionen)
@@ -461,7 +463,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     }
                     else if (ki.Kampfstil == Kampfstil.Parierwaffenstil)
                     {
-                        if (ersterAngriff != null && (ki.Kämpfer is Model.Gegner || (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")) && geplanteAktionen.Where(mi => mi.Manöver is Manöver.TodVonLinks).Count() == 0)
+                        if (ki.Abwehraktionen == 1 && ersterAngriff != null && (ki.Kämpfer is Model.Gegner || (ki.Kämpfer as Model.Held).HatSonderfertigkeit("Tod von Links")) && geplanteAktionen.Where(mi => mi.Manöver is Manöver.TodVonLinks).Count() == 0)
                             Kampf.InitiativListe.Add(ki, new Manöver.TodVonLinks(ki), Math.Min(i * -4, -8));
                         else
                             Kampf.InitiativListe.Add(ki, new Manöver.Attacke(ki), Math.Min(i * -4, -8));
