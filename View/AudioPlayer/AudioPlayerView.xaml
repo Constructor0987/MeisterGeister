@@ -438,7 +438,7 @@
                                                 <ProgressBar Name="pbarTitel0_X" Height="18" Margin="15,0,0,3" Grid.Column="2" VerticalAlignment="Bottom" Grid.ColumnSpan="1" />
                                                 <CheckBox Name="chkTitel0_X" Content="chkTitel0" Height="20" Margin="0,2,0,0" Grid.Column="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" IsChecked="False" Click="chkTitel0_0_Click" IsTabStop="False" />
                                                 <Label Name="lblDauer0_X" Content="-:--" Grid.Column="3" Height="14" Margin="5,3,0,6" Padding="0" HorizontalContentAlignment="Center" />
-                                                <Slider Name="sldKlangVol0_X"  Grid.Column="4" Height="23" Margin="6,0,4,0" Value="{Binding Path=ZeileVMVolume}" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" />
+                                                <Slider Name="sldKlangVol0_X"  Grid.Column="4" Height="23" Margin="6,0,4,0" Value="{Binding Path=ZeileVMVolume}" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" ValueChanged="sldKlangVol0_X_ValueChanged" />
                                                 <CheckBox Name="chkVolMove0_X" Height="14" Margin="0,6,0,4" Grid.Column="5" Width="14" Click="chkVolMove0_0_Click" Tag="0" IsTabStop="False" />
                                                 <TextBox Name="tboxVolMin0_X" Grid.Column="6" Text="0" HorizontalContentAlignment="Center" Margin="0,0,36,0" Tag="0" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxVolMin0_X_LostFocus"/>
                                                 <Button Name="_btnVolMinMinus0_X" Width="18" Grid.Column="6" HorizontalAlignment="Right" Margin="18,0" Click="_btnVolMinMinus0_X_Click" Tag="-5" IsTabStop="False">
@@ -455,7 +455,7 @@
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
 
-                                                <Slider Name="sldKlangPause0_X" Grid.Column="9" Height="23" Margin="6,0,4,0" Value="1000" Maximum="10000" Interval="50" LargeChange="500" SmallChange="100" ToolTip="1000 ms" TickFrequency="10" />
+                                                <Slider Name="sldKlangPause0_X" Grid.Column="9" Height="23" Margin="6,0,4,0" Value="1000" Maximum="10000" Interval="50" LargeChange="500" SmallChange="100" ToolTip="1000 ms" TickFrequency="10" ValueChanged="sldKlangPause0_X_ValueChanged" />
                                                 <CheckBox Name="chkKlangPauseMove0_X" Height="14" Margin="0,6,0,4" Grid.Column="10" Width="14" Click="chkKlangPauseMove0_0_Click" Tag="0" IsTabStop="False" />
                                                 <TextBox Name="tboxPauseMin0_X" Grid.Column="11" Margin="0,0,36,0" Text="0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxPauseMin0_X_LostFocus" Tag="0" />
                                                 <Button Name="_btnPauseMinMinus0_X" Grid.Column="11" Margin="39,0,18,0" Click="_btnPauseMinMinus0_X_Click" Tag="-200" IsTabStop="False">
@@ -472,7 +472,7 @@
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
                                                 <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="13" HorizontalAlignment="Left" Margin="8,3,0,0" />
-                                                <Slider Name="sldPlaySpeed0_X" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4" Grid.Column="13" HorizontalAlignment="Center" Width="45" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" ToolTip="Abspielgeschwinidkeit anpassen" />
+                                                <Slider Name="sldPlaySpeed0_X" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4" Grid.Column="13" HorizontalAlignment="Center" Width="45" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" ToolTip="Abspielgeschwinidkeit anpassen" ValueChanged="sldPlaySpeed0_X_ValueChanged" />
                                                 <Image Source="/Images/Icons/General/hase.png" Grid.Column="13" HorizontalAlignment="Right" Margin="0,5,5,0" />
                                             </Grid>
                                         </StackPanel>
