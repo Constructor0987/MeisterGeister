@@ -12,7 +12,7 @@
 
 *                                        *
 
-*         Version 2.0.1                  *
+*         Version 2.1.0                  *
 
 *                                        *
 
@@ -20,7 +20,7 @@
 
 
 
-Copyright © MeisterGeister-Team 2010-2012
+Copyright © MeisterGeister-Team 2010-2013
 
 http://www.meistergeister.org/
 

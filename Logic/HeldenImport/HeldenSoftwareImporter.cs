@@ -975,7 +975,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 for (int i = 1; i <= 7 && !sr.EndOfStream; i++)
                 {
                     string line = sr.ReadLine();
-                    if (line.Contains("helden.xsd"))
+                    if (line.Contains("helden.xsd") || line.Contains("helden.xsl"))
                         return true;
                 }
             }
