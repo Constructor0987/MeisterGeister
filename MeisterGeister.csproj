@@ -60,7 +60,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;TEST</DefineConstants>
+    <DefineConstants>TRACE;INTERN</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -1432,9 +1432,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0067.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0068.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
-    <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="License\Apache License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
