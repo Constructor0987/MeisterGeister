@@ -97,7 +97,7 @@ namespace MeisterGeister.View.ArtGen
             uint tawMagiekunde = Convert.ToUInt32(h.Talentwert("Magiekunde"));
             
             // Übergabe an ArtefaktGenerator
-            PlugInControl.plugInHero(h.Name, representation, sfKraftkontrolle, sfVielfacheLadung, sfStapeleffekt, sfHypervehemenz, sfMatrixgeber, sfSemipermI, 
+            PlugInControl.controller.plugInHero(h.Name, representation, sfKraftkontrolle, sfVielfacheLadung, sfStapeleffekt, sfHypervehemenz, sfMatrixgeber, sfSemipermI, 
                 sfSemipermII, sfRingkunde, sfAuxiliator, tawArcanovi, tawArcanoviMatrix, tawArcanoviSemi, tawOdem, tawAnalys, tawDestructibo, tawMagiekunde);
         }
 

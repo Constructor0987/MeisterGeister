@@ -101,7 +101,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Ares.MeisterGeisterPlugin.dll</HintPath>
     </Reference>
-    <Reference Include="ArtefaktGenerator, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="ArtefaktGenerator, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ArtefaktGenerator.dll</HintPath>
+    </Reference>
     <Reference Include="DG-Suche, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\DG-Suche.dll</HintPath>
