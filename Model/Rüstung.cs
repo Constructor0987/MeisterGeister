@@ -31,7 +31,7 @@ namespace MeisterGeister.Model
             get {
                 if (ZonenrüstungswerteVorhanden())
                 {
-                    return (2 * (Kopf.Value + LBein.Value + RBein.Value) + 4 * (Bauch.Value + Brust.Value + Rücken.Value) + (LArm.Value + RArm.Value)) / _gRSDivisor;
+                    return (2.0 * (Kopf.Value + LBein.Value + RBein.Value) + 4.0 * (Bauch.Value + Brust.Value + Rücken.Value) + (LArm.Value + RArm.Value)) / _gRSDivisor;
                 }
                 else
                 {
