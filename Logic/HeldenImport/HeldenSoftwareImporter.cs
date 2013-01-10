@@ -279,6 +279,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _talentMapping.Add("lesen/schreiben (gimaril-glyphen)", "lesen/schreiben (gimaril)");
             _talentMapping.Add("lesen/schreiben (urtulamidya)", "lesen/schreiben (ur-tulamidya)");
             _talentMapping.Add("lesen/schreiben (angramm)", "lesen/schreiben (angram)");
+            _talentMapping.Add("lesen/schreiben (isdira/asdharia)", "lesen/schreiben (isdira)");
             _talentMapping.Add("ritualkenntnis: gildenmagie", "ritualkenntnis (gildenmagie)");
             _talentMapping.Add("ritualkenntnis: kristallomantie", "ritualkenntnis (kristallomantie)");
             _talentMapping.Add("ritualkenntnis: scharlatan", "ritualkenntnis (scharlatanerie)");
