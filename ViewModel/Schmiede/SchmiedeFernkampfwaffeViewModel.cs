@@ -417,6 +417,8 @@ namespace MeisterGeister.ViewModel.Schmiede
                 ausr.AusrüstungGUID = Guid.Empty;
                 _erstellteFernkampfwaffe.Ausrüstung = ausr;
                 ausr.Fernkampfwaffe = _erstellteFernkampfwaffe;
+                foreach (var item in _selectedFernkampfwaffe.Ausrüstung.Ausrüstung_Setting)
+                    _erstellteFernkampfwaffe.Ausrüstung.Ausrüstung_Setting.Add(Global.ContextInventar.Clone<Model.Ausrüstung_Setting>(item));
                 //Prüfen, ob FK-Waffe auch NK-Waffe ist
                 if (_selectedFernkampfwaffe.Ausrüstung.Waffe != null)
                 {
