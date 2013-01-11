@@ -61,6 +61,40 @@ namespace MeisterGeister.Model
         }
         #endregion
 
+        /// <summary>
+        /// Eine Zusammenführung aller durchsuchbaren Felder.
+        /// </summary>
+        private string SuchText
+        {
+            get { return (Name ?? string.Empty).ToLower() + (Tags ?? string.Empty).ToLower(); }
+        }
+
+        /// <summary>
+        /// Prüft, ob 'suchWort' im Namen oder in den Tags vorkommt.
+        /// </summary>
+        /// <param name="suchWort"></param>
+        /// <returns></returns>
+        public bool Contains(string suchWort)
+        {
+            return SuchText.Contains(suchWort);
+        }
+
+        /// <summary>
+        /// Prüft, ob die 'suchWorte' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// Es wird dabei eine UND-Prüfung durchgeführt.
+        /// </summary>
+        /// <param name="suchWorte"></param>
+        /// <returns></returns>
+        public bool Contains(string[] suchWorte)
+        {
+            foreach (string wort in suchWorte)
+            {
+                if (!Contains(wort))
+                    return false;
+            }
+            return true;
+        }
+
         private KampfLogic.Rüstungsschutz _rs = null;
         public KampfLogic.IRüstungsschutz RS
         {

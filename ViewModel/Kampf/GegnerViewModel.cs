@@ -28,6 +28,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 GegnerBaseListe = Global.ContextHeld.Liste<GegnerBase>().OrderBy(h => h.Name).ToList();
                 if (tmp != Guid.Empty)
                     SelectedGegnerBase = GegnerBaseListe.Where(h => h.GegnerBaseGUID == tmp).FirstOrDefault();
+                FilterListe();
             }
         }
 
@@ -60,6 +61,18 @@ namespace MeisterGeister.ViewModel.Kampf
 
         #region Bindable Properties
 
+        private string _suchText = string.Empty;
+        public string SuchText
+        {
+            get { return _suchText; }
+            set
+            {
+                _suchText = value;
+                OnChanged("SuchText");
+                FilterListe();
+            }
+        }
+
         private GegnerBase selectedGegnerBase;
         public GegnerBase SelectedGegnerBase
         {
@@ -80,6 +93,17 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 gegnerBaseListe = value;
                 OnChanged("GegnerBaseListe");
+            }
+        }
+
+        private List<GegnerBase> _filteredGegnerBaseListe;
+        public List<GegnerBase> FilteredGegnerBaseListe
+        {
+            get { return _filteredGegnerBaseListe; }
+            set
+            {
+                _filteredGegnerBaseListe = value;
+                OnChanged("FilteredGegnerBaseListe");
             }
         }
 
@@ -172,6 +196,26 @@ namespace MeisterGeister.ViewModel.Kampf
                 selectedRüstung = value;
                 OnChanged("SelectedRüstung");
             }
+        }
+
+        #endregion
+
+        #region Filtern
+
+        /// <summary>
+        /// Filtert die BasarItem-Liste auf Basis des SuchTextes.
+        /// </summary>
+        private void FilterListe()
+        {
+            string suchText = _suchText.ToLower().Trim();
+            string[] suchWorte = suchText.Split(' ');
+
+            if (suchText == string.Empty) // kein Suchwort
+                FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().OrderBy(n => n.Name).ToList();
+            else if (suchWorte.Length == 1) // nur ein Suchwort
+                FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
+            else // mehrere Suchwörter
+                FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
         }
 
         #endregion

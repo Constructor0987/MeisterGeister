@@ -54,20 +54,34 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Style="{DynamicResource ControlTitelBorder}">
+
+            <Expander IsExpanded="True" Grid.Row="0">
+                <Expander.Header>
+                    <TextBlock Text="Filter" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                        <TextBox Margin="5,10" Width="150" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                    </StackPanel>
+                </Border>
+            </Expander>
+
+            <Border Grid.Row="1" Style="{DynamicResource ControlTitelBorder}">
                 <TextBlock Text="Gegner" Style="{DynamicResource TextTitel}" />
             </Border>
 
-            <Border Grid.Row="1" Style="{DynamicResource ControlContentBorder}">
+            <Border Grid.Row="2" Style="{DynamicResource ControlContentBorder}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListBox x:Name="_listBoxGegnerBase" Grid.Row="0" Padding="4" Background="Transparent" AllowDrop="True" 
-				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding GegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000" SelectionChanged="ListBoxGegnerBase_SelectionChanged" MouseDoubleClick="_listBoxGegnerBase_MouseDoubleClick">
+				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding FilteredGegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000" SelectionChanged="ListBoxGegnerBase_SelectionChanged" MouseDoubleClick="_listBoxGegnerBase_MouseDoubleClick">
                         <ListBox.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
                         </ListBox.InputBindings>
