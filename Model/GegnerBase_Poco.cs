@@ -231,7 +231,7 @@ namespace MeisterGeister.Model
         private Nullable<int> _mRKörper;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int GS
+        public virtual double GS
         {
             get { return _gS; }
             set
@@ -241,10 +241,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private int _gS;
+        private double _gS;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> GS2
+        public virtual Nullable<double> GS2
         {
             get { return _gS2; }
             set
@@ -254,10 +254,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _gS2;
+        private Nullable<double> _gS2;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> GS3
+        public virtual Nullable<double> GS3
         {
             get { return _gS3; }
             set
@@ -267,7 +267,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _gS3;
+        private Nullable<double> _gS3;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int RSKopf
@@ -489,6 +489,58 @@ namespace MeisterGeister.Model
     
         }
         private string _setting;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Verbreitung
+        {
+            get { return _verbreitung; }
+            set
+    		{ 
+    			_verbreitung = value;
+    			OnChanged("Verbreitung");
+    		}
+    
+        }
+        private string _verbreitung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Jagdreaktion
+        {
+            get { return _jagdreaktion; }
+            set
+    		{ 
+    			_jagdreaktion = value;
+    			OnChanged("Jagdreaktion");
+    		}
+    
+        }
+        private string _jagdreaktion;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Beute
+        {
+            get { return _beute; }
+            set
+    		{ 
+    			_beute = value;
+    			OnChanged("Beute");
+    		}
+    
+        }
+        private string _beute;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Auftreten
+        {
+            get { return _auftreten; }
+            set
+    		{ 
+    			_auftreten = value;
+    			OnChanged("Auftreten");
+    		}
+    
+        }
+        private string _auftreten;
 
         #endregion
 

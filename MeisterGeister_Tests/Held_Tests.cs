@@ -155,7 +155,7 @@ namespace MeisterGeister_Tests
             testHeld1.Modifikatoren.Clear();
             Assert.Greater(testHeld1.LebensenergieAktuell, 10, "Mehr als 10 LeP");
             Assert.AreEqual(0, testHeld1.Modifikatoren.Count, "Keine Modifikatoren");
-            int gs = testHeld1.Geschwindigkeit;
+            double gs = testHeld1.Geschwindigkeit;
             Assert.Greater(gs, 1);
             testHeld1.LebensenergieAktuell = (int)Math.Round(testHeld1.LebensenergieMax * 1.0 / 2.0) - 1;
             Assert.AreEqual(1, testHeld1.Modifikatoren.Where(m => m is Mod.NiedrigeLebensenergieModifikator).Count() , "Ein Modifikator");

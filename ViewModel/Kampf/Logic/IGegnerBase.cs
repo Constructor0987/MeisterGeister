@@ -21,9 +21,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int KO { get;  }
         int MRGeist { get;  }
         int? MRKörper { get;  }
-        int GS { get;  }
-        int? GS2 { get;  }
-        int? GS3 { get;  }
+        double GS { get;  }
+        double? GS2 { get; }
+        double? GS3 { get; }
         int RSKopf { get;  }
         int RSBrust { get;  }
         int RSRücken { get;  }

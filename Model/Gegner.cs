@@ -132,7 +132,7 @@ namespace MeisterGeister.Model
 
         //return GS abhängig vom Modus (fliegend, am boden, galopp, etc.)
         [DependentProperty("GS")]
-        public int Geschwindigkeit
+        public double Geschwindigkeit
         {
             get { return GS; }
         }

@@ -510,7 +510,7 @@ namespace MeisterGeister.Model
         private int _aktionen;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual int GS
+        public virtual double GS
         {
             get { return _gS; }
             set
@@ -520,10 +520,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private int _gS;
+        private double _gS;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> GS2
+        public virtual Nullable<double> GS2
         {
             get { return _gS2; }
             set
@@ -533,10 +533,10 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _gS2;
+        private Nullable<double> _gS2;
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual Nullable<int> GS3
+        public virtual Nullable<double> GS3
         {
             get { return _gS3; }
             set
@@ -546,7 +546,7 @@ namespace MeisterGeister.Model
     		}
     
         }
-        private Nullable<int> _gS3;
+        private Nullable<double> _gS3;
 
         #endregion
 

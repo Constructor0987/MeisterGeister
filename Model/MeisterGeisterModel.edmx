@@ -497,9 +497,9 @@
           <Property Name="WundenBeinR" Type="int" Nullable="false" />
           <Property Name="Bemerkung" Type="ntext" />
           <Property Name="Aktionen" Type="int" Nullable="false" />
-          <Property Name="GS" Type="int" Nullable="false" />
-          <Property Name="GS2" Type="int" />
-          <Property Name="GS3" Type="int" />
+          <Property Name="GS" Type="float" Nullable="false" />
+          <Property Name="GS2" Type="float" />
+          <Property Name="GS3" Type="float" />
         </EntityType>
         <EntityType Name="GegnerBase">
           <Key>
@@ -520,9 +520,9 @@
           <Property Name="KO" Type="int" Nullable="false" />
           <Property Name="MRGeist" Type="int" Nullable="false" />
           <Property Name="MRKörper" Type="int" />
-          <Property Name="GS" Type="int" Nullable="false" />
-          <Property Name="GS2" Type="int" />
-          <Property Name="GS3" Type="int" />
+          <Property Name="GS" Type="float" Nullable="false" />
+          <Property Name="GS2" Type="float" />
+          <Property Name="GS3" Type="float" />
           <Property Name="RSKopf" Type="int" Nullable="false" />
           <Property Name="RSBrust" Type="int" Nullable="false" />
           <Property Name="RSRücken" Type="int" Nullable="false" />
@@ -540,6 +540,10 @@
           <Property Name="Bemerkung" Type="ntext" />
           <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
           <Property Name="Setting" Type="nvarchar" MaxLength="100" />
+          <Property Name="Verbreitung" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Jagdreaktion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Beute" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Auftreten" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="GegnerBase_Angriff">
           <Key>
@@ -1886,17 +1890,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="upper"
-            Aggregate="false"
-            BuiltIn="true"
-            NiladicFunction="false"
-            IsComposable="true"
-            ParameterTypeSemantics="AllowImplicitConversion"
-            ReturnType="nvarchar">
-          <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
-        </Function>
-      </Schema>
-    </edmx:StorageModels>
+      <Function Name="upper"
+          Aggregate="false"
+          BuiltIn="true"
+          NiladicFunction="false"
+          IsComposable="true"
+          ParameterTypeSemantics="AllowImplicitConversion"
+          ReturnType="nvarchar">
+             <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
+            </Function>
+    </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseDSAModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -1914,8 +1917,6 @@
           <EntitySet Name="Einstellungen" EntityType="DatabaseDSAModel.Einstellungen" />
           <EntitySet Name="Farbe" EntityType="DatabaseDSAModel.Farbe" />
           <EntitySet Name="Fernkampfwaffe" EntityType="DatabaseDSAModel.Fernkampfwaffe" />
-          <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Gegner" />
-          <EntitySet Name="GegnerBase" EntityType="DatabaseDSAModel.GegnerBase" />
           <EntitySet Name="GegnerBase_Angriff" EntityType="DatabaseDSAModel.GegnerBase_Angriff" />
           <EntitySet Name="GegnerBase_Kampfregel" EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" />
           <EntitySet Name="Handelsgut" EntityType="DatabaseDSAModel.Handelsgut" />
@@ -2023,18 +2024,6 @@
           <AssociationSet Name="fk_HeldMunition_Fernkampfwaffe" Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe">
             <End Role="Fernkampfwaffe" EntitySet="Fernkampfwaffe" />
             <End Role="Held_Munition" EntitySet="Held_Munition" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Gegner_GegnerBase" Association="DatabaseDSAModel.fk_Gegner_GegnerBase">
-            <End Role="GegnerBase" EntitySet="GegnerBase" />
-            <End Role="Gegner" EntitySet="Gegner" />
-          </AssociationSet>
-          <AssociationSet Name="fk_GegnerBaseAngriff_GegnerBase" Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase">
-            <End Role="GegnerBase" EntitySet="GegnerBase" />
-            <End Role="GegnerBase_Angriff" EntitySet="GegnerBase_Angriff" />
-          </AssociationSet>
-          <AssociationSet Name="fk_GegnerBaseKampfregel_GegnerBase" Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase">
-            <End Role="GegnerBase" EntitySet="GegnerBase" />
-            <End Role="GegnerBase_Kampfregel" EntitySet="GegnerBase_Kampfregel" />
           </AssociationSet>
           <AssociationSet Name="fk_GegnerBaseKampfregel_Kampfregel" Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel">
             <End Role="Kampfregel" EntitySet="Kampfregel" />
@@ -2175,6 +2164,20 @@
           <AssociationSet Name="Waffe_Talent" Association="DatabaseDSAModel.Waffe_Talent">
             <End Role="Talent" EntitySet="Talent" />
             <End Role="Waffe" EntitySet="Waffe" />
+          </AssociationSet>
+          <EntitySet Name="Gegner" EntityType="DatabaseDSAModel.Gegner" />
+          <EntitySet Name="GegnerBase" EntityType="DatabaseDSAModel.GegnerBase" />
+          <AssociationSet Name="fk_Gegner_GegnerBase" Association="DatabaseDSAModel.fk_Gegner_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
+            <End Role="Gegner" EntitySet="Gegner" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GegnerBaseAngriff_GegnerBase" Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
+            <End Role="GegnerBase_Angriff" EntitySet="GegnerBase_Angriff" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GegnerBaseKampfregel_GegnerBase" Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase">
+            <End Role="GegnerBase" EntitySet="GegnerBase" />
+            <End Role="GegnerBase_Kampfregel" EntitySet="GegnerBase_Kampfregel" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Abenteuer">
@@ -2351,94 +2354,6 @@
           <NavigationProperty Name="Held_Munition" Relationship="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" FromRole="Fernkampfwaffe" ToRole="Held_Munition" />
           <NavigationProperty Name="Talent" Relationship="DatabaseDSAModel.Fernkampfwaffe_Talent" FromRole="Fernkampfwaffe" ToRole="Talent" />
         </EntityType>
-        <EntityType Name="Gegner">
-          <Key>
-            <PropertyRef Name="GegnerGUID" />
-          </Key>
-          <Property Type="Guid" Name="GegnerGUID" Nullable="false" />
-          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Bild" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ATMod" Nullable="false" />
-          <Property Type="Int32" Name="INIBasis" Nullable="false" />
-          <Property Type="Int32" Name="PA" Nullable="false" />
-          <Property Type="Int32" Name="LE" Nullable="false" />
-          <Property Type="Int32" Name="AU" Nullable="false" />
-          <Property Type="Int32" Name="AE" Nullable="false" />
-          <Property Type="Int32" Name="KE" Nullable="false" />
-          <Property Type="Int32" Name="KO" Nullable="false" />
-          <Property Type="Int32" Name="MRGeist" Nullable="false" />
-          <Property Type="Int32" Name="MRKörper" />
-          <Property Type="Int32" Name="RSKopf" Nullable="false" />
-          <Property Type="Int32" Name="RSBrust" Nullable="false" />
-          <Property Type="Int32" Name="RSRücken" Nullable="false" />
-          <Property Type="Int32" Name="RSArmL" Nullable="false" />
-          <Property Type="Int32" Name="RSArmR" Nullable="false" />
-          <Property Type="Int32" Name="RSBauch" Nullable="false" />
-          <Property Type="Int32" Name="RSBeinL" Nullable="false" />
-          <Property Type="Int32" Name="RSBeinR" Nullable="false" />
-          <Property Type="Int32" Name="LEAktuell" Nullable="false" />
-          <Property Type="Int32" Name="AUAktuell" Nullable="false" />
-          <Property Type="Int32" Name="AEAktuell" Nullable="false" />
-          <Property Type="Int32" Name="KEAktuell" Nullable="false" />
-          <Property Type="Int32" Name="Wunden" Nullable="false" />
-          <Property Type="Int32" Name="WundenKopf" Nullable="false" />
-          <Property Type="Int32" Name="WundenBrust" Nullable="false" />
-          <Property Type="Int32" Name="WundenArmL" Nullable="false" />
-          <Property Type="Int32" Name="WundenArmR" Nullable="false" />
-          <Property Type="Int32" Name="WundenBauch" Nullable="false" />
-          <Property Type="Int32" Name="WundenBeinL" Nullable="false" />
-          <Property Type="Int32" Name="WundenBeinR" Nullable="false" />
-          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="Aktionen" Nullable="false" />
-          <Property Type="Int32" Name="GS" Nullable="false" />
-          <Property Type="Int32" Name="GS2" />
-          <Property Type="Int32" Name="GS3" />
-          <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="Gegner" ToRole="GegnerBase" />
-        </EntityType>
-        <EntityType Name="GegnerBase">
-          <Key>
-            <PropertyRef Name="GegnerBaseGUID" />
-          </Key>
-          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Typ" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Bild" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="INIBasis" Nullable="false" />
-          <Property Type="String" Name="INIZufall" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="Aktionen" Nullable="false" />
-          <Property Type="Int32" Name="PA" Nullable="false" />
-          <Property Type="Int32" Name="LE" Nullable="false" />
-          <Property Type="Int32" Name="AU" Nullable="false" />
-          <Property Type="Int32" Name="AE" Nullable="false" />
-          <Property Type="Int32" Name="KE" Nullable="false" />
-          <Property Type="Int32" Name="KO" Nullable="false" />
-          <Property Type="Int32" Name="MRGeist" Nullable="false" />
-          <Property Type="Int32" Name="MRKörper" />
-          <Property Type="Int32" Name="GS" Nullable="false" />
-          <Property Type="Int32" Name="GS2" />
-          <Property Type="Int32" Name="GS3" />
-          <Property Type="Int32" Name="RSKopf" Nullable="false" />
-          <Property Type="Int32" Name="RSBrust" Nullable="false" />
-          <Property Type="Int32" Name="RSRücken" Nullable="false" />
-          <Property Type="Int32" Name="RSArmL" Nullable="false" />
-          <Property Type="Int32" Name="RSArmR" Nullable="false" />
-          <Property Type="Int32" Name="RSBauch" Nullable="false" />
-          <Property Type="Int32" Name="RSBeinL" Nullable="false" />
-          <Property Type="Int32" Name="RSBeinR" Nullable="false" />
-          <Property Type="Int32" Name="GW" />
-          <Property Type="Int32" Name="Jagd" />
-          <Property Type="Int32" Name="Beschwörung" />
-          <Property Type="Int32" Name="Kontrolle" />
-          <Property Type="Int32" Name="Beschwörungskosten" />
-          <Property Type="String" Name="Tags" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Setting" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="GegnerBase" ToRole="Gegner" />
-          <NavigationProperty Name="GegnerBase_Angriff" Relationship="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Angriff" />
-          <NavigationProperty Name="GegnerBase_Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Kampfregel" />
-        </EntityType>
         <EntityType Name="GegnerBase_Angriff">
           <Key>
             <PropertyRef Name="GegnerBaseGUID" />
@@ -2465,8 +2380,8 @@
           <Property Type="Int32" Name="Erschwernis" Nullable="false" />
           <Property Type="String" Name="TP" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" FromRole="GegnerBase_Kampfregel" ToRole="GegnerBase" />
           <NavigationProperty Name="Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" FromRole="GegnerBase_Kampfregel" ToRole="Kampfregel" />
+          <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" FromRole="GegnerBase_Kampfregel" ToRole="GegnerBase" />
         </EntityType>
         <EntityType Name="Handelsgut">
           <Key>
@@ -3280,48 +3195,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_Gegner_GegnerBase">
-          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DatabaseDSAModel.Gegner" Role="Gegner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GegnerBase">
-              <PropertyRef Name="GegnerBaseGUID" />
-            </Principal>
-            <Dependent Role="Gegner">
-              <PropertyRef Name="GegnerBaseGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_GegnerBaseAngriff_GegnerBase">
-          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DatabaseDSAModel.GegnerBase_Angriff" Role="GegnerBase_Angriff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GegnerBase">
-              <PropertyRef Name="GegnerBaseGUID" />
-            </Principal>
-            <Dependent Role="GegnerBase_Angriff">
-              <PropertyRef Name="GegnerBaseGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_GegnerBaseKampfregel_GegnerBase">
-          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DatabaseDSAModel.GegnerBase_Kampfregel" Role="GegnerBase_Kampfregel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GegnerBase">
-              <PropertyRef Name="GegnerBaseGUID" />
-            </Principal>
-            <Dependent Role="GegnerBase_Kampfregel">
-              <PropertyRef Name="GegnerBaseGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_GegnerBaseKampfregel_Kampfregel">
           <End Type="DatabaseDSAModel.Kampfregel" Role="Kampfregel" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3780,6 +3653,140 @@
           <End Type="DatabaseDSAModel.Talent" Role="Talent" Multiplicity="*" />
           <End Type="DatabaseDSAModel.Waffe" Role="Waffe" Multiplicity="*" />
         </Association>
+        <EntityType Name="Gegner">
+          <Key>
+            <PropertyRef Name="GegnerGUID" />
+          </Key>
+          <Property Type="Guid" Name="GegnerGUID" Nullable="false" />
+          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bild" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ATMod" Nullable="false" />
+          <Property Type="Int32" Name="INIBasis" Nullable="false" />
+          <Property Type="Int32" Name="PA" Nullable="false" />
+          <Property Type="Int32" Name="LE" Nullable="false" />
+          <Property Type="Int32" Name="AU" Nullable="false" />
+          <Property Type="Int32" Name="AE" Nullable="false" />
+          <Property Type="Int32" Name="KE" Nullable="false" />
+          <Property Type="Int32" Name="KO" Nullable="false" />
+          <Property Type="Int32" Name="MRGeist" Nullable="false" />
+          <Property Type="Int32" Name="MRKörper" />
+          <Property Type="Int32" Name="RSKopf" Nullable="false" />
+          <Property Type="Int32" Name="RSBrust" Nullable="false" />
+          <Property Type="Int32" Name="RSRücken" Nullable="false" />
+          <Property Type="Int32" Name="RSArmL" Nullable="false" />
+          <Property Type="Int32" Name="RSArmR" Nullable="false" />
+          <Property Type="Int32" Name="RSBauch" Nullable="false" />
+          <Property Type="Int32" Name="RSBeinL" Nullable="false" />
+          <Property Type="Int32" Name="RSBeinR" Nullable="false" />
+          <Property Type="Int32" Name="LEAktuell" Nullable="false" />
+          <Property Type="Int32" Name="AUAktuell" Nullable="false" />
+          <Property Type="Int32" Name="AEAktuell" Nullable="false" />
+          <Property Type="Int32" Name="KEAktuell" Nullable="false" />
+          <Property Type="Int32" Name="Wunden" Nullable="false" />
+          <Property Type="Int32" Name="WundenKopf" Nullable="false" />
+          <Property Type="Int32" Name="WundenBrust" Nullable="false" />
+          <Property Type="Int32" Name="WundenArmL" Nullable="false" />
+          <Property Type="Int32" Name="WundenArmR" Nullable="false" />
+          <Property Type="Int32" Name="WundenBauch" Nullable="false" />
+          <Property Type="Int32" Name="WundenBeinL" Nullable="false" />
+          <Property Type="Int32" Name="WundenBeinR" Nullable="false" />
+          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Aktionen" Nullable="false" />
+          <Property Type="Double" Name="GS" Nullable="false" />
+          <Property Type="Double" Name="GS2" />
+          <Property Type="Double" Name="GS3" />
+          <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="Gegner" ToRole="GegnerBase" />
+        </EntityType>
+        <EntityType Name="GegnerBase">
+          <Key>
+            <PropertyRef Name="GegnerBaseGUID" />
+          </Key>
+          <Property Type="Guid" Name="GegnerBaseGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Typ" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bild" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="INIBasis" Nullable="false" />
+          <Property Type="String" Name="INIZufall" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Aktionen" Nullable="false" />
+          <Property Type="Int32" Name="PA" Nullable="false" />
+          <Property Type="Int32" Name="LE" Nullable="false" />
+          <Property Type="Int32" Name="AU" Nullable="false" />
+          <Property Type="Int32" Name="AE" Nullable="false" />
+          <Property Type="Int32" Name="KE" Nullable="false" />
+          <Property Type="Int32" Name="KO" Nullable="false" />
+          <Property Type="Int32" Name="MRGeist" Nullable="false" />
+          <Property Type="Int32" Name="MRKörper" />
+          <Property Type="Double" Name="GS" Nullable="false" />
+          <Property Type="Double" Name="GS2" />
+          <Property Type="Double" Name="GS3" />
+          <Property Type="Int32" Name="RSKopf" Nullable="false" />
+          <Property Type="Int32" Name="RSBrust" Nullable="false" />
+          <Property Type="Int32" Name="RSRücken" Nullable="false" />
+          <Property Type="Int32" Name="RSArmL" Nullable="false" />
+          <Property Type="Int32" Name="RSArmR" Nullable="false" />
+          <Property Type="Int32" Name="RSBauch" Nullable="false" />
+          <Property Type="Int32" Name="RSBeinL" Nullable="false" />
+          <Property Type="Int32" Name="RSBeinR" Nullable="false" />
+          <Property Type="Int32" Name="GW" />
+          <Property Type="Int32" Name="Jagd" />
+          <Property Type="Int32" Name="Beschwörung" />
+          <Property Type="Int32" Name="Kontrolle" />
+          <Property Type="Int32" Name="Beschwörungskosten" />
+          <Property Type="String" Name="Tags" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Setting" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Verbreitung" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Jagdreaktion" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Beute" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Auftreten" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Gegner" Relationship="DatabaseDSAModel.fk_Gegner_GegnerBase" FromRole="GegnerBase" ToRole="Gegner" />
+          <NavigationProperty Name="GegnerBase_Angriff" Relationship="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Angriff" />
+          <NavigationProperty Name="GegnerBase_Kampfregel" Relationship="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" FromRole="GegnerBase" ToRole="GegnerBase_Kampfregel" />
+        </EntityType>
+        <Association Name="fk_Gegner_GegnerBase">
+          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.Gegner" Role="Gegner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Principal>
+            <Dependent Role="Gegner">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GegnerBaseAngriff_GegnerBase">
+          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.GegnerBase_Angriff" Role="GegnerBase_Angriff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Principal>
+            <Dependent Role="GegnerBase_Angriff">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GegnerBaseKampfregel_GegnerBase">
+          <End Type="DatabaseDSAModel.GegnerBase" Role="GegnerBase" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.GegnerBase_Kampfregel" Role="GegnerBase_Kampfregel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GegnerBase">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Principal>
+            <Dependent Role="GegnerBase_Kampfregel">
+              <PropertyRef Name="GegnerBaseGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3938,92 +3945,6 @@
                 <ScalarProperty Name="Munitionsgewicht" ColumnName="Munitionsgewicht" />
                 <ScalarProperty Name="Munitionspreis" ColumnName="Munitionspreis" />
                 <ScalarProperty Name="FernkampfwaffeGUID" ColumnName="FernkampfwaffeGUID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Gegner">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.Gegner">
-              <MappingFragment StoreEntitySet="Gegner">
-                <ScalarProperty Name="GS3" ColumnName="GS3" />
-                <ScalarProperty Name="GS2" ColumnName="GS2" />
-                <ScalarProperty Name="GS" ColumnName="GS" />
-                <ScalarProperty Name="Aktionen" ColumnName="Aktionen" />
-                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
-                <ScalarProperty Name="WundenBeinR" ColumnName="WundenBeinR" />
-                <ScalarProperty Name="WundenBeinL" ColumnName="WundenBeinL" />
-                <ScalarProperty Name="WundenBauch" ColumnName="WundenBauch" />
-                <ScalarProperty Name="WundenArmR" ColumnName="WundenArmR" />
-                <ScalarProperty Name="WundenArmL" ColumnName="WundenArmL" />
-                <ScalarProperty Name="WundenBrust" ColumnName="WundenBrust" />
-                <ScalarProperty Name="WundenKopf" ColumnName="WundenKopf" />
-                <ScalarProperty Name="Wunden" ColumnName="Wunden" />
-                <ScalarProperty Name="KEAktuell" ColumnName="KEAktuell" />
-                <ScalarProperty Name="AEAktuell" ColumnName="AEAktuell" />
-                <ScalarProperty Name="AUAktuell" ColumnName="AUAktuell" />
-                <ScalarProperty Name="LEAktuell" ColumnName="LEAktuell" />
-                <ScalarProperty Name="RSBeinR" ColumnName="RSBeinR" />
-                <ScalarProperty Name="RSBeinL" ColumnName="RSBeinL" />
-                <ScalarProperty Name="RSBauch" ColumnName="RSBauch" />
-                <ScalarProperty Name="RSArmR" ColumnName="RSArmR" />
-                <ScalarProperty Name="RSArmL" ColumnName="RSArmL" />
-                <ScalarProperty Name="RSRücken" ColumnName="RSRücken" />
-                <ScalarProperty Name="RSBrust" ColumnName="RSBrust" />
-                <ScalarProperty Name="RSKopf" ColumnName="RSKopf" />
-                <ScalarProperty Name="MRKörper" ColumnName="MRKörper" />
-                <ScalarProperty Name="MRGeist" ColumnName="MRGeist" />
-                <ScalarProperty Name="KO" ColumnName="KO" />
-                <ScalarProperty Name="KE" ColumnName="KE" />
-                <ScalarProperty Name="AE" ColumnName="AE" />
-                <ScalarProperty Name="AU" ColumnName="AU" />
-                <ScalarProperty Name="LE" ColumnName="LE" />
-                <ScalarProperty Name="PA" ColumnName="PA" />
-                <ScalarProperty Name="INIBasis" ColumnName="INIBasis" />
-                <ScalarProperty Name="ATMod" ColumnName="ATMod" />
-                <ScalarProperty Name="Bild" ColumnName="Bild" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
-                <ScalarProperty Name="GegnerGUID" ColumnName="GegnerGUID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GegnerBase">
-            <EntityTypeMapping TypeName="DatabaseDSAModel.GegnerBase">
-              <MappingFragment StoreEntitySet="GegnerBase">
-                <ScalarProperty Name="Setting" ColumnName="Setting" />
-                <ScalarProperty Name="Literatur" ColumnName="Literatur" />
-                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
-                <ScalarProperty Name="Tags" ColumnName="Tags" />
-                <ScalarProperty Name="Beschwörungskosten" ColumnName="Beschwörungskosten" />
-                <ScalarProperty Name="Kontrolle" ColumnName="Kontrolle" />
-                <ScalarProperty Name="Beschwörung" ColumnName="Beschwörung" />
-                <ScalarProperty Name="Jagd" ColumnName="Jagd" />
-                <ScalarProperty Name="GW" ColumnName="GW" />
-                <ScalarProperty Name="RSBeinR" ColumnName="RSBeinR" />
-                <ScalarProperty Name="RSBeinL" ColumnName="RSBeinL" />
-                <ScalarProperty Name="RSBauch" ColumnName="RSBauch" />
-                <ScalarProperty Name="RSArmR" ColumnName="RSArmR" />
-                <ScalarProperty Name="RSArmL" ColumnName="RSArmL" />
-                <ScalarProperty Name="RSRücken" ColumnName="RSRücken" />
-                <ScalarProperty Name="RSBrust" ColumnName="RSBrust" />
-                <ScalarProperty Name="RSKopf" ColumnName="RSKopf" />
-                <ScalarProperty Name="GS3" ColumnName="GS3" />
-                <ScalarProperty Name="GS2" ColumnName="GS2" />
-                <ScalarProperty Name="GS" ColumnName="GS" />
-                <ScalarProperty Name="MRKörper" ColumnName="MRKörper" />
-                <ScalarProperty Name="MRGeist" ColumnName="MRGeist" />
-                <ScalarProperty Name="KO" ColumnName="KO" />
-                <ScalarProperty Name="KE" ColumnName="KE" />
-                <ScalarProperty Name="AE" ColumnName="AE" />
-                <ScalarProperty Name="AU" ColumnName="AU" />
-                <ScalarProperty Name="LE" ColumnName="LE" />
-                <ScalarProperty Name="PA" ColumnName="PA" />
-                <ScalarProperty Name="Aktionen" ColumnName="Aktionen" />
-                <ScalarProperty Name="INIZufall" ColumnName="INIZufall" />
-                <ScalarProperty Name="INIBasis" ColumnName="INIBasis" />
-                <ScalarProperty Name="Bild" ColumnName="Bild" />
-                <ScalarProperty Name="Typ" ColumnName="Typ" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4602,6 +4523,96 @@
               <ScalarProperty Name="TalentGUID" ColumnName="TalentGUID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Gegner">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Gegner">
+              <MappingFragment StoreEntitySet="Gegner">
+                <ScalarProperty Name="GS3" ColumnName="GS3" />
+                <ScalarProperty Name="GS2" ColumnName="GS2" />
+                <ScalarProperty Name="GS" ColumnName="GS" />
+                <ScalarProperty Name="Aktionen" ColumnName="Aktionen" />
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="WundenBeinR" ColumnName="WundenBeinR" />
+                <ScalarProperty Name="WundenBeinL" ColumnName="WundenBeinL" />
+                <ScalarProperty Name="WundenBauch" ColumnName="WundenBauch" />
+                <ScalarProperty Name="WundenArmR" ColumnName="WundenArmR" />
+                <ScalarProperty Name="WundenArmL" ColumnName="WundenArmL" />
+                <ScalarProperty Name="WundenBrust" ColumnName="WundenBrust" />
+                <ScalarProperty Name="WundenKopf" ColumnName="WundenKopf" />
+                <ScalarProperty Name="Wunden" ColumnName="Wunden" />
+                <ScalarProperty Name="KEAktuell" ColumnName="KEAktuell" />
+                <ScalarProperty Name="AEAktuell" ColumnName="AEAktuell" />
+                <ScalarProperty Name="AUAktuell" ColumnName="AUAktuell" />
+                <ScalarProperty Name="LEAktuell" ColumnName="LEAktuell" />
+                <ScalarProperty Name="RSBeinR" ColumnName="RSBeinR" />
+                <ScalarProperty Name="RSBeinL" ColumnName="RSBeinL" />
+                <ScalarProperty Name="RSBauch" ColumnName="RSBauch" />
+                <ScalarProperty Name="RSArmR" ColumnName="RSArmR" />
+                <ScalarProperty Name="RSArmL" ColumnName="RSArmL" />
+                <ScalarProperty Name="RSRücken" ColumnName="RSRücken" />
+                <ScalarProperty Name="RSBrust" ColumnName="RSBrust" />
+                <ScalarProperty Name="RSKopf" ColumnName="RSKopf" />
+                <ScalarProperty Name="MRKörper" ColumnName="MRKörper" />
+                <ScalarProperty Name="MRGeist" ColumnName="MRGeist" />
+                <ScalarProperty Name="KO" ColumnName="KO" />
+                <ScalarProperty Name="KE" ColumnName="KE" />
+                <ScalarProperty Name="AE" ColumnName="AE" />
+                <ScalarProperty Name="AU" ColumnName="AU" />
+                <ScalarProperty Name="LE" ColumnName="LE" />
+                <ScalarProperty Name="PA" ColumnName="PA" />
+                <ScalarProperty Name="INIBasis" ColumnName="INIBasis" />
+                <ScalarProperty Name="ATMod" ColumnName="ATMod" />
+                <ScalarProperty Name="Bild" ColumnName="Bild" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
+                <ScalarProperty Name="GegnerGUID" ColumnName="GegnerGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GegnerBase">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.GegnerBase">
+              <MappingFragment StoreEntitySet="GegnerBase">
+                <ScalarProperty Name="Auftreten" ColumnName="Auftreten" />
+                <ScalarProperty Name="Beute" ColumnName="Beute" />
+                <ScalarProperty Name="Jagdreaktion" ColumnName="Jagdreaktion" />
+                <ScalarProperty Name="Verbreitung" ColumnName="Verbreitung" />
+                <ScalarProperty Name="Setting" ColumnName="Setting" />
+                <ScalarProperty Name="Literatur" ColumnName="Literatur" />
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Beschwörungskosten" ColumnName="Beschwörungskosten" />
+                <ScalarProperty Name="Kontrolle" ColumnName="Kontrolle" />
+                <ScalarProperty Name="Beschwörung" ColumnName="Beschwörung" />
+                <ScalarProperty Name="Jagd" ColumnName="Jagd" />
+                <ScalarProperty Name="GW" ColumnName="GW" />
+                <ScalarProperty Name="RSBeinR" ColumnName="RSBeinR" />
+                <ScalarProperty Name="RSBeinL" ColumnName="RSBeinL" />
+                <ScalarProperty Name="RSBauch" ColumnName="RSBauch" />
+                <ScalarProperty Name="RSArmR" ColumnName="RSArmR" />
+                <ScalarProperty Name="RSArmL" ColumnName="RSArmL" />
+                <ScalarProperty Name="RSRücken" ColumnName="RSRücken" />
+                <ScalarProperty Name="RSBrust" ColumnName="RSBrust" />
+                <ScalarProperty Name="RSKopf" ColumnName="RSKopf" />
+                <ScalarProperty Name="GS3" ColumnName="GS3" />
+                <ScalarProperty Name="GS2" ColumnName="GS2" />
+                <ScalarProperty Name="GS" ColumnName="GS" />
+                <ScalarProperty Name="MRKörper" ColumnName="MRKörper" />
+                <ScalarProperty Name="MRGeist" ColumnName="MRGeist" />
+                <ScalarProperty Name="KO" ColumnName="KO" />
+                <ScalarProperty Name="KE" ColumnName="KE" />
+                <ScalarProperty Name="AE" ColumnName="AE" />
+                <ScalarProperty Name="AU" ColumnName="AU" />
+                <ScalarProperty Name="LE" ColumnName="LE" />
+                <ScalarProperty Name="PA" ColumnName="PA" />
+                <ScalarProperty Name="Aktionen" ColumnName="Aktionen" />
+                <ScalarProperty Name="INIZufall" ColumnName="INIZufall" />
+                <ScalarProperty Name="INIBasis" ColumnName="INIBasis" />
+                <ScalarProperty Name="Bild" ColumnName="Bild" />
+                <ScalarProperty Name="Typ" ColumnName="Typ" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GegnerBaseGUID" ColumnName="GegnerBaseGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4623,7 +4634,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="MeisterGeisterModel" ZoomLevel="94">
+      <Diagram Name="MeisterGeisterModel" ZoomLevel="87">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="5.1972188843401232" PointY="14.050589299784317" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="5.3241254134681659" PointY="15.294746391146791" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="0.36770149710015465" PointY="21.573071996482589" />
@@ -4637,8 +4648,6 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Einstellungen" Width="1.5" PointX="0.47177568286274363" PointY="29.201306401380016" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="3.1307269572889096" PointY="30.174591823562324" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="7.6930353956730269" PointY="6.1101233242592414" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="6.9447965784672627" PointY="23.957214828560694" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="9.3178726906505762" PointY="10.308558200629689" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="1.2034194940717051" PointY="15.313460655190731" />
         <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="1.565989143013018" PointY="8.9050911557418715" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.794575272032327" PointY="30.676649569848855" />
@@ -4696,9 +4705,6 @@
         <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Setting" />
         <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" />
         <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Handelsgut" />
         <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Setting" />
@@ -4734,6 +4740,11 @@
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Playlist" />
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" />
         <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="8.2713302766305059" PointY="7.6396877354195754" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="5.7744965766437808" PointY="16.528516553588453" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" />
       </Diagram>
     </Diagrams>
   </Designer>

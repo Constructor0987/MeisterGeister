@@ -145,18 +145,6 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Fernkampfwaffe> _fernkampfwaffe;
     
-        public ObjectSet<Gegner> Gegner
-        {
-            get { return _gegner  ?? (_gegner = CreateObjectSet<Gegner>("Gegner")); }
-        }
-        private ObjectSet<Gegner> _gegner;
-    
-        public ObjectSet<GegnerBase> GegnerBase
-        {
-            get { return _gegnerBase  ?? (_gegnerBase = CreateObjectSet<GegnerBase>("GegnerBase")); }
-        }
-        private ObjectSet<GegnerBase> _gegnerBase;
-    
         public ObjectSet<GegnerBase_Angriff> GegnerBase_Angriff
         {
             get { return _gegnerBase_Angriff  ?? (_gegnerBase_Angriff = CreateObjectSet<GegnerBase_Angriff>("GegnerBase_Angriff")); }
@@ -396,6 +384,18 @@ namespace MeisterGeister.Model
             get { return _zauberzeichen_Setting  ?? (_zauberzeichen_Setting = CreateObjectSet<Zauberzeichen_Setting>("Zauberzeichen_Setting")); }
         }
         private ObjectSet<Zauberzeichen_Setting> _zauberzeichen_Setting;
+    
+        public ObjectSet<Gegner> Gegner
+        {
+            get { return _gegner  ?? (_gegner = CreateObjectSet<Gegner>("Gegner")); }
+        }
+        private ObjectSet<Gegner> _gegner;
+    
+        public ObjectSet<GegnerBase> GegnerBase
+        {
+            get { return _gegnerBase  ?? (_gegnerBase = CreateObjectSet<GegnerBase>("GegnerBase")); }
+        }
+        private ObjectSet<GegnerBase> _gegnerBase;
 
         #endregion
 
@@ -428,10 +428,6 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Farbe;
     		if(typeof(T) == typeof(Fernkampfwaffe))
     				return (ObjectSet<T>)(Object)Fernkampfwaffe;
-    		if(typeof(T) == typeof(Gegner))
-    				return (ObjectSet<T>)(Object)Gegner;
-    		if(typeof(T) == typeof(GegnerBase))
-    				return (ObjectSet<T>)(Object)GegnerBase;
     		if(typeof(T) == typeof(GegnerBase_Angriff))
     				return (ObjectSet<T>)(Object)GegnerBase_Angriff;
     		if(typeof(T) == typeof(GegnerBase_Kampfregel))
@@ -512,6 +508,10 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Zauberzeichen;
     		if(typeof(T) == typeof(Zauberzeichen_Setting))
     				return (ObjectSet<T>)(Object)Zauberzeichen_Setting;
+    		if(typeof(T) == typeof(Gegner))
+    				return (ObjectSet<T>)(Object)Gegner;
+    		if(typeof(T) == typeof(GegnerBase))
+    				return (ObjectSet<T>)(Object)GegnerBase;
     		return null;
     	}
     	

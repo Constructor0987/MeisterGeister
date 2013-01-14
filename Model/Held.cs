@@ -1711,7 +1711,7 @@ namespace MeisterGeister.Model
 
         [DependentProperty("GeschwindigkeitOhneMod")]
         [DependsOnModifikator(typeof(Mod.IModGS))]
-        public int Geschwindigkeit
+        public double Geschwindigkeit
         {
             get {
                 int gs = GeschwindigkeitOhneMod;
