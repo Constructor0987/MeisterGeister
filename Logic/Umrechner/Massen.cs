@@ -36,12 +36,12 @@ namespace MeisterGeister.Logic.Umrechner
             Add("Mikrogramm (µg)", 0.000000001);
         }
 
-        public double WertUmrechnen(string von, string nach, double wert)
+        public double WertUmrechnen(string von, string nach, double? wert)
         {
             double ergebnis = 0;
 
             if (ContainsKey(von) && ContainsKey(nach))
-                ergebnis = wert * this[von] / this[nach];
+                ergebnis = (double)wert * this[von] / this[nach];
 
             return ergebnis;
         }

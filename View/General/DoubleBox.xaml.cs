@@ -27,9 +27,6 @@ namespace MeisterGeister.View.General
         {
             InitializeComponent();
 
-            _backgroundBrushDefault = _textBoxDouble.Background;
-            _borderBrushDefault = _textBoxDouble.BorderBrush;
-
             MinValue = Double.MinValue;
             MaxValue = Double.MaxValue;
         }
@@ -46,95 +43,232 @@ namespace MeisterGeister.View.General
             set;
         }
 
-        private Brush _backgroundBrushDefault;
-        private Brush _borderBrushDefault;
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+        public static DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(DoubleBox),
+                new PropertyMetadata(false));
 
-        private bool _noBackground = false;
+        public bool NoMouseWheel
+        {
+            get { return (bool)GetValue(NoMouseWheelProperty); }
+            set { SetValue(NoMouseWheelProperty, value); }
+        }
+        public static DependencyProperty NoMouseWheelProperty = DependencyProperty.Register("NoMouseWheel", typeof(bool), typeof(DoubleBox),
+                new PropertyMetadata(false));
+
         public bool NoBackground
         {
-            get { return _noBackground; }
-            set 
-            { 
-                _noBackground = value;
-                if (value)
-                {
-                    _textBoxDouble.Background = null;
-                    _textBoxDouble.BorderBrush = null;
-                }
-                else
-                {
-                    _textBoxDouble.Background = _backgroundBrushDefault;
-                    _textBoxDouble.BorderBrush = _borderBrushDefault;
-                }
-            }
+            get { return (bool)GetValue(NoBackgroundProperty); }
+            set { SetValue(NoBackgroundProperty, value); }
         }
+        public static DependencyProperty NoBackgroundProperty = DependencyProperty.Register("NoBackground", typeof(bool), typeof(DoubleBox),
+                new PropertyMetadata(false));
+
+        public bool WeissAufSchwarz
+        {
+            get { return (bool)GetValue(WeissAufSchwarzProperty); }
+            set { SetValue(WeissAufSchwarzProperty, value); }
+        }
+        public static DependencyProperty WeissAufSchwarzProperty = DependencyProperty.Register("WeissAufSchwarz", typeof(bool), typeof(DoubleBox),
+                new PropertyMetadata(false));
+
+        public bool MarkPlusValue
+        {
+            get { return (bool)GetValue(MarkPlusValueProperty); }
+            set { SetValue(MarkPlusValueProperty, value); }
+        }
+        public static DependencyProperty MarkPlusValueProperty = DependencyProperty.Register("MarkPlusValue", typeof(bool), typeof(DoubleBox),
+                new PropertyMetadata(false));
 
         public bool ShowButtons
         {
             get { return (bool)GetValue(ShowButtonsProperty); }
             set { SetValue(ShowButtonsProperty, value); }
         }
-
         public static DependencyProperty ShowButtonsProperty = DependencyProperty.Register("ShowButtons", typeof(bool), typeof(DoubleBox),
                 new PropertyMetadata(false));
 
-        public Double Value
+        public bool CanBeNull
         {
-            get { return (Double)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get { return (bool)GetValue(CanBeNullProperty); }
+            set { SetValue(CanBeNullProperty, value); }
+        }
+        public static DependencyProperty CanBeNullProperty = DependencyProperty.Register("CanBeNull", typeof(bool), typeof(DoubleBox),
+                new PropertyMetadata(false));
+
+        new public Brush Foreground
+        {
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
+        }
+        new public static DependencyProperty ForegroundProperty = DependencyProperty.Register("Foreground", typeof(Brush), typeof(DoubleBox),
+                new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnCurrentForegroundChanged),
+                    new CoerceValueCallback(OnCoerceForeground)));
+
+        private static object OnCoerceForeground(DependencyObject d, Object baseValue)
+        {
+            DoubleBox box = (DoubleBox)d;
+
+            if ((Brush)baseValue == box._textBoxDouble.Background)
+                return box._textBoxDouble.Foreground;
+            return baseValue;
         }
 
-        public static DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(Double), typeof(DoubleBox),
+        private static void OnCurrentForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            DoubleBox box = (DoubleBox)d;
+            box._textBoxDouble.Foreground = (Brush)e.NewValue;
+        }
+
+        public double? Value
+        {
+            get { return (double?)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
+        public static DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double?), typeof(DoubleBox),
                 new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnCurrentValueChanged),
                     new CoerceValueCallback(OnCoerceValue)));
 
         private static object OnCoerceValue(DependencyObject d, Object baseValue)
         {
             DoubleBox box = (DoubleBox)d;
-            if ((double)baseValue < box.MinValue)
+            double? value = (double?)baseValue;
+            if (value == null)
+            {
+                if (box.CanBeNull)
+                    return null;
+                else
+                    value = 0.0;
+            }
+
+            if ((double)value < box.MinValue)
                 return box.MinValue;
-            else if ((double)baseValue > box.MaxValue)
+            else if ((double)value > box.MaxValue)
                 return box.MaxValue;
-            return baseValue;
+            return value;
         }
 
         private static void OnCurrentValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DoubleBox box = (DoubleBox)d;
+            double? value = box.Value;
+            if (box.MarkPlusValue)
+                box.MarkRed(value != null && value > 0.0);
+
+            box._textBoxDouble.Text = (value == null) ? String.Empty : value.ToString();
+
             if (box.NumValueChanged != null)
                 box.NumValueChanged(box);
         }
 
+        private void MarkRed(bool mark)
+        {
+            if (mark)
+                _textBoxDouble.Foreground = Brushes.Red;
+            else
+            {
+                if (WeissAufSchwarz)
+                    _textBoxDouble.Foreground = Brushes.White;
+                else
+                    _textBoxDouble.Foreground = Brushes.Black;
+            }
+        }
+
+        private void IncreaseValue(double i = 1)
+        {
+            double value = (Value ?? 0.0) + i;
+            if (value < MaxValue)
+                Value = value;
+            else
+                Value = MaxValue;
+        }
+
+        private void DecreaseValue(double i = 1)
+        {
+            double value = (Value ?? 0.0) - i;
+            if (value > MinValue)
+                Value = value;
+            else
+                Value = MinValue;
+        }
 
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
-            // Umwandlung in decimal, um Rundungsfehler zu vermeiden
-            Value = (double)((decimal)Value + 0.1M);
+            if (!IsReadOnly)
+                IncreaseValue();
         }
 
         private void ButtonMinus_Click(object sender, RoutedEventArgs e)
         {
-            // Umwandlung in decimal, um Rundungsfehler zu vermeiden
-            Value = (double)((decimal)Value - 0.1M);
+            if (!IsReadOnly)
+                DecreaseValue();
         }
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            // Umwandlung in decimal, um Rundungsfehler zu vermeiden
-            if (e.Delta < 0)
-                Value = (double)((decimal)Value - 0.1M);
-            else
-                Value = (double)((decimal)Value + 0.1M);
+            if (!NoMouseWheel && !IsReadOnly)
+            {
+                if (e.Delta < 0)
+                    DecreaseValue();
+                else
+                    IncreaseValue();
+                e.Handled = true;
+            }
         }
 
         private void _textBoxDouble_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                // Focus kurz entfernen, um eine aktualiserung zu erzwingen
-                _textBoxDouble.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-                _textBoxDouble.Focus();
+                // Focus entfernen, um eine Aktualiserung zu erzwingen
+                if (!_textBoxDouble.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right)))
+                    _textBoxDouble.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
+        }
+
+        private void _textBoxDouble_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!IsReadOnly)
+            {
+                if (e.Key == Key.Up)
+                    IncreaseValue();
+                else if (e.Key == Key.Down)
+                    DecreaseValue();
+            }
+        }
+
+        private void _textBoxDouble_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)e.OriginalSource;
+            tb.Dispatcher.BeginInvoke(
+                new Action(delegate
+                {
+                    tb.SelectAll();
+                }), System.Windows.Threading.DispatcherPriority.Input);
+        }
+
+        private void _textBoxDouble_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string input = (sender as TextBox).Text;
+            if (CanBeNull && input == null || input == string.Empty)
+            {
+                Value = null;
+                return;
+            }
+            input = input.Trim();
+            if ((input.Contains(',') || input.Contains('.')) != true) // nur parsen, wenn keine Dezimalzahl enthalten
+                Value = Logic.General.Würfel.Parse(input, true);
+            else
+            {
+                double tmp = 0.0;
+                Double.TryParse(input, out tmp);
+                Value = tmp;
+            }
+            // Wert zurück in TextBox schreiben, falls Value korrigiert wurde
+            (sender as TextBox).Text = Value.ToString();
         }
     }
 }
