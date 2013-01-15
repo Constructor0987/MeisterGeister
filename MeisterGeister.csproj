@@ -60,7 +60,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;INTERN</DefineConstants>
+    <DefineConstants>TRACE;TEST</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -154,7 +154,6 @@
     <Compile Include="Daten\DatabaseTools.cs" />
     <Compile Include="Daten\DatabaseUpdate.cs" />
     <Compile Include="Daten\SqlCeUpgrade.cs" />
-    <Compile Include="Logic\Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Logic\Extensions\ObservableDictionary.cs" />
     <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
@@ -418,6 +417,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModEigenschaft.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModProbe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\CustomModifikator.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\ModifikatorenListe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\PABonusDurchHoheIni.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />

@@ -82,7 +82,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //Kampfstil Kampfstil { get; set; }
         //WaffenloserKampfstil WaffenloserKampfstil { get; set; }
 
-        ObservableCollection<Modifikatoren.IModifikator> Modifikatoren { get; }
+        Modifikatoren.ModifikatorenListe Modifikatoren { get; }
 
         //Umwandlung von Aktionen und Reaktionen muss noch modeliert werden,
         //mögliche überlegung ist eine manöverliste, welche den  Regelkomformen und den nicht Regelkomformen Modus abdeckt, hiermit wird auch die Umwandlug von Aktionen/Reaktionen mit 

@@ -106,8 +106,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             return li;
         }
 
-        private ObservableCollection<Mod.IModifikator> _modifikatoren = new ObservableCollection<Mod.IModifikator>();
-        public ObservableCollection<Mod.IModifikator> Modifikatoren
+        Mod.ModifikatorenListe _modifikatoren = new Mod.ModifikatorenListe();
+        public Mod.ModifikatorenListe Modifikatoren
         {
             get { return _modifikatoren; }
         }
