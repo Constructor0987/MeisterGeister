@@ -28,6 +28,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 GegnerBaseListe = Global.ContextHeld.Liste<GegnerBase>().OrderBy(h => h.Name).ToList();
                 if (tmp != Guid.Empty)
                     SelectedGegnerBase = GegnerBaseListe.Where(h => h.GegnerBaseGUID == tmp).FirstOrDefault();
+                RefreshTagListe();
                 FilterListe();
             }
         }
@@ -80,6 +81,8 @@ namespace MeisterGeister.ViewModel.Kampf
             set {
                 SaveGegner();
                 selectedGegnerBase = value;
+                if (selectedGegnerBase != null)
+                    RefreshTagListe();
                 OnChanged("SelectedGegnerBase");
                 OnChanged("AngriffListe");
             }
@@ -104,6 +107,17 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 _filteredGegnerBaseListe = value;
                 OnChanged("FilteredGegnerBaseListe");
+            }
+        }
+
+        private List<string> _tagListe;
+        public List<string> TagListe
+        {
+            get { return _tagListe; }
+            set
+            {
+                _tagListe = value;
+                OnChanged("TagListe");
             }
         }
 
@@ -203,7 +217,7 @@ namespace MeisterGeister.ViewModel.Kampf
         #region Filtern
 
         /// <summary>
-        /// Filtert die BasarItem-Liste auf Basis des SuchTextes.
+        /// Filtert die Gegner-Liste auf Basis des SuchTextes.
         /// </summary>
         private void FilterListe()
         {
@@ -216,6 +230,26 @@ namespace MeisterGeister.ViewModel.Kampf
                 FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
             else // mehrere Suchwörter
                 FilteredGegnerBaseListe = GegnerBaseListe.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+        }
+
+        private void RefreshTagListe()
+        {
+            if (GegnerBaseListe == null)
+                return;
+
+            List<string> tagListe = new List<string>();
+            string[] tags;
+            foreach (var item in GegnerBaseListe)
+            {
+                tags = (item.Tags ?? string.Empty).Split(new char[] {',', ';', '/'});
+                foreach (string tag in tags)
+                {
+                    if (!tagListe.Contains(tag.Trim()))
+                        tagListe.Add(tag.Trim());
+                }
+            }
+            tagListe.Sort();
+            TagListe = tagListe;
         }
 
         #endregion

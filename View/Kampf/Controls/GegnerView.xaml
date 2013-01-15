@@ -63,9 +63,12 @@
                     <TextBlock Text="Filter" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
-                        <TextBox Margin="5,10" Width="150" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Margin="2,2,0,2" Source="/Images/Icons/General/suchen.png" Width="18" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                            <TextBox Margin="2,2,0,2" Width="170" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                        </StackPanel>
+                        <ListBox Padding="4" Background="Transparent" BorderBrush="#00000000" MaxHeight="150" ItemsSource="{Binding TagListe}" SelectedItem="{Binding SuchText}" ToolTip="Liste der Stichwörter" />
                     </StackPanel>
                 </Border>
             </Expander>
@@ -177,7 +180,7 @@
                             </Button.ContextMenu>
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                         </Button>
-                        <Label Content="{Binding GegnerBaseListe.Count, FallbackValue=0}"/>
+                        <Label Content="{Binding FilteredGegnerBaseListe.Count, FallbackValue=0}"/>
                         <Label Content="Gegner" />
                     </StackPanel>
                 </Grid>
