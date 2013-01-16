@@ -502,6 +502,8 @@ namespace MeisterGeister.Model
 
         public int AT { get { return Base_Angriff.AT; } }
 
+        public int PA { get { return Base_Angriff.PA; } }
+
         public string Bemerkung { get { return Base_Angriff.Bemerkung; } }
 
         public string DK { get { return Base_Angriff.DK; } }
@@ -515,7 +517,7 @@ namespace MeisterGeister.Model
         }
 
         /// <summary>
-        /// Grund-PA-Wert inkl. Abzüge.
+        /// Grund-AT-Wert inkl. Abzüge.
         /// </summary>
         [DependentProperty("AT")]
         [DependsOnModifikator(typeof(Mod.IModATBasis))]
@@ -542,6 +544,38 @@ namespace MeisterGeister.Model
             {
                 List<dynamic> list = Gegner.ModifikatorenListe(typeof(Mod.IModATBasis), AT);
                 list.AddRange(Gegner.ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? AT : list.LastOrDefault().Wert));
+                return list;
+            }
+        }
+
+        /// <summary>
+        /// Grund-PA-Wert inkl. Abzüge.
+        /// </summary>
+        [DependentProperty("PA")]
+        [DependsOnModifikator(typeof(Mod.IModPABasis))]
+        [DependsOnModifikator(typeof(Mod.IModPA))]
+        public int Parade
+        {
+            get
+            {
+                int v = PA;
+                if (Gegner.Modifikatoren != null)
+                {
+                    Gegner.Modifikatoren.Where(m => m is Mod.IModPABasis).Select(m => (Mod.IModPABasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPABasisMod(v));
+                    Gegner.Modifikatoren.Where(m => m is Mod.IModPA).Select(m => (Mod.IModPA)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPAMod(v));
+                }
+                return v;
+            }
+        }
+
+        [DependsOnModifikator(typeof(Mod.IModPABasis))]
+        [DependsOnModifikator(typeof(Mod.IModPA))]
+        public List<dynamic> ModifikatorenListePA
+        {
+            get
+            {
+                List<dynamic> list = Gegner.ModifikatorenListe(typeof(Mod.IModPABasis), PA);
+                list.AddRange(Gegner.ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? PA : list.LastOrDefault().Wert));
                 return list;
             }
         }

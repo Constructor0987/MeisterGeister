@@ -157,6 +157,19 @@ namespace MeisterGeister.Model
     
         }
         private string _bemerkung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int PA
+        {
+            get { return _pA; }
+            set
+    		{ 
+    			_pA = value;
+    			OnChanged("PA");
+    		}
+    
+        }
+        private int _pA;
 
         #endregion
 

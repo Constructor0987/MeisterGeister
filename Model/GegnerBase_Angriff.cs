@@ -85,6 +85,7 @@ namespace MeisterGeister.Model
             GegnerBase_Angriff ga = new GegnerBase_Angriff();
             ga.Name = waffe.Name;
             ga.AT = 10;
+            ga.PA = 10;
             ga.Bemerkung = waffe.Bemerkung;
             ga.Distanzklasse = waffe.Distanzklasse;
             ga.TPBonus = waffe.TPBonus;

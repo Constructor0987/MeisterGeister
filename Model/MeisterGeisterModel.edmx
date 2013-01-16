@@ -556,9 +556,10 @@
           <Property Name="TPWürfelAnzahl" Type="int" Nullable="false" />
           <Property Name="TPBonus" Type="int" Nullable="false" />
           <Property Name="AT" Type="int" Nullable="false" />
-          <Property Name="DK" Type="nvarchar" MaxLength="4" />
+          <Property Name="DK" Type="nvarchar" MaxLength="5" />
           <Property Name="Reichweite" Type="int" />
           <Property Name="Bemerkung" Type="ntext" />
+          <Property Name="PA" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="GegnerBase_Kampfregel">
           <Key>
@@ -2365,10 +2366,11 @@
           <Property Type="Int32" Name="TPWürfelAnzahl" Nullable="false" />
           <Property Type="Int32" Name="TPBonus" Nullable="false" />
           <Property Type="Int32" Name="AT" Nullable="false" />
-          <Property Type="String" Name="DK" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DK" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Reichweite" />
           <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GegnerBase" Relationship="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" FromRole="GegnerBase_Angriff" ToRole="GegnerBase" />
+          <Property Type="Int32" Name="PA" Nullable="false" />
         </EntityType>
         <EntityType Name="GegnerBase_Kampfregel">
           <Key>
@@ -3951,6 +3953,7 @@
           <EntitySetMapping Name="GegnerBase_Angriff">
             <EntityTypeMapping TypeName="DatabaseDSAModel.GegnerBase_Angriff">
               <MappingFragment StoreEntitySet="GegnerBase_Angriff">
+                <ScalarProperty Name="PA" ColumnName="PA" />
                 <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
                 <ScalarProperty Name="Reichweite" ColumnName="Reichweite" />
                 <ScalarProperty Name="DK" ColumnName="DK" />

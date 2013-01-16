@@ -294,7 +294,12 @@
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT"/>
                                     </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
-                                <DataGridTemplateColumn CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
+                                    <DataGridTextColumn Width="Auto" MinWidth="35" Binding="{Binding PA}" IsReadOnly="False" CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
+                                        <DataGridTextColumn.Header >
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA"/>
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
                                     <DataGridTemplateColumn.Header>
                                         <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP"/>
                                     </DataGridTemplateColumn.Header>
