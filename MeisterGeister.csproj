@@ -557,6 +557,9 @@
     <Compile Include="View\Helden\Controls\ZauberView.xaml.cs">
       <DependentUpon>ZauberView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Kampf\Controls\GegnerDetailView.xaml.cs">
+      <DependentUpon>GegnerDetailView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Kampf\Controls\GegnerView.xaml.cs">
       <DependentUpon>GegnerView.xaml</DependentUpon>
     </Compile>
@@ -892,6 +895,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Helden\Controls\ZauberView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Controls\GegnerDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

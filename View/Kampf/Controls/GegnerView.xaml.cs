@@ -96,16 +96,6 @@ namespace MeisterGeister.View.Kampf.Controls
             _listBoxGegnerBase.SelectedItem = null;
         }
 
-        private void ButtonCloseZonenRsControl_Click(object sender, RoutedEventArgs e)
-        {
-            _rsZonenRsControl.Visibility = System.Windows.Visibility.Collapsed;
-        }
-
-        private void ButtonZonenRsControl_Click(object sender, RoutedEventArgs e)
-        {
-            _rsZonenRsControl.Visibility = System.Windows.Visibility.Visible;
-        }
-
         private void ListBoxGegnerBase_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Nachdem ein Eintrag selektiert wurde, wird die Liste in den Sichtbereich gescrollt
@@ -120,11 +110,5 @@ namespace MeisterGeister.View.Kampf.Controls
         }
 
         public EventHandler ListBox_DoubleClicked;
-
-        private void TextBoxAngriffName_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter && sender != null && sender is TextBox)
-                (sender as TextBox).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-        }
 	}
 }
