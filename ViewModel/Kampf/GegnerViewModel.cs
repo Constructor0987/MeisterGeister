@@ -335,7 +335,11 @@ namespace MeisterGeister.ViewModel.Kampf
             GegnerBase_Angriff ga = Global.ContextHeld.New<GegnerBase_Angriff>();
             ga.Name = AngriffAddName;
             // Default-Werte
-            ga.DK = "N"; ga.TPWürfelAnzahl = 1; ga.TPWürfel = 6; ga.AT = 10;
+            ga.DK = "N"; ga.TPWürfelAnzahl = 1; ga.TPWürfel = 6;
+            // TODO ??: Globalen AT-Wert des Gegners als Default-Wert verwenden; modifiziert mit WM
+            //ga.AT = SelectedGegnerBase.AT;
+            ga.AT = 10;
+            ga.PA = SelectedGegnerBase.PA;
 
             AddAngriff(ga);
         }
@@ -359,9 +363,9 @@ namespace MeisterGeister.ViewModel.Kampf
             if (ausr == null)
                 return;
             if (ausr.Waffe != null)
-                AddAngriff(GegnerBase_Angriff.FromWaffe(ausr.Waffe));
+                AddAngriff(GegnerBase_Angriff.FromWaffe(ausr.Waffe, SelectedGegnerBase));
             if (ausr.Fernkampfwaffe != null)
-                AddAngriff(GegnerBase_Angriff.FromFernkampfwaffe(ausr.Fernkampfwaffe));
+                AddAngriff(GegnerBase_Angriff.FromFernkampfwaffe(ausr.Fernkampfwaffe, SelectedGegnerBase));
         }
 
         private GegnerBase_Angriff AddAngriff(GegnerBase_Angriff ga)

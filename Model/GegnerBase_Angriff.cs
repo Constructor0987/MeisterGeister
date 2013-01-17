@@ -78,14 +78,16 @@ namespace MeisterGeister.Model
         }
         #endregion
 
-        public static GegnerBase_Angriff FromWaffe(Waffe waffe)
+        public static GegnerBase_Angriff FromWaffe(Waffe waffe, GegnerBase gegner = null)
         {
             if (waffe == null)
                 return null;
             GegnerBase_Angriff ga = new GegnerBase_Angriff();
             ga.Name = waffe.Name;
+            // TODO ??: Globalen AT-Wert des Gegners als Default-Wert verwenden; modifiziert mit WM
+            //ga.AT = gegner != null ? gegner.AT + waffe.WMAT.GetValueOrDefault() : 10;
             ga.AT = 10;
-            ga.PA = 10;
+            ga.PA = gegner != null ? gegner.PA + waffe.WMPA.GetValueOrDefault() : 10;
             ga.Bemerkung = waffe.Bemerkung;
             ga.Distanzklasse = waffe.Distanzklasse;
             ga.TPBonus = waffe.TPBonus;
@@ -94,12 +96,14 @@ namespace MeisterGeister.Model
             return ga;
         }
 
-        public static GegnerBase_Angriff FromFernkampfwaffe(Fernkampfwaffe waffe)
+        public static GegnerBase_Angriff FromFernkampfwaffe(Fernkampfwaffe waffe, GegnerBase gegner = null)
         {
             if (waffe == null)
                 return null;
             GegnerBase_Angriff ga = new GegnerBase_Angriff();
             ga.Name = waffe.Name;
+            // TODO ??: Globalen AT-Wert des Gegners als Default-Wert verwenden
+            //ga.AT = gegner != null ? gegner.AT : 10;
             ga.AT = 10;
             ga.Bemerkung = waffe.Bemerkung;
             ga.Reichweite = waffe.RWSehrWeit;
