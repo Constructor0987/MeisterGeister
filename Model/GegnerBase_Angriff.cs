@@ -112,6 +112,7 @@ namespace MeisterGeister.Model
         private static Regex
                 reName = new Regex("^((?!(AT|PA|TP|DK))[\\w]+(?:\\s+(?!(AT|PA|TP|DK|:))[\\w]+)*)", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
                 reAttacke = new Regex("(?<![\\w\\d])(?:AT|FK)\\s+(\\d+)(?!\\w)", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
+                reParade = new Regex("(?<![\\w\\d])(?:PA|Ausweichen)\\s+(\\d+)(?!\\w)", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
                 reWürfel = new Regex("(?<!\\w)(\\d+)?W(\\d+)?([\\+-])?(\\d?)(?!\\w)", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
                 reSchadensart = new Regex("(?<![\\w\\d])(TP(\\(A\\))?|SP)(?![\\w\\d])", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
                 reDistanzklasse = new Regex("(?<![\\w\\d])(H|HN|N|NS|HNS|S|SP|NSP|HNSP|P|X|PX|SPX|NSPX|HNSPX)(?![\\w\\d])", RegexOptions.CultureInvariant & RegexOptions.IgnoreCase & RegexOptions.Compiled),
@@ -128,17 +129,22 @@ namespace MeisterGeister.Model
             int attacke = 0;
             Int32.TryParse(m.Groups[1].Captures[0].Value, out attacke);
 
+            m = reParade.Match(zeile);
+            int parade = 0;
+            if (m != null && m.Success)
+                Int32.TryParse(m.Groups[1].Captures[0].Value, out parade);
+
             m = reWürfel.Match(zeile);
-            if (m == null || !m.Success)
-                return null;
             int wAnzahl = 1, wSeiten = 6, tpBonus = 0;
-            if(m.Groups[1] != null)
+            if (m == null || !m.Success)
+                wAnzahl = 0;
+            if (m.Groups[1] != null && m.Groups[1].Captures.Count > 0)
                 Int32.TryParse(m.Groups[1].Captures[0].Value, out wAnzahl);
             if (m.Groups[2] != null && m.Groups[2].Captures.Count > 0)
                 Int32.TryParse(m.Groups[2].Captures[0].Value, out wSeiten);
             if (m.Groups[3] != null)
             {
-                if (m.Groups[4] != null)
+                if (m.Groups[4] != null && m.Groups[4].Captures.Count > 0)
                     Int32.TryParse(m.Groups[4].Captures[0].Value, out tpBonus);
                 if (m.Groups[3].Value == "-")
                     tpBonus *= -1;
@@ -188,6 +194,7 @@ namespace MeisterGeister.Model
             a.TPBonus = tpBonus;
             a.DK = dk;
             a.AT = attacke;
+            a.PA = parade;
             a.Reichweite = reichweite;
             return a;
         }
