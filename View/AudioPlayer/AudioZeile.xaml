@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="28" d:DesignWidth="853">
-    <Grid Height="28" Width="853">
+    <Grid Height="28" Width="853" Name="grd_parent">
         <StackPanel Grid.Row="1" Name="spnlKlangRow" Visibility="Hidden" VerticalAlignment="Top">
             <Grid Name="grdKlangRow">
                 <Grid.RowDefinitions>
@@ -29,17 +29,17 @@
 
                 </Grid.ColumnDefinitions>
 
-                <Image Name="imgTrash" Height="16" Margin="0,0,0,4" Stretch="Fill" Grid.Column="1"  Width="16" VerticalAlignment="Bottom" Tag="0" HorizontalAlignment="Left" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" />
+                <Image Name="imgTrash" Height="16" Margin="0,0,0,4" Stretch="Fill" Grid.Column="1"  Width="16" VerticalAlignment="Bottom" Tag="0"  HorizontalAlignment="Left" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" />
                 <ProgressBar Name="pbarTitel" Height="18" Margin="15,0,0,3" Grid.Column="2" VerticalAlignment="Bottom" Grid.ColumnSpan="1" />
-                <CheckBox Name="chkTitel" Content="chkTitel0" Height="20" Margin="0,2,0,0" Grid.Column="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" IsChecked="False"  IsTabStop="False" />
+                <CheckBox Name="chkTitel" Content="chkTitel0" Height="20" Margin="0,2,0,0" Grid.Column="2" Grid.ColumnSpan="1" HorizontalAlignment="Left" IsChecked="False" IsTabStop="False" />
                 <Label Name="lblDauer" Content="-:--" Grid.Column="3" Height="14" Margin="5,3,0,6" Padding="0" HorizontalContentAlignment="Center" />
-                <Slider Name="sldKlangVol"  Grid.Column="4" Height="23" Margin="6,0,4,0" Value="50" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" />
+                <Slider Name="sldKlangVol"  Grid.Column="4" Height="23" Margin="6,0,4,0" Value="{Binding Path=ZeileVMVolume}" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" />
                 <CheckBox Name="chkVolMove" Height="14" Margin="0,6,0,4" Grid.Column="5" Width="14" Tag="0" IsTabStop="False" />
                 <TextBox Name="tboxVolMin" Grid.Column="6" Text="0" HorizontalContentAlignment="Center" Margin="0,0,36,0" Tag="0" />
                 <Button Name="_btnVolMinMinus" Width="18" Grid.Column="6" HorizontalAlignment="Right" Margin="18,0" Tag="-5" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
-                <Button Name="_btnVolMinPlus0_X" Width="18" Grid.Column="6" HorizontalAlignment="Right" Tag="5" IsTabStop="False">
+                <Button Name="_btnVolMinPlus" Width="18" Grid.Column="6" HorizontalAlignment="Right" Tag="5" IsTabStop="False">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
                 <TextBox Name="tboxVolMax" Grid.Column="7" Margin="0,0,36,0" Text="100" HorizontalContentAlignment="Center" DataContext="{Binding}" MaxLength="3" Tag="0" />
@@ -50,7 +50,7 @@
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
 
-                <Slider Name="sldKlangPause" Grid.Column="9" Height="23" Margin="6,0,4,0" Value="1000" Maximum="30000" Interval="50" LargeChange="500" SmallChange="100" ToolTip="1000 ms" TickFrequency="10" />
+                <Slider Name="sldKlangPause" Grid.Column="9" Height="23" Margin="6,0,4,0" Value="1000" Maximum="10000" Interval="50" LargeChange="500" SmallChange="100" ToolTip="1000 ms" TickFrequency="10" />
                 <CheckBox Name="chkKlangPauseMove" Height="14" Margin="0,6,0,4" Grid.Column="10" Width="14" Tag="0" IsTabStop="False" />
                 <TextBox Name="tboxPauseMin" Grid.Column="11" Margin="0,0,36,0" Text="0" HorizontalContentAlignment="Center" Tag="0" />
                 <Button Name="_btnPauseMinMinus" Grid.Column="11" Margin="39,0,18,0" Tag="-200" IsTabStop="False">
@@ -59,7 +59,7 @@
                 <Button Name="_btnPauseMinPlus" Grid.Column="11" Tag="200" Margin="57,0,0,0" IsTabStop="False">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <TextBox Name="tboxPauseMax" Grid.Column="12" Margin="0,0,36,0" Text="9000" HorizontalContentAlignment="Center" Tag="0" />
+                <TextBox Name="tboxPauseMax" Grid.Column="12" Margin="0,0,36,0" HorizontalContentAlignment="Center" Tag="0" Text=" 3" />
                 <Button Name="_btnPauseMaxMinus" Width="18" Grid.Column="12" HorizontalAlignment="Right" Margin="18,0" Tag="-200" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
@@ -67,7 +67,7 @@
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
                 <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="13" HorizontalAlignment="Left" Margin="8,3,0,0" />
-                <Slider Name="sldPlaySpeed" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4" Grid.Column="13" HorizontalAlignment="Center" Width="45" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" />
+                <Slider Name="sldPlaySpeed" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4" Grid.Column="13" HorizontalAlignment="Center" Width="45" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" ToolTip="Abspielgeschwinidkeit anpassen" />
                 <Image Source="/Images/Icons/General/hase.png" Grid.Column="13" HorizontalAlignment="Right" Margin="0,5,5,0" />
             </Grid>
         </StackPanel>

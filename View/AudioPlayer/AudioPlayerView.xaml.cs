@@ -105,6 +105,8 @@ public class KlangZeile
     public UInt16 UpdateZyklusVol = 3;  //Sekunden neuen Zielwert ermitteln
     public DateTime dtLiedLastCheck = DateTime.MinValue;
 
+  //  public AudioZeile audioZeile = null;
+
     public StackPanel spnlKlangRow = null;
     public Grid grdKlangRow = null;
     public Image imgTrash = null;
@@ -128,6 +130,7 @@ public class KlangZeile
     public Button btnPauseMaxMinus = null;
     public Button btnPauseMaxPlus = null;
     public Slider sldPlaySpeed = null;
+   
        
     public KlangZeile(UInt16 id)
     {
@@ -297,17 +300,17 @@ namespace MeisterGeister.View.AudioPlayer {
                     _player = new MediaPlayer();
                 try
                 {
-                    _player.Open(new Uri(url));
                     if (seite >= 0)
                     {
                         _player.MediaEnded += new EventHandler(Player_Ended);
-                        _player.SpeedRatio = _GrpObjecte[posObjGruppe]._listZeile[zeile].playspeed;
+                        //_player.SpeedRatio = _GrpObjecte[posObjGruppe]._listZeile[zeile].playspeed;
                     }
                     else
                     {
                         _player.MediaEnded += new EventHandler(HintergrundPlayer_Ended);
                         _player.IsMuted = Convert.ToBoolean(btnBGSpeaker.Tag);
                     }
+                    _player.Open(new Uri(url));
                 }
                 catch (Exception ex2)
                 {
@@ -381,6 +384,9 @@ namespace MeisterGeister.View.AudioPlayer {
                        // StackPanel spnlZeile = _GrpObjecte[posObjGruppe]._listZeile[zuspielendersong].spnlKlangRow;
                         if (_GrpObjecte[posObjGruppe]._listZeile[zuspielendersong].chkTitel != null)
                             chkTitel0_0_Click(_GrpObjecte[posObjGruppe]._listZeile[zuspielendersong].chkTitel, new RoutedEventArgs());
+                        else
+                            _GrpObjecte[posObjGruppe]._listZeile[zuspielendersong].istStandby = true;
+
 
                         standbyNichtPause--;
                         klZeilenStandbyNichtPause.RemoveAt(w.Ergebnis - 1);
@@ -404,10 +410,10 @@ namespace MeisterGeister.View.AudioPlayer {
             _GrpObjecte[posObjGruppe]._listZeile[zeile].pbarTitel.Value = 0;
             if (_GrpObjecte[posObjGruppe]._listZeile[zeile].chkKlangPauseMove.IsChecked == true)
             {
-                Würfel w = new Würfel(Convert.ToUInt16(Convert.ToUInt16(_GrpObjecte[posObjGruppe]._listZeile[zeile].tboxPauseMax.Text) - 
+                Würfel w = new Würfel(Convert.ToUInt16(Convert.ToUInt16(_GrpObjecte[posObjGruppe]._listZeile[zeile].tboxPauseMax.Text) -
                                             Convert.ToUInt16(_GrpObjecte[posObjGruppe]._listZeile[zeile].tboxPauseMin.Text)));
                 w.Würfeln(1);
-                _GrpObjecte[posObjGruppe]._listZeile[zeile].sldKlangPause.Value = w.Ergebnis-1;
+                _GrpObjecte[posObjGruppe]._listZeile[zeile].sldKlangPause.Value = w.Ergebnis - 1;
             }
             // Song aus der Liste der laufenden Songs herausnehmen
             _GrpObjecte[posObjGruppe]._listZeile[zeile].istLaufend = false;
@@ -594,7 +600,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             if (KlangZeilenLaufend[durchlauf].pbarTitel.Maximum == 100000 && KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan)
                             {
                                 KlangZeilenLaufend[durchlauf].pbarTitel.Maximum = KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.TimeSpan.TotalMilliseconds;
-                                if (aktiveThemeGruppe >= 0 &&
+                                if (aktiveThemeGruppe >= 0 && _ThemeGruppe[aktiveThemeGruppe].Hintergrund != null &&
                                     _GrpObjecte[posObjGruppe].playlistName == _ThemeGruppe[aktiveThemeGruppe].Hintergrund.playlistName)
 
                                     //aktualisiere Endzeitpunkt Minutenposition
@@ -605,11 +611,12 @@ namespace MeisterGeister.View.AudioPlayer {
                             }
 
                             //aktualisiere ProgressBar
-                            if (_GrpObjecte[posObjGruppe].seite == 0 || ((TabItemControl)tcKlang.Items[_GrpObjecte[posObjGruppe].seite]).Visibility == Visibility.Visible)
+                            if (_GrpObjecte[posObjGruppe].seite == 0 || ((TabItemControl)tcKlang.Items[_GrpObjecte[posObjGruppe].seite]).Visibility == Visibility.Visible &&
+                                KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan)
                                 KlangZeilenLaufend[durchlauf].pbarTitel.Value = KlangZeilenLaufend[durchlauf]._mplayer.Position.TotalMilliseconds;
 
                             //aktualisiere ProgressBar im Theme
-                            if (aktiveThemeGruppe >= 0 &&
+                            if (aktiveThemeGruppe >= 0 && _ThemeGruppe[aktiveThemeGruppe].Hintergrund != null &&
                                     _GrpObjecte[posObjGruppe].playlistName == _ThemeGruppe[aktiveThemeGruppe].Hintergrund.playlistName)
                             {
                                 _ThemeGruppe[aktiveThemeGruppe].pnlAudioTheme.pbarActBGTitel.Value = (KlangZeilenLaufend[durchlauf].audiotitel.TeilAbspielen) ?
@@ -998,7 +1005,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
             for (UInt16 i = 0; i < _GrpObjecte[posObjGruppe]._listZeile.Count; i++) 
             {
-                
+
                 if (_GrpObjecte[posObjGruppe]._listZeile[i].chkTitel.IsChecked.Value == true)
                 {
                     if (checkboxAus)
@@ -1020,7 +1027,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     _GrpObjecte[posObjGruppe]._listZeile[i].pbarTitel.Value = 0;
                 }
                 if (ZeileLoeschen)
-                {             
+                {
                     _GrpObjecte[posObjGruppe]._listZeile[i].grdKlangRow.Children
                         .Remove(_GrpObjecte[posObjGruppe]._listZeile[i].imgTrash);
 
@@ -1137,7 +1144,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void ZeigeKlangSettings(Int16 posObjGruppe, UInt16 row, bool sichtbar)
         {
-            if (_GrpObjecte[posObjGruppe]._listZeile[row].spnlKlangRow!= null)
+            if (_GrpObjecte[posObjGruppe]._listZeile[row].spnlKlangRow != null)
             {
                 if (!sichtbar)
                 {
@@ -1152,7 +1159,7 @@ namespace MeisterGeister.View.AudioPlayer {
             }
         }
 
-        private void KlangNewRow(string songdatei, int posObjGruppe, UInt16 row, Audio_Playlist_Titel playlisttitel)
+    /*    private void KlangNewRow(string songdatei, int posObjGruppe, UInt16 row, Audio_Playlist_Titel playlisttitel)
         {   
             bool neuerstellen = true;
             int objGruppe = _GrpObjecte[posObjGruppe].objGruppe;
@@ -1162,6 +1169,207 @@ namespace MeisterGeister.View.AudioPlayer {
             if (((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + row)) != null)
                 neuerstellen = false;
             
+           // StackPanel newStack = (StackPanel)DeepCopy(null, "0_X", objGruppe + "_" + row);
+            
+            AudioZeile aZeile = new AudioZeile();
+            aZeile.spnlKlangRow.Name = "spnlKlangRow" + objGruppe + "_" + row;
+                        
+            aZeile.spnlKlangRow.Visibility = Visibility.Visible;
+            aZeile.spnlKlangRow.Tag = rowErstellt;
+            aZeile.grd_parent.Children.Remove(aZeile.spnlKlangRow);
+            _GrpObjecte[posObjGruppe].grdKlang.Children.Add(aZeile.spnlKlangRow);
+            Grid.SetRow(aZeile.spnlKlangRow, _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.Count - 1);
+     //       _GrpObjecte[posObjGruppe].grdKlang.Children.Add(aZeile.spnlKlangRow);
+                
+            //Papierkorb
+            aZeile.imgTrash.Tag = playlisttitel.Audio_Titel.Audio_TitelGUID;
+            aZeile.imgTrash.ToolTip = imgTrash0_X.ToolTip;
+            if (neuerstellen)
+                aZeile.imgTrash.MouseUp += new MouseButtonEventHandler(imgTrash0_0_MouseUp);
+                                                           
+            //Titel
+            aZeile.chkTitel.Name = "chkTitel" + objGruppe + "_" + row;
+            if (neuerstellen)
+                aZeile.chkTitel.Click += new RoutedEventHandler(chkTitel0_0_Click);
+            aZeile.chkTitel.Content = System.IO.Path.GetFileNameWithoutExtension(songdatei);
+            if (playlisttitel.Aktiv)
+                aZeile.chkTitel.IsChecked = playlisttitel.Aktiv;
+
+            aZeile.chkTitel.ToolTip = songdatei;
+            aZeile.chkTitel.Tag = songdatei;
+
+            // Schieberegler Lautstärke
+            //Slider sldVol = (Slider)newStack.FindName("sldKlangVol" + objGruppe + "_" + row);
+            aZeile.sldKlangVol.Minimum = 0;
+            aZeile.sldKlangVol.Maximum = 100;
+            aZeile.sldKlangVol.Value = playlisttitel.Volume;
+          //  SetBinding(Slider.ValueProperty, "ZeileVMVolume");
+            aZeile.sldKlangVol.Tag = rowErstellt;// row;
+            if (neuerstellen)
+                aZeile.sldKlangVol.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
+            aZeile.sldKlangVol.ToolTip = Math.Round(aZeile.sldKlangVol.Value) + " %";
+
+            //Checkbox Automatisch veränderbare Lautstärke
+            //CheckBox chkVolMove = (CheckBox)newStack.FindName("chkVolMove" + objGruppe + "_" + row);
+            aZeile.chkVolMove.IsChecked = playlisttitel.VolumeChange;
+            aZeile.chkVolMove.Tag = row;
+            if (neuerstellen)
+                aZeile.chkVolMove.Click += new RoutedEventHandler(chkVolMove0_0_Click);
+
+            // Volume Minimum Plus/Minus (für ein Song)
+            //Button btnVolMinMinus = (Button)newStack.FindName("_btnVolMinMinus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnVolMinMinus.Click += new RoutedEventHandler(_btnVolMinMinus0_X_Click);
+            //Button btnVolMinPlus = (Button)newStack.FindName("_btnVolMinPlus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnVolMinPlus.Click += new RoutedEventHandler(_btnVolMinPlus0_X_Click);
+
+            //(TextBox tboxVolMin = (TextBox)newStack.FindName("tboxVolMin" + objGruppe + "_" + row);
+            aZeile.tboxVolMin.Text = Convert.ToString(playlisttitel.VolumeMin);
+            aZeile.tboxVolMin.Tag = row;
+            if (neuerstellen)
+                aZeile.tboxVolMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            if (neuerstellen)
+                aZeile.tboxVolMin.LostFocus += new RoutedEventHandler(tboxVolMin0_X_LostFocus);
+
+            // Volume Maximum Plus/Minus (für ein Song)
+            //Button btnVolMaxMinus = (Button)newStack.FindName("_btnVolMaxMinus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnVolMaxMinus.Click += new RoutedEventHandler(_btnVolMaxMinus0_X_Click);
+            //Button btnVolMaxPlus = (Button)newStack.FindName("_btnVolMaxPlus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnVolMaxPlus.Click += new RoutedEventHandler(_btnVolMaxPlus0_X_Click);
+
+            //TextBox tboxVolMax = (TextBox)newStack.FindName("tboxVolMax" + objGruppe + "_" + row);
+            aZeile.tboxVolMax.Text = Convert.ToString(playlisttitel.VolumeMax);
+            aZeile.tboxVolMax.Tag = row;
+            if (neuerstellen)
+                aZeile.tboxVolMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            if (neuerstellen)
+                aZeile.tboxVolMax.LostFocus += new RoutedEventHandler(tboxVolMax0_X_LostFocus);
+
+            // Schieberegler Zwischenpause
+            //Slider sldKlangPause = (Slider)newStack.FindName("sldKlangPause" + objGruppe + "_" + row);
+            aZeile.sldKlangPause.Minimum = 0;
+            aZeile.sldKlangPause.Maximum = 9000;
+            aZeile.sldKlangPause.Value = playlisttitel.Pause;
+            aZeile.sldKlangPause.TickFrequency = 10;
+            aZeile.sldKlangPause.Tag = rowErstellt; //row;
+            if (neuerstellen)
+                aZeile.sldKlangPause.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangPause0_X_ValueChanged);
+            aZeile.sldKlangPause.ToolTip = Math.Round(aZeile.sldKlangPause.Value) + " ms";
+
+            // Checkbox veränderbare Zwischenpause
+            //CheckBox chkKlangPauseMove = (CheckBox)newStack.FindName("chkKlangPauseMove" + objGruppe + "_" + row);
+            aZeile.chkKlangPauseMove.IsChecked = playlisttitel.PauseChange;
+            aZeile.chkKlangPauseMove.Tag = row;
+            if (neuerstellen)
+                aZeile.chkKlangPauseMove.Click += new RoutedEventHandler(chkKlangPauseMove0_0_Click);
+
+            // Zwischenpause Minimum Plus/Minus (für ein Song)
+            //Button btnPauseMinMinus = (Button)newStack.FindName("_btnPauseMinMinus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnPauseMinMinus.Click += new RoutedEventHandler(_btnPauseMinMinus0_X_Click);
+            //Button btnPauseMinPlus = (Button)newStack.FindName("_btnPauseMinPlus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnPauseMinPlus.Click += new RoutedEventHandler(_btnPauseMinPlus0_X_Click);
+
+            //TextBox tboxPauseMin = (TextBox)newStack.FindName("tboxPauseMin" + objGruppe + "_" + row);
+            aZeile.tboxPauseMin.Text = Convert.ToString(playlisttitel.PauseMin);
+            aZeile.tboxPauseMin.Tag = row;
+            if (neuerstellen)
+                aZeile.tboxPauseMin.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            if (neuerstellen)
+                aZeile.tboxPauseMin.LostFocus += new RoutedEventHandler(tboxPauseMin0_X_LostFocus);
+
+            // Zwischenpause Maximum Plus/Minus (für ein Song)
+            //Button btnPauseMaxMinus = (Button)newStack.FindName("_btnPauseMaxMinus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnPauseMaxMinus.Click += new RoutedEventHandler(_btnPauseMaxMinus0_X_Click);
+            //Button btnPauseMaxPlus = (Button)newStack.FindName("_btnPauseMaxPlus" + objGruppe + "_" + row);
+            if (neuerstellen)
+                aZeile._btnPauseMaxPlus.Click += new RoutedEventHandler(_btnPauseMaxPlus0_X_Click);
+
+            //TextBox tboxPauseMax = (TextBox)newStack.FindName("tboxPauseMax" + objGruppe + "_" + row);
+            aZeile.tboxPauseMax.Text = Convert.ToString(playlisttitel.PauseMax);
+            aZeile.tboxPauseMax.Tag = row;
+            if (neuerstellen)
+                aZeile.tboxPauseMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
+            if (neuerstellen)
+                aZeile.tboxPauseMax.LostFocus += new RoutedEventHandler(tboxPauseMax0_X_LostFocus);
+            
+            // Schieberegler Geschwindigeit
+            //Slider sldSpeed = (Slider)newStack.FindName("sldPlaySpeed" + objGruppe + "_" + row);          
+            aZeile.sldPlaySpeed.Value = playlisttitel.Speed;
+            
+            string geschw = "Abspielgeschwindigkeit: ";
+            geschw += aZeile.sldPlaySpeed.Value == .1 ? "sehr langsam" :
+                      aZeile.sldPlaySpeed.Value == .5 ? "langsam" :
+                      aZeile.sldPlaySpeed.Value == .75 ? "gedrosselt" :
+                      aZeile.sldPlaySpeed.Value == 1 ? "normal" :
+                      aZeile.sldPlaySpeed.Value == 2 ? "erhöht" :
+                      aZeile.sldPlaySpeed.Value == 3 ? "schnell" :
+                      aZeile.sldPlaySpeed.Value == 4 ? "sehr schnell" :
+                      aZeile.sldPlaySpeed.Value == 5 ? "utlra schnell" : "nicht definiert";
+            aZeile.sldPlaySpeed.ToolTip = geschw;
+            aZeile.sldPlaySpeed.Tag = row;
+            if (neuerstellen)
+                aZeile.sldPlaySpeed.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldPlaySpeed0_X_ValueChanged);
+
+            RowDefinition rowDef1 = new RowDefinition();
+            rowDef1.Height = _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions[1].Height;
+            _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.Insert(_GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.Count, rowDef1);
+
+
+            //************************************************************************
+
+            KlangZeile klZeile = new KlangZeile(rowErstellt++);
+
+            klZeile.audiotitel = playlisttitel;
+            klZeile._mplayer = new MediaPlayer();
+            klZeile.mediaHashCode = klZeile._mplayer.GetHashCode();
+
+            
+            klZeile = aZeile;
+                
+            klZeile.pauseMin_wert = Convert.ToInt16(aZeile.tboxPauseMin.Text);
+            klZeile.pauseMax_wert = Convert.ToInt16(aZeile.tboxPauseMax.Text);
+            klZeile.volMin_wert = Convert.ToInt16(aZeile.tboxVolMin.Text);
+            klZeile.volMax_wert = Convert.ToInt16(aZeile.tboxVolMax.Text);
+            klZeile.Aktuell_Volume = playlisttitel.Volume;
+            klZeile.Vol_jump = (klZeile.volMax_wert - klZeile.volMin_wert) / SliderTeile;
+            if (klZeile.Vol_jump < 1) klZeile.Vol_jump = 1;
+
+            klZeile.playspeed = aZeile.sldPlaySpeed.Value;
+
+            if (playlisttitel.Aktiv && !_GrpObjecte[posObjGruppe].istHintergrundMusik)
+                klZeile.istStandby = true;
+            else
+                klZeile.istStandby = false;
+         //   if (((_GrpObjecte[posObjGruppe].seite == 0) && (_GrpObjecte[posObjGruppe].btnKlangPause).IsChecked == true) ||  // ((ToggleButton)this.FindName("btnKlangPause" + objGruppe)
+        //        ((_GrpObjecte[posObjGruppe].seite != 0) && (_GrpObjecte[posObjGruppe].grdKlangTop ((ToggleButton)((Grid)this.FindName("grdKlangTop" + objGruppe)).FindName("btnKlangPause" + objGruppe)).IsChecked == true)))
+            if (Convert.ToBoolean((_GrpObjecte[posObjGruppe].btnKlangPause).Tag) == true)
+                klZeile.istPause = true;
+
+            klZeile.playable = aZeile.chkTitel.IsChecked.Value;
+
+            _GrpObjecte[posObjGruppe]._listZeile.Add(klZeile);
+            if (aZeile.chkTitel.IsChecked == true) _GrpObjecte[posObjGruppe].anzTitelAkt++;
+            if (aZeile.chkVolMove.IsChecked == true) _GrpObjecte[posObjGruppe].anzVolChange++;
+            if (aZeile.chkKlangPauseMove.IsChecked == true) _GrpObjecte[posObjGruppe].anzPauseChange++;
+        }
+
+    */    
+        private void KlangNewRow(string songdatei, int posObjGruppe, UInt16 row, Audio_Playlist_Titel playlisttitel)
+        {
+            bool neuerstellen = true;
+            int objGruppe = _GrpObjecte[posObjGruppe].objGruppe;
+            if (posObjGruppe == -1)
+                return;
+        
+            if (((StackPanel)this.FindName("spnlKlangRow" + objGruppe + "_" + row)) != null)
+                neuerstellen = false;
+
             StackPanel newStack = (StackPanel)DeepCopy(null, "0_X", objGruppe + "_" + row);
 
             newStack.Visibility = Visibility.Visible;
@@ -1171,8 +1379,8 @@ namespace MeisterGeister.View.AudioPlayer {
             Grid.SetRow(newStack, _GrpObjecte[posObjGruppe].grdKlang.RowDefinitions.Count - 1);
 
             Grid grdKlangRow = (Grid)newStack.FindName("grdKlangRow" + objGruppe + "_" + row);
-       //     if (neuerstellen)
-       //         this.RegisterName(newStack.Name, newStack);
+            //     if (neuerstellen)
+            //         this.RegisterName(newStack.Name, newStack);
 
             //Papierkorb
             Image imgTrash = (Image)newStack.FindName("imgTrash" + objGruppe + "_" + row);
@@ -1194,10 +1402,10 @@ namespace MeisterGeister.View.AudioPlayer {
 
             // Schieberegler Lautstärke
             Slider sldVol = (Slider)newStack.FindName("sldKlangVol" + objGruppe + "_" + row);
-            sldVol.Minimum = 0; 
+            sldVol.Minimum = 0;
             sldVol.Maximum = 100;
             sldVol.Value = playlisttitel.Volume;
-          //  SetBinding(Slider.ValueProperty, "ZeileVMVolume");
+            //  SetBinding(Slider.ValueProperty, "ZeileVMVolume");
             sldVol.Tag = rowErstellt;// row;
             if (neuerstellen)
                 sldVol.ValueChanged += new RoutedPropertyChangedEventHandler<double>(sldKlangVol0_X_ValueChanged);
@@ -1244,8 +1452,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
             // Schieberegler Zwischenpause
             Slider sldKlangPause = (Slider)newStack.FindName("sldKlangPause" + objGruppe + "_" + row);
-            sldKlangPause.Minimum = 0; 
-            sldKlangPause.Maximum = 9000; 
+            sldKlangPause.Minimum = 0;
+            sldKlangPause.Maximum = 9000;
             sldKlangPause.Value = playlisttitel.Pause;
             sldKlangPause.TickFrequency = 10;
             sldKlangPause.Tag = rowErstellt; //row;
@@ -1291,11 +1499,11 @@ namespace MeisterGeister.View.AudioPlayer {
                 tboxPauseMax.PreviewTextInput += new TextCompositionEventHandler(tboxVolMin0_X_PreviewTextInput);
             if (neuerstellen)
                 tboxPauseMax.LostFocus += new RoutedEventHandler(tboxPauseMax0_X_LostFocus);
-            
+
             // Schieberegler Geschwindigeit
-            Slider sldSpeed = (Slider)newStack.FindName("sldPlaySpeed" + objGruppe + "_" + row);          
+            Slider sldSpeed = (Slider)newStack.FindName("sldPlaySpeed" + objGruppe + "_" + row);
             sldSpeed.Value = playlisttitel.Speed;
-            
+
             string geschw = "Abspielgeschwindigkeit: ";
             geschw += sldSpeed.Value == .1 ? "sehr langsam" :
                       sldSpeed.Value == .5 ? "langsam" :
@@ -1326,7 +1534,7 @@ namespace MeisterGeister.View.AudioPlayer {
             klZeile.grdKlangRow = grdKlangRow;
             klZeile.spnlKlangRow = newStack;
             klZeile.imgTrash = imgTrash;
-            klZeile.pbarTitel = (ProgressBar)newStack.FindName("pbarTitel" + objGruppe + "_" + row); 
+            klZeile.pbarTitel = (ProgressBar)newStack.FindName("pbarTitel" + objGruppe + "_" + row);
             klZeile.chkTitel = chkTitel;
             klZeile.lblDauer = (Label)newStack.FindName("lblDauer" + objGruppe + "_" + row);
             klZeile.sldKlangVol = sldVol;
@@ -1361,8 +1569,8 @@ namespace MeisterGeister.View.AudioPlayer {
                 klZeile.istStandby = true;
             else
                 klZeile.istStandby = false;
-         //   if (((_GrpObjecte[posObjGruppe].seite == 0) && (_GrpObjecte[posObjGruppe].btnKlangPause).IsChecked == true) ||  // ((ToggleButton)this.FindName("btnKlangPause" + objGruppe)
-        //        ((_GrpObjecte[posObjGruppe].seite != 0) && (_GrpObjecte[posObjGruppe].grdKlangTop ((ToggleButton)((Grid)this.FindName("grdKlangTop" + objGruppe)).FindName("btnKlangPause" + objGruppe)).IsChecked == true)))
+            //   if (((_GrpObjecte[posObjGruppe].seite == 0) && (_GrpObjecte[posObjGruppe].btnKlangPause).IsChecked == true) ||  // ((ToggleButton)this.FindName("btnKlangPause" + objGruppe)
+            //        ((_GrpObjecte[posObjGruppe].seite != 0) && (_GrpObjecte[posObjGruppe].grdKlangTop ((ToggleButton)((Grid)this.FindName("grdKlangTop" + objGruppe)).FindName("btnKlangPause" + objGruppe)).IsChecked == true)))
             if (Convert.ToBoolean((_GrpObjecte[posObjGruppe].btnKlangPause).Tag) == true)
                 klZeile.istPause = true;
 
@@ -1446,7 +1654,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             else
                                 _GrpObjecte[posObjGruppe]._listZeile[zeile].pbarTitel.Maximum = 100000;
                             
-                            if (aktiveThemeGruppe >= 0 &&
+                            if (aktiveThemeGruppe >= 0 && _ThemeGruppe[aktiveThemeGruppe].Hintergrund != null &&
                                 _GrpObjecte[posObjGruppe].playlistName == _ThemeGruppe[aktiveThemeGruppe].Hintergrund.playlistName)
                                 _ThemeGruppe[aktiveThemeGruppe].pnlAudioTheme.pbarActBGTitel.Maximum = _GrpObjecte[posObjGruppe]._listZeile[zeile].pbarTitel.Maximum;
 
@@ -3107,7 +3315,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Pause();
                 if (!_GrpObjecte[posObjGruppe]._listZeile[i].istPause && _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend)
                     _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Play();
-                if (!_GrpObjecte[posObjGruppe]._listZeile[i].istPause && !_GrpObjecte[posObjGruppe]._listZeile[i].istLaufend && 
+                if (!_GrpObjecte[posObjGruppe]._listZeile[i].istPause && !_GrpObjecte[posObjGruppe]._listZeile[i].istLaufend &&
                     _GrpObjecte[posObjGruppe]._listZeile[i].chkTitel.IsChecked.Value)
                     _GrpObjecte[posObjGruppe]._listZeile[i].istStandby = true;
             }
@@ -3575,7 +3783,7 @@ namespace MeisterGeister.View.AudioPlayer {
         private void btnTopVolMinPlus0_Click(object sender, RoutedEventArgs e)
         {            
             int posObjGruppe = GetPosObjGruppe(GetObjGruppe(tcKlang.SelectedIndex));
-            
+
             List<KlangZeile> klZeilen = _GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.chkTitel.IsChecked.Value);
 
             for (int i = 0; i < klZeilen.Count; i++)
@@ -3755,25 +3963,23 @@ namespace MeisterGeister.View.AudioPlayer {
                 _ThemeGruppe[theme].pnlAudioTheme.btnAudioTheme.IsChecked = SollZustand;
                 _ThemeGruppe[theme].pnlAudioTheme.btnAudioTheme.Unchecked += new RoutedEventHandler(btnAudioTheme_Unchecked);
                 _ThemeGruppe[theme].pnlAudioTheme.imgPlay.Visibility = Visibility.Hidden;
-                //_ThemeGruppe[theme].pnlAudioTheme.btnAudioTheme.IsChecked = false;
-                if (rbtnGleichSpielen.IsChecked.Value)
+
+                if (_ThemeGruppe[theme].HGThemePlaylist != null && _ThemeGruppe[theme].Hintergrund.btnKlangPause != null &&
+                    !Convert.ToBoolean(_ThemeGruppe[theme].Hintergrund.btnKlangPause.Tag))
+                {                    
+                    _ThemeGruppe[theme].Hintergrund.btnKlangPause.Tag = SollZustand;
+                    tcKlang.Tag = _ThemeGruppe[theme].Hintergrund.seite;
+                    btnKlangPause0_Click(_ThemeGruppe[theme].Hintergrund.btnKlangPause, new RoutedEventArgs());
+                    KlangZeile klZeileLaufend = _ThemeGruppe[theme].Hintergrund._listZeile.Find(t => t.istLaufend);
+                    AktThemeGruppe.pnlAudioTheme.lblActBGTitel.Content = (klZeileLaufend != null) ? klZeileLaufend.audiotitel.Audio_Titel.Name : "kein aktiver Hintergrundtitel";
+                }
+                for (int i = 0; i < _ThemeGruppe[theme].Klaenge.Count; i++)
                 {
-                    if (_ThemeGruppe[theme].HGThemePlaylist != null && _ThemeGruppe[theme].Hintergrund.btnKlangPause != null &&
-                        !Convert.ToBoolean(_ThemeGruppe[theme].Hintergrund.btnKlangPause.Tag))
-                    {                    
-                        _ThemeGruppe[theme].Hintergrund.btnKlangPause.Tag = SollZustand;
-                        tcKlang.Tag = _ThemeGruppe[theme].Hintergrund.seite;
-                        btnKlangPause0_Click(_ThemeGruppe[theme].Hintergrund.btnKlangPause, new RoutedEventArgs());
-                        KlangZeile klZeileLaufend = _ThemeGruppe[theme].Hintergrund._listZeile.Find(t => t.istLaufend);
-                        AktThemeGruppe.pnlAudioTheme.lblActBGTitel.Content = (klZeileLaufend != null) ? klZeileLaufend.audiotitel.Audio_Titel.Name : "kein aktiver Hintergrundtitel";
-                    }
-                    for (int i = 0; i < _ThemeGruppe[theme].Klaenge.Count; i++)
-                    {
-                        _ThemeGruppe[theme].Klaenge[i].btnKlangPause.Tag = SollZustand;
-                        tcKlang.Tag = _ThemeGruppe[theme].Klaenge[i].seite;
-                        btnKlangPause0_Click(_ThemeGruppe[theme].Klaenge[i].btnKlangPause, new RoutedEventArgs());
-                    }
-                } 
+                    _ThemeGruppe[theme].Klaenge[i].btnKlangPause.Tag = SollZustand;
+                    tcKlang.Tag = _ThemeGruppe[theme].Klaenge[i].seite;
+                    btnKlangPause0_Click(_ThemeGruppe[theme].Klaenge[i].btnKlangPause, new RoutedEventArgs());
+                }
+
                 if (CheckPlay)
                     CheckThemePlayListAuswahl(null);
                 aktiveThemeGruppe = -1;
@@ -3784,7 +3990,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 _ThemeGruppe[theme].pnlAudioTheme.btnAudioTheme.IsChecked = SollZustand;
                 _ThemeGruppe[theme].pnlAudioTheme.btnAudioTheme.Checked += new RoutedEventHandler(btnAudioTheme_Checked);
                 tboxThemeBezeichnung.Text = _ThemeGruppe[theme].dbAudioTheme.Name;
-                if (rbtnGleichSpielen.IsChecked.Value)
+                if (!btnThemeEditPlay.IsChecked.Value) // rbtnGleichSpielen.IsChecked.Value)
                 {
                     aktiveThemeGruppe = theme;
                     if (_ThemeGruppe[theme].Hintergrund != null && _ThemeGruppe[theme].Hintergrund.btnKlangPause != null)
@@ -3843,16 +4049,17 @@ namespace MeisterGeister.View.AudioPlayer {
             AktThemeGruppe = new ThemeGruppe();
             AktThemeGruppe = _ThemeGruppe[i];
             AktThemeGruppe.ThemeJustRead = true;
-
             aktiveThemeGruppe = i;
             AktThemeGruppe.ThemeName = AktThemeGruppe.dbAudioTheme.Name;
 
             ThemeSchalten(i, true, true);
+            AktThemeGruppe.pnlAudioTheme.imgPlay.Tag = 0;
+
             AktThemeGruppe.ThemeJustRead = false;
             tboxThemeBezeichnung.Visibility = Visibility.Visible;
             btnThemeLöschen.Visibility = Visibility.Visible;
             exThemeEditor.IsEnabled = true;
-            if (!rbtnGleichSpielen.IsChecked.Value)
+            if (!btnThemeEditPlay.IsChecked.Value) // rbtnGleichSpielen.IsChecked.Value)
                 exThemeEditor.IsExpanded = true;
         }
 
@@ -4020,7 +4227,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 AktualisiereKlangPlaylist();
 
                 _ThemeGrp.pnlAudioTheme = new AudioTheme();
-                _ThemeGrp.pnlAudioTheme.Tag = rbtnGleichSpielen.IsChecked.Value ? 1 : 0;
+                _ThemeGrp.pnlAudioTheme.Tag = btnThemeEditPlay.IsChecked.Value? 0 : 1;
                 _ThemeGrp.pnlAudioTheme.Name = "pnlTheme" + i;
                 _ThemeGrp.pnlAudioTheme.btnAudioTheme.Tag = i;
                 _ThemeGrp.pnlAudioTheme.btnAudioTheme.Checked += new RoutedEventHandler(btnAudioTheme_Checked);
@@ -4088,12 +4295,12 @@ namespace MeisterGeister.View.AudioPlayer {
 
             for (int i = 0; i < _ThemeGruppe.Count; i++)
             {
-                if (rbtnGleichSpielen.IsChecked.Value && _ThemeGruppe[i].pnlAudioTheme.btnAudioTheme.IsChecked.Value)
+                if (btnThemeEditPlay.IsChecked.Value && _ThemeGruppe[i].pnlAudioTheme.btnAudioTheme.IsChecked.Value) // rbtnGleichSpielen.IsChecked.Value
                 {
                     _ThemeGruppe[i].pnlAudioTheme.imgPlay.Tag = 0;
                     btnAudioTheme_Unchecked(_ThemeGruppe[i].pnlAudioTheme.btnAudioTheme, new RoutedEventArgs());
                 }
-                _ThemeGruppe[i].pnlAudioTheme.Tag = rbtnGleichSpielen.IsChecked.Value;
+                _ThemeGruppe[i].pnlAudioTheme.Tag = btnThemeEditPlay.IsChecked.Value; // rbtnGleichSpielen.IsChecked.Value;
             }
 
             for (int i = tcKlang.Items.Count-3; i > 0; i--)
@@ -4104,7 +4311,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     tcKlang.Items.RemoveAt(i);
                 }
             }
-            
+
             lblNoThemes.Content = "Lade Audio-Themes Informationen" + Environment.NewLine + Environment.NewLine + "Bitte warten...";
             lblNoThemes.Visibility = Visibility.Visible;
             lblNoThemes.Refresh();
@@ -4124,6 +4331,12 @@ namespace MeisterGeister.View.AudioPlayer {
 
             AktualisiereThemeGruppe(0, true);
             ShowThemeGruppen(0);
+
+            btnThemeEditPlay.Visibility = Visibility.Visible;
+            if (grdKlaenge.Children.Count > 0 || grdHintergrund.Children.Count > 0)
+                exThemeEditor.IsExpanded = true;
+            else
+                exThemeEditor.IsExpanded = false;
         }
                 
         private void ShowThemeGruppen(int start)
@@ -4222,26 +4435,37 @@ namespace MeisterGeister.View.AudioPlayer {
                 {
                     AktThemeGruppe.dbAudioTheme.Audio_Playlist.Add(aThemePlaylist);
 
-                    GruppenObjekt grpKlang = _GrpObjecte.Find(t => t.Audio_Playlist_GUID == aThemePlaylist.Audio_PlaylistGUID);                    
+                    GruppenObjekt grpKlang = _GrpObjecte.Find(t => t.Audio_Playlist_GUID == aThemePlaylist.Audio_PlaylistGUID);
                     if (grpKlang == null)   //Noch nicht geladen
                     {
                         tcKlang.SelectedIndex = tcKlang.Items.Count - 3;
                         tiPlus_MouseUp(null, null);
-                    
 
                         int plylstItemPos = 0;
                         while (((ListBoxItem)lbKlang.Items[plylstItemPos]).Content.ToString() != aThemePlaylist.Name)
                             plylstItemPos++;
                         lbKlang.SelectedIndex = plylstItemPos;
-                        
+
                         GruppenObjekt grpObjTheme = _GrpObjecte.Find(t => t.seite.Equals(tcKlang.SelectedIndex));
                         ((TabItemControl)tcKlang.SelectedItem).Visibility = Visibility.Collapsed;
 
                         AktThemeGruppe.Klaenge.Add(grpObjTheme);
+                        if (!btnThemeEditPlay.IsChecked.Value)
+                        {
+                            tcKlang.Tag = grpObjTheme.seite;
+                            grpObjTheme.btnKlangPause.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                        }
                     }
                     else
+                    {
                         AktThemeGruppe.Klaenge.Add(grpKlang);
-
+                        if (!btnThemeEditPlay.IsChecked.Value)
+                        {
+                            tcKlang.Tag = grpKlang.seite;
+                            grpKlang.btnKlangPause.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                        }
+                    }
+                    
                     Global.ContextAudio.Update<Audio_Theme>(AktThemeGruppe.dbAudioTheme);
                 }
                 UpdateAudioThemeToolTip(AktThemeGruppe);
@@ -4253,14 +4477,17 @@ namespace MeisterGeister.View.AudioPlayer {
             if (!AktThemeGruppe.ThemeJustRead)
             {
                 Audio_Playlist aThemePlaylist = AktThemeGruppe.dbAudioTheme.Audio_Playlist.Where(t => t.Audio_PlaylistGUID.Equals((sender as ToggleButton).Tag)).First();
-
-                AktThemeGruppe.Klaenge.RemoveAt(AktThemeGruppe.Klaenge.FindIndex(t => t.Audio_Playlist_GUID == aThemePlaylist.Audio_PlaylistGUID)); //  .playlistName  .Name
+                
+                int klangPos = AktThemeGruppe.Klaenge.FindIndex(t => t.Audio_Playlist_GUID == aThemePlaylist.Audio_PlaylistGUID);
+                tcKlang.Tag = AktThemeGruppe.Klaenge[klangPos].seite;
+                AktThemeGruppe.Klaenge[klangPos].btnKlangPause.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                AktThemeGruppe.Klaenge.RemoveAt(klangPos); //  .playlistName  .Name
                 AktThemeGruppe.dbAudioTheme.Audio_Playlist.Remove(aThemePlaylist);
                 Global.ContextAudio.Update<Audio_Theme>(AktThemeGruppe.dbAudioTheme);
                 UpdateAudioThemeToolTip(AktThemeGruppe);
             }
         }
-
+        
         private void btnKlangSave_Click(object sender, RoutedEventArgs e)
         {
             int posObjGruppe = Convert.ToInt16(btnKlangSave.Tag);
@@ -4296,13 +4523,10 @@ namespace MeisterGeister.View.AudioPlayer {
                     s = "Neues_Theme_" + sub;
                     sub++;
                 }
-
-                
-
-
+                                
                 _ThemeGrp.ThemeName = s;
                 _ThemeGrp.pnlAudioTheme = new AudioTheme();
-                _ThemeGrp.pnlAudioTheme.Tag = rbtnGleichSpielen.IsChecked.Value ? 1 : 0;
+                _ThemeGrp.pnlAudioTheme.Tag = btnThemeEditPlay.IsChecked.Value ? 0 : 1; //rbtnGleichSpielen.IsChecked.Value
                 _ThemeGrp.pnlAudioTheme.Name = "pnlTheme" + i;
                 _ThemeGrp.pnlAudioTheme.btnAudioTheme.Tag = i;
                 _ThemeGrp.pnlAudioTheme.btnAudioTheme.Checked += new RoutedEventHandler(btnAudioTheme_Checked);
@@ -4397,21 +4621,21 @@ namespace MeisterGeister.View.AudioPlayer {
 
         }
 
-        private void rbtnGleichSpielen_Click(object sender, RoutedEventArgs e)
+        private void btnThemeEditPlay_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < _ThemeGruppe.Count; i++)
             {
-                if (rbtnGleichSpielen.IsChecked.Value && _ThemeGruppe[i].pnlAudioTheme.btnAudioTheme.IsChecked.Value)
+                if (_ThemeGruppe[i].pnlAudioTheme.btnAudioTheme.IsChecked.Value)
                 {
                     _ThemeGruppe[i].ThemeJustRead = true;
                     ThemeSchalten(i, false, true);
                     _ThemeGruppe[i].pnlAudioTheme.imgPlay.Tag = 0;
                     _ThemeGruppe[i].ThemeJustRead = false;
                 }
-                _ThemeGruppe[i].pnlAudioTheme.Tag = rbtnGleichSpielen.IsChecked.Value;
+
+                _ThemeGruppe[i].pnlAudioTheme.Tag = !btnThemeEditPlay.IsChecked.Value;
 
             }
         }
-
     }
 }
