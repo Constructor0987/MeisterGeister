@@ -76,6 +76,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _sonderfertigkeitMapping.Add("merkmalskenntnis: elementar", "merkmalskenntnis (elementar (gesamt))");
             _sonderfertigkeitMapping.Add("stabzauber: fackel", "stabzauber: ewige flamme");
             _sonderfertigkeitMapping.Add("stabzauber: seil", "stabzauber: seil des adepten");
+            _sonderfertigkeitMapping.Add("stabzauber: stabverlängerung", "stabzauber: doppeltes maß/stabverlängerung");
             _sonderfertigkeitMapping.Add("repräsentation: achaz", "repräsentation (achaz-kristallomantisch)");
             _sonderfertigkeitMapping.Add("repräsentation: borbaradianer", "repräsentation (borbaradianisch)");
             _sonderfertigkeitMapping.Add("repräsentation: druide", "repräsentation (druidisch)");
@@ -145,6 +146,14 @@ namespace MeisterGeister.Logic.HeldenImport
             _sonderfertigkeitMapping.Add("liturgie: wort der wahrheit (heiliger befehl)", "liturgie: heiliger befehl");
             _sonderfertigkeitMapping.Add("liturgie: lug und trug (unverstellter blick)", "liturgie: lug und trug");
             _sonderfertigkeitMapping.Add("liturgie: rahjas erquickung (schlaf des gesegneten)", "liturgie: schlaf des gesegneten");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: mercenario", "waffenlose kampftechnik (mercenario/legionärsstil/söldnerstil)");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: legionärsstil", "waffenlose kampftechnik (mercenario/legionärsstil/söldnerstil)");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: söldnerstil", "waffenlose kampftechnik (mercenario/legionärsstil/söldnerstil)");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: unauer schule", "waffenlose kampftechnik (unauer schule/cyclopeisches ringen/echsenzwinger)");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: cyclopeisches ringen", "waffenlose kampftechnik (unauer schule/cyclopeisches ringen/echsenzwinger)");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: echsenzwinger", "waffenlose kampftechnik (unauer schule/cyclopeisches ringen/echsenzwinger)");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: bornländisch", "waffenlose kampftechnik (bornländisch/gossenstil)");
+            _sonderfertigkeitMapping.Add("waffenloser kampfstil: gossenstil", "waffenlose kampftechnik (bornländisch/gossenstil)");
         }
 
         private static void SetVorNachteilMapping()
@@ -266,6 +275,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _talentMapping.Add("lesen/schreiben (bramschoromk)", "lesen/schreiben (bramschoromk/baramun-keilschrift)");
             _talentMapping.Add("lesen/schreiben (kalshinishi)", "lesen/schreiben (kalshinishi/shingwanische knotenschrift)");
             _talentMapping.Add("lesen/schreiben (shingwanische knotenschrift)", "lesen/schreiben (kalshinishi/shingwanische knotenschrift)");
+            _talentMapping.Add("lesen/schreiben (imperiale zeichen)", "lesen/schreiben (imperiale zeichen/altgüldenländisch/alt-imperiale buchstaben)");
             _talentMapping.Add("lesen/schreiben ((alt-)imperiale zeichen)", "lesen/schreiben (imperiale zeichen/altgüldenländisch/alt-imperiale buchstaben)");
             _talentMapping.Add("lesen/schreiben (alt-imperiale buchstaben)", "lesen/schreiben (imperiale zeichen/altgüldenländisch/alt-imperiale buchstaben)");
             _talentMapping.Add("lesen/schreiben (altes amulashtra)", "lesen/schreiben (alt-amulashtra)");
@@ -743,6 +753,11 @@ namespace MeisterGeister.Logic.HeldenImport
                 // Ritualkenntnis (Schamanentradition)
                 if (!added && sfName.StartsWith("Ritualkenntnis"))
                     added = AddSonderfertigkeit(sfName.Replace("Ritualkenntnis: ", "Ritualkenntnis (") + ")", wertString, _held);
+                // Göttliche....
+                if (!added && (sfName.StartsWith("Göttliche Beseelung rufen") || sfName.StartsWith("Göttliche Essenz kanalisieren")
+                    || sfName.StartsWith("Göttliche Macht binden") || sfName.StartsWith("Göttlichen Schutz erflehen")
+                    || sfName.StartsWith("Göttlichen Willen erzwingen") || sfName.StartsWith("Göttliches Prinzip stärken")))
+                    added = AddSonderfertigkeit("Liturgie: " + sfName, wertString, _held);
                 // Waffenlose Kampftechniken
                 if (!added && sfName.StartsWith("Waffenloser Kampfstil"))
                     added = AddSonderfertigkeit(sfName.Replace("Waffenloser Kampfstil: ", "Waffenlose Kampftechnik (") + ")", wertString, _held);
