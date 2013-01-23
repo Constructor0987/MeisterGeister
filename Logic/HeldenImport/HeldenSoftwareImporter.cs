@@ -613,12 +613,12 @@ namespace MeisterGeister.Logic.HeldenImport
                 talentName = talent.Attributes["name"].Value;
 
                 // Kampfwerte
-                XmlNode atNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampf/kampfwerte[@name='{0}']/attacke", talentName));
+                XmlNode atNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampf/kampfwerte[@name='{0}']/attacke", talentName.Replace("'", "&apos;")));
                 if (atNode == null)
-                    atNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampfwerte[@name='{0}']/attacke", talentName));
-                XmlNode paNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampf/kampfwerte[@name='{0}']/parade", talentName));
+                    atNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampfwerte[@name='{0}']/attacke", talentName.Replace("'", "&apos;")));
+                XmlNode paNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampf/kampfwerte[@name='{0}']/parade", talentName.Replace("'", "&apos;")));
                 if (paNode == null)
-                    paNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampfwerte[@name='{0}']/parade", talentName));
+                    paNode = _xmlDoc.SelectSingleNode(string.Format("helden/held/kampfwerte[@name='{0}']/parade", talentName.Replace("'", "&apos;")));
 
                 atZuteilung = 0;
                 paZuteilung = 0;
@@ -700,7 +700,7 @@ namespace MeisterGeister.Logic.HeldenImport
                         sub = "auswahl";
                     else if (sfName == "Scharfschütze" || sfName == "Meisterschütze" || sfName == "Schnellladen")
                         sub = "talent";
-                    XmlNodeList subNodes = _xmlDoc.SelectNodes(string.Format("{2}[contains(@name,'{0}')]/{1}", sfName, sub, sfXpath));
+                    XmlNodeList subNodes = _xmlDoc.SelectNodes(string.Format("{2}[contains(@name,'{0}')]/{1}", sfName.Replace("'", "&apos;"), sub, sfXpath));
                     foreach (XmlNode s in subNodes)
                     {
                         string sfNameNeu = string.Format("{0} ({1})", sfName, s.Attributes["name"].Value);
@@ -721,7 +721,7 @@ namespace MeisterGeister.Logic.HeldenImport
                         sub = "gegenstand";
                     else if (sfName == "Ortskenntnis")
                         sub = "auswahl";
-                    XmlNodeList subNodes = _xmlDoc.SelectNodes(string.Format("{2}[contains(@name,'{0}')]/{1}", sfName, sub, sfXpath));
+                    XmlNodeList subNodes = _xmlDoc.SelectNodes(string.Format("{2}[contains(@name,'{0}')]/{1}", sfName.Replace("'", "&apos;"), sub, sfXpath));
                     foreach (XmlNode s in subNodes)
                     {
                         added = AddSonderfertigkeit(sfName, s.Attributes["name"].Value, _held);
