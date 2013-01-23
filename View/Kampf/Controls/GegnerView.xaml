@@ -152,7 +152,7 @@
             </Border>
         </Grid>
 
-        <Gegner:GegnerDetailView Grid.Column="1" Width="Auto" />
+        <Gegner:GegnerDetailView Grid.Column="1" Width="Auto" IsEnabled="{Binding SelectedGegnerBaseIsNotNull}" />
         
     </Grid>
 </UserControl>

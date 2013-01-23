@@ -175,7 +175,7 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox>
-                                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" ToolTip="Globale Kampfwerte." VerticalAlignment="Center">
+                                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" ToolTip="Globale Kampfwerte" VerticalAlignment="Center">
                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_02.png" Height="16" Width="16" />
                                     <Label  Content=":" />
                                 </StackPanel>
@@ -311,7 +311,7 @@
                                 </DataGridTextColumn>
                                     <DataGridTextColumn Width="Auto" MinWidth="35" Binding="{Binding PA}" IsReadOnly="False" CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
                                         <DataGridTextColumn.Header >
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" ToolTip="Paradewert (bei Fernkampfangriff leer lassen)">
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" ToolTip="Paradewert (bei Fernkampfangriffen bitte nichts eintragen)">
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="16" Width="16" />
                                             </Label>
                                         </DataGridTextColumn.Header>

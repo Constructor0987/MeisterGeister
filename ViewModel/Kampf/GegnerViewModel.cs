@@ -85,7 +85,13 @@ namespace MeisterGeister.ViewModel.Kampf
                     RefreshTagListe();
                 OnChanged("SelectedGegnerBase");
                 OnChanged("AngriffListe");
+                OnChanged("SelectedGegnerBaseIsNotNull");
             }
+        }
+
+        public bool SelectedGegnerBaseIsNotNull
+        {
+            get { return SelectedGegnerBase != null; }
         }
 
         private List<GegnerBase> gegnerBaseListe;

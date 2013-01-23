@@ -156,7 +156,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public string GetLebensenergieStatus()
         {
                 IKämpfer k = this as IKämpfer;
-                if (k==null)
+                if (k==null || k.LebensenergieMax == 0)
                     return string.Empty;
                 int leModCount = 0;
                 if (k.LebensenergieAktuell < k.Konstitution * -1)
@@ -175,7 +175,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 IKämpfer k = this as IKämpfer;
-                if (k == null)
+                if (k == null || k.LebensenergieMax == 0)
                     return string.Empty;
                 string info = string.Empty; int leModCount = 0;
                 if (k.LebensenergieAktuell < k.Konstitution * -1)
@@ -204,6 +204,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         protected string GetAusdauerStatus()
         {
             int auModCount = 0;
+            if ((this as IKämpfer).AusdauerMax == 0)
+                return string.Empty;
             if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
                 return "Kampfunfähig";
             else if ((auModCount = Modifikatoren.Where(m => m is Mod.NiedrigeAusdauerModifikator).Count()) > 0)
@@ -216,6 +218,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 string info = string.Empty; int auModCount = 0;
+                if ((this as IKämpfer).AusdauerMax == 0)
+                    return info;
                 if (Modifikatoren.Where(m => m is Mod.AusdauerKampfunfähigModifikator).Count() > 0)
                 {
                     info = "Kampfunfähig";
@@ -272,7 +276,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         protected void CheckAuModifikatoren()
         {
             IKämpfer k = this as IKämpfer;
-            if (k == null)
+            if (k == null || k.AusdauerMax == 0)
                 return;
             double percent = (double)k.AusdauerAktuell / (double)k.AusdauerMax;
             int targetModCount = 0;
@@ -284,7 +288,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 targetModCount = 2;
             int change = 0;
 
-            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeAU) // nur anwenden, wenn Regel-Option aktiv
+            // nur anwenden, wenn Regel-Option aktiv und Wesen AU hat
+            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeAU && k.AusdauerMax != 0)
                 change = SetModifikatorCount<Mod.NiedrigeAusdauerModifikator>(targetModCount);
 
             if (targetModCount == 1 && change >= 1)
@@ -309,7 +314,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         protected void CheckLePModifikatoren()
         {
             IKämpfer k = this as IKämpfer;
-            if (k == null)
+            if (k == null || k.LebensenergieMax == 0)
                 return;
             double percent = (double)k.LebensenergieAktuell / (double)k.LebensenergieMax;
             int targetModCount = 0;
@@ -322,10 +327,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             else
                 targetModCount = 3;
 
-            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeLE) // nur anwenden, wenn Regel-Option aktiv
+            // nur anwenden, wenn Regel-Option aktiv und Wesen LE hat
+            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeLE && k.LebensenergieMax != 0)
                 SetModifikatorCount<Mod.NiedrigeLebensenergieModifikator>(targetModCount);
 
-            if (k is Model.Held && !(k as Model.Held).HatVorNachteil("Eisern") && !(k as Model.Held).HatVorNachteil("Zäher Hund") && k.LebensenergieAktuell <= 5 || k.LebensenergieAktuell <= 0)
+            if (k is Model.Held && !(k as Model.Held).HatVorNachteil("Eisern") && !(k as Model.Held).HatVorNachteil("Zäher Hund")
+                 && k.LebensenergieAktuell <= 5 || k.LebensenergieAktuell <= 0)
             {
                 if (!(Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0))
                     Modifikatoren.Add(new Mod.LebensenergieKampfunfähigModifikator());
