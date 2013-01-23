@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="helden.xsl"?>
+
+<helden xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="5.2.3" xsi:noNamespaceSchemaLocation="helden.xsd">
+<held key="1353749451584" name="Liskalf Horigan" stand="1353750450805">
+<basis>
+<geschlecht name="männlich"/>
+<settings name="DSA4.1">
+<inc name="Unter dem Westwind"/>
+<inc name="Wege der Alchimie"/>
+<inc name="Abenteuer"/>
+<inc name="Spielhilfen"/>
+</settings>
+<mods/>
+<rasse name="helden.model.rasse.Mittellaender" string="Mittelländer">
+<groesse gewicht="83" value="186"/>
+<aussehen alter="25" augenfarbe="grün" aussehentext0="" aussehentext1="" aussehentext2="" aussehentext3="" familietext0="" familietext1="" familietext2="" familietext3="" familietext4="" familietext5="" gbjahr="987" gbmonat="10" gbtag="21" gprest="0" gpstart="110" haarfarbe="rotbraun" kalender="Bosparans Fall" stand="" titel=""/>
+</rasse>
+<kultur name="helden.model.kultur.Garetien" string="Mittelländische Städte"/>
+<ausbildungen>
+<ausbildung art="Hauptprofession" name="helden.model.profession.Magier" string="Akademie der Verformungen zu Lowangen">
+<variante name="Akademie der Verformungen zu Lowangen"/>
+</ausbildung>
+</ausbildungen>
+<eingegeben value="true"/>
+<notiz notiz0="Notizen" notiz1="" notiz10="" notiz11="" notiz2="" notiz3="" notiz4="" notiz5="" notiz6="" notiz7="" notiz8="" notiz9=""/>
+<portraet value=""/>
+<abenteuerpunkte value="1255"/>
+<freieabenteuerpunkte value="70"/>
+<gilde name="grau"/>
+</basis>
+<eigenschaften>
+<eigenschaft mod="0" name="Mut" startwert="13" value="13"/>
+<eigenschaft mod="0" name="Klugheit" startwert="13" value="13"/>
+<eigenschaft mod="0" name="Intuition" startwert="14" value="15"/>
+<eigenschaft mod="0" name="Charisma" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Fingerfertigkeit" startwert="11" value="11"/>
+<eigenschaft mod="0" name="Gewandtheit" startwert="13" value="13"/>
+<eigenschaft mod="0" name="Konstitution" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Körperkraft" startwert="12" value="12"/>
+<eigenschaft mod="0" name="Sozialstatus" startwert="7" value="7"/>
+<eigenschaft mod="10" name="Lebensenergie" value="0"/>
+<eigenschaft mod="10" name="Ausdauer" value="0"/>
+<eigenschaft grossemeditation="0" mod="18" mrmod="-2" name="Astralenergie" value="0"/>
+<eigenschaft karmalqueste="0" mod="0" name="Karmaenergie" value="0"/>
+<eigenschaft mod="-2" name="Magieresistenz" value="0"/>
+<eigenschaft mod="0" name="ini" value="11"/>
+<eigenschaft mod="0" name="at" value="8"/>
+<eigenschaft mod="0" name="pa" value="8"/>
+<eigenschaft mod="0" name="fk" value="8"/>
+</eigenschaften>
+<vt>
+<vorteil name="Akademische Ausbildung (Magier)"/>
+<vorteil name="Begabung für [Merkmal]" value="Eigenschaften"/>
+<vorteil name="Begabung für [Merkmal]" value="Form"/>
+<vorteil name="Gebildet" value="2"/>
+<vorteil name="Göttergeschenk: Storch"/>
+<vorteil name="Vollzauberer"/>
+<vorteil name="Farbenblind"/>
+<vorteil name="Hitzeempfindlichkeit"/>
+<vorteil name="Jähzorn" value="6"/>
+<vorteil name="Körpergebundene Kraft"/>
+<vorteil name="Meeresangst" value="5"/>
+<vorteil name="Neugier" value="7"/>
+<vorteil name="Raubtiergeruch"/>
+<vorteil name="Schulden" value="1000"/>
+<vorteil kommentar="Linker Arm ist mit rotbraunem Fell überzogen, wie Hand wirkt leicht Klauenartig, die Fingernägel erinnern an Krallen." name="Stigma" value="8"/>
+<vorteil name="Verpflichtungen"/>
+</vt>
+<sf>
+<sonderfertigkeit name="Astrale Meditation"/>
+<sonderfertigkeit name="Große Meditation"/>
+<sonderfertigkeit name="Kulturkunde">
+<kultur name="Mittelreich"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Merkmalskenntnis: Eigenschaften"/>
+<sonderfertigkeit name="Merkmalskenntnis: Form"/>
+<sonderfertigkeit name="Ortskenntnis">
+<auswahl name="Stadtteil/Kleinstadt"/>
+</sonderfertigkeit>
+<sonderfertigkeit name="Regeneration I"/>
+<sonderfertigkeit name="Regeneration II"/>
+<sonderfertigkeit name="Repräsentation: Magier"/>
+<sonderfertigkeit name="Ritualkenntnis: Gildenmagie"/>
+<sonderfertigkeit dauer="" kosten="" name="Stabzauber: Bindung" probe="" wirkung=""/>
+<sonderfertigkeit name="Zauberkontrolle"/>
+</sf>
+<ereignisse>
+<ereignis obj="max GP für Helden: 110" text="EINSTELLUNG" time="1353749452726" version="5.2.3"/>
+<ereignis obj="max Eigenschafts-GP für Helden: 100" text="EINSTELLUNG" time="1353749452726" version="5.2.3"/>
+<ereignis obj="max Eigenschafts-Wert für Helden: 14" text="EINSTELLUNG" time="1353749452726" version="5.2.3"/>
+<ereignis obj="80 AP aus GEBILDET wurden nicht genutzt und dem Helden gut geschrieben" text="Meistergenehmigung notwendig" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Rasse: Mittelländer" text="RKP" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Kultur: Mittelländische Städte" text="RKP" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="25 GP" obj="Profession: Akademie der Verformungen zu Lowangen" text="RKP" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="Mut: 13" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="Klugheit: 13" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="14" kommentar="14 GP" obj="Intuition: 14" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Charisma: 12" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="11" kommentar="11 GP" obj="Fingerfertigkeit: 11" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="13" kommentar="13 GP" obj="Gewandtheit: 13" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Konstitution: 12" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="12" kommentar="12 GP" obj="Körperkraft: 12" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="7" kommentar="0 GP" obj="Sozialstatus: 7" text="EIGENSCHAFTEN" time="1353749452727" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="Merkmalskenntnis: Eigenschaften" text="SF" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="1 GP" obj="Regeneration I" text="SF" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="1 GP" obj="Regeneration II" text="SF" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="1 GP" obj="Zauberkontrolle" text="SF" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Akademische Ausbildung (Magier)" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="12 GP" obj="Begabung für [Merkmal] 1: Eigenschaften" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="12 GP" obj="Begabung für [Merkmal] 2: Form" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="Farbenblind" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="2 GP" obj="Gebildet: 2" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-7 GP" obj="Hitzeempfindlichkeit" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-9 GP" obj="Jähzorn: 6" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-7 GP" obj="Körpergebundene Kraft" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="Meeresangst: 5" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Neugier: 7" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Schulden: 1000" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-8 GP" obj="Stigma: 8" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Verpflichtungen" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="0 GP" obj="Vollzauberer" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="0" Neu="0" kommentar="-5 GP" obj="Übler Geruch" text="VORTEILE" time="1353749452728" version="5.2.3"/>
+<ereignis obj="Auswahl" text="Merkmalskenntnis: Form" time="1353749452728" version="5.2.3"/>
+<ereignis Neu="1" obj="Auswahl" text="Wurfmesser" time="1353749452728" version="5.2.3"/>
+<ereignis Neu="3" obj="Auswahl" text="Sprachen kennen Tulamidya" time="1353749452728" version="5.2.3"/>
+<ereignis Neu="1" obj="Auswahl" text="Ackerbau" time="1353749452728" version="5.2.3"/>
+<ereignis Alt="3" Neu="5" kommentar="Editor" obj="Stäbe" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="2" kommentar="Editor" obj="Klettern" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="3" kommentar="Editor" obj="Schwimmen" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="2" Neu="3" kommentar="Editor" obj="Sinnenschärfe" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="1" Neu="3" kommentar="Editor" obj="Zechen" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="5" Neu="6" kommentar="Editor" obj="Menschenkenntnis" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="5" kommentar="Editor" obj="Fährtensuchen" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="2" Neu="5" kommentar="Editor" obj="Orientierung" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="2" Neu="6" kommentar="Editor" obj="Wildnisleben" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="3" Neu="4" kommentar="Editor" obj="Anatomie" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="3" Neu="4" kommentar="Editor" obj="Geografie" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="2" Neu="3" kommentar="Editor" obj="Geschichtswissen" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="5" Neu="8" kommentar="Editor" obj="Pflanzenkunde" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="5" Neu="8" kommentar="Editor" obj="Tierkunde" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="3" Neu="6" kommentar="Editor" obj="Sprachen kennen Thorwalsch" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="3" Neu="6" kommentar="Editor" obj="Sprachen kennen Tulamidya" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="1" Neu="2" kommentar="Editor" obj="Ackerbau" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="3" Neu="5" kommentar="Editor" obj="Heilkunde: Gift" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="3" Neu="7" kommentar="Editor" obj="Heilkunde: Krankheiten" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="4" Neu="8" kommentar="Editor" obj="Heilkunde: Wunden" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="3" Neu="6" kommentar="Editor" obj="Ritualkenntnis: Gildenmagie" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Zweihandhiebwaffen" text="Talent aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="2" kommentar="Editor" obj="Zweihandhiebwaffen" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Lesen/Schreiben Urtulamidya" text="Talent aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="5" kommentar="Editor" obj="Lesen/Schreiben Urtulamidya" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Hauswirtschaft" text="Talent aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="1" kommentar="Editor" obj="Hauswirtschaft" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Viehzucht" text="Talent aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="1" kommentar="Editor" obj="Viehzucht" text="Talent steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier]" text="Zauber entfernt" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Blaufalke]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="9" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Blaufalke]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="false" Neu="true" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Blaufalke]" text="Hauszauber verändert" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Hermelin]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="9" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Hermelin]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="false" Neu="true" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Hermelin]" text="Hauszauber verändert" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Rotluchs]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="10" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Rotluchs]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="false" Neu="true" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Rotluchs]" text="Hauszauber verändert" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Silberwolf]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="10" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Silberwolf]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="false" Neu="true" kommentar="Editor" obj="Adlerschwinge Wolfsgestalt [Magier] [Silberwolf]" text="Hauszauber verändert" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Falkenauge Meisterschuss [Elf]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="3" kommentar="Editor" obj="Falkenauge Meisterschuss [Elf]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Flim Flam Funkel [Magier]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="3" kommentar="Editor" obj="Flim Flam Funkel [Magier]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Haselbusch und Ginsterkraut [Elf]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="4" kommentar="Editor" obj="Haselbusch und Ginsterkraut [Elf]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Movimento Dauerlauf [Elf]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="7" kommentar="Editor" obj="Movimento Dauerlauf [Elf]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Penetrizzel Tiefenblick [Magier]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="3" kommentar="Editor" obj="Penetrizzel Tiefenblick [Magier]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="5" kommentar="Editor" obj="Plumbumbarum schwerer Arm [Magier]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Reversalis Revidum [Magier]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="2" kommentar="Editor" obj="Reversalis Revidum [Magier]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Ruhe Körper, ruhe Geist [Magier]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="7" kommentar="Editor" obj="Ruhe Körper, ruhe Geist [Magier]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Transmutare Körperform [Magier]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="8" kommentar="Editor" obj="Transmutare Körperform [Magier]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Unitatio Geistesbund [Magier]" text="Zauber aktivieren" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="0" Neu="4" kommentar="Editor" obj="Unitatio Geistesbund [Magier]" text="Zauber steigern" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="620" Neu="1255" kommentar="Editor" obj="gesamt" text="Abenteuerpunkte" time="1353750185411" version="5.2.3"/>
+<ereignis Abenteuerpunkte="-550" Alt="620" Neu="70" kommentar="Editor" obj="verfügbar" text="Abenteuerpunkte" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Übler Geruch" text="Vor-/Nachteil entfernt" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Göttergeschenk: Storch" text="Vor-/Nachteil hinzugefügt" time="1353750185411" version="5.2.3"/>
+<ereignis kommentar="Editor" obj="Raubtiergeruch" text="Vor-/Nachteil hinzugefügt" time="1353750185411" version="5.2.3"/>
+<ereignis Alt="7" Neu="8" kommentar="Editor" obj="Fernkampf-Basis" text="Eigenschaft steigern" time="1353750258294" version="5.2.3"/>
+<ereignis Alt="14" Neu="15" kommentar="Editor" obj="Intuition" text="Eigenschaft steigern" time="1353750258294" version="5.2.3"/>
+</ereignisse>
+<talentliste>
+<talent lernmethode="Gegenseitiges Lehren" name="Dolche" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hiebwaffen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Infanteriewaffen" probe=" (GE/GE/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Raufen" probe=" (GE/GE/KK)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ringen" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Stäbe" probe=" (GE/GE/KK)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Säbel" probe=" (GE/GE/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wurfmesser" probe=" (GE/FF/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Zweihandhiebwaffen" probe=" (GE/GE/KK)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Athletik" probe=" (GE/KO/KK)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Klettern" probe=" (MU/GE/KK)" value="2"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Körperbeherrschung" probe=" (MU/IN/GE)" value="2"/>
+<talent be="BE" lernmethode="Gegenseitiges Lehren" name="Schleichen" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Schwimmen" probe=" (GE/KO/KK)" value="3"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Selbstbeherrschung" probe=" (MU/KO/KK)" value="4"/>
+<talent be="BE-2" lernmethode="Gegenseitiges Lehren" name="Sich verstecken" probe=" (MU/IN/GE)" value="0"/>
+<talent be="BE-3" lernmethode="Gegenseitiges Lehren" name="Singen" probe=" (IN/CH/CH)" value="0"/>
+<talent be="0-&gt;BE" lernmethode="Gegenseitiges Lehren" name="Sinnenschärfe" probe=" (KL/IN/IN)" value="3"/>
+<talent be="BEx2" lernmethode="Gegenseitiges Lehren" name="Tanzen" probe=" (CH/GE/GE)" value="0"/>
+<talent be="" lernmethode="Gegenseitiges Lehren" name="Zechen" probe=" (IN/KO/KK)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Etikette" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Gassenwissen" probe=" (KL/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lehren" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Menschenkenntnis" probe=" (KL/IN/CH)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schriftlicher Ausdruck" probe=" (KL/IN/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Überreden" probe=" (MU/IN/CH)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Fährtensuchen" probe=" (KL/IN/KO)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Orientierung" probe=" (KL/IN/IN)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Wildnisleben" probe=" (IN/GE/KO)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Anatomie" probe=" (MU/KL/FF)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geografie" probe=" (KL/KL/IN)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Geschichtswissen" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Götter und Kulte" probe=" (KL/KL/IN)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heraldik" probe=" (KL/KL/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Magiekunde" probe=" (KL/KL/IN)" value="6"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Pflanzenkunde" probe=" (KL/IN/FF)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechnen" probe=" (KL/KL/IN)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Rechtskunde" probe=" (KL/KL/IN)" value="3"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sagen und Legenden" probe=" (KL/IN/CH)" value="4"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Sternkunde" probe=" (KL/KL/IN)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Tierkunde" probe=" (MU/KL/IN)" value="8"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Bosparano" probe=" (KL/IN/CH)" value="8"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Garethi" probe=" (KL/IN/CH)" value="15"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Isdira" probe=" (KL/IN/CH)" value="4"/>
+<talent k="15" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Ologhaijan" probe=" (KL/IN/CH)" value="2"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Thorwalsch" probe=" (KL/IN/CH)" value="6"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Tulamidya" probe=" (KL/IN/CH)" value="6"/>
+<talent k="21" lernmethode="Gegenseitiges Lehren" name="Sprachen kennen Urtulamidya" probe=" (KL/IN/CH)" value="5"/>
+<talent k="18" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Isdira/Asdharia" probe=" (KL/KL/FF)" value="1"/>
+<talent k="10" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Kusliker Zeichen" probe=" (KL/KL/FF)" value="8"/>
+<talent k="10" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Nanduria" probe=" (KL/KL/FF)" value="7"/>
+<talent k="14" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Tulamidya" probe=" (KL/KL/FF)" value="6"/>
+<talent k="16" lernmethode="Gegenseitiges Lehren" name="Lesen/Schreiben Urtulamidya" probe=" (KL/KL/FF)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ackerbau" probe=" (IN/FF/KO)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Alchimie" probe=" (MU/KL/FF)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Hauswirtschaft" probe=" (IN/CH/FF)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Gift" probe=" (MU/KL/IN)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Krankheiten" probe=" (MU/KL/CH)" value="7"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Heilkunde: Wunden" probe=" (KL/CH/FF)" value="8"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Holzbearbeitung" probe=" (KL/FF/KK)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Kochen" probe=" (KL/IN/FF)" value="2"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Lederarbeiten" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Malen/Zeichnen" probe=" (KL/IN/FF)" value="5"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Schneidern" probe=" (KL/FF/FF)" value="0"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Viehzucht" probe=" (KL/IN/KK)" value="1"/>
+<talent lernmethode="Gegenseitiges Lehren" name="Ritualkenntnis: Gildenmagie" probe=" (--/--/--)" value="6"/>
+</talentliste>
+<zauberliste>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Selbststudium" name="Adlerauge Luchsenohr" probe=" (KL/IN/FF)" reichweite="" repraesentation="Magier" value="6" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Selbststudium" name="Adlerschwinge Wolfsgestalt" probe=" (MU/IN/GE)" reichweite="" repraesentation="Magier" value="9" variante="Blaufalke" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Selbststudium" name="Adlerschwinge Wolfsgestalt" probe=" (MU/IN/GE)" reichweite="" repraesentation="Magier" value="9" variante="Hermelin" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Selbststudium" name="Adlerschwinge Wolfsgestalt" probe=" (MU/IN/GE)" reichweite="" repraesentation="Magier" value="10" variante="Rotluchs" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="D" kosten="" lernmethode="Selbststudium" name="Adlerschwinge Wolfsgestalt" probe=" (MU/IN/GE)" reichweite="" repraesentation="Magier" value="10" variante="Silberwolf" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="B" kosten="" lernmethode="Selbststudium" name="Armatrutz" probe=" (IN/GE/KO)" reichweite="" repraesentation="Magier" value="12" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="B" kosten="" lernmethode="Selbststudium" name="Attributo" probe=" (KL/CH/**)" reichweite="" repraesentation="Magier" value="12" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Axxeleratus Blitzgeschwind" probe=" (KL/GE/KO)" reichweite="" repraesentation="Magier" value="8" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Balsam Salabunde" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Selbststudium" name="Bannbaladin" probe=" (IN/CH/CH)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Selbststudium" name="Blitz dich find" probe=" (KL/IN/GE)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Corpofesso Gliederschmerz" probe=" (KL/KO/KK)" reichweite="" repraesentation="Magier" value="7" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Eigenschaft wiederherstellen" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Selbststudium" name="Falkenauge Meisterschuss" probe=" (IN/FF/GE)" reichweite="" repraesentation="Elf" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="A" kosten="" lernmethode="Selbststudium" name="Flim Flam Funkel" probe=" (KL/KL/FF)" reichweite="" repraesentation="Magier" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Fulminictus Donnerkeil" probe=" (IN/GE/KO)" reichweite="" repraesentation="Magier" value="6" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" lernmethode="Selbststudium" name="Gardianum Zauberschild" probe=" (KL/IN/KO)" reichweite="" repraesentation="Magier" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" lernmethode="Selbststudium" name="Haselbusch und Ginsterkraut" probe=" (CH/FF/KO)" reichweite="" repraesentation="Elf" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" lernmethode="Selbststudium" name="Klarum Purum" probe=" (KL/KL/CH)" reichweite="" repraesentation="Magier" value="8" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="A" kosten="" lernmethode="Selbststudium" name="Movimento Dauerlauf" probe=" (IN/GE/KO)" reichweite="" repraesentation="Elf" value="7" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="A" kosten="" lernmethode="Selbststudium" name="Odem Arcanum" probe=" (KL/IN/IN)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="C" kosten="" lernmethode="Selbststudium" name="Paralysis starr wie Stein" probe=" (IN/CH/KK)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Penetrizzel Tiefenblick" probe=" (KL/KL/KO)" reichweite="" repraesentation="Magier" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Selbststudium" name="Plumbumbarum schwerer Arm" probe=" (CH/GE/KK)" reichweite="" repraesentation="Magier" value="5" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Psychostabilis" probe=" (MU/KL/KO)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="E" kosten="" lernmethode="Selbststudium" name="Reversalis Revidum" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="2" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Selbststudium" name="Ruhe Körper, ruhe Geist" probe=" (KL/CH/KO)" reichweite="" repraesentation="Magier" value="7" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="E" kosten="" lernmethode="Selbststudium" name="Salander Mutander" probe=" (KL/CH/KO)" reichweite="" repraesentation="Magier" value="7" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Sensibar Empathicus" probe=" (KL/IN/CH)" reichweite="" repraesentation="Magier" value="3" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="C" kosten="" lernmethode="Selbststudium" name="Tiergedanken" probe=" (MU/IN/CH)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" lernmethode="Selbststudium" name="Transmutare Körperform" probe=" (CH/GE/KO)" reichweite="" repraesentation="Magier" value="8" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="B" kosten="" lernmethode="Selbststudium" name="Unitatio Geistesbund" probe=" (IN/CH/KO)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="false" k="D" kosten="" lernmethode="Selbststudium" name="Verwandlung beenden" probe=" (KL/CH/FF)" reichweite="" repraesentation="Magier" value="4" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="C" kosten="" lernmethode="Selbststudium" name="Visibili Vanitar" probe=" (KL/IN/GE)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+<zauber anmerkungen="" hauszauber="true" k="C" kosten="" lernmethode="Selbststudium" name="Wasseratem" probe=" (MU/KL/KO)" reichweite="" repraesentation="Magier" value="10" variante="" wirkungsdauer="" zauberdauer="" zauberkommentar=""/>
+</zauberliste>
+<kampf>
+<kampfwerte name="Dolche">
+<attacke value="8"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Hiebwaffen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Infanteriewaffen">
+<attacke value="8"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Raufen">
+<attacke value="9"/>
+<parade value="9"/>
+</kampfwerte>
+<kampfwerte name="Ringen">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Stäbe">
+<attacke value="11"/>
+<parade value="10"/>
+</kampfwerte>
+<kampfwerte name="Säbel">
+<attacke value="8"/>
+<parade value="8"/>
+</kampfwerte>
+<kampfwerte name="Zweihandhiebwaffen">
+<attacke value="10"/>
+<parade value="8"/>
+</kampfwerte>
+</kampf>
+<gegenstände/>
+<ausrüstungen>
+<heldenausruestung name="jagtwaffe" nummer="0" set="0"/>
+</ausrüstungen>
+<verbindungen/>
+<extention/>
+<geldboerse/>
+</held>
+</helden>

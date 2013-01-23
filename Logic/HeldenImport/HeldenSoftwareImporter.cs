@@ -566,14 +566,18 @@ namespace MeisterGeister.Logic.HeldenImport
 
                 if (z != null)
                 {
-                    Held_Zauber hz = new Held_Zauber();
-                    hz.HeldGUID = _held.HeldGUID;
-                    hz.ZauberGUID = z.ZauberGUID;
-                    hz.Repräsentation = rep;
-                    hz.ZfW = wert;
-                    hz.Bemerkung = bemerkung;
-                    _held.Held_Zauber.Add(hz);
-                    added = true;
+                    // TODO ??: Import von Zauber-Varianten ermöglichen
+                    if (!_held.HatZauber(z.ZauberGUID, rep))
+                    {
+                        Held_Zauber hz = new Held_Zauber();
+                        hz.HeldGUID = _held.HeldGUID;
+                        hz.ZauberGUID = z.ZauberGUID;
+                        hz.Repräsentation = rep;
+                        hz.ZfW = wert;
+                        hz.Bemerkung = bemerkung;
+                        _held.Held_Zauber.Add(hz);
+                        added = true;
+                    }
                 }
 
                 if (!added) // Import nicht möglich
@@ -930,6 +934,9 @@ namespace MeisterGeister.Logic.HeldenImport
                     break;
                 case ImportTypen.Zauber:
                     typString = "Zauber: ";
+                    // TODO ??: Hinweis für Adlerschwinge-Varianten entfernen, sobald import mögich
+                    if (name.StartsWith("Adlerschwinge Wolfsgestalt"))
+                        hinweis += "(Es kann derzeit nur eine Variante dieses Zaubers import werden)";
                     break;
                 case ImportTypen.Gegenstand:
                     typString = "Gegenstand: ";
@@ -956,7 +963,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
                 txtLog.Text = _importPfad
-                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet werden, konnten denen in unserer Datenbank nicht zugeordnet wereden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, sende bitte die Helden-XML-Datei an 'info@meistergeister.org' oder melde das Problem im Forum (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
+                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet werden, konnten denen in unserer Datenbank nicht zugeordnet wereden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum und lade die XML-Datei dort hoch (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;

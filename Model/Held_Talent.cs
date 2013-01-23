@@ -99,6 +99,8 @@ namespace MeisterGeister.Model
         {
             get
             {
+                if (Talent == null)
+                    return false;
                 return Talent.Untergruppe != Talent.UNTERGRUPPE_ATTECHNIK
                     && Talent.Untergruppe != Talent.UNTERGRUPPE_FERNKAMPF;
             }

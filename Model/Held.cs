@@ -1172,6 +1172,11 @@ namespace MeisterGeister.Model
             return Held_Zauber.Where(hz => hz.Zauber == z && hz.Repräsentation == rep).Count() > 0;
         }
 
+        public bool HatZauber(Guid z, string rep)
+        {
+            return Held_Zauber.Where(hz => hz.ZauberGUID == z && hz.Repräsentation == rep).Count() > 0;
+        }
+
         public bool HatZauber(string zaubername, bool exactMatch = true)
         {
             return Held_Zauber.Where(hz => (exactMatch && hz.Zauber.Name.ToUpperInvariant() == zaubername.ToUpperInvariant()) || (!exactMatch && hz.Zauber.Name.ToUpperInvariant().StartsWith(zaubername.ToUpperInvariant())) ).Count() > 0;
