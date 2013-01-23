@@ -10,11 +10,11 @@
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
     xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
 	x:Name="UserControl" Background="{DynamicResource Background1}"
-	d:DesignWidth="763.291" d:DesignHeight="543.038">
+	d:DesignWidth="739.291" d:DesignHeight="543.038">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -152,7 +152,7 @@
             </Border>
         </Grid>
 
-        <Gegner:GegnerDetailView Grid.Column="1" />
+        <Gegner:GegnerDetailView Grid.Column="1" Width="Auto" />
         
     </Grid>
 </UserControl>

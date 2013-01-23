@@ -547,6 +547,32 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<double> _gS3;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int AT
+        {
+            get { return _aT; }
+            set
+    		{ 
+    			_aT = value;
+    			OnChanged("AT");
+    		}
+    
+        }
+        private int _aT;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int FK
+        {
+            get { return _fK; }
+            set
+    		{ 
+    			_fK = value;
+    			OnChanged("FK");
+    		}
+    
+        }
+        private int _fK;
 
         #endregion
 

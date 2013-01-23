@@ -7,8 +7,7 @@
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kampf"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
     xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
-	x:Name="UserControl" Background="{DynamicResource Background1}"
-	d:DesignWidth="763.291" d:DesignHeight="543.038">
+	x:Name="UserControl" Background="{DynamicResource Background1}" d:DesignHeight="543.038" Width="675.291">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="DistanzklasseValues" MethodName="GetNames" ObjectType="{x:Type KampfLogic:Distanzklasse}">
             <ObjectDataProvider.MethodParameters>
@@ -131,32 +130,32 @@
                                 <Label   DockPanel.Dock="Left" Content="LE:" />
                                 <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Firebrick" Margin="4" Width="10" />
                             </DockPanel>
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="1" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.LE}" Margin="2" ShowButtons="True" />
                             <DockPanel Grid.Row="0" Grid.Column="2">
                                 <Label   DockPanel.Dock="Left" Content="AU:" />
                                 <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="SteelBlue" Margin="4" Width="10" />
                             </DockPanel>
-                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="0" Grid.Column="3" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AU}" Margin="2" ShowButtons="True" />
                             <DockPanel Grid.Row="1" Grid.Column="0">
                                 <Label   DockPanel.Dock="Left" Content="AE:" />
                                 <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="BlueViolet" Margin="4" Width="10" />
                             </DockPanel>
-                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AE}" Margin="2" ShowButtons="True" />
                             <DockPanel Grid.Row="1" Grid.Column="2">
                                 <Label   DockPanel.Dock="Left" Content="KE:" />
                                 <Rectangle DockPanel.Dock="Right" HorizontalAlignment="Right" Fill="Gold" Margin="4" Width="10" />
                             </DockPanel>
-                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="0" Grid.Column="4" Content="Literatur:" />
                             <TextBox Grid.Row="0" Grid.Column="5" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Literatur}" Margin="2" MaxLength="300" />
                         </Grid>
                         <Grid Margin="5,0,5,5" Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="64*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="64" />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="35* "/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -167,23 +166,33 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Label   Grid.Row="2" Grid.Column="0" Content="INI-Basis:" />
-                            <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.INIBasis}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="2" Grid.Column="3" Content="INI-Zufall:" />
-                            <TextBox Grid.Row="2" Grid.Column="4" Margin="2" MinWidth="100" HorizontalAlignment="Left">
+                            <TextBox Grid.Row="2" Grid.Column="4" Margin="2" MinWidth="80" HorizontalAlignment="Left">
                                 <Binding Path="SelectedGegnerBase.INIZufall">
                                     <Binding.ValidationRules>
                                         <ViewGeneral:WürfelValidationRule />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox>
+                                <StackPanel Grid.Row="3" Grid.Column="0" Orientation="Horizontal" ToolTip="Globale Kampfwerte." VerticalAlignment="Center">
+                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_02.png" Height="16" Width="16" />
+                                    <Label  Content=":" />
+                                </StackPanel>
+                                <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left">
+                                    <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.AT}" Margin="2" ShowButtons="True" ToolTip="Globaler AT-Wert" />
+                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="16" Width="16" Margin="0,0,8,0" ToolTip="Globaler AT-Wert" />
+                                    <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" ToolTip="Globaler PA-Wert" />
+                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="16" Width="16" Margin="0,0,8,0" ToolTip="Globaler PA-Wert" />
+                                    <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.FK}" Margin="2" ShowButtons="True" ToolTip="Globaler FK-Wert" />
+                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="16" Width="16" Margin="0,0,8,0" ToolTip="Globaler FK-Wert" />
+                                </WrapPanel>
 
-                            <Label   Grid.Row="3" Grid.Column="0" Content="PA:" />
-                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.PA}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="3" Grid.Column="3" Content="KO:" />
-                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="3" Grid.Column="4" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KO}" Margin="2" ShowButtons="True" />
                             <Label   Grid.Row="4" Grid.Column="0" Content="RS:" />
                             <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
-                                <ViewGeneral:IntBox MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" />
+                                <ViewGeneral:IntBox MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" Margin="2" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" />
                                 <Button Height="24" Click="ButtonZonenRsControl_Click">
                                     <Image Margin="1" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
                                     <Button.ToolTip>
@@ -231,7 +240,7 @@
                                 <ViewGeneral:DoubleBox Grid.Column="2" Value="{Binding SelectedGegnerBase.GS3}" Margin="2" CanBeNull="True" ToolTip="Geschwindigkeit im Bewegungsmodus 3"/>
                             </Grid>
                             <Label   Grid.Row="5" Grid.Column="3" Content="Aktionen:" />
-                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="4" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
+                            <ViewGeneral:IntBox Grid.Row="5" Grid.Column="4" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Aktionen}" Margin="2" ShowButtons="True" />
                         </Grid>
                     </Grid>
                 </Border>
@@ -291,12 +300,20 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Width="Auto" MinWidth="35" Binding="{Binding AT}" IsReadOnly="False" CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
                                     <DataGridTextColumn.Header >
-                                        <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="AT"/>
-                                    </DataGridTextColumn.Header>
+                                            <Border Grid.Column="6" BorderBrush="#FFBEB3A3" BorderThickness="1" ToolTip="Attacke- bzw. Fernkampfwert" >
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="16" Width="16" />
+                                                    <TextBlock Text="/" VerticalAlignment="Center" />
+                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="16" Width="16" />
+                                                </StackPanel>
+                                            </Border>
+                                        </DataGridTextColumn.Header>
                                 </DataGridTextColumn>
                                     <DataGridTextColumn Width="Auto" MinWidth="35" Binding="{Binding PA}" IsReadOnly="False" CellStyle="{StaticResource Body_Content_DataGrid_Centering}">
                                         <DataGridTextColumn.Header >
-                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="PA"/>
+                                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Grid.Column="7" ToolTip="Paradewert (bei Fernkampfangriff leer lassen)">
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="16" Width="16" />
+                                            </Label>
                                         </DataGridTextColumn.Header>
                                     </DataGridTextColumn>
                                     <DataGridTemplateColumn CellStyle="{StaticResource Body_Content_DataGrid_Centering}">

@@ -336,9 +336,7 @@ namespace MeisterGeister.ViewModel.Kampf
             ga.Name = AngriffAddName;
             // Default-Werte
             ga.DK = "N"; ga.TPWürfelAnzahl = 1; ga.TPWürfel = 6;
-            // TODO ??: Globalen AT-Wert des Gegners als Default-Wert verwenden; modifiziert mit WM
-            //ga.AT = SelectedGegnerBase.AT;
-            ga.AT = 10;
+            ga.AT = SelectedGegnerBase.AT;
             ga.PA = SelectedGegnerBase.PA;
 
             AddAngriff(ga);

@@ -145,12 +145,6 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Fernkampfwaffe> _fernkampfwaffe;
     
-        public ObjectSet<GegnerBase_Angriff> GegnerBase_Angriff
-        {
-            get { return _gegnerBase_Angriff  ?? (_gegnerBase_Angriff = CreateObjectSet<GegnerBase_Angriff>("GegnerBase_Angriff")); }
-        }
-        private ObjectSet<GegnerBase_Angriff> _gegnerBase_Angriff;
-    
         public ObjectSet<GegnerBase_Kampfregel> GegnerBase_Kampfregel
         {
             get { return _gegnerBase_Kampfregel  ?? (_gegnerBase_Kampfregel = CreateObjectSet<GegnerBase_Kampfregel>("GegnerBase_Kampfregel")); }
@@ -396,6 +390,12 @@ namespace MeisterGeister.Model
             get { return _gegnerBase  ?? (_gegnerBase = CreateObjectSet<GegnerBase>("GegnerBase")); }
         }
         private ObjectSet<GegnerBase> _gegnerBase;
+    
+        public ObjectSet<GegnerBase_Angriff> GegnerBase_Angriff
+        {
+            get { return _gegnerBase_Angriff  ?? (_gegnerBase_Angriff = CreateObjectSet<GegnerBase_Angriff>("GegnerBase_Angriff")); }
+        }
+        private ObjectSet<GegnerBase_Angriff> _gegnerBase_Angriff;
 
         #endregion
 
@@ -428,8 +428,6 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Farbe;
     		if(typeof(T) == typeof(Fernkampfwaffe))
     				return (ObjectSet<T>)(Object)Fernkampfwaffe;
-    		if(typeof(T) == typeof(GegnerBase_Angriff))
-    				return (ObjectSet<T>)(Object)GegnerBase_Angriff;
     		if(typeof(T) == typeof(GegnerBase_Kampfregel))
     				return (ObjectSet<T>)(Object)GegnerBase_Kampfregel;
     		if(typeof(T) == typeof(Handelsgut))
@@ -512,6 +510,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Gegner;
     		if(typeof(T) == typeof(GegnerBase))
     				return (ObjectSet<T>)(Object)GegnerBase;
+    		if(typeof(T) == typeof(GegnerBase_Angriff))
+    				return (ObjectSet<T>)(Object)GegnerBase_Angriff;
     		return null;
     	}
     	

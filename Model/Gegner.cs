@@ -226,18 +226,20 @@ namespace MeisterGeister.Model
             set {}
         }
 
-        public int? AT
+        int? KampfLogic.IKämpfer.AT
         {
             get {
                 //TODO JT: stattdessen selectedangriff verwenden
-                GegnerBase_Angriff ga = GegnerBase.GegnerBase_Angriff.FirstOrDefault();
-                return (ga == null)?0:ga.AT; 
+                return AT;
             }
         }
 
         int? KampfLogic.IKämpfer.PA
         {
-            get { return PA; }
+            get {
+                // TODO JT stattdessen selectedangriff verwenden
+                return PA; 
+            }
         }
 
         [DependentProperty("MRKörper")]
