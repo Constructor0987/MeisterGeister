@@ -132,9 +132,6 @@
     <Content Include="Daten\TestDBs\Bruno_DatabaseDSA.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Daten\TestDBs\DatabaseDSA_Test.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Daten\TestDBs\Eshmael_DatabaseDSA.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -145,6 +142,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Daten\TestDBs\Lares_DatabaseDSA.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\TestDBs\Los_DatabaseDSA.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Daten\TestDBs\Marc_DatabaseDSA.sdf">
