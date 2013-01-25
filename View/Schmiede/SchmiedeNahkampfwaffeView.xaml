@@ -13,7 +13,7 @@
 	<Grid OpacityMask="Black">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="450*" />
-			<ColumnDefinition Width="296" />
+			<ColumnDefinition Width="325" />
 		</Grid.ColumnDefinitions>
 
         <Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
