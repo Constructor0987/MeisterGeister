@@ -134,7 +134,7 @@ namespace MeisterGeister.ViewModel.Schmiede
                 _selectedRüstungTyp = value;
                 if (value != FILTERDEAKTIVIEREN)
                 {
-                    RüstungListe = Global.ContextInventar.RuestungListe.Where(r => r.Gruppe.Contains(value)).ToList();
+                    RüstungListe = Global.ContextInventar.RuestungListe.Where(r => (r.Gruppe == null ? string.Empty : r.Gruppe).Contains(value)).ToList();
                 }
                 else
                 {

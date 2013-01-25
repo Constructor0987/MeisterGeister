@@ -850,12 +850,9 @@ DELETE FROM [Munition] WHERE [MunitionGUID]='00000000-0000-0000-000f-00000000003
 /* Rüstung */
 
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000012';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000013';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000020';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000022';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000013';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000020';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000022';
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000030';
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000031';
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000032';
@@ -868,128 +865,68 @@ UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-00
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000039';
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000050';
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000061';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000064';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000065';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000064';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000065';
 UPDATE [Rüstung] SET [Gruppe] = N'Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000066';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000076';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000077';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000078';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000079';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000080';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000081';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000082';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000083';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000084';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000085';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000086';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000087';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000088';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000089';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000090';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000091';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000093';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000094';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000095';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000096';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000097';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000098';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000099';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000100';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000101';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000102';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000103';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000104';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000105';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000106';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000108';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000109';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000110';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000111';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000112';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000113';
-UPDATE [Rüstung] SET [Gruppe] = N'Kleidung
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000114';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000115';
-UPDATE [Rüstung] SET [Gruppe] = N'Kette
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000116';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000118';
-UPDATE [Rüstung] SET [Gruppe] = N'Schuppe
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000119';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000120';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000121';
-UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000122';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000076';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000077';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000078';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000079';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000080';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000081';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000082';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000083';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000084';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000085';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000086';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000087';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000088';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000089';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000090';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000091';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000093';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000094';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000095';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000096';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000097';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000098';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000099';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000100';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000101';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000102';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000103';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000104';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000105';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000106';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000108';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000109';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000110';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000111';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000112';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000113';
+UPDATE [Rüstung] SET [Gruppe] = N'Kleidung' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000114';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000115';
+UPDATE [Rüstung] SET [Gruppe] = N'Kette' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000116';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000118';
+UPDATE [Rüstung] SET [Gruppe] = N'Schuppe' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000119';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000120';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000121';
+UPDATE [Rüstung] SET [Gruppe] = N'Lederrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000122';
 UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000123';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000124';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000125';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000126';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000127';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000128';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000130';
-UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000131';
-UPDATE [Rüstung] SET [Gruppe] = N'Kleidung
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000133';
-UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000135';
-UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000136';
-UPDATE [Rüstung] SET [Gruppe] = N'Kleidung
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000138';
-UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen
-' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000139';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000140';
-UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen
-' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000141';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000124';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000125';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000126';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000127';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000128';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000130';
+UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000131';
+UPDATE [Rüstung] SET [Gruppe] = N'Kleidung' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000133';
+UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000135';
+UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000136';
+UPDATE [Rüstung] SET [Gruppe] = N'Kleidung' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000138';
+UPDATE [Rüstung] SET [Gruppe] = N'Tuchrüstungen' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000139';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000140';
+UPDATE [Rüstung] SET [Gruppe] = N'Plattenrüstungen' ,[Steif] = 1 WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000141';
 UPDATE [Rüstung] SET [Gruppe] = N'hervorragende Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000142';
 UPDATE [Rüstung] SET [Gruppe] = N'hervorragende Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000144';
 UPDATE [Rüstung] SET [Gruppe] = N'hervorragende Kette' WHERE [RüstungGUID]='00000000-0000-0000-0004-000000000145';
