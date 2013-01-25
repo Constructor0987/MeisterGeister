@@ -114,6 +114,8 @@ namespace MeisterGeister.Daten
         /// <returns></returns>
         public static DatabaseUpdateResult PerformDatabaseUpdate(string connectionString)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("Datenbank Update wird gestartet: {0}", connectionString));
+
             GetUserDatabaseVersion(connectionString);
 
             if (UserDatabaseVersion > DatenbankVersionAktuell) // Programm ist zu alt für die Datenbank
