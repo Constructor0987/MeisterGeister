@@ -28,8 +28,8 @@
 			</Style.Triggers>
 		</Style>
 		<DataTemplate x:Key="HeldListTemplate">
-			<StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical" VerticalAlignment="Center">
-                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Height="30" Text="{Binding Name}" VerticalAlignment="Center">
+            <StackPanel Style="{StaticResource HeldenListItemStyle}" Orientation="Vertical" VerticalAlignment="Center" Height="30">
+                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Text="{Binding Name}" VerticalAlignment="Center">
                     <TextBlock.ToolTip>
                         <StackPanel>
                             <TextBlock Text="Eindeutige Held-ID:" FontStyle="Italic" />
@@ -37,13 +37,39 @@
                         </StackPanel>
                     </TextBlock.ToolTip>
                 </TextBlock>
+                <TextBlock Style="{StaticResource HeldenListTextBlockStyle}" Text="{Binding Spieler}" VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="Gray" ToolTip="Name des Spielers des Helden" />
 			</StackPanel>
 		</DataTemplate>		
 	</UserControl.Resources>
 
     <Border Style="{DynamicResource ControlContentBorder}">
 		<Grid>
-			<ListBox x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ComboBox Grid.Row="0" Margin="4,2,25,2" Height="24" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}" ToolTip="Sortierung">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Source="/DSA MeisterGeister;component/Images/Icons/General/sort.png" />
+                            <TextBlock Text="{Binding}" Margin="2,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Image Grid.Row="0" Height="16" Margin="0,5,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+                <Image.ToolTip>
+                    <StackPanel Width="200">
+                        <TextBlock TextWrapping="Wrap"><Run Text="Rechtsklick für weitere Aktionen."/></TextBlock>
+                        <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
+                </Image.ToolTip>
+            </Image>
+            
+            <ListBox Grid.Row="1" x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
 				MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000" VerticalContentAlignment="Center">
                 <ListBox.InputBindings>
                     <KeyBinding Key="Delete" Command="{Binding OnDeleteHeld}" />
@@ -108,15 +134,7 @@
                     </ContextMenu>
 				</ListBox.ContextMenu>				
 			</ListBox>
-			<Image Height="16" Margin="0,8,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
-				<Image.ToolTip>
-					<StackPanel Width="200">
-						<TextBlock TextWrapping="Wrap"><Run Text="Rechtsklick für weitere Aktionen."/></TextBlock>
-						<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
-					</StackPanel>
-				</Image.ToolTip>
-			</Image>
-			<Button Height="23" Margin="5,0,0,5" Width="25" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
+			<Button Grid.Row="2" Height="23" Margin="5,0,0,5" Width="25" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
 				<Button.ContextMenu>
 					<ContextMenu>
                         <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Helden eingeben.">
@@ -155,11 +173,11 @@
 				</Button.ContextMenu>
 				<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
 			</Button>
-			<StackPanel Margin="36,0,0,6" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
+			<StackPanel Grid.Row="2" Margin="36,0,0,6" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Bottom">
 				<Label Height="23" Width="Auto" Content="{Binding ItemsSource.Count, ElementName=_listBoxHelden}" VerticalContentAlignment="Center" />
 				<Label Height="23" Width="Auto" Content="Helden" VerticalContentAlignment="Center" />
 			</StackPanel>
-            <Button Height="22" Margin="135,0,0,7" Width="48" Command="{Binding OnExportDemoHelden}" Content="Export" HorizontalAlignment="Left" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" />
+            <Button Grid.Row="2" Height="22" Margin="135,0,0,7" Width="48" Command="{Binding OnExportDemoHelden}" Content="Export" HorizontalAlignment="Left" x:Name="_buttonExportDemo" VerticalAlignment="Bottom" />
 		</Grid>
 	</Border>
 </UserControl>

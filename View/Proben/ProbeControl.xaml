@@ -112,7 +112,24 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" ToolTip="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Held.Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold">
+                    <TextBlock.ToolTip>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Held: " FontWeight="Bold" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Spieler: " FontWeight="Bold" />
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Held.Name}" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Held.Spieler}" />
+                        </Grid>
+                    </TextBlock.ToolTip>
+                </TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" ToolTip="{Binding Probe.Probenname, StringFormat=\{0\}-Probe}" TextTrimming="CharacterEllipsis">
                     <Run Text="{Binding Probe.Probenname}" FontStyle="Italic" />
                     <Run Text="-Probe" />

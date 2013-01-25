@@ -62,6 +62,9 @@ namespace MeisterGeister.Model
         #endregion
 
         #region IKämpfer
+
+        public string Spieler { get { return "Meister"; } }
+
         private int _initiativeWurf = 0;
         public int InitiativeWurf
         {

@@ -99,7 +99,24 @@
                         </Grid>
                         <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
                                Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
-                        <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                        <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="2,0,0,0">
+                            <TextBlock.ToolTip>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Held: " FontWeight="Bold" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Spieler: " FontWeight="Bold" />
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding KämpferInfo.Kämpfer.Name}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding KämpferInfo.Kämpfer.Spieler}" />
+                                </Grid>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                     </StackPanel>
                     <TextBlock Text="{Binding KämpferInfo.Kämpfer.HinweisText}" FontSize="11" VerticalAlignment="Center" Margin="4,0,0,2">
                         <TextBlock.Style>
@@ -412,7 +429,23 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="130" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Margin="6,6,2,2" Text="{Binding SelectedKämpfer.Name}" ToolTip="Name des Kämpfers" FontWeight="Bold" VerticalAlignment="Top" >
+                    <TextBox Margin="6,6,2,2" Text="{Binding SelectedKämpfer.Name}" FontWeight="Bold" VerticalAlignment="Top" >
+                        <TextBox.ToolTip>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Held: " FontWeight="Bold" />
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Spieler: " FontWeight="Bold" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelectedKämpfer.Name}" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SelectedKämpfer.Spieler}" />
+                            </Grid>
+                        </TextBox.ToolTip>
                         <TextBox.BorderBrush>
                             <SolidColorBrush />
                         </TextBox.BorderBrush>

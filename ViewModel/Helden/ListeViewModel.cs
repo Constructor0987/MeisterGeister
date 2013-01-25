@@ -73,13 +73,36 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
+        List<string> _sortierungListe = new List<string>() { "Held", "Spieler" };
+        public List<string> SortierungListe
+        {
+            get { return _sortierungListe; }
+            set { _sortierungListe = value; OnChanged("SortierungListe"); }
+        }
+
+        private string _selectedSortierung = "Held";
+        public string SelectedSortierung
+        {
+            get { return _selectedSortierung; }
+            set
+            {
+                _selectedSortierung = value;
+                OnChanged("SelectedSortierung");
+                //Liste aktualisieren
+                LoadDaten();
+            }
+        }
+
         public void LoadDaten()
         {
             Guid tmp = (SelectedHeld==null)?Guid.Empty:SelectedHeld.HeldGUID;
             SelectedHeld = null;
             if (Global.ContextHeld != null)
             {
-                HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ToList();
+                if (SelectedSortierung == "Spieler")
+                    HeldListe = Global.ContextHeld.Liste<Held>().OrderBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
+                else
+                    HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ToList();
                 if(tmp != Guid.Empty)
                     SelectedHeld = HeldListe.Where(h => h.HeldGUID == tmp).FirstOrDefault();
             }
