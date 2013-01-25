@@ -632,6 +632,58 @@ namespace MeisterGeister.Model
     
         }
         private string _bild;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Spieler
+        {
+            get { return _spieler; }
+            set
+    		{ 
+    			_spieler = value;
+    			OnChanged("Spieler");
+    		}
+    
+        }
+        private string _spieler;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Vermögen
+        {
+            get { return _vermögen; }
+            set
+    		{ 
+    			_vermögen = value;
+    			OnChanged("Vermögen");
+    		}
+    
+        }
+        private Nullable<double> _vermögen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> APGesamt
+        {
+            get { return _aPGesamt; }
+            set
+    		{ 
+    			_aPGesamt = value;
+    			OnChanged("APGesamt");
+    		}
+    
+        }
+        private Nullable<int> _aPGesamt;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<int> APEingesetzt
+        {
+            get { return _aPEingesetzt; }
+            set
+    		{ 
+    			_aPEingesetzt = value;
+    			OnChanged("APEingesetzt");
+    		}
+    
+        }
+        private Nullable<int> _aPEingesetzt;
 
         #endregion
 

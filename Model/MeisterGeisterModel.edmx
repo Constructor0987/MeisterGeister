@@ -648,6 +648,10 @@
           <Property Name="SO" Type="int" />
           <Property Name="HeldGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Bild" Type="nvarchar" MaxLength="500" />
+          <Property Name="Spieler" Type="nvarchar" MaxLength="100" />
+          <Property Name="Vermögen" Type="float" />
+          <Property Name="APGesamt" Type="int" />
+          <Property Name="APEingesetzt" Type="int" />
         </EntityType>
         <EntityType Name="Held_Ausrüstung">
           <Key>
@@ -2454,6 +2458,10 @@
           <NavigationProperty Name="Held_Sonderfertigkeit" Relationship="DatabaseDSAModel.Held_Sonderfertigkeit_HeldFK" FromRole="Held" ToRole="Held_Sonderfertigkeit" />
           <NavigationProperty Name="Held_VorNachteil" Relationship="DatabaseDSAModel.Held_VorNachteil_HeldFK" FromRole="Held" ToRole="Held_VorNachteil" />
           <NavigationProperty Name="Held_Zauber" Relationship="DatabaseDSAModel.Held_Zauber_HeldFK" FromRole="Held" ToRole="Held_Zauber" />
+          <Property Type="String" Name="Spieler" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="Vermögen" />
+          <Property Type="Int32" Name="APGesamt" />
+          <Property Type="Int32" Name="APEingesetzt" />
         </EntityType>
         <EntityType Name="Held_Ausrüstung">
           <Key>
@@ -3995,6 +4003,10 @@
           <EntitySetMapping Name="Held">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Held">
               <MappingFragment StoreEntitySet="Held">
+                <ScalarProperty Name="APEingesetzt" ColumnName="APEingesetzt" />
+                <ScalarProperty Name="APGesamt" ColumnName="APGesamt" />
+                <ScalarProperty Name="Vermögen" ColumnName="Vermögen" />
+                <ScalarProperty Name="Spieler" ColumnName="Spieler" />
                 <ScalarProperty Name="Bild" ColumnName="Bild" />
                 <ScalarProperty Name="HeldGUID" ColumnName="HeldGUID" />
                 <ScalarProperty Name="SO" ColumnName="SO" />
@@ -4649,7 +4661,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="MeisterGeisterModel" ZoomLevel="86">
+      <Diagram Name="MeisterGeisterModel" ZoomLevel="68">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="5.1972188843401232" PointY="14.050589299784317" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="5.3241254134681659" PointY="15.294746391146791" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="0.36770149710015465" PointY="21.573071996482589" />
