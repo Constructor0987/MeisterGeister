@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="145" d:DesignWidth="237">
+             d:DesignHeight="125" d:DesignWidth="237">
 
     <UserControl.Resources>
         
@@ -83,7 +83,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="56*" />
+            <RowDefinition Height="30*" />
             <RowDefinition Height="20" />
             <RowDefinition Height="19" />
             <RowDefinition Height="19" />
@@ -93,19 +93,18 @@
             <ToggleButton.BindingGroup>
                 <BindingGroup Name="Themes" />
             </ToggleButton.BindingGroup>
-            <Grid Height="130" Width="218">
+            <Grid Height="105" Width="218">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition Height="56*" />
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="25" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png" Visibility="Hidden" Grid.RowSpan="2" Tag="0" Margin="0,0,0,5" />
                 <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
-                <Label Name="lblActBGTitel" Content="kein aktiver Hintergrundtitel" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>                
+                <Label Name="lblActBGTitel" Content="kein aktiver Hintergrundtitel" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,10" />                
             </Grid>
         </ToggleButton>
         <ProgressBar Name="pbarActBGTitel" Grid.Row="2" Margin="2" Grid.ColumnSpan="3" Cursor="Hand" />

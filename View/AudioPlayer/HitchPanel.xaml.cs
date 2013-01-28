@@ -50,6 +50,5 @@ namespace MeisterGeister.View.AudioPlayer
         {
             btnAngehakt.IsChecked = false;
         }
-
     }
 }

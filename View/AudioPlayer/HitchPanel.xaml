@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="47" d:DesignWidth="217" IsEnabled="True">
-    <Grid Margin="5">
+             d:DesignHeight="35" d:DesignWidth="217" IsEnabled="True">
+    <Grid Margin="3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
@@ -13,19 +13,19 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Border Background="{StaticResource CheckBoxFillNormal}" BorderBrush="#FF707070"></Border>
-        <ToggleButton Name="btnHitchPanel" ClickMode="Press" Background="{StaticResource CheckBoxFillNormal}" BorderThickness="3" Focusable="False" IsTabStop="False" Panel.ZIndex="10" Checked="btnHitchPanel_Checked" Unchecked="btnHitchPanel_Unchecked">
+        <ToggleButton Name="btnHitchPanel" ClickMode="Press" Background="{StaticResource CheckBoxFillNormal}" BorderThickness="3" Focusable="False" IsTabStop="False" Panel.ZIndex="0" Checked="btnHitchPanel_Checked" Unchecked="btnHitchPanel_Unchecked" IsChecked="False">
             <ToggleButton.BindingGroup>
                 <BindingGroup Name="Themes" />
             </ToggleButton.BindingGroup>
-            <Grid Height="32" Width="200">
+            <Grid Height="22" Width="200">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
-                <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
-                <ToggleButton Name="btnAngehakt" Height="30" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="2" ClickMode="Press" Checked="btnAngehakt_Checked" Unchecked="btnAngehakt_Unchecked">
+                <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="14" Padding="0" />
+                <ToggleButton Name="btnAngehakt" Height="22" Width="22" HorizontalAlignment="Right" VerticalAlignment="Center" BorderThickness="2" ClickMode="Press" Checked="btnAngehakt_Checked" Unchecked="btnAngehakt_Unchecked">
                     <Image Name="btnImgAngehakt" VerticalAlignment="Center"/>
                 </ToggleButton>
             </Grid>
