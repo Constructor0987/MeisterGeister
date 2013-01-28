@@ -79,12 +79,15 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Center">
+                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Center" IsEditable="True">
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
+                        <ComboBox.InputBindings>
+                            <KeyBinding Key="Enter"  Command="{Binding OnAddSonderfertigkeit}" />
+                        </ComboBox.InputBindings>
                     </ComboBox>
                     <Button Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />

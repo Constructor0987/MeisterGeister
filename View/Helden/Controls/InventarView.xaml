@@ -631,12 +631,15 @@
                                         <Label Content="Nahkampfwaffe:" Style="{DynamicResource TextInStack}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="3" Margin="5">
-                                        <ComboBox Height="25.96" ItemsSource="{Binding NahkampfwaffeListe}" SelectedItem="{Binding SelectedNahkampfwaffe}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox Height="25.96" ItemsSource="{Binding NahkampfwaffeListe}" SelectedItem="{Binding SelectedNahkampfwaffe}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
                                                 </ItemsPanelTemplate>
                                             </ComboBox.ItemsPanel>
+                                            <ComboBox.InputBindings>
+                                                <KeyBinding Key="Enter"  Command="{Binding OnAddNahkampfwaffe}" />
+                                            </ComboBox.InputBindings>
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="4" Margin="5">
@@ -671,12 +674,15 @@
                                         <Label Content="Fernkampfwaffe:" Style="{DynamicResource TextInStack}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="3" Margin="5">
-                                        <ComboBox Height="25.96" ItemsSource="{Binding FernkampfwaffeListe}"  SelectedItem="{Binding SelectedFernkampfwaffe}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox Height="25.96" ItemsSource="{Binding FernkampfwaffeListe}"  SelectedItem="{Binding SelectedFernkampfwaffe}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
                                                 </ItemsPanelTemplate>
                                             </ComboBox.ItemsPanel>
+                                            <ComboBox.InputBindings>
+                                                <KeyBinding Key="Enter"  Command="{Binding OnAddFernwaffe}" />
+                                            </ComboBox.InputBindings>
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="4" Margin="5">
@@ -698,12 +704,15 @@
                                         <Label Content="Schild:" Style="{DynamicResource TextInStack}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5">
-                                        <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox Height="25.96" ItemsSource="{Binding SchildListe}" SelectedItem="{Binding SelectedSchild}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
                                                 </ItemsPanelTemplate>
                                             </ComboBox.ItemsPanel>
+                                            <ComboBox.InputBindings>
+                                                <KeyBinding Key="Enter"  Command="{Binding OnAddSchild}" />
+                                            </ComboBox.InputBindings>
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="5">
@@ -724,12 +733,15 @@
                                         <Label Content="Rüstung:" Style="{DynamicResource TextInStack}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5">
-                                        <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
                                                 </ItemsPanelTemplate>
                                             </ComboBox.ItemsPanel>
+                                            <ComboBox.InputBindings>
+                                                <KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
+                                            </ComboBox.InputBindings>
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="5">
@@ -768,7 +780,11 @@
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Sonstiges" Margin="0,0,10,0" VerticalAlignment="Center" />
-                                            <ComboBox Height="23"  Width="222" ItemsSource="{Binding InventarListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRuestung}" />
+                                            <ComboBox Height="23"  Width="222" ItemsSource="{Binding InventarListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRuestung}" IsEditable="True">
+                                                <ComboBox.InputBindings>
+                                                    <KeyBinding Key="Enter"  Command="{Binding OnAddInventar}" />
+                                                </ComboBox.InputBindings>
+                                            </ComboBox>
                                             <Button Command="{Binding OnAddInventar}" VerticalAlignment="Center" Height="25">
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                             </Button>

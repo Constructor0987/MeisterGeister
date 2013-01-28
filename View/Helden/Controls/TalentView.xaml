@@ -305,12 +305,15 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" Height="23" x:Name="_comboBoxTalentAktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentauswahlListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding TalentAuswahl}">
+                                <ComboBox Grid.Column="0" Height="23" x:Name="_comboBoxTalentAktivieren" VerticalAlignment="Top" ItemsSource="{Binding TalentauswahlListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding TalentAuswahl}" IsEditable="True">
                                     <ComboBox.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <VirtualizingStackPanel />
                                         </ItemsPanelTemplate>
                                     </ComboBox.ItemsPanel>
+                                    <ComboBox.InputBindings>
+                                        <KeyBinding Key="Enter"  Command="{Binding OnAddTalent_Click}" CommandParameter="{Binding}" />
+                                    </ComboBox.InputBindings>
                                 </ComboBox>
                                 <Button Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />

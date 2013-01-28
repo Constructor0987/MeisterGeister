@@ -26,12 +26,15 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ZauberAuswahlListe}" SelectedItem="{Binding SelectedAddZauber}" DisplayMemberPath="Name" ToolTip="Zauber" VerticalAlignment="Center">
+                    <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding ZauberAuswahlListe}" SelectedItem="{Binding SelectedAddZauber}" DisplayMemberPath="Name" ToolTip="Zauber" VerticalAlignment="Center" IsEditable="True">
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
+                        <ComboBox.InputBindings>
+                            <KeyBinding Key="Enter"  Command="{Binding OnAddZauber}" />
+                        </ComboBox.InputBindings>
                     </ComboBox>
                     <ComboBox Grid.Column="1" Height="23" ItemsSource="{Binding RepräsentationAuswahlListe}" SelectedItem="{Binding SelectedRepräsentation}" DisplayMemberPath="Value" SelectedValuePath="Key" ToolTip="Repräsentation" VerticalAlignment="Center">
                         <ComboBox.ItemsPanel>

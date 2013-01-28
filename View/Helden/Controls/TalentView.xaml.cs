@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 // Eigene Usings
 using VM = MeisterGeister.ViewModel.Helden;
 using MeisterGeister.View.Kampf;
+using System.Reflection;
 
 
 namespace MeisterGeister.View.Helden.Controls {
