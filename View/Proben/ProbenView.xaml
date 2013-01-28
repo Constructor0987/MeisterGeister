@@ -98,7 +98,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Tag="3">
                             <TextBlock Text="+3" FontWeight="Bold" Width="22" />
-                            <TextBlock Text="Fummelsarbeit" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <TextBlock Text="Fummelarbeit" Margin="5,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Tag="7">
                             <TextBlock Text="+7" FontWeight="Bold" Width="22" />
