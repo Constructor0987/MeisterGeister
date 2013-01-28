@@ -312,7 +312,7 @@
                                         </ItemsPanelTemplate>
                                     </ComboBox.ItemsPanel>
                                     <ComboBox.InputBindings>
-                                        <KeyBinding Key="Enter"  Command="{Binding OnAddTalent_Click}" CommandParameter="{Binding}" />
+                                        <KeyBinding Key="Enter"  Command="{Binding OnAddTalent_Click}" />
                                     </ComboBox.InputBindings>
                                 </ComboBox>
                                 <Button Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23">

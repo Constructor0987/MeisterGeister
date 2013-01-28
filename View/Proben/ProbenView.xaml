@@ -63,12 +63,15 @@
                         </CheckBox.Content>
                     </CheckBox>
                     <Image Grid.Column="2" Width="24" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_rechts.png" Opacity="0.8" />
-                    <ComboBox Grid.Column="3" Height="23" ItemsSource="{Binding FilteredProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Probenname" ToolTip="Proben-Auswahl">
+                    <ComboBox Grid.Column="3" Height="23" ItemsSource="{Binding FilteredProbeListe}" SelectedItem="{Binding SelectedProbe}" DisplayMemberPath="Probenname" ToolTip="Proben-Auswahl" IsEditable="True">
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
+                        <ComboBox.InputBindings>
+                            <KeyBinding Key="Enter"  Command="{Binding OnWürfeln}" />
+                        </ComboBox.InputBindings>
                     </ComboBox>
 
                     <ViewGeneral:IntBox Grid.Column="4" ShowButtons="True" Value="{Binding Modifikator}" ToolTip="Erschwernis/Erleichterung" />
