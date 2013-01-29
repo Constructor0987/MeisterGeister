@@ -74,9 +74,14 @@
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
                                 <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Image Width="28" Margin="0,6,0,0" Height="28" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
-                                    <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="16" TextAlignment="Center" />
+                                    <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" TextAlignment="Center" Foreground="DarkGray">
+                                        <TextBlock.Effect>
+                                            <BlurEffect Radius="8.0" KernelType="Gaussian" />
+                                        </TextBlock.Effect>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,0,0,0" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" TextAlignment="Center" />
                                 </Grid>
-                                <TextBlock Margin="0,6,2,0" Text="{Binding KämpferInfo.Kämpfer.InitiativeWurf, StringFormat='(\{0\})'}" FontSize="16" />
+                                <TextBlock Margin="0,6,2,0" Text="{Binding KämpferInfo.Kämpfer.InitiativeWurf, StringFormat='(\{0\})'}" FontSize="16" Visibility="{Binding KämpferInfo.Kämpfer.IsHeld, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                 <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
                                    Visibility="{Binding KämpferInfo.Kämpfer.Kampfunfähig, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                                 <TextBlock Text="{Binding KämpferInfo.Kämpfer.Name}" FontWeight="Bold" Style="{StaticResource KämpferListItemNameStyle}" VerticalAlignment="Center" Margin="4,0,0,0"/>

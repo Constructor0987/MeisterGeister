@@ -101,8 +101,15 @@
                                 </Image>
                             </Border>
                             <Label   Grid.Row="0" Grid.Column="1" Content="Name:" />
-                            <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding SelectedGegnerBase.Name}" Margin="2" ToolTip="{Binding SelectedGegnerBase.GegnerBaseGUID}"/>
-                            <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
+                                <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Text="{Binding SelectedGegnerBase.Name}" Margin="2">
+                                    <TextBox.ToolTip>
+                                        <StackPanel>
+                                            <TextBlock Text="Eindeutige Gegner-ID:" FontStyle="Italic" />
+                                            <TextBlock Text="{Binding SelectedGegnerBase.GegnerBaseGUID}" />
+                                        </StackPanel>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                                <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
                             <!-- TODO AutoComplete für Tags -->
                             <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags}" Margin="2" MaxLength="1000" />
                             <Label   Grid.Row="2" Grid.Column="1" Content="Verbreitung:" />

@@ -95,6 +95,11 @@
                         </StackPanel.ToolTip>
                         <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Image Width="24" Height="24" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6_blank.png"  />
+                            <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,4,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" Foreground="DarkGoldenrod">
+                                <TextBlock.Effect>
+                                    <BlurEffect Radius="8.0" KernelType="Gaussian" />
+                                </TextBlock.Effect>
+                            </TextBlock>
                             <TextBlock Text="{Binding Initiative}" Width="20" Height="20" Margin="0,4,0,0" VerticalAlignment="Center" FontWeight="Bold" TextAlignment="Center" />
                         </Grid>
                         <Image Width="16" Height="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" ToolTip="Kampfunfähig" 
