@@ -485,6 +485,30 @@ namespace MeisterGeister.Model
         public GegnerBase_Angriff Base_Angriff { get; set; }
         private Gegner Gegner { get; set; }
 
+        /// <summary>
+        /// Gibt an, ob es sich bei diesem Angriff um Basisangriffwerte handelt (globale Kampfwerte).
+        /// </summary>
+        public bool IsBasis
+        {
+            get
+            {
+                return Name.StartsWith("Basis");
+            }
+        }
+
+        public bool IsBasisNot { get { return !IsBasis; } }
+
+        public bool IsFernkampf
+        {
+            get
+            {
+                return Name.Contains("Fernkampf") ||
+                    (Reichweite > 0 && PA == 0);
+            }
+        }
+
+        public bool IsNahkampf { get { return !IsFernkampf; } }
+
         private string _name;
         public string Name { get { return Base_Angriff == null ? _name : Base_Angriff.Name; } }
 
@@ -494,15 +518,17 @@ namespace MeisterGeister.Model
         private int _pa;
         public int PA { get { return Base_Angriff == null ? _pa : Base_Angriff.PA; } }
 
-        public string Bemerkung { get { return Base_Angriff == null ? string.Empty : Base_Angriff.Bemerkung; } }
+        public string Bemerkung { get { return Base_Angriff == null ? null : Base_Angriff.Bemerkung; } }
 
-        public string DK { get { return Base_Angriff == null ? string.Empty : Base_Angriff.DK; } }
+        public string DK { get { return Base_Angriff == null ? null : Base_Angriff.DK; } }
+
+        public int? Reichweite { get { return Base_Angriff == null ? null : Base_Angriff.Reichweite; } }
 
         public string TP 
         { 
             get 
             {
-                return Base_Angriff == null ? string.Empty : string.Format("{0}W{1}+{2}", Base_Angriff.TPWürfelAnzahl, Base_Angriff.TPWürfel, Base_Angriff.TPBonus);
+                return Base_Angriff == null ? null : string.Format("{0}W{1}+{2}", Base_Angriff.TPWürfelAnzahl, Base_Angriff.TPWürfel, Base_Angriff.TPBonus);
             }
         }
 

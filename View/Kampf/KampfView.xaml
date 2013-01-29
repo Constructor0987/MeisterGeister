@@ -602,25 +602,28 @@
                                          Visibility="{Binding SelectedKämpfer.IsGegner, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Vertical" ToolTip="{Binding Bemerkung}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="{Binding Name}" MinWidth="150" />
                                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
-                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" Visibility="{Binding IsFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" Visibility="{Binding IsNahkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                                             <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
                                                                                   StartWert="{Binding AT}" Wert="{Binding Attacke}" />
                                                         </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding IsNahkampf, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
                                                             <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
                                                                                   StartWert="{Binding PA}" Wert="{Binding Parade}" />
                                                         </StackPanel>
                                                     </StackPanel>
-                                                    <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
+                                                    <StackPanel Orientation="Horizontal" Margin="25,0,0,0" Visibility="{Binding IsBasisNot, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                                         <TextBlock Text="TP " FontWeight="Bold" />
                                                         <TextBlock Text="{Binding TP}" Margin="2,0,0,0" />
                                                         <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
                                                         <TextBlock Text="{Binding DK}" Margin="2,0,0,0" />
+                                                        <TextBlock Text="Reichweite " FontWeight="Bold" Margin="20,0,0,0" Visibility="{Binding IsFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                                        <TextBlock Text="{Binding Reichweite}" Margin="2,0,0,0" Visibility="{Binding IsFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                                     </StackPanel>
                                                 </StackPanel>
                                             </DataTemplate>
