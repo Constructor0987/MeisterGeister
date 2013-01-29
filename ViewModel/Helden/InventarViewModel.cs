@@ -621,7 +621,8 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("HeldRuestungImInventar");
             }
 
-            SelectedHeld.BE = HeldRuestungImInventar.Sum(item => item.EntityR.BE);
+            if (SelectedHeld != null)
+                SelectedHeld.BE = HeldRuestungImInventar.Sum(item => item.EntityR.BE);
         }
 
         #region //--ADD
