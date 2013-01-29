@@ -42,7 +42,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*" MinHeight="150" />
-                        <RowDefinition Height="Auto" MinHeight="22" MaxHeight="280" />
+                        <RowDefinition Height="22" MinHeight="22" MaxHeight="280"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130" />
@@ -97,7 +97,7 @@
 
 
                     <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.ColumnSpan="4" />
-                    <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="200" AllowDrop="True" Margin="0,0,0,6" Grid.Row="1" Grid.ColumnSpan="4">
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" MinHeight="140" Margin="0,0,0,6" Grid.Row="1" Grid.ColumnSpan="4">
                         <Grid Name="grdUebersicht">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="240" />
@@ -111,13 +111,13 @@
                         </Grid.RowDefinitions>                            
                         </Grid>
                     </ScrollViewer>
-                    
-                    <Expander Grid.Row="2" Grid.ColumnSpan="4"  IsExpanded="False" IsEnabled="False" Name="exThemeEditor" ExpandDirection="Up" >
+
+                    <Expander Grid.Row="2" Grid.ColumnSpan="4"  IsExpanded="False" IsEnabled="False" Name="exThemeEditor" ExpandDirection="Up" Expanded="exThemeEditor_Expanded" Collapsed="exThemeEditor_Collapsed" >
                         <Expander.Header>
                             <TextBlock Text="Theme - Editor" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                        <ScrollViewer VerticalScrollBarVisibility="Visible" AllowDrop="True" Margin="0,0,0,6" Name="scrViewerEditor">
-                            <Grid Name="grdThemeEditor" HorizontalAlignment="Stretch" Background="{StaticResource Background1}" >
+                       <!-- <ScrollViewer VerticalScrollBarVisibility="Visible" AllowDrop="True" Margin="0,0,0,6" Name="scrViewerEditor"> -->
+                            <Grid Name="grdThemeEditor" Background="{StaticResource Background1}" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="280" />
                                     <ColumnDefinition Width="135" />
@@ -126,10 +126,11 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="16" />
-                                    <RowDefinition Height="38*" />
+                                    <RowDefinition Height="*" MinHeight="100"/>
                                 </Grid.RowDefinitions>
 
                                 <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="brdThemeKlaenge">
+                                    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,6" Name="scrKlang">
                                         <Grid Name="grd_themeKlang">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="30" />
@@ -145,39 +146,43 @@
                                                     <ColumnDefinition Width="220" />
                                                     <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="35" />
-                                            </Grid.RowDefinitions>
-                                    </Grid>
-                                    </Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="35" />
+                                                </Grid.RowDefinitions>
+                                            </Grid>
+                                        </Grid>
+                                    </ScrollViewer>
                                 </Border>
                                 <Border Grid.Row="1" Grid.Column="0">
-                                    <Grid Name="grd_themeHintergrund">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="230*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="30" />
-                                            <RowDefinition Height="30*" />
-                                        </Grid.RowDefinitions>
-                                        <Border Style="{DynamicResource ControlContentBorder}" Margin="1" Grid.ColumnSpan="2">
-                                            <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
-                                        </Border>
 
-                                        <Grid Grid.Row="1" Margin="5" Name="grdHintergrund">
+                                    <ScrollViewer VerticalScrollBarVisibility="Visible" AllowDrop="True" Margin="0,0,0,6" Name="scrHinter">
+                                        <Grid Name="grd_themeHintergrund">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="220" />
-                                                <ColumnDefinition Width="1*" />
+                                                <ColumnDefinition Width="230*" />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="35" />
+                                                <RowDefinition Height="30" />
+                                                <RowDefinition Height="30*" />
                                             </Grid.RowDefinitions>
+                                            <Border Style="{DynamicResource ControlContentBorder}" Margin="1" Grid.ColumnSpan="2">
+                                                <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
+                                            </Border>
+
+                                            <Grid Grid.Row="1" Margin="5" Name="grdHintergrund">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="220" />
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="35" />
+                                                </Grid.RowDefinitions>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
+                                    </ScrollViewer>
                                 </Border>
                         </Grid>
               
-                    </ScrollViewer>
+                    <!--</ScrollViewer>-->
                         </Expander>
                 </Grid>
             </TabItem>
@@ -307,7 +312,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Playlist-Editor" Name="tiKlang" Loaded="tiKlang_Loaded">
+            <TabItem Header="Playlist-Editor" Name="tiKlang" GotFocus="tiKlang_Loaded" >
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="164" />

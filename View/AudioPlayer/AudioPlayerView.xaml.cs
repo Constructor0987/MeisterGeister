@@ -890,19 +890,19 @@ namespace MeisterGeister.View.AudioPlayer {
                 {
                     Mouse.OverrideCursor = Cursors.Wait;
                     Int16 objGruppe;
-                 /*   if (tcKlang.SelectedItem == null || (tcKlang.SelectedItem).GetType() != typeof(TabItemControl))
+                    if (tcKlang.SelectedIndex == 0)
                     {
                         int was = lbKlang.SelectedIndex;
                         tiPlus_MouseUp(tiPlus, null);
                         lbKlang.SelectionChanged -= new SelectionChangedEventHandler(lbKlang_SelectionChanged);
                         lbKlang.SelectedIndex = was;
                         lbKlang.SelectionChanged += new SelectionChangedEventHandler(lbKlang_SelectionChanged);
-                        tcKlang.SelectedIndex = tcKlang.Items.Count - 2;
-                        objGruppe = Convert.ToInt16(tiErstellt);
-                    }
-                    else*/
-                        objGruppe = Convert.ToInt16(((TabItemControl)tcKlang.SelectedItem).Name.Substring(7));
 
+                        objGruppe = Convert.ToInt16(((TabItemControl)tcKlang.SelectedItem).Name.Substring(7));                        
+                    }
+                    else
+                        objGruppe = Convert.ToInt16(((TabItemControl)tcKlang.SelectedItem).Name.Substring(7));
+                    
                     Int16 posObjGruppe = GetPosObjGruppe(objGruppe);
 
                     for (int i = 0; i <= grdKlangPlaylistInfo.Children.Count - 1; i++)
@@ -1851,6 +1851,40 @@ namespace MeisterGeister.View.AudioPlayer {
                 AktualisiereKlangPlaylist();
         }
 
+
+        private void tiKlang_GotFocus(object sender, RoutedEventArgs e)
+        {
+        /*    if (tcKlang.Items.CurrentItem == null)
+            {
+                UInt16 anz = 0;
+                for (int i = 0; i < tcKlang.Items.Count - 1; i++)
+                {
+                    if (tcKlang.Items[i].GetType() == typeof(TabItemControl))
+                    {
+                        anz++;
+                        break;
+                    }
+                }
+                if (anz != 0)
+                    tcKlang.SelectedItem = anz;
+                else
+                    tiPlus_MouseUp(tiPlus, null);
+            }
+            else
+            {
+                if (tcKlang.Items.CurrentItem.GetType() != typeof(TabItemControl))
+                {
+                    for (int i = 0; i < tcKlang.Items.Count - 1; i++)
+                        if (tcKlang.Items[i].GetType() == typeof(TabItemControl))
+                        {
+                            ((TabItemControl)tcKlang.Items[i]).IsSelected = true;
+                            break;
+                        }
+                }
+            }*/
+        //    List<TabItemControl> tic = tcKlang.
+        }
+
         private void lbhintergrundtitellist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((lbhintergrundtitellist.SelectedIndex >= 0) &&
@@ -2415,7 +2449,6 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (tiKlang.IsSelected && lbKlang.SelectedIndex == -1) 
                     tcKlang.SelectedItem = null;
             }
-            //tboxPlaylistName.Visibility = (tcKlang.SelectedIndex < 0)? Visibility.Hidden : Visibility.Visible;
             else
             {
                 if (((TabItem)tcKlang.Items[0]).Header.ToString() == "")
@@ -3846,8 +3879,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     CheckThemePlayListAuswahl(_ThemeGruppe[theme]);
             }
         }
-
-
+        
         private void btnAudioTheme_Unchecked(object sender, RoutedEventArgs e)
         {
             int i = Convert.ToInt16(((ToggleButton)sender).Tag);
@@ -4529,7 +4561,20 @@ namespace MeisterGeister.View.AudioPlayer {
             btnThemeLöschen.Visibility = Visibility.Hidden;
         }
 
+        public void exThemeEditor_Expanded(object sender, RoutedEventArgs e)
+        {
+            double d = grdThemes.ActualHeight -  grdUebersicht.RowDefinitions.Count * grdUebersicht.RowDefinitions[0].Height.Value;
+            
+            
+            //grdThemes.RowDefinitions[2].Height  = new GridLength(grdThemes.RowDefinitions[2].MaxHeight);
+            grdThemes.RowDefinitions[2].Height = new GridLength(d, GridUnitType.Star);
+        }
 
+        public void exThemeEditor_Collapsed(object sender, RoutedEventArgs e)
+        {
+            grdThemes.RowDefinitions[2].Height = new GridLength(grdThemes.RowDefinitions[2].MinHeight);
+        }
+        
 
         public void ThreadProc()
         {
