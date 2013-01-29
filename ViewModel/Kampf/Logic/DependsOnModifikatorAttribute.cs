@@ -26,7 +26,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             private set;
         }
 
-        private static Dictionary<Type, List<string>> cache = new Dictionary<Type, List<string>>();
+        private static Dictionary<Type, Dictionary<Type, List<string>>> cache = new Dictionary<Type, Dictionary<Type, List<string>>>();
 
         public static void OnModifikatorenChanged(object o, NotifyCollectionChangedEventArgs args)
         {
@@ -47,7 +47,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
             foreach (Type t in changed)
             {
-                if (!cache.ContainsKey(t))
+                if (!cache.ContainsKey(t) || !cache[t].ContainsKey(o.GetType()))
                 {
                     List<string> methodnames = new List<string>();
                     foreach (PropertyInfo pi in o.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
@@ -71,11 +71,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             }
                         }
                     }
-                    cache.Add(t, methodnames);
+                    if (!cache.ContainsKey(t))
+                        cache.Add(t, new Dictionary<Type, List<string>>());
+                    cache[t].Add(o.GetType(), methodnames);
                 }
                 else
                 {
-                    foreach (string method in cache[t])
+                    foreach (string method in cache[t][o.GetType()])
                         Impromptu.InvokeMemberAction(o, "OnChanged", method);
                 }
             }

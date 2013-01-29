@@ -48,7 +48,9 @@ namespace MeisterGeister.Model
             RSBrust = gegnerBase.RSBrust;
             RSKopf = gegnerBase.RSKopf;
             RSRücken = gegnerBase.RSRücken;
+            AT = gegnerBase.AT;
             PA = gegnerBase.PA;
+            FK = gegnerBase.FK;
             Name = gegnerBase.Name;
             Bild = gegnerBase.Bild;
             Bemerkung = gegnerBase.Bemerkung;
@@ -328,6 +330,13 @@ namespace MeisterGeister.Model
             get 
             {
                 IList<Gegner_Angriff> angriffe = new List<Gegner_Angriff>();
+
+                // Basis-Kampfwerte einfügen
+                if (AT != 0 || PA != 0)
+                    angriffe.Add(new Gegner_Angriff("Basis-Kampfwerte", AT, PA, this));
+                if (FK != 0)
+                    angriffe.Add(new Gegner_Angriff("Basis-Fernkampf", FK, 0, this));
+
                 foreach (var item in GegnerBase.GegnerBase_Angriff)
                     angriffe.Add(new Gegner_Angriff(item, this));
                 return angriffe;
@@ -356,42 +365,6 @@ namespace MeisterGeister.Model
         {
             get { return _hinweisText; }
             set { _hinweisText = value; OnChanged("HinweisText"); }
-        }
-
-        #endregion
-
-        #region Parade
-
-        /// <summary>
-        /// Grund-PA-Wert inkl. Abzüge.
-        /// </summary>
-        [DependentProperty("PA")]
-        [DependsOnModifikator(typeof(Mod.IModPABasis))]
-        [DependsOnModifikator(typeof(Mod.IModPA))]
-        public int Parade
-        {
-            get
-            {
-                int v = PA;
-                if (Modifikatoren != null)
-                {
-                    Modifikatoren.Where(m => m is Mod.IModPABasis).Select(m => (Mod.IModPABasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPABasisMod(v));
-                    Modifikatoren.Where(m => m is Mod.IModPA).Select(m => (Mod.IModPA)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPAMod(v));
-                }
-                return v;
-            }
-        }
-
-        [DependsOnModifikator(typeof(Mod.IModPABasis))]
-        [DependsOnModifikator(typeof(Mod.IModPA))]
-        public List<dynamic> ModifikatorenListePA
-        {
-            get
-            {
-                List<dynamic> list = ModifikatorenListe(typeof(Mod.IModPABasis), PA);
-                list.AddRange(ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? PA : list.LastOrDefault().Wert));
-                return list;
-            }
         }
 
         #endregion
@@ -500,24 +473,36 @@ namespace MeisterGeister.Model
             Gegner = gegner;
         }
 
+        public Gegner_Angriff(string name, int at, int pa, Gegner gegner)
+        {
+            PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
+            _name = name;
+            _at = at;
+            _pa = pa;
+            Gegner = gegner;
+        }
+
         public GegnerBase_Angriff Base_Angriff { get; set; }
         private Gegner Gegner { get; set; }
 
-        public string Name { get { return Base_Angriff.Name; } }
+        private string _name;
+        public string Name { get { return Base_Angriff == null ? _name : Base_Angriff.Name; } }
 
-        public int AT { get { return Base_Angriff.AT; } }
+        private int _at;
+        public int AT { get { return Base_Angriff == null ? _at : Base_Angriff.AT; } }
 
-        public int PA { get { return Base_Angriff.PA; } }
+        private int _pa;
+        public int PA { get { return Base_Angriff == null ? _pa : Base_Angriff.PA; } }
 
-        public string Bemerkung { get { return Base_Angriff.Bemerkung; } }
+        public string Bemerkung { get { return Base_Angriff == null ? string.Empty : Base_Angriff.Bemerkung; } }
 
-        public string DK { get { return Base_Angriff.DK; } }
+        public string DK { get { return Base_Angriff == null ? string.Empty : Base_Angriff.DK; } }
 
         public string TP 
         { 
             get 
-            { 
-                return string.Format("{0}W{1}+{2}", Base_Angriff.TPWürfelAnzahl, Base_Angriff.TPWürfel, Base_Angriff.TPBonus);
+            {
+                return Base_Angriff == null ? string.Empty : string.Format("{0}W{1}+{2}", Base_Angriff.TPWürfelAnzahl, Base_Angriff.TPWürfel, Base_Angriff.TPBonus);
             }
         }
 

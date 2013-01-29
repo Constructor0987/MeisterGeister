@@ -652,8 +652,6 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <TextBlock Margin="10,6,2,2" Text="PA: " />
-                                <ViewGeneral:IntBox Margin="2,2,2,2" Value="{Binding Path=SelectedKämpfer.PA, Mode=OneWay}" ToolTip="Parade" FontWeight="Bold" NoBackground="True" />
                             </StackPanel>
                         </StackPanel>
                         <Grid Grid.Row="2" Margin="0,8,0,0">
