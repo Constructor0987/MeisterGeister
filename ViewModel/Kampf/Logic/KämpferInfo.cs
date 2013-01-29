@@ -595,7 +595,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public void Remove(IKämpfer k)
         {
-            Remove(this[k]);
+            if (_kämpfer_kämpferinfo.ContainsKey(k))
+                Remove(this[k]);
         }
 
         public new void Clear()

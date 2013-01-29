@@ -116,14 +116,39 @@ namespace MeisterGeister.ViewModel.Arena
         {
             _kampf = kampf;
 
+            Point mitte = new Point(_width / 2, _height / 2);
+
+            // Punkte-Liste erstellen, die dann spiralförmig sortiert wird
+            // entlang dieser Liste können die Tokens dann platziert werden
+            List<Point> pointList = new List<Point>(_width * _height);
+            for (int x = _width / -2; x < _width / 2; x++)
+                for (int y = _height / -2; y < _height / 2; y++)
+                    pointList.Add(new Point(x, y));
+            pointList.Sort(new PointComparer());
+
+            int i = 0;
+
+            // Helden einfügen
             foreach (KämpferInfo kämpferInfo in _kampf.Kämpfer) {
                 if (kämpferInfo.Kämpfer is Model.Held)
                 {
-                    AddHeld((Model.Held)kämpferInfo.Kämpfer, new Point(10, 10));
+                    if (i >= pointList.Count)
+                        i = 0;
+                    AddHeld((Model.Held)kämpferInfo.Kämpfer, new Point(pointList[i].X + mitte.X, pointList[i].Y + mitte.Y));
+                    i++;
                 }
-                else if (kämpferInfo.Kämpfer is Model.Gegner)
+            }
+
+            // Gegner einfügen
+            i += pointList.Count / 4; // Gegner auf Abstand setzen
+            foreach (KämpferInfo kämpferInfo in _kampf.Kämpfer)
+            {
+                if (kämpferInfo.Kämpfer is Model.Gegner)
                 {
-                    AddGegner((Model.Gegner)kämpferInfo.Kämpfer, new Point(10, 10));
+                    if (i >= pointList.Count)
+                        i = 0;
+                    AddGegner((Model.Gegner)kämpferInfo.Kämpfer, new Point(pointList[i].X + mitte.X, pointList[i].Y + mitte.Y));
+                    i++;
                 }
             }
         }
@@ -149,5 +174,19 @@ namespace MeisterGeister.ViewModel.Arena
             }
             return null;
         }
+
+        #region Subklasse zum Vergleichen von zwei Punkten
+
+        class PointComparer : IComparer<Point>
+        {
+            public int Compare(Point x, Point y)
+            {
+                //compare distance between two points
+                return ((int)x.X * (int)x.X + (int)x.Y * (int)x.Y) - ((int)y.X * (int)y.X + (int)y.Y * (int)y.Y);
+            }
+        }
+
+        #endregion
+
     }
 }
