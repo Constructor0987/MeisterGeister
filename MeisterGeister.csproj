@@ -1108,6 +1108,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MeisterGeisterModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="DereGlobusIndex.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Logic\Voraussetzungen\Voraussetzungen.tpg" />
     <None Include="Logic\Würfel\Würfel.tpg" />
     <None Include="Model\Model1.Context.tt">
