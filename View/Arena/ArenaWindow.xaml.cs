@@ -34,6 +34,16 @@ namespace MeisterGeister.View.Arena
 
         private ScrollViewer _arenaSV;
 
+        public VM.Arena.Arena Arena
+        {
+            get { return _arenaViewer == null ? null : _arenaViewer.Arena; }
+            set
+            {
+                if (_arenaViewer != null)
+                    _arenaViewer.Arena = value;
+            }
+        }
+
         public ArenaWindow(ViewModel.Kampf.Logic.Kampf kampf)
         {
             InitializeComponent();
@@ -53,7 +63,7 @@ namespace MeisterGeister.View.Arena
             //MouseWheel += onMouseWheel;
 
             VM.Arena.Arena arena = new VM.Arena.Arena(25, 25);
-            
+            arena.BodenplanWindow = this;
             _arenaViewer.Arena = arena;
 
             if (kampf != null) {
@@ -61,9 +71,12 @@ namespace MeisterGeister.View.Arena
                 _arenaControlPane.OnArenaPopulated(_kampf);
             }
 
-            _arenaViewer.DrawArena();
+            DrawArena();
+        }
 
-           
+        public void DrawArena()
+        {
+            _arenaViewer.DrawArena();
         }
 
         private void onPreviewMouseWheel(object sender, MouseWheelEventArgs e) {

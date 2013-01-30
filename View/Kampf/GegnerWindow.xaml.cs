@@ -62,7 +62,15 @@ namespace MeisterGeister.View.Kampf
                     gegner.Name = name;
                     Global.ContextHeld.Insert<Model.Gegner>(gegner);
                     _kampf.Kämpfer.Add(gegner, 2);
+
+                    // zur Arena hinzufügen
+                    if (_kampf.Bodenplan != null)
+                        _kampf.Bodenplan.AddGegner(gegner, new System.Windows.Point(15, 15));
                 }
+
+                // Arena neu zeichnen
+                if (_kampf.Bodenplan != null)
+                    _kampf.Bodenplan.BodenplanWindow.DrawArena();
             }
         }
     }

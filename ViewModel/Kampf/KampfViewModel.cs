@@ -37,6 +37,13 @@ namespace MeisterGeister.ViewModel.Kampf
             OnChanged("InitiativListe");
         }
 
+        private View.Arena.ArenaWindow _bodenplanWindow;
+        public View.Arena.ArenaWindow BodenplanWindow
+        {
+            get { return _bodenplanWindow; }
+            set { _bodenplanWindow = value; Kampf.Bodenplan = value.Arena; OnChanged("BodenplanWindow"); }
+        }
+
         public K Kampf
         {
             get { return _kampf; }
@@ -142,8 +149,13 @@ namespace MeisterGeister.ViewModel.Kampf
                 {
                     ki = new KämpferInfo(held, Kampf);
                     KämpferListe.Add(held);
+
+                    if (BodenplanWindow != null)
+                        BodenplanWindow.Arena.AddHeld(held, new System.Windows.Point(10, 10));
                 }
             }
+            if (BodenplanWindow != null)
+                BodenplanWindow.DrawArena();
             var k = KämpferListe.FirstOrDefault();
         }
 
@@ -161,7 +173,15 @@ namespace MeisterGeister.ViewModel.Kampf
         private void DeleteKämpfer(object obj)
         {
             if (SelectedKämpferInfo != null && Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", SelectedKämpferInfo.Kämpfer.Name)))
+            {
+                IKämpfer k = SelectedKämpferInfo.Kämpfer;
                 KämpferListe.Remove(SelectedKämpferInfo);
+                if (BodenplanWindow != null)
+                {
+                    BodenplanWindow.Arena.RemoveCreature(k);
+                    BodenplanWindow.DrawArena();
+                }
+            }
         }
 
         private Base.CommandBase onDeleteAllKämpfer = null;
@@ -177,8 +197,15 @@ namespace MeisterGeister.ViewModel.Kampf
 
         private void DeleteAllKämpfer(object obj)
         {
-            if(Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
+            if (Confirm("Liste leeren", "Sollen alle Kämpfer entfernt werden?"))
+            {
                 KämpferListe.Clear();
+                if (BodenplanWindow != null)
+                {
+                    BodenplanWindow.Arena.RemoveCreatureAll();
+                    BodenplanWindow.DrawArena();
+                }
+            }
         }
 
         private Base.CommandBase onEinfärbenKämpfer = null;

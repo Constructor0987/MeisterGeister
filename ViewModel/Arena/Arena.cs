@@ -26,6 +26,8 @@ namespace MeisterGeister.ViewModel.Arena
         private Dictionary<Model.Gegner, int> _gegnerIndex;
         private int _nextEnemyIndex = 1;
 
+        public View.Arena.ArenaWindow BodenplanWindow { get; set; }
+
         private ViewModel.Kampf.Logic.Kampf _kampf;
 
         public Arena(int width, int height) {
@@ -47,24 +49,31 @@ namespace MeisterGeister.ViewModel.Arena
 
         public int Width {
             get { return _width; }
+            set { _width = value; }
         }
 
         public int Height {
             get { return _height; }
+            set { _height = value; }
         }
 
 
         public void AddHeld(Model.Held held, Point pos) {
             _helden.Add(held);
-            _positionen.Add(held, pos);
-            _viewingDirections.Add(held, 0.0);
+            if (!_positionen.ContainsKey(held))
+                _positionen.Add(held, pos);
+            if (!_viewingDirections.ContainsKey(held))
+                _viewingDirections.Add(held, 0.0);
         }
         public void AddGegner(Model.Gegner gegner, Point pos)
         {
             _gegner.Add(gegner);
-            _positionen.Add(gegner, pos);
-            _viewingDirections.Add(gegner, 0.0);
-            _gegnerIndex.Add(gegner, _nextEnemyIndex);
+            if (!_positionen.ContainsKey(gegner))
+                _positionen.Add(gegner, pos);
+            if (!_viewingDirections.ContainsKey(gegner))
+                _viewingDirections.Add(gegner, 0.0);
+            if (!_gegnerIndex.ContainsKey(gegner))
+                _gegnerIndex.Add(gegner, _nextEnemyIndex);
             _nextEnemyIndex++;
         }
 
@@ -78,21 +87,33 @@ namespace MeisterGeister.ViewModel.Arena
             _positionen.Remove(creature);
 
             // aus Kampf entfernen
-            _kampf.Kämpfer.Remove(creature);
+            if (_kampf.Kämpfer.Kämpfer.Contains(creature))
+                _kampf.Kämpfer.Remove(creature);
+        }
+
+        public void RemoveCreatureAll()
+        {
+            _helden.Clear();
+            _gegner.Clear();
+
+            _positionen.Clear();
         }
 
         public HashSet<Model.Held> Heroes
         {
             get { return _helden; }
+            set { _helden = value; }
         }
 
         public HashSet<Model.Gegner> Enemies
         {
             get { return _gegner; }
+            set { _gegner = value; }
         }
 
         public Dictionary<IKämpfer, Point> Positions {
             get { return _positionen; }
+            set { _positionen = value; }
         }
 
         public Boolean Contains(IKämpfer c) {
@@ -101,6 +122,7 @@ namespace MeisterGeister.ViewModel.Arena
 
         public HashSet<ArenaHindernisAbstract> Hindernisse {
             get { return _hindernisse; }
+            set { _hindernisse = value; }
         }
 
         public Boolean ContainsHeldWidthId(Guid heldId) {

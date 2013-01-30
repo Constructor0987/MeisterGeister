@@ -66,13 +66,13 @@ namespace MeisterGeister.View.Arena
 
             _attentionLabel = new Label();
             _attentionLabel.Foreground = new SolidColorBrush(Colors.Red);
-            _attentionLabel.Content = "Achtung! Aktuelle Arena wird gelöscht!";
+            _attentionLabel.Content = string.Empty; // kein Hinweistext
             _attentionLabel.HorizontalAlignment = HorizontalAlignment.Center;
             _attentionLabel.Margin = new Thickness(0, 10, 0, 0);
 
             _okButton = new Button();
             _okButton.Width = 100;
-            _okButton.Content = "Arena erstellen";
+            _okButton.Content = "Größe ändern";
             _okButton.Click += onOkButtonClick;
 
                         

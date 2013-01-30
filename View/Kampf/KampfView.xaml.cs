@@ -23,15 +23,6 @@ namespace MeisterGeister.View.Kampf
         public KampfView()
         {
             InitializeComponent();
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //_listBoxAktionen.ItemsSource = _kampf.AktionenListe;
-
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //_kampf.NächsterKämpferRollover += NächsterKämpferRollover_EventHandler;
-
-            // TODO ??: Umstellen auf neues Kampf-Model
-            //_comboBoxTrefferzone.ItemsSource = Trefferzone.TrefferzonenListe();
-            //_comboBoxTrefferzone.SelectedIndex = 0;
             VM = new VM.KampfViewModel(View.General.ViewHelper.ShowGegnerView, View.General.ViewHelper.Confirm);
 
             View.General.EnumItemsSource tpValues = (View.General.EnumItemsSource)Resources["TrefferzonenValues"];
@@ -76,10 +67,24 @@ namespace MeisterGeister.View.Kampf
         {
             // TODO ??: In Command verschieben
             ViewModel.Kampf.Logic.Kampf k = VM.Kampf;
-            ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
-            arenaWindow.Width = 1200;
-            arenaWindow.Height = 800;
-            arenaWindow.Show();
+            if (VM.BodenplanWindow != null)
+            {
+                VM.BodenplanWindow.Activate();
+            }
+            else
+            {
+                ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
+                VM.BodenplanWindow = arenaWindow;
+                arenaWindow.Width = 1200;
+                arenaWindow.Height = 800;
+                arenaWindow.Closed += ArenaWindow_Closed;
+                arenaWindow.Show();
+            }
+        }
+
+        void ArenaWindow_Closed(object sender, EventArgs e)
+        {
+            VM.BodenplanWindow = null;
         }
 
         private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)

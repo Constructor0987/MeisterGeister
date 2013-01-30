@@ -38,6 +38,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Kampfrunde = 0;
         }
 
+        public Arena.Arena Bodenplan { get; set; }
+
         private InitiativListe _initiativListe;
         public InitiativListe InitiativListe
         {
@@ -343,6 +345,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         }
 
         #endregion
+
     }
 
     [Flags]

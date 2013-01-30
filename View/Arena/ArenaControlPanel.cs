@@ -83,7 +83,7 @@ namespace MeisterGeister.View.Arena
             _newArenaButton.Width = Width - 2 * MARGIN;
             _newArenaButton.FontSize = 12;
             _newArenaButton.Margin = new Thickness(0, 40, 0, 0);
-            _newArenaButton.Content = "Neue Arena";
+            _newArenaButton.Content = "Größe ändern...";
             _newArenaButton.Click += onNewArenaClick;
             
         }
@@ -154,11 +154,14 @@ namespace MeisterGeister.View.Arena
 
                 if (pair != null && !_arenaViewer.Arena.ContainsHeldWidthId(pair.Id)) {
                     Model.Held held = Global.ContextHeld.LoadHeldByGUID(pair.Id);
-                    _kampf.Kämpfer.Add(held);
-                    _arenaViewer.Arena.AddHeld(held, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
-                    _arenaViewer.DrawArena();
-                    _heroAdder.SelectedIndex = 0;
-                    _heroAdder.Items.Remove(pair);
+                    if (!_kampf.Kämpfer.Kämpfer.Contains(held))
+                    {
+                        _kampf.Kämpfer.Add(held);
+                        _arenaViewer.Arena.AddHeld(held, new Point(_arenaViewer.Arena.Width / 2, _arenaViewer.Arena.Height / 2));
+                        _arenaViewer.DrawArena();
+                        _heroAdder.SelectedIndex = 0;
+                        _heroAdder.Items.Remove(pair);
+                    }
                 }
             }
         }
@@ -181,12 +184,11 @@ namespace MeisterGeister.View.Arena
         }
 
         public void CreateNewArena(int width, int height) {
-            VM.Arena.Arena arena = new VM.Arena.Arena(width, height);
-            _arenaViewer.Arena = arena;
-            _arenaViewer.DrawArena();
+            
+            _arenaViewer.Arena.Width = width;
+            _arenaViewer.Arena.Height = height;
 
-            _heroAdder.Items.Clear();
-            addHeroes();
+            _arenaViewer.DrawArena();
         }
 
         internal void OnMouseWheelZoom(int delta) {
