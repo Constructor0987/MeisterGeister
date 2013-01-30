@@ -29,7 +29,7 @@
             <Image.ToolTip>
                 <StackPanel Width="200">
                     <TextBlock TextWrapping="Wrap"><Run Text="Schreibschutz ist aktiv!"/></TextBlock>
-                    <TextBlock FontStyle="Italic" Text="Derzeit können keine Änderungen an den Helden vorgenommen werden.." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
+                    <TextBlock FontStyle="Italic" Text="Derzeit können keine Änderungen an den Helden vorgenommen werden. Änderungen an Wunden und Energie-Ständen sind von der Sperre ausgenommen." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
                 </StackPanel>
             </Image.ToolTip>
         </Image>

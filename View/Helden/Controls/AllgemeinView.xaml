@@ -49,7 +49,7 @@
                         <Label Grid.Column="0" Grid.Row="3" Content="Profession:" FontWeight="Bold" />
                         <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Profession, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" />
 
-                        <CheckBox Grid.Column="1" Grid.Row="4" Margin="2" Content="Aktive Heldengruppe" IsChecked="{Binding SelectedHeld.AktiveHeldengruppe}" ToolTip="Ist der Held Mitglied der aktiven Heldengruppe?" VerticalAlignment="Center" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" />
+                        <CheckBox Grid.Column="1" Grid.Row="4" Margin="2" Content="Aktive Heldengruppe" IsChecked="{Binding SelectedHeld.AktiveHeldengruppe}" ToolTip="Ist der Held Mitglied der aktiven Heldengruppe?" VerticalAlignment="Center" />
                     </Grid>
                 </Border>
             </Expander>
