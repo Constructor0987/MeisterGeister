@@ -246,5 +246,25 @@ namespace MeisterGeister.Logic.Settings
                 SetEinstellung<string>("ProbenFavoriten", value);
             }
         }
+
+        /// <summary>
+        /// Gibt an, ob sich MeisterGeister im Nur-Lesen-Modus befindet.
+        /// Ist der Schreibschutz aktiviert, werden bestimmte Eingabe- und Änderungsmöglichkeiten eingeschränkt.
+        /// </summary>
+        public static bool IsReadOnly
+        {
+            get
+            {
+                return GetOrCreateEinstellung<bool>("IsReadOnly", false);
+            }
+            set
+            {
+                SetEinstellung<bool>("IsReadOnly", value);
+                if (IsReadOnlyChanged != null)
+                    IsReadOnlyChanged(null, new EventArgs());
+            }
+        }
+
+        public static EventHandler IsReadOnlyChanged;
     }
 }

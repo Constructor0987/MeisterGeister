@@ -38,6 +38,10 @@ namespace MeisterGeister.ViewModel.Helden {
             get { return listenToChangeEvents; }
             set { listenToChangeEvents = value; SelectedHeldChanged(); }
         }
+        public bool IsReadOnly
+        {
+            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+        }
         //Listen
         public List<Model.Talent> TalentauswahlListe {
             get { return talentAuswahlListe; }
@@ -130,6 +134,7 @@ namespace MeisterGeister.ViewModel.Helden {
             onWürfelGruppenProbe = new Base.CommandBase(WürfelGruppenProbe, null);
 
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             SelectedHeld = Global.SelectedHeld;
         }
         #endregion
@@ -153,6 +158,12 @@ namespace MeisterGeister.ViewModel.Helden {
         }
         #endregion
         #region //EVENTS
+        
+        private void IsReadOnlyChanged(object sender, EventArgs e)
+        {
+            OnChanged("IsReadOnly");
+        }
+
         void SelectedHeldChanged() {
             if (!ListenToChangeEvents)
                 return;
@@ -287,7 +298,7 @@ namespace MeisterGeister.ViewModel.Helden {
             else if (SelectedTalentListeItem != null) // Aufruf durch ContextMenu
                 h = SelectedTalentListeItem.HeldTalent;
 
-            if (h != null
+            if (h != null && !IsReadOnly
                 && Confirm("Talent löschen", String.Format("Soll das Talent '{0}' wirklich vom Helden entfernt werden?", h.Talent.Talentname)))
             {
                 SelectedHeld.DeleteTalent(h);

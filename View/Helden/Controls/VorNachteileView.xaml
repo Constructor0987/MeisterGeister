@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             x:Name="userControl"
              mc:Ignorable="d"
              d:DesignHeight="299" d:DesignWidth="677" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -72,8 +73,8 @@
             <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#38A08350">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="{Binding VorNachteil.Name}" VerticalAlignment="Center" />
-                    <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" />
-                    <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="15,0,0,0" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" VerticalAlignment="Center" />
+                    <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                    <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="15,0,0,0" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -114,7 +115,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddVorteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen">
+                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                     <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="Nachteil:" VerticalAlignment="Center" FontWeight="Bold" />
@@ -129,7 +130,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddNachteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen">
+                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                 </Grid>
@@ -160,7 +161,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Command="{Binding OnDeleteVorNachteil}" Header="Löschen" x:Name="_menuItemVorNachteilLöschen">
+                    <MenuItem Height="28" Command="{Binding OnDeleteVorNachteil}" Header="Löschen" x:Name="_menuItemVorNachteilLöschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>

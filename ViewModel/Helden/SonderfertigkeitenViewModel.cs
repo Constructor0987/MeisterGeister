@@ -68,6 +68,11 @@ namespace MeisterGeister.ViewModel.Helden
             get { return SelectedHeld == null ? null : SelectedHeld.SonderfertigkeitenWählbar; }
         }
 
+        public bool IsReadOnly
+        {
+            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -76,6 +81,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
 
             onDeleteSonderfertigkeit = new Base.CommandBase(DeleteSonderfertigkeit, null);
             onAddSonderfertigkeit = new Base.CommandBase(AddSonderfertigkeit, null);
@@ -101,7 +107,7 @@ namespace MeisterGeister.ViewModel.Helden
         private void DeleteSonderfertigkeit(object sender)
         {
             Model.Held_Sonderfertigkeit h = SelectedHeldSonderfertigkeit;
-            if (h != null
+            if (h != null && !IsReadOnly
                 && Confirm("Sonderfertigkeit löschen", String.Format("Soll die Sonderfertigkeit {0} wirklich vom Helden entfernt werden?", h.Sonderfertigkeit.Name)))
             {
                 SelectedHeld.DeleteSonderfertigkeit(h);
@@ -130,6 +136,11 @@ namespace MeisterGeister.ViewModel.Helden
         #endregion
 
         #region //---- EVENTS ----
+
+        private void IsReadOnlyChanged(object sender, EventArgs e)
+        {
+            OnChanged("IsReadOnly");
+        }
 
         private void SelectedHeldChanged()
         {

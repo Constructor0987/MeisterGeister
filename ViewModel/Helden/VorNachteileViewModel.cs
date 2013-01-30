@@ -87,6 +87,11 @@ namespace MeisterGeister.ViewModel.Helden
             get { return SelectedHeld == null ? null : SelectedHeld.NachteileWählbar; }
         }
 
+        public bool IsReadOnly
+        {
+            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -95,6 +100,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
 
             onDeleteVorNachteil = new Base.CommandBase(DeleteVorNachteil, null);
             onAddVorteil = new Base.CommandBase(AddVorteil, null);
@@ -122,7 +128,7 @@ namespace MeisterGeister.ViewModel.Helden
         private void DeleteVorNachteil(object sender)
         {
             Model.Held_VorNachteil h = SelectedHeldVorNachteil;
-            if (h != null
+            if (h != null && !IsReadOnly
                 && Confirm("Vor-/Nachteil löschen", String.Format("Soll der Vor-/Nachteil {0} wirklich vom Helden entfernt werden?", h.VorNachteil.Name)))
             {
                 SelectedHeld.DeleteVorNachteil(h);
@@ -162,6 +168,11 @@ namespace MeisterGeister.ViewModel.Helden
         #endregion
 
         #region //---- EVENTS ----
+
+        private void IsReadOnlyChanged(object sender, EventArgs e)
+        {
+            OnChanged("IsReadOnly");
+        }
 
         private void SelectedHeldChanged()
         {

@@ -49,7 +49,7 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ComboBox Grid.Row="0" Margin="4,2,25,2" Height="24" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}" ToolTip="Sortierung">
+            <ComboBox Grid.Row="0" Margin="4,2,85,2" Height="24" ItemsSource="{Binding SortierungListe}" SelectedItem="{Binding SelectedSortierung}" ToolTip="Sortierung">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -60,10 +60,10 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Image Grid.Row="0" Height="16" Margin="0,5,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
+            <Image Grid.Row="0" Height="16" Margin="0,6,2,0" Width="16" HorizontalAlignment="Right" x:Name="_imageInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top">
                 <Image.ToolTip>
                     <StackPanel Width="200">
-                        <TextBlock TextWrapping="Wrap"><Run Text="Rechtsklick für weitere Aktionen."/></TextBlock>
+                        <TextBlock TextWrapping="Wrap"><Run Text="Rechtsklick in der Liste für weitere Aktionen."/></TextBlock>
                         <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" TextWrapping="WrapWithOverflow" />
                     </StackPanel>
                 </Image.ToolTip>
@@ -88,7 +88,7 @@
 							</MenuItem.Icon>
 						</MenuItem>
                         <Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!">
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                             <MenuItem.Icon>
                                 <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
                             </MenuItem.Icon>
@@ -126,7 +126,7 @@
 							</MenuItem.ToolTip>
 						</MenuItem>
 						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteHeld}" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen.">
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeld}" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen." IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
 							</MenuItem.Icon>

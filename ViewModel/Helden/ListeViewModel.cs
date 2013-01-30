@@ -27,6 +27,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (Global.SelectedHeld != null)
                 selectedHeld = Global.SelectedHeld;
+            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             LoadDaten();
         }
 
@@ -37,6 +38,16 @@ namespace MeisterGeister.ViewModel.Helden
                 Global.SelectedHeld = value;
                 OnChanged("SelectedHeld");
             }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+        }
+
+        private void IsReadOnlyChanged(object sender, EventArgs e)
+        {
+            OnChanged("IsReadOnly");
         }
 
         private void SelectedHeldChanged()
@@ -142,7 +153,7 @@ namespace MeisterGeister.ViewModel.Helden
         private void DeleteHeld(object sender)
         {
             Held h = SelectedHeld;
-            if (h != null)
+            if (h != null && !IsReadOnly)
             {
                 if (Confirm("Held löschen", string.Format("Sind Sie sicher, dass Sie den Helden '{0}' löschen möchten?", h.Name))
                     && Global.ContextHeld.Delete<Held>(h))
@@ -167,7 +178,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void DeleteHeldAll(object sender)
         {
-            if (Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.Count)))
+            if (!IsReadOnly && Confirm("Alle Helden löschen", string.Format("Sind Sie sicher, dass Sie alle Helden ({0}) endgültig löschen möchten?", HeldListe.Count)))
             {
                 Global.SetIsBusy(true, "Alle Helden werden gelöscht...");
 

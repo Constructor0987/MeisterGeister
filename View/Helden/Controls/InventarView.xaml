@@ -45,7 +45,7 @@
                         <TextBlock Grid.Column="8" Text="{Binding WM}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="9" Text="{Binding EntityNW.DK}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}">
+                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -79,7 +79,7 @@
                         <TextBlock Grid.Column="6" Grid.ColumnSpan="2" Text="{Binding EntityFW.TPReichweiten}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="8" Text="{Binding EntityFW.Laden}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}">
+                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -113,7 +113,7 @@
                         <TextBlock Grid.Column="6" Text="{Binding EntityS.INI}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="7" Text="{Binding EntityS.BF}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveSchild}">
+                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveSchild}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -142,7 +142,7 @@
                         <TextBlock Grid.Column="3" Text="{Binding EntityR.RS}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding EntityR.BE}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveRuestung}">
+                    <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveRuestung}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -643,7 +643,7 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="4" Margin="5">
-                                        <Button x:Name="ADDNah2" Command="{Binding OnAddNahkampfwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5">
+                                        <Button x:Name="ADDNah2" Command="{Binding OnAddNahkampfwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
@@ -686,7 +686,7 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="4" Margin="5">
-                                        <Button  Command="{Binding OnAddFernwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5">
+                                        <Button  Command="{Binding OnAddFernwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
@@ -716,7 +716,7 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="5">
-                                        <Button  Command="{Binding OnAddSchild}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5">
+                                        <Button  Command="{Binding OnAddSchild}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
@@ -745,7 +745,7 @@
                                         </ComboBox>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="5">
-                                        <Button  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23">
+                                        <Button  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                         </Button>
                                     </StackPanel>
@@ -785,7 +785,7 @@
                                                     <KeyBinding Key="Enter"  Command="{Binding OnAddInventar}" />
                                                 </ComboBox.InputBindings>
                                             </ComboBox>
-                                            <Button Command="{Binding OnAddInventar}" VerticalAlignment="Center" Height="25">
+                                            <Button Command="{Binding OnAddInventar}" VerticalAlignment="Center" Height="25" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                             </Button>
                                         </StackPanel>

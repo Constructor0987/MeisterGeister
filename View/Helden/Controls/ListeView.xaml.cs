@@ -92,7 +92,7 @@ namespace MeisterGeister.View.Helden.Controls
             }
             else
             {
-                _menuItemHeldLöschen.IsEnabled = true;
+                _menuItemHeldLöschen.IsEnabled = !VM.IsReadOnly;
                 _menuItemHeldImport.IsEnabled = true;
                 _menuItemHeldExport.IsEnabled = true;
                 _menuItemHeldKopie.IsEnabled = true;

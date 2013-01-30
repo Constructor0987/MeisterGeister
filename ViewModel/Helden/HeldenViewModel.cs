@@ -52,6 +52,16 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
+        public bool IsReadOnly
+        {
+            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+            set 
+            { 
+                MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly = value;
+                OnChanged("IsReadOnly");
+            }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----

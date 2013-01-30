@@ -57,7 +57,7 @@ namespace MeisterGeister.View.Helden.Controls
         {
             _menuItemZauberLöschen.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
             _menuItemZauberWiki.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
-            _menuItemZauberGruppenProbe.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
+            _menuItemZauberGruppenProbe.IsEnabled = _listBoxHeldZauber.SelectedItem != null && !VM.IsReadOnly;
             _menuItemZauberProbe.IsEnabled = _listBoxHeldZauber.SelectedItem != null;
         }
 

@@ -73,6 +73,10 @@ namespace MeisterGeister.ViewModel.Inventar {
         #region //EIGENSCHAFTEN
 
         //UI
+        public bool IsReadOnly
+        {
+            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+        }
         public Visibility IsNahkampfwaffevorhanden {
             get { return isNahkampfwaffevorhanden; }
             set {
@@ -412,6 +416,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             onAddRuestung = new Base.CommandBase(AddRuestung, null);
 
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
+            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             SelectedFilterIndex = 0;
         }
 
@@ -517,6 +522,11 @@ namespace MeisterGeister.ViewModel.Inventar {
         #endregion
 
         #region //EVENTS
+
+        private void IsReadOnlyChanged(object sender, EventArgs e)
+        {
+            OnChanged("IsReadOnly");
+        }
 
         void SelectedHeldChanged() {
             //FIXME Hack
@@ -709,7 +719,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         #region //--REMOVE
 
         void RemoveAusruestung(object sender) {
-            if (sender != null && SelectedHeld != null) {
+            if (sender != null && SelectedHeld != null && !IsReadOnly) {
 
                 if (sender is NahkampfItem) {
                     NahkampfItem item = HeldNahkampfWaffeImInventar.Where(value => value == (sender as NahkampfItem)).FirstOrDefault();

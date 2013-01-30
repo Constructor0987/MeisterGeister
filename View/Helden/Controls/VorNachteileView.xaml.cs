@@ -69,7 +69,7 @@ namespace MeisterGeister.View.Helden.Controls
             }
             else
             {
-                _menuItemVorNachteilLöschen.IsEnabled = true;
+                _menuItemVorNachteilLöschen.IsEnabled = !VM.IsReadOnly;
                 _menuItemVorNachteilWiki.IsEnabled = true;
             }
         }

@@ -14,18 +14,32 @@ namespace MeisterGeister.ViewModel.Helden {
         //Selection
         private Model.Held selectedHeld = new M.Held();
         #endregion
+        
         #region //EIGENSCHAFTEN
+        
         //Selection
         public Model.Held SelectedHeld { get { return Global.SelectedHeld; } set { Global.SelectedHeld = value; OnChanged("SelectedHeld"); } }
+        
         //Events
         public event EventHandler RefreshNotiz;
+
+        public bool IsReadOnly
+        {
+            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+        }
+
         #endregion
+
         #region //KONSTRUKTOR
+
         public AllgemeinViewModel() {
             AttachEvents();
         }
+
         #endregion
+
         #region //METHODEN
+
         private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args) {
             if (new string[] { "Name", "BildLink", "Rasse", "Kultur", "Profession", "AktiveHeldengruppe" }.Contains(args.PropertyName))
                 hasChanges = true;
@@ -35,6 +49,7 @@ namespace MeisterGeister.ViewModel.Helden {
         {
             Global.HeldSelectionChanged += SelectedHeldChanged;
             Global.HeldSelectionChanging += SelectedHeldChanging;
+            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             SelectedHeldChanged(null, null);
         }
 
@@ -43,10 +58,18 @@ namespace MeisterGeister.ViewModel.Helden {
             SelectedHeldChanging(null, null);
             Global.HeldSelectionChanged -= SelectedHeldChanged;
             Global.HeldSelectionChanging -= SelectedHeldChanging;
+            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
         }
 
         #endregion
+
         #region //EVENTS
+        
+        private void IsReadOnlyChanged(object sender, EventArgs e)
+        {
+            OnChanged("IsReadOnly");
+        }
+
         //Event
         void SelectedHeldChanged(object sender, EventArgs args)
         {
