@@ -73,9 +73,10 @@ namespace MeisterGeister.ViewModel.Inventar {
         #region //EIGENSCHAFTEN
 
         //UI
+        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
-            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+            get { return _isReadOnly; }
         }
         public Visibility IsNahkampfwaffevorhanden {
             get { return isNahkampfwaffevorhanden; }
@@ -525,6 +526,7 @@ namespace MeisterGeister.ViewModel.Inventar {
 
         private void IsReadOnlyChanged(object sender, EventArgs e)
         {
+            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 

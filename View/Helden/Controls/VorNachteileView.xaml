@@ -20,6 +20,9 @@
                     </MultiDataTrigger.Conditions>
                     <Setter Property="Visibility" Value="Visible" />
                 </MultiDataTrigger>
+                <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="VorNachteilWertNumItemStyle" TargetType="{x:Type ViewGeneral:IntBox}">
@@ -27,6 +30,9 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding VorNachteil.WertTyp}" Value="int">
                     <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>

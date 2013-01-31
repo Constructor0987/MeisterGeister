@@ -11,7 +11,7 @@
     d:DesignHeight="529.04"
     Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
-        <Style x:Key="ReadOnlyTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
                     <Setter Property="Opacity" Value="0.6" />
@@ -47,16 +47,16 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="Name:" FontWeight="Bold" VerticalAlignment="Center" />
-                        <TextBox Grid.Column="1" Grid.Row="0" Margin="2" x:Name="_textBoxHeldName" Text="{Binding SelectedHeld.Name, Mode=TwoWay}" ToolTip="Name des Helden" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyTextBoxStyle}" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Margin="2" x:Name="_textBoxHeldName" Text="{Binding SelectedHeld.Name, Mode=TwoWay}" ToolTip="Name des Helden" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                         <Image Grid.Column="2" Grid.Row="0" Height="28" Margin="1" Cursor="Hand" MouseDown="ImageWikiHeldenbrief_MouseDown" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Uniform" ToolTip="Charakterbeschreibung im Wiki-Aventurica anzeigen (falls vorhanden)." />
                         <Label Grid.Column="3" Grid.Row="0" Content="Spieler:" FontWeight="Bold" VerticalAlignment="Center" />
-                        <TextBox Grid.Column="4" Grid.Row="0" Margin="2" Text="{Binding SelectedHeld.Spieler, Mode=TwoWay}" ToolTip="Name des Spielers des Helden" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyTextBoxStyle}" />
+                        <TextBox Grid.Column="4" Grid.Row="0" Margin="2" Text="{Binding SelectedHeld.Spieler, Mode=TwoWay}" ToolTip="Name des Spielers des Helden" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                         <Label Grid.Column="0" Grid.Row="1" Content="Rasse:" FontWeight="Bold" />
-                        <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Rasse, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyTextBoxStyle}" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Rasse, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                         <Label Grid.Column="0" Grid.Row="2" Content="Kultur:" FontWeight="Bold" />
-                        <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Kultur, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyTextBoxStyle}" />
+                        <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Kultur, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                         <Label Grid.Column="0" Grid.Row="3" Content="Profession:" FontWeight="Bold" />
-                        <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Profession, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyTextBoxStyle}" />
+                        <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Profession, Mode=TwoWay}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
 
                         <CheckBox Grid.Column="1" Grid.Row="4" Margin="2" Content="Aktive Heldengruppe" IsChecked="{Binding SelectedHeld.AktiveHeldengruppe}" ToolTip="Ist der Held Mitglied der aktiven Heldengruppe?" VerticalAlignment="Center" />
                     </Grid>

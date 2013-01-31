@@ -8,6 +8,15 @@
              mc:Ignorable="d" 
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
              d:DesignHeight="299" d:DesignWidth="677">
+    <UserControl.Resources>
+        <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -63,98 +72,98 @@
             </Expander.Header>
             <ScrollViewer Name="scrollViewer">
                 <Border Style="{DynamicResource ControlContentBorder}">
-                <StackPanel>
-                    <Border Style="{DynamicResource ControlContentBorder}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="44" />
-                                <ColumnDefinition Width="44" />
-                                <ColumnDefinition Width="44" />
-                                <ColumnDefinition Width="44" />
-                                <ColumnDefinition Width="65" />
-                                <ColumnDefinition Width="70" />
-                                <ColumnDefinition Width="120*" />
-                                <ColumnDefinition Width="100*" />
-                            </Grid.ColumnDefinitions>
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Zaubername" Grid.Column="0" />
-                            <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Image.ToolTip>
-                                    <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Zauber für weitere Aktionen."/></TextBlock>
-                                </Image.ToolTip>
-                            </Image>
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kom." Grid.Column="4" />
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Rep." Grid.Column="5" />
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="ZfW" Grid.Column="6" />
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Merkmale" Grid.Column="7" />
-                            <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
-                        </Grid>
-                    </Border>
-                    <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding ZauberListe, IsAsync=True}" SelectedItem="{Binding SelectedHeldZauber}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                    <StackPanel>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200" />
+                                    <ColumnDefinition Width="44" />
+                                    <ColumnDefinition Width="44" />
+                                    <ColumnDefinition Width="44" />
+                                    <ColumnDefinition Width="44" />
+                                    <ColumnDefinition Width="65" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="120*" />
+                                    <ColumnDefinition Width="100*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Zaubername" Grid.Column="0" />
+                                <Image Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Image.ToolTip>
+                                        <TextBlock Height="Auto" Width="200" TextWrapping="Wrap"><Run Text="Rechtsklick auf ein Zauber für weitere Aktionen."/></TextBlock>
+                                    </Image.ToolTip>
+                                </Image>
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E1" Grid.Column="1" />
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E2" Grid.Column="2" />
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="E3" Grid.Column="3" />
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Kom." Grid.Column="4" />
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Rep." Grid.Column="5" />
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="ZfW" Grid.Column="6" />
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Merkmale" Grid.Column="7" />
+                                <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Bemerkung" Grid.Column="8" />
+                            </Grid>
+                        </Border>
+                        <ListBox Background="Transparent" BorderThickness="0" ItemsSource="{Binding ZauberListe, IsAsync=True}" SelectedItem="{Binding SelectedHeldZauber}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
                              Name="_listBoxHeldZauber" PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
-                        <ListBox.ContextMenu>
-                            <ContextMenu Opened="ContextMenuZauber_Opened">
-                                <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Height="28" Command="{Binding OnWürfelProbe}" Header="Probe würfeln" x:Name="_menuItemZauberProbe">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}" Header="Gruppenprobe würfeln" x:Name="_menuItemZauberGruppenProbe">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
+                            <ListBox.ContextMenu>
+                                <ContextMenu Opened="ContextMenuZauber_Opened">
+                                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Height="28" Command="{Binding OnWürfelProbe}" Header="Probe würfeln" x:Name="_menuItemZauberProbe">
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}" Header="Gruppenprobe würfeln" x:Name="_menuItemZauberGruppenProbe">
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
                                     <MenuItem Height="28" Command="{Binding OnDeleteZauber}" Header="Löschen" x:Name="_menuItemZauberLöschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
+                                        <MenuItem.Icon>
+                                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
                             </ListBox.ContextMenu>
-                        <ListBox.InputBindings>
-                            <KeyBinding Key="Delete" Command="{Binding OnDeleteZauber}" />
-                        </ListBox.InputBindings>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200" />
-                                            <ColumnDefinition Width="44" />
-                                            <ColumnDefinition Width="44" />
-                                            <ColumnDefinition Width="44" />
-                                            <ColumnDefinition Width="44" />
-                                            <ColumnDefinition Width="65" />
-                                            <ColumnDefinition Width="70" />
-                                            <ColumnDefinition Width="120*" />
-                                            <ColumnDefinition Width="100*" />
-                                        </Grid.ColumnDefinitions>
+                            <ListBox.InputBindings>
+                                <KeyBinding Key="Delete" Command="{Binding OnDeleteZauber}" />
+                            </ListBox.InputBindings>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#FFBEB3A3" BorderThickness="1,0,1,1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="44" />
+                                                <ColumnDefinition Width="65" />
+                                                <ColumnDefinition Width="70" />
+                                                <ColumnDefinition Width="120*" />
+                                                <ColumnDefinition Width="100*" />
+                                            </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Zauber.Name}" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" ToolTip="{Binding Zauber.Name}" />
                                             <TextBlock Text="{Binding Zauber.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" />
                                             <TextBlock Text="{Binding Zauber.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding Zauber.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" />
+                                            <TextBlock Text="{Binding Zauber.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" />
                                             <TextBlock Text="{Binding Zauber.Komplex}" Grid.Column="4" TextAlignment="Center" VerticalAlignment="Center" />
                                             <TextBlock Text="{Binding Repräsentation}" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" />
-                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" Grid.Column="6" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                            <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" Grid.Column="6" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                             <TextBlock Text="{Binding Zauber.Merkmale}" Grid.Column="7" TextTrimming="WordEllipsis" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="{Binding Zauber.Merkmale}" />
-                                            <TextBox Text="{Binding Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-            </Border>
+                                            <TextBox Text="{Binding Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
             </ScrollViewer>
         </Expander>
     </Grid>

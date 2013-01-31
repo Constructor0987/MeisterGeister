@@ -38,9 +38,10 @@ namespace MeisterGeister.ViewModel.Helden {
             get { return listenToChangeEvents; }
             set { listenToChangeEvents = value; SelectedHeldChanged(); }
         }
+        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
-            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+            get { return _isReadOnly; }
         }
         //Listen
         public List<Model.Talent> TalentauswahlListe {
@@ -161,6 +162,7 @@ namespace MeisterGeister.ViewModel.Helden {
         
         private void IsReadOnlyChanged(object sender, EventArgs e)
         {
+            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 

@@ -11,6 +11,13 @@
 	d:DesignWidth="810"
     d:DesignHeight="700">
     <UserControl.Resources>
+        <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="HorizontalStretchSet">
             <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch" />
             <Setter Property="Control.HorizontalContentAlignment" Value="Stretch" />
@@ -469,10 +476,10 @@
                                                                     </Image.Style>
                                                                 </Image>
                                                             </DockPanel>
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT}" Grid.Column="1" Visibility="{Binding HeldTalent.IsZuteilbar, Converter={StaticResource BooleanToVisibilityConverter1}}" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA}" Grid.Column="2" Visibility="{Binding HeldTalent.IsZuteilbar, Converter={StaticResource BooleanToVisibilityConverter1}}" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungAT}" Grid.Column="1" Visibility="{Binding HeldTalent.IsZuteilbar, Converter={StaticResource BooleanToVisibilityConverter1}}" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.ZuteilungPA}" Grid.Column="2" Visibility="{Binding HeldTalent.IsZuteilbar, Converter={StaticResource BooleanToVisibilityConverter1}}" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                             <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="4" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                            <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="4" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                             <TextBlock Text="{Binding Talent.eBE}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                             <TextBlock Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Unmodifizierter FK-Wert" Text="{Binding HeldTalent.FernkampfwertBasisOhneMod}" 
                                                                                   Visibility="{Binding HeldTalent.HatFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}" />
@@ -593,7 +600,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -604,7 +611,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -676,7 +683,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -687,7 +694,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -759,7 +766,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -770,7 +777,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -842,7 +849,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -853,7 +860,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -925,7 +932,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -936,7 +943,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1008,7 +1015,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -1019,7 +1026,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1091,7 +1098,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -1102,7 +1109,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1174,7 +1181,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung, TargetNullValue=var}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -1185,7 +1192,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1257,7 +1264,7 @@
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Steigerung, TargetNullValue=var}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <MGControl:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding HeldTalent.TaW}" Grid.Column="5" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                         <TextBlock Text="{Binding Talent.eBE}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <Image Grid.Column="7" Height="15" Width="15" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                                Visibility="{Binding Talent.HatVoraussetzungen, Converter={StaticResource BooleanToVisibilityConverter1}}">
@@ -1268,7 +1275,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>

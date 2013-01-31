@@ -68,9 +68,10 @@ namespace MeisterGeister.ViewModel.Helden
             get { return SelectedHeld == null ? null : SelectedHeld.SonderfertigkeitenWählbar; }
         }
 
+        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
-            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+            get { return _isReadOnly; }
         }
 
         #endregion
@@ -139,6 +140,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void IsReadOnlyChanged(object sender, EventArgs e)
         {
+            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 

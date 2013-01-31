@@ -25,6 +25,9 @@
                 <DataTrigger Binding="{Binding Sonderfertigkeit.HatWert}" Value="false">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </DataTrigger>
+                <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="SonderfertigkeitenTemplate">

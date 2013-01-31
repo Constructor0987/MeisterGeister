@@ -40,13 +40,15 @@ namespace MeisterGeister.ViewModel.Helden
             }
         }
 
+        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
-            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+            get { return _isReadOnly; }
         }
 
         private void IsReadOnlyChanged(object sender, EventArgs e)
         {
+            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 
