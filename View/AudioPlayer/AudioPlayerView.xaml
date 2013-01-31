@@ -32,8 +32,9 @@
             <ColumnDefinition Width="280" />
         </Grid.ColumnDefinitions>
         
-        <Border Name="brdHintergrundOption" Grid.ColumnSpan="1" Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
+        <Border Name="brdHintergrundOption" Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
             <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" />
+            
         </Border>
         <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <TabItem Header="Themes" Name="tiUebersicht" >  
@@ -353,7 +354,7 @@
                             </Button>
                             
                             <Button Height="30" HorizontalAlignment="Right" Name="btnKlangOpen" Width="30" IsEnabled="True" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Click="btnKlangOpen_Click" Grid.Column="6" VerticalAlignment="Center" Margin="0,0,20,0" TabIndex="1" Visibility="Hidden">
-                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" Name="btnKlangOpenImg0" />
+                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" Name="btnKlangOpenImg" />
                             </Button>
                         </Grid>
                     </Border>
@@ -520,8 +521,10 @@
         </TabControl>
         <Image Grid.RowSpan="2" Height="35" HorizontalAlignment="Left" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="35" Source="/DSA%20MeisterGeister;component/Images/Icons/General/info.png" MouseDown="image1_MouseDown" Cursor="Hand" FlowDirection="LeftToRight" Margin="10,0,0,0" ToolTip="Audio-Codec Informationen" />
 
-
-
-
+        <StackPanel HorizontalAlignment="Left" Margin="50,0,0,0" Name="spStdPfad" Orientation="Horizontal">
+            <Label Name="lblStdPfad" Content="Standard-Verzeichnis" />
+            <TextBox Height="23" Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="T:\" Width="200" />
+            <Button Content="..." Height="21" HorizontalAlignment="Left" Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
+        </StackPanel>
     </Grid>
 </UserControl>
