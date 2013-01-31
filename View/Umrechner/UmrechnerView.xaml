@@ -36,8 +36,8 @@
                             <Label Margin="20,0,0,0" Content="Nach:" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
-                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxLängeVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxLängeVon_SelectionChanged" />
-                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxLängeNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxLängeVon_SelectionChanged" />
+                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxLängeVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxLängeVon_SelectionChanged" IsEditable="True" />
+                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxLängeNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxLängeVon_SelectionChanged" IsEditable="True" />
                         </StackPanel>
                         <Button Grid.Column="3" Height="25" Name="_buttonLängeWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonLängeWechseln_Click">
                             <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
@@ -67,8 +67,8 @@
                             <Label Margin="20,0,0,0" Content="Nach:" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
-                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxMasseVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxMasse_SelectionChanged" />
-                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxMasseNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxMasse_SelectionChanged" />
+                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxMasseVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxMasse_SelectionChanged" IsEditable="True" />
+                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxMasseNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxMasse_SelectionChanged" IsEditable="True" />
                         </StackPanel>
                         <Button Grid.Column="3" Height="25" Name="_buttonMasseWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonMasseWechseln_Click">
                             <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
@@ -98,8 +98,8 @@
                             <Label Margin="20,0,0,0" Content="Nach:" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
-                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxVolumenVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxVolumen_SelectionChanged" />
-                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxVolumenNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxVolumen_SelectionChanged" />
+                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxVolumenVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxVolumen_SelectionChanged" IsEditable="True" />
+                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxVolumenNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxVolumen_SelectionChanged" IsEditable="True" />
                         </StackPanel>
                         <Button Grid.Column="3" Height="25" Name="_buttonVolumenWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonVolumenWechseln_Click">
                             <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
@@ -129,8 +129,8 @@
                             <Label Margin="20,0,0,0" Content="Nach:" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
-                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxFlächeVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxFläche_SelectionChanged" />
-                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxFlächeNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxFläche_SelectionChanged" />
+                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxFlächeVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxFläche_SelectionChanged" IsEditable="True" />
+                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxFlächeNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxFläche_SelectionChanged" IsEditable="True" />
                         </StackPanel>
                         <Button Grid.Column="3" Height="25" Name="_buttonFlächeWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonFlächeWechseln_Click">
                             <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
@@ -160,8 +160,8 @@
                             <Label Margin="20,0,0,0" Content="Nach:" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
-                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxWährungVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxWährung_SelectionChanged" />
-                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxWährungNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxWährung_SelectionChanged" />
+                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxWährungVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxWährung_SelectionChanged" IsEditable="True" />
+                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxWährungNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxWährung_SelectionChanged" IsEditable="True" />
                         </StackPanel>
                         <Button Grid.Column="3" Height="25" Name="_buttonWährungWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonWährungWechseln_Click">
                             <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />
@@ -191,8 +191,8 @@
                             <Label Margin="20,0,0,0" Content="Nach:" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
-                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxZeitVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxZeit_SelectionChanged" />
-                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxZeitNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxZeit_SelectionChanged" />
+                            <ComboBox Height="23" Margin="20,10,10,0" Name="_comboBoxZeitVon" Width="186" ToolTip="Umrechnung von..." SelectionChanged="_comboBoxZeit_SelectionChanged" IsEditable="True" />
+                            <ComboBox Height="23" Margin="20,5,10,0" Name="_comboBoxZeitNach" Width="186" ToolTip="Umrechnung nach..." SelectionChanged="_comboBoxZeit_SelectionChanged" IsEditable="True" />
                         </StackPanel>
                         <Button Grid.Column="3" Height="25" Name="_buttonZeitWechseln"  ToolTip="Umrechnung tauschen." Click="ButtonZeitWechseln_Click">
                             <Image Source="/Images/Icons/General/refresh.png" Stretch="Uniform" />

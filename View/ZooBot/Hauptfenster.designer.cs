@@ -860,6 +860,8 @@
             // 
             // Nahrung_BoxRegion
             // 
+            this.Nahrung_BoxRegion.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Nahrung_BoxRegion.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Nahrung_BoxRegion.FormattingEnabled = true;
             this.Nahrung_BoxRegion.Location = new System.Drawing.Point(87, 97);
             this.Nahrung_BoxRegion.Name = "Nahrung_BoxRegion";
@@ -1371,6 +1373,8 @@
             // 
             // Kraeuter_BoxLandschaft
             // 
+            this.Kraeuter_BoxLandschaft.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Kraeuter_BoxLandschaft.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Kraeuter_BoxLandschaft.FormattingEnabled = true;
             this.Kraeuter_BoxLandschaft.Location = new System.Drawing.Point(87, 124);
             this.Kraeuter_BoxLandschaft.Name = "Kraeuter_BoxLandschaft";
@@ -1432,6 +1436,8 @@
             // 
             // Kraeuter_BoxRegion
             // 
+            this.Kraeuter_BoxRegion.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Kraeuter_BoxRegion.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Kraeuter_BoxRegion.FormattingEnabled = true;
             this.Kraeuter_BoxRegion.Location = new System.Drawing.Point(87, 97);
             this.Kraeuter_BoxRegion.Name = "Kraeuter_BoxRegion";
@@ -1441,6 +1447,8 @@
             // 
             // Kraeuter_BoxPflanze
             // 
+            this.Kraeuter_BoxPflanze.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Kraeuter_BoxPflanze.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Kraeuter_BoxPflanze.FormattingEnabled = true;
             this.Kraeuter_BoxPflanze.Location = new System.Drawing.Point(88, 168);
             this.Kraeuter_BoxPflanze.Name = "Kraeuter_BoxPflanze";
@@ -1800,6 +1808,8 @@
             // 
             // Jagd_BoxLandschaft
             // 
+            this.Jagd_BoxLandschaft.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Jagd_BoxLandschaft.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Jagd_BoxLandschaft.FormattingEnabled = true;
             this.Jagd_BoxLandschaft.Location = new System.Drawing.Point(87, 124);
             this.Jagd_BoxLandschaft.Name = "Jagd_BoxLandschaft";
@@ -1861,6 +1871,8 @@
             // 
             // Jagd_BoxRegion
             // 
+            this.Jagd_BoxRegion.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Jagd_BoxRegion.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Jagd_BoxRegion.FormattingEnabled = true;
             this.Jagd_BoxRegion.Location = new System.Drawing.Point(87, 97);
             this.Jagd_BoxRegion.Name = "Jagd_BoxRegion";
@@ -1870,6 +1882,8 @@
             // 
             // Jagd_BoxTier
             // 
+            this.Jagd_BoxTier.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Jagd_BoxTier.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Jagd_BoxTier.FormattingEnabled = true;
             this.Jagd_BoxTier.Location = new System.Drawing.Point(88, 168);
             this.Jagd_BoxTier.Name = "Jagd_BoxTier";
@@ -2147,6 +2161,8 @@
             // 
             // Fischen_BoxRegion
             // 
+            this.Fischen_BoxRegion.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.Fischen_BoxRegion.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.Fischen_BoxRegion.FormattingEnabled = true;
             this.Fischen_BoxRegion.Location = new System.Drawing.Point(87, 97);
             this.Fischen_BoxRegion.Name = "Fischen_BoxRegion";

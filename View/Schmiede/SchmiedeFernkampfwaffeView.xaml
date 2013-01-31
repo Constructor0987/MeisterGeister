@@ -18,7 +18,7 @@
 		<Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
 		<StackPanel Orientation="Vertical" VerticalAlignment="Top">
 			<TextBlock Margin="5" Text="Talent:" />
-				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedFernkampfwaffeTalent}">
+				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedFernkampfwaffeTalent}" IsEditable="True">
 					<ComboBox.ItemsPanel>
 						<ItemsPanelTemplate>
 							<VirtualizingStackPanel />
@@ -26,7 +26,7 @@
 					</ComboBox.ItemsPanel>
 				</ComboBox>
 				<TextBlock Margin="5" Text="Waffe:" />
-				<ComboBox Margin="5,0,5,20" Height="23" ItemsSource="{Binding Path=FernkampfwaffeListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffe}">
+				<ComboBox Margin="5,0,5,20" Height="23" ItemsSource="{Binding Path=FernkampfwaffeListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffe}" IsEditable="True">
 					<ComboBox.ItemsPanel>
 						<ItemsPanelTemplate>
 							<VirtualizingStackPanel />
@@ -64,9 +64,9 @@
 			</StackPanel>
 			<StackPanel Orientation="Vertical" Visibility="{Binding Path=AnzeigenTpVerbesserung}">
 				<TextBlock Margin="5" Text="Material:" />
-				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeMaterialListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffeMaterial}" />
+				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeMaterialListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffeMaterial}" IsEditable="True" />
 				<TextBlock Margin="5" Text="Technik:" />
-				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTechnikListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffeTechnik}" />
+				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTechnikListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffeTechnik}" IsEditable="True" />
 			</StackPanel>
 		</StackPanel>
 		</Border>

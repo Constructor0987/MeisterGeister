@@ -619,7 +619,7 @@
                                         <Label Content="Talent" Style="{DynamicResource TextInStack}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5">
-                                        <ComboBox Margin="0,0,0,3"  ItemsSource="{Binding NahkampfWaffeTalentListe}" SelectedItem="{Binding SelectedNahkampfwaffeTalent}" Height="25.96" DisplayMemberPath="Talentname" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox Margin="0,0,0,3"  ItemsSource="{Binding NahkampfWaffeTalentListe}" SelectedItem="{Binding SelectedNahkampfwaffeTalent}" Height="25.96" DisplayMemberPath="Talentname" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
@@ -662,7 +662,7 @@
                                         <Label Content="Talent" Style="{DynamicResource TextInStack}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5">
-                                        <ComboBox Margin="0,0,0,3" Height="25.96" ItemsSource="{Binding FernkampWaffeTalentListe}" SelectedItem="{Binding SelectedFernkampfwaffeTalent}" DisplayMemberPath="Talentname" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                        <ComboBox Margin="0,0,0,3" Height="25.96" ItemsSource="{Binding FernkampWaffeTalentListe}" SelectedItem="{Binding SelectedFernkampfwaffeTalent}" DisplayMemberPath="Talentname" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                             <ComboBox.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <VirtualizingStackPanel />
