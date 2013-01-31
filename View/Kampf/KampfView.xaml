@@ -747,6 +747,7 @@
                                 </ListBox>
                             </Border>
                         </Expander>
+
                     </Grid>
                 </Grid>
             </Border>
@@ -756,7 +757,22 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Expander Grid.Row="0" Grid.Column="0" Margin="0,0,4,0" IsExpanded="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Expander IsExpanded="True" Margin="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Expander.Header>
+                    <TextBlock Text="Kampf-Log" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <ListBox Height="65" Background="Transparent" BorderThickness="0" ItemsSource="{Binding Kampf.KampfLog}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
+                    </ListBox>
+                </Border>
+            </Expander>
+
+            <Expander Grid.Row="1" Grid.Column="0" Margin="0,0,4,0" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Längerfristige Handlungen / Effekte einfügen" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -787,7 +803,7 @@
                     </Grid>
                 </Border>
             </Expander>
-            <Expander Grid.Row="0" Grid.Column="1" IsExpanded="True">
+            <Expander Grid.Row="1" Grid.Column="1" IsExpanded="True">
                 <Expander.Header>
                     <TextBlock Text="Kampf" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>

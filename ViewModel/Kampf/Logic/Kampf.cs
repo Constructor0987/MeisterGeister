@@ -40,6 +40,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         public Arena.Arena Bodenplan { get; set; }
 
+        private ObservableCollection<string> _kampfLog = new ObservableCollection<string>();
+        public ObservableCollection<string> KampfLog
+        {
+            get { return _kampfLog; }
+        }
+
         private InitiativListe _initiativListe;
         public InitiativListe InitiativListe
         {
@@ -102,6 +108,15 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 }
 
             }
+        }
+
+        /// <summary>
+        /// Speichert einen Text im Kampf-Log.
+        /// </summary>
+        /// <param name="msg">Zu speichernder Log-Text.</param>
+        public void Log(string msg)
+        {
+            KampfLog.Insert(0, string.Format("{0}: {1}", DateTime.Now.ToShortTimeString(), msg));
         }
 
         public ManöverInfo Next()
@@ -180,6 +195,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             //eventuell in die Property?
             if (OnNeueKampfrunde != null)
                 OnNeueKampfrunde(this, _kampfrunde);
+
+            Log(string.Format("Kampfrunde {0} gestartet", Kampfrunde));
         }
 
         bool _umwandelnMöglich = true;
@@ -211,6 +228,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             UmwandelnMöglich = true;
             if (OnNeueKampfrunde != null)
                 OnNeueKampfrunde(this, _kampfrunde);
+
+            Log(string.Format("Kampfrunde {0} gestartet", Kampfrunde));
         }
 
         public void KampfEnde()
@@ -289,13 +308,13 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         /// <param name="alsTPA">als Ausdauerschaden</param>
         public void Trefferpunkte(IKämpfer k, int tp, Trefferzone zone = Trefferzone.Unlokalisiert, TrefferpunkteOptions optionen = TrefferpunkteOptions.Default)
         {
-            if(Kämpfer[k] == null)
+            if (Kämpfer[k] == null)
                 return;
 
             if (zone == Trefferzone.Zufall)
                 zone = TrefferzonenHelper.ZufallsZone();
             int rs = 0;
-            if((optionen & TrefferpunkteOptions.IgnoriertRüstung) != TrefferpunkteOptions.IgnoriertRüstung)
+            if ((optionen & TrefferpunkteOptions.IgnoriertRüstung) != TrefferpunkteOptions.IgnoriertRüstung)
                 rs = k.RS[zone];
             int spa = 0;
             int sp = Math.Max(tp - rs, 0);
@@ -309,6 +328,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
             k.LebensenergieAktuell -= sp;
             k.AusdauerAktuell -= spa;
+
+            Log(string.Format("Treffer bei '{0}': {1} SP ({2} TP, RS {3}) in Zone {4}", k.Name, sp, tp, rs, zone));
+
             if ((optionen & TrefferpunkteOptions.KeineWunden) != TrefferpunkteOptions.KeineWunden)
             {
                 int wsmod = 0 - ((optionen & TrefferpunkteOptions.VerringerteWundschwelle) == TrefferpunkteOptions.VerringerteWundschwelle ? 2 : 0) + ((optionen & TrefferpunkteOptions.Ausdauerschaden) == TrefferpunkteOptions.Ausdauerschaden ? 2 : 0);
@@ -320,6 +342,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 else if (sp > k.Wundschwelle + wsmod)
                     wunden = 1;
                 k.Wunden[zone] += wunden;
+
+                if (wunden > 0)
+                    Log(string.Format("Wunden bei '{0}': {1} Wunde(n) in Zone {2}", k.Name, wunden, zone));
             }
         }
 
