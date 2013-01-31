@@ -99,42 +99,42 @@ namespace MeisterGeister.View.Umrechner
         {
             if (IsInitialized && _comboBoxLängeVon.SelectedIndex != -1 && _comboBoxLängeNach.SelectedIndex != -1)
                 _textBoxLängeErgebnis.Text = _längen.WertUmrechnen(_comboBoxLängeVon.SelectedValue.ToString(),
-                    _comboBoxLängeNach.SelectedValue.ToString(), _doubleBoxLängeWert.Value).ToString();
+                    _comboBoxLängeNach.SelectedValue.ToString(), _doubleBoxLängeWert.Value).ToString().Replace("n. def.", "-");
         }
 
         private void UmrechnenMasse()
         {
             if (IsInitialized && _comboBoxMasseVon.SelectedIndex != -1 && _comboBoxMasseNach.SelectedIndex != -1)
                 _textBoxMasseErgebnis.Text = _massen.WertUmrechnen(_comboBoxMasseVon.SelectedValue.ToString(),
-                    _comboBoxMasseNach.SelectedValue.ToString(), _doubleBoxMasseWert.Value).ToString();
+                    _comboBoxMasseNach.SelectedValue.ToString(), _doubleBoxMasseWert.Value).ToString().Replace("n. def.", "-");
         }
 
         private void UmrechnenVolumen()
         {
             if (IsInitialized && _comboBoxVolumenVon.SelectedIndex != -1 && _comboBoxVolumenNach.SelectedIndex != -1)
                 _textBoxVolumenErgebnis.Text = _volumen.WertUmrechnen(_comboBoxVolumenVon.SelectedValue.ToString(),
-                    _comboBoxVolumenNach.SelectedValue.ToString(), _doubleBoxVolumenWert.Value).ToString();
+                    _comboBoxVolumenNach.SelectedValue.ToString(), _doubleBoxVolumenWert.Value).ToString().Replace("n. def.", "-");
         }
 
         private void UmrechnenFläche()
         {
             if (IsInitialized && _comboBoxFlächeVon.SelectedIndex != -1 && _comboBoxFlächeNach.SelectedIndex != -1)
                 _textBoxFlächeErgebnis.Text = _flächen.WertUmrechnen(_comboBoxFlächeVon.SelectedValue.ToString(),
-                    _comboBoxFlächeNach.SelectedValue.ToString(), _doubleBoxFlächeWert.Value).ToString();
+                    _comboBoxFlächeNach.SelectedValue.ToString(), _doubleBoxFlächeWert.Value).ToString().Replace("n. def.", "-");
         }
 
         private void UmrechnenWährung()
         {
             if (IsInitialized && _comboBoxWährungVon.SelectedIndex != -1 && _comboBoxWährungNach.SelectedIndex != -1)
                 _textBoxWährungErgebnis.Text = _währung.WertUmrechnen(_comboBoxWährungVon.SelectedValue.ToString(),
-                    _comboBoxWährungNach.SelectedValue.ToString(), _doubleBoxWährungWert.Value).ToString();
+                    _comboBoxWährungNach.SelectedValue.ToString(), _doubleBoxWährungWert.Value).ToString().Replace("n. def.", "-");
         }
 
         private void UmrechnenZeit()
         {
             if (IsInitialized && _comboBoxZeitVon.SelectedIndex != -1 && _comboBoxZeitNach.SelectedIndex != -1)
                 _textBoxZeitErgebnis.Text = _zeit.WertUmrechnen(_comboBoxZeitVon.SelectedValue.ToString(),
-                    _comboBoxZeitNach.SelectedValue.ToString(), _doubleBoxZeitWert.Value).ToString();
+                    _comboBoxZeitNach.SelectedValue.ToString(), _doubleBoxZeitWert.Value).ToString().Replace("n. def.", "-");
         }
 
         private void _doubleBoxLängeWert_NumValueChanged(DoubleBox sender)
