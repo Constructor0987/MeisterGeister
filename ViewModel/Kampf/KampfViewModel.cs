@@ -70,6 +70,19 @@ namespace MeisterGeister.ViewModel.Kampf
         public IKämpfer SelectedKämpfer
         {
             get { return (SelectedKämpferInfo != null) ? SelectedKämpferInfo.Kämpfer : null; }
+            set
+            {
+                foreach (var mi in InitiativListe)
+                {
+                    if (mi.KämpferInfo.Kämpfer == value)
+                    {
+                        SelectedManöverInfo = mi;
+                        KämpferSelected = true;
+                        break;
+                    }
+                }
+                OnChanged("SelectedKämpfer");
+            }
         }
 
         public KämpferInfo SelectedKämpferInfo

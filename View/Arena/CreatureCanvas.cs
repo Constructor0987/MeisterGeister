@@ -91,6 +91,28 @@ namespace MeisterGeister.View.Arena
 
         }
          */
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+            if (_creature != null && e.ButtonState == MouseButtonState.Released && _arenaViewer.Arena.KampfViewModel != null)
+            {
+                // Hack, um zu verhindern, dass beim Klick das Hauptfenster in den Vordergrund geholt wird
+                ArenaWindow arenaWindow = null;
+                foreach (var window in App.Current.Windows)
+                {
+                    if (window.GetType() == typeof(ArenaWindow))
+                    {
+                        arenaWindow = ((ArenaWindow)window);
+                        break;
+                    }
+                }
+                if (arenaWindow != null)
+                    arenaWindow.Topmost = true;
+                _arenaViewer.Arena.KampfViewModel.SelectedKämpfer = _creature;
+                if (arenaWindow != null)
+                    arenaWindow.Topmost = false;
+            }
+        }
 
         protected override void OnMouseEnter(MouseEventArgs args) {
             if (!_arenaViewer.isGrabbed) {

@@ -29,6 +29,10 @@ namespace MeisterGeister.ViewModel.Arena
         public View.Arena.ArenaWindow BodenplanWindow { get; set; }
 
         private ViewModel.Kampf.Logic.Kampf _kampf;
+        public ViewModel.Kampf.Logic.Kampf Kampf { get { return _kampf; } }
+
+        private ViewModel.Kampf.KampfViewModel _kampfViewModel;
+        public ViewModel.Kampf.KampfViewModel KampfViewModel { get { return _kampfViewModel; } }
 
         public Arena(int width, int height) {
             _width = width;
@@ -134,9 +138,10 @@ namespace MeisterGeister.ViewModel.Arena
             return false;
         }
 
-        public void Populate(ViewModel.Kampf.Logic.Kampf kampf)
+        public void Populate(ViewModel.Kampf.KampfViewModel kampfVM)
         {
-            _kampf = kampf;
+            _kampfViewModel = kampfVM;
+            _kampf = kampfVM.Kampf;
 
             Point mitte = new Point(_width / 2, _height / 2);
 

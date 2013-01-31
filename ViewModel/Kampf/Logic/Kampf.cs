@@ -344,7 +344,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 k.Wunden[zone] += wunden;
 
                 if (wunden > 0)
-                    Log(string.Format("Wunden bei '{0}': {1} Wunde(n) in Zone {2}", k.Name, wunden, zone));
+                    Log(string.Format("Wunde(n) bei '{0}': {1} Wunde(n) in Zone {2}", k.Name, wunden, zone));
             }
         }
 

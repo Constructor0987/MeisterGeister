@@ -66,14 +66,13 @@ namespace MeisterGeister.View.Kampf
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
             // TODO ??: In Command verschieben
-            ViewModel.Kampf.Logic.Kampf k = VM.Kampf;
             if (VM.BodenplanWindow != null)
             {
                 VM.BodenplanWindow.Activate();
             }
             else
             {
-                ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? k : null);
+                ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? VM : null);
                 VM.BodenplanWindow = arenaWindow;
                 arenaWindow.Width = 1200;
                 arenaWindow.Height = 800;
