@@ -93,6 +93,7 @@ namespace MeisterGeister.View.Kampf.Controls
 
         private void ListBoxGegner_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             _listBoxGegnerBase.SelectedItem = null;
         }
 
