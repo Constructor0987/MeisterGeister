@@ -25,6 +25,13 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="ReadOnlyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="VorNachteilWertNumItemStyle" TargetType="{x:Type ViewGeneral:IntBox}">
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
@@ -121,7 +128,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddVorteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{StaticResource ReadOnlyButtonStyle}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                     <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="Nachteil:" VerticalAlignment="Center" FontWeight="Bold" />
@@ -136,7 +143,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddNachteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{StaticResource ReadOnlyButtonStyle}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                 </Grid>

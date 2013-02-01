@@ -18,6 +18,13 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="ReadOnlyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="HorizontalStretchSet">
             <Setter Property="FrameworkElement.HorizontalAlignment" Value="Stretch" />
             <Setter Property="Control.HorizontalContentAlignment" Value="Stretch" />
@@ -323,7 +330,7 @@
                                         <KeyBinding Key="Enter"  Command="{Binding OnAddTalent_Click}" />
                                     </ComboBox.InputBindings>
                                 </ComboBox>
-                                <Button Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                                <Button Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{DynamicResource ReadOnlyButtonStyle}">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                 </Button>
                             </Grid>

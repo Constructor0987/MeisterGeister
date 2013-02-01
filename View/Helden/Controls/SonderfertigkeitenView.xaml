@@ -30,6 +30,13 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="ReadOnlyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <DataTemplate x:Key="SonderfertigkeitenTemplate">
             <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#38A08350">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
@@ -93,7 +100,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddSonderfertigkeit}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                    <Button Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{StaticResource ReadOnlyButtonStyle}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                 </Grid>

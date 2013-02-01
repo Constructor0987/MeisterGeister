@@ -18,6 +18,13 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="ReadOnlyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
 		<Grid>
@@ -108,7 +115,7 @@
                                     <TextBlock Margin="4,0" Text="Web" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
-                            <Button Grid.Column="2" Grid.Row="0" Height="23" Click="ButtonBildLinkDelete_Click" x:Name="_buttonBildLinkDelete" ToolTip="Bild-Link entfernen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                            <Button Grid.Column="2" Grid.Row="0" Height="23" Click="ButtonBildLinkDelete_Click" x:Name="_buttonBildLinkDelete" ToolTip="Bild-Link entfernen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{StaticResource ReadOnlyButtonStyle}">
                                 <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                             </Button>
                             <Grid Grid.Column="0" Grid.Row="1" Margin="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="Bild_MouseDown">

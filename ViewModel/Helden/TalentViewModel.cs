@@ -285,7 +285,7 @@ namespace MeisterGeister.ViewModel.Helden {
             OnChanged("LiturgienTalentListe");
         }        
         private void AddTalent(object obj) {
-            if (TalentAuswahl != null && SelectedHeld != null)
+            if (TalentAuswahl != null && SelectedHeld != null && !IsReadOnly)
             {
                 SelectedHeld.AddTalent(TalentAuswahl, 0);
                 SelectedHeldChanged();

@@ -16,6 +16,13 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="ReadOnlyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -43,7 +50,7 @@
                             </ItemsPanelTemplate>
                         </ComboBox.ItemsPanel>
                         <ComboBox.InputBindings>
-                            <KeyBinding Key="Enter"  Command="{Binding OnAddZauber}" />
+                            <KeyBinding Key="Enter" Command="{Binding OnAddZauber}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
                     <ComboBox Grid.Column="1" Height="23" ItemsSource="{Binding RepräsentationAuswahlListe}" SelectedItem="{Binding SelectedRepräsentation}" DisplayMemberPath="Value" SelectedValuePath="Key" ToolTip="Repräsentation" VerticalAlignment="Center" IsEditable="True">
@@ -54,7 +61,7 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
 
-                    <Button Grid.Column="2" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                    <Button Grid.Column="2" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{StaticResource ReadOnlyButtonStyle}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
 

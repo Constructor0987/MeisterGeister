@@ -640,7 +640,8 @@ namespace MeisterGeister.ViewModel.Inventar {
         #region //--ADD
 
         void AddNahkampfwaffe(object sender) {
-            if (SelectedNahkampfwaffe != null && SelectedHeld != null) {
+            if (SelectedNahkampfwaffe != null && SelectedHeld != null && !IsReadOnly)
+            {
                 foreach (var item in HeldNahkampfWaffeImInventar) {
                     if (item.EntityNW.WaffeGUID == SelectedNahkampfwaffe.WaffeGUID) {
                         item.EntityHA.Anzahl++;
@@ -658,7 +659,8 @@ namespace MeisterGeister.ViewModel.Inventar {
             }
         }
         void AddFernkampfwaffe(object sender) {
-            if (SelectedFernkampfwaffe != null && SelectedHeld != null) {
+            if (SelectedFernkampfwaffe != null && SelectedHeld != null && !IsReadOnly)
+            {
                 foreach (var item in HeldFernkampfwaffeImInventar) {
                     if (item.EntityFW.FernkampfwaffeGUID == SelectedFernkampfwaffe.FernkampfwaffeGUID) {
                         item.EntityHA.Anzahl++;
@@ -677,7 +679,8 @@ namespace MeisterGeister.ViewModel.Inventar {
             }
         }
         void AddSchild(object sender) {
-            if (SelectedSchild != null && SelectedHeld != null) {
+            if (SelectedSchild != null && SelectedHeld != null && !IsReadOnly)
+            {
                 foreach (var item in HeldSchildImInventar) {
                     if (item.EntityS.SchildGUID == SelectedSchild.SchildGUID) {
                         item.EntityHA.Anzahl++;
@@ -696,7 +699,8 @@ namespace MeisterGeister.ViewModel.Inventar {
             }
         }
         void AddRuestung(object sender) {
-            if (SelectedRuestung != null && SelectedHeld != null) {
+            if (SelectedRuestung != null && SelectedHeld != null && !IsReadOnly)
+            {
                 foreach (var item in HeldRuestungImInventar) {
                     if (item.EntityR.RüstungGUID == SelectedRuestung.RüstungGUID) {
                         item.EntityHA.Anzahl++;

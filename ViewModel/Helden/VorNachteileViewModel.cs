@@ -140,7 +140,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void AddVorteil(object sender)
         {
-            if (SelectedHeld != null && SelectedAddVorteil != null)
+            if (SelectedHeld != null && SelectedAddVorteil != null && !IsReadOnly)
             {
                 if (!SelectedHeld.HatVorNachteil(SelectedAddVorteil))
                     SelectedHeld.AddVorNachteil(SelectedAddVorteil, null);
@@ -151,7 +151,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void AddNachteil(object sender)
         {
-            if (SelectedHeld != null && SelectedAddNachteil != null)
+            if (SelectedHeld != null && SelectedAddNachteil != null && !IsReadOnly)
             {
                 if (!SelectedHeld.HatVorNachteil(SelectedAddNachteil))
                     SelectedHeld.AddVorNachteil(SelectedAddNachteil, null);
