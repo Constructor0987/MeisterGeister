@@ -101,6 +101,7 @@ namespace MeisterGeister.View.Helden.Controls
 
         private void ListBoxHelden_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             _listBoxHelden.SelectedItem = null;
         }
 

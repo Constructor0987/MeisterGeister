@@ -527,7 +527,7 @@
                                                                     </StackPanel>
                                                                 </Image.ToolTip>
                                                             </Image>
-                                                            <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="12" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                                                            <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="12" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
                                                         </Grid>
                                                     </Border>
                                                 </DataTemplate>
@@ -611,7 +611,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -694,7 +694,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -777,7 +777,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -860,7 +860,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -943,7 +943,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1026,7 +1026,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1109,7 +1109,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1192,7 +1192,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
@@ -1275,7 +1275,7 @@
                                                                 </StackPanel>
                                                             </Image.ToolTip>
                                                         </Image>
-                                                        <TextBox Text="{Binding HeldTalent.Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                                        <TextBox Text="{Binding HeldTalent.Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>

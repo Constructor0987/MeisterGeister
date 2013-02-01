@@ -156,7 +156,7 @@
                                             <TextBlock Text="{Binding Repräsentation}" Grid.Column="5" TextAlignment="Center" VerticalAlignment="Center" />
                                             <ViewGeneral:IntBox NoMouseWheel="True" ShowButtons="True" Value="{Binding ZfW}" Grid.Column="6" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                             <TextBlock Text="{Binding Zauber.Merkmale}" Grid.Column="7" TextTrimming="WordEllipsis" Margin="5,0,0,0" VerticalAlignment="Center" ToolTip="{Binding Zauber.Merkmale}" />
-                                            <TextBox Text="{Binding Bemerkung}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                                            <TextBox Text="{Binding Bemerkung, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" TextWrapping="WrapWithOverflow" BorderThickness="0" Grid.Column="8" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

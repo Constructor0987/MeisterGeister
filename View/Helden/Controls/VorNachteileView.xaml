@@ -79,7 +79,7 @@
             <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#38A08350">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="{Binding VorNachteil.Name}" VerticalAlignment="Center" />
-                    <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                    <TextBox Style="{StaticResource VorNachteilWertItemStyle}" Margin="15,0,0,0" MaxWidth="500" MinWidth="100" Text="{Binding Wert, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow" ToolTip="Wert des Vor-/Nachteils" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
                     <ViewGeneral:IntBox Style="{StaticResource VorNachteilWertNumItemStyle}" Margin="15,0,0,0" MinWidth="80" NoMouseWheel="True" ShowButtons="True" ToolTip="Wert des Vor-/Nachteils" Value="{Binding WertInt}" VerticalAlignment="Center" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
                 </StackPanel>
             </Border>

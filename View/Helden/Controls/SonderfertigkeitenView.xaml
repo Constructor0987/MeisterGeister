@@ -34,7 +34,7 @@
             <Border Margin="5,5,5,5" BorderBrush="Transparent" BorderThickness="0" CornerRadius="3" Padding="5" Background="#38A08350">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock Text="{Binding Sonderfertigkeit.Name}" />
-                    <TextBox Style="{StaticResource SonderfertigkeitWertItemStyle}" Margin="15,0,0,0" MaxLength="1200" MaxWidth="500" MinWidth="100" Text="{Binding Wert}" TextWrapping="WrapWithOverflow" ToolTip="Wert der Sonderfertigkeit" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
+                    <TextBox Style="{StaticResource SonderfertigkeitWertItemStyle}" Margin="15,0,0,0" MaxLength="1200" MaxWidth="500" MinWidth="100" Text="{Binding Wert, UpdateSourceTrigger=PropertyChanged}" TextWrapping="WrapWithOverflow" ToolTip="Wert der Sonderfertigkeit" IsReadOnly="{Binding ElementName=userControl, Path=VM.IsReadOnly}" />
                 </StackPanel>
             </Border>
         </DataTemplate>
