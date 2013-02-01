@@ -333,6 +333,31 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region Abenteuerpunkte
+
+        [DependentProperty("APGesamt"), DependentProperty("APEingesetzt")]
+        public int APGuthaben
+        {
+            get { return APGesamt.GetValueOrDefault() - APEingesetzt.GetValueOrDefault(); }
+            set
+            {
+                // TODO ??: Soll eine Änderung des Guthabens die abhängigen AP-Werte ändern? Soll das möglich sein, oder eher nicht?
+            }
+        }
+
+        [DependentProperty("APEingesetzt")]
+        public int Stufe
+        {
+            get { return APEingesetzt.GetValueOrDefault() / 1000; }
+            set
+            {
+                // TODO ??: Änderung der Stufe erhöht die AP-Werte? Soll das möglich sein, oder eher nicht?
+            }
+        }
+
+        #endregion
+
+
         #region BaseEigenschaften / Für die Berechnung von abgeleiteten Werten
         [DependentProperty("MU")]
         [DependsOnModifikator(typeof(Mod.IModMU))]

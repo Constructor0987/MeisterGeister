@@ -52,6 +52,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="Name:" FontWeight="Bold" VerticalAlignment="Center" />
                         <TextBox Grid.Column="1" Grid.Row="0" Margin="2" x:Name="_textBoxHeldName" Text="{Binding SelectedHeld.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Name des Helden" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
@@ -65,7 +66,30 @@
                         <Label Grid.Column="0" Grid.Row="3" Content="Profession:" FontWeight="Bold" />
                         <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="4" Margin="2" Text="{Binding SelectedHeld.Profession, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
 
-                        <CheckBox Grid.Column="1" Grid.Row="4" Margin="2" Content="Aktive Heldengruppe" IsChecked="{Binding SelectedHeld.AktiveHeldengruppe}" ToolTip="Ist der Held Mitglied der aktiven Heldengruppe?" VerticalAlignment="Center" />
+                        <!--Abenteuerpunkte-->
+                        <Label Grid.Column="0" Grid.Row="4" Content="Abenteuerpunkte:" FontWeight="Bold" Margin="0,10,0,0" />
+                        <Grid Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="4" Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <MeisterGeister_View_General:IntBox Grid.Column="0" ShowButtons="True" Value="{Binding SelectedHeld.APGesamt}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                            <Label Grid.Column="1" Content="(Gesamt)" FontWeight="Bold" Margin="0,0,20,0" />
+                            <MeisterGeister_View_General:IntBox Grid.Column="2" ShowButtons="True" Value="{Binding SelectedHeld.APEingesetzt}" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                            <Label Grid.Column="3" Content="(Eingesetzt)" FontWeight="Bold" Margin="0,0,20,0" />
+                            <MeisterGeister_View_General:IntBox Grid.Column="4" Value="{Binding SelectedHeld.APGuthaben}" IsReadOnly="True" />
+                            <Label Grid.Column="5" Content="(Guthaben)" FontWeight="Bold" Margin="0,0,20,0" />
+                            <MeisterGeister_View_General:IntBox Grid.Column="6" Value="{Binding SelectedHeld.Stufe}" IsReadOnly="True" />
+                            <Label Grid.Column="7" Content="(Stufe)" FontWeight="Bold" Margin="0,0,20,0" />
+                        </Grid>
+                        
+                        <CheckBox Grid.Column="1" Grid.Row="5" Margin="2,8,2,2" Content="Aktive Heldengruppe" IsChecked="{Binding SelectedHeld.AktiveHeldengruppe}" ToolTip="Ist der Held Mitglied der aktiven Heldengruppe?" VerticalAlignment="Center" />
                     </Grid>
                 </Border>
             </Expander>
