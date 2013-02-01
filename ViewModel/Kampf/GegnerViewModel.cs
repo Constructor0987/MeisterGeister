@@ -686,6 +686,7 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             if (SelectedGegnerBase != null)
             {
+                SaveGegner();
                 GegnerBase h = SelectedGegnerBase.Clone();
                 LoadDaten();
             }
