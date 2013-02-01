@@ -1523,6 +1523,16 @@
     </Content>
     <Resource Include="Images\Icons\General\info.png" />
     <Resource Include="Images\Logos\WikiAventurica_Logo.png" />
+    <Resource Include="View\Helden\Controls\hosen.png" />
+    <Resource Include="View\Helden\Controls\koerper.png" />
+    <Resource Include="View\Helden\Controls\kopf.png" />
+    <Resource Include="View\Helden\Controls\larm.png" />
+    <Resource Include="View\Helden\Controls\lbein.png" />
+    <Resource Include="View\Helden\Controls\lhand.png" />
+    <Resource Include="View\Helden\Controls\rarm.png" />
+    <Resource Include="View\Helden\Controls\rbein.png" />
+    <Resource Include="View\Helden\Controls\rhand.png" />
+    <Resource Include="View\Helden\Controls\sonstiges.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
