@@ -1,6 +1,4 @@
-﻿-- TODO ??: ACHTUNG! Dieses Skript ist noch nicht in der Dropbox Datenbank enthalten!
-
--- Erweiterungen für Held-Tabelle
+﻿-- Erweiterungen für Held-Tabelle
 ALTER TABLE [Held] ADD [Spieler] nvarchar(100)
 GO
 ALTER TABLE [Held] ADD [Vermögen] float

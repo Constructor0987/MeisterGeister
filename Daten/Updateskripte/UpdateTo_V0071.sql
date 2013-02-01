@@ -1,6 +1,4 @@
-﻿-- TODO ??: ACHTUNG! Dieses Skript ist noch nicht in der Dropbox Datenbank enthalten!
-
--- Zauber Korrekturen
+﻿-- Zauber Korrekturen
 UPDATE Zauber SET Name = 'Dämonenbann (Belshirash)' WHERE Name = 'Dämonenbann (Nagrach)';
 
 -- Korrektur von Umbruch-Fehler in Rüstungen
@@ -28,11 +26,3 @@ GO
 UPDATE Rüstung SET Gruppe = 'Tuchrüstungen' WHERE Gruppe = 'Tuchrüstungen
 '
 GO
-
--- Neue Zauber aus Stätten okkulter Macht
---Zauber: Ecliptifactus Schattenkraft (obsk.) [Mag]
---Zauber: Nuntiovolo Botenvogel (obsk.) [Mag]
---Zauber: Opacitas Schattenleib [Mag]
---Zauber: Pantenebrum [Mag]
---Zauber: Schattenodem [Mag]
---Zauber: Umbraporta Schattentüre [Mag]
