@@ -42,7 +42,11 @@ namespace MeisterGeister.ViewModel.Kampf
         public View.Arena.ArenaWindow BodenplanWindow
         {
             get { return _bodenplanWindow; }
-            set { _bodenplanWindow = value; Kampf.Bodenplan = value.Arena; OnChanged("BodenplanWindow"); }
+            set 
+            { 
+                _bodenplanWindow = value;
+                Kampf.Bodenplan = value == null ? null : value.Arena;
+                OnChanged("BodenplanWindow"); }
         }
 
         public K Kampf
