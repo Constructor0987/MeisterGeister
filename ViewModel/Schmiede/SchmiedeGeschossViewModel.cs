@@ -318,11 +318,14 @@ namespace MeisterGeister.ViewModel.Schmiede
         private void Init()
         {
             FernkampfwaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
-            FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && (t.Talentname == TALENTFERNKAMPFBOGEN || t.Talentname == TALENTFERNKAMPFARMBRUST) && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+            if (Global.ContextInventar != null)
+            {
+                FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && (t.Talentname == TALENTFERNKAMPFBOGEN || t.Talentname == TALENTFERNKAMPFARMBRUST) && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+                FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => (w.Munitionsart == MUNITIONSTYPBOLZEN || w.Munitionsart == MUNITIONSTYPPFEIL) && !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
+                MunitionListe.AddRange(Global.ContextInventar.MunitionListe.Where(m => (m.Art == MUNITIONSTYPBOLZEN || m.Art == MUNITIONSTYPPFEIL)));
+            }
             OnChanged("FernkampfwaffeTalentListe");
-            FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => (w.Munitionsart == MUNITIONSTYPBOLZEN || w.Munitionsart == MUNITIONSTYPPFEIL) && !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("FernkampfwaffeListe");
-            MunitionListe.AddRange(Global.ContextInventar.MunitionListe.Where(m => (m.Art == MUNITIONSTYPBOLZEN || m.Art == MUNITIONSTYPPFEIL)));
             OnChanged("MunitionListe");
         }
 

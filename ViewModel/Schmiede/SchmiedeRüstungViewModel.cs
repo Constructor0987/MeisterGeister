@@ -183,10 +183,13 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         private void Init()
         {
-            RüstungListe.AddRange(Global.ContextInventar.RuestungListe.Where(w => !RüstungListe.Contains(w)).OrderBy(w => w.Name));
-            OnChanged("RüstungListe");
             RüstungTypenListe.Add(FILTERDEAKTIVIEREN);
-            RüstungTypenListe.AddRange(Global.ContextInventar.RuestungListe.Where(r => !RüstungTypenListe.Contains(r.Gruppe)).Select(r => r.Gruppe));
+            if (Global.ContextInventar != null)
+            {
+                RüstungListe.AddRange(Global.ContextInventar.RuestungListe.Where(w => !RüstungListe.Contains(w)).OrderBy(w => w.Name));
+                RüstungTypenListe.AddRange(Global.ContextInventar.RuestungListe.Where(r => !RüstungTypenListe.Contains(r.Gruppe)).Select(r => r.Gruppe));
+            }
+            OnChanged("RüstungListe");
             OnChanged("RüstungTypenListe");
         }
 

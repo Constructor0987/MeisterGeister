@@ -126,7 +126,9 @@ namespace MeisterGeister.ViewModel.Schmiede
         private void Init()
         {
             // Schilde - keine Parierwaffen
-            SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => (w.Typ == "S" || w.SchildGUID.ToString().CompareTo(GUIDBUCKLER) == 0 || w.SchildGUID.ToString().CompareTo(GUIDBUCKLERVOLLMETAL) == 0) && !SchildListe.Contains(w)).OrderBy(w => w.Name));
+            if (Global.ContextInventar!=null) {
+                SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => (w.Typ == "S" || w.SchildGUID.ToString().CompareTo(GUIDBUCKLER) == 0 || w.SchildGUID.ToString().CompareTo(GUIDBUCKLERVOLLMETAL) == 0) && !SchildListe.Contains(w)).OrderBy(w => w.Name));
+            }
             OnChanged("SchildListe");
         }
 

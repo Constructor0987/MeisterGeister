@@ -593,9 +593,12 @@ namespace MeisterGeister.ViewModel.Schmiede
             FernkampfwaffeMaterialListe = new Materialien();
             FernkampfwaffeTechnikListe = new Techniken();
             FernkampfwaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
-            FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && t.Talentname != TALENTBELAGERUNGSWAFFEN && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+            if (Global.ContextInventar != null)
+            {
+                FernkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && t.Talentname != TALENTBELAGERUNGSWAFFEN && !FernkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+                FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
+            }
             OnChanged("FernkampfwaffeTalentListe");
-            FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("FernkampfwaffeListe");
 
             SelectedFernkampfwaffeMaterial = FernkampfwaffeMaterialListe.First();

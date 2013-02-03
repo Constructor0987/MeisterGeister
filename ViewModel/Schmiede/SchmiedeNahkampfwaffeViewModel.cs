@@ -335,13 +335,16 @@ namespace MeisterGeister.ViewModel.Schmiede
         {
             // Neben Nahkampfwaffen auch Raufen-Waffen (-> Parierwaffen)
             NahkampfwaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
-            NahkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t =>
-                t.TalentgruppeID == 1
-                && (t.Untergruppe == TALENTNAHKAMPFWAFFEUNTERKATEGORIE
-                || t.Untergruppe == TALENTNAHKAMPFWAFFEATTECHNIK)
-                && !NahkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+            if (Global.ContextInventar != null)
+            {
+                NahkampfwaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t =>
+                    t.TalentgruppeID == 1
+                    && (t.Untergruppe == TALENTNAHKAMPFWAFFEUNTERKATEGORIE
+                    || t.Untergruppe == TALENTNAHKAMPFWAFFEATTECHNIK)
+                    && !NahkampfwaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
+                NahkampfwaffeListe.AddRange(Global.ContextInventar.WaffeListe.Where(w => !NahkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
+            }
             OnChanged("NahkampfwaffeTalentListe");
-            NahkampfwaffeListe.AddRange(Global.ContextInventar.WaffeListe.Where(w => !NahkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
             OnChanged("NahkampfwaffeListe");
             NahkampfwaffeMaterialListe = new Materialien();
             NahkampfwaffeTechnikListe = new Techniken();

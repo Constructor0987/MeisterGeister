@@ -5,89 +5,139 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:vmSchmiede="clr-namespace:MeisterGeister.ViewModel.Schmiede"
 			 xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-			 mc:Ignorable="d" 
-			 d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
-	<UserControl.DataContext>
-		<vmSchmiede:SchmiedeGeschossViewModel />
-	</UserControl.DataContext>
-	<Grid OpacityMask="Black">
+			 Background="{StaticResource Background1}"
+			 Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignHeight="457.5" d:DesignWidth="728">
+	<Grid>
 		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="300*" />
 			<ColumnDefinition Width="450*" />
-			<ColumnDefinition Width="296" />
 		</Grid.ColumnDefinitions>
+		<GridSplitter Grid.Column="0" Background="DarkGray" Width="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" />
 
-		<Border Grid.Column="1" Margin="32" Style="{DynamicResource ControlContentBorder}">
-			<StackPanel Orientation="Vertical" VerticalAlignment="Top">
-				<TextBlock Margin="5" Text="Talent:" />
-				<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedFernkampfwaffeTalent}" IsEditable="True">
-					<ComboBox.ItemsPanel>
-						<ItemsPanelTemplate>
-							<VirtualizingStackPanel />
-						</ItemsPanelTemplate>
-					</ComboBox.ItemsPanel>
-				</ComboBox>
-
-				<TextBlock Margin="5" Text="Waffe:" />
-				<ComboBox Margin="5,0,5,20" Height="23" ItemsSource="{Binding Path=FernkampfwaffeListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffe}" IsEditable="True">
-					<ComboBox.ItemsPanel>
-						<ItemsPanelTemplate>
-							<VirtualizingStackPanel />
-						</ItemsPanelTemplate>
-					</ComboBox.ItemsPanel>
-				</ComboBox>
-				<StackPanel Orientation="Vertical">
-					<TextBlock Margin="5" Text="Typ:" />
-					<ComboBox Margin="5,0,5,0" Height="23" ItemsSource="{Binding Path=MunitionListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedMunition}" IsEditable="True" />
-                    <CheckBox Margin="5,0,5,0" Content="gehärtet" IsChecked="{Binding GeschossHärten}" IsEnabled="{Binding IstGeschossHärtbar}"  />
-				</StackPanel>
-			</StackPanel>
-		</Border>
-
-		<Border Grid.Column="0" Margin="32" Style="{DynamicResource ControlContentBorder}">
-			<StackPanel>
-			<TextBlock Margin="20,20,20,10" FontWeight="Bold" Text="{Binding Path=SelectedMunition.Name}" />
-			<StackPanel Orientation="Horizontal" Margin="20,0,20,0">
-				<TextBlock Text="{Binding Munitionspreis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
-				<TextBlock Text="{Binding Path=SelectedFernkampfwaffe.Munitionsgewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
-			</StackPanel>
-			<Grid Margin="20,40,20,10">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition />
-					<ColumnDefinition />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
-				<TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="Spitze" />
-				<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" Text="Geschoss" />
-				<TextBlock Grid.Row="1" Grid.Column="0" Text="benötigte Talentpunkte:" />
-				<TextBlock Grid.Row="1" Grid.Column="1" Text="1 TaP*" />
-				<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding ProbePunkte, StringFormat={}{0} TaP*}" />
-				<TextBlock Grid.Row="2" Grid.Column="0" Text="Erschwernis:" />
-				<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=ProbeErschwernisSpitze}" />
-				<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=ProbeErschwernis}" />
-				<TextBlock Grid.Row="3" Grid.Column="0" Text="Dauer jeder Probe:" />
-				<TextBlock Grid.Row="3" Grid.Column="1" Text="6 SR (30 Min.)" />
-				<TextBlock Grid.Row="3" Grid.Column="2" Text="6 SR (30 Min.)" />
-				<TextBlock Grid.Row="4" Grid.Column="0" Margin="0,10,0,0" Text="TaW" />
-				<ViewGeneral:IntBox Grid.Row="4" Grid.Column="1" Margin="0,10,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedSpitze}" />
-				<ViewGeneral:IntBox Grid.Row="4" Grid.Column="2" Margin="0,10,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmied}" />
-				<TextBlock Grid.Row="5" Grid.Column="0" Text="Zus. Erschwernis/Erleichterung" />
-				<ViewGeneral:IntBox Grid.Row="5" Grid.Column="1" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedModSpitze}" />
-				<ViewGeneral:IntBox Grid.Row="5" Grid.Column="2" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
-				<TextBlock Grid.Row="6" Grid.Column="0" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
-				<TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Path=ProbeDauerNApproxSpitze, StringFormat={}{0} Stunden}" />
-				<TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Stunden}" />
-			</Grid>
+		<StackPanel Grid.Column="0">
+			<Expander Margin="5" IsExpanded="True">
+				<Expander.Header>
+					<TextBlock Text="Auswahl der Waffe" Style="{DynamicResource TextTitel}" />
+				</Expander.Header>
+				<Border Style="{DynamicResource ControlContentBorder}">
+					<StackPanel>
+						<TextBlock Margin="5" Text="Talent:" />
+						<ComboBox Margin="5" Height="23" ItemsSource="{Binding Path=FernkampfwaffeTalentListe}" DisplayMemberPath="Talentname" SelectedItem="{Binding Path=SelectedFernkampfwaffeTalent}" IsEditable="True">
+							<ComboBox.ItemsPanel>
+								<ItemsPanelTemplate>
+									<VirtualizingStackPanel />
+								</ItemsPanelTemplate>
+							</ComboBox.ItemsPanel>
+						</ComboBox>
+						<TextBlock Margin="5" Text="Waffe:" />
+						<ComboBox Margin="5" Height="23" ItemsSource="{Binding Path=FernkampfwaffeListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedFernkampfwaffe}" IsEditable="True">
+							<ComboBox.ItemsPanel>
+								<ItemsPanelTemplate>
+									<VirtualizingStackPanel />
+								</ItemsPanelTemplate>
+							</ComboBox.ItemsPanel>
+						</ComboBox>
+					</StackPanel>
+				</Border>
+			</Expander>
+			<Expander Margin="5" IsExpanded="True">
+				<Expander.Header>
+					<TextBlock Text="Auswahl des Geschosses" Style="{DynamicResource TextTitel}" />
+				</Expander.Header>
+				<Border Style="{DynamicResource ControlContentBorder}">
+					<StackPanel>
+						<StackPanel Orientation="Vertical">
+							<TextBlock Margin="5" Text="Typ:" />
+							<ComboBox Margin="5" Height="23" ItemsSource="{Binding Path=MunitionListe}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedMunition}" IsEditable="True" />
+							<CheckBox Margin="5" Content="gehärtet" IsChecked="{Binding GeschossHärten}" IsEnabled="{Binding IstGeschossHärtbar}"  />
+						</StackPanel>
+					</StackPanel>
+				</Border>
+			</Expander>
 		</StackPanel>
-		</Border>
+
+		<StackPanel Grid.Column="1">
+			<Expander Margin="5" IsExpanded="True">
+				<Expander.Header>
+					<TextBlock Text="Werte des Geschosses" Style="{DynamicResource TextTitel}" />
+				</Expander.Header>
+				<Border Style="{DynamicResource ControlContentBorder}">
+					<StackPanel>
+						<TextBlock Margin="20,10" FontWeight="Bold" Text="{Binding Path=SelectedMunition.Name}" />
+						<StackPanel Orientation="Horizontal" Margin="20,0,20,10">
+							<TextBlock Text="{Binding Munitionspreis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
+							<TextBlock Text="{Binding Path=SelectedFernkampfwaffe.Munitionsgewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
+						</StackPanel>
+					</StackPanel>
+				</Border>
+			</Expander>
+			<Expander Margin="5" IsExpanded="True">
+				<Expander.Header>
+					<TextBlock Text="Herstellung des Geschosses" Style="{DynamicResource TextTitel}" />
+				</Expander.Header>
+				<Border Style="{DynamicResource ControlContentBorder}">
+					<StackPanel>
+						<Grid Margin="10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
+							<TextBlock Grid.Row="0" Grid.Column="1" Margin="10,0" FontWeight="Bold" Text="Spitze" />
+							<TextBlock Grid.Row="0" Grid.Column="2" Margin="10,0" FontWeight="Bold" Text="Geschoss" />
+							<TextBlock Grid.Row="1" Grid.Column="0" Margin="10,0" Text="benötigte Talentpunkte:" />
+							<TextBlock Grid.Row="1" Grid.Column="1" Margin="10,0" Text="1 TaP*" />
+							<TextBlock Grid.Row="1" Grid.Column="2" Margin="10,0" Text="{Binding ProbePunkte, StringFormat={}{0} TaP*}" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Margin="10,0" Text="Erschwernis:" />
+							<TextBlock Grid.Row="2" Grid.Column="1" Margin="10,0" Text="{Binding Path=ProbeErschwernisSpitze}" />
+							<TextBlock Grid.Row="2" Grid.Column="2" Margin="10,0" Text="{Binding Path=ProbeErschwernis}" />
+							<TextBlock Grid.Row="3" Grid.Column="0" Margin="10,0" Text="Dauer jeder Probe:" />
+							<TextBlock Grid.Row="3" Grid.Column="1" Margin="10,0" Text="6 SR (30 Min.)" />
+							<TextBlock Grid.Row="3" Grid.Column="2" Margin="10,0" Text="6 SR (30 Min.)" />
+						</Grid>
+					</StackPanel>
+				</Border>
+			</Expander>
+			<Expander Margin="5" IsExpanded="True">
+				<Expander.Header>
+					<TextBlock Text="erwartete Dauer der Herstellung" Style="{DynamicResource TextTitel}" />
+				</Expander.Header>
+				<Border Style="{DynamicResource ControlContentBorder}">
+					<StackPanel>
+						<Grid Margin="10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+							</Grid.RowDefinitions>
+							<TextBlock Grid.Row="0" Grid.Column="1" Margin="10,0" FontWeight="Bold" Text="Spitze" />
+							<TextBlock Grid.Row="0" Grid.Column="2" Margin="10,0" FontWeight="Bold" Text="Geschoss" />
+							<TextBlock Grid.Row="1" Grid.Column="0" Margin="10,0" Text="TaW" />
+							<ViewGeneral:IntBox Grid.Row="1" Grid.Column="1" Margin="10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedSpitze}" />
+							<ViewGeneral:IntBox Grid.Row="1" Grid.Column="2" Margin="10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmied}" />
+							<TextBlock Grid.Row="2" Grid.Column="0" Margin="10,0" Text="Zus. Erschwernis/Erleichterung" />
+							<ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" Margin="10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedModSpitze}" />
+							<ViewGeneral:IntBox Grid.Row="2" Grid.Column="2" Margin="10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding Path=TawSchmiedMod}" />
+							<TextBlock Grid.Row="3" Grid.Column="0" Margin="10,0" Text="geschätzte Dauer:" ToolTip="Zur Berechnung werden (TaW-Erschwernis)/2 TaP* angenommen." />
+							<TextBlock Grid.Row="3" Grid.Column="1" Margin="10,0" Text="{Binding Path=ProbeDauerNApproxSpitze, StringFormat={}{0} Stunden}" />
+							<TextBlock Grid.Row="3" Grid.Column="2" Margin="10,0" Text="{Binding Path=ProbeDauerNApprox, StringFormat={}{0} Stunden}" />
+						</Grid>
+					</StackPanel>
+				</Border>
+			</Expander>
+		</StackPanel>
 
 	</Grid>
 </UserControl>

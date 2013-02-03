@@ -10,8 +10,12 @@
     <UserControl.DataContext>
         <vmSchmiede:SchmiedeViewModel />
     </UserControl.DataContext>
-    <StackPanel Orientation="Horizontal"  Margin="5">
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="5" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left">
             <Button Click="ButtonSchmiede_Click" Tag="Nahkampfwaffe" ToolTip="Schmiede: Nahkampfwaffe" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2" />
             </Button>
@@ -28,6 +32,6 @@
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/munition.png" Margin="2" />
             </Button>
         </StackPanel>
-        <TabControl x:Name="_tabControlSchmiede" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" d:IsHidden="True" />
-    </StackPanel>
+        <TabControl Grid.Column="1" x:Name="_tabControlSchmiede" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" d:IsHidden="True" />
+    </Grid>
 </UserControl>

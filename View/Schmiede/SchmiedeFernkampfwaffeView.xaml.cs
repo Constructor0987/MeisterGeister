@@ -26,6 +26,7 @@ namespace MeisterGeister.View.Schmiede
         public SchmiedeFernkampfwaffeView()
         {
             InitializeComponent();
+            VM = new VM.SchmiedeFernkampfwaffeViewModel();
         }
 
         /// <summary>
@@ -44,11 +45,8 @@ namespace MeisterGeister.View.Schmiede
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            if (VM != null)
                 VM.Refresh();
-            }
-            catch (Exception) { }
         }
     }
 }
