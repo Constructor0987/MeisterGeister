@@ -14,6 +14,7 @@ using System.Diagnostics;
 // Eigene Usings
 using GeneralLogic = MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
+using MeisterGeister.View.AudioPlayer;
 
 namespace MeisterGeister.View.Windows
 {
@@ -30,6 +31,7 @@ namespace MeisterGeister.View.Windows
             DataContext = Global.ContextRegeln.RegelnListe;
 
             _listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
+            tbStdPfad.Text = Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", @"C:\");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -82,6 +84,40 @@ namespace MeisterGeister.View.Windows
         private void Window_Closed(object sender, EventArgs e)
         {
             Global.ContextRegeln.Save();
+        }
+
+
+        public void btnStdPfad_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var dialog = new System.Windows.Forms.FolderBrowserDialog();
+                dialog.SelectedPath = Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis",@"C:\"); // btnStdPfad.Tag.ToString(); 
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    MeisterGeister.Logic.Settings.Einstellungen.SetEinstellung("AudioVerzeichnis", dialog.SelectedPath);
+                    btnStdPfad.Tag = dialog.SelectedPath;
+                    
+                 /*   for (int x = 0; x < _GrpObjecte.Count; x++)
+                    {
+                        List<KlangZeile> grpob = _GrpObjecte[x]._listZeile.Where(t => t.spnlKlangRow.Background == Brushes.Red).ToList();
+                        grpob.ForEach(t => t.spnlKlangRow.Background = null);
+                    }                    
+                    for (int i = 0; i < lbhintergrundtitellist.Items.Count; i++)
+                        ((ListBoxItem)lbhintergrundtitellist.Items[i]).Background = null;*/
+                }
+            }
+            catch (Exception ex)
+            {
+                var errWin = new MsgWindow("Eingabefehler", "Das Auswählen des Standard-Verzeichnisses hat eine Exeption ausgelöst.", ex);
+                errWin.ShowDialog();
+                errWin.Close();
+            }
+            finally
+            {
+                tbStdPfad.Text = btnStdPfad.Tag.ToString();
+            }
         }
     }
 }

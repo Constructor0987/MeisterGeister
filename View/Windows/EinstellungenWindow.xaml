@@ -87,6 +87,11 @@
                             <Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate">Mehr Infos zum Jingle.</Hyperlink>
                             </TextBlock>
                         </StackPanel>
+                        <StackPanel HorizontalAlignment="Left" Margin="50,0,0,0" Name="spStdPfad" Orientation="Horizontal">
+                            <Label Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
+                            <TextBox Height="23" Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
+                            <Button Content="..." Height="21" HorizontalAlignment="Left" Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
+                        </StackPanel>
                     </ListBox>
                 </Border>
             </Expander>

@@ -127,6 +127,22 @@ namespace MeisterGeister.Logic.Settings
 
         public static EventHandler WuerfelSoundAbspielenChanged;
 
+        public static bool AudioDirektAbspielen
+        {
+            get
+            {
+                return GetOrCreateEinstellung<bool>("AudioDirektAbspielen", false);
+            }
+            set
+            {
+                SetEinstellung<bool>("AudioDirektAbspielen", value);
+                if (AudioDirektAbspielen_Click != null)
+                    AudioDirektAbspielen_Click(null, new EventArgs());
+            }
+        }
+
+        public static EventHandler AudioDirektAbspielen_Click;
+
         public static int SelectedTab
         {
             get
@@ -246,6 +262,7 @@ namespace MeisterGeister.Logic.Settings
                 SetEinstellung<string>("ProbenFavoriten", value);
             }
         }
+
 
         /// <summary>
         /// Gibt an, ob sich MeisterGeister im Nur-Lesen-Modus befindet.
