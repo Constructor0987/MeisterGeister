@@ -89,6 +89,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <ComboBox Grid.Column="0" Height="23" ItemsSource="{Binding SonderfertigkeitAuswahlListe}" SelectedItem="{Binding SelectedAddSonderfertigkeit}"  DisplayMemberPath="Name" x:Name="_comboBoxSonderfertigkeit" ToolTip="Sonderfertigkeit hinzufügen" VerticalAlignment="Center" IsEditable="True">
                         <ComboBox.ItemsPanel>
@@ -103,10 +104,15 @@
                     <Button Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{StaticResource ReadOnlyButtonStyle}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
+                    <Button Grid.Column="2" Margin="10,0,0,0" Command="{Binding OnShowAddMultiSonderfertigkeit}" Height="23" Width="23" ToolTip="Mehrere gleichzeitig einfügen..." IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{StaticResource ReadOnlyButtonStyle}">
+                        <Grid>
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="-2,-2,2,2" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
+                        </Grid>
+                    </Button>
                 </Grid>
             </Border>
         </Expander>
-
         <ListBox Grid.Row="1" ItemsSource="{Binding Source={StaticResource SonderfertigkeitListeView}}" SelectedItem="{Binding SelectedHeldSonderfertigkeit}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ItemTemplate="{StaticResource SonderfertigkeitenTemplate}" x:Name="_listBoxHeldSonderfertigkeiten" BorderBrush="#00000000" Background="#00000000">
             <ListBox.ItemsPanel>
@@ -142,5 +148,46 @@
                 <KeyBinding Key="Delete" Command="{Binding OnDeleteSonderfertigkeit}" />
             </ListBox.InputBindings>
         </ListBox>
+        
+        <!-- Sonderfertigkeiten Multi-Add -->
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="#E57A7A7A" Visibility="{Binding IsMultiAdd}">
+            <Border Margin="15" Style="{DynamicResource ControlContentBorder}">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Sonderfertigkeiten auswählen, die hinzugefügt werden sollen." FontStyle="Italic" TextAlignment="Center" FontSize="14">
+                        <TextBlock.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="White"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding SonderfertigkeitMultiAddListe}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 BorderBrush="#00000000" Background="#00000000" Margin="0,20,0,0">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Width="320" ToolTip="{Binding SF.Name}" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsWählbar}">
+                                    <TextBlock Text="{Binding SF.Name}" TextTrimming="CharacterEllipsis" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <DockPanel Grid.Row="2">
+                        <Button DockPanel.Dock="Right" Margin="10,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Abbrechen" Command="{Binding OnShowAddMultiSonderfertigkeit}">
+                            <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
+                        </Button>
+                        <Button DockPanel.Dock="Right" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Ausgewählte Sonderfertigkeiten hinzufügen" Command="{Binding OnAddMultiSonderfertigkeit}">
+                            <Image Source="/Images/Icons/General/add.png" Height="25" />
+                        </Button>
+                    </DockPanel>
+                </Grid>
+            </Border>
+        </Border>
     </Grid>
 </UserControl>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Model.Extensions;
 
@@ -21,6 +22,28 @@ namespace MeisterGeister.ViewModel.Helden
         public Base.CommandBase OnAddSonderfertigkeit
         {
             get { return onAddSonderfertigkeit; }
+        }
+
+        private Base.CommandBase onShowAddMultiSonderfertigkeit = null;
+        public Base.CommandBase OnShowAddMultiSonderfertigkeit
+        {
+            get
+            {
+                if (onShowAddMultiSonderfertigkeit == null)
+                    onShowAddMultiSonderfertigkeit = new Base.CommandBase(ShowAddMultiSonderfertigkeit, null);
+                return onShowAddMultiSonderfertigkeit;
+            }
+        }
+
+        private Base.CommandBase onAddMultiSonderfertigkeit = null;
+        public Base.CommandBase OnAddMultiSonderfertigkeit
+        {
+            get
+            {
+                if (onAddMultiSonderfertigkeit == null)
+                    onAddMultiSonderfertigkeit = new Base.CommandBase(AddMultiSonderfertigkeit, null);
+                return onAddMultiSonderfertigkeit;
+            }
         }
 
         private Base.CommandBase onOpenWiki;
@@ -68,10 +91,44 @@ namespace MeisterGeister.ViewModel.Helden
             get { return SelectedHeld == null ? null : SelectedHeld.SonderfertigkeitenWählbar; }
         }
 
+        private List<SonderfertigkeitItem> _sonderfertigkeitMultiAddListe = new List<SonderfertigkeitItem>();
+        public List<SonderfertigkeitItem> SonderfertigkeitMultiAddListe
+        {
+            get 
+            {
+                return _sonderfertigkeitMultiAddListe;
+            }
+            set
+            {
+                _sonderfertigkeitMultiAddListe = value;
+                OnChanged("SonderfertigkeitMultiAddListe");
+            }
+        }
+
+        private void RefreshSonderfertigkeitMultiAddListe()
+        {
+            var globalList = Global.ContextHeld.SonderfertigkeitListe.OrderBy(sf => sf.Name);
+            List<SonderfertigkeitItem> li = new List<SonderfertigkeitItem>(globalList.Count());
+            foreach (var item in globalList)
+                li.Add(new SonderfertigkeitItem(item, SelectedHeld.HatSonderfertigkeit(item)));
+            SonderfertigkeitMultiAddListe = li;
+        }
+
         private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
             get { return _isReadOnly; }
+        }
+
+        private Visibility _isMultiAdd = Visibility.Collapsed;
+        public Visibility IsMultiAdd
+        {
+            get { return _isMultiAdd; }
+            set
+            {
+                _isMultiAdd = value;
+                OnChanged("IsMultiAdd");
+            }
         }
 
         #endregion
@@ -103,6 +160,8 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("SelectedHeld");
             OnChanged("SonderfertigkeitListe");
             OnChanged("SonderfertigkeitAuswahlListe");
+            if (IsMultiAdd == Visibility.Visible)
+                RefreshSonderfertigkeitMultiAddListe();
         }
 
         private void DeleteSonderfertigkeit(object sender)
@@ -124,6 +183,33 @@ namespace MeisterGeister.ViewModel.Helden
                 if (!SelectedHeld.HatSonderfertigkeitUndVoraussetzungen(SelectedAddSonderfertigkeit))
                     SelectedHeld.AddSonderfertigkeit(SelectedAddSonderfertigkeit, null);
 
+                NotifyRefresh();
+            }
+        }
+
+        private void ShowAddMultiSonderfertigkeit(object obj)
+        {
+            if (SelectedHeld != null && !IsReadOnly)
+            {
+                if (IsMultiAdd == Visibility.Visible)
+                    IsMultiAdd = Visibility.Collapsed;
+                else
+                {
+                    IsMultiAdd = Visibility.Visible;
+                    RefreshSonderfertigkeitMultiAddListe();
+                }
+            }
+        }
+
+        private void AddMultiSonderfertigkeit(object obj)
+        {
+            if (SelectedHeld != null && !IsReadOnly)
+            {
+                // Sonderfertigkeiten hinzufügen
+                foreach (var item in SonderfertigkeitMultiAddListe.Where(sf => sf.IsChecked && sf.IsWählbar))
+                    SelectedHeld.AddSonderfertigkeit(item.SF);
+
+                IsMultiAdd = Visibility.Collapsed;
                 NotifyRefresh();
             }
         }
@@ -160,7 +246,27 @@ namespace MeisterGeister.ViewModel.Helden
             get { return listenToChangeEvents; }
             set { listenToChangeEvents = value; SelectedHeldChanged(); }
         }
-        
+
+        #region Subklassen
+
+        public class SonderfertigkeitItem
+        {
+            public SonderfertigkeitItem(Model.Sonderfertigkeit sf, bool hatHeld)
+            {
+                SF = sf;
+                IsWählbar = !hatHeld;
+                IsChecked = hatHeld;
+            }
+
+            public Model.Sonderfertigkeit SF { get; set; }
+
+            public bool IsWählbar { get; set; }
+
+            public bool IsChecked { get; set; }
+        }
+
+        #endregion
+
     }
     
 }
