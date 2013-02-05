@@ -8,9 +8,21 @@ namespace MeisterGeister.Daten
 {
     public static class SqlCeUpgrade
     {
+        private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=True";
+
         public static void Run(string fileName)
         {
-            var engine = new System.Data.SqlServerCe.SqlCeEngine("Data Source=" + fileName);
+            string connectionString = "Data Source=" + fileName + DatabasePwd;
+            var engine = new System.Data.SqlServerCe.SqlCeEngine(connectionString);
+
+            // Check Password
+            if (!engine.Verify())
+            {
+                engine = new System.Data.SqlServerCe.SqlCeEngine("Data Source=" + fileName);
+                engine.Compact(connectionString);
+                engine = new System.Data.SqlServerCe.SqlCeEngine(connectionString);
+            }
+
             engine.EnsureVersion40(fileName);
         }
 

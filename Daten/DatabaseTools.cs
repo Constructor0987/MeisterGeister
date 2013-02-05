@@ -80,7 +80,7 @@ namespace MeisterGeister.Daten
             try
             {
                 SqlCeEngine engine = new SqlCeEngine(connectionString);
-                engine.Compact(string.Empty);
+                engine.Compact(connectionString);
             }
             catch (Exception ex)
             {

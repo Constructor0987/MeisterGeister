@@ -20,6 +20,8 @@ namespace MeisterGeister.Daten
         /// </summary>
         public const int DatenbankVersionAktuell = 71;
 
+        private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=True";
+
         /// <summary>
         /// Das zuletzt ausgeführte Update-Skript.
         /// </summary>
@@ -68,7 +70,7 @@ namespace MeisterGeister.Daten
             string[] files = Directory.GetFiles(directoryPath, "*.sdf");
 
             foreach (string file in files)
-                databases.Add("Data Source=" + file);
+                databases.Add("Data Source=" + file + DatabasePwd);
 
             return databases;
         }
@@ -91,7 +93,7 @@ namespace MeisterGeister.Daten
         /// <returns></returns>
         public static DatabaseUpdateResult PerformDatabaseUpdate()
         {
-            return PerformDatabaseUpdate(MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString);
+            return PerformDatabaseUpdate(MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString.Replace(DatabasePwd, string.Empty));
         }
 
         /// <summary>
@@ -114,7 +116,7 @@ namespace MeisterGeister.Daten
         /// <returns></returns>
         public static DatabaseUpdateResult PerformDatabaseUpdate(string connectionString)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("Datenbank Update wird gestartet: {0}", connectionString));
+            System.Diagnostics.Debug.WriteLine(string.Format("Datenbank Update wird gestartet: {0}", connectionString.Replace(DatabasePwd, string.Empty)));
 
             GetUserDatabaseVersion(connectionString);
 
