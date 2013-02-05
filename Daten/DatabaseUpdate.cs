@@ -93,7 +93,7 @@ namespace MeisterGeister.Daten
         /// <returns></returns>
         public static DatabaseUpdateResult PerformDatabaseUpdate()
         {
-            return PerformDatabaseUpdate(MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString.Replace(DatabasePwd, string.Empty));
+            return PerformDatabaseUpdate(MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString);
         }
 
         /// <summary>
