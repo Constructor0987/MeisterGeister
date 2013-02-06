@@ -2507,7 +2507,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         else
                             s = ((TabItem)tcKlang.SelectedItem).Header.ToString();
 
-                        if (playlistliste != null && _GrpObjecte[posObjGruppe]._listZeile.Count > 0)
+                        if (playlistliste != null && playlistliste.Count != 0 && _GrpObjecte[posObjGruppe]._listZeile.Count > 0)
                         {
                             List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(playlistliste[0]);
                             AktKlangPlaylist = playlistliste[0];
