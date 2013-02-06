@@ -113,9 +113,9 @@ namespace MeisterGeister.ViewModel.Helden
             if (Global.ContextHeld != null)
             {
                 if (SelectedSortierung == "Spieler")
-                    HeldListe = Global.ContextHeld.Liste<Held>().OrderBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
+                    HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
                 else
-                    HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ToList();
+                    HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
                 if(tmp != Guid.Empty)
                     SelectedHeld = HeldListe.Where(h => h.HeldGUID == tmp).FirstOrDefault();
             }

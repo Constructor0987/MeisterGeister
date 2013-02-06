@@ -25,6 +25,11 @@ namespace MeisterGeister.View.Helden.Controls
         {
             InitializeComponent();
             VM = new VM.SonderfertigkeitenViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+
+            // TODO MT: Entfernen, sobald Feature veröffentlicht werden soll
+#if !DEBUG
+            _buttonMultiAdd.Visibility = System.Windows.Visibility.Collapsed;
+#endif
         }
 
         /// <summary>
