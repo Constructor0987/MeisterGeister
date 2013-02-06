@@ -20,6 +20,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
@@ -33,16 +34,24 @@
                             <Image Margin="2,2,0,2" Source="/Images/Icons/General/suchen.png" Width="18" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
                             <TextBox Margin="2,2,0,2" Width="170" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
                         </StackPanel>
-                        <ListBox Padding="4" Background="Transparent" BorderBrush="#00000000" MaxHeight="150" ItemsSource="{Binding TagListe}" SelectedItem="{Binding SuchText}" ToolTip="Liste der Stichwörter" />
                     </StackPanel>
                 </Border>
             </Expander>
 
-            <Border Grid.Row="1" Style="{DynamicResource ControlTitelBorder}">
-                <TextBlock Text="Gegner" Style="{DynamicResource TextTitel}" />
+            <Expander IsExpanded="True" Grid.Row="1">
+                <Expander.Header>
+                    <TextBlock Text="Stichwort-Filter" Style="{DynamicResource TextTitel}" />
+                </Expander.Header>
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <ListBox Padding="4" Background="Transparent" BorderBrush="#00000000" MaxHeight="150" ItemsSource="{Binding TagListe}" SelectedItem="{Binding SuchText}" ToolTip="Liste der Stichwörter" />
+                </Border>
+            </Expander>
+
+            <Border Grid.Row="2" Style="{DynamicResource ControlTitelBorder}">
+                <TextBlock Text="Gegner-Liste" Style="{DynamicResource TextTitel}" />
             </Border>
 
-            <Border Grid.Row="2" Style="{DynamicResource ControlContentBorder}">
+            <Border Grid.Row="3" Style="{DynamicResource ControlContentBorder}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />

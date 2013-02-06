@@ -69,7 +69,7 @@
                 </Image.ToolTip>
             </Image>
             
-            <ListBox Grid.Row="1" x:Name="_listBoxHelden" Margin="2,6,0,35" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
+            <ListBox Grid.Row="1" x:Name="_listBoxHelden" Margin="2,6,0,2" Padding="4" Background="Transparent" AllowDrop="True" ItemsSource="{Binding HeldListe}" ItemTemplate="{StaticResource HeldListTemplate}" 
 				MouseDown="ListBoxHelden_MouseDown" SelectedItem="{Binding SelectedHeld}" Drop="ListBoxHelden_Drop" BorderBrush="#00000000" VerticalContentAlignment="Center">
                 <ListBox.InputBindings>
                     <KeyBinding Key="Delete" Command="{Binding OnDeleteHeld}" />
