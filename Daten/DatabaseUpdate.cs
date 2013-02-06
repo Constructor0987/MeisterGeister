@@ -20,7 +20,7 @@ namespace MeisterGeister.Daten
         /// </summary>
         public const int DatenbankVersionAktuell = 71;
 
-        private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=True";
+        private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
         /// <summary>
         /// Das zuletzt ausgeführte Update-Skript.

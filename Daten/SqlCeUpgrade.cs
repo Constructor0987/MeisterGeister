@@ -8,7 +8,7 @@ namespace MeisterGeister.Daten
 {
     public static class SqlCeUpgrade
     {
-        private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=True";
+        private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
         public static void Run(string fileName)
         {

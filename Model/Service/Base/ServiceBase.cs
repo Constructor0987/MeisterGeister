@@ -13,7 +13,7 @@ namespace MeisterGeister.Model.Service {
         protected static Object syncRoot;
 
         protected static volatile DatabaseDSAEntities _context = null;
-        public static string ConnectionString = "metadata=res://*/Model.MeisterGeisterModel.csdl|res://*/Model.MeisterGeisterModel.ssdl|res://*/Model.MeisterGeisterModel.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=\"Data Source=|DataDirectory|" + "\\" + "Daten\\DatabaseDSA.sdf;Password=m3ist3rg3ist3r;Persist Security Info=True\"";
+        public static string ConnectionString = "metadata=res://*/Model.MeisterGeisterModel.csdl|res://*/Model.MeisterGeisterModel.ssdl|res://*/Model.MeisterGeisterModel.msl;provider=System.Data.SqlServerCe.4.0;provider connection string=\"Data Source=|DataDirectory|" + "\\" + "Daten\\DatabaseDSA.sdf;Password=m3ist3rg3ist3r;Persist Security Info=False\"";
 
         static ServiceBase() {
             syncRoot = new Object();

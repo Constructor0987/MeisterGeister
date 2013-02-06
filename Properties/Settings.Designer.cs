@@ -36,7 +36,7 @@ namespace MeisterGeister.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=|DataDirectory|\\Daten\\DatabaseDSA.sdf;Password=m3ist3rg3ist3r;Persist" +
-            " Security Info=True")]
+            " Security Info=False")]
         public string DatabaseDSAConnectionString {
             get {
                 return ((string)(this["DatabaseDSAConnectionString"]));
