@@ -150,10 +150,11 @@
         </ListBox>
         
         <!-- Sonderfertigkeiten Multi-Add -->
-        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="#E57A7A7A" Visibility="{Binding IsMultiAdd, FallbackValue=Collapsed}">
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="#E57A7A7A" Visibility="{Binding IsMultiAdd}">
             <Border Margin="15" Style="{DynamicResource ControlContentBorder}">
                 <Grid Margin="15">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
@@ -163,22 +164,38 @@
                             <DropShadowEffect ShadowDepth="0" Color="White"/>
                         </TextBlock.Effect>
                     </TextBlock>
-                    <ListBox Grid.Row="1" ItemsSource="{Binding SonderfertigkeitMultiAddListe}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 BorderBrush="#00000000" Background="#00000000" Margin="0,20,0,0">
-                        <ListBox.ItemsPanel>
+                    <StackPanel Grid.Row="1">
+                        <DockPanel>
+                            <Image DockPanel.Dock="Left"  Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
+                            <TextBox DockPanel.Dock="Top" Margin="5" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name oder Typ der Sonderfertigkeit)" />
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image Source="/Images/Icons/mechanik.png" Width="16" />
+                            <TextBlock Text="Aktive Settings (unter 'Einstellungen' änderbar): " />
+                            <TextBlock Text="{Binding AktiveSettings}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <ListBox Grid.Row="2" ItemsSource="{Binding FilteredSonderfertigkeitMultiAddListe}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 BorderBrush="#00000000" Background="#00000000" Margin="0,20,0,0" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
+                        <!-- Das WrapPanel unterstützt leider keine Virtualisierung, weshalb diese Variante zu langsam ist -->
+                        <!--<ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel IsItemsHost="True" />
                             </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
+                        </ListBox.ItemsPanel>-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox Width="320" ToolTip="{Binding SF.Name}" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsWählbar}">
-                                    <TextBlock Text="{Binding SF.Name}" TextTrimming="CharacterEllipsis" />
+                                <CheckBox ToolTip="{Binding SF.Name}" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsWählbar}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding ImagePath}" Height="16" ToolTip="{Binding SF.Typ}" />
+                                        <TextBlock Text="{Binding SF.Name}" TextTrimming="CharacterEllipsis" Margin="2,0,0,0" />
+                                    </StackPanel>
                                 </CheckBox>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <DockPanel Grid.Row="2">
+                    <DockPanel Grid.Row="3">
+                        <TextBlock Margin="18,0,0,0" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding FilteredSonderfertigkeitMultiAddListe.Count, StringFormat='{}{0} Sonderfertigkeit(en)'}" />
                         <Button DockPanel.Dock="Right" Margin="10,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Abbrechen" Command="{Binding OnShowAddMultiSonderfertigkeit}">
                             <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
                         </Button>

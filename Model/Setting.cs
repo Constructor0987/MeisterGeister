@@ -39,6 +39,20 @@ namespace MeisterGeister.Model
                 return Setting.aktiveSettings; 
             }
             set { Setting.aktiveSettings = value; }
-        }        
+        }
+
+        public static string AktiveSettingsToString()
+        {
+            string settings = string.Empty;
+
+            foreach (var setting in AktiveSettings)
+            {
+                if (settings != string.Empty)
+                    settings += ", ";
+                settings += setting.Name;
+            }
+
+            return settings;
+        }
     }
 }

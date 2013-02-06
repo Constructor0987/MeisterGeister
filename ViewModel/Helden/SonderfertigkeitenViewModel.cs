@@ -56,6 +56,23 @@ namespace MeisterGeister.ViewModel.Helden
 
         #region //---- EIGENSCHAFTEN & FELDER ----
 
+        private string _suchText = string.Empty;
+        public string SuchText
+        {
+            get { return _suchText; }
+            set
+            {
+                _suchText = value;
+                OnChanged("SuchText");
+                RefreshFilterListe();
+            }
+        }
+
+        public string AktiveSettings
+        {
+            get { return Model.Setting.AktiveSettingsToString(); }
+        }
+
         // Selection
         public Model.Held SelectedHeld
         {
@@ -102,6 +119,21 @@ namespace MeisterGeister.ViewModel.Helden
             {
                 _sonderfertigkeitMultiAddListe = value;
                 OnChanged("SonderfertigkeitMultiAddListe");
+                RefreshFilterListe();
+            }
+        }
+
+        private List<SonderfertigkeitItem> _filteredSonderfertigkeitMultiAddListe;
+        public List<SonderfertigkeitItem> FilteredSonderfertigkeitMultiAddListe
+        {
+            get
+            {
+                return _filteredSonderfertigkeitMultiAddListe;
+            }
+            set
+            {
+                _filteredSonderfertigkeitMultiAddListe = value;
+                OnChanged("FilteredSonderfertigkeitMultiAddListe");
             }
         }
 
@@ -112,6 +144,19 @@ namespace MeisterGeister.ViewModel.Helden
             foreach (var item in globalList)
                 li.Add(new SonderfertigkeitItem(item, SelectedHeld.HatSonderfertigkeit(item)));
             SonderfertigkeitMultiAddListe = li;
+        }
+
+        private void RefreshFilterListe()
+        {
+            string suchText = _suchText.ToLower().Trim();
+            string[] suchWorte = suchText.Split(' ');
+
+            if (suchText == string.Empty) // kein Suchwort
+                FilteredSonderfertigkeitMultiAddListe = SonderfertigkeitMultiAddListe.AsParallel().OrderBy(n => n.SF.Name).ToList();
+            else if (suchWorte.Length == 1) // nur ein Suchwort
+                FilteredSonderfertigkeitMultiAddListe = SonderfertigkeitMultiAddListe.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.SF.Name).ToList();
+            else // mehrere Suchwörter
+                FilteredSonderfertigkeitMultiAddListe = SonderfertigkeitMultiAddListe.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.SF.Name).ToList();
         }
 
         private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
@@ -247,26 +292,94 @@ namespace MeisterGeister.ViewModel.Helden
             set { listenToChangeEvents = value; SelectedHeldChanged(); }
         }
 
-        #region Subklassen
+    }
 
-        public class SonderfertigkeitItem
+    #region Subklassen
+
+    public class SonderfertigkeitItem
+    {
+        public SonderfertigkeitItem(Model.Sonderfertigkeit sf, bool hatHeld)
         {
-            public SonderfertigkeitItem(Model.Sonderfertigkeit sf, bool hatHeld)
+            SF = sf;
+            IsWählbar = !hatHeld;
+            IsChecked = hatHeld;
+            if (SF != null)
             {
-                SF = sf;
-                IsWählbar = !hatHeld;
-                IsChecked = hatHeld;
+                _suchtext = SF.Name.ToLower() + SF.Typ.ToLower();
+                SetImagePath();
             }
-
-            public Model.Sonderfertigkeit SF { get; set; }
-
-            public bool IsWählbar { get; set; }
-
-            public bool IsChecked { get; set; }
         }
 
-        #endregion
+        private string _suchtext = string.Empty;
 
+        public Model.Sonderfertigkeit SF { get; set; }
+
+        public bool IsWählbar { get; set; }
+
+        public bool IsChecked { get; set; }
+
+        private string _imagePath = string.Empty;
+        public string ImagePath
+        {
+            get { return _imagePath; }
+            set { _imagePath = value; }
+        }
+
+        private void SetImagePath()
+        {
+            switch (SF.Typ)
+            {
+                case "Kampf":
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png";
+                    break;
+                case "Magisch":
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/magie.png";
+                    break;
+                case "Magisch (Ritual)":
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/zauberzeichen.png";
+                    break;
+                case "Petromantie":
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/zauberzeichen.png";
+                    break;
+                case "Klerikal":
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/audio2.png";
+                    break;
+                case "Klerikal (Liturgie)":
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/audio2.png";
+                    break;
+                default:
+                    _imagePath = "/DSA MeisterGeister;component/Images/Icons/helden.png";
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Prüft, ob 'suchWort' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// </summary>
+        /// <param name="suchWort"></param>
+        /// <returns></returns>
+        public bool Contains(string suchWort)
+        {
+            return _suchtext.Contains(suchWort);
+        }
+
+        /// <summary>
+        /// Prüft, ob die 'suchWorte' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// Es wird dabei eine UND-Prüfung durchgeführt.
+        /// </summary>
+        /// <param name="suchWorte"></param>
+        /// <returns></returns>
+        public bool Contains(string[] suchWorte)
+        {
+            foreach (string wort in suchWorte)
+            {
+                if (!Contains(wort))
+                    return false;
+            }
+            return true;
+        }
     }
+
+    #endregion
     
 }
