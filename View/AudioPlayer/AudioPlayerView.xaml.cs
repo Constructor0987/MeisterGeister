@@ -543,7 +543,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             KlangZeilenLaufend[durchlauf].pbarTitel.Tag != null)
                         {
                             //keine Informationen nach 1 Sekunde vom MediaPlayer über Track -> Gelb -> nächstes Lied
-                            if (((TimeSpan)(DateTime.Now - KlangZeilenLaufend[durchlauf].dtLiedLastCheck)).TotalSeconds > .1)
+                            if (((TimeSpan)(DateTime.Now - KlangZeilenLaufend[durchlauf].dtLiedLastCheck)).TotalSeconds > 1)
                             {
                                 if (!KlangZeilenLaufend[durchlauf]._mplayer.HasAudio)
                                 {
