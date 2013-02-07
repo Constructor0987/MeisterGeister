@@ -409,9 +409,9 @@
                             <Label   Grid.Row="2" Grid.Column="0" Content="Jagd:" />
                             <ViewGeneral:IntBox Grid.Row="2" Grid.Column="1" MinWidth="100" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.Jagd}" Margin="2" ShowButtons="True" CanBeNull="True" ToolTip="Jagdschwierigkeit"/>
                             <Label   Grid.Row="2" Grid.Column="2" Content="Reaktion:" />
-                            <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding SelectedGegnerBase.Jagdreaktion, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000"  AcceptsReturn="True" ToolTip="Wie reagiert das Wesen (Angriff, Flucht, ...)"/>
+                            <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding SelectedGegnerBase.Jagdreaktion, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" TextWrapping="Wrap" AcceptsReturn="True" ToolTip="Wie reagiert das Wesen (Angriff, Flucht, ...)"/>
                             <Label   Grid.Row="3" Grid.Column="0" Content="Beute:" />
-                            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SelectedGegnerBase.Beute, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000"  AcceptsReturn="True" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SelectedGegnerBase.Beute, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" TextWrapping="Wrap" AcceptsReturn="True" />
                         </Grid>
 
                     </Border>
