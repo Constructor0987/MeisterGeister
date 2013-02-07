@@ -14,6 +14,7 @@ using System.Windows.Forms;
 // Eigene Usings
 using MeisterGeister.View;
 using System.IO;
+using MeisterGeister.View.Windows;
 
 namespace MeisterGeister.View.SpielerScreen
 {
@@ -155,6 +156,19 @@ namespace MeisterGeister.View.SpielerScreen
                     _listBoxDirectory.ScrollIntoView(item);
                     break;
                 }
+            }
+        }
+
+        private void ImageVorschau_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(_textBlockFilePath.Text);
+            }
+            catch (Exception ex)
+            {
+                MsgWindow errWin = new MsgWindow("Fehler beim Starten eines externen Programms", "Beim Starten eines externen Programms ist ein Fehler aufgetreten!", ex);
+                errWin.ShowDialog();
             }
         }
 

@@ -95,7 +95,7 @@
                         </CheckBox>
                         <TextBlock Grid.Column="0" Grid.Row="1" Margin="6" Name="_textBlockFilePath" Text="" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
                         <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" Background="Transparent" SelectionChanged="ListBoxDirectory_SelectionChanged" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
-                        <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Margin="6" Name="_image1" Stretch="Uniform" MinWidth="226" ToolTip="Vorschau" HorizontalAlignment="Right" MaxWidth="400" />
+                        <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Margin="6" Name="_image1" Stretch="Uniform" MinWidth="226" ToolTip="Ein Links-Klick öffnet das Bild extern." HorizontalAlignment="Right" MaxWidth="400" MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
                     </Grid>
             </Border>
         </Expander>
