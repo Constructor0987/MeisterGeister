@@ -117,7 +117,7 @@
                                 </TextBox>
                                 <Label   Grid.Row="1" Grid.Column="1" Content="Stichwörter:" />
                                 <!-- TODO AutoComplete für Tags -->
-                                <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" />
+                                <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Tags, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="1000" ToolTip="Einzelne Stichwörter sollten mit Komma (,) getrennt werden." />
                                 <Label   Grid.Row="2" Grid.Column="1" Content="Verbreitung:" />
                                 <TextBox Grid.Row="2" Grid.Column="2" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Verbreitung, UpdateSourceTrigger=PropertyChanged}" Margin="2" AcceptsReturn="True" MaxLength="1000" />
                                 <Label   Grid.Row="2" Grid.Column="3" Content="Auftreten:" />

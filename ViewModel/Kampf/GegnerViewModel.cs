@@ -74,6 +74,18 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private string _selectedTag = string.Empty;
+        public string SelectedTag
+        {
+            get { return _selectedTag; }
+            set
+            {
+                _selectedTag = value;
+                OnChanged("SelectedTag");
+                FilterListe();
+            }
+        }
+
         private GegnerBase selectedGegnerBase;
         public GegnerBase SelectedGegnerBase
         {
@@ -228,6 +240,8 @@ namespace MeisterGeister.ViewModel.Kampf
         private void FilterListe()
         {
             string suchText = _suchText.ToLower().Trim();
+            if (SelectedTag != null)
+                suchText += " " + SelectedTag.ToLower().Trim();
             string[] suchWorte = suchText.Split(' ');
 
             if (suchText == string.Empty) // kein Suchwort
@@ -414,6 +428,55 @@ namespace MeisterGeister.ViewModel.Kampf
                     OnChanged("AngriffListe");
                 }
             }
+        }
+
+        private Base.CommandBase onDeleteTag = null;
+        public Base.CommandBase OnDeleteTag
+        {
+            get
+            {
+                if (onDeleteTag == null)
+                    onDeleteTag = new Base.CommandBase(DeleteTag, null);
+                return onDeleteTag;
+            }
+        }
+
+        private void DeleteTag(object args)
+        {
+            string tag = SelectedTag;
+            if (tag != string.Empty)
+            {
+                if (Confirm("Stichwort löschen", string.Format("Sind Sie sicher, dass Sie das Stichwort '{0}' löschen möchten? Es wird aus allen Gegner-Vorlagen entfernt.", tag)))
+                {
+                    foreach (var gegner in GegnerBaseListe)
+                    {
+                        if (gegner.Tags != null && gegner.Tags.Contains(tag))
+                        {
+                            // Tag und überflüssige Trennzeichen entfernen
+                            gegner.Tags = gegner.Tags.Replace(tag, string.Empty).Replace(",,", ",").Replace("  ", " ").Trim(new char[] { ',', ' '});
+                        }
+                    }
+                    SaveGegner();
+                    RefreshTagListe();
+                }
+            }
+        }
+
+        private Base.CommandBase onClearFilter = null;
+        public Base.CommandBase OnClearFilter
+        {
+            get
+            {
+                if (onClearFilter == null)
+                    onClearFilter = new Base.CommandBase(ClearFilter, null);
+                return onClearFilter;
+            }
+        }
+
+        private void ClearFilter(object args)
+        {
+            SuchText = string.Empty;
+            SelectedTag = null;
         }
         #endregion
 
