@@ -652,7 +652,6 @@ namespace MeisterGeister.View.AudioPlayer {
                 KlangProgBarTimer.IsEnabled = false;
                 KlangProgBarTimer.Stop();
             }
-            //MyTimer.stop_timer();
         }
 
         private void slBGVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -701,13 +700,13 @@ namespace MeisterGeister.View.AudioPlayer {
                         if (rbtnGleichSpielen.IsChecked.Value)
                         {
                             SpieleNeuenHintergrundTitel(-1);
-                        //    if (titel.Count != 0)
+                            if (titel.Count == 0)
                         //        grdSongInfo.Visibility = Visibility.Visible;
                         //    else
-                        //    {
+                            {
                                 btnBGAbspielen.Tag = 1;
                                 btnBGAbspielen_Click(btnBGAbspielen, new RoutedEventArgs());
-                        //    }
+                            }
                         }
                         if (titel.Count == 0)
                             grdSongInfo.Visibility = Visibility.Hidden;
@@ -895,7 +894,8 @@ namespace MeisterGeister.View.AudioPlayer {
                 {
                     Mouse.OverrideCursor = Cursors.Wait;
                     Int16 objGruppe;
-                    if ((tcKlang.SelectedItem.GetType() == typeof(TabItemControl) && ((TabItemControl)tcKlang.SelectedItem).Visibility != Visibility.Visible) ||
+                    if (tcKlang.SelectedItem == null ||
+                        (tcKlang.SelectedItem.GetType() == typeof(TabItemControl) && ((TabItemControl)tcKlang.SelectedItem).Visibility != Visibility.Visible) ||
                         (tcKlang.SelectedItem.GetType() == typeof(TabItem)))
                     //if (tcKlang.SelectedIndex <= 0)
                     {
@@ -950,10 +950,19 @@ namespace MeisterGeister.View.AudioPlayer {
                                 //*************** TEMP *********************
                                 if (playlisttitel.Audio_Titel.Pfad.StartsWith(stdPfad))
                                 {
-                                    playlisttitel.Audio_Titel.Pfad = playlisttitel.Audio_Titel.Pfad.Substring(stdPfad.Length);
+                                    playlisttitel.Audio_Titel.Pfad = playlisttitel.Audio_Titel.Pfad.Substring(stdPfad.Length+1);
                                     Global.ContextAudio.Update<Audio_Titel>(playlisttitel.Audio_Titel);
                                 }
                                 //******************************************
+
+                 /*   for (int x = 0; x < _GrpObjecte.Count; x++)
+                    {
+                        List<KlangZeile> grpob = _GrpObjecte[x]._listZeile.Where(t => t.spnlKlangRow.Background == Brushes.Red).ToList();
+                        grpob.ForEach(t => t.spnlKlangRow.Background = null);
+                    }                    
+                    for (int i = 0; i < lbhintergrundtitellist.Items.Count; i++)
+                        ((ListBoxItem)lbhintergrundtitellist.Items[i]).Background = null;*/
+
 
                                 KlangNewRow(playlisttitel.Audio_Titel.Pfad, posObjGruppe, x, playlisttitel);
 
@@ -1462,7 +1471,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
             if (!_GrpObjecte[posObjGruppe]._listZeile[zeile].istPause)
             {
-                if (File.Exists(file) != true)
+                // Austauschbare Laufwerk überprüfen, falls die Datei im Original-Verzeichnis nicht gefunden werden kann
+              /*  if (File.Exists(file) != true)
                 {
                     DriveInfo[] Drives = DriveInfo.GetDrives();
                     foreach (DriveInfo Drive in Drives)
@@ -1477,7 +1487,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             }
                         }
                     }
-                }
+                }*/
                 if (File.Exists(file) != true)
                 {
                     _GrpObjecte[posObjGruppe]._listZeile[zeile].spnlKlangRow.Background = Brushes.Red;
@@ -1605,18 +1615,16 @@ namespace MeisterGeister.View.AudioPlayer {
             Audio_Titel titel = Global.ContextAudio.New<Audio_Titel>();
             //eigenschaften setzen
             titel.Name = System.IO.Path.GetFileNameWithoutExtension(datei);
-            titel.Pfad = datei;
+            titel.Pfad = (titel.Pfad.StartsWith(stdPfad))? titel.Pfad.Substring(stdPfad.Length + 1): datei;
+
             //zur datenbank hinzufügen
             if (Global.ContextAudio.Insert<Audio_Titel>(titel))
             {
                 Global.ContextAudio.AddTitelToPlaylist(AktKlangPlaylist, titel);
 
                 Int16 posObjGruppe = GetPosObjGruppe(GetObjGruppe(tcKlang.SelectedIndex));
-                //   UInt16 seite = Convert.ToUInt16(tcKlang.SelectedIndex);
-                //   Int16 objGruppe = GetObjGruppe(tcKlang.SelectedIndex); 
-                //   Int16 posObjGruppe = GetPosObjGruppe(objGruppe);
 
-                tboxklangsongparallel.Tag = _GrpObjecte[posObjGruppe]._listZeile.Count + 1;// zeilenAufSeite[tcKlang.SelectedIndex] + 1;
+                tboxklangsongparallel.Tag = _GrpObjecte[posObjGruppe]._listZeile.Count + 1;
 
                 List<Audio_Playlist_Titel> playlisttitel = Global.ContextAudio.LoadPlaylist_TitelByPlaylist(AktKlangPlaylist, titel);
                 if (playlisttitel.Count == 1)
@@ -1631,7 +1639,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     playlisttitel[0].PauseMin = 100;
                     playlisttitel[0].PauseMax = 10000;
                     playlisttitel[0].Speed = 1;
-
+                    
                     KlangNewRow(datei, posObjGruppe, Convert.ToUInt16(_GrpObjecte[posObjGruppe]._listZeile.Count), playlisttitel[0]);
 
                     if (AktKlangPlaylist.Hintergrundmusik)
@@ -1713,7 +1721,6 @@ namespace MeisterGeister.View.AudioPlayer {
                     playlist.Name = NeuerPlaylistName;
                     playlist.Hintergrundmusik = false;
                     playlist.MaxSongsParallel = Convert.ToInt32(tboxklangsongparallel.Text);
-
 
                     //zur datenbank hinzufügen
                     if (Global.ContextAudio.Insert<Audio_Playlist>(playlist))               //erfolgreich hinzugefügt
@@ -1906,8 +1913,8 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         // Wenn kein Stadtverzeichnis durchsuche alle Wechseldatenträger
 
-                        if (titel[lbhintergrundtitellist.SelectedIndex].Pfad.Substring(1, 2) == @":\")
-                        {
+                       /*if (titel[lbhintergrundtitellist.SelectedIndex].Pfad.Substring(1, 2) == @":\")
+                       {
                             DriveInfo[] Drives = DriveInfo.GetDrives();
                             foreach (DriveInfo Drive in Drives)
                             {
@@ -1921,7 +1928,7 @@ namespace MeisterGeister.View.AudioPlayer {
                                     }
                                 }
                             }
-                        }
+                        }*/
                         lbItem.Background = Brushes.Red;
                         lbItem.ToolTip = "Datei nicht gefunden";
                         lbhintergrundtitellist.Tag = -1;
