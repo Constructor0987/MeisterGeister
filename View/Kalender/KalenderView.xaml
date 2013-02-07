@@ -258,17 +258,17 @@
                     <Expander Name="_expanderSonnenuhr" Grid.Row="1" Margin="2" IsExpanded="True" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Sonnenuhr" Style="{DynamicResource TextTitel}" />
-                                <Image Source="/Images/Logos/DereGlobus_Favicon.png" Height="16" Margin="10,0" Stretch="Uniform" Cursor="Hand" MouseDown="ImageStandort_MouseDown" ToolTip="Standort festlegen... (Internet-Verbindung erforderlich!)" VerticalAlignment="Bottom" />
+                                <TextBlock Text="Sonnenuhr und Standort" Style="{DynamicResource TextTitel}" />
                             </StackPanel>
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel>
-                                <Label Name="_labelSonne" Content="Sonnenaufgang:" />
+                                <Image Source="/Images/Icons/kartenzeichnen.png" Height="32" Margin="5" Stretch="Uniform" Cursor="Hand" MouseDown="ImageStandort_MouseDown" ToolTip="Standort festlegen... (Internet-Verbindung erforderlich!)" VerticalAlignment="Bottom" />
                                 <StackPanel Orientation="Horizontal">
                                     <Label Name="_labelStandort" Content="Standort (X | Y)" />
                                     <ViewGeneral:DereGlobusLinkControl x:Name="_dereGlobusLinkControl" Tag="{Binding}" Height="20" Width="20" Margin="2,0,0,0" PreviewMouseDown="DereGlobusLinkControl_PreviewMouseDown" />
                                 </StackPanel>
+                                <Label Name="_labelSonne" Content="Sonnenaufgang:" />
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="(Koordinaten nach" />
                                     <Image Source="/Images/Logos/DereGlobus_Icon.png" Height="18" Stretch="Uniform" Cursor="Hand" MouseDown="ImageDereGlobus_MouseDown" />

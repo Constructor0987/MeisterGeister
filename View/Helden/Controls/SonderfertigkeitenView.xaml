@@ -196,11 +196,11 @@
                     </ListBox>
                     <DockPanel Grid.Row="3">
                         <TextBlock Margin="18,0,0,0" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding FilteredSonderfertigkeitMultiAddListe.Count, StringFormat='{}{0} Sonderfertigkeit(en)'}" />
-                        <Button DockPanel.Dock="Right" Margin="10,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Abbrechen" Command="{Binding OnShowAddMultiSonderfertigkeit}">
-                            <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
-                        </Button>
-                        <Button DockPanel.Dock="Right" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Ausgewählte Sonderfertigkeiten hinzufügen" Command="{Binding OnAddMultiSonderfertigkeit}">
+                        <Button DockPanel.Dock="Right" Margin="10,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Ausgewählte Sonderfertigkeiten hinzufügen" Command="{Binding OnAddMultiSonderfertigkeit}">
                             <Image Source="/Images/Icons/General/add.png" Height="25" />
+                        </Button>
+                        <Button DockPanel.Dock="Right" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Abbrechen" Command="{Binding OnShowAddMultiSonderfertigkeit}">
+                            <Image Source="/Images/Icons/General/entf_01.png" Height="25" />
                         </Button>
                     </DockPanel>
                 </Grid>

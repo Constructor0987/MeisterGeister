@@ -29,8 +29,8 @@ namespace MeisterGeister.View.Kampf
             if (App.Current.MainWindow != null)
             {
                 Owner = App.Current.MainWindow;
-                Width = App.Current.MainWindow.ActualWidth * 0.7;
-                Height = App.Current.MainWindow.ActualHeight * 0.8;
+                Width = App.Current.MainWindow.ActualWidth * 0.9;
+                Height = App.Current.MainWindow.ActualHeight * 0.9;
             }
         }
 

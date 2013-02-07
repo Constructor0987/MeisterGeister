@@ -445,7 +445,7 @@
             </Grid>
         </ScrollViewer>
 
-        <Border Name="_rsZonenRsControl" Background="#E57A7A7A" Visibility="Hidden">
+        <Border Name="_rsZonenRsControl" Background="#F27A7A7A" Visibility="Hidden">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
