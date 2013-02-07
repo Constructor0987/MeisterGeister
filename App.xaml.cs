@@ -92,7 +92,7 @@ namespace MeisterGeister {
                 string msg = "Es ist keine, eine falsche oder eine beschädigte Microsoft SQL Server Compact Edition installiert.\n"
                     + "Installiert:\t" + SqlCompactVersion
                     + "\nBenötigt:\t\t" + sqlCompactVersionNeeded + "\n\nDie benötigte Edition kann unter folgendem Link heruntergeladen werden:\n\n"
-                    + @"http://www.microsoft.com/downloads/de-de/details.aspx?familyid=033cfb76-5382-44fb-bc7e-b3c8174832e2&displaylang=de";
+                    + @"http://www.microsoft.com/de-de/download/details.aspx?id=30709";
                 MsgWindow errWin = new MsgWindow("Datenbank-Fehler", msg);
                 errWin.ShowDialog();
                 Shutdown();
