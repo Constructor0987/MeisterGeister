@@ -79,8 +79,7 @@
                     </Grid.RowDefinitions>
                     <DockPanel ToolTip="Aktive Filter">
                         <Image Margin="2" Source="/Images/Icons/General/filter.png" Width="12" />
-                        <TextBlock DockPanel.Dock="Left" Margin="2" FontSize="9" Text="{Binding SuchText}" />
-                        <TextBlock DockPanel.Dock="Left" Margin="2" FontSize="9" Text="{Binding SelectedTag}" />
+                        <TextBlock DockPanel.Dock="Left" Margin="2" FontSize="9" Text="{Binding AktiveFilter}" />
                         <Button DockPanel.Dock="Right" Height="18" Width="18" ToolTip="Alle Filter entfernen" HorizontalAlignment="Right" Command="{Binding OnClearFilter}">
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </Button>

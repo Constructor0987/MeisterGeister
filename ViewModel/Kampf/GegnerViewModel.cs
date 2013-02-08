@@ -76,6 +76,17 @@ namespace MeisterGeister.ViewModel.Kampf
                     SelectedTag = tag.FirstOrDefault();
                 else
                     FilterListe();
+                OnChanged("AktiveFilter");
+            }
+        }
+
+        public string AktiveFilter
+        {
+            get
+            {
+                if (SuchText.ToLower() == (SelectedTag == null ? string.Empty : SelectedTag.ToLower()))
+                    return SuchText.ToLower();
+                return SuchText.ToLower() + (SelectedTag == null ? string.Empty : " " + SelectedTag.ToLower());
             }
         }
 
@@ -88,6 +99,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 _selectedTag = value;
                 OnChanged("SelectedTag");
                 FilterListe();
+                OnChanged("AktiveFilter");
             }
         }
 
