@@ -97,15 +97,8 @@ namespace MeisterGeister.View.Windows
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     MeisterGeister.Logic.Settings.Einstellungen.SetEinstellung("AudioVerzeichnis", dialog.SelectedPath);
-                    btnStdPfad.Tag = dialog.SelectedPath;
-                    
-                 /*   for (int x = 0; x < _GrpObjecte.Count; x++)
-                    {
-                        List<KlangZeile> grpob = _GrpObjecte[x]._listZeile.Where(t => t.spnlKlangRow.Background == Brushes.Red).ToList();
-                        grpob.ForEach(t => t.spnlKlangRow.Background = null);
-                    }                    
-                    for (int i = 0; i < lbhintergrundtitellist.Items.Count; i++)
-                        ((ListBoxItem)lbhintergrundtitellist.Items[i]).Background = null;*/
+                    btnStdPfad.Tag = dialog.SelectedPath;                    
+                    tbStdPfad.Text = btnStdPfad.Tag.ToString();
                 }
             }
             catch (Exception ex)
@@ -113,10 +106,6 @@ namespace MeisterGeister.View.Windows
                 var errWin = new MsgWindow("Eingabefehler", "Das Auswählen des Standard-Verzeichnisses hat eine Exeption ausgelöst.", ex);
                 errWin.ShowDialog();
                 errWin.Close();
-            }
-            finally
-            {
-                tbStdPfad.Text = btnStdPfad.Tag.ToString();
             }
         }
     }

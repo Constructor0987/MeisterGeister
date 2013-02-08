@@ -498,8 +498,9 @@
             </TabItem>
         </TabControl>
         <Image Grid.RowSpan="2" Height="35" HorizontalAlignment="Left" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="35" Source="/DSA%20MeisterGeister;component/Images/Icons/General/info.png" MouseDown="image1_MouseDown" Cursor="Hand" FlowDirection="LeftToRight" Margin="10,0,0,0" ToolTip="Audio-Codec Informationen" />
-
-       <!-- <StackPanel HorizontalAlignment="Left" Margin="50,0,0,0" Name="spStdPfad" Orientation="Horizontal">
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="430,7,0,0" Name="statusOut" VerticalAlignment="Top" Width="67" />
+        <TextBox Height="23" Margin="507,7,0,0" Name="statusIn" VerticalAlignment="Top" HorizontalAlignment="Left" Width="67" />
+        <!-- <StackPanel HorizontalAlignment="Left" Margin="50,0,0,0" Name="spStdPfad" Orientation="Horizontal">
             <Label Name="lblStdPfad" Content="Standard-Verzeichnis" />
             <TextBox Height="23" Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="T:\" Width="200" />
             <Button Content="..." Height="21" HorizontalAlignment="Left" Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
