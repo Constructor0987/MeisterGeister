@@ -263,16 +263,16 @@ namespace MeisterGeister.ViewModel.Kampf
                 return;
 
             List<string> tagListe = new List<string>();
-            string[] tags;
+            List<string> tagsGegner;
 
             // Hinweis: Eine Paralellisierung der Schleife scheint sich nicht zu lohnen und ist teilweise sogar langsamer
             foreach (var item in GegnerBaseListe)
             {
-                tags = (item.Tags ?? string.Empty).Split(new char[] { ',', ';', '/' });
-                foreach (string tag in tags)
+                tagsGegner = item.TagListe();
+                foreach (string tag in tagsGegner)
                 {
-                    if (!tagListe.Contains(tag.Trim()))
-                        tagListe.Add(tag.Trim());
+                    if (!tagListe.Contains(tag))
+                        tagListe.Add(tag);
                 }
             }
 
@@ -476,12 +476,20 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 if (Confirm("Stichwort löschen", string.Format("Sind Sie sicher, dass Sie das Stichwort '{0}' löschen möchten? Es wird aus allen Gegner-Vorlagen entfernt.", tag)))
                 {
+                    List<string> tagList = null;
                     foreach (var gegner in GegnerBaseListe)
                     {
-                        if (gegner.Tags != null && gegner.Tags.Contains(tag))
+                        tagList = gegner.TagListe();
+                        if (tagList != null && tagList.Contains(tag))
                         {
-                            // Tag und überflüssige Trennzeichen entfernen
-                            gegner.Tags = gegner.Tags.Replace(tag, string.Empty).Replace(",,", ",").Replace("  ", " ").Trim(new char[] { ',', ' ' });
+                            tagList.Remove(tag);
+                            gegner.Tags = string.Empty;
+                            foreach (string t in tagList)
+                            {
+                                if (gegner.Tags != string.Empty)
+                                    gegner.Tags += ", ";
+                                gegner.Tags += t;
+                            }
                         }
                     }
                     SaveGegner();

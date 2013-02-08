@@ -22,6 +22,11 @@ namespace MeisterGeister.Model
             get { return !GegnerBaseGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
+        public List<string> TagListe()
+        {
+            return (Tags ?? string.Empty).Split(new char[] { ',', ';', '/' }).Select(s => s.Trim()).ToList();
+        }
+
         #region Import Export
 
         public static GegnerBase Import(string pfad, bool batch = false)
