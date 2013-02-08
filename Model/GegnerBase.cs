@@ -66,7 +66,7 @@ namespace MeisterGeister.Model
         /// </summary>
         private string SuchText
         {
-            get { return (Name ?? string.Empty).ToLower() + (Tags ?? string.Empty).ToLower(); }
+            get { return (Name ?? string.Empty).ToLower() + (Tags ?? string.Empty).ToLower() + (Verbreitung ?? string.Empty).ToLower() + (Literatur ?? string.Empty).ToLower(); }
         }
 
         /// <summary>

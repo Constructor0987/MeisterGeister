@@ -31,7 +31,7 @@
                 <Border Style="{DynamicResource ControlContentBorder}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Image Margin="2,2,0,2" Source="/Images/Icons/General/suchen.png" Width="18" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
+                            <Image Margin="2,2,0,2" Source="/Images/Icons/General/suchen.png" Width="18" ToolTip="Suchtext (Name, Verbreitung, Literatur und Stichwörter werden durchsucht)" />
                             <TextBox Margin="2,2,0,2" Width="170" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext (Name und Stichwörter werden durchsucht)" />
                         </StackPanel>
                     </StackPanel>
