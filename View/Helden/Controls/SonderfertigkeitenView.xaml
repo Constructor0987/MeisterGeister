@@ -185,7 +185,20 @@
                         </ListBox.ItemsPanel>-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox ToolTip="{Binding SF.Name}" IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsWählbar}">
+                                <CheckBox IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsWählbar}">
+                                    <CheckBox.ToolTip>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{Binding SF.Name}" FontWeight="Bold" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Literatur: " />
+                                                <TextBlock Text="{Binding SF.Literatur}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Voraussetzungen: " />
+                                                <TextBlock Text="{Binding SF.Voraussetzungen}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </CheckBox.ToolTip>
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="{Binding ImagePath}" Height="16" ToolTip="{Binding SF.Typ}" />
                                         <TextBlock Text="{Binding SF.Name}" TextTrimming="CharacterEllipsis" Margin="2,0,0,0" />
