@@ -45,7 +45,7 @@ namespace MeisterGeister.View.General
             return 0;
         }
 
-        public static string InputDialog(string caption, string msg)
+        public static string InputDialog(string caption, string msg, string init)
         {
             string input = null;
             InputWindow inBox = new InputWindow();
@@ -53,6 +53,7 @@ namespace MeisterGeister.View.General
             inBox.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             inBox.Title = caption;
             inBox.Beschreibung = msg;
+            inBox.Wert = init;
             inBox.ShowDialog();
             if (inBox.OK_Click)
                 input = inBox.Wert;

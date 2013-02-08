@@ -11,10 +11,11 @@ namespace MeisterGeister.ViewModel.Kampf
 {
     public class GegnerViewModel : Base.ViewModelBase
     {
-        public GegnerViewModel(Func<string> selectImage, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
+        public GegnerViewModel(Func<string, string, string, string> input, Func<string> selectImage, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
             this.selectImage = selectImage;
+            this.changeTag = input;
 
             LoadDaten();
         }
@@ -430,6 +431,26 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private Base.CommandBase onClearFilter = null;
+        public Base.CommandBase OnClearFilter
+        {
+            get
+            {
+                if (onClearFilter == null)
+                    onClearFilter = new Base.CommandBase(ClearFilter, null);
+                return onClearFilter;
+            }
+        }
+
+        private void ClearFilter(object args)
+        {
+            SuchText = string.Empty;
+            SelectedTag = null;
+        }
+        #endregion
+
+        #region Tag Commands
+
         private Base.CommandBase onDeleteTag = null;
         public Base.CommandBase OnDeleteTag
         {
@@ -453,7 +474,7 @@ namespace MeisterGeister.ViewModel.Kampf
                         if (gegner.Tags != null && gegner.Tags.Contains(tag))
                         {
                             // Tag und überflüssige Trennzeichen entfernen
-                            gegner.Tags = gegner.Tags.Replace(tag, string.Empty).Replace(",,", ",").Replace("  ", " ").Trim(new char[] { ',', ' '});
+                            gegner.Tags = gegner.Tags.Replace(tag, string.Empty).Replace(",,", ",").Replace("  ", " ").Trim(new char[] { ',', ' ' });
                         }
                     }
                     SaveGegner();
@@ -462,23 +483,43 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private Base.CommandBase onClearFilter = null;
-        public Base.CommandBase OnClearFilter
+        private Func<string, string, string, string> changeTag;
+
+        private Base.CommandBase onChangeTag = null;
+        public Base.CommandBase OnChangeTag
         {
             get
             {
-                if (onClearFilter == null)
-                    onClearFilter = new Base.CommandBase(ClearFilter, null);
-                return onClearFilter;
+                if (onChangeTag == null)
+                    onChangeTag = new Base.CommandBase(ChangeTag, null);
+                return onChangeTag;
             }
         }
 
-        private void ClearFilter(object args)
+        private void ChangeTag(object obj)
         {
-            SuchText = string.Empty;
-            SelectedTag = null;
+            string tag = SelectedTag;
+            if (tag != string.Empty && changeTag != null)
+            {
+                string newTagName = changeTag("Stichwort ändern", "Bitte den neuen Namen des Stichworts angeben.", SelectedTag);
+                if (newTagName != null && newTagName != tag)
+                {
+                    newTagName = newTagName.Trim();
+                    foreach (var gegner in GegnerBaseListe)
+                    {
+                        if (gegner.Tags != null && gegner.Tags.Contains(tag))
+                        {
+                            gegner.Tags = gegner.Tags.Replace(tag, newTagName);
+                        }
+                    }
+                    SaveGegner();
+                    RefreshTagListe();
+                }
+            }
         }
+
         #endregion
+
 
         #region Kampfregel Commands
 

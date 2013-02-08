@@ -97,7 +97,7 @@ namespace MeisterGeister.View.General
     /// </summary>
     public class SelectImageDialogViewModel : ViewModel.Base.ViewModelBase
     {
-        public SelectImageDialogViewModel(Func<string, string, string> chooseWebLink, Func<string, string, bool, string[], string> chooseFile)
+        public SelectImageDialogViewModel(Func<string, string, string, string> chooseWebLink, Func<string, string, bool, string[], string> chooseFile)
             : base(null, null, null, chooseFile, null)
         {
             this.chooseWebLink = chooseWebLink;
@@ -346,13 +346,13 @@ namespace MeisterGeister.View.General
         {
             if (chooseWebLink != null)
             {
-                string pfad = chooseWebLink("Bild-Link vom Web", "Bitte den vollständigen Web-Link zum Bild angeben.");
+                string pfad = chooseWebLink("Bild-Link vom Web", "Bitte den vollständigen Web-Link zum Bild angeben.", string.Empty);
                 if (pfad != null)
                     SelectedPathWeb = pfad;
             }
         }
 
-        private Func<string, string, string> chooseWebLink;
+        private Func<string, string, string, string> chooseWebLink;
 
         #endregion // ---- COMMANDS ----
         

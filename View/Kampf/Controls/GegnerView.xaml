@@ -50,6 +50,11 @@
                     <ListBox Padding="4" Background="Transparent" BorderBrush="#00000000" MaxHeight="150" ItemsSource="{Binding TagListe}" SelectedItem="{Binding SelectedTag}" ToolTip="Liste der Stichwörter">
                         <ListBox.ContextMenu>
                             <ContextMenu>
+                                <MenuItem Height="28" Command="{Binding OnChangeTag}" Header="Stichwort umbenennen" ToolTip="Das Stichwort wird in allen Gegnern umbenannt...">
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/feder.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Height="28" Command="{Binding OnDeleteTag}" Header="Stichwort Löschen" ToolTip="Das Stichwort wird aus allen Gegnern entfernt.">
                                     <MenuItem.Icon>
                                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
