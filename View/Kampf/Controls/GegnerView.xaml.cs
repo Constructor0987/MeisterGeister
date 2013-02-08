@@ -111,5 +111,12 @@ namespace MeisterGeister.View.Kampf.Controls
         }
 
         public EventHandler ListBox_DoubleClicked;
+
+        private void ListBoxTags_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Nachdem ein Eintrag selektiert wurde, wird die Liste in den Sichtbereich gescrollt
+            if (sender != null && sender is ListBox)
+                (sender as ListBox).ScrollIntoView(e.AddedItems.Count > 0 ? e.AddedItems[0] : null);
+        }
 	}
 }

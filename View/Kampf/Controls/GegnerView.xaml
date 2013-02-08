@@ -47,7 +47,7 @@
                     </StackPanel>
                 </Expander.Header>
                 <Border Style="{DynamicResource ControlContentBorder}">
-                    <ListBox Padding="4" Background="Transparent" BorderBrush="#00000000" MaxHeight="150" ItemsSource="{Binding TagListe}" SelectedItem="{Binding SelectedTag}" ToolTip="Liste der Stichwörter">
+                    <ListBox Padding="4" Background="Transparent" BorderBrush="#00000000" MaxHeight="150" ItemsSource="{Binding TagListe}" SelectedItem="{Binding SelectedTag}" ToolTip="Liste der Stichwörter" SelectionChanged="ListBoxTags_SelectionChanged">
                         <ListBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Height="28" Command="{Binding OnChangeTag}" Header="Stichwort umbenennen" ToolTip="Das Stichwort wird in allen Gegnern umbenannt...">

@@ -71,7 +71,11 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 _suchText = value;
                 OnChanged("SuchText");
-                FilterListe();
+                var tag = TagListe.Where(t => (t == null ? string.Empty : t.ToLower()) == _suchText.ToLower());
+                if (tag != null)
+                    SelectedTag = tag.FirstOrDefault();
+                else
+                    FilterListe();
             }
         }
 
@@ -260,15 +264,18 @@ namespace MeisterGeister.ViewModel.Kampf
 
             List<string> tagListe = new List<string>();
             string[] tags;
+
+            // Hinweis: Eine Paralellisierung der Schleife scheint sich nicht zu lohnen und ist teilweise sogar langsamer
             foreach (var item in GegnerBaseListe)
             {
-                tags = (item.Tags ?? string.Empty).Split(new char[] {',', ';', '/'});
+                tags = (item.Tags ?? string.Empty).Split(new char[] { ',', ';', '/' });
                 foreach (string tag in tags)
                 {
                     if (!tagListe.Contains(tag.Trim()))
                         tagListe.Add(tag.Trim());
                 }
             }
+
             tagListe.Sort();
             TagListe = tagListe;
         }
