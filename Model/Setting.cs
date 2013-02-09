@@ -61,5 +61,15 @@ namespace MeisterGeister.Model
 
             return settings;
         }
+
+        /// <summary>
+        /// Gibt zurück, ob ein Setting aktiv ist. 
+        /// </summary>
+        /// <param name="guidString">String-Repräsentation des zu prüfenden Guid</param>
+        /// <returns>true, falls das Setting aktiv ist, false sonst</returns>
+        public static bool SettingAktiv(String guidString)
+        {
+            return Model.Setting.AktiveSettings.Any(s => s.SettingGUID.ToString() == guidString);
+        }
     }
 }

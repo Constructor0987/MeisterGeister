@@ -26,7 +26,8 @@ namespace MeisterGeister.Model
             // Nur im Myranor-Setting gibt es diverse gehärtete Pfeile / Bolzen
             // in allen anderen Settings nur Jagd/Kriegs-Bolzen/Pfeile
             get {
-                if (Model.Setting.AktiveSettings.Any(s => s.SettingGUID.ToString() == Model.Setting.MYRANOR_GUID)){
+                if (Model.Setting.SettingAktiv(Model.Setting.MYRANOR_GUID))
+                {
                     return this.Härtbar;
                 }else{
                     switch (this.MunitionGUID.ToString())
