@@ -320,6 +320,13 @@ namespace MeisterGeister.View.AudioPlayer {
                         _player.IsMuted = Convert.ToBoolean(btnBGSpeaker.Tag);
                     }
                     _player.Open(new Uri(url));
+
+                    _player.Volume = (seite == -1) ? vol / 100 : (vol * (_GrpObjecte[posObjGruppe].Vol_ThemeMod / 100)) / 100;
+                    if (fading)
+                        FadingIn(_player, _player.Volume);
+                    else
+                        _player.Play();
+                        
                 }
                 catch (Exception ex2)
                 {
@@ -328,14 +335,6 @@ namespace MeisterGeister.View.AudioPlayer {
                     lbItem.ToolTip = "Datei konnte nicht geöffnet werden (Datei abspielbar / Codec installiert?)" + ex2;
                     SpieleNeuenHintergrundTitel(-1);
                     return null;
-                }
-                finally
-                {
-                    _player.Volume = (seite == -1) ? vol / 100 : (vol * (_GrpObjecte[posObjGruppe].Vol_ThemeMod / 100)) / 100;
-                    if (fading)
-                        FadingIn(_player, _player.Volume);
-                    else
-                        _player.Play();
                 }
 
                 if (seite >= 0)
@@ -1696,7 +1695,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
                     string[] gedroppteDateien = (string[])e.Data.GetData(DataFormats.FileDrop, true);
                     string[] extension = new String[4] { ".mp3", ".wav", ".ogg", ".wma" };
-
+                    
                     foreach (string droppedFilePath in gedroppteDateien)
                     {
                         if (Array.IndexOf(extension, droppedFilePath.Substring(droppedFilePath.Length - 4)) != -1)
