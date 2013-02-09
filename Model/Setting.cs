@@ -8,6 +8,13 @@ namespace MeisterGeister.Model
 {
     public partial class Setting
     {
+        // GUID der Settings
+        public static readonly String AVENTURIEN_GUID = "00000000-0000-0000-5e77-000000000001";
+        public static readonly String DUNKLE_ZEITEN_GUID = "00000000-0000-0000-5e77-000000000002";
+        public static readonly String MYRANOR_GUID = "00000000-0000-0000-5e77-000000000003";
+        public static readonly String RAKSHAZAR_GUID = "00000000-0000-0000-5e77-000000000004";
+
+
         public Setting()
         {
             PropertyChanged += Setting_PropertyChanged;
