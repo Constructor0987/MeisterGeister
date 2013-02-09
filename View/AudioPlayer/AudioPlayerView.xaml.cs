@@ -724,15 +724,13 @@ namespace MeisterGeister.View.AudioPlayer {
                         {
                             SpieleNeuenHintergrundTitel(-1);
                             if (titel.Count == 0)
-                        //        grdSongInfo.Visibility = Visibility.Visible;
-                        //    else
                             {
                                 btnBGAbspielen.Tag = 1;
                                 btnBGAbspielen_Click(btnBGAbspielen, new RoutedEventArgs());
                             }
                         }
                         if (titel.Count == 0)
-                            grdSongInfo.Visibility = Visibility.Hidden;
+                            grdSongInfo.Visibility = Visibility.Hidden;                        
                     }
                     else
                     {
@@ -1649,8 +1647,11 @@ namespace MeisterGeister.View.AudioPlayer {
             Audio_Titel titel = Global.ContextAudio.New<Audio_Titel>();
             //eigenschaften setzen
             titel.Name = System.IO.Path.GetFileNameWithoutExtension(datei);
-            titel.Pfad = (titel.Pfad.StartsWith(stdPfad))? titel.Pfad.Substring(stdPfad.Length + 1): datei;
-
+            if (datei.StartsWith(stdPfad))
+                titel.Pfad = datei.Substring(stdPfad.Length + 1);
+            else
+                titel.Pfad = datei;
+            
             //zur datenbank hinzufügen
             if (Global.ContextAudio.Insert<Audio_Titel>(titel))
             {
@@ -2048,6 +2049,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             }
                             btnBGNext.IsEnabled = true;
                             btnBGAbspielen.IsEnabled = true;
+                            starsUpdate();
                             grdSongInfo.Visibility = Visibility.Visible;
 
                             ListBoxItem lbi = (ListBoxItem)lbBackground.SelectedItem;
@@ -4700,7 +4702,6 @@ namespace MeisterGeister.View.AudioPlayer {
                 {
                     startOut -= fadingTime / 100;
                     mplayer.Volume = stVol * startOut / 100;
-                    statusOut.Text = Convert.ToString(mplayer.Volume);
                     if (mplayer.Volume == 0)
                     {
                         if (klZeile != null)
@@ -4735,7 +4736,6 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 startIn += fadingTime / 100;
                 mplayer.Volume = zielVol * startIn / 100;
-                statusIn.Text = Convert.ToString(mplayer.Volume);
                 if (mplayer.Volume >= zielVol)
                     _timer.Stop();
             });
@@ -4743,6 +4743,32 @@ namespace MeisterGeister.View.AudioPlayer {
             _timer.Start();
         }
 
+        public void imgBGStern_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            AktBGPlaylistTitel.Rating = Convert.ToInt16(((Image)sender).Tag);
+            Global.ContextAudio.Update<Audio_Playlist_Titel>(AktBGPlaylistTitel);
+            starsUpdate();
+        }
+
+        public void starsUpdate()
+        {
+            imgBGStern0.Source = (AktBGPlaylistTitel.Rating != null && AktBGPlaylistTitel.Rating >= 0) ?
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu.png")) :
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu_grau.png"));
+            imgBGStern1.Source = (AktBGPlaylistTitel.Rating != null && AktBGPlaylistTitel.Rating >= 1) ?
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu.png")) :
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu_grau.png"));
+            imgBGStern2.Source = (AktBGPlaylistTitel.Rating != null && AktBGPlaylistTitel.Rating >= 2) ?
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu.png")) :
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu_grau.png"));
+            imgBGStern3.Source = (AktBGPlaylistTitel.Rating != null && AktBGPlaylistTitel.Rating >= 3) ?
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu.png")) :
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu_grau.png"));
+            imgBGStern4.Source = (AktBGPlaylistTitel.Rating != null && AktBGPlaylistTitel.Rating == 4) ?
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu.png")) :
+                new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu_grau.png"));
+            
+        }
     }
 
 }
