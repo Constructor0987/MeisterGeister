@@ -323,6 +323,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeNahkampfwaffeViewModel()
         {
+            //ActiveSettingsChanged an EventHandler hängen
+            //Falls zu langsam: FlagAttributes für Settings nutzen
             Init();
             TawSchmied = 12;
         }
@@ -400,7 +402,13 @@ namespace MeisterGeister.ViewModel.Schmiede
         #endregion
 
         #region //---- EVENTS ----
-
+        public void ActiveSettingsChanged(object sender, EventArgs e)
+        {
+            NahkampfwaffeMaterialListe = new Materialien();
+            NahkampfwaffeTechnikListe = new Techniken();
+            SelectedNahkampfwaffeMaterial = NahkampfwaffeMaterialListe.First();
+            SelectedNahkampfwaffeTechnik = NahkampfwaffeTechnikListe.First();
+        }
         #endregion
 
     }

@@ -579,6 +579,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeFernkampfwaffeViewModel()
         {
+            //ActiveSettingsChanged an EventHandler hängen
+            //Falls zu langsam: FlagAttributes für Settings nutzen
             Init();
             TawSchmied = 12;
         }
@@ -705,7 +707,13 @@ namespace MeisterGeister.ViewModel.Schmiede
         #endregion
 
         #region //---- EVENTS ----
-
+        public void ActiveSettingsChanged(object sender, EventArgs e)
+        {
+            FernkampfwaffeMaterialListe = new Materialien();
+            FernkampfwaffeTechnikListe = new Techniken();
+            SelectedFernkampfwaffeMaterial = FernkampfwaffeMaterialListe.First();
+            SelectedFernkampfwaffeTechnik = FernkampfwaffeTechnikListe.First();
+        }
         #endregion
 
     }
