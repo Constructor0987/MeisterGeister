@@ -216,6 +216,8 @@ namespace MeisterGeister.View.AudioPlayer {
         public List<ThemeGruppe> _ThemeGruppe = new List<ThemeGruppe>();
         public int aktiveThemeGruppe = -1;
 
+        private int tcKlang_vorher, tcKlang_vorherTag;
+
         private Audio_Playlist AktHintergrundPlaylist, AktKlangPlaylist;
         private Audio_Playlist_Titel AktBGPlaylistTitel;
         private ThemeGruppe AktThemeGruppe = null;
@@ -364,7 +366,7 @@ namespace MeisterGeister.View.AudioPlayer {
             if (posObjGruppe == -1)
                 return;
 
-            int laufende = _GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.istLaufend).Count;
+            int laufende = _GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.istLaufend).FindAll(tt => tt.chkTitel.IsChecked.Value).Count;
 
             List<KlangZeile> klZeilenStandby = _GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.istStandby);
             List<KlangZeile> klZeilenStandbyNichtPause = klZeilenStandby.FindAll(t => t.istPause == false);
@@ -1021,12 +1023,13 @@ namespace MeisterGeister.View.AudioPlayer {
                         }
 
                         _GrpObjecte[posObjGruppe].grdKlangTop.Visibility = Visibility.Visible;
-                        if (!AktKlangPlaylist.Hintergrundmusik && rbtnGleichSpielen.IsChecked == true && //((TabItem)tcKlang.SelectedItem).Name.StartsWith("tiKlang") &&
+                        if (!AktKlangPlaylist.Hintergrundmusik && rbtnGleichSpielen.IsChecked == true && 
                            ((TabItem)tcAudioPlayer.SelectedItem).Name == "tiKlang")
                         {
                             btnKlangPauseX.Tag = true;
+                            _GrpObjecte[posObjGruppe].btnKlangPause.Tag = true;
                             btnKlangPauseX.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                            btnKlangPauseX.Tag = false;
+                            _GrpObjecte[posObjGruppe].btnKlangPause.Tag = false;
                             _GrpObjecte[posObjGruppe].btnImgKlangPause.Source = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/pause.png"));
                         }
                     }
@@ -1875,7 +1878,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         if ((lbKlang.Items[i] as ListBoxItem).Content.ToString() == playlist.Name)
                             lbKlang.SelectedIndex = i;
 
-                    tboxPlaylistName.Background = Brushes.OrangeRed;
+                    tboxPlaylistName.Background = Brushes.LightSalmon;
                     tboxPlaylistName.Focus();
                     //nun kann man verschiedene titel zB. so holen
                     //          List<Audio_Titel> titelMitNeuImNamen = Global.ContextAudio.TitelListe.Where(t => t.Name.StartsWith("Neu")).ToList();
@@ -2450,10 +2453,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         else
                             AktKlangPlaylist.Hintergrundmusik = false;
                         tboxPlaylistName.Text = AktKlangPlaylist.Name;
-         //               if (tcKlang.SelectedIndex == 0)
-         //                   ((TabItem)tcKlang.SelectedItem).Header = AktKlangPlaylist.Name;
-         //               else
-                            ((TabItemControl)tcKlang.SelectedItem)._textBlockTitel.Text = AktKlangPlaylist.Name;
+                        ((TabItemControl)tcKlang.SelectedItem)._textBlockTitel.Text = AktKlangPlaylist.Name;
                     }
                     else
                     {
@@ -2474,7 +2474,7 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             else
             {
-                ((TextBox)(sender)).Background = Brushes.OrangeRed;
+                ((TextBox)(sender)).Background = Brushes.LightSalmon;
             }
         }
 
@@ -3233,21 +3233,23 @@ namespace MeisterGeister.View.AudioPlayer {
 
             for (int i = 0; i < _GrpObjecte[posObjGruppe]._listZeile.Count; i++)
             {
-                _GrpObjecte[posObjGruppe]._listZeile[i].istPause = Convert.ToBoolean(((Button)sender).Tag);// .IsChecked.Value; // true;
+                _GrpObjecte[posObjGruppe]._listZeile[i].istPause = Convert.ToBoolean(((Button)sender).Tag);
                 if (_GrpObjecte[posObjGruppe]._listZeile[i].istPause && _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend)
                 {
                     _GrpObjecte[posObjGruppe]._listZeile[i].FadingOutStarted = true;
                     FadingOut(_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer, _GrpObjecte[posObjGruppe]._listZeile[i], true);
-                    // _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Pause();
+                    _GrpObjecte[posObjGruppe]._listZeile[i].istStandby = false;
+                    _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend = false;
+
                 }
-                if (!_GrpObjecte[posObjGruppe]._listZeile[i].istPause && _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend)
+                if (!_GrpObjecte[posObjGruppe]._listZeile[i].istPause && _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend && 
+                    _GrpObjecte[posObjGruppe]._listZeile[i].chkTitel.IsChecked.Value)
                 {
                     if (_GrpObjecte[posObjGruppe].ticKlang.Visibility == Visibility.Collapsed)
                         FadingIn(_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer, 
                                 (_GrpObjecte[posObjGruppe]._listZeile[i].Aktuell_Volume / 100) * (_GrpObjecte[posObjGruppe].Vol_ThemeMod) / 100);
                     else
                         FadingIn(_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer, _GrpObjecte[posObjGruppe]._listZeile[i].Aktuell_Volume);
-                    //  _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Play();
 
                 }
                 if (!_GrpObjecte[posObjGruppe]._listZeile[i].istPause && !_GrpObjecte[posObjGruppe]._listZeile[i].istLaufend &&
@@ -4289,7 +4291,7 @@ namespace MeisterGeister.View.AudioPlayer {
             for (int i = 0; i < _ThemeGruppe.Count; i++)
                 grdUebersicht.Children.Remove(_ThemeGruppe[i].pnlAudioTheme);
             _ThemeGruppe.Clear();
-
+            
             AktualisiereThemeGruppe(0, true);
             ShowThemeGruppen(0);
 
@@ -4300,7 +4302,6 @@ namespace MeisterGeister.View.AudioPlayer {
                 exThemeEditor.IsExpanded = false;
 
             ZeigeKlangGerneral(-1, false);
-            tcKlang.SelectedIndex = -1;
         }
 
         private void ShowThemeGruppen(int start)
@@ -4342,13 +4343,14 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void btnBGthemeAngehakt_Checked(object sender, RoutedEventArgs e)
         {
-
             if (!AktThemeGruppe.ThemeJustRead)
             {
                 if (AktThemeGruppe.Hintergrund != null)
                 {
-                    HitchPanel hBGPanel = ThemeLstBGPanel.Find(t => t.lblThemeName.Content.Equals(AktThemeGruppe.Hintergrund.playlistName));
-                    if (hBGPanel != null && hBGPanel.btnAngehakt.IsChecked.Value)
+                 //   HitchPanel hBGPanel = ThemeLstBGPanel.Find(t => t.btnHitchPanel.IsChecked.Value);             
+                    HitchPanel hBGPanel = ThemeLstBGPanel.Find(t => t.lblThemeName.Content.Equals(AktThemeGruppe.Hintergrund.ticKlang._textBlockTitel.Text));
+                    if (hBGPanel != null && hBGPanel.btnAngehakt.IsChecked.Value && 
+                        Convert.ToString(AktThemeGruppe.Hintergrund.Audio_Playlist_GUID) != hBGPanel.btnAngehakt.Tag)
                         hBGPanel.btnHitchPanel.IsChecked = false; // .btnAngehakt.IsChecked = false;
                 }
 
@@ -4471,7 +4473,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void btnBGthemeAngehakt_UnChecked(object sender, RoutedEventArgs e)
         {
-            if (!AktThemeGruppe.ThemeJustRead)
+            if (!AktThemeGruppe.ThemeJustRead && aktiveThemeGruppe != -1) // AktThemeGruppe.Hintergrund != null)
             {
                 tcKlang.Tag = AktThemeGruppe.Hintergrund.seite;
                 if (!btnThemeEdit.IsChecked.Value)
@@ -4767,6 +4769,18 @@ namespace MeisterGeister.View.AudioPlayer {
                 new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu.png")) :
                 new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/neu_grau.png"));
             
+        }
+
+        public void tiUebersicht_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tcKlang_vorher = tcKlang.SelectedIndex;
+            tcKlang_vorherTag = Convert.ToInt16(tcKlang.Tag);
+        }
+
+        public void tiUebersicht_LostFocus(object sender, RoutedEventArgs e)
+        {
+            tcKlang.SelectedIndex = tcKlang_vorher;
+            tcKlang.Tag = tcKlang_vorherTag;
         }
     }
 

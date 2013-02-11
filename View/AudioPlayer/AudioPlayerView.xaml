@@ -37,7 +37,7 @@
             
         </Border>
         <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
-            <TabItem Header="Themes" Name="tiUebersicht" >  
+            <TabItem Header="Themes" Name="tiUebersicht" GotFocus="tiUebersicht_GotFocus" LostFocus="tiUebersicht_LostFocus">  
                 
                 <Grid Background="{StaticResource Background1}" Name="grdThemes">
                     <Grid.RowDefinitions>
