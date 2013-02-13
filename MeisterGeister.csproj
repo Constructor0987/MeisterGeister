@@ -369,6 +369,8 @@
     <Compile Include="Model\Zauber_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Net\Web\HttpService.cs" />
+    <Compile Include="Net\Web\RequestProcessor.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
@@ -1108,6 +1110,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MeisterGeisterModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Daten\meistergeister.kmz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DereGlobusIndex.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -1456,6 +1461,7 @@
     </Content>
     <Resource Include="Images\Logos\MG_Icon.ico" />
     <Resource Include="Images\Logos\MG_Logo.png" />
+    <Resource Include="Images\Logos\MG_Icon_mit_Zeiger.png" />
     <Content Include="Libs\ImpromptuInterface.dll" />
     <Content Include="Libs\DG-Suche.dll" />
     <Resource Include="Images\Icons\General\kreise.png" />

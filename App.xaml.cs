@@ -340,6 +340,12 @@ namespace MeisterGeister {
 
         }
 
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Global.CleanUp();
+            base.OnExit(e);
+        }
+
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
             // Dieser EventHandler fängt alle unbehandelten Ausnahmen und zeigt den Fehler an.
             MsgWindow errWin = new MsgWindow("Unbehandelte Ausnahme", "Es ist eine unbehandelte Ausnahme aufgetreten. Das Programm wird beendet.\n", e.Exception);

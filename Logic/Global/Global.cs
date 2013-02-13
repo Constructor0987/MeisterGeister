@@ -139,6 +139,14 @@ namespace MeisterGeister
                 if (Guid.TryParse(Logic.Settings.Einstellungen.SelectedHeld, out heldguid))
                     SelectedHeldGUID = heldguid;
             }
+
+            //webserver
+            Net.Web.RequestProcessor.Start();
+        }
+
+        public static void CleanUp()
+        {
+            Net.Web.RequestProcessor.Stop();
         }
 
         /// <summary>
