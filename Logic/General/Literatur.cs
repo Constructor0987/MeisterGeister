@@ -12,6 +12,7 @@ namespace MeisterGeister.Logic.General
             {"H&K", "Handelsherr und Kiepenkerl"},
             {"K&K", "Katakomben und Kavernen"},
             {"LCD", "Liber Cantiones"},
+            {"MyA", "Myranisches Arsenal"},
             {"SRD", "Stäbe, Ringe, Dschinnenlampen"},
             {"TCD", "Tractatus contra Daemones"},
             {"WdA", "Wege der Alchimie"},
