@@ -137,7 +137,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox Name="_textBoxRechtliches" TextWrapping="Wrap" Margin="5,10,5,0" TextAlignment="Justify" Text="DAS SCHWARZE AUGE, AVENTURIEN und DERE sind eingetragene Marken in Schrift und Bild der Ulisses Medien und Spiel Distribution GmbH oder deren Partner. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel Distribution GmbH ist eine Verwendung der Ulisses-Spiele-Markenzeichen nicht gestattet. " BorderThickness="0" IsReadOnly="True" FontStyle="Italic" FontSize="11">
+                <TextBox Name="_textBoxRechtliches" TextWrapping="Wrap" Margin="5,10,5,0" TextAlignment="Justify" Text="DAS SCHWARZE AUGE, AVENTURIEN, DERE, MYRANOR, THARUN, UTHURIA und RIESLAND sind eingetragene Marken der Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel Distribution GmbH ist eine Verwendung der genannten Markenzeichen nicht gestattet." BorderThickness="0" IsReadOnly="True" FontStyle="Italic" FontSize="11">
                     <TextBox.Background>
                         <SolidColorBrush />
                     </TextBox.Background>

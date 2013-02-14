@@ -71,7 +71,7 @@ Das Urheberrecht des 'ArtefaktGenerator' PlugIns liegt bei Mario Rauschenberg (h
 Das Urheberrecht des 'Ares-Controller' PlugIns liegt bei Jörg Rüdenauer (http://aresrpg.sourceforge.net/).
 
 
-DAS SCHWARZE AUGE, AVENTURIEN und DERE sind eingetragene Marken in Schrift und Bild der Ulisses Medien und Spiel Distribution GmbH oder deren Partner. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel Distribution GmbH ist eine Verwendung der Ulisses-Spiele-Markenzeichen nicht gestattet.
+DAS SCHWARZE AUGE, AVENTURIEN, DERE, MYRANOR, THARUN, UTHURIA und RIESLAND sind eingetragene Marken der Significant Fantasy Medienrechte GbR. Ohne vorherige schriftliche Genehmigung der Ulisses Medien und Spiel Distribution GmbH ist eine Verwendung der genannten Markenzeichen nicht gestattet.
 
 Die Datei 'ImpromptuInterface.dll' unterliegt der Apache License (siehe 'License\Apache License.txt').
 
