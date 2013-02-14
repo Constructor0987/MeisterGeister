@@ -49,7 +49,12 @@ namespace MeisterGeister.View.General
             Content = con;
         }
 
-        private void _buttonClose_Click(object sender, RoutedEventArgs e)
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            CloseTool();
+        }
+
+        private void CloseTool()
         {
             if (Parent != null && Parent is TabControl)
             {
@@ -57,5 +62,14 @@ namespace MeisterGeister.View.General
                 App.SaveAll();
             }
         }
+
+        private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Middle && e.ButtonState == MouseButtonState.Pressed)
+            {
+                CloseTool();
+            }
+        }
+
     }
 }
