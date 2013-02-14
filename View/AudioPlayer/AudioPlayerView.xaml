@@ -240,7 +240,7 @@
                                 <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" Focusable="False" />                                
                             </Grid>
                         </Border>
-                        <Border Grid.Column="3" Grid.Row="1" Height="220" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center">
+                        <Border Grid.Column="3" Grid.Row="1" Height="240" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center">
                             <Grid Name="grdSongInfo" Width="284" Visibility="Hidden">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="39*" />
@@ -257,7 +257,7 @@
                                     <RowDefinition Height="30*" />
                                     <RowDefinition Height="30" />
                                     <RowDefinition Height="30" />
-                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Label Content="" Grid.Row="1" Name="lblBgTitel" Grid.Column="2" Grid.ColumnSpan="2" FontWeight="Bold" />
@@ -277,13 +277,17 @@
                                 <CheckBox Name="chkbxPlayRange" Grid.Row="7" Content="Nur ein Teil des Songs" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Click="chkbxPlayRange_Click" Focusable="False" />
                                 <local:SliderRange x:Name="rsldTeilSong" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="201.263" LowerValue="0" UpperValue="10000" Minimum="0" Maximum="10000" Margin="0,2,0,0" Visibility="Hidden" PreviewMouseLeftButtonUp="rsldTeilSong_PreviewMouseLeftButtonUp" />
 
-                                <StackPanel Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" FlowDirection="LeftToRight" Margin="30,0,0,0">
+                                <GroupBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Header="Gewichtung">
+                                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="30,0,0,0">
+                                    
                                     <Image Name="imgBGStern0" Grid.Column="1" Tag="0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
                                     <Image Name="imgBGStern1" Grid.Column="1" Tag="1" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
                                     <Image Name="imgBGStern2" Grid.Column="1" Tag="2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
                                     <Image Name="imgBGStern3" Grid.Column="1" Tag="3" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
                                     <Image Name="imgBGStern4" Grid.Column="1" Tag="4" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
-                                </StackPanel>
+                                   
+                                </StackPanel> 
+                                </GroupBox>
                                 <!--<Image Grid.ColumnSpan="2" Grid.Row="7" Name="imgHintergrundTitel" Stretch="Fill" VerticalAlignment="Top" Grid.Column="1" />-->
                             </Grid>                            
                         </Border>

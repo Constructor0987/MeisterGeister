@@ -114,7 +114,7 @@
         <Slider Name="sldVolHintergrund" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
         <Border x:Name="TrackVolKlaengeBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="4" Grid.Column="1" />
         <Slider Name="sldVolKlaenge" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
-        <Button Name="btnPlayNext" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="0,1,3,3" Focusable="False" IsTabStop="False">
+        <Button Name="btnPlayNext" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="0,1,3,3" Focusable="False" IsTabStop="False" IsEnabled="False">
             <Grid>
             <Image Source="/Images/Icons/General/play_next.png" VerticalAlignment="Center"/>
             </Grid>
