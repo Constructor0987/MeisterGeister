@@ -12,7 +12,7 @@ using MeisterGeister.ViewModel.Schmiede.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeGeschossViewModel : Base.ViewModelBase
+    public class SchmiedeGeschossViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----
@@ -304,6 +304,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeGeschossViewModel()
         {
+            this.Name = "Geschoss";
+            this.Icon = "/DSA%20MeisterGeister;component/Images/Icons/munition.png";
             Init();
             TawSchmied = 12;
             TawSchmiedSpitze = 12;

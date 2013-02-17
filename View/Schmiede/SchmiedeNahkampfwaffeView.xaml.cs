@@ -26,7 +26,6 @@ namespace MeisterGeister.View.Schmiede
         public SchmiedeNahkampfwaffeView()
         {
             InitializeComponent();
-            VM = new VM.SchmiedeNahkampfwaffeViewModel();
         }
 
         /// <summary>

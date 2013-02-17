@@ -11,7 +11,7 @@ using MeisterGeister.ViewModel.Schmiede.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeNahkampfwaffeViewModel : Base.ViewModelBase
+    public class SchmiedeNahkampfwaffeViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----
@@ -323,6 +323,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeNahkampfwaffeViewModel()
         {
+            this.Name = "Nahkampfwaffe";
+            this.Icon = "/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png";
             //ActiveSettingsChanged an EventHandler hängen
             //Falls zu langsam: FlagAttributes für Settings nutzen
             Init();

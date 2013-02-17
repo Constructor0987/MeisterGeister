@@ -10,7 +10,7 @@ using Service = MeisterGeister.Model.Service;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeRüstungViewModel : Base.ViewModelBase
+    public class SchmiedeRüstungViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----
@@ -173,6 +173,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeRüstungViewModel()
         {
+            this.Name = "Rüstung";
+            this.Icon = "/DSA%20MeisterGeister;component/Images/Icons/ruestung.png";
             Init();
             TawSchmied = 12;
         }

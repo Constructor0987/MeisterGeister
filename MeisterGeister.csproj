@@ -375,6 +375,7 @@
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
+    <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />

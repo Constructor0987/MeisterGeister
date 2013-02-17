@@ -26,7 +26,6 @@ namespace MeisterGeister.View.Schmiede
         public SchmiedeSchildView()
         {
             InitializeComponent();
-            VM = new VM.SchmiedeSchildViewModel();
         }
 
         /// <summary>

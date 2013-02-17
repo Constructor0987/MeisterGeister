@@ -67,7 +67,7 @@ namespace MeisterGeister.View.General
         {
             if (e.ChangedButton == MouseButton.Middle && e.ButtonState == MouseButtonState.Pressed)
             {
-                CloseTool();
+                //CloseTool();
             }
         }
 

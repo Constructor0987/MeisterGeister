@@ -12,7 +12,7 @@ using MeisterGeister.ViewModel.Schmiede.Logic;
 
 namespace MeisterGeister.ViewModel.Schmiede
 {
-    public class SchmiedeFernkampfwaffeViewModel : Base.ViewModelBase
+    public class SchmiedeFernkampfwaffeViewModel : Base.ToolViewModelBase
     {
 
         #region //---- FELDER ----
@@ -579,6 +579,8 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         public SchmiedeFernkampfwaffeViewModel()
         {
+            this.Name = "Fernkampfwaffe";
+            this.Icon = "/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png";
             //ActiveSettingsChanged an EventHandler hängen
             //Falls zu langsam: FlagAttributes für Settings nutzen
             Init();

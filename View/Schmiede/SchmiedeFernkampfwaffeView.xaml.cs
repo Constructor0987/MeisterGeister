@@ -26,7 +26,6 @@ namespace MeisterGeister.View.Schmiede
         public SchmiedeFernkampfwaffeView()
         {
             InitializeComponent();
-            VM = new VM.SchmiedeFernkampfwaffeViewModel();
         }
 
         /// <summary>

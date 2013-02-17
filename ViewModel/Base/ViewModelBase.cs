@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Diagnostics;
 using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.Base {
@@ -132,6 +133,34 @@ namespace MeisterGeister.ViewModel.Base {
             return null;
         }
 
+        /// <summary>
+        /// Gibt zurück, ob eine Exception gewurfen werden soll, oder Debug.Fail() 
+        /// genutz wird, falls ein nicht vorhandener Property-Name als String an
+        /// OnChanged bzw. VerifyPropertyName übergeben wird.
+        /// Standartrückgabewert ist false. Unterklassen können für Unit-Tests diesen
+        /// Getter überschreiben, um true zurückzugeben.
+        /// <returns>true, falls eine Exeption geworfen werden soll.</returns>
+        /// </summary>
+        protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
+
+        /// <summary>
+        /// Verifiziert als String übergebene Properties
+        /// </summary>
+        /// <param name="propertyString">String/Name des zu verifizierenden Property</param>
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        public void VerifyPropertyName(string propertyString)
+        {
+            if (TypeDescriptor.GetProperties(this)[propertyString] == null)
+            {
+                string msg = "Invalid property name: " + propertyString;
+                if (this.ThrowOnInvalidPropertyName)
+                    throw new Exception(msg);
+                else
+                    Debug.Fail(msg);
+            }
+        }
+
         #endregion
 
         #region //---- EIGENSCHAFTEN -----
@@ -148,6 +177,7 @@ namespace MeisterGeister.ViewModel.Base {
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnChanged(string propertyName) {
+            this.VerifyPropertyName(propertyName);
             if (this.PropertyChanged != null) {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }

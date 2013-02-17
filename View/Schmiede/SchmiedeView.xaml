@@ -4,34 +4,75 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vmSchmiede="clr-namespace:MeisterGeister.ViewModel.Schmiede"
+             xmlns:vSchmiede="clr-namespace:MeisterGeister.View.Schmiede"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
              d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
-    <UserControl.DataContext>
-        <vmSchmiede:SchmiedeViewModel />
-    </UserControl.DataContext>
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vmSchmiede:SchmiedeFernkampfwaffeViewModel}">
+            <vSchmiede:SchmiedeFernkampfwaffeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmSchmiede:SchmiedeGeschossViewModel}">
+            <vSchmiede:SchmiedeGeschossView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmSchmiede:SchmiedeNahkampfwaffeViewModel}">
+            <vSchmiede:SchmiedeNahkampfwaffeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmSchmiede:SchmiedeRüstungViewModel}">
+            <vSchmiede:SchmiedeRüstungView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vmSchmiede:SchmiedeSchildViewModel}">
+            <vSchmiede:SchmiedeSchildView />
+        </DataTemplate>
+        <DataTemplate x:Key="ClosableTabItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Image Height="24" Width="24" Source="{Binding Path=Icon}" />
+                <TextBlock Text="{Binding Path=Name}" Margin="4, 0, 0, 0" VerticalAlignment="Center" FontSize="11" />
+                <Button Command="{Binding Path=CloseCommand}" Margin="7,0,0,0" Height="15" Width="15"  BorderThickness="0.5" Opacity="0.5" ToolTip="Tool schließen (auch mit mittlerer Maustaste)" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
+                    <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                </Button>
+                <StackPanel.InputBindings>
+                    <MouseBinding Gesture="MiddleClick" Command="{Binding Path=CloseCommand}" />
+                </StackPanel.InputBindings>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="SchmiedenTemplate">
+            <TabControl IsSynchronizedWithCurrentItem="True" 
+                        ItemsSource="{Binding}" 
+                        ItemTemplate="{StaticResource ClosableTabItemTemplate}"
+                        Margin="4"
+                        />
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Margin="5" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left">
-            <Button Click="ButtonSchmiede_Click" Tag="Nahkampfwaffe" ToolTip="Schmiede: Nahkampfwaffe" VerticalAlignment="Center" Height="50">
+            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeNahkampfwaffeViewModel}" ToolTip="Schmiede: Nahkampfwaffe" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2" />
             </Button>
-            <Button Click="ButtonSchmiede_Click" Tag="Fernkampfwaffe" ToolTip="Schmiede: Fernkampfwaffe" VerticalAlignment="Center" Height="50">
+            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeFernkampfwaffeViewModel}" ToolTip="Schmiede: Fernkampfwaffe" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Margin="2" />
             </Button>
-            <Button Click="ButtonSchmiede_Click" Tag="Schild" ToolTip="Schmiede: Schild" VerticalAlignment="Center" Height="50">
+            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeSchildViewModel}" ToolTip="Schmiede: Schild" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2" />
             </Button>
-            <Button Click="ButtonSchmiede_Click" Tag="Rüstung" ToolTip="Schmiede: Rüstung" VerticalAlignment="Center" Height="50">
+            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeRüstungViewModel}" ToolTip="Schmiede: Rüstung" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/ruestung.png" Margin="2" />
             </Button>
-            <Button Click="ButtonSchmiede_Click" Tag="Geschoss" ToolTip="Schmiede: Geschoss" VerticalAlignment="Center" Height="50">
+            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeGeschossViewModel}" ToolTip="Schmiede: Geschoss" VerticalAlignment="Center" Height="50">
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/munition.png" Margin="2" />
             </Button>
         </StackPanel>
-        <TabControl Grid.Column="1" x:Name="_tabControlSchmiede" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" TabStripPlacement="Top" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" d:IsHidden="True" />
+        <TabControl Grid.Column="1" 
+                    ItemsSource="{Binding Path=Schmieden}"
+                    SelectedItem="{Binding Path=SelectedSchmiede}"
+                    ItemTemplate="{StaticResource ClosableTabItemTemplate}"
+                    TabStripPlacement="Top" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    d:IsHidden="True" />
     </Grid>
 </UserControl>
