@@ -2827,19 +2827,17 @@ namespace MeisterGeister.View.AudioPlayer {
 
             int seite = _GrpObjecte[posObjGruppe].seite;
 
-            if (_GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.istLaufend).Count > 0) // laufendeSongs[seite] != null)
+            for (int i = 0; i < _GrpObjecte[posObjGruppe]._listZeile.Count; i++) 
             {
-                for (int i = 0; i < _GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.istLaufend).Count; i++)
+                if (_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer != null)
                 {
-                    if (_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer != null)
-                    {
-                        _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.MediaEnded -= new EventHandler(Player_Ended);
-                        _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Stop();   // DIREKTER STOPP DA PLAYLIST GELÖSCHT WIRD
-                        _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Close();
-                        _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer = null;
-                    }
+                    _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.MediaEnded -= new EventHandler(Player_Ended);
+                    _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Stop();   // DIREKTER STOPP DA PLAYLIST GELÖSCHT WIRD
+                    _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Close();
+                    _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer = null;
                 }
-            }
+                _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend = false;
+            } 
             PlaylisteLeeren(posObjGruppe);
             /*
             this.UnregisterName("tiKlang" + objGruppe);
