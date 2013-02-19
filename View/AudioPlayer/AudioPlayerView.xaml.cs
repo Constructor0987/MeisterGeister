@@ -89,7 +89,7 @@ public class ThemeGruppe
 public class KlangZeile 
 {
     public UInt16 ID_Zeile;
-    public MediaPlayer _mplayer = null; //new MediaPlayer();
+    public MediaPlayer _mplayer = null;
     public Audio_Playlist_Titel audiotitel = new Audio_Playlist_Titel();
     public int mediaHashCode = 0;
     public bool FadingOutStarted = false;
