@@ -28,6 +28,7 @@ using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using MeisterGeister.View.AudioPlayer;
 using MeisterGeister.ViewModel.AudioPlayer;
+using System.Windows.Threading;
 using System.Threading;
 //using MeisterGeister.View.AudioPlayer.DragDropFramework;
 //using MeisterGeister.View.AudioPlayer.DragDropFrameworkData;
@@ -88,7 +89,7 @@ public class ThemeGruppe
 public class KlangZeile 
 {
     public UInt16 ID_Zeile;
-    public MediaPlayer _mplayer = new MediaPlayer();
+    public MediaPlayer _mplayer = null; //new MediaPlayer();
     public Audio_Playlist_Titel audiotitel = new Audio_Playlist_Titel();
     public int mediaHashCode = 0;
     public bool FadingOutStarted = false;
@@ -214,7 +215,7 @@ namespace MeisterGeister.View.AudioPlayer {
     /// </summary>
     /// 
 
-    delegate void updateBGSongCallback(MediaPlayer _player, string tekst);
+    //delegate void updateBGSongCallback(MediaPlayer _player, string tekst);
 
     public partial class AudioPlayerView : UserControl
     {
@@ -266,6 +267,8 @@ namespace MeisterGeister.View.AudioPlayer {
            public DragManager dragHelperTabControl0;
            public DropManager dropHelperTabControl0; 
            */
+        delegate void UpdateUI();
+
         public AudioPlayerView()
         {
             InitializeComponent();
@@ -511,6 +514,7 @@ namespace MeisterGeister.View.AudioPlayer {
         void HintergrundPlayer_Ended(object sender, EventArgs e)
         {
             (sender as MediaPlayer).Stop();
+            (sender as MediaPlayer).Close();
             lbhintergrundtitellist.Tag = lbhintergrundtitellist.SelectedIndex;
             
         }
@@ -518,6 +522,7 @@ namespace MeisterGeister.View.AudioPlayer {
         void Player_HintergrundMediaFailed(object sender, ExceptionEventArgs e)
         {
             (sender as MediaPlayer).Stop();
+            (sender as MediaPlayer).Close();
             HintergrundProgBarTimer.Stop();
             ListBoxItem lbItem = (ListBoxItem)lbhintergrundtitellist.SelectedItem;
             lbItem.Background = Brushes.Yellow;
@@ -573,6 +578,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (_GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer != null)
                 {
                     _GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer.Stop();
+                    _GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer.Close();
                     _GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer = null;
                 }
 
@@ -603,7 +609,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         if (_BGPlayer.BG[_BGPlayer.aktiv].mPlayer != null)
                         {
                             _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true; 
-                            BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], true);                           
+                            BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], true);                            
                         }
                         btnBGAbspielen.Tag = 1;
                         btnBGAbspielen_Click(btnBGAbspielen, new RoutedEventArgs());
@@ -781,8 +787,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     lbhintergrundtitellist.SelectionChanged -= new SelectionChangedEventHandler(lbhintergrundtitellist_SelectionChanged);
                     lbhintergrundtitellist.SelectedIndex = Convert.ToInt16(lbhintergrundtitellist.Tag);
                     lbhintergrundtitellist.SelectionChanged += new SelectionChangedEventHandler(lbhintergrundtitellist_SelectionChanged);
-
-                    _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = false;
+					_BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = false;
                     FadingIn(_BGPlayer.BG[_BGPlayer.aktiv].mPlayer, Convert.ToDouble(_BGPlayer.AktPlaylistTitel.Volume) / 100);
                     btnBGAbspielen.Tag = 1;
                     btnImgBGAbspielen.Source = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/pause.png"));
@@ -798,7 +803,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (_BGPlayer.BG[_BGPlayer.aktiv].mPlayer != null)
                 {
                     _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true; // BGFadingOutStarted[aktHintergrund] = true;
-                    BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], false); //BGFadingOutStarted[aktHintergrund]
+                     BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], false); //BGFadingOutStarted[aktHintergrund]
                 }
                 btnBGAbspielen.Tag = 0;
                 btnImgBGAbspielen.Source = new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/play.png"));
@@ -1045,7 +1050,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.MediaEnded -= new EventHandler(Player_Ended);
                         _GrpObjecte[posObjGruppe]._listZeile[i].FadingOutStarted = true;
-                        FadingOut(_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer, _GrpObjecte[posObjGruppe]._listZeile[i].FadingOutStarted, true);
+                        FadingOut(_GrpObjecte[posObjGruppe]._listZeile[i], true);
                     }
                     _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend = false;
                     _GrpObjecte[posObjGruppe]._listZeile[i].istPause = false;
@@ -1515,11 +1520,12 @@ namespace MeisterGeister.View.AudioPlayer {
                             if (_GrpObjecte[posObjGruppe].istHintergrundMusik)
                             {
                                 _GrpObjecte[posObjGruppe]._listZeile[zeile].FadingOutStarted = true;
-                                FadingOut(_GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer, _GrpObjecte[posObjGruppe]._listZeile[zeile].FadingOutStarted, true);
+                                FadingOut(_GrpObjecte[posObjGruppe]._listZeile[zeile], true);
                             }
                             else
                             {
                                 _GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer.Stop();
+                                _GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer.Close();
                                 _GrpObjecte[posObjGruppe]._listZeile[zeile]._mplayer = null;
                             }
                             _GrpObjecte[posObjGruppe]._listZeile[zeile].istStandby = false;
@@ -1950,7 +1956,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         }
                         if (_BGPlayer.BG[_BGPlayer.aktiv].mPlayer != null)
                         {
-                            _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true; // BGFadingOutStarted[aktHintergrund] = true;
+                            _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true;
                             BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], true);
                             
                             _BGPlayer.aktiv = (_BGPlayer.aktiv == 0)? 1: 0;
@@ -2080,6 +2086,8 @@ namespace MeisterGeister.View.AudioPlayer {
                                     KlangZeilenLaufend[durchlauf].spnlKlangRow.Background = Brushes.Yellow;
                                     KlangZeilenLaufend[durchlauf].spnlKlangRow.ToolTip = "Datei kann nicht abgespielt werden (Zeitüberlauf)";
                                     KlangZeilenLaufend[durchlauf]._mplayer.Stop();
+                                    KlangZeilenLaufend[durchlauf]._mplayer.Close();
+                                    KlangZeilenLaufend[durchlauf]._mplayer = null;
                                     KlangZeilenLaufend[durchlauf].playable = false;
                                     KlangZeilenLaufend[durchlauf].istStandby = true;
                                     KlangZeilenLaufend[durchlauf].istLaufend = false;
@@ -2172,7 +2180,8 @@ namespace MeisterGeister.View.AudioPlayer {
                                 {
                                     _GrpObjecte[posObjGruppe].Gespielt.Add(Convert.ToUInt16(durchlauf));
                                     KlangZeilenLaufend[durchlauf].FadingOutStarted = true;
-                                    FadingOut(KlangZeilenLaufend[durchlauf]._mplayer, KlangZeilenLaufend[durchlauf].FadingOutStarted, true);
+                                    FadingOut(KlangZeilenLaufend[durchlauf], true);
+                                    
                                     _ThemeGruppe[aktiveThemeGruppe].pnlAudioTheme.pbarActBGTitel.Value = 0;
                                     
                                 }
@@ -2189,7 +2198,8 @@ namespace MeisterGeister.View.AudioPlayer {
                             {
                                 _GrpObjecte[posObjGruppe].Gespielt.Add(Convert.ToUInt16(durchlauf));
                                 KlangZeilenLaufend[durchlauf].FadingOutStarted = true;
-                                FadingOut(KlangZeilenLaufend[durchlauf]._mplayer, KlangZeilenLaufend[durchlauf].FadingOutStarted, true);
+                                FadingOut(KlangZeilenLaufend[durchlauf], true);
+                                
                                 _ThemeGruppe[aktiveThemeGruppe].pnlAudioTheme.pbarActBGTitel.Value = 0;
                                 KlangZeilenLaufend[durchlauf].istLaufend = false;
                                 KlangZeilenLaufend[durchlauf].istStandby = true;
@@ -2333,7 +2343,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         _BGPlayer.BG[_BGPlayer.aktiv].mPlayer.NaturalDuration.TimeSpan.TotalMilliseconds)
                 {
                     _BGPlayer.Gespielt.Add(Convert.ToUInt16(lbhintergrundtitellist.SelectedIndex));
-                    _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true; // BGFadingOutStarted[aktHintergrund] = true;
+                    _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true; 
                     BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], true);
                     HintergrundProgBarTimer.Stop();
                     if (btnBGRepeat.IsChecked.Value)
@@ -2759,8 +2769,16 @@ namespace MeisterGeister.View.AudioPlayer {
                             ZeigeKlangSongsParallel(posObjGruppe, false);
 
                             tboxklangsongparallel.TextChanged -= new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
-                            tboxklangsongparallel.Tag = null;
-                            tboxklangsongparallel.Text = "1";
+                            if (playlistliste != null && _GrpObjecte[posObjGruppe]._listZeile.Count > 0)
+                            {
+                                tboxklangsongparallel.Tag = AktKlangPlaylist.Audio_Playlist_Titel.Count;
+                                tboxklangsongparallel.Text = AktKlangPlaylist.MaxSongsParallel.ToString();
+                            }
+                            else
+                            {
+                                tboxklangsongparallel.Tag = null;
+                                tboxklangsongparallel.Text = "1";
+                            }
                             tboxklangsongparallel.TextChanged += new TextChangedEventHandler(tboxklangsongparallel_TextChanged);
                             
                         }
@@ -2817,6 +2835,8 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.MediaEnded -= new EventHandler(Player_Ended);
                         _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Stop();   // DIREKTER STOPP DA PLAYLIST GELÖSCHT WIRD
+                        _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer.Close();
+                        _GrpObjecte[posObjGruppe]._listZeile[i]._mplayer = null;
                     }
                 }
             }
@@ -3364,7 +3384,8 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (_GrpObjecte[posObjGruppe]._listZeile[i].istPause && _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend)
                 {
                     _GrpObjecte[posObjGruppe]._listZeile[i].FadingOutStarted = true;
-                    FadingOut(_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer, _GrpObjecte[posObjGruppe]._listZeile[i].FadingOutStarted, false);
+                    FadingOut(_GrpObjecte[posObjGruppe]._listZeile[i], false);
+                    
               //      _GrpObjecte[posObjGruppe]._listZeile[i].istStandby = false;
               //      _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend = false;
 
@@ -3372,7 +3393,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (!_GrpObjecte[posObjGruppe]._listZeile[i].istPause && _GrpObjecte[posObjGruppe]._listZeile[i].istLaufend && 
                     _GrpObjecte[posObjGruppe]._listZeile[i].chkTitel.IsChecked.Value)
                 {
-                    _GrpObjecte[posObjGruppe]._listZeile[i].FadingOutStarted = false;
+					_GrpObjecte[posObjGruppe]._listZeile[i].FadingOutStarted = false;
                     if (_GrpObjecte[posObjGruppe].ticKlang.Visibility == Visibility.Collapsed)
                         FadingIn(_GrpObjecte[posObjGruppe]._listZeile[i]._mplayer, 
                                 (_GrpObjecte[posObjGruppe]._listZeile[i].Aktuell_Volume / 100) * (_GrpObjecte[posObjGruppe].Vol_ThemeMod) / 100);
@@ -3500,6 +3521,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     if (_BGPlayer.BG[_BGPlayer.aktiv].mPlayer != null)
                     {
                         _BGPlayer.BG[_BGPlayer.aktiv].mPlayer.Stop();
+                        _BGPlayer.BG[_BGPlayer.aktiv].mPlayer.Close();
                         _BGPlayer.BG[_BGPlayer.aktiv].mPlayer = null;
                         btnBGAbspielen.IsEnabled = false;
                         _BGPlayer.AktPlaylist = null;
@@ -4014,8 +4036,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 {
                     AktThemeGruppe.Hintergrund._listZeile[momLaufend].FadingOutStarted = true;
                     _ThemeGruppe[aktiveThemeGruppe].pnlAudioTheme.pbarActBGTitel.Value = 0;
-                    FadingOut(AktThemeGruppe.Hintergrund._listZeile[momLaufend]._mplayer, AktThemeGruppe.Hintergrund._listZeile[momLaufend].FadingOutStarted, true);
-                    //AktThemeGruppe.Hintergrund._listZeile[momLaufend]._mplayer.Stop();
+                    FadingOut(AktThemeGruppe.Hintergrund._listZeile[momLaufend], true);
                     AktThemeGruppe.Hintergrund._listZeile[momLaufend].istLaufend = false;
                     AktThemeGruppe.Hintergrund._listZeile[momLaufend].istStandby = false;
                     ThemeSchalten(aktiveThemeGruppe, true, false);
@@ -4066,8 +4087,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     if (_ThemeGruppe[theme].Hintergrund != null && _ThemeGruppe[theme].Hintergrund.btnKlangPause != null)
                     {
                         _ThemeGruppe[theme].Hintergrund.btnKlangPause.Tag = SollZustand;
-                        tcKlang.Tag = _ThemeGruppe[theme].Hintergrund.seite;       
-                 
+                        tcKlang.Tag = _ThemeGruppe[theme].Hintergrund.seite;                        
                         btnKlangPauseX_Click(_ThemeGruppe[theme].Hintergrund.btnKlangPause, new RoutedEventArgs());
 
                         KlangZeile klZeileLaufende = _ThemeGruppe[theme].Hintergrund._listZeile.Find(t => t.istLaufend);
@@ -4098,7 +4118,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
             // AktThemeGruppe.dbAudioTheme.Name = null;
             AktThemeGruppe.ThemeJustRead = false;
-            AktThemeGruppe.pnlAudioTheme.btnPlayNext.IsEnabled = false;
+			AktThemeGruppe.pnlAudioTheme.btnPlayNext.IsEnabled = false;
             // AktThemeGruppe.pnlAudioTheme.imgPlay.Tag = 0;
             AktThemeGruppe = null;
             aktiveThemeGruppe = -1;
@@ -4122,7 +4142,7 @@ namespace MeisterGeister.View.AudioPlayer {
             AktThemeGruppe.ThemeJustRead = true;
             aktiveThemeGruppe = i;
             AktThemeGruppe.ThemeName = AktThemeGruppe.dbAudioTheme.Name;
-                        
+
             exThemeEditor.IsEnabled = true;
             ThemeSchalten(i, true, true);
             AktThemeGruppe.pnlAudioTheme.imgPlay.Tag = 0;
@@ -4132,6 +4152,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
             if (btnThemeEdit.IsChecked.Value)
             {
+
                 AktThemeGruppe.pnlAudioTheme.btnPlayNext.IsEnabled = false;
                 btnThemeLöschen.Visibility = Visibility.Visible;
             }
@@ -4859,6 +4880,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             if (playerStoppen && BG.FadingOutStarted)   //bei Volume 0 Fadingauf false und MediaPlayer freigeben
                             {
                                 BG.mPlayer.Stop();
+                                BG.mPlayer.Close();
                                 BG.mPlayer = null;
                             }
                             BG.FadingOutStarted = false;
@@ -4878,36 +4900,41 @@ namespace MeisterGeister.View.AudioPlayer {
             _timer.Start();
         }
 
-        public void FadingOut(MediaPlayer mplayer, bool FadingOutStarted, bool playerStoppen)
+        public void FadingOut(KlangZeile klZeile, bool playerStoppen) // MediaPlayer mplayer, bool FadingOutStarted, 
         {
             DispatcherTimer _timer = new DispatcherTimer();
-            
-            double stVol = mplayer.Volume;
+
+            double stVol = klZeile._mplayer.Volume;
             double start= 100;
             _timer.Interval = TimeSpan.FromMilliseconds(fadingIntervall);
                         
             _timer.Tick += new EventHandler(delegate(object s, EventArgs a)
             {
-                if (FadingOutStarted)                              //solange Volume runterregeln bis der Titel extern das Fadingstoppt
+                if (klZeile.FadingOutStarted)                              //solange Volume runterregeln bis der Titel extern das Fadingstoppt
                 {
-                    if (mplayer != null)
+                    if (klZeile._mplayer!= null)
                     {
                         start-= fadingTime / 100;
-                        mplayer.Volume = stVol * start/ 100;
-                        if (mplayer.Volume == 0)                    
+                        klZeile._mplayer.Volume = stVol * start / 100;
+                        if (klZeile._mplayer.Volume == 0)                    
                         {
-                            if (playerStoppen && FadingOutStarted)     //bei Volume 0 Fadingauf false und MediaPlayer freigeben
-                                mplayer.Stop();
-                            else
-                                if (!playerStoppen && FadingOutStarted)
-                                    mplayer.Pause();
-                            FadingOutStarted = false;
+                            if (playerStoppen && klZeile.FadingOutStarted)     //bei Volume 0 Fadingauf false und MediaPlayer freigeben
+                            {
+                                klZeile._mplayer.Stop();
+                                klZeile._mplayer.Close();
+                                klZeile._mplayer = null;
+                            }
+                            if (!playerStoppen && klZeile.FadingOutStarted)
+                            {
+                                klZeile._mplayer.Pause();
+                            }
+                            klZeile.FadingOutStarted = false;
                             _timer.Stop();
                         }
                     }
                     else
                     {
-                        FadingOutStarted = false;
+                        klZeile.FadingOutStarted = false;
                         _timer.Stop();
                     }
                 }
