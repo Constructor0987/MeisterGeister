@@ -147,7 +147,7 @@ namespace MeisterGeister.ViewModel.Base {
         /// Verifiziert als String übergebene Properties
         /// </summary>
         /// <param name="propertyString">String/Name des zu verifizierenden Property</param>
-        [Conditional("DEBUG")]
+        [Conditional("DEBUG_PROPERTIES")]
         [DebuggerStepThrough]
         public void VerifyPropertyName(string propertyString)
         {
