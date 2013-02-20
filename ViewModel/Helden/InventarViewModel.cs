@@ -22,6 +22,8 @@ namespace MeisterGeister.ViewModel.Inventar {
         const string TALENTFERNKAMPFWAFFEUNTERKATEGORIE = "Fernkampf";
         const string FILTERDEAKTIVIEREN = " Alle ";
         bool IsLoaded = false;
+        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+        private bool listenToChangeEvents = true;
 
         //UI
         private Visibility isNahkampfwaffevorhanden = Visibility.Collapsed;
@@ -72,12 +74,18 @@ namespace MeisterGeister.ViewModel.Inventar {
 
         #region //EIGENSCHAFTEN
 
-        //UI
-        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+        //Intern
+        public bool ListenToChangeEvents {
+            get { return listenToChangeEvents; }
+            set { listenToChangeEvents = value; SelectedHeldChanged(); }
+        }
+
+        //UI      
         public bool IsReadOnly
         {
             get { return _isReadOnly; }
         }
+
         public Visibility IsNahkampfwaffevorhanden {
             get { return isNahkampfwaffevorhanden; }
             set {
@@ -85,6 +93,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("IsNahkampfwaffevorhanden");
             }
         }
+
         public Visibility IsFernkampfwaffevorhanden {
             get { return isFernkampfwaffevorhanden; }
             set {
@@ -92,6 +101,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("IsFernkampfwaffevorhanden");
             }
         }
+
         public Visibility IsSchildVorhanden {
             get { return isSchildVorhanden; }
             set {
@@ -99,6 +109,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("IsSchildVorhanden");
             }
         }
+
         public Visibility IsRuestungVorhanden {
             get { return isRuestungVorhanden; }
             set {
@@ -106,6 +117,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("IsRuestungVorhanden");
             }
         }
+
         public int SelectedFilterIndex {
             get { return selectedFilterIndex; }
             set {
@@ -841,12 +853,7 @@ namespace MeisterGeister.ViewModel.Inventar {
 
         #endregion
 
-        private bool listenToChangeEvents = true;
-
-        public bool ListenToChangeEvents {
-            get { return listenToChangeEvents; }
-            set { listenToChangeEvents = value; SelectedHeldChanged(); }
-        }
+        
 
 
     }

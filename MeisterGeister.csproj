@@ -1533,16 +1533,16 @@
     </Content>
     <Resource Include="Images\Icons\General\info.png" />
     <Resource Include="Images\Logos\WikiAventurica_Logo.png" />
-    <Resource Include="View\Helden\Controls\hosen.png" />
-    <Resource Include="View\Helden\Controls\koerper.png" />
-    <Resource Include="View\Helden\Controls\kopf.png" />
-    <Resource Include="View\Helden\Controls\larm.png" />
-    <Resource Include="View\Helden\Controls\lbein.png" />
-    <Resource Include="View\Helden\Controls\lhand.png" />
-    <Resource Include="View\Helden\Controls\rarm.png" />
-    <Resource Include="View\Helden\Controls\rbein.png" />
-    <Resource Include="View\Helden\Controls\rhand.png" />
-    <Resource Include="View\Helden\Controls\sonstiges.png" />
+    <Resource Include="Images\Koerperzonen\hosen.png" />
+    <Resource Include="Images\Koerperzonen\koerper.png" />
+    <Resource Include="Images\Koerperzonen\kopf.png" />
+    <Resource Include="Images\Koerperzonen\larm.png" />
+    <Resource Include="Images\Koerperzonen\lbein.png" />
+    <Resource Include="Images\Koerperzonen\lhand.png" />
+    <Resource Include="Images\Koerperzonen\rarm.png" />
+    <Resource Include="Images\Koerperzonen\rbein.png" />
+    <Resource Include="Images\Koerperzonen\rhand.png" />
+    <Resource Include="Images\Koerperzonen\sonstiges.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

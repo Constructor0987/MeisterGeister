@@ -493,8 +493,8 @@
                                     	<Grid>
                                     		<Grid Height="120" VerticalAlignment="Top">
                                     			<StackPanel ToolTipService.ToolTip="Kopf" HorizontalAlignment="Left" Height="30"  VerticalAlignment="Top" Orientation="Horizontal" Width="30" Margin="0,0,0,0" >
-                                    				<Border Background="#CC000000" Width="30" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">                                                
-                                    					<Image Source="kopf.png" Stretch="Fill" Margin="0,0,0,0" >
+                                    				<Border Background="#CC000000" Width="30" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                        <Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/kopf.png" Stretch="Fill" Margin="0,0,0,0" >
                                     						<Image.Effect>
                                     							<DropShadowEffect ShadowDepth="1"/>
                                     						</Image.Effect>
@@ -504,7 +504,7 @@
                                     			<StackPanel Margin="0.032,30,0,0"    ToolTipService.ToolTip="Arme" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Orientation="Horizontal" Width="30" >
                                     				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" Width="30" VerticalAlignment="Stretch">                                                
                                     					<Grid HorizontalAlignment="Left" Height="24" VerticalAlignment="Top">
-                                    						<Image Margin="3.698,4.525,4.562,-4.525" Source="larm.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                            <Image Margin="3.698,4.525,4.562,-4.525" Source="/DSA MeisterGeister;component/Images/Koerperzonen/larm.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
                                     							<Image.Effect>
                                     								<DropShadowEffect ShadowDepth="1"/>
                                     							</Image.Effect>
@@ -517,7 +517,7 @@
                                     								</TransformGroup>
                                     							</Image.RenderTransform>
                                     						</Image>
-                                    						<Image Margin="5.998,0.936,1.722,4.472" Source="rarm.png" Stretch="Fill" d:LayoutOverrides="HorizontalAlignment" RenderTransformOrigin="0.5,0.5">
+                                    						<Image Margin="5.998,0.936,1.722,4.472" Source="/DSA MeisterGeister;component/Images/Koerperzonen/rarm.png" Stretch="Fill" d:LayoutOverrides="HorizontalAlignment" RenderTransformOrigin="0.5,0.5">
                                     							<Image.Effect>
                                     								<DropShadowEffect ShadowDepth="1"/>
                                     							</Image.Effect>
@@ -534,8 +534,8 @@
                                     				</Border>
                                     			</StackPanel>
                                     			<StackPanel Margin="0.042,60,0,0"  ToolTipService.ToolTip="Rechte Hand" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Orientation="Horizontal" Width="30" >
-                                    				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" Width="30" VerticalAlignment="Stretch">                      
-                                    					<Image HorizontalAlignment="Left"  Source="rhand.png" Stretch="Fill" Width="27" Height="24" VerticalAlignment="Top" Margin="-3.167,2.833,0,0">
+                                    				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" Width="30" VerticalAlignment="Stretch">
+                                                        <Image HorizontalAlignment="Left"  Source="/DSA MeisterGeister;component/Images/Koerperzonen/rhand.png" Stretch="Fill" Width="27" Height="24" VerticalAlignment="Top" Margin="-3.167,2.833,0,0">
                                     						<Image.Effect>
                                     							<DropShadowEffect ShadowDepth="1"/>
                                     						</Image.Effect>
@@ -545,12 +545,12 @@
                                     			<StackPanel VerticalAlignment="Bottom"   ToolTipService.ToolTip="Schuhe" HorizontalAlignment="Left" Height="30" Orientation="Horizontal" Width="30" d:LayoutOverrides="VerticalAlignment" Margin="0.128,0,0,0" >
                                     				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">             
                                     					<Grid HorizontalAlignment="Left" Height="24" Width="27.917" Margin="0,2">
-                                    						<Image HorizontalAlignment="Left" Margin="12.055,0,0,4" Source="rbein.png" Stretch="Fill" Width="13.666" RenderTransformOrigin="0.193,0.444">
+                                                            <Image HorizontalAlignment="Left" Margin="12.055,0,0,4" Source="/DSA MeisterGeister;component/Images/Koerperzonen/rbein.png" Stretch="Fill" Width="13.666" RenderTransformOrigin="0.193,0.444">
                                     							<Image.Effect>
                                     								<DropShadowEffect ShadowDepth="1"/>
                                     							</Image.Effect>
                                     						</Image>
-                                    						<Image Margin="3.085,1,14.195,3" Source="lbein.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                                            <Image Margin="3.085,1,14.195,3" Source="/DSA MeisterGeister;component/Images/Koerperzonen/lbein.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
                                     							<Image.RenderTransform>
                                     								<TransformGroup>
                                     									<ScaleTransform ScaleY="1" ScaleX="-1"/>
@@ -568,7 +568,7 @@
                                     			</StackPanel>
                                     			<StackPanel  Margin="30.034,0,0,0" VerticalAlignment="Bottom"   ToolTipService.ToolTip="Weiteres" HorizontalAlignment="Left" Height="30"  d:LayoutOverrides="VerticalAlignment" Orientation="Horizontal" Width="30" >
                                     				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" Width="30" VerticalAlignment="Stretch" Margin="0,0.022,0,-0.022">
-                                    					<Image  Source="sonstiges.png" Stretch="Fill" Height="21" VerticalAlignment="Bottom" Margin="1.667,0,2.333,3.5">
+                                                        <Image  Source="/DSA MeisterGeister;component/Images/Koerperzonen/sonstiges.png" Stretch="Fill" Height="21" VerticalAlignment="Bottom" Margin="1.667,0,2.333,3.5">
                                     						<Image.Effect>
                                     							<DropShadowEffect ShadowDepth="1"/>
                                     						</Image.Effect>
@@ -577,7 +577,7 @@
                                     			</StackPanel>
                                     			<StackPanel  Margin="30.034,30,0,0" VerticalAlignment="Top"   ToolTipService.ToolTip="Beine" HorizontalAlignment="Left" Height="30" Orientation="Horizontal" Width="30" >
                                     				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" Width="30" VerticalAlignment="Stretch">
-                                    					<Image HorizontalAlignment="Left" Source="hosen.png" Stretch="Fill" Width="22.333" Height="20" VerticalAlignment="Top" Margin="2.667,3,0,0">
+                                                        <Image HorizontalAlignment="Left" Source="/DSA MeisterGeister;component/Images/Koerperzonen/hosen.png" Stretch="Fill" Width="22.333" Height="20" VerticalAlignment="Top" Margin="2.667,3,0,0">
                                     						<Image.Effect>
                                     							<DropShadowEffect ShadowDepth="1"/>
                                     						</Image.Effect>
@@ -585,8 +585,8 @@
                                     				</Border>
                                     			</StackPanel>
                                     			<StackPanel Margin="30.034,0,0,0" VerticalAlignment="Top"   ToolTipService.ToolTip="Körper" HorizontalAlignment="Left" Height="30" Orientation="Horizontal" Width="30" >
-                                    				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" Width="30" VerticalAlignment="Stretch">    
-                                    					<Image HorizontalAlignment="Left"  Source="koerper.png" Stretch="Fill" Width="19" Margin="4.875,3.625,0,5.375">
+                                    				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" Width="30" VerticalAlignment="Stretch">
+                                                        <Image HorizontalAlignment="Left"  Source="/DSA MeisterGeister;component/Images/Koerperzonen/koerper.png" Stretch="Fill" Width="19" Margin="4.875,3.625,0,5.375">
                                     						<Image.Effect>
                                     							<DropShadowEffect ShadowDepth="1"/>
                                     						</Image.Effect>
@@ -594,8 +594,8 @@
                                     				</Border>
                                     			</StackPanel>
                                     			<StackPanel Margin="30.034,60,0,0" ToolTipService.ToolTip="Linke Hand" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Orientation="Horizontal" Width="30" >
-                                    				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="30.083" Margin="0,-0.031,0,0.031">                                                
-                                    					<Image Height="24"  Source="lhand.png" Stretch="Fill" VerticalAlignment="Top" Width="26" Margin="3.083,2.167,-1,0">
+                                    				<Border Background="#CC000000" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="30.083" Margin="0,-0.031,0,0.031">
+                                                        <Image Height="24"  Source="/DSA MeisterGeister;component/Images/Koerperzonen/lhand.png" Stretch="Fill" VerticalAlignment="Top" Width="26" Margin="3.083,2.167,-1,0">
                                     						<Image.Effect>
                                     							<DropShadowEffect ShadowDepth="1"/>
                                     						</Image.Effect>
