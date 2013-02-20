@@ -127,7 +127,12 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF;
+                //DW: Null_Referenz_Exception aufgetreten
+                Boolean retVal = false;                
+                if (Talent != null) {
+                    retVal = Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF;
+                }
+                return retVal;
             }
         }
 

@@ -408,6 +408,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             get { return onAddRuestung; }
         }
         #endregion
+
         #region //KONSTRUKTOR
 
         public InventarViewModel() {
@@ -422,6 +423,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         }
 
         #endregion
+
         #region //INSTANZMETHODEN
         public void LoadDaten() {
             if (IsLoaded == false) {
@@ -478,6 +480,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 IsLoaded = true;
             }
         }
+
         private Model.Held_Ausrüstung CreateHeldZuAusruestung(Model.Held aHeld, Model.Ausrüstung aAusruestung) {
             Model.Held_Ausrüstung tmp = new Model.Held_Ausrüstung();
             tmp.Held = aHeld;
@@ -496,30 +499,35 @@ namespace MeisterGeister.ViewModel.Inventar {
             tmp.Anzahl = 1;
             return tmp;
         }
+
         private NahkampfItem CreateItemVonNahkampfwaffe(Model.Waffe aNahkampfwaffe) {
             NahkampfItem tmpItem = new NahkampfItem(CreateHeldZuAusruestung(SelectedHeld, aNahkampfwaffe.Ausrüstung), aNahkampfwaffe);
             tmpItem.Trageort = "Rucksack";
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             return tmpItem;
         }
+
         private FernkampfItem CreateItemVonFernkampfwaffe(Model.Fernkampfwaffe aFernkampfwaffe) {
             FernkampfItem tmpItem = new FernkampfItem(CreateHeldZuAusruestung(SelectedHeld, aFernkampfwaffe.Ausrüstung), aFernkampfwaffe);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
+
         private SchildItem CreateItemVonSchild(Model.Schild aSchild) {
             SchildItem tmpItem = new SchildItem(CreateHeldZuAusruestung(SelectedHeld, aSchild.Ausrüstung), aSchild);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
+
         private RuestungItem CreateItemVonRuestung(Model.Rüstung aRuestung) {
             RuestungItem tmpItem = new RuestungItem(CreateHeldZuAusruestung(SelectedHeld, aRuestung.Ausrüstung), aRuestung);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
+
         #endregion
 
         #region //EVENTS
@@ -633,8 +641,9 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("HeldRuestungImInventar");
             }
 
-            if (SelectedHeld != null)
-                SelectedHeld.BE = HeldRuestungImInventar.Sum(item => item.EntityR.BE);
+            if (SelectedHeld != null) {
+                //SelectedHeld.BE = HeldRuestungImInventar.Sum(item => item.EntityR.BE);
+            }
         }
 
         #region //--ADD
