@@ -67,6 +67,8 @@ namespace MeisterGeister.Net.Web
             {
                 lock (_queue)
                 {
+                    if (!_listener.IsListening)
+                        return;
                     _queue.Enqueue(_listener.EndGetContext(ar));
                     _ready.Set();
                 }
