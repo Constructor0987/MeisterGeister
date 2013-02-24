@@ -633,7 +633,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         btnBGAbspielen.IsEnabled = true;
                         btnBGAbspielen.Tag = 0;
                         btnBGNext.IsEnabled = true;
-
+                        
                         if (rbtnGleichSpielen.IsChecked.Value)
                         {
                             SpieleNeuenHintergrundTitel(-1);
@@ -643,6 +643,9 @@ namespace MeisterGeister.View.AudioPlayer {
                                 btnBGAbspielen_Click(btnBGAbspielen, new RoutedEventArgs());
                             }
                         }
+                        _BGPlayer.totalLength = TimeSpan.FromMilliseconds(0);
+                        GetTotalLength();
+
                         if (titel.Count == 0)
                             grdSongInfo.Visibility = Visibility.Hidden;                        
                     }
@@ -1899,8 +1902,6 @@ namespace MeisterGeister.View.AudioPlayer {
                 }
                 else
                 {
-                    _BGPlayer.totalLength = TimeSpan.FromMilliseconds(0);
-                    GetTotalLength();
                     string file = titel[lbhintergrundtitellist.SelectedIndex].Pfad;
                     if (file.Substring(1, 2) != @":\")
                     {
@@ -3955,10 +3956,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
                 while (klZeileAktiv.Count > 0)
                 {
-
-                    //         Würfel w = new Würfel(Convert.ToUInt16(klZeileAktiv.Count));
-                    //         w.Würfeln(1);
-                    int zeileIndex = _GrpObjecte[posObjGruppe]._listZeile.IndexOf(klZeileAktiv[(new Random()).Next(0, klZeileAktiv.Count)]);//  - 1]);
+                    int zeileIndex = _GrpObjecte[posObjGruppe]._listZeile.IndexOf(klZeileAktiv[(new Random()).Next(0, klZeileAktiv.Count)]);
                     chkTitel0_0_Click(_GrpObjecte[posObjGruppe]._listZeile[zeileIndex].chkTitel, e);
 
                     klZeileAktiv = klZeileAktiv.FindAll(t => t.istLaufend != true);
@@ -4976,8 +4974,6 @@ namespace MeisterGeister.View.AudioPlayer {
         public void GetTotalLength()
         {
             lblGesamtLänge.Visibility = Visibility.Hidden; 
-           // Vi.Content = "";
-           // lblCapLänge.Visibility = Visibility.Hidden;
             MyTimer.start_timer();
             BackgroundWorker worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
@@ -5027,7 +5023,7 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             else if (e.Error != null)
             {
-                lblGesamtLänge.Content = "Gesamtlängen-Fehler";// beim ermitteln der Gesamtlänge" + e.Error.Message;
+                lblGesamtLänge.Content = "Gesamtlängen-Fehler" + e.Error.Message;
             }
             else
             {
