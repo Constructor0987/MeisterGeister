@@ -37,7 +37,7 @@
             <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" Click="rbtnGleichSpielen_Click" Focusable="False" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Content="Fading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <Slider Height="23" HorizontalAlignment="Center" Name="sldFading" VerticalAlignment="Center" Width="100" SmallChange="50" TickFrequency="50" Maximum="500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="350" Focusable="False" IsTabStop="False" ToolTip="3,5 Sekunden Fading" ValueChanged="sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                    <Slider Height="23" HorizontalAlignment="Center" Name="sldFading" VerticalAlignment="Center" Width="100" SmallChange="50" TickFrequency="50" Maximum="700" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="350" Focusable="False" IsTabStop="False" ToolTip="3,5 Sekunden Fading" ValueChanged="sldFading_ValueChanged" IsSnapToTickEnabled="True" />
                 </StackPanel>
             </StackPanel>
         </Border>

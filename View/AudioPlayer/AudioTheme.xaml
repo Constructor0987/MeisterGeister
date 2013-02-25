@@ -93,16 +93,15 @@
             <ToggleButton.BindingGroup>
                 <BindingGroup Name="Themes" />
             </ToggleButton.BindingGroup>
-            <Grid Height="105" Width="218">
+            <Grid Width="218">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="28" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="36" />
                 </Grid.RowDefinitions>
-                <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png" Visibility="Hidden" Grid.RowSpan="2" Tag="0" Margin="0,0,0,5" />
+                <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png" Visibility="Hidden" Grid.RowSpan="2" Tag="0" Margin="0,0,0,3" />
                 <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
                 <Label Name="lblActBGTitel" Content="kein aktiver Hintergrundtitel" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,10" />                
             </Grid>
