@@ -369,7 +369,6 @@
                                     <TextBox Text="List0" VerticalAlignment="Center" Visibility="Collapsed" FontSize="17" Margin="3" Background="Khaki" />
                                     <Button  Margin="8,0,0,0" Height="18" ToolTip="Umbenennen" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                                         <DockPanel>
-                                            <Image Source="/Images/Icons/General/feder.png" Stretch="Fill" Visibility="Visible" />
                                             <Image Source="/Images/Icons/General/ok.png" Stretch="Fill" Visibility="Hidden" />
                                         </DockPanel>
                                     </Button>
@@ -529,7 +528,8 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                        </Grid>
+                                <Image Source="/Images/Icons/General/feder.png" Stretch="Fill" Visibility="Visible" Margin="86,-7,734,367" />
+                            </Grid>
                         </TabItem>
                     </TabControl>
                         
@@ -537,11 +537,22 @@
                     <Button Content="Liste löschen" HorizontalAlignment="Left" Name="btnPlaylistLoeschen" Height="23" Width="80" Margin="3,3,3,0" IsEnabled="False" Click="btnPlaylistLoeschen_Click" />
                     <GroupBox Header="Anzeige Playlists" Name="groupBox1" Grid.Row="1">
                         <Grid  Width="148">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="26" />
-                                    <RowDefinition Height="297*" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="26" />
+                                <RowDefinition Height="26" />
+                                <RowDefinition Height="297*" />
                                 </Grid.RowDefinitions>
-                                <Border Grid.Row="1" HorizontalAlignment="Stretch" Margin="0,0,0,10" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
+                            <Border Grid.Row="1" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="26" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>                                
+                                    <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                    <TextBox Margin="2" Name="tbKlangPlaylistFilter" Grid.Column="1" TextChanged="tbKlangPlaylistFilter_TextChanged"/>
+                                </Grid>
+                            </Border>
+                            <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,10" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
                                     <ListBox Background="Transparent" Name="lbKlang" SelectionChanged="lbKlang_SelectionChanged" />
                                 </Border>
                                 <RadioButton Click="rbKlangKlang_Click" Content="Klänge" GroupName="KlangListe" Height="17" IsChecked="False" Margin="40,5,56,0" Name="rbKlangKlang" VerticalAlignment="Top" />
