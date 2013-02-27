@@ -389,7 +389,7 @@
         		<SplineColorKeyFrame KeyTime="0:0:0.2" Value="#999D845D"/>
         	</ColorAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="MovingInfo" AutoReverse="True" RepeatBehavior="Forever">
+        <Storyboard x:Key="MovingInfo" AutoReverse="False" RepeatBehavior="Forever">
         	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="image5">
         		<SplineDoubleKeyFrame KeyTime="0" Value="76.667"/>
         		<SplineDoubleKeyFrame KeyTime="0:0:1" Value="0"/>

@@ -432,6 +432,10 @@ namespace MeisterGeister.ViewModel.Inventar {
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
             MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             SelectedFilterIndex = 0;
+            
+            if (IsLoaded == false) {
+                IsAllSelected = true;
+            }
         }
 
         #endregion
