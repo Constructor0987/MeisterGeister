@@ -7,7 +7,7 @@
 	x:Class="MeisterGeister.View.Helden.Controls.ListeView"
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Helden"
 	x:Name="UserControl"
-	d:DesignWidth="190" d:DesignHeight="561">
+	d:DesignWidth="190" d:DesignHeight="561" Loaded="HeldelLiseLoaded">
 	<UserControl.Resources>
 
 		<Style x:Key="HeldenListTextBlockStyle" TargetType="{x:Type TextBlock}">
@@ -88,7 +88,7 @@
 							</MenuItem.Icon>
 						</MenuItem>
                         <Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!" ><!-- IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
                             <MenuItem.Icon>
                                 <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
                             </MenuItem.Icon>
@@ -126,7 +126,7 @@
 							</MenuItem.ToolTip>
 						</MenuItem>
 						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteHeld}" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen." IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeld}" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen." ><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
 							</MenuItem.Icon>

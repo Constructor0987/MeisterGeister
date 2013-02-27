@@ -24,12 +24,6 @@ namespace MeisterGeister.View.Helden.Controls
         public SonderfertigkeitenView()
         {
             InitializeComponent();
-            VM = new VM.SonderfertigkeitenViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
-
-            // TODO MT: Entfernen, sobald Feature veröffentlicht werden soll
-#if !DEBUG
-            _buttonMultiAdd.Visibility = System.Windows.Visibility.Collapsed;
-#endif
         }
 
         /// <summary>
@@ -45,12 +39,7 @@ namespace MeisterGeister.View.Helden.Controls
             }
             set { DataContext = value; }
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
+		
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (VM != null)
@@ -69,6 +58,20 @@ namespace MeisterGeister.View.Helden.Controls
                 _menuItemSonderfertigkeitLöschen.IsEnabled = !VM.IsReadOnly;
                 _menuItemSonderfertigkeitlWiki.IsEnabled = true;
             }
+        }
+
+		//LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
+        private void SonderfertigkeitLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            VM = new VM.SonderfertigkeitenViewModel(View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowError);
+
+            // TODO MT: Entfernen, sobald Feature veröffentlicht werden soll
+#if !DEBUG
+            _buttonMultiAdd.Visibility = System.Windows.Visibility.Collapsed;
+#endif
+			
+			            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
     }
 }

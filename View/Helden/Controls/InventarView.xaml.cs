@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using VM = MeisterGeister.ViewModel.Inventar;
 //Weitere Usings
 using System.Diagnostics;
+using System.Windows.Media.Animation;
 
 namespace MeisterGeister.View.Helden.Controls
 {
@@ -24,7 +25,6 @@ namespace MeisterGeister.View.Helden.Controls
         public InventarView()
         {
             InitializeComponent();
-            VM = new VM.InventarViewModel();
         }
 
         /// <summary>
@@ -41,21 +41,12 @@ namespace MeisterGeister.View.Helden.Controls
             set { DataContext = value; }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                VM.LoadDaten();
-            }
-            catch (Exception) { }
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (VM != null)
                 VM.ListenToChangeEvents = IsVisible;
         }
+
         #region Events
         #region --UI
         private void brdKlicked(object sender, RoutedEventArgs e) {
@@ -80,6 +71,58 @@ namespace MeisterGeister.View.Helden.Controls
                     break;
                 default:
                     break;
+            }
+        }
+
+        //INIT
+        private void InventarLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+             VM = new VM.InventarViewModel();
+			            try
+            {
+                VM.LoadDaten();
+            }
+            catch (Exception) { }
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
+
+            Ruestung.Visibility = Visibility.Hidden;
+            Uebersicht.Visibility = Visibility.Visible;
+        }
+
+        private void OpenRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+        	Storyboard uebersicht = (Storyboard)TryFindResource("CloseUebersicht");
+            if (uebersicht != null) {
+                
+
+                uebersicht.Completed += (obj, args) => {
+                    Uebersicht.Visibility = Visibility.Hidden;
+                    Ruestung.Visibility = Visibility.Visible;
+
+                    Storyboard ruestung = (Storyboard)TryFindResource("OpenRuestung");
+                    if (ruestung != null)
+                        ruestung.Begin(this);
+                };
+                uebersicht.Begin(this);                
+            }
+
+			
+        }
+
+        private void CloseRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+        	Storyboard uebersicht = (Storyboard)TryFindResource("CloseRuestung");
+            if (uebersicht != null) {                
+                uebersicht.Completed += (obj, args) => {
+                    Ruestung.Visibility = Visibility.Hidden;
+                    Uebersicht.Visibility = Visibility.Visible;
+
+                    Storyboard ruestung = (Storyboard)TryFindResource("OpenUebersicht");
+                    if (ruestung != null)
+                        ruestung.Begin(this);
+                };
+                uebersicht.Begin(this);
             }
         }
         #endregion

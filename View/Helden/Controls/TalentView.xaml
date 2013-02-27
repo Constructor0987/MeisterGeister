@@ -4,7 +4,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"	
     xmlns:MGControl="clr-namespace:MeisterGeister.View.General" 		
-    Loaded="UserControl_Loaded" 
+    Loaded="TalentLoaded" 
 	Unloaded="UserControl_Unloaded"
     x:Name="userControl"
 	mc:Ignorable="d"	
@@ -330,7 +330,7 @@
                                         <KeyBinding Key="Enter"  Command="{Binding OnAddTalent_Click}" />
                                     </ComboBox.InputBindings>
                                 </ComboBox>
-                                <Button Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" Style="{DynamicResource ReadOnlyButtonStyle}">
+                                <Button Grid.Column="1" Command="{Binding OnAddTalent_Click}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}"><!-- IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" -->
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                                 </Button>
                             </Grid>
@@ -359,7 +359,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Height="28" Command="{Binding OnRemove}" Header="Löschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}">
+                            <MenuItem Height="28" Command="{Binding OnRemove}" Header="Löschen" > <!-- IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
                                 <MenuItem.Icon>
                                     <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                                 </MenuItem.Icon>

@@ -26,8 +26,7 @@ namespace MeisterGeister.View.Helden.Controls
         {
             InitializeComponent();
 
-            //VM an View Registrieren
-            VM = new VM.EigenschaftenViewModel();
+         
         }
 
         /// <summary>
@@ -44,9 +43,19 @@ namespace MeisterGeister.View.Helden.Controls
             set { DataContext = value; }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            try
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
+        }
+
+        //LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
+        private void EigenschaftenLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	   //VM an View Registrieren
+            VM = new VM.EigenschaftenViewModel();
+			
+			  try
             {
                 VM.Init();
             }
@@ -55,12 +64,6 @@ namespace MeisterGeister.View.Helden.Controls
             }
             if (VM != null)
                 VM.ListenToChangeEvents = IsVisible;
-        }
-
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
+        }     
     }
 }

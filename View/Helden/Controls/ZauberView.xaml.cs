@@ -23,8 +23,7 @@ namespace MeisterGeister.View.Helden.Controls
     {
         public ZauberView()
         {
-            InitializeComponent();
-            VM = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowProbeDialog, View.General.ViewHelper.ShowError);
+            InitializeComponent();            
         }
 
         /// <summary>
@@ -40,12 +39,7 @@ namespace MeisterGeister.View.Helden.Controls
             }
             set { DataContext = value; }
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
+        
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (VM != null)
@@ -66,6 +60,14 @@ namespace MeisterGeister.View.Helden.Controls
             scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
         }
 
+        //LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
+        private void ZauberLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            VM = new VM.ZauberViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowProbeDialog, View.General.ViewHelper.ShowError);
+
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
+        }
         
     }
 }

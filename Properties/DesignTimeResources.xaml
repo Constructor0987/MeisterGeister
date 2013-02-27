@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/DSA MeisterGeister;component/View/Themes/Style.xaml"/>
+		<ResourceDictionary Source="/DSA MeisterGeister;component/View/AudioPlayer/GlasButton.xaml"/>
 	</ResourceDictionary.MergedDictionaries>
 	<!-- Hier werden Einträge für Ressourcenverzeichnisse definiert. -->
 </ResourceDictionary>

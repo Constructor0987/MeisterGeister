@@ -25,8 +25,6 @@ namespace MeisterGeister.View.Helden.Controls
         public AllgemeinView()
         {
             this.InitializeComponent();
-            VM = new VM.AllgemeinViewModel();
-            VM.RefreshNotiz += (s, ev) => { RefreshNotizentool(); };
         }
         #endregion
 
@@ -45,11 +43,7 @@ namespace MeisterGeister.View.Helden.Controls
         }
 
         #region //EVENTS
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
-        }
+        
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             if (VM != null)
@@ -119,6 +113,16 @@ namespace MeisterGeister.View.Helden.Controls
                 if (inBox.OK_Click)
                     VM.SelectedHeld.Bild = inBox.Wert;
             }
+        }
+
+		//LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
+        private void AllgemeinLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            VM = new VM.AllgemeinViewModel();
+            VM.RefreshNotiz += (s, ev) => { RefreshNotizentool(); };
+			
+			            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
         }
         #endregion
     }
