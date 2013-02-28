@@ -129,7 +129,7 @@ namespace MeisterGeister.Model.Service
                 .Where(rk => rk.Unüblich == false).Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
             kulturen.OrderBy(k=>k.Name);
             
-            //unüblich unten anfügen falls gewünscht
+            //unüblich unten anfügen falls gewünscht 
             if (unüblicheKulturen)
             {
                 List<Kultur> kulturenUnüblich = Liste<Rasse>().Where(r => r.Name == rasse.Name)
