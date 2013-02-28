@@ -17,23 +17,16 @@ using VM = MeisterGeister.ViewModel.Inventar;
 using System.Diagnostics;
 using System.Windows.Media.Animation;
 
-namespace MeisterGeister.View.Helden.Controls
-{
-    public partial class InventarView : UserControl
-    {
+namespace MeisterGeister.View.Helden.Controls {
+    public partial class InventarView : UserControl {
 
-        public InventarView()
-        {
-            InitializeComponent();
-        }
+        #region Public
 
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
         /// </summary>
-        public VM.InventarViewModel VM
-        {
-            get
-            {
+        public VM.InventarViewModel VM {
+            get {
                 if (DataContext == null || !(DataContext is VM.InventarViewModel))
                     return null;
                 return DataContext as VM.InventarViewModel;
@@ -41,14 +34,31 @@ namespace MeisterGeister.View.Helden.Controls
             set { DataContext = value; }
         }
 
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (VM != null)
-                VM.ListenToChangeEvents = IsVisible;
+        #endregion
+
+        #region Konstruktor
+
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        public InventarView() {
+            InitializeComponent();
+
+            Ruestung.Visibility = Visibility.Hidden;
+            Uebersicht.Visibility = Visibility.Visible;
         }
 
+        #endregion
+
         #region Events
+
         #region --UI
+
+        /// <summary>
+        /// Welches Border?
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void brdKlicked(object sender, RoutedEventArgs e) {
             switch ((sender as Border).Name) {
                 case "borderAll":
@@ -74,27 +84,31 @@ namespace MeisterGeister.View.Helden.Controls
             }
         }
 
-        //INIT
-        private void InventarLoaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-             VM = new VM.InventarViewModel();
-			            try
-            {
-                VM.LoadDaten();
-            }
-            catch (Exception) { }
-            if (VM != null)
+        /// <summary>
+        /// Loaded-Event: init VM
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InventarLoaded(object sender, System.Windows.RoutedEventArgs e) {
+            if (VM == null) {
+                VM = new VM.InventarViewModel();
                 VM.ListenToChangeEvents = IsVisible;
+            } else {
+                VM.ListenToChangeEvents = IsVisible;
+            }
 
-            Ruestung.Visibility = Visibility.Hidden;
-            Uebersicht.Visibility = Visibility.Visible;
+            VM.LoadDaten();           
         }
 
-        private void OpenRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-        	Storyboard uebersicht = (Storyboard)TryFindResource("CloseUebersicht");
+        /// <summary>
+        /// BtnKlick: StartAnimation Open Ruestung
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            Storyboard uebersicht = (Storyboard)TryFindResource("CloseUebersicht");
             if (uebersicht != null) {
-                
+
 
                 uebersicht.Completed += (obj, args) => {
                     Uebersicht.Visibility = Visibility.Hidden;
@@ -104,16 +118,18 @@ namespace MeisterGeister.View.Helden.Controls
                     if (ruestung != null)
                         ruestung.Begin(this);
                 };
-                uebersicht.Begin(this);                
+                uebersicht.Begin(this);
             }
-
-			
         }
 
-        private void CloseRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-        	Storyboard uebersicht = (Storyboard)TryFindResource("CloseRuestung");
-            if (uebersicht != null) {                
+        /// <summary>
+        /// BtnKlick: StartAnimation Open Uebersicht
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+            Storyboard uebersicht = (Storyboard)TryFindResource("CloseRuestung");
+            if (uebersicht != null) {
                 uebersicht.Completed += (obj, args) => {
                     Ruestung.Visibility = Visibility.Hidden;
                     Uebersicht.Visibility = Visibility.Visible;
@@ -125,7 +141,14 @@ namespace MeisterGeister.View.Helden.Controls
                 uebersicht.Begin(this);
             }
         }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e) {
+            if (VM != null)
+                VM.ListenToChangeEvents = IsVisible;
+        }
+
         #endregion
+
         #endregion
     }
 }
