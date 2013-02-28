@@ -103,6 +103,7 @@ namespace MeisterGeister.Model.Service
         {
             //TODO MP: distinct db selection of name row?!
             // List<string> ls =Context.Rasse.SelectValue<string>("Rasse.Name").ToList();
+            //wird nicht benötigt
             List<string> ret = new List<string>();
             ret.Sort();
             ret.Insert(0, "keine Profession");
