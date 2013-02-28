@@ -123,7 +123,7 @@ namespace MeisterGeister.Model.Service
             List<Rasse> rassen = Liste<Rasse>().Where(r => r.Name == rasse.Name).ToList();
             List<Rasse_Kultur> rasse_kultur = new List<Rasse_Kultur>();
             List<Rasse_Kultur> rasse_kulturUnüblich = new List<Rasse_Kultur>();
-            //übliche Kulturen wählen
+            //übliche Kulturen wählen 
             List<Kultur> kulturen = Liste<Rasse>().Where(r => r.Name == rasse.Name)
                 .Join(Context.Rasse_Kultur, r => r.RasseGUID, rk => rk.RasseGUID, (r, rk) => rk)
                 .Where(rk => rk.Unüblich == false).Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k).Distinct().ToList();
