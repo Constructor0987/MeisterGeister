@@ -8,8 +8,8 @@
     <!-- CombplexTpye -->
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     <mg:InverseBooleanConverter x:Key="InverseBooleanConverter1" />
-
-    <!-- EasyTpye -->
+    
+    <!-- EasyTpye -->    
     <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="#8C8E94"/>
     <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
     	<GradientStop Color="#F3F3F3" Offset="0"/>
@@ -1313,6 +1313,23 @@
     			</ControlTemplate>
     		</Setter.Value>
     	</Setter>
-    </Style>    
+    </Style>
 
+    <!--Style für Schreibschutzvisualisierung-->
+    <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
+                <Setter Property="Opacity" Value="0.6" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ReadOnlyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
+                <Setter Property="Opacity" Value="0.6" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>    
+    
 </ResourceDictionary>

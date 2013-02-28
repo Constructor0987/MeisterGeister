@@ -4,8 +4,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Inventar"
-    xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 	
-    xmlns:MeisterGeister_View_General="clr-namespace:MeisterGeister.View.General"
+    xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 	    
 	xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  	
     mc:Ignorable="d" x:Name="userControl"
     d:DesignHeight="500" 
@@ -13,23 +12,8 @@
     Loaded="InventarLoaded" 
     Unloaded="UserControl_Unloaded"
     Background="Transparent">
-
-    <UserControl.Resources>
-        <!--Style für Schreibschutzvisualisierung-->
-        <Style x:Key="ReadOnlyButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
-                    <Setter Property="Opacity" Value="0.6" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="ReadOnlyButtonStyle2" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
-                    <Setter Property="Opacity" Value="0.6" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+    <UserControl.Resources>        
+	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <!--NahkampfTemplate-->
         <DataTemplate x:Key="NahkampfwaffeTemplate">
             <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
@@ -47,10 +31,6 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <!--<StackPanel Grid.Column="0">
-                        <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
-                        <TextBox Text="{Binding Trageort, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                    </StackPanel>-->
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding EntityNW.Gewicht}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityNW.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -61,7 +41,7 @@
                         <TextBlock Grid.Column="8" Text="{Binding WM}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="9" Text="{Binding EntityNW.DK}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{StaticResource ReadOnlyButtonStyle}"><!--IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{DynamicResource ReadOnlyButtonStyle}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -82,11 +62,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <!--<StackPanel Grid.Column="0">
-                            <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
-                            -<TextBox Text="{Binding Trageort.Name, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                        </StackPanel>-->
+                        </Grid.ColumnDefinitions>                        
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding Gewicht}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -95,7 +71,7 @@
                         <TextBlock Grid.Column="6" Grid.ColumnSpan="2" Text="{Binding EntityFW.TPReichweiten}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="8" Text="{Binding EntityFW.Laden}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{StaticResource ReadOnlyButtonStyle}"><!--IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -116,11 +92,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <!--<StackPanel Grid.Column="0" >
-                            <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
-                            -<TextBox Text="{Binding Trageort.Name, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                        </StackPanel>-->
+                        </Grid.ColumnDefinitions>                        
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding EntityS.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding EntityS.Name}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -129,7 +101,7 @@
                         <TextBlock Grid.Column="6" Text="{Binding EntityS.INI}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="7" Text="{Binding EntityS.BF}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveSchild}" Style="{StaticResource ReadOnlyButtonStyle}"><!--IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+                    <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveSchild}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -147,18 +119,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <!--<StackPanel Grid.Column="0">
-                            <CheckBox IsChecked="{Binding Ausgeruestet, Mode=TwoWay}"  HorizontalAlignment="Center" Margin="0,0,5,0"/>
-                            <TextBox Text="{Binding Trageort.Name, Mode=TwoWay}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                        </StackPanel>-->
+                        </Grid.ColumnDefinitions>                        
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding EntityR.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityR.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="3" Text="{Binding EntityR.RS}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="4" Text="{Binding EntityR.BE}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveRuestung}" Style="{StaticResource ReadOnlyButtonStyle}"><!--IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+                    <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveRuestung}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         <Image Source="/Images/Icons/General/entf_01.png" />
                     </Button>
                 </Grid>
@@ -404,8 +372,7 @@
 
     </UserControl.Resources>
     <UserControl.Triggers>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="SkipDetailToRuestung">
-            <!--<BeginStoryboard Storyboard="{StaticResource HeldContentToRuestung}"/>-->
+        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="SkipDetailToRuestung">            
         </EventTrigger>
         <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="SkipRuestungToDetail">
             <BeginStoryboard x:Name="HeldRuestungToContent_BeginStoryboard" Storyboard="{StaticResource HeldRuestungToContent}"/>
@@ -458,7 +425,7 @@
     </UserControl.Triggers>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
         <Grid HorizontalAlignment="Stretch">                        	            	
-                <Grid x:Name="Uebersicht" RenderTransformOrigin="0.5,0.5">
+                <Grid x:Name="Uebersicht" RenderTransformOrigin="0.5,0.5" d:IsHidden="True">
                 	<Grid.RenderTransform>
             		<TransformGroup>
             			<ScaleTransform/>
@@ -888,7 +855,7 @@
     										</ComboBox>
     									</StackPanel>
     									<StackPanel Grid.Column="4" Margin="5">
-    										<Button x:Name="ADDNah2" Command="{Binding OnAddNahkampfwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{StaticResource ReadOnlyButtonStyle2}"><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+    										<Button x:Name="ADDNah2" Command="{Binding OnAddNahkampfwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
     											<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
     										</Button>
     									</StackPanel>
@@ -931,7 +898,7 @@
     										</ComboBox>
     									</StackPanel>
     									<StackPanel Grid.Column="4" Margin="5">
-    										<Button  Command="{Binding OnAddFernwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{StaticResource ReadOnlyButtonStyle2}"><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+    										<Button  Command="{Binding OnAddFernwaffe}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
     											<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
     										</Button>
     									</StackPanel>
@@ -961,7 +928,7 @@
     										</ComboBox>
     									</StackPanel>
     									<StackPanel Grid.Column="2" Margin="5">
-    										<Button  Command="{Binding OnAddSchild}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{StaticResource ReadOnlyButtonStyle2}"><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+    										<Button  Command="{Binding OnAddSchild}" VerticalAlignment="Center" Height="23" Margin="0,0,0,5" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
     											<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
     										</Button>
     									</StackPanel>
@@ -990,7 +957,7 @@
     										</ComboBox>
     									</StackPanel>
     									<StackPanel Grid.Column="2" Margin="5">
-    										<Button  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23" Style="{StaticResource ReadOnlyButtonStyle2}"><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+    										<Button  Command="{Binding OnAddRuestung}" VerticalAlignment="Center" Height="23" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
     											<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
     										</Button>
     									</StackPanel>
@@ -1030,7 +997,7 @@
     													<KeyBinding Key="Enter"  Command="{Binding OnAddInventar}" />
     												</ComboBox.InputBindings>
     											</ComboBox>
-    											<Button Command="{Binding OnAddInventar}" VerticalAlignment="Center" Height="25" Style="{StaticResource ReadOnlyButtonStyle2}"><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+    											<Button Command="{Binding OnAddInventar}" VerticalAlignment="Center" Height="25" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
     												<Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
     											</Button>
     										</StackPanel>
@@ -1084,8 +1051,7 @@
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
-    											</Grid.ColumnDefinitions>
-    											<!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen" Grid.Column="0"/>-->
+    											</Grid.ColumnDefinitions>    											
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="1" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="2"  />
@@ -1124,8 +1090,7 @@
     												<ColumnDefinition />
     												<ColumnDefinition />                                                
     												<ColumnDefinition />
-    											</Grid.ColumnDefinitions>
-    											<!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen" Grid.Column="0" />-->
+    											</Grid.ColumnDefinitions>    											
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="1" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
@@ -1160,14 +1125,12 @@
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
-
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
-    											</Grid.ColumnDefinitions>
-    											<!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen"  Grid.Column="0" />-->
+    											</Grid.ColumnDefinitions>    											
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name"  Grid.Column="2" Grid.ColumnSpan="2" />
@@ -1196,14 +1159,12 @@
     									<Border Grid.Row="1" x:Name="RIHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
     										<Grid Margin="0,0,25,0">
     											<Grid.ColumnDefinitions>
-
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
     												<ColumnDefinition />
-    											</Grid.ColumnDefinitions>
-    											<!--<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Getragen"  Grid.Column="0" />-->
+    											</Grid.ColumnDefinitions>    											
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
     											<Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
@@ -1257,7 +1218,7 @@
     				</Border>
     			</Grid>
     		</Grid>                        
-                <Grid x:Name="Ruestung" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+                <Grid x:Name="Ruestung" RenderTransformOrigin="0.5,0.5">
                 	<Grid.RenderTransform>
                 		<TransformGroup>
                 			<ScaleTransform/>
@@ -1284,18 +1245,18 @@
                                                     <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
                                                 </Grid.Background>
                                                 <Image Width="45" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_links.png" MouseDown="CloseRuestung" ToolTipService.ToolTip="Zurück"/>
-                                                <ViewGeneral:IntBox Margin="159,20,6,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
-                                                <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
+                                                <ViewGeneral:IntBox Margin="159,20,6,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
+                                                <ViewGeneral:IntBox Margin="81,20,84,223" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
+                                                <ViewGeneral:IntBox Margin="60,59,132,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
+                                                <ViewGeneral:IntBox Margin="130,59,62,184" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
+                                                <ViewGeneral:IntBox Margin="17,95,175,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
+                                                <ViewGeneral:IntBox Margin="177,95,15,148" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" />
+                                                <ViewGeneral:IntBox Margin="81,125,84,118" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
+                                                <ViewGeneral:IntBox Margin="40,179,125,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
+                                                <ViewGeneral:IntBox Margin="130,179,35,28" Width="65" MinValue="0" ShowButtons="True" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
                                             </Grid>
                                             <Label Height="27" Margin="14,286,0,0" Content="Behinderung:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
-                                            <ViewGeneral:IntBox Margin="101,287,0,0" Width="65" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" VerticalAlignment="Top" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
+                                            <ViewGeneral:IntBox Margin="101,287,0,0" Width="65" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" VerticalAlignment="Top" IsReadOnly="{Binding IsReadOnly}"  Style="{DynamicResource ReadOnlyStyle}"/>
                                             <TextBlock Margin="14,342,0,0" Text="HINWEIS: Die hier eingestellten Werte werden in anderen Tools berücksichtigt. Die Werte aus dem Inventar fließen derzeit nocht nicht in Berechnungen mit ein." TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" VerticalAlignment="Top" Height="81" Width="224" FontStyle="Italic" />
                                         </Grid>
                                     </Border>
@@ -1309,7 +1270,7 @@
                                         <StackPanel Height="Auto" VerticalAlignment="Stretch">
                                             <TextBlock Margin="5" Text="HINWEIS: Dieser Text wird auch im Kampf-Tool angezeigt." FontSize="10" HorizontalAlignment="Center" />
                                             <TextBox Height="378" Margin="5" Padding="5" AcceptsReturn="True" HorizontalAlignment="Stretch" MinHeight="120" Text="{Binding SelectedHeld.Kampfwerte}" 
-                                                     Background="{DynamicResource BackgroundPergamentQuer}" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="{Binding IsReadOnly}"  /><!--Style="{StaticResource ReadOnlyStyle}"-->
+                                                     Background="{DynamicResource BackgroundPergamentQuer}" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" />
                                         </StackPanel>
                                     </Border>
                                 </Expander>

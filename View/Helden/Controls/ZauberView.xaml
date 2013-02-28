@@ -9,6 +9,7 @@
              Loaded="ZauberLoaded" Unloaded="UserControl_Unloaded"
              d:DesignHeight="299" d:DesignWidth="677">
     <UserControl.Resources>
+    	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding ElementName=userControl, Path=VM.IsReadOnly}" Value="true">
@@ -61,7 +62,7 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
 
-                    <Button Grid.Column="2" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}"><!-- IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
+                    <Button Grid.Column="2" Command="{Binding OnAddZauber}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"> 
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
 
@@ -130,7 +131,7 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem Height="28" Command="{Binding OnDeleteZauber}" Header="Löschen" x:Name="_menuItemZauberLöschen" ><!-- IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}" -->
+                                    <MenuItem Height="28" Command="{Binding OnDeleteZauber}" Header="Löschen" x:Name="_menuItemZauberLöschen"  IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                                         <MenuItem.Icon>
                                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                                         </MenuItem.Icon>

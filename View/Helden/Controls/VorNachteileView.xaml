@@ -9,6 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="299" d:DesignWidth="677" Loaded="VorUndNachteileLoaded">
     <UserControl.Resources>
+    	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <!-- Vor-/Nachteile -->
         <Style x:Key="VorNachteilWertItemStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Visibility" Value="Collapsed" />
@@ -128,8 +129,8 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddVorteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}">
-                        <!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
+                    <Button Grid.Column="2" Command="{Binding OnAddVorteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                        
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                     <TextBlock Grid.Column="3" Margin="5,0,5,0" Text="Nachteil:" VerticalAlignment="Center" FontWeight="Bold" />
@@ -144,8 +145,7 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddNachteil}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}">
-                        <!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
+                    <Button Grid.Column="5" Command="{Binding OnAddNachteil}" Height="23" ToolTip="Einfügen"  Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
                 </Grid>
@@ -176,8 +176,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Command="{Binding OnDeleteVorNachteil}" Header="Löschen" x:Name="_menuItemVorNachteilLöschen" >
-                        <!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
+                    <MenuItem Height="28" Command="{Binding OnDeleteVorNachteil}" Header="Löschen" x:Name="_menuItemVorNachteilLöschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>

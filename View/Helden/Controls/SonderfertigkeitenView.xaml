@@ -10,6 +10,7 @@
              Loaded="SonderfertigkeitLoaded" Unloaded="UserControl_Unloaded"
              d:DesignHeight="299" d:DesignWidth="677">
     <UserControl.Resources>
+    	<ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <CollectionViewSource x:Key="SonderfertigkeitListeView" Source="{Binding SonderfertigkeitListe}">
             <CollectionViewSource.SortDescriptions>
                 <ComponentModel:SortDescription PropertyName="Sonderfertigkeit.Typ" />
@@ -101,12 +102,10 @@
                             <KeyBinding Key="Enter"  Command="{Binding OnAddSonderfertigkeit}" />
                         </ComboBox.InputBindings>
                     </ComboBox>
-                    <Button Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}">
-                        <!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
+                    <Button Grid.Column="1" Command="{Binding OnAddSonderfertigkeit}" Height="23" ToolTip="Einfügen" Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
                         <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" />
                     </Button>
-                    <Button Grid.Column="2" Margin="10,0,0,0" x:Name="_buttonMultiAdd" Command="{Binding OnShowAddMultiSonderfertigkeit}" Height="23" Width="23" ToolTip="Mehrere gleichzeitig einfügen..." Style="{StaticResource ReadOnlyButtonStyle}">
-                        <!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
+                    <Button Grid.Column="2" Margin="10,0,0,0" x:Name="_buttonMultiAdd" Command="{Binding OnShowAddMultiSonderfertigkeit}" Height="23" Width="23" ToolTip="Mehrere gleichzeitig einfügen..." Style="{StaticResource ReadOnlyButtonStyle}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
                         <Grid>
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="-2,-2,2,2" />
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
@@ -139,8 +138,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Command="{Binding OnDeleteSonderfertigkeit}" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen" >
-                        <!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter1}}"-->
+                    <MenuItem Height="28" Command="{Binding OnDeleteSonderfertigkeit}" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
@@ -180,12 +178,7 @@
                     </StackPanel>
                     <ListBox Grid.Row="2" ItemsSource="{Binding FilteredSonderfertigkeitMultiAddListe}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  BorderBrush="#00000000" Background="#00000000" Margin="0,20,0,0" VirtualizingStackPanel.IsVirtualizing="True" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
-                        <!-- Das WrapPanel unterstützt leider keine Virtualisierung, weshalb diese Variante zu langsam ist -->
-                        <!--<ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel IsItemsHost="True" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>-->
+                        <!-- Das WrapPanel unterstützt leider keine Virtualisierung, weshalb diese Variante zu langsam ist -->                        
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding IsChecked}" IsEnabled="{Binding IsWählbar}">

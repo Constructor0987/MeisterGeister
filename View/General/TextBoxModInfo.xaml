@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 			 
              mc:Ignorable="d" Name="_textBoxModInfo" Tag="{Binding RelativeSource={x:Static RelativeSource.Self}}">
     <UserControl.Resources>
         <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed" />
