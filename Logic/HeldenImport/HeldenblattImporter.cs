@@ -629,7 +629,7 @@ namespace MeisterGeister.Logic.HeldenImport
                     added = AddSonderfertigkeit(sfNameNeu, wertString, _held);
                 }
                 //TODO: Ritualkenntnis, Merkmalskenntnis, Schamanen, Geländekunde mappen, Rituale, Liturgien
-                //Geländekunde wird im Heldenblatt momentan noch mit gebirgskundug, Waldkundug, etc. abgebildet.
+                //Geländekunde wird im Heldenblatt momentan noch mit Gebirgskundug, Waldkundig, etc. abgebildet.
                 
 
                 //allgemein
