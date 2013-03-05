@@ -117,22 +117,6 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
-        public virtual Kampfregel Kampfregel
-        {
-            get { return _kampfregel; }
-            set
-            {
-                if (!ReferenceEquals(_kampfregel, value))
-                {
-                    var previousValue = _kampfregel;
-                    _kampfregel = value;
-                    FixupKampfregel(previousValue);
-                }
-            }
-        }
-        private Kampfregel _kampfregel;
-    
-    	[DataMember]
         public virtual GegnerBase GegnerBase
         {
             get { return _gegnerBase; }
@@ -147,31 +131,26 @@ namespace MeisterGeister.Model
             }
         }
         private GegnerBase _gegnerBase;
+    
+    	[DataMember]
+        public virtual Kampfregel Kampfregel
+        {
+            get { return _kampfregel; }
+            set
+            {
+                if (!ReferenceEquals(_kampfregel, value))
+                {
+                    var previousValue = _kampfregel;
+                    _kampfregel = value;
+                    FixupKampfregel(previousValue);
+                }
+            }
+        }
+        private Kampfregel _kampfregel;
 
         #endregion
 
         #region Association Fixup
-    
-        private void FixupKampfregel(Kampfregel previousValue)
-        {
-    		OnChanged("Kampfregel");
-            if (previousValue != null && previousValue.GegnerBase_Kampfregel.Contains(this))
-            {
-                previousValue.GegnerBase_Kampfregel.Remove(this);
-            }
-    
-            if (Kampfregel != null)
-            {
-                if (!Kampfregel.GegnerBase_Kampfregel.Contains(this))
-                {
-                    Kampfregel.GegnerBase_Kampfregel.Add(this);
-                }
-                if (KampfregelGUID != Kampfregel.KampfregelGUID)
-                {
-                    KampfregelGUID = Kampfregel.KampfregelGUID;
-                }
-            }
-        }
     
         private void FixupGegnerBase(GegnerBase previousValue)
         {
@@ -190,6 +169,27 @@ namespace MeisterGeister.Model
                 if (GegnerBaseGUID != GegnerBase.GegnerBaseGUID)
                 {
                     GegnerBaseGUID = GegnerBase.GegnerBaseGUID;
+                }
+            }
+        }
+    
+        private void FixupKampfregel(Kampfregel previousValue)
+        {
+    		OnChanged("Kampfregel");
+            if (previousValue != null && previousValue.GegnerBase_Kampfregel.Contains(this))
+            {
+                previousValue.GegnerBase_Kampfregel.Remove(this);
+            }
+    
+            if (Kampfregel != null)
+            {
+                if (!Kampfregel.GegnerBase_Kampfregel.Contains(this))
+                {
+                    Kampfregel.GegnerBase_Kampfregel.Add(this);
+                }
+                if (KampfregelGUID != Kampfregel.KampfregelGUID)
+                {
+                    KampfregelGUID = Kampfregel.KampfregelGUID;
                 }
             }
         }

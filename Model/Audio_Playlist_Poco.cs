@@ -86,6 +86,19 @@ namespace MeisterGeister.Model
     
         }
         private int _maxSongsParallel;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual double Länge
+        {
+            get { return _länge; }
+            set
+    		{ 
+    			_länge = value;
+    			OnChanged("Länge");
+    		}
+    
+        }
+        private double _länge;
 
         #endregion
 

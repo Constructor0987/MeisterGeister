@@ -49,10 +49,10 @@ namespace MeisterGeister.Model
                     }
                     _audio_PlaylistGUID = value;
                 }
-            }    
+            }
+    
         }
         private System.Guid _audio_PlaylistGUID;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual System.Guid Audio_TitelGUID
@@ -68,7 +68,8 @@ namespace MeisterGeister.Model
                     }
                     _audio_TitelGUID = value;
                 }
-            }    
+            }
+    
         }
         private System.Guid _audio_TitelGUID;
     	///<summary>Database persistent property</summary>
@@ -81,9 +82,9 @@ namespace MeisterGeister.Model
     			_aktiv = value;
     			OnChanged("Aktiv");
     		}
+    
         }
         private bool _aktiv;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int Volume
@@ -93,10 +94,10 @@ namespace MeisterGeister.Model
     		{ 
     			_volume = value;
     			OnChanged("Volume");
-    		}    
+    		}
+    
         }
         private int _volume;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual bool VolumeChange
@@ -106,10 +107,10 @@ namespace MeisterGeister.Model
     		{ 
     			_volumeChange = value;
     			OnChanged("VolumeChange");
-    		}    
+    		}
+    
         }
         private bool _volumeChange;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int VolumeMin
@@ -119,10 +120,10 @@ namespace MeisterGeister.Model
     		{ 
     			_volumeMin = value;
     			OnChanged("VolumeMin");
-    		}    
+    		}
+    
         }
         private int _volumeMin;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int VolumeMax
@@ -132,10 +133,10 @@ namespace MeisterGeister.Model
     		{ 
     			_volumeMax = value;
     			OnChanged("VolumeMax");
-    		}    
+    		}
+    
         }
         private int _volumeMax;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual long Pause
@@ -145,10 +146,10 @@ namespace MeisterGeister.Model
     		{ 
     			_pause = value;
     			OnChanged("Pause");
-    		}    
+    		}
+    
         }
         private long _pause;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual bool PauseChange
@@ -158,10 +159,10 @@ namespace MeisterGeister.Model
     		{ 
     			_pauseChange = value;
     			OnChanged("PauseChange");
-    		}    
+    		}
+    
         }
         private bool _pauseChange;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual long PauseMin
@@ -171,10 +172,10 @@ namespace MeisterGeister.Model
     		{ 
     			_pauseMin = value;
     			OnChanged("PauseMin");
-    		}    
+    		}
+    
         }
         private long _pauseMin;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual long PauseMax
@@ -184,10 +185,10 @@ namespace MeisterGeister.Model
     		{ 
     			_pauseMax = value;
     			OnChanged("PauseMax");
-    		}    
+    		}
+    
         }
         private long _pauseMax;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual double Speed
@@ -197,10 +198,10 @@ namespace MeisterGeister.Model
     		{ 
     			_speed = value;
     			OnChanged("Speed");
-    		}    
+    		}
+    
         }
         private double _speed;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual bool TeilAbspielen
@@ -210,10 +211,10 @@ namespace MeisterGeister.Model
     		{ 
     			_teilAbspielen = value;
     			OnChanged("TeilAbspielen");
-    		}    
+    		}
+    
         }
         private bool _teilAbspielen;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<double> TeilStart
@@ -223,11 +224,11 @@ namespace MeisterGeister.Model
     		{ 
     			_teilStart = value;
     			OnChanged("TeilStart");
-    		}    
+    		}
+    
         }
         private Nullable<double> _teilStart;
-    	
-        ///<summary>Database persistent property</summary>
+    	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<double> TeilEnde
         {
@@ -236,35 +237,37 @@ namespace MeisterGeister.Model
     		{ 
     			_teilEnde = value;
     			OnChanged("TeilEnde");
-    		}    
+    		}
+    
         }
         private Nullable<double> _teilEnde;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual Nullable<Int16> Rating
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Rating
         {
             get { return _rating; }
             set
-            {
-                _rating = value;
-                OnChanged("Rating");
-            }
+    		{ 
+    			_rating = value;
+    			OnChanged("Rating");
+    		}
+    
         }
-        private Nullable<Int16> _rating;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual Nullable<double> L‰nge
+        private int _rating;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual double L√§nge
         {
-            get { return _l‰nge; }
+            get { return _l√§nge; }
             set
-            {
-                _l‰nge = value;
-                OnChanged("L‰nge");
-            }
+    		{ 
+    			_l√§nge = value;
+    			OnChanged("L√§nge");
+    		}
+    
         }
-        private Nullable<double> _l‰nge;
+        private double _l√§nge;
+
         #endregion
 
         #region Navigation Properties

@@ -73,6 +73,19 @@ namespace MeisterGeister.Model
     
         }
         private string _pfad;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Länge
+        {
+            get { return _länge; }
+            set
+    		{ 
+    			_länge = value;
+    			OnChanged("Länge");
+    		}
+    
+        }
+        private Nullable<double> _länge;
 
         #endregion
 
