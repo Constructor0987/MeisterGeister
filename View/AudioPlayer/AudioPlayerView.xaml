@@ -10,7 +10,7 @@
 	xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  	
     
     mc:Ignorable="d" 
-    d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}">
+    d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -23,7 +23,7 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="56" />
             <RowDefinition Height="207*" />
             <RowDefinition Height="334*" />
         </Grid.RowDefinitions>
@@ -32,16 +32,31 @@
             <ColumnDefinition Width="280" />
         </Grid.ColumnDefinitions>
         
-        <Border Name="brdHintergrundOption" Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
-            <StackPanel>
-            <CheckBox Content="Beim Auswählen direkt abspielen" Name="rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" Click="rbtnGleichSpielen_Click" Focusable="False" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Label Content="Fading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <Slider Height="23" HorizontalAlignment="Center" Name="sldFading" VerticalAlignment="Center" Width="100" SmallChange="50" TickFrequency="50" Maximum="700" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="350" Focusable="False" IsTabStop="False" ToolTip="3,5 Sekunden Fading" ValueChanged="sldFading_ValueChanged" IsSnapToTickEnabled="True" />
-                </StackPanel>
+        <Border Name="brdHintergrundOption" Grid.Column="1"  Style="{DynamicResource ControlContentBorder}" Height="77" Grid.RowSpan="2" VerticalAlignment="Top">
+            <StackPanel >
+                
+                    <ListBox BorderThickness="0">
+                        <ListBox.Background>
+                            <SolidColorBrush />
+                        </ListBox.Background>
+
+                        <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Height="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="200" Click="_rbtnGleichSpielen_Click" Focusable="False" />
+                        
+                        <StackPanel HorizontalAlignment="Left" Name="spStdPfad" Orientation="Horizontal">
+                            <Label Name="lblStdPfad" Content="Standard-Verzeichnis" />
+                        <TextBox Height="23" Name="_tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="130" Tag="C:\" />
+                            <Button Content="..." Height="21" HorizontalAlignment="Left" Name="_btnStdPfad" Width="20" Click="_btnStdPfad_Click" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Label Content="Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+
+                        </StackPanel>
+                    </ListBox>
+                
             </StackPanel>
         </Border>
-        <TabControl Margin="12,16,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <TabItem Header="Themes" Name="tiUebersicht" GotFocus="tiUebersicht_GotFocus" LostFocus="tiUebersicht_LostFocus">  
                 
                 <Grid Background="{StaticResource Background1}" Name="grdThemes">
@@ -103,7 +118,7 @@
 
 
                     <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.ColumnSpan="4" />
-                    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" MinHeight="140" Margin="0,0,0,6" Grid.Row="1" Grid.ColumnSpan="4">
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" MinHeight="140" Margin="0,0,0,6" Grid.Row="1" Grid.ColumnSpan="4" Name="scrTheme">
                         <Grid Name="grdUebersicht">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="240" />
@@ -113,7 +128,7 @@
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="125" />
+                            <RowDefinition Height="110" />
                         </Grid.RowDefinitions>                            
                         </Grid>
                     </ScrollViewer>
@@ -142,15 +157,31 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30*" />
                                             </Grid.RowDefinitions>
-                                            <Border Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="3" Margin="1">
+                                        <Border Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="3" Margin="1">
+                                            <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="280*" />
+                                                <ColumnDefinition Width="100" />
+                                            </Grid.ColumnDefinitions>
                                                 <Label Content="Klang-Playlists" Name="lblKlangPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" />
-                                            </Border>
+                                                <Border Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="26" />
+                                                            <ColumnDefinition Width="*" MinWidth="55" />
+                                                            <ColumnDefinition Width="20" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                                        <TextBox Margin="2" Name="tbThemeKlangPlaylistFilter" Grid.Column="1" TextChanged="tbThemeKlangPlaylistFilter_TextChanged"/>
+                                                        <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgThemeKlangPlaylistFilter_MouseUp" ToolTip="Filter löschen"/>
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
                                             <Grid Grid.Row="1" Margin="5" Name="grdKlaenge">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="220" />
-                                                    <ColumnDefinition Width="220" />
-                                                    <ColumnDefinition Width="220" />
-                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="200" />
+                                                <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="35" />
@@ -171,12 +202,31 @@
                                                 <RowDefinition Height="30*" />
                                             </Grid.RowDefinitions>
                                             <Border Style="{DynamicResource ControlContentBorder}" Margin="1" Grid.ColumnSpan="2">
-                                                <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="80*" />
+                                                        <ColumnDefinition Width="100" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
+                                                    <Border Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="26" />
+                                                            <ColumnDefinition Width="*" MinWidth="55" />
+                                                            <ColumnDefinition Width="20" />
+                                                        </Grid.ColumnDefinitions>
+                                                            <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                                        <TextBox Margin="2" Name="tbThemeBGPlaylistFilter" Grid.Column="1" TextChanged="tbThemeBGPlaylistFilter_TextChanged"/>
+                                                        <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgThemeBGPlaylistFilter_MouseUp" ToolTip="Filter löschen"/>
+                                                    </Grid>
+                                                    </Border>
+                                                </Grid>
                                             </Border>
 
                                             <Grid Grid.Row="1" Margin="5" Name="grdHintergrund">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="220" />
+                                                    <ColumnDefinition Width="200" />
                                                     <ColumnDefinition Width="1*" />
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
@@ -206,8 +256,19 @@
                             <RowDefinition Height="26" />
                             <RowDefinition Height="388" />
                         </Grid.RowDefinitions>
-                        
-                        <Border Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="6,0,0,10" Style="{DynamicResource ControlContentBorder}" Grid.RowSpan="2">
+                        <Border Grid.Row="1" Grid.ColumnSpan="2"  Margin="6,1,4,0" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="26" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                <TextBox Margin="2" Name="tbBGFilter" Grid.Column="1" TextChanged="tbKBGFilter_TextChanged"/>
+                                <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Grid.Column="2" Stretch="Fill" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen" HorizontalAlignment="Left" />
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="6,0,0,10" Style="{DynamicResource ControlContentBorder}" Grid.RowSpan="2">
                             <ListBox Background="Transparent" Name="lbBackground" VerticalAlignment="Stretch" Width="253" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged" ForceCursor="False" Tag="-1"></ListBox>
                         </Border>
                         
@@ -304,7 +365,7 @@
                         </Border>
                         <Label Content="Gesamtlänge: " Name="lblGesamtLänge" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Visibility="Hidden"/>
 
-                        <Expander Margin="0,0,30,10" Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Left" IsExpanded="True" MinWidth="150" ForceCursor="False">
+                        <Expander Margin="0,0,30,10" Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Left" IsExpanded="True" MinWidth="200" ForceCursor="False">
                             <Expander.Header>
                                 <TextBlock Text="Titel" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
@@ -359,36 +420,9 @@
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" Name="btnKlangOpenImg" />
                             </Button>
                         </Grid>
-                    </Border>
+                    </Border>                        
 
-                    <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcListKlang" Grid.Column="1" Grid.Row="1" Margin="3,8,6,9" Visibility="Visible">
-                        <TabItem>
-                            <TabItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="List0" VerticalAlignment="Center" Visibility="Visible" />
-                                    <TextBox Text="List0" VerticalAlignment="Center" Visibility="Collapsed" FontSize="17" Margin="3" Background="Khaki" />
-                                    <Button  Margin="8,0,0,0" Height="18" ToolTip="Umbenennen" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
-                                        <DockPanel>
-                                            <Image Source="/Images/Icons/General/ok.png" Stretch="Fill" Visibility="Hidden" />
-                                        </DockPanel>
-                                    </Button>
-                                    <Button  Margin="4,0,0,0" Height="18" Opacity="0.5" ToolTip="Löschen" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-                                        <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                                    </Button>
-                                    <Button  Margin="0" Height="20" Opacity="0.5" ToolTip="Neue Notiz..." HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-                                        <Image Source="/Images/Icons/General/add.png" Stretch="Fill" />
-                                    </Button>
-                                </StackPanel>
-                            </TabItem.Header>
-                            <Grid Background="{StaticResource Background1}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="581*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="312*" />
-                            </Grid.RowDefinitions>                            
-
-                        <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcKlang" Grid.Column="1" Grid.Row="1" Margin="3,8,6,9" SelectionChanged="tcKlang_SelectionChanged" Visibility="Visible">
+                    <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcKlang" Grid.Column="1" Grid.Row="1" Margin="3,8,6,9" SelectionChanged="tcKlang_SelectionChanged" Visibility="Visible">
                             <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" >
                                 <TabItem.Header>
                                     <Image Name="_image" Height="12" Width="12" Source="/Images/Icons/General/add.png" />
@@ -528,10 +562,6 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                                <Image Source="/Images/Icons/General/feder.png" Stretch="Fill" Visibility="Visible" Margin="86,-7,734,367" />
-                            </Grid>
-                        </TabItem>
-                    </TabControl>
                         
                     <Button Content="Neue Liste" HorizontalAlignment="Right" Name="btnNeuePlaylist" Click="bntNeuePlaylist_Click" Height="23" Width="65" Margin="3,3,3,0" Visibility="Visible" />
                     <Button Content="Liste löschen" HorizontalAlignment="Left" Name="btnPlaylistLoeschen" Height="23" Width="80" Margin="3,3,3,0" IsEnabled="False" Click="btnPlaylistLoeschen_Click" />
@@ -547,9 +577,11 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="26" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="20" />
                                     </Grid.ColumnDefinitions>                                
                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
                                     <TextBox Margin="2" Name="tbKlangPlaylistFilter" Grid.Column="1" TextChanged="tbKlangPlaylistFilter_TextChanged"/>
+                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgKlangPlaylistFilter_MouseUp" ToolTip="Filter löschen"/>
                                 </Grid>
                             </Border>
                             <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,10" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">

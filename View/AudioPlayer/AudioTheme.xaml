@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="125" d:DesignWidth="237">
+             d:DesignHeight="106" d:DesignWidth="237">
 
     <UserControl.Resources>
         
@@ -82,38 +82,37 @@
             <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="20" />
-            <RowDefinition Height="19" />
-            <RowDefinition Height="19" />
+            <RowDefinition Height="44" />
+            <RowDefinition Height="18" />
+            <RowDefinition Height="17" />
+            <RowDefinition Height="17" />
         </Grid.RowDefinitions>
         <Border Grid.RowSpan="5" Grid.ColumnSpan="3" BorderBrush="#FF707070" Style="{DynamicResource ControlContentBorder}" />
-        <ToggleButton Name="btnAudioTheme" ClickMode="Press" BorderThickness="3" MouseEnter="btnAudioTheme_MouseEnter" MouseLeave="btnAudioTheme_MouseLeave" Click="btnAudioTheme_Click" Focusable="False" IsTabStop="False" UseLayoutRounding="False" Panel.ZIndex="10" Grid.ColumnSpan="3" Grid.RowSpan="2" Background="#FFEAE3D8">
+        <ToggleButton Name="btnAudioTheme" ClickMode="Press" BorderThickness="3" MouseEnter="btnAudioTheme_MouseEnter" MouseLeave="btnAudioTheme_MouseLeave" Click="btnAudioTheme_Click" Focusable="False" IsTabStop="False" UseLayoutRounding="False" Grid.ColumnSpan="3" Background="#FFEAE3D8">
             <ToggleButton.BindingGroup>
                 <BindingGroup Name="Themes" />
             </ToggleButton.BindingGroup>
-            <Grid Width="218">
+            <Grid Width="220">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="28" />
-                    <RowDefinition Height="36" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="20" />
                 </Grid.RowDefinitions>
-                <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png" Visibility="Hidden" Grid.RowSpan="2" Tag="0" Margin="0,0,0,3" />
-                <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="14" />
-                <Label Name="lblActBGTitel" Content="kein aktiver Hintergrundtitel" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,0,10" />                
+                <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png"  Visibility="Hidden" Grid.RowSpan="2" Tag="0" Margin="0,-6,-10,0" HorizontalAlignment="Right" Width="50" Height="50" />
+                <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="12" Padding="1" />
+                <Label Name="lblActBGTitel" Content="kein aktiver Hintergrundtitel" Grid.Row="1" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="1" />                
             </Grid>
         </ToggleButton>
-        <ProgressBar Name="pbarActBGTitel" Grid.Row="2" Margin="2" Grid.ColumnSpan="3" Cursor="Hand" />
-        <Label Name="lblVolHintergrund" Content="Hintergrund" Grid.Row="3" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
-        <Label Name="lblVolKlaenge" Content="Klänge" Grid.Row="4" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
-        <Border x:Name="TrackVolHGBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="3" Grid.Column="1" />
-        <Slider Name="sldVolHintergrund" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
-        <Border x:Name="TrackVolKlaengeBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="4" Grid.Column="1" />
-        <Slider Name="sldVolKlaenge" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
-        <Button Name="btnPlayNext" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Margin="0,1,3,3" Focusable="False" IsTabStop="False" IsEnabled="False">
+        <ProgressBar Name="pbarActBGTitel" Grid.Row="1" Margin="2" Grid.ColumnSpan="3" Cursor="Hand" />
+        <Label Name="lblVolHintergrund" Content="Hintergrund" Grid.Row="2" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
+        <Label Name="lblVolKlaenge" Content="Klänge" Grid.Row="3" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
+        <Border x:Name="TrackVolHGBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="2" Grid.Column="1" />
+        <Slider Name="sldVolHintergrund" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
+        <Border x:Name="TrackVolKlaengeBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="3" Grid.Column="1" />
+        <Slider Name="sldVolKlaenge" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
+        <Button Name="btnPlayNext" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Margin="0,1,3,3" Focusable="False" IsTabStop="False" IsEnabled="False">
             <Grid>
             <Image Source="/Images/Icons/General/play_next.png" VerticalAlignment="Center"/>
             </Grid>

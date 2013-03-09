@@ -140,8 +140,24 @@ namespace MeisterGeister.Logic.Settings
                     AudioDirektAbspielen_Click(null, new EventArgs());
             }
         }
-
         public static EventHandler AudioDirektAbspielen_Click;
+
+
+        public static int Fading
+        {
+            get
+            {
+                return GetOrCreateEinstellung<int>("Fading", 600);
+            }
+            set
+            {
+                SetEinstellung<int>("Fading", value);
+                if (Fading_Click != null)
+                    Fading_Click(null, new EventArgs());
+            }
+        }
+        public static EventHandler Fading_Click;
+        
 
         public static int SelectedTab
         {
