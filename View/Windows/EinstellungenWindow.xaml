@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MeisterGeister.View.Windows.EinstellungenWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Einstellungen" Height="441.32" Width="695.724" Icon="/Images/Icons/mechanik.png" Loaded="Window_Loaded" Background="{StaticResource Background1}" Closed="Window_Closed"
+        Title="Einstellungen" Height="470" Width="695.724" Icon="/Images/Icons/mechanik.png" Loaded="Window_Loaded" Background="{StaticResource Background1}" Closed="Window_Closed"
         TextOptions.TextFormattingMode="Display" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <DataTemplate x:Key="RegelnListTemplate">
@@ -87,10 +87,21 @@
                             <Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate">Mehr Infos zum Jingle.</Hyperlink>
                             </TextBlock>
                         </StackPanel>
-                        <StackPanel HorizontalAlignment="Left" Margin="50,0,0,0" Name="spStdPfad" Orientation="Horizontal">
+
+                        <StackPanel Margin="4" Orientation="Horizontal">
+                            <CheckBox Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
+                            <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" Name="spStdPfad" Orientation="Horizontal">
                             <Label Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
                             <TextBox Height="23" Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
                             <Button Content="..." Height="21" HorizontalAlignment="Left" Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
+                            <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
                         </StackPanel>
                     </ListBox>
                 </Border>

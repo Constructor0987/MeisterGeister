@@ -31,13 +31,16 @@ namespace MeisterGeister.View.Windows
             DataContext = Global.ContextRegeln.RegelnListe;
 
             _listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
-            tbStdPfad.Text = Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", @"C:\");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _checkBoxFrageNeueKampfrundeAbstellen.IsChecked = Einstellungen.FrageNeueKampfrundeAbstellen;
             _checkBoxJingleAbstellen.IsChecked = Einstellungen.JingleAbstellen;
+
+            _checkboxGleichSpielen.IsChecked = Einstellungen.AudioDirektAbspielen;
+            _sldFading.Value = Einstellungen.Fading;
+            tbStdPfad.Text = Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", @"C:\");
         }
 
         private void _checkBoxFrageNeueKampfrundeAbstellen_Checked(object sender, RoutedEventArgs e)
@@ -86,6 +89,15 @@ namespace MeisterGeister.View.Windows
             Global.ContextRegeln.Save();
         }
 
+        private void _checkboxGleichSpielen_Checked(object sender, RoutedEventArgs e)
+        {
+            Einstellungen.AudioDirektAbspielen = (bool)_checkboxGleichSpielen.IsChecked;
+        }
+
+        private void _checkboxGleichSpielen_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Einstellungen.AudioDirektAbspielen = (bool)_checkboxGleichSpielen.IsChecked;
+        }
 
         public void btnStdPfad_Click(object sender, RoutedEventArgs e)
         {
@@ -106,6 +118,15 @@ namespace MeisterGeister.View.Windows
                 var errWin = new MsgWindow("Eingabefehler", "Das Auswählen des Standard-Verzeichnisses hat eine Exeption ausgelöst.", ex);
                 errWin.ShowDialog();
                 errWin.Close();
+            }
+        }
+
+        public void _sldFading_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (IsInitialized)
+            {
+                _sldFading.ToolTip = Math.Round(e.NewValue / 100, 1) + " Sekunden In-/Out-Fading";
+                Einstellungen.Fading = (int)e.NewValue;
             }
         }
     }
