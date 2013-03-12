@@ -20,6 +20,44 @@ namespace MeisterGeister.Logic.General
             return Generator.Next(minvalue, maxvalue + 1);
         }
 
+        public static double RandomDouble(double minvalue, double maxvalue)
+        {
+            return Generator.NextDouble() * (maxvalue - minvalue) + minvalue;
+        }
+
+        public static double RandomNormalDistribution()
+        {
+            double q = 0;
+            double u1 = 0;
+            double u2 = 0;
+            while (q == 0 || q > 1)
+            {
+                u1 = RandomDouble(-1, 1);
+                u2 = RandomDouble(-1, 1);
+                q = Math.Pow(u1, 2) + Math.Pow(u2, 2);
+            }
+            q = Math.Sqrt((-2 * Math.Log(q)) / q);
+            return u1 * q;
+        }
+
+        public static double RandomNormalDistribution(double mean, double stddev)
+        {
+            return mean + RandomNormalDistribution() * stddev;
+        }
+
+        /// <summary>
+        /// Nur der 3 Sigma Bereich
+        /// </summary>
+        public static double RandomNormalDistributionMinMax(double min, double max)
+        {
+            double radius = (max - min) / 2.0;
+            double mean = min + radius;
+            double d = RandomNormalDistribution(mean, radius / 3.0);
+            while (d < min || d > max)
+                d = RandomNormalDistribution(mean, radius / 3.0);
+            return min + d;
+        }
+
         public static int W100
         {
             get { return Generator.Next(1, 101); }
