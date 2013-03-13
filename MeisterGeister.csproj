@@ -168,6 +168,7 @@
     <Compile Include="Logic\General\WikiAventurica.cs" />
     <Compile Include="Logic\General\Würfel.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
+    <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
     <Compile Include="Logic\Würfel\Parser.cs" />
     <Compile Include="Logic\Würfel\ParseTree.cs" />
     <Compile Include="Logic\Würfel\Scanner.cs" />
@@ -390,6 +391,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Helden\ZauberViewModel.cs" />
+    <Compile Include="ViewModel\Kalender\KalenderViewModel.cs" />
+    <Compile Include="ViewModel\Kalender\Wetter\Wetter.cs" />
     <Compile Include="ViewModel\Kampf\GegnerViewModel.cs" />
     <Compile Include="ViewModel\Kampf\KampfViewModel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Distanzklasse.cs" />

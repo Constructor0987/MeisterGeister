@@ -23,16 +23,13 @@ namespace MeisterGeister.Net.Web
                 service.Stop();
         }
 
-        static double heldenlon = 32;
-        static double heldenlat = 3;
-
         static void ReturnMeisterGeisterLocation(System.Net.HttpListenerContext context)
         {
             var response = context.Response;
             
-            //TODO JT: Position der Heldengruppe zurückgeben
-            double lon = heldenlon;
-            double lat = heldenlat;
+            //Position der Heldengruppe zurückgeben
+            double lon = Global.HeldenLon;
+            double lat = Global.HeldenLat;
 
             // Construct a response. 
             string kml1 =
@@ -104,13 +101,13 @@ namespace MeisterGeister.Net.Web
             string latStr = context.Request.QueryString["lookatTerrainLat"];
 
             var response = context.Response;
-            double lon = 32;
-            double lat = 3;
+            double lon = Global.HeldenLon;
+            double lat = Global.HeldenLat;
 
             Double.TryParse(lonStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out lon);
             Double.TryParse(latStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out lat);
 
-            //TODO JT: dg position merken
+            //dg position merken
             dglon = lon;
             dglat = lat;
 
@@ -187,9 +184,12 @@ namespace MeisterGeister.Net.Web
 
         static void SetMeisterGeisterLocationFromDereGlobus(System.Net.HttpListenerContext context)
         {
-            //TODO JT: gespeicherte dg-location auf die heldengruppe anwenden.
-            heldenlat = dglat;
-            heldenlon = dglon;
+            //gespeicherte dg-location auf die heldengruppe anwenden.
+            Global.HeldenLon = dglat;
+            Global.HeldenLon = dglon;
+            
+            //müsste anhand der koordinaten aus einer datenbank bestimmt werden.
+            Global.HeldenRegion = "";
 
             var response = context.Response;
             response.ContentType = "image/jpeg";

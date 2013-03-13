@@ -155,12 +155,12 @@ public class DSADateCalendarTwelve : DSADateCalendar {
     /**
      * @return The day of the week.
      */
-    /*
-    public DayOfWeekType getDayOfWeek() {
+    public WochentagEnum getDayOfWeek()
+    {
         // The 1st of Praios 0 BF was a Praiostag.
-        return DayOfWeek.findByIDnum(MathUtil.modulo((getDaysSinceBF() + 6), 7));
+        return (WochentagEnum)MathUtil.modulo((getDaysSinceBF() + 2), 7);
     }
-    */
+    
 }
 
 }

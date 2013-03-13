@@ -10,6 +10,9 @@ namespace MeisterGeister.Logic.Kalender
         public static Dictionary<Kalender, Zeitrechnung> ZeitrechnungenDictionary =
             new Dictionary<Kalender, Zeitrechnung>();
 
+        public static Dictionary<Kalender, DsaTool.DSADateCalendar> KalenderDictionary =
+            new Dictionary<Kalender, DsaTool.DSADateCalendar>();
+
         static Zeitrechnung()
         {
             ZeitrechnungenDictionary.Add(Kalender.BosparansFall,

@@ -345,7 +345,19 @@ namespace MeisterGeister.Logic.HeldenImport
         public static Held ImportHeldenblattFile(string _importPfad, Guid newGuid)
         {
             System.Collections.Generic.List<string> _importLog = new List<string>();
-            OleDbConnection conn = new OleDbConnection(String.Format("Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"", _importPfad));
+            string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties = \"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
+            string xlsConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
+            OleDbConnection conn;
+            if (_importPfad.ToLowerInvariant().EndsWith(".xlsx") || _importPfad.ToLowerInvariant().EndsWith(".xlsb"))
+            {
+                //CheckProvider(); oder Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255
+                conn = new OleDbConnection(String.Format(xlsxConnString, _importPfad));
+            }
+            else if (_importPfad.ToLowerInvariant().EndsWith(".xls"))
+                conn = new OleDbConnection(String.Format(xlsConnString, _importPfad));
+            else
+                return null; // falsche Datei
+            
             conn.Open();
 
             //Held Basisdaten
@@ -548,6 +560,10 @@ namespace MeisterGeister.Logic.HeldenImport
                 wert = (int?)tRow.Field<double?>("TaW") ?? 0;
                 atZuteilung = (int?)tRow.Field<double?>("ZuteilungAT") ?? 0;
                 paZuteilung = (int?)tRow.Field<double?>("ZuteilungPA") ?? 0;
+                //TODO Talentspezialisierung:
+                //talentSpez1 = tRow.Field<string>("Spezialisierung 1");
+                //talentSpez2 = tRow.Field<string>("Spezialisierung 2");
+                //-> AddSonderfertigkeit
 
                 //geklammerte angaben entfernen
                 Match m = reKlammern.Match(talentName);
@@ -559,8 +575,8 @@ namespace MeisterGeister.Logic.HeldenImport
                 // Sonderfälle: Sprachen Kennen und Lesen/Schreiben
                 if (talentName.StartsWith("L/S: "))
                     talentName = string.Format("Lesen/Schreiben ({0})", talentName.Replace("L/S: ", string.Empty));
-                else if (talentName.StartsWith("Sprachen Kennen: "))
-                    talentName = string.Format("Sprachen Kennen ({0})", talentName.Replace("Sprachen Kennen: ", string.Empty));
+                else if (talentName.StartsWith("Sprache kennen: "))
+                    talentName = string.Format("Sprachen Kennen ({0})", talentName.Replace("Sprache kennen: ", string.Empty));
 
                 Talent t = Global.ContextHeld.LoadTalentByName(talentName);
                 if (t == null)

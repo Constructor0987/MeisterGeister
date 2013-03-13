@@ -45,6 +45,8 @@ namespace MeisterGeister
         #region //FELDER
 
         private static Model.Held _selectedHeld;
+        private static double _heldenLon = 32;
+        private static double _heldenLat = 3;
 
         #endregion
 
@@ -53,6 +55,50 @@ namespace MeisterGeister
         {
             get;
             private set;
+        }
+
+        private static DgSuche.Ortsmarke standort = null;
+        public static DgSuche.Ortsmarke Standort
+        {
+            get {
+                if (standort == null)
+                    standort = new DgSuche.Ortsmarke(Logic.Settings.Einstellungen.Standort, true);
+                return standort; 
+            }
+            set { 
+                standort = value;
+                OnStandortChanged();
+            }
+        }
+
+        public static string HeldenRegion
+        {
+            get { return standort.Name; }
+            set { 
+                standort.Name = value;
+                OnStandortChanged();
+            }
+        }
+
+        public static double HeldenLon
+        {
+            get { return Global._heldenLon; }
+            set
+            {
+                Global._heldenLon = value;
+                Standort.Longitude = String.Format("{0:0.00000000000000}", _heldenLon);
+                OnStandortChanged();
+            }
+        }
+
+        public static double HeldenLat
+        {
+            get { return Global._heldenLat; }
+            set { 
+                Global._heldenLat = value;
+                Standort.Latitude = String.Format("{0:0.00000000000000}", _heldenLat);
+                OnStandortChanged();
+            }
         }
 
         /// <summary>
@@ -187,6 +233,17 @@ namespace MeisterGeister
 
         public static event EventHandler HeldSelectionChanged;
         public static event EventHandler HeldSelectionChanging;
+        public static event EventHandler StandortChanged;
+
+        static void OnStandortChanged()
+        {
+            Logic.Settings.Einstellungen.Standort = string.Format("{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+            Double.TryParse(Standort.Longitude, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLon);
+            Double.TryParse(Standort.Latitude, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLat);
+
+            if (StandortChanged != null)
+                StandortChanged(null, new EventArgs());
+        }
 
         public static event GruppenProbeWürfelnEventHandler GruppenProbeWürfeln;
 

@@ -28,7 +28,7 @@ namespace MeisterGeister.View.Kalender
         {
             InitializeComponent();
 
-            Standort = new DgSuche.Ortsmarke(Einstellungen.Standort, true);
+            Standort = Global.Standort;
 
             _comboBoxMonat.SelectionChanged -= _comboBoxMonat_SelectionChanged;
             _comboBoxTag.SelectionChanged -= _comboBoxTag_SelectionChanged;
@@ -56,6 +56,12 @@ namespace MeisterGeister.View.Kalender
             _comboBoxMonat.SelectionChanged += _comboBoxMonat_SelectionChanged;
             _comboBoxTag.SelectionChanged += _comboBoxTag_SelectionChanged;
             _comboBoxZeitrechnung.SelectionChanged += _comboBoxZeitrechnung_SelectionChanged;
+            Global.StandortChanged += Global_StandortChanged;
+        }
+
+        void Global_StandortChanged(object sender, EventArgs e)
+        {
+            Berechnen();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -266,7 +272,7 @@ namespace MeisterGeister.View.Kalender
             }
         }
 
-        private DgSuche.Ortsmarke Standort = new DgSuche.Ortsmarke("Gareth");
+        private DgSuche.Ortsmarke Standort = Global.Standort;
 
         private void ImageStandort_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -279,10 +285,11 @@ namespace MeisterGeister.View.Kalender
 
         internal void SetzeStandort(DgSuche.Ortsmarke ort)
         {
-            Standort = ort;
             if (Standort != null)
-                Einstellungen.Standort = string.Format("{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
-            Berechnen();
+            {
+                Standort = ort;
+                Global.Standort = ort;
+            }
         }
 
         private void DereGlobusLinkControl_PreviewMouseDown(object sender, MouseButtonEventArgs e)
