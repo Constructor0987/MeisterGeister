@@ -29,6 +29,7 @@
             <ColumnDefinition Width="766*" />
             <ColumnDefinition Width="420" />
         </Grid.ColumnDefinitions>
+        
         <Expander IsExpanded="False" Name="exEinstellungen" Grid.Column="1" Grid.RowSpan="2" >
             <Expander.Header>
                 <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
@@ -123,20 +124,7 @@
 
                     <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.ColumnSpan="4" />
                     <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="140" Margin="0,0,0,6" Grid.Row="1" Grid.ColumnSpan="4" Name="scrTheme">
-
                         <WrapPanel Name="WrapPnlUebersicht" />
-                         <!--   <Grid Name="grdUebersicht">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="240" />
-                                <ColumnDefinition Width="*" />  
-                            </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="110" />
-                        </Grid.RowDefinitions>                            
-                        </Grid>-->
                     </ScrollViewer>
 
                     <Expander Grid.Row="2" Grid.ColumnSpan="4"  IsExpanded="False" Name="exThemeEditor" ExpandDirection="Up" Expanded="exThemeEditor_Expanded" Collapsed="exThemeEditor_Collapsed" >
@@ -406,10 +394,6 @@
                             </Button>
                             <TextBox Grid.Column="3" HorizontalContentAlignment="Left" Name="tboxklangsongparallel" Text="1" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallel_TextChanged" IsEnabled="True" Visibility="Hidden" />
 
-                            <Button Height="30" HorizontalAlignment="Right" Name="btnKlangSave" Width="30" ToolTip="Speichern der aktuellen Playliste" Click="btnKlangSave_Click" Grid.Column="6" VerticalAlignment="Center" Margin="0,0,50,0" TabIndex="1" Visibility="Hidden">
-                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speichern.png" />
-                            </Button>
-
                             <Button Height="30" HorizontalAlignment="Right" Name="btnKlangOpen" Width="30" IsEnabled="True" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Click="btnKlangOpen_Click" Grid.Column="6" VerticalAlignment="Center" Margin="0,0,10,0" TabIndex="1" Visibility="Hidden">
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" Name="btnKlangOpenImg" />
                             </Button>
@@ -424,31 +408,32 @@
                             </TabItem>
                             <TabItem x:Name="tabItemTemp" Visibility="Hidden">
                             <Grid Name="GridX">
-                                <ScrollViewer Name="sviewerX" VerticalScrollBarVisibility="Visible" MinHeight="200" ToolTip="Musikdateien per Drag&amp;Drop einfügen" AllowDrop="True" Drop="grdKlangX_Drop" HorizontalScrollBarVisibility="Auto">
+                                <ScrollViewer Name="sviewerX" MinHeight="200" ToolTip="Musikdateien per Drag&amp;Drop einfügen" AllowDrop="True" Drop="grdKlangX_Drop" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" >
+
                                     <Grid Name="grdKlangX" AllowDrop="True" Drop="grdKlangX_Drop" ToolTip="Musikdateien über Drag&amp;Drop einfügen">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="40" />
-                                            <RowDefinition Height="23" />
-                                        </Grid.RowDefinitions>
-                                        
-                                        <Grid Name="grdKlangTopX" Visibility="Hidden">
-                                            <Grid.RowDefinitions>
+                                        <RowDefinition Height="40" />
+                                        <RowDefinition Height="23" />
+                                    </Grid.RowDefinitions>
+
+                                        <Grid Name="grdKlangTopX" Visibility="Hidden" >
+                                        <Grid.RowDefinitions>
                                                 <RowDefinition Height="40" />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="1" />
                                                 <ColumnDefinition Width="35" />
-                                                <ColumnDefinition Width="150*" />
+                                                <ColumnDefinition Width="110*" MinWidth="110"/>
                                                 <ColumnDefinition Width="42" />
                                                 <ColumnDefinition Width="92" />
                                                 <ColumnDefinition Width="21" />
-                                                <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="72" />
+                                                <ColumnDefinition Width="70" />
+                                                <ColumnDefinition Width="70" />
                                                 <ColumnDefinition Width="14" />
                                                 <ColumnDefinition Width="92" />
                                                 <ColumnDefinition Width="21" />
-                                                <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="72" />
+                                                <ColumnDefinition Width="85" />
+                                                <ColumnDefinition Width="85" />
                                                 <ColumnDefinition Width="110" />
 
                                             </Grid.ColumnDefinitions>
@@ -463,9 +448,9 @@
 
                                             <Label Name="lblTopVolX" Content="Volume [%]" Grid.Column="4" Height="17" HorizontalAlignment="Stretch" Margin="0" Padding="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.Row="1" Visibility="{Binding ElementName=rbIstKlangPlaylist, Path=IsChecked}" />
                                             <Button Name="btnTopVolMinX" Content="&lt;&lt;" Grid.Column="4" Grid.Row="1" Height="22" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Lautstärke aller aktiven Klänge auf 0%" Tag="-100" Click="btnAllVolUp_Click" IsTabStop="False" />
-                                            <Button Name="btnTopVolDownX" Content="&lt;" Grid.Column="4" Grid.Row="1" Height="22" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge verringern" Tag="-10" Click="btnAllVolUp_Click" IsTabStop="False" />
+                                            <Button Name="btnTopVolDownX" Content="&lt;" Grid.Column="4" Grid.Row="1" Height="22" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge um 10% verringern" Tag="-10" Click="btnAllVolUp_Click" IsTabStop="False" />
                                             <Button Name="btnTopVolMaxX" Content="&gt;&gt;" Grid.Column="4" Grid.Row="1" Height="22" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Lautstärke aller aktiven Klänge auf 100%" Tag="100" Click="btnAllVolUp_Click" IsTabStop="False" />
-                                            <Button Name="btnTopVolUpX" Content="&gt;" Grid.Column="4" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge erhöhen" Click="btnAllVolUp_Click" Tag="10" IsTabStop="False" />
+                                            <Button Name="btnTopVolUpX" Content="&gt;" Grid.Column="4" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" VerticalAlignment="Bottom" Width="22" ToolTip="Lautstärke aller aktiven Klänge um 10% erhöhen" Click="btnAllVolUp_Click" Tag="10" IsTabStop="False" />
                                             <CheckBox Name="chkbxTopVolChangeX" Height="14" Margin="0,2,0,5" VerticalAlignment="Bottom" Width="14" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" ToolTip="Lautstärke aller aktiven Klänge automatisch variieren" Click="chkbxTopVolChangeX_Click" Tag="0" IsTabStop="False" />
                                             <Label Name="lblTopVolRangeX" Content="Volume Range [%]" Grid.Column="6" Grid.ColumnSpan="2" Height="17" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="0" VerticalAlignment="Top" Grid.RowSpan="2" Margin="24,0,2,0" Grid.Row="1" />
                                             <Button Name="btnTopVolMinMinusX" Content="-" Height="22" Margin="0,0,30,1" VerticalAlignment="Bottom" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Right" Width="22" ToolTip="Minimale Lautstärke aller variierbaren Klänge verringern" Click="btnTopVolMinMinusX_Click" IsTabStop="False" />
@@ -473,20 +458,20 @@
                                             <Button Name="btnTopVolMaxMinusX" Content="-" Grid.Column="7" Grid.Row="1" Height="22" Margin="0,0,30,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge verringern" Click="btnTopVolMaxMinusX_Click" IsTabStop="False" />
                                             <Button Name="btnTopVolMaxPlusX" Content="+" Grid.Column="7" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,0,1" VerticalAlignment="Bottom" Width="22" ToolTip="Maximale Lautstärke aller variierbaren Klänge erhöhen" Click="btnTopVolMaxPlusX_Click" IsTabStop="False" />
                                             <Label Name="lblTopPauseX" Content="Zwischenpause [ms]" Grid.Column="8" Height="17" HorizontalAlignment="Stretch" Margin="0,0,4,0" Padding="0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" Width="123" Grid.Row="1" />
-                                            <Button Name="btnTopPauseMinX" Content="&lt;&lt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 0%" Click="btnAllPauseUp_Click" Tag="-10000" IsTabStop="False" />
-                                            <Button Name="btnTopPauseDownX" Content="&lt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge verringern" Click="btnAllPauseUp_Click" Tag="-200" IsTabStop="False" />
-                                            <Button Name="btnTopPauseMaxX" Content="&gt;&gt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Pausenzeit aller aktiven Klänge auf 100%" Tag="10000" Click="btnAllPauseUp_Click" IsTabStop="False" />
-                                            <Button Name="btnTopPauseUpX" Content="&gt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Click="btnAllPauseUp_Click" Tag="200" IsTabStop="False" />
+                                            <Button Name="btnTopPauseMinX" Content="&lt;&lt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Pausenzeit aller aktiven Klänge verringern" Click="btnAllPauseUp_Click" Tag="-2" IsTabStop="False" />
+                                            <Button Name="btnTopPauseDownX" Content="&lt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge verringern" Click="btnAllPauseUp_Click" Tag="-1" IsTabStop="False" />
+                                            <Button Name="btnTopPauseMaxX" Content="&gt;&gt;" Grid.Column="9" Grid.Row="1" Height="22" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Tag="2" Click="btnAllPauseUp_Click" IsTabStop="False" />
+                                            <Button Name="btnTopPauseUpX" Content="&gt;" Grid.Column="9" Grid.Row="1" Height="22" HorizontalAlignment="Right" Margin="0,0,23,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Click="btnAllPauseUp_Click" Tag="1" IsTabStop="False" />
                                             <CheckBox Name="chkbxTopPauseChangeX" Height="14" Margin="0,2,0,5" VerticalAlignment="Bottom" Width="14" Grid.Column="10" Grid.Row="1" HorizontalAlignment="Center" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" Click="chkbxTopVolChangeX_Click" Tag="0" IsTabStop="False" />
                                             <Label Name="lblTopPauseRangeX" Content="Pause Range [ms]" Grid.Column="11" Grid.ColumnSpan="2" Height="17" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Padding="0" VerticalAlignment="Top" Grid.RowSpan="2" Margin="24,0,2,0" Grid.Row="1" />
-                                            <Button Name="btnTopPauseMinMinusX" Content="-" Height="22" Margin="0,0,30,1" VerticalAlignment="Bottom" Grid.Column="11" Grid.Row="1" HorizontalAlignment="Right" Width="22" ToolTip="Minimale Pausenzeit aller variierbaren Klänge verringern" Click="btnTopPauseMinMinusX_Click" IsTabStop="False" />
-                                            <Button Name="btnTopPauseMinPlusX" Content="+" Height="22" HorizontalAlignment="Right" Margin="0,0,0,1" VerticalAlignment="Bottom" Width="22" Grid.Column="11" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge erhöhen" Click="btnTopPauseMinPlusX_Click" IsTabStop="False" />
-                                            <Button Name="btnTopPauseMaxMinusX" Content="-" Grid.Column="12" Grid.Row="1" Height="22" Margin="0,0,30,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="22" ToolTip="Maximale Pausenzeit aller variierbaren Klänge verringern" Click="btnTopPauseMaxMinusX_Click" IsTabStop="False" />
-                                            <Button Name="btnTopPauseMaxPlusX" Content="+" Grid.Column="12" Grid.Row="1" Height="22" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="22" Margin="0,0,0,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge erhöhen" Click="btnTopPauseMaxPlusX_Click" IsTabStop="False" />
-                                            <Label Name="lblPlaySpeedX" Content="Geschwindigkeit" Grid.Column="13" Margin="0" Padding="0" VerticalAlignment="Center" Grid.RowSpan="1" Grid.Row="1" HorizontalContentAlignment="Center" />
+                                            <Button Name="btnTopPauseMinMinusX" Content="-" Height="22" Margin="20,0,0,1" VerticalAlignment="Bottom" Grid.Column="11" Grid.Row="1" HorizontalAlignment="left" Width="22" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um 200ms verringern" Click="btnTopPauseMinMinusX_Click" IsTabStop="False" />
+                                            <Button Name="btnTopPauseMinPlusX" Content="+" Height="22" HorizontalAlignment="Left" Margin="45,0,0,1" VerticalAlignment="Bottom" Width="22" Grid.Column="11" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um 200ms erhöhen" Click="btnTopPauseMinPlusX_Click" IsTabStop="False" />
+                                            <Button Name="btnTopPauseMaxMinusX" Content="-" Grid.Column="12" Grid.Row="1" Height="22" Margin="20,0,30,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="22" ToolTip="Maximale Pausenzeit aller variierbaren Klänge um 200ms verringern" Click="btnTopPauseMaxMinusX_Click" IsTabStop="False" />
+                                            <Button Name="btnTopPauseMaxPlusX" Content="+" Grid.Column="12" Grid.Row="1" Height="22" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="22" Margin="45,0,0,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge um 200ms erhöhen" Click="btnTopPauseMaxPlusX_Click" IsTabStop="False" />
+                                            <Label Name="lblPlaySpeedX" Content="Geschwindigkeit" Grid.Column="13" Margin="0,0,10,0" Padding="0" VerticalAlignment="Center" Grid.RowSpan="1" Grid.Row="1" HorizontalContentAlignment="Center" />
                                         </Grid>
 
-                                        <StackPanel Grid.Row="1" Name="spnlKlangRow0_X" Visibility="Hidden" VerticalAlignment="Top">
+                                        <StackPanel Grid.Row="1" Name="spnlKlangRow0_X" VerticalAlignment="Top" Visibility="Hidden" >
                                             <Grid Name="grdKlangRow0_X">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="23" />
@@ -494,17 +479,17 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="1" />
                                                     <ColumnDefinition Width="35" />
-                                                    <ColumnDefinition Width="150*" />
+                                                    <ColumnDefinition Width="110*" MinWidth="110"/>
                                                     <ColumnDefinition Width="42" />
                                                     <ColumnDefinition Width="92" />
                                                     <ColumnDefinition Width="21" />
-                                                    <ColumnDefinition Width="75" />
-                                                    <ColumnDefinition Width="72" />
+                                                    <ColumnDefinition Width="70" />
+                                                    <ColumnDefinition Width="70" />
                                                     <ColumnDefinition Width="14" />
                                                     <ColumnDefinition Width="92" />
                                                     <ColumnDefinition Width="21" />
-                                                    <ColumnDefinition Width="75" />
-                                                    <ColumnDefinition Width="72" />
+                                                    <ColumnDefinition Width="85" />
+                                                    <ColumnDefinition Width="85" />
                                                     <ColumnDefinition Width="110" />
 
                                                 </Grid.ColumnDefinitions>
@@ -530,16 +515,18 @@
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
 
-                                                <Slider Name="sldKlangPause0_X" Grid.Column="9" Height="23" Margin="6,0,4,0" Value="1000" Maximum="10000" Interval="50" LargeChange="500" SmallChange="100" ToolTip="1000 ms" TickFrequency="10" ValueChanged="sldKlangPause0_X_ValueChanged" />
+                                                <Slider Name="sldKlangPause0_X" Grid.Column="9" Height="23" Margin="6,0,4,0" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" ValueChanged="sldKlangPause0_X_ValueChanged" TickPlacement="BottomRight" 
+                                                        Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000, 50000" />
+
                                                 <CheckBox Name="chkKlangPauseMove0_X" Height="14" Margin="0,6,0,4" Grid.Column="10" Width="14" Click="chkKlangPauseMove0_0_Click" Tag="0" IsTabStop="False" />
-                                                <TextBox Name="tboxPauseMin0_X" Grid.Column="11" Margin="0,0,36,0" Text="0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxPauseMin0_X_LostFocus" Tag="0" />
-                                                <Button Name="_btnPauseMinMinus0_X" Grid.Column="11" Margin="39,0,18,0" Click="_btnPauseMinMinus0_X_Click" Tag="-200" IsTabStop="False">
+                                                <TextBox Name="tboxPauseMin0_X" Grid.Column="11" Margin="0,0,36,0" Text="12345" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxPauseMin0_X_LostFocus" Tag="0" />
+                                                <Button Name="_btnPauseMinMinus0_X" Grid.Column="11" Margin="39,0,18,0" Click="_btnPauseMinMinus0_X_Click" Tag="-200" Width="18" HorizontalAlignment="Right" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
-                                                <Button Name="_btnPauseMinPlus0_X" Grid.Column="11" Tag="200" Click="_btnPauseMinPlus0_X_Click" Margin="57,0,0,0" IsTabStop="False">
+                                                <Button Name="_btnPauseMinPlus0_X" Grid.Column="11" Tag="200" Click="_btnPauseMinPlus0_X_Click" Margin="57,0,0,0" Width="18" HorizontalAlignment="Right" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
-                                                <TextBox Name="tboxPauseMax0_X" Grid.Column="12" Margin="0,0,36,0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxPauseMax0_X_LostFocus" Tag="0" Text=" 3" />
+                                                <TextBox Name="tboxPauseMax0_X" Grid.Column="12" Margin="0,0,36,0" HorizontalContentAlignment="Center" PreviewTextInput="tboxVolMin0_X_PreviewTextInput" LostFocus="tboxPauseMax0_X_LostFocus" Tag="0" Text="12345" />
                                                 <Button Name="_btnPauseMaxMinus0_X" Width="18" Grid.Column="12" HorizontalAlignment="Right" Margin="18,0" Tag="-200" Click="_btnPauseMaxMinus0_X_Click" IsTabStop="False">
                                                     <Image Source="/Images/Icons/General/entf_02.png" />
                                                 </Button>
@@ -550,7 +537,7 @@
                                                 <Slider Name="sldPlaySpeed0_X" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4" Grid.Column="13" HorizontalAlignment="Center" Width="45" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" ToolTip="Abspielgeschwinidkeit anpassen" ValueChanged="sldPlaySpeed0_X_ValueChanged" />
                                                 <Image Source="/Images/Icons/General/hase.png" Grid.Column="13" HorizontalAlignment="Right" Margin="0,5,5,0" />
                                             </Grid>
-                                        </StackPanel>
+                                        </StackPanel>                                        
                                     </Grid>
                                 </ScrollViewer>
                             </Grid>
