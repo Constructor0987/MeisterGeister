@@ -35,6 +35,9 @@ namespace MeisterGeister.Logic.HeldenImport
 
             // Gegenstand-Mapping
             SetGegenstandMapping();
+
+            // Dialekte
+            SetDialektMapping();
         }
 
         private static System.Collections.Generic.Dictionary<string, string> _talentMapping = new Dictionary<string, string>();
@@ -42,6 +45,29 @@ namespace MeisterGeister.Logic.HeldenImport
         private static System.Collections.Generic.Dictionary<string, string> _vorNachteilMapping = new Dictionary<string, string>();
         private static System.Collections.Generic.Dictionary<string, string> _sonderfertigkeitMapping = new Dictionary<string, string>();
         private static System.Collections.Generic.Dictionary<string, string> _gegenstandMapping = new Dictionary<string, string>();
+        private static System.Collections.Generic.Dictionary<string, string> _dialektMapping = new Dictionary<string, string>();
+
+        private static void SetDialektMapping()
+        {
+            _dialektMapping.Add("alberned", "garethi");
+            _dialektMapping.Add("almadanisch", "garethi");
+            _dialektMapping.Add("andergastisch", "garethi");
+            _dialektMapping.Add("aran-tulamidya", "tulamidya");
+            _dialektMapping.Add("balashidisch", "tulamidya");
+            _dialektMapping.Add("bornisch", "garethi");
+            _dialektMapping.Add("brabaci", "garethi");
+            _dialektMapping.Add("charypto", "garethi");
+            _dialektMapping.Add("fjarningsch", "thorwalsch");
+            //_dialektMapping.Add("floßsprache", "mohisch"); //wird als SF gelernt
+            _dialektMapping.Add("gatamo", "garethi");
+            _dialektMapping.Add("gjalskisch", "thorwalsch");
+            _dialektMapping.Add("horathi", "garethi");
+            _dialektMapping.Add("khôm-novadisch", "tulamidya");
+            _dialektMapping.Add("maraskani", "garethi");
+            _dialektMapping.Add("mhanadi-tulamidisch", "tulamidya");
+            _dialektMapping.Add("ongalo-thalusisch", "tulamidya");
+            _dialektMapping.Add("puka-puka", "mohisch");
+        }
 
         private static void SetGegenstandMapping()
         {
@@ -66,8 +92,10 @@ namespace MeisterGeister.Logic.HeldenImport
 
         private static void SetSonderfertigkeitenMapping()
         {
+            _sonderfertigkeitMapping.Add("turniereiterei", "turnierreiterei");
             _sonderfertigkeitMapping.Add("akklimatisierung: hitze", "akklimatisierung (hitze)");
             _sonderfertigkeitMapping.Add("akklimatisierung: kälte", "akklimatisierung (kälte)");
+            _sonderfertigkeitMapping.Add("auxilator", "auxiliator");
             _sonderfertigkeitMapping.Add("fernzauberei", "fernzauberei i");
             _sonderfertigkeitMapping.Add("traumgänger", "traumgänger i");
             _sonderfertigkeitMapping.Add("apport", "objektritual: apport");
@@ -201,11 +229,14 @@ namespace MeisterGeister.Logic.HeldenImport
 
         private static void SetZauberMapping()
         {
-            _zauberMapping.Add("analys arkanstruktur", "analys arcanstruktur");
+            _zauberMapping.Add("analys arcanstructur", "analys arcanstruktur");
             _zauberMapping.Add("aquafaxius wasserstrahl", "aquafaxius");
             _zauberMapping.Add("archofaxius erzstrahl", "archofaxius");
             _zauberMapping.Add("arcanovi artefakt", "arcanovi artefakt (spruchspeicher)");
+            _zauberMapping.Add("arcanovi (semipermanenz)", "arcanovi artefakt (semipermanenz)");
+            _zauberMapping.Add("arcanovi (matrixgeber)", "arcanovi artefakt (matrixgeber)");
             _zauberMapping.Add("brenne toter stoff!", "brenne, toter stoff!");
+            _zauberMapping.Add("brenne toter stoff !", "brenne, toter stoff!");
             _zauberMapping.Add("chronoautos zeitenfahrt", "chrononautos zeitenfahrt");
             _zauberMapping.Add("eigenschaft wiederherstellen", "eigenschaften wiederherstellen");
             _zauberMapping.Add("frigifaxius eisstrahl", "frigifaxius");
@@ -222,6 +253,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _zauberMapping.Add("aquasphaero wasserball", "aquasphaero");
             _zauberMapping.Add("archosphaero erzball", "archosphaero");
             _zauberMapping.Add("humosphaero humusball", "humosphaero");
+            _zauberMapping.Add("silentium silentille", "silentium schweigekreis");
         }
 
         private static void SetTalentMapping()
@@ -237,6 +269,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _talentMapping.Add("heilkunde: seele", "heilkunde seele");
             _talentMapping.Add("heilkunde: wunden", "heilkunde wunden");
             _talentMapping.Add("kartografie", "kartographie");
+            _talentMapping.Add("kristallzüchter", "kristallzucht");
             _talentMapping.Add("sprachen kennen (aureliani)", "sprachen kennen (alt-imperial/alt-güldenländisch/aureliani)");
             _talentMapping.Add("sprachen kennen (alt-imperial/aureliani)", "sprachen kennen (alt-imperial/alt-güldenländisch/aureliani)");
             _talentMapping.Add("sprachen kennen (alt-imperial)", "sprachen kennen (alt-imperial/alt-güldenländisch/aureliani)");
@@ -337,14 +370,15 @@ namespace MeisterGeister.Logic.HeldenImport
                 return fürSpätweihe ? "Nichtalveranische Gottheit" : "nicht-alveranische Gottheit";
         }
 
-        public static Held ImportHeldenblattFile(string _importPfad)
+        public static Held ImportHeldenblattFile(string _importPfad, List<string> _importLog = null)
         {
-            return ImportHeldenblattFile(_importPfad, Guid.Empty);
+            return ImportHeldenblattFile(_importPfad, Guid.Empty, _importLog);
         }
 
-        public static Held ImportHeldenblattFile(string _importPfad, Guid newGuid)
+        public static Held ImportHeldenblattFile(string _importPfad, Guid newGuid, List<string> _importLog = null)
         {
-            System.Collections.Generic.List<string> _importLog = new List<string>();
+            if(_importLog == null)
+                _importLog = new List<string>();
             string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties = \"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
             string xlsConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
             OleDbConnection conn;
@@ -420,11 +454,11 @@ namespace MeisterGeister.Logic.HeldenImport
             var row = dt.Rows[0];
 
             Held _held = new Held();
-            _held.Name = (string)row["Name"];
-            _held.Rasse = (string)row["Rasse"];
-            _held.Kultur = (string)row["Kultur"];
-            _held.Spieler = (string)row["Spieler"];
-            _held.Profession = (string)row["Profession"];
+            _held.Name = (string)row.Field<string>("Name");
+            _held.Rasse = (string)row.Field<string>("Rasse");
+            _held.Kultur = (string)row.Field<string>("Kultur");
+            _held.Spieler = (string)row.Field<string>("Spieler");
+            _held.Profession = (string)row.Field<string>("Profession");
             // Bild
             _held.MU = (int?)row.Field<double?>("MU");
             _held.KL = (int?)row.Field<double?>("KL");
@@ -486,10 +520,10 @@ namespace MeisterGeister.Logic.HeldenImport
                 if (rep != null)
                     rep = rep.Trim();
                 else
-                    rep = "Dil";
+                    rep = "Dil"; //Übernatürliche Begabungen
                 bemerkung = string.Empty;
                 variante = string.Empty;
-                //TODO Übernatürliche Begabungen
+                
                 rep = Logic.General.Repräsentationen.GetKürzel(Logic.General.Repräsentationen.GetName(rep));
                 
                 //zunächst nach einem exakten treffer suchen
@@ -548,6 +582,7 @@ namespace MeisterGeister.Logic.HeldenImport
             int paZuteilung = 0;
             int atBasis = _held.AttackeBasisOhneMod;
             int paBasis = _held.ParadeBasisOhneMod;
+            string talentSpez1, talentSpez2;
             string talentName = string.Empty;
 
             DataTable dt = GetTable(conn, "Select * from [MG_Talente$] where Aktiviert=True");
@@ -560,10 +595,9 @@ namespace MeisterGeister.Logic.HeldenImport
                 wert = (int?)tRow.Field<double?>("TaW") ?? 0;
                 atZuteilung = (int?)tRow.Field<double?>("ZuteilungAT") ?? 0;
                 paZuteilung = (int?)tRow.Field<double?>("ZuteilungPA") ?? 0;
-                //TODO Talentspezialisierung:
-                //talentSpez1 = tRow.Field<string>("Spezialisierung 1");
-                //talentSpez2 = tRow.Field<string>("Spezialisierung 2");
-                //-> AddSonderfertigkeit
+                //Talentspezialisierung:
+                talentSpez1 = tRow.Field<string>("Spezialisierung 1");
+                talentSpez2 = tRow.Field<string>("Spezialisierung 2");
 
                 //geklammerte angaben entfernen
                 Match m = reKlammern.Match(talentName);
@@ -573,10 +607,19 @@ namespace MeisterGeister.Logic.HeldenImport
                 }
 
                 // Sonderfälle: Sprachen Kennen und Lesen/Schreiben
+                string dialekt = null;
                 if (talentName.StartsWith("L/S: "))
                     talentName = string.Format("Lesen/Schreiben ({0})", talentName.Replace("L/S: ", string.Empty));
                 else if (talentName.StartsWith("Sprache kennen: "))
-                    talentName = string.Format("Sprachen Kennen ({0})", talentName.Replace("Sprache kennen: ", string.Empty));
+                {
+                    string sprache = talentName.Replace("Sprache kennen: ", string.Empty);
+                    if (_dialektMapping.ContainsKey(sprache.ToLowerInvariant())) //ist ein dialekt
+                    {
+                        dialekt = sprache;
+                        sprache = _dialektMapping[dialekt.ToLowerInvariant()];
+                    }
+                    talentName = string.Format("Sprachen Kennen ({0})", sprache);
+                }
 
                 Talent t = Global.ContextHeld.LoadTalentByName(talentName);
                 if (t == null)
@@ -590,8 +633,39 @@ namespace MeisterGeister.Logic.HeldenImport
                     ht.TaW = wert;
                     ht.ZuteilungAT = atZuteilung;
                     ht.ZuteilungPA = paZuteilung;
-                    if (_held.Held_Talent.Any(_ht => ht.TalentGUID == _ht.TalentGUID))
+
+                    if (talentSpez1 != null || talentSpez2 != null)
                     {
+                        //Talentspezialisierung
+                        string spezTyp = "Talentspezialisierung"; //Typ anhand von der Talentgruppe
+                        if(t.Talentgruppe.Gruppenname == "Kampftalent")
+                            spezTyp = "Waffenspezialisierung";
+                        //Prüfen ob vorhanden
+                        var hsf = _held.Held_Sonderfertigkeit.Where(_hsf => _hsf.Sonderfertigkeit.Name == spezTyp).FirstOrDefault();
+                        if (hsf == null)
+                            AddSonderfertigkeit(spezTyp, t.Talentname, _held); //neu hinzufügen
+                        else
+                        {
+                            if(talentSpez1 != null)
+                                hsf.Wert = (hsf.Wert == null || hsf.Wert.Length == 0)? talentSpez1 : hsf.Wert + ", " + talentSpez1;
+                            if (talentSpez2 != null)
+                                hsf.Wert = (hsf.Wert == null || hsf.Wert.Length == 0) ? talentSpez2 : hsf.Wert + ", " + talentSpez2;
+                        }
+                    }
+
+                    if (_held.Held_Talent.Any(_ht => ht.TalentGUID == _ht.TalentGUID)) //bereits vorhanden
+                    {
+                        //dialekte abfangen
+                        if(talentName.StartsWith("Sprachen Kennen ") && dialekt != null)
+                        {
+                            var ht_vorhanden = _held.Held_Talent.Where(_ht => ht.TalentGUID == _ht.TalentGUID).FirstOrDefault();
+                            ht_vorhanden.TaW = (int)Math.Max(ht.TaW ?? 0, ht_vorhanden.TaW ?? 0);
+                            if(ht_vorhanden.Bemerkung == null || ht_vorhanden.Bemerkung.Length == 0)
+                                ht_vorhanden.Bemerkung = dialekt;
+                            else
+                                ht_vorhanden.Bemerkung +=  ", dialekt";
+                            continue;
+                        }
                         AddImportLog(ImportTypen.Talent, talentName, wert, _importLog);
                         continue;
                     }
@@ -607,7 +681,7 @@ namespace MeisterGeister.Logic.HeldenImport
             string sfName = string.Empty;
             string wertString = string.Empty;
 
-            DataTable dt = GetTable(conn, "Select * from [MG_Talente$] where Aktiviert=True");
+            DataTable dt = GetTable(conn, "Select * from [MG_SF$] where Aktiviert=True");
 
             foreach (DataRow tRow in dt.Rows)
             {
@@ -644,20 +718,32 @@ namespace MeisterGeister.Logic.HeldenImport
                     sfNameNeu = String.Format("Spätweihe {0}", GetGötterArt(göttername, true));
                     added = AddSonderfertigkeit(sfNameNeu, wertString, _held);
                 }
-                //TODO: Ritualkenntnis, Merkmalskenntnis, Schamanen, Geländekunde mappen, Rituale, Liturgien
-                //Geländekunde wird im Heldenblatt momentan noch mit Gebirgskundig, Waldkundig, Wüstenkundig etc. abgebildet.
-                
+                //Kulturkunde
+                if (!added && sfName.StartsWith("Kulturkunde"))
+                {
+                    sfNameNeu = String.Format("Kulturkunde ({0})", wertString);
+                    added = AddSonderfertigkeit(sfNameNeu, null, _held);
+                }
+                //Geländekunde
+                if (!added && sfName.EndsWith("kundig"))
+                {
+                    sfNameNeu = String.Format("Geländekunde ({0})", sfName);
+                    added = AddSonderfertigkeit(sfNameNeu, null, _held);
+                }
+                //TODO: Ritualkenntnis, Merkmalskenntnis, Schamanen, Rituale, Liturgien
 
                 //allgemein
-                sfNameNeu = sfName;
-                if (wertString != null && wertString != string.Empty)
+                if (!added)
                 {
-                    sfNameNeu = String.Format("{0} ({1})", sfName, wertString);
+                    sfNameNeu = sfName;
+                    if (wertString != null && wertString != string.Empty)
+                    {
+                        sfNameNeu = String.Format("{0} ({1})", sfName, wertString);
+                        added = AddSonderfertigkeitTryMapping(sfNameNeu, wertString, _held);
+                    }
+                    sfNameNeu = sfName;
                     added = AddSonderfertigkeitTryMapping(sfNameNeu, wertString, _held);
                 }
-                sfNameNeu = sfName;
-                added = AddSonderfertigkeitTryMapping(sfNameNeu, wertString, _held);
-
                 //weitere probieren
                 if (!added)
                     added = AddSonderfertigkeit(string.Format("Waffenloses Manöver ({0})", sfName), wertString, _held); // waffenlose manöver
@@ -1099,7 +1185,19 @@ namespace MeisterGeister.Logic.HeldenImport
 
         public static bool IsHeldenblattFile(string xlsFile)
         {
-            OleDbConnection conn = new OleDbConnection(String.Format("Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"", xlsFile));
+            string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties = \"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
+            string xlsConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
+            OleDbConnection conn;
+            if (xlsFile.ToLowerInvariant().EndsWith(".xlsx") || xlsFile.ToLowerInvariant().EndsWith(".xlsb"))
+            {
+                //CheckProvider(); oder Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255
+                conn = new OleDbConnection(String.Format(xlsxConnString, xlsFile));
+            }
+            else if (xlsFile.ToLowerInvariant().EndsWith(".xls"))
+                conn = new OleDbConnection(String.Format(xlsConnString, xlsFile));
+            else
+                return false; // falsche Datei
+            
             try
             {
                 conn.Open();
