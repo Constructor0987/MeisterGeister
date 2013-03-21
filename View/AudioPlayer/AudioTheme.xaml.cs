@@ -93,5 +93,11 @@ namespace MeisterGeister.View.AudioPlayer
             ((Slider)sender).ToolTip = Math.Round(e.NewValue) + "%";
         }
 
+
+        public void slVolume_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ((Slider)sender).Value += (e.Delta > 1) ? 3 : -3;
+        }
+
     }
 }

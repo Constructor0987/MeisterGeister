@@ -109,9 +109,9 @@
         <Label Name="lblVolHintergrund" Content="Hintergrund" Grid.Row="2" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
         <Label Name="lblVolKlaenge" Content="Klänge" Grid.Row="3" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
         <Border x:Name="TrackVolHGBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="2" Grid.Column="1" />
-        <Slider Name="sldVolHintergrund" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
+        <Slider Name="sldVolHintergrund" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" MouseWheel="slVolume_MouseWheel" />
         <Border x:Name="TrackVolKlaengeBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="3" Grid.Column="1" />
-        <Slider Name="sldVolKlaenge" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" />
+        <Slider Name="sldVolKlaenge" Style="{StaticResource MyCustomStyleForSlider}" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Margin="1,0,2,0" Maximum="100" Value="50" LargeChange="10" SmallChange="1" ValueChanged="sldVolHintergrund_ValueChanged" MouseWheel="slVolume_MouseWheel" />
         <Button Name="btnPlayNext" Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Margin="0,1,3,3" Focusable="False" IsTabStop="False" IsEnabled="False">
             <Grid>
             <Image Source="/Images/Icons/General/play_next.png" VerticalAlignment="Center"/>

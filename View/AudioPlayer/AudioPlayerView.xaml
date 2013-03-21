@@ -153,6 +153,7 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="80*" />
                                                 <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="25" />
                                             </Grid.ColumnDefinitions>
 
                                             <Label Content="Hintergrund-Playlists" Name="lblHintergrundPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold"  />
@@ -168,6 +169,7 @@
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgThemeBGPlaylistFilter_MouseUp" ToolTip="Filter löschen"/>
                                                 </Grid>
                                             </Border>
+                                            <Image Name="imgThemeBGPlaylistRefresh" Source="/Images/Icons/General/refresh.png" Grid.Column="2" Cursor="Hand" />
                                         </Grid>
                                     </Border>
                                     <ScrollViewer VerticalScrollBarVisibility="Visible" AllowDrop="True" Margin="0,0,0,6" Name="scrHinter" Grid.Row="1">
@@ -190,6 +192,7 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="280*" />
                                                 <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="25" />
                                             </Grid.ColumnDefinitions>
                                             <Label Content="Klang-Playlists" Name="lblKlangPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" />
                                             <Border Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
@@ -203,8 +206,8 @@
                                                     <TextBox Margin="2" Name="tbThemeKlangPlaylistFilter" Grid.Column="1" TextChanged="tbThemeKlangPlaylistFilter_TextChanged"/>
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgThemeKlangPlaylistFilter_MouseUp" ToolTip="Filter löschen"/>
                                                 </Grid>
-
                                             </Border>
+                                            <Image Name="imgThemeKlangPlaylistRefresh" Source="/Images/Icons/General/refresh.png" Grid.Column="2" Cursor="Hand" MouseDown="imgThemeKlangPlaylistRefresh_MouseDown" />
                                         </Grid>
                                     </Border>
                                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" Name="scrKlang">
@@ -287,7 +290,7 @@
                                     <Image Name="btnImgBGSpeaker" Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" />
                                 </Button>
 
-                                <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" Focusable="False" />
+                                <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" Focusable="False" MouseWheel="slVolume_MouseWheel" />
                             </Grid>
                         </Border>
                         <Border Grid.Column="3" Grid.Row="2" Height="240" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" Margin="2,46,2,72">
@@ -398,13 +401,15 @@
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" Name="btnKlangOpenImg" />
                             </Button>
                         </Grid>
-                    </Border>                        
+                    </Border>
 
-                    <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcKlang" Grid.Column="1" Grid.Row="1" Margin="3,8,6,9" SelectionChanged="tcKlang_SelectionChanged" Visibility="Visible">
-                            <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" >
+                    <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcKlang" Grid.Column="1" Grid.Row="1" Margin="3,8,6,9" SelectionChanged="tcKlang_SelectionChanged" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" >
+                        <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" >
                                 <TabItem.Header>
+                                <StackPanel>
                                     <Image Name="_image" Height="12" Width="12" Source="/Images/Icons/General/add.png" />
-                                </TabItem.Header>                                
+                                </StackPanel>
+                            </TabItem.Header>                                
                             </TabItem>
                             <TabItem x:Name="tabItemTemp" Visibility="Hidden">
                             <Grid Name="GridX">
