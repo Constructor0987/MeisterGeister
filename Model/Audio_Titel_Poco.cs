@@ -82,7 +82,8 @@ namespace MeisterGeister.Model
     		{ 
     			_länge = value;
     			OnChanged("Länge");
-    		}    
+    		}
+    
         }
         private Nullable<double> _länge;
 

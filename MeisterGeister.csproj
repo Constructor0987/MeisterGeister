@@ -1457,6 +1457,7 @@
     <Resource Include="Images\Icons\General\neu_grau.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0073.sql" />
     <Resource Include="Images\Icons\General\pfeil_links_rot.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0074.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="License\Apache License.txt">

@@ -60,6 +60,32 @@ namespace MeisterGeister.Model
     
         }
         private string _name;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Hintergrund_VolMod
+        {
+            get { return _hintergrund_VolMod; }
+            set
+    		{ 
+    			_hintergrund_VolMod = value;
+    			OnChanged("Hintergrund_VolMod");
+    		}
+    
+        }
+        private int _hintergrund_VolMod;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Klang_VolMod
+        {
+            get { return _klang_VolMod; }
+            set
+    		{ 
+    			_klang_VolMod = value;
+    			OnChanged("Klang_VolMod");
+    		}
+    
+        }
+        private int _klang_VolMod;
 
         #endregion
 
