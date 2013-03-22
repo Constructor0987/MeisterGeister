@@ -396,8 +396,12 @@ namespace MeisterGeister.Logic.HeldenImport
 
         public static Held ImportHeldenblattFile(string _importPfad, Guid newGuid, List<string> _importLog = null)
         {
-            if(_importLog == null)
+            bool showlog = false                ;
+            if (_importLog == null)
+            {
                 _importLog = new List<string>();
+                showlog = true;
+            }
             OleDbConnection conn = GetConnection(_importPfad);
             if (conn == null)
                 return null;
@@ -438,7 +442,8 @@ namespace MeisterGeister.Logic.HeldenImport
             Global.ContextHeld.UpdateList<Held>();
 
             // Import-Log erzeugen
-            ShowLogWindow(_importPfad, _importLog);
+            if(showlog)
+                ShowLogWindow(_importPfad, _importLog);
 
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
