@@ -48,7 +48,8 @@ namespace MeisterGeister.View.Helden.Controls {
 
                 Held importHeld = null;
                 foreach (string file in droppedFiles) {
-                    if (!file.EndsWith("xml")) {
+                    if (!(file.EndsWith("xml") || file.EndsWith("xls") || file.EndsWith("xlsx") || file.EndsWith("xlsb")))
+                    {
                         ViewHelper.Popup(file + "\n\nFalscher Dateityp!");
                         continue;
                     }

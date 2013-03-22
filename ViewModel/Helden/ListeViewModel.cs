@@ -250,7 +250,7 @@ namespace MeisterGeister.ViewModel.Helden {
             }
         }
         public void ImportHeldCommand(object sender) {
-            string pfad = ChooseFile("Held importieren", "", false, "xml");
+            string pfad = ChooseFile("Held importieren", "", false, "xml", "xls", "xlsx", "xlsb");
             if (pfad != null) {
                 Global.SetIsBusy(true, string.Format("{0} wird importiert...", pfad));
 
@@ -283,18 +283,21 @@ namespace MeisterGeister.ViewModel.Helden {
             } catch {
                 throw new ArgumentException(String.Format("Die Datei {0} konnte nicht geöffnet werden.", pfad));
             }
-            bool isHeldenSoftware = false;
+            bool isHeldenSoftware = false; bool isHeldenblatt = false;
             if (HeldenSoftwareImporter.IsHeldenSoftwareFile(pfad)) {
                 hGuid = HeldenSoftwareImporter.GetGuidFromFile(pfad);
                 isHeldenSoftware = true;
             } else if (Model.Service.SerializationService.IsMeistergeisterFile(pfad)) {
                 Held h = Model.Service.SerializationService.DeserializeObjectFromFile<Held>(pfad);
                 hGuid = h.HeldGUID;
+            } else if (HeldenblattImporter.IsHeldenblattFile(pfad)) {
+                hGuid = Guid.Empty;
+                isHeldenblatt = true;
             } else
                 throw new ArgumentException(String.Format("Die Datei {0} ist in keinem bekannten Format", pfad));
             Held existing = null;
             bool overwrite = true;
-            if ((existing = Global.ContextHeld.Liste<Held>().Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null) {
+            if (!isHeldenblatt && (existing = Global.ContextHeld.Liste<Held>().Where(hl => hl.HeldGUID == hGuid).FirstOrDefault()) != null) {
                 //überschreiben?
                 int result = ConfirmYesNoCancel(
                     "Held importieren",
@@ -307,6 +310,8 @@ namespace MeisterGeister.ViewModel.Helden {
             }
             if (isHeldenSoftware)
                 importHeld = HeldenSoftwareImporter.ImportHeldenSoftwareFile(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
+            else if (isHeldenblatt)
+                importHeld = HeldenblattImporter.ImportHeldenblattFile(pfad);
             else
                 importHeld = Held.Import(pfad, overwrite ? Guid.Empty : Guid.NewGuid());
             LoadDaten();

@@ -83,6 +83,8 @@ namespace MeisterGeister.Logic.HeldenImport
             _gegenstandMapping.Add("beintaschen", "beintaschen/schürze");
             _gegenstandMapping.Add("schürze", "beintaschen/schürze");
             _gegenstandMapping.Add("lederweste", "lederweste/pelzweste");
+            _gegenstandMapping.Add("magierstab", "magierstab als stab");
+            _gegenstandMapping.Add("magierstab (kristallkugel)", "magierstab m. kristallk.");
             _gegenstandMapping.Add("pelzweste", "lederweste/pelzweste");
             _gegenstandMapping.Add("stechhelm", "stechhelm/visierhelm");
             _gegenstandMapping.Add("visierhelm", "stechhelm/visierhelm");
@@ -375,23 +377,30 @@ namespace MeisterGeister.Logic.HeldenImport
             return ImportHeldenblattFile(_importPfad, Guid.Empty, _importLog);
         }
 
-        public static Held ImportHeldenblattFile(string _importPfad, Guid newGuid, List<string> _importLog = null)
+        private static OleDbConnection GetConnection(string _importPfad)
         {
-            if(_importLog == null)
-                _importLog = new List<string>();
             string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties = \"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
-            string xlsConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
+            string xlsConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
+            //TODO Provider Prüfen, evtl. Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255
             OleDbConnection conn;
             if (_importPfad.ToLowerInvariant().EndsWith(".xlsx") || _importPfad.ToLowerInvariant().EndsWith(".xlsb"))
             {
-                //CheckProvider(); oder Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255
                 conn = new OleDbConnection(String.Format(xlsxConnString, _importPfad));
             }
             else if (_importPfad.ToLowerInvariant().EndsWith(".xls"))
                 conn = new OleDbConnection(String.Format(xlsConnString, _importPfad));
             else
                 return null; // falsche Datei
-            
+            return conn;
+        }
+
+        public static Held ImportHeldenblattFile(string _importPfad, Guid newGuid, List<string> _importLog = null)
+        {
+            if(_importLog == null)
+                _importLog = new List<string>();
+            OleDbConnection conn = GetConnection(_importPfad);
+            if (conn == null)
+                return null;
             conn.Open();
 
             //Held Basisdaten
@@ -418,9 +427,8 @@ namespace MeisterGeister.Logic.HeldenImport
 
             //für tests
             conn.Close();
-            return _held;
-
-            /*
+            //return _held;
+            
             Model.Service.SerializationService serializer = Model.Service.SerializationService.GetInstance(true);
             if (!serializer.InsertOrUpdateHeld(_held))
             {
@@ -433,7 +441,6 @@ namespace MeisterGeister.Logic.HeldenImport
             ShowLogWindow(_importPfad, _importLog);
 
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
-             * */
         }
 
         private static DataTable GetTable(OleDbConnection conn, string commandText)
@@ -578,8 +585,8 @@ namespace MeisterGeister.Logic.HeldenImport
         private static void ImportTalente(OleDbConnection conn, Held _held, System.Collections.Generic.List<string> _importLog)
         {
             int wert;
-            int atZuteilung = 0;
-            int paZuteilung = 0;
+            int? atZuteilung = null;
+            int? paZuteilung = null;
             int atBasis = _held.AttackeBasisOhneMod;
             int paBasis = _held.ParadeBasisOhneMod;
             string talentSpez1, talentSpez2;
@@ -593,8 +600,8 @@ namespace MeisterGeister.Logic.HeldenImport
                 if (talentName != null)
                     talentName = talentName.Trim();
                 wert = (int?)tRow.Field<double?>("TaW") ?? 0;
-                atZuteilung = (int?)tRow.Field<double?>("ZuteilungAT") ?? 0;
-                paZuteilung = (int?)tRow.Field<double?>("ZuteilungPA") ?? 0;
+                atZuteilung = (int?)tRow.Field<double?>("ZuteilungAT");
+                paZuteilung = (int?)tRow.Field<double?>("ZuteilungPA");
                 //Talentspezialisierung:
                 talentSpez1 = tRow.Field<string>("Spezialisierung 1");
                 talentSpez2 = tRow.Field<string>("Spezialisierung 2");
@@ -631,8 +638,10 @@ namespace MeisterGeister.Logic.HeldenImport
                     ht.HeldGUID = _held.HeldGUID;
                     ht.TalentGUID = t.TalentGUID;
                     ht.TaW = wert;
-                    ht.ZuteilungAT = atZuteilung;
-                    ht.ZuteilungPA = paZuteilung;
+                    if(atZuteilung != null)
+                        ht.ZuteilungAT = atZuteilung - atBasis;
+                    if(paZuteilung != null)
+                        ht.ZuteilungPA = paZuteilung - paBasis;
 
                     if (talentSpez1 != null || talentSpez2 != null)
                     {
@@ -753,93 +762,6 @@ namespace MeisterGeister.Logic.HeldenImport
 
                 if (!added) 
                     AddImportLog(ImportTypen.Sonderfertigkeit, sfName, wertString, _importLog);
-
-            //    // Kulturkunde,  Scharfschütze, Meisterschütze, Schnellladen
-            //    if (!added && (sfName == "Kulturkunde" || sfName == "Scharfschütze"
-            //        || sfName == "Meisterschütze" || sfName == "Schnellladen"))
-            //    {
-            //        string sub = null;
-            //        if (sfName == "Kulturkunde")
-            //            sub = "kultur";
-            //        else if (sfName == "Ortskenntnis")
-            //            sub = "auswahl";
-            //        else if (sfName == "Scharfschütze" || sfName == "Meisterschütze" || sfName == "Schnellladen")
-            //            sub = "talent";
-            //        XmlNodeList subNodes = _xmlDoc.SelectNodes(string.Format("{2}[contains(@name,'{0}')]/{1}", sfName.Replace("'", "&apos;"), sub, sfXpath));
-            //        foreach (XmlNode s in subNodes)
-            //        {
-            //            string sfNameNeu = string.Format("{0} ({1})", sfName, s.Attributes["name"].Value);
-                //if (_sonderfertigkeitMapping.ContainsKey(sfNameNeu.ToLowerInvariant()))
-                //    sfNameNeu = _sonderfertigkeitMapping[sfNameNeu.ToLowerInvariant()];
-
-            //            added = AddSonderfertigkeit(sfNameNeu, wertString, _held);
-            //            if (!added) // Import nicht mögliche
-            //                AddImportLog(ImportTypen.Sonderfertigkeit, sfName, s.Attributes["name"].Value, _importLog);
-            //        }
-            //        continue;
-            //    }
-            //    // Rüstungsgewöhnung I, Ortskenntnis
-            //    if (!added && (sfName == "Rüstungsgewöhnung I" || sfName == "Ortskenntnis"))
-            //    {
-            //        string sub = null;
-            //        if (sfName == "Rüstungsgewöhnung I")
-            //            sub = "gegenstand";
-            //        else if (sfName == "Ortskenntnis")
-            //            sub = "auswahl";
-            //        XmlNodeList subNodes = _xmlDoc.SelectNodes(string.Format("{2}[contains(@name,'{0}')]/{1}", sfName.Replace("'", "&apos;"), sub, sfXpath));
-            //        foreach (XmlNode s in subNodes)
-            //        {
-            //            added = AddSonderfertigkeit(sfName, s.Attributes["name"].Value, _held);
-            //            if (!added) // Import nicht mögliche
-            //                AddImportLog(ImportTypen.Sonderfertigkeit, sfName, s.Attributes["name"].Value, _importLog);
-            //        }
-            //        continue;
-            //    }
-            //    // Talentspezialisierung
-            //    if (!added && sfName.StartsWith("Talentspezialisierung"))
-            //        added = AddSonderfertigkeit("Talentspezialisierung", sfName.Replace("Talentspezialisierung ", null), _held);
-            //    // Zauberspezialisierung
-            //    if (!added && sfName.StartsWith("Zauberspezialisierung"))
-            //        added = AddSonderfertigkeit("Zauberspezialisierung", sfName.Replace("Zauberspezialisierung ", null), _held);
-            //    // Ritualkenntnis (Schamanentradition)
-            //    if (!added && sfName.StartsWith("Ritualkenntnis"))
-            //        added = AddSonderfertigkeit(sfName.Replace("Ritualkenntnis: ", "Ritualkenntnis (") + ")", wertString, _held);
-            //    // Göttliche....
-            //    if (!added && (sfName.StartsWith("Göttliche Beseelung rufen") || sfName.StartsWith("Göttliche Essenz kanalisieren")
-            //        || sfName.StartsWith("Göttliche Macht binden") || sfName.StartsWith("Göttlichen Schutz erflehen")
-            //        || sfName.StartsWith("Göttlichen Willen erzwingen") || sfName.StartsWith("Göttliches Prinzip stärken")))
-            //        added = AddSonderfertigkeit("Liturgie: " + sfName, wertString, _held);
-            //    // Waffenlose Kampftechniken
-            //    if (!added && sfName.StartsWith("Waffenloser Kampfstil"))
-            //        added = AddSonderfertigkeit(sfName.Replace("Waffenloser Kampfstil: ", "Waffenlose Kampftechnik (") + ")", wertString, _held);
-            //    if (!added && sfName.StartsWith("Merkmalskenntnis"))
-            //        added = AddSonderfertigkeit(sfName.Replace("Merkmalskenntnis: ", "Merkmalskenntnis (") + ")", wertString, _held); // Merkmalskenntnis
-            //    if (!added && sfName.StartsWith("Gabe des Odûn"))
-            //        added = AddSonderfertigkeit(sfName.Replace("Gabe des Odûn", "Odûn-Gabe"), wertString, _held); // Odûn-Gabe
-            //    if (!added && sfName.StartsWith("Ritual:"))
-            //        added = AddSonderfertigkeit(sfName.Replace("Ritual:", "Schamanenritual:"), wertString, _held); // Schamanenritual
-            //    if (!added)
-            //        added = AddSonderfertigkeit(sfName, wertString, _held);
-            //    if (!added)
-            //        added = AddSonderfertigkeit(string.Format("Geländekunde ({0})", sfName), wertString, _held); // Geländekunden
-
-            //    if (!added)
-            //    {
-            //        if (_sonderfertigkeitMapping.ContainsKey(sfName.ToLowerInvariant()))
-            //            added = AddSonderfertigkeit(_sonderfertigkeitMapping[sfName.ToLowerInvariant()], wertString, _held);
-            //    }
-            //    // Sonderfertigkeit wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
-            //    if (!added)
-            //        added = AddSonderfertigkeit(sfName + " " + wertString, null, _held);
-            //    // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
-            //    if (!added)
-            //    {
-            //        if (_sonderfertigkeitMapping.ContainsKey((sfName + " " + wertString).ToLowerInvariant()))
-            //            added = AddSonderfertigkeit(_sonderfertigkeitMapping[(sfName + " " + wertString).ToLowerInvariant()], null, _held);
-            //    }
-
-            //    if (!added) // Import nicht mögliche
-            //        AddImportLog(ImportTypen.Sonderfertigkeit, sfName, wertString, _importLog);
             }
         }
 
@@ -876,7 +798,7 @@ namespace MeisterGeister.Logic.HeldenImport
                     //TODO Talentgruppen gleichziehen
                     added = AddVorNachteil(string.Format("Unfähigkeit für Talentgruppe ({0})", wertString), null, _held); // Unfähigkeit für Talentgruppe
                 }
-                else if (!added && vorNachteilName == "Geweiht ")
+                else if (!added && vorNachteilName.StartsWith("Geweiht"))
                 {
                     var m = reKlammern.Match(vorNachteilName);
                     if (m.Groups.Count == 3)
@@ -886,173 +808,156 @@ namespace MeisterGeister.Logic.HeldenImport
                         added = AddVorNachteil(string.Format("Geweiht [{0}]", GetGötterArt(göttername)), göttername, _held); // Geweiht
                     }
                 }
-                
-                
-            //    else if (!added && vorNachteilName.StartsWith("Angst vor")) // Angst vor...
-            //    {
-            //        string[] angstVorTeile = vorNachteilName.Split(' ');
-            //        string angstVor = angstVorTeile[2] + string.Format(" ({0})", wertString);
-            //        added = AddVorNachteil("Angst vor", angstVor, _held);
-            //    }
-            //    else if (!added && vorNachteilName == "Vorurteile (stark)") // Vorurteile (stark)...
-            //        added = AddVorNachteil("Vorurteile", string.Format("stark ({0})", vorNachteil.Attributes["value"].Value), _held);
-            //    else if (!added && vorNachteilName.StartsWith("Moralkodex")) // Moralkodex
-            //        added = AddVorNachteil("Moralkodex Kirche", vorNachteilName.Replace("Moralkodex [", null).TrimEnd(']'), _held);
-            //    else if (!added && (vorNachteilName.StartsWith("Herausragende Eigenschaft")
-            //        || vorNachteilName.StartsWith("Miserable Eigenschaft"))) // Herausragende/Miserable Eigenschaft
-            //    {
-            //        string eigenschaft = vorNachteilName.Split(':')[1].Trim();
-            //        string eigenschaftKürzel = Eigenschaft.GetAbkürzung(eigenschaft);
-            //        if (vorNachteilName.StartsWith("Herausragende Eigenschaft"))
-            //            added = AddVorNachteil(vorNachteilName.Replace("Herausragende Eigenschaft: ", "Herausragende Eigenschaft (")
-            //                .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString, _held);
-            //        else
-            //            added = AddVorNachteil(vorNachteilName.Replace("Miserable Eigenschaft: ", "Miserable Eigenschaft (")
-            //                .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString, _held);
-            //    }
+                //TODO? Vorurteile, Angst, Herausragende sinne, Moralkodex
 
-            //    if (!added)
-            //        added = AddVorNachteil(vorNachteilName, wertString, _held);
+                if (!added)
+                    added = AddVorNachteil(vorNachteilName, wertString, _held);
 
-            //    // Vor-/Nachteil wurde nicht gefunden, evtl. Mapping möglich
-            //    if (!added)
-            //    {
-            //        if (_vorNachteilMapping.ContainsKey(vorNachteilName.ToLowerInvariant()))
-            //            added = AddVorNachteil(_vorNachteilMapping[vorNachteilName.ToLowerInvariant()], wertString, _held);
-            //    }
-            //    // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
-            //    if (!added)
-            //        added = AddVorNachteil(vorNachteilName + " " + wertString, null, _held);
-            //    // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
-            //    if (!added)
-            //    {
-            //        if (_vorNachteilMapping.ContainsKey((vorNachteilName + " " + wertString).ToLowerInvariant()))
-            //            added = AddVorNachteil(_vorNachteilMapping[(vorNachteilName + " " + wertString).ToLowerInvariant()], null, _held);
-            //    }
+                // Vor-/Nachteil wurde nicht gefunden, evtl. Mapping möglich
+                if (!added)
+                {
+                    if (_vorNachteilMapping.ContainsKey(vorNachteilName.ToLowerInvariant()))
+                        added = AddVorNachteil(_vorNachteilMapping[vorNachteilName.ToLowerInvariant()], wertString, _held);
+                }
+                // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. mit Wert möglich
+                if (!added)
+                    added = AddVorNachteil(vorNachteilName + " " + wertString, null, _held);
+                // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
+                if (!added)
+                {
+                    if (_vorNachteilMapping.ContainsKey((vorNachteilName + " " + wertString).ToLowerInvariant()))
+                        added = AddVorNachteil(_vorNachteilMapping[(vorNachteilName + " " + wertString).ToLowerInvariant()], null, _held);
+                }
 
-            //    if (!added) // Import nicht möglich
-            //        AddImportLog(ImportTypen.VorNachteil, vorNachteilName, wertString, _importLog);
+                if (!added) // Import nicht möglich
+                    AddImportLog(ImportTypen.VorNachteil, vorNachteilName, wertString, _importLog);
             }
         }
 
         private static void ImportInventar(OleDbConnection conn, Held _held, System.Collections.Generic.List<string> _importLog)
         {
-            //string name = string.Empty;
-            //double gewicht = 0.0;
-            //double preis = 0.0;
-            //int anzahl = 0;
-            //string vtXpath = "helden/held/gegenstand";
-            //XmlNodeList gegenstaende = _xmlDoc.SelectNodes(vtXpath);
 
-            //foreach (XmlNode gegenstand in gegenstaende)
-            //{
-            //    name = gegenstand.Attributes["name"].Value.Trim();
-            //    if (!Int32.TryParse(gegenstand.Attributes["anzahl"].Value.Trim(), out anzahl))
-            //        anzahl = 1;
-            //    if (gegenstand.HasChildNodes)
-            //        foreach (XmlNode gchild in gegenstand.ChildNodes)
-            //        {
-            //            if (gchild.Name == "modallgemein")
-            //            {
-            //                foreach (XmlNode mchild in gegenstand.ChildNodes)
-            //                {
-            //                    if (mchild.Name == "name")
-            //                    {
-            //                        name = mchild.Attributes["value"].Value.Trim();
-            //                    }
-            //                    else if (mchild.Name == "preis")
-            //                    {
-            //                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), out preis);
-            //                    }
-            //                    else if (mchild.Name == "gewicht")
-            //                    {
-            //                        Double.TryParse(mchild.Attributes["value"].Value.Trim(), out gewicht);
-            //                    }
-            //                }
-            //            }
-            //        }
+            string name = string.Empty;
+            string ausrüstung = string.Empty;
 
-            //    bool isnew = false;
-            //    Ausrüstung a = null;
-            //    Inventar i = null;
+            //waffen/schilde/fernwaffen
+            string art = String.Empty;
 
-            //    if (_gegenstandMapping.ContainsKey(name.ToLowerInvariant()))
-            //        name = _gegenstandMapping[name.ToLowerInvariant()];
-            //    //alles durchsuchen
-            //    a = Global.ContextHeld.Liste<Ausrüstung>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
-            //    if (i == null && a == null)
-            //    {
-            //        i = Global.ContextHeld.Liste<Inventar>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
-            //    }
-            //    if (i == null && a == null)
-            //    {
-            //        Handelsgut h = Global.ContextHeld.Liste<Handelsgut>().Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
-            //        if (h != null)
-            //        {
-            //            i = new Inventar();
-            //            i.Name = h.Name;
-            //            i.Tags = h.Tags;
-            //            i.Preis = h.Preis;
-            //            i.ME = h.ME;
-            //            i.Literatur = h.Literatur;
-            //            i.Kategorie = h.Kategorie;
-            //            i.HandelsgutGUID = h.HandelsgutGUID;
-            //            i.Gewicht = h.Gewicht;
-            //            i.Bemerkung = h.Bemerkung;
-            //            isnew = true;
-            //        }
-            //    }
-            //    //wenn nichts gefunden, dann einen Gegenstand im inventar neu erstellen
-            //    if (a == null && i == null)
-            //    {
-            //        i = new Inventar();
-            //        i.Name = name;
-            //        i.Gewicht = gewicht;
-            //        i.Kategorie = "Import";
-            //        //TODO JT: Einheit automatisch bestimmen
-            //        i.Preis = String.Format("{0}S", preis / 100.0);
-            //        isnew = true;
-            //        //gegenstand wurde nicht erkannt und wurde im Inventar hinzugefügt
-            //        AddImportLog(ImportTypen.Gegenstand, name, null, _importLog);
-            //    }
-            //    //sonst in held_Ausrüstung oder Held_inventar hinzufügen, bzw anzahl erhöhen.
-            //    if (i != null)
-            //    {
-            //        Held_Inventar hi = _held.Held_Inventar.Where(hhi => hhi.InventarGUID == i.InventarGUID).FirstOrDefault();
-            //        if (hi == null)
-            //        {
-            //            hi = new Held_Inventar();
-            //            hi.HeldGUID = _held.HeldGUID;
-            //            hi.InventarGUID = i.InventarGUID;
-            //            hi.Anzahl = anzahl;
-            //            hi.Angelegt = false;
-            //            hi.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
-            //            if (isnew)
-            //                hi.Inventar = i;
-            //            _held.Held_Inventar.Add(hi);
-            //        }
-            //        else
-            //            hi.Anzahl += anzahl;
-            //    }
-            //    else if (a != null)
-            //    {
-            //        Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
-            //        if (ha == null)
-            //        {
-            //            ha = new Held_Ausrüstung();
-            //            ha.AusrüstungGUID = a.AusrüstungGUID;
-            //            ha.HeldGUID = _held.HeldGUID;
-            //            ha.Angelegt = false;
-            //            ha.Anzahl = anzahl;
-            //            ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
-            //            _held.Held_Ausrüstung.Add(ha);
-            //        }
-            //        else
-            //        {
-            //            ha.Anzahl += anzahl;
-            //        }
-            //    }
-            //}
+            DataTable dt = GetTable(conn, "Select * from [MG_INV$] where Aktiviert_Waffe=True");
+
+            var listeA = Global.ContextHeld.Liste<Ausrüstung>();
+
+            foreach (DataRow tRow in dt.Rows)
+            {
+                ausrüstung = tRow.Field<string>("Waffe");
+                art = tRow.Field<string>("Art");
+                if (ausrüstung == null || art == null)
+                    continue;
+                ausrüstung = ausrüstung.Trim();
+                art = art.Trim();
+                
+                
+                //TODO ist es eine angepasste waffe?
+                //if (!tRow.IsNull("Name") || !tRow.IsNull("TP") || !tRow.IsNull("WM-AT") || !tRow.IsNull("WM-PA") || !tRow.IsNull("INI") || !tRow.IsNull("BF") || !tRow.IsNull("Entfernungen") || !tRow.IsNull("TP_Entfernung"))
+                //{
+                //    name = tRow.Field<string>("Name");
+                //    if (name != null)
+                //        name = name.Trim();
+                //    switch (art)
+                //    {
+                //        case "Nah": //waffen
+                //            break;
+                //        case "Fern": //fernwaffen
+                //            break;
+                //        case "Schild": //schilde
+                //            break;
+                //    }
+                //}
+                //int tp = 0;
+                //int wmat = 0;
+                //int wmpa = 0;
+                //int ini = 0;
+                //int bf = 0;
+                //string entfernungen = string.Empty;
+                //string tp_entfernung = string.Empty;
+                
+                if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
+                    ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
+
+                //alles durchsuchen
+                Ausrüstung a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
+                if (a != null) //wenn gefunden
+                {
+                    Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
+                    if (ha == null)
+                    {
+                        ha = new Held_Ausrüstung();
+                        ha.AusrüstungGUID = a.AusrüstungGUID;
+                        ha.HeldGUID = _held.HeldGUID;
+                        ha.Angelegt = false;
+                        ha.Anzahl = 1;
+                        ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
+                        _held.Held_Ausrüstung.Add(ha);
+                    }
+                    else
+                    {
+                        ha.Anzahl += 1;
+                    }
+                }
+                else
+                    AddImportLog(ImportTypen.Gegenstand, ausrüstung, name, _importLog);
+
+            }
+            
+
+            //rüstungen
+            dt = GetTable(conn, "Select * from [MG_INV$] where Aktiviert_Rüstung=True");
+            foreach (DataRow tRow in dt.Rows)
+            {
+                ausrüstung = tRow.Field<string>("Rüstung");
+                if (ausrüstung == null)
+                    continue;
+                ausrüstung = ausrüstung.Trim();
+
+                //TODO angepasste rüstung
+                //int rskopf = 0;
+                //int rsbrust = 0;
+                //int rsrücken = 0;
+                //int rsbauch = 0;
+                //int rsarml = 0;
+                //int rsarmr = 0;
+                //int rsbeine = 0;
+                //int grs = 0;
+                //int gbe = 0;
+                //int rs = 0;
+                //int be = 0;
+
+                if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
+                    ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
+
+                //alles durchsuchen
+                Ausrüstung a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
+                if (a != null) //wenn gefunden
+                {
+                    Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
+                    if (ha == null)
+                    {
+                        ha = new Held_Ausrüstung();
+                        ha.AusrüstungGUID = a.AusrüstungGUID;
+                        ha.HeldGUID = _held.HeldGUID;
+                        ha.Angelegt = false;
+                        ha.Anzahl = 1;
+                        ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
+                        _held.Held_Ausrüstung.Add(ha);
+                    }
+                    else
+                    {
+                        ha.Anzahl += 1;
+                    }
+                }
+                else
+                    AddImportLog(ImportTypen.Gegenstand, ausrüstung, null, _importLog);
+            }
         }
 
 
@@ -1109,18 +1014,21 @@ namespace MeisterGeister.Logic.HeldenImport
                     hs = new Held_Sonderfertigkeit();
                     hs.HeldGUID = _held.HeldGUID;
                     hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
-                    hs.Wert = wertString;
+                    hs.Wert = wertString ?? "";
                     _held.Held_Sonderfertigkeit.Add(hs);
                 }
                 else //Sonderfertigkeit bereits vorhanden
                 {
-                    if (hs.Wert == null || hs.Wert == String.Empty)
-                        hs.Wert = wertString;
-                    else
+                    if (wertString != null && wertString != string.Empty)
                     {
-                        if ((hs.Wert + ", " + wertString).Length > 1200)
-                            return false;
-                        hs.Wert += ", " + wertString;
+                        if (hs.Wert == null || hs.Wert == String.Empty)
+                            hs.Wert = wertString ?? "";
+                        else
+                        {
+                            if ((hs.Wert + ", " + wertString).Length > 1200)
+                                return false;
+                            hs.Wert += ", " + wertString;
+                        }
                     }
                 }
                 return true;
@@ -1174,7 +1082,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
                 txtLog.Text = _importPfad
-                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet werden, konnten denen in unserer Datenbank nicht zugeordnet wereden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum und lade die XML-Datei dort hoch (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
+                    + "\n\nEinige Werte konnten nicht importiert werden.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://meistergeister.orkenspalter.de/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die Excel-Datei dort hoch. Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;
@@ -1185,24 +1093,14 @@ namespace MeisterGeister.Logic.HeldenImport
 
         public static bool IsHeldenblattFile(string xlsFile)
         {
-            string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties = \"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
-            string xlsConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
-            OleDbConnection conn;
-            if (xlsFile.ToLowerInvariant().EndsWith(".xlsx") || xlsFile.ToLowerInvariant().EndsWith(".xlsb"))
-            {
-                //CheckProvider(); oder Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255
-                conn = new OleDbConnection(String.Format(xlsxConnString, xlsFile));
-            }
-            else if (xlsFile.ToLowerInvariant().EndsWith(".xls"))
-                conn = new OleDbConnection(String.Format(xlsConnString, xlsFile));
-            else
-                return false; // falsche Datei
-            
+            OleDbConnection conn = GetConnection(xlsFile);
+            if (conn == null)
+                return false;
             try
             {
                 conn.Open();
                 DataTable tables = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-                //TODO check tables: MG_Held, MG_INV, MG_Vor, MG_Nach, MG_SF
+                //check tables: MG_Held, MG_INV, MG_Vor, MG_Nach, MG_SF
                 string[] mgtables = new string[] { "MG_Held", "MG_INV", "MG_Vor", "MG_Nach", "MG_SF", "MG_Talente" };
                 var view = tables.DefaultView;
                 foreach (string tablename in mgtables)
@@ -1213,8 +1111,9 @@ namespace MeisterGeister.Logic.HeldenImport
                 }
                 return true;
             }
-            catch(Exception e)
+            catch(InvalidOperationException e)
             {
+                System.Diagnostics.Debug.WriteLine(e.Message);
                 return false;
             }
             finally

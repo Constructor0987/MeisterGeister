@@ -79,16 +79,24 @@ namespace MeisterGeister.View.General
                     case "xml":
                         filter = "XML-Dateien (*.xml)|*.xml";
                         break;
+                    case "xls":
+                        filter = "Excel-8-Dateien (*.xls)|*.xls";
+                        break;
+                    case "xlsx":
+                        filter = "Excel-12-Dateien (*.xlsx)|*.xlsx";
+                        break;
+                    case "xlsb":
+                        filter = "Excel-12-Dateien (*.xlsb)|*.xlsb";
+                        break;
                     case "*.*":
                     case "*":
                         filter = "Alle Dateien (*.*)|*.*";
                         break;
                     default:
+                        filter = String.Format("(*.{0})|*.{0}", extension);
                         break;
                 }
-                if (objDialog.Filter != String.Empty)
-                    objDialog.Filter += "|";
-                objDialog.Filter += filter;
+                objDialog.Filter += (objDialog.Filter != String.Empty) ? "|" + filter : filter;
             }
             if(objDialog.Filter==String.Empty)
                 objDialog.Filter = "Alle Dateien (*.*)|*.*";

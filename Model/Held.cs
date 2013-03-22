@@ -1498,12 +1498,12 @@ namespace MeisterGeister.Model
 
         #region Sonderfertigkeiten
 
-        public Sonderfertigkeit AddSonderfertigkeit(string sfName, string wert = null)
+        public Sonderfertigkeit AddSonderfertigkeit(string sfName, string wert = "")
         {
             return AddSonderfertigkeit(Global.ContextHeld.Liste<Sonderfertigkeit>().Where(sf => sf.Name == sfName).FirstOrDefault(), wert);
         }
 
-        public Sonderfertigkeit AddSonderfertigkeit(Sonderfertigkeit sf, string wert = null)
+        public Sonderfertigkeit AddSonderfertigkeit(Sonderfertigkeit sf, string wert = "")
         {
             if (sf == null)
                 return null;
@@ -1521,7 +1521,7 @@ namespace MeisterGeister.Model
             hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
             hs.Sonderfertigkeit = sf;
             
-            hs.Wert = wert;
+            hs.Wert = wert ?? "";
                         
             Held_Sonderfertigkeit.Add(hs);
 

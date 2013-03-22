@@ -913,18 +913,21 @@ namespace MeisterGeister.Logic.HeldenImport
                     hs = new Held_Sonderfertigkeit();
                     hs.HeldGUID = _held.HeldGUID;
                     hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
-                    hs.Wert = wertString;
+                    hs.Wert = wertString ?? "";
                     _held.Held_Sonderfertigkeit.Add(hs);
                 }
                 else //Sonderfertigkeit bereits vorhanden
                 {
-                    if (hs.Wert == null || hs.Wert == String.Empty)
-                        hs.Wert = wertString;
-                    else
+                    if (wertString != null && wertString != string.Empty)
                     {
-                        if ((hs.Wert + ", " + wertString).Length > 1200)
-                            return false;
-                        hs.Wert += ", " + wertString;
+                        if (hs.Wert == null || hs.Wert == String.Empty)
+                            hs.Wert = wertString ?? "";
+                        else
+                        {
+                            if ((hs.Wert + ", " + wertString ?? "").Length > 1200)
+                                return false;
+                            hs.Wert += ", " + wertString ?? "";
+                        }
                     }
                 }
                 return true;
@@ -978,7 +981,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
                 txtLog.Text = _importPfad
-                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet werden, konnten denen in unserer Datenbank nicht zugeordnet wereden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum und lade die XML-Datei dort hoch (http://meistergeister.siteboard.org/f14-bug-meldungen.html). Vielen Dank!.\n\n";
+                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet sind, konnten denen in unserer Datenbank nicht zugeordnet werden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://meistergeister.orkenspalter.de/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die XML-Datei dort hoch. Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;
