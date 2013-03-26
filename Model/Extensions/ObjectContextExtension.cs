@@ -214,8 +214,9 @@ namespace MeisterGeister.Model.Extensions
         /// </summary>
         public static object GetShallowClone(this ObjectContext context, object entity)
         {
-            object clone = ImpromptuInterface.Impromptu.InvokeConstructor(entity.GetType()); // Activator.CreateInstance(entity.GetType());
-            foreach (System.Data.Metadata.Edm.EdmMember member in context.GetEntitySet(entity.GetType()).ElementType.Members.Where(m => m.TypeUsage.EdmType is PrimitiveType))
+            Type entityType = ObjectContext.GetObjectType(entity.GetType());
+            object clone = ImpromptuInterface.Impromptu.InvokeConstructor(entityType); // Activator.CreateInstance(entity.GetType());
+            foreach (System.Data.Metadata.Edm.EdmMember member in context.GetEntitySet(entityType).ElementType.Members.Where(m => m.TypeUsage.EdmType is PrimitiveType))
             {
                 ImpromptuInterface.Impromptu.InvokeSet(clone, member.Name, ImpromptuInterface.Impromptu.InvokeGet(entity, member.Name));
             }
@@ -265,6 +266,27 @@ namespace MeisterGeister.Model.Extensions
             removedItems = toremove;
         }
 
+        #region Entity path marker methods
+
+        /// <summary>
+        /// Marker method to indicate this section of the path expression
+        /// should not be loaded but only referenced.
+        /// </summary>
+        public static object ReferenceOnly(this System.ComponentModel.INotifyPropertyChanged entity)
+        {
+            throw new InvalidOperationException("The ReferenceOnly() method is a marker method in entity property paths and should not be effectively invoked.");
+        }
+
+        /// <summary>
+        /// Marker method to indicate the instances the method is called on
+        /// within path expressions should not be updated.
+        /// </summary>
+        public static object WithoutUpdate(this System.ComponentModel.INotifyPropertyChanged entity)
+        {
+            throw new InvalidOperationException("The WithoutUpdate() method is a marker method in entity property paths and should not be effectively invoked.");
+        }
+
+        #endregion
 
         /// <summary>
         /// Navigates a property path on detached instance to translate into attached instance.

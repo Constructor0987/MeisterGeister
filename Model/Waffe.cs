@@ -15,7 +15,6 @@ namespace MeisterGeister.Model
         public Waffe()
         {
             Ausrüstung = new Ausrüstung();
-            Ausrüstung.AusrüstungGUID = WaffeGUID = Guid.NewGuid();
         }
 
         public bool Usergenerated

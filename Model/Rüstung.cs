@@ -18,7 +18,6 @@ namespace MeisterGeister.Model
         public Rüstung()
         {
             Ausrüstung = new Ausrüstung();
-            Ausrüstung.AusrüstungGUID = RüstungGUID = Guid.NewGuid();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
         }
 

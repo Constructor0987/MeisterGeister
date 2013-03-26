@@ -67,7 +67,7 @@ namespace MeisterGeister.Model
             get
             {
                 return String.Format("{0}W{1}", TPWürfelAnzahl, TPWürfel)
-                    + ((TPBonus != 0) ? ((TPBonus > 0) ? "+" : "-") + TPBonus.ToString() : String.Empty);
+                    + (((TPBonus ?? 0) != 0) ? ((TPBonus > 0) ? "+" : "-") + TPBonus.ToString() : String.Empty);
             }
         }
 
@@ -75,7 +75,18 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return TPSehrNah + "/" + TPNah + "/" + TPMittel + "/" + TPWeit + "/" + TPSehrWeit;
+                return ((TPSehrNah == null) ? "-" : TPSehrNah.Value.ToString()) + "/" + ((TPNah == null) ? "-" : TPNah.Value.ToString()) + "/" + ((TPMittel == null) ? "-" : TPMittel.Value.ToString()) + "/" + ((TPWeit == null) ? "-" : TPWeit.Value.ToString()) + "/" + ((TPSehrWeit == null) ? "-" : TPSehrWeit.Value.ToString());
+            }
+            set
+            {
+                var rw = SplitReichweitenString(value);
+                if (rw == null)
+                    return;
+                TPSehrNah = rw[0];
+                TPNah = rw[1];
+                TPMittel = rw[2];
+                TPWeit = rw[3];
+                TPSehrWeit = rw[4];
             }
         }
 
@@ -83,16 +94,47 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return RWSehrNah + "/" + RWNah + "/" + RWMittel + "/" + RWWeit + "/" + RWSehrWeit;
+                return ((RWSehrNah == null) ? "-" : RWSehrNah.Value.ToString()) + "/" + ((RWNah == null) ? "-" : RWNah.Value.ToString()) + "/" + ((RWMittel == null) ? "-" : RWMittel.Value.ToString()) + "/" + ((RWWeit == null) ? "-" : RWWeit.Value.ToString()) + "/" + ((RWSehrWeit == null) ? "-" : RWSehrWeit.Value.ToString());
+            }
+            set
+            {
+                var rw = SplitReichweitenString(value);
+                if(rw == null)
+                    return;
+                RWSehrNah = rw[0];
+                RWNah = rw[1];
+                RWMittel = rw[2];
+                RWWeit = rw[3];
+                RWSehrWeit = rw[4];
             }
         }
 
         #endregion
 
+        #region Helper-Methoden
+        public static int?[] SplitReichweitenString(string rwString)
+        {
+            if(rwString == null)
+                return null;
+            rwString = rwString.Trim('(', ')', ' ', '\t');
+            var rw = rwString.Split('/');
+            if (rw.Length != 5)
+                return null;
+            int?[] outArray = new int?[5];
+            for (int i = 0; i < 5; i++)
+            {
+                int o = Int32.MinValue;
+                outArray[i] = null;
+                if(Int32.TryParse(rw[i].Trim(), out o))
+                    outArray[i] = o;
+            }
+            return outArray;
+        }
+        #endregion
+
         public Fernkampfwaffe()
         {
             Ausrüstung = new Ausrüstung();
-            Ausrüstung.AusrüstungGUID = FernkampfwaffeGUID = Guid.NewGuid();
         }
 
         public bool Usergenerated

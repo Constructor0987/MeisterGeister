@@ -48,8 +48,10 @@ namespace MeisterGeister.Model.Extensions
 						CollectRelationalMembers(arg, members);
 
 					// Handle special marker method 'WithoutUpdate':
-					if (cexp.Method.Name == "WithoutUpdate")
-						members.Last().NoUpdate = true;
+                    if (cexp.Method.Name == "WithoutUpdate")
+                    {
+                        members.Last().NoUpdate = true;
+                    }
 
 					// Handle special marker method 'ReferenceOnly':
 					if (cexp.Method.Name == "ReferenceOnly")

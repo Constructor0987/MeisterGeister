@@ -22,6 +22,7 @@ namespace MeisterGeister.Model
         {
             get
             {
+                //TODO ??: hier fehlt ein Event-Handler, welches bei einer Änderung der Talente _talente wieder auf null setzt.
                 if (_talente == null)
                 {
                     _talente = new List<Talent>();
@@ -90,6 +91,36 @@ namespace MeisterGeister.Model
                 a_s.Verbreitung = value;
                 OnChanged("Verbreitung");
             }
+        }
+
+        /// <summary>
+        /// Erstellt einen Klon der Ausrüstung mit einer neuen Guid.
+        /// Waffe, Fernkampfwaffe, Schild und Rüstung werden mit kopiert.
+        /// </summary>
+        /// <returns></returns>
+        public Ausrüstung Clone()
+        {
+            Ausrüstung a = Global.ContextInventar.Clone<Ausrüstung>(this);
+            Guid guid = Guid.NewGuid();
+            a.AusrüstungGUID = guid;
+            Waffe w = null;
+            Fernkampfwaffe f = null;
+            Schild s = null;
+            Rüstung r = null;
+            if(Waffe != null)
+                w = Global.ContextInventar.Clone<Waffe>(Waffe);
+            if (Fernkampfwaffe != null)
+                f = Global.ContextInventar.Clone<Fernkampfwaffe>(Fernkampfwaffe);
+            if (Schild != null)
+                s = Global.ContextInventar.Clone<Schild>(Schild);
+            if (Rüstung != null)
+                r = Global.ContextInventar.Clone<Rüstung>(Rüstung);
+            
+            a.Waffe = w;
+            a.Fernkampfwaffe = f;
+            a.Schild = s;
+            a.Rüstung = r;
+            return a;
         }
     }
 }

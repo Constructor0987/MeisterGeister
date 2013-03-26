@@ -377,9 +377,26 @@ namespace MeisterGeister.Logic.HeldenImport
             return ImportHeldenblattFile(_importPfad, Guid.Empty, _importLog);
         }
 
+        public static bool ProviderIsInstalled(string providerName)
+        {
+            using (OleDbDataReader reader = OleDbEnumerator.GetRootEnumerator())
+            {
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                var rows = dt.Select(String.Format("SOURCES_NAME = '{0}'", providerName));
+                if (rows == null || rows.Length == 0)
+                    return false;
+                return true;
+            }
+        }
+
         private static OleDbConnection GetConnection(string _importPfad)
         {
-            string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties = \"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
+            if (!ProviderIsInstalled("Microsoft.ACE.OLEDB.12.0"))
+            {
+                throw new Exception("Der OLEDB-Provider Microsoft.ACE.OLEDB.12.0 ist nicht installiert.\nDie Access Database Engine 2010 kann bei Microsft heruntergeladen werden: http://www.microsoft.com/de-de/download/details.aspx?id=13255");
+            }
+            string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
             string xlsConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
             //TODO Provider Prüfen, evtl. Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255
             OleDbConnection conn;
@@ -860,44 +877,114 @@ namespace MeisterGeister.Logic.HeldenImport
                     continue;
                 ausrüstung = ausrüstung.Trim();
                 art = art.Trim();
-                
-                
-                //TODO ist es eine angepasste waffe?
-                //if (!tRow.IsNull("Name") || !tRow.IsNull("TP") || !tRow.IsNull("WM-AT") || !tRow.IsNull("WM-PA") || !tRow.IsNull("INI") || !tRow.IsNull("BF") || !tRow.IsNull("Entfernungen") || !tRow.IsNull("TP_Entfernung"))
-                //{
-                //    name = tRow.Field<string>("Name");
-                //    if (name != null)
-                //        name = name.Trim();
-                //    switch (art)
-                //    {
-                //        case "Nah": //waffen
-                //            break;
-                //        case "Fern": //fernwaffen
-                //            break;
-                //        case "Schild": //schilde
-                //            break;
-                //    }
-                //}
-                //int tp = 0;
-                //int wmat = 0;
-                //int wmpa = 0;
-                //int ini = 0;
-                //int bf = 0;
-                //string entfernungen = string.Empty;
-                //string tp_entfernung = string.Empty;
-                
+
                 if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
                     ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
 
+                name = ausrüstung;
+
                 //alles durchsuchen
                 Ausrüstung a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
-                if (a != null) //wenn gefunden
+
+                bool neuAberSchonAmHeld = false;
+                bool neueAusrüstung = false;
+
+                if (a == null) //nichts gefunden
+                {
+                    //Basisausrüstung aus den Klammern holen
+                    Match m = reKlammern.Match(ausrüstung);
+                    if (m != null && m.Groups.Count == 3)
+                    {
+                        ausrüstung = m.Groups[2].Value.Trim();
+                        name = m.Groups[1].Value.Trim();
+
+                        if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
+                            ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
+
+                        //mit namen suchen, eventuell wurde die ausrüstung schon importiert
+                        a = listeA.Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+
+                        
+
+                        if (a == null) //nein, sie existiert noch nicht -> also basisausrüstung kopieren und neu anlegen
+                        {
+                            //eventuell haben wir die waffe bereits als nahkampfwaffe importiert und sie kann auch anders verwendet werden?
+                            a = _held.Held_Ausrüstung.Where(hha => hha.Ausrüstung.Name == name).Select(_hha => _hha.Ausrüstung).FirstOrDefault();
+                            
+                            if (a == null) //sonst die basisausrüstung suchen
+                                a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
+                            else
+                                neuAberSchonAmHeld = true;
+                            if (a != null)
+                            {
+                                //kopieren - hat bereits eine neue GUID
+                                if (!neuAberSchonAmHeld)
+                                {
+                                    a = a.Clone();
+                                    a.Name = name;
+                                    neueAusrüstung = true;
+                                }
+                                //Anpassungen anwenden
+                                if (!tRow.IsNull("TP") || !tRow.IsNull("WM-AT") || !tRow.IsNull("WM-PA") || !tRow.IsNull("INI") || !tRow.IsNull("BF") || !tRow.IsNull("Entfernungen") || !tRow.IsNull("TP_Entfernung")) //es gibt kein Name-Feld
+                                //if (!tRow.IsNull("Name") || !tRow.IsNull("TP") || !tRow.IsNull("WM-AT") || !tRow.IsNull("WM-PA") || !tRow.IsNull("INI") || !tRow.IsNull("BF") || !tRow.IsNull("Entfernungen") || !tRow.IsNull("TP_Entfernung")) 
+                                {
+                                    switch (art)
+                                    {
+                                        case "Nah": //waffen
+                                            if(a.Waffe == null)
+                                                break; //die basisausrüstung ist keine waffe
+                                            if (!tRow.IsNull("TP"))
+                                                a.Waffe.TPBonus += (int?)tRow.Field<double?>("TP") ?? 0;
+                                            if (!tRow.IsNull("WM-AT"))
+                                                a.Waffe.WMAT += (int?)tRow.Field<double?>("WM-AT") ?? 0;
+                                            if (!tRow.IsNull("WM-PA"))
+                                                a.Waffe.WMPA += (int?)tRow.Field<double?>("WM-PA") ?? 0;
+                                            if (!tRow.IsNull("INI"))
+                                                a.Waffe.INI += (int?)tRow.Field<double?>("INI") ?? 0;
+                                            if (!tRow.IsNull("BF"))
+                                                a.Waffe.BF += (int?)tRow.Field<double?>("BF") ?? 0;
+                                            break;
+                                        case "Fern": //fernwaffen
+                                            if(a.Fernkampfwaffe == null)
+                                                break; //die basisausrüstung ist keine fernkampfwaffe
+                                            if (!tRow.IsNull("TP"))
+                                                a.Fernkampfwaffe.TPBonus += (int?)tRow.Field<double?>("TP") ?? 0;
+                                            if(!tRow.IsNull("Entfernungen"))
+                                                a.Fernkampfwaffe.Reichweiten = tRow.Field<string>("Entfernungen");
+                                            if (!tRow.IsNull("TP_Entfernung"))
+                                                a.Fernkampfwaffe.TPReichweiten = tRow.Field<string>("TP_Entfernung");
+                                            break;
+                                        case "Schild": //schilde
+                                            if(a.Schild == null)
+                                                break; //die basisausrüstung ist kein Schild
+                                            if (!tRow.IsNull("WM-AT"))
+                                                a.Schild.WMAT += (int?)tRow.Field<double?>("WM-AT") ?? 0;
+                                            if (!tRow.IsNull("WM-PA"))
+                                                a.Schild.WMPA += (int?)tRow.Field<double?>("WM-PA") ?? 0;
+                                            if (!tRow.IsNull("INI"))
+                                                a.Schild.INI += (int?)tRow.Field<double?>("INI") ?? 0;
+                                            if (!tRow.IsNull("BF"))
+                                                a.Schild.BF += (int?)tRow.Field<double?>("BF") ?? 0;
+                                            break;
+                                    }
+                                }
+
+                                //context.attach oder update ist nicht notwendig, weil der held die waffe ja zugewiesen bekommt.
+                                //dadurch landet sie auch im dbcontext
+                            }
+                        }
+                    }
+                }
+                
+                if (a != null) //wenn gefunden, hinzufügen
                 {
                     Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
                     if (ha == null)
                     {
                         ha = new Held_Ausrüstung();
                         ha.AusrüstungGUID = a.AusrüstungGUID;
+                        if (neueAusrüstung)
+                            ha.Ausrüstung = a;
                         ha.HeldGUID = _held.HeldGUID;
                         ha.Angelegt = false;
                         ha.Anzahl = 1;
@@ -906,7 +993,8 @@ namespace MeisterGeister.Logic.HeldenImport
                     }
                     else
                     {
-                        ha.Anzahl += 1;
+                        if(!neuAberSchonAmHeld)
+                            ha.Anzahl += 1;
                     }
                 }
                 else
@@ -923,25 +1011,52 @@ namespace MeisterGeister.Logic.HeldenImport
                 if (ausrüstung == null)
                     continue;
                 ausrüstung = ausrüstung.Trim();
-
-                //TODO angepasste rüstung
-                //int rskopf = 0;
-                //int rsbrust = 0;
-                //int rsrücken = 0;
-                //int rsbauch = 0;
-                //int rsarml = 0;
-                //int rsarmr = 0;
-                //int rsbeine = 0;
-                //int grs = 0;
-                //int gbe = 0;
-                //int rs = 0;
-                //int be = 0;
-
+                
                 if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
                     ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
 
                 //alles durchsuchen
                 Ausrüstung a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
+
+                bool neueAusrüstung = false;
+
+                if (a == null) //angepasste rüstung?
+                {
+                    if (!tRow.IsNull("RS Kopf") || !tRow.IsNull("RS Brust") || !tRow.IsNull("RS Rücken")
+                        || !tRow.IsNull("RS Bauch") || !tRow.IsNull("RS Arm links") || !tRow.IsNull("RS Arm rechts")
+                        || !tRow.IsNull("RS Beine") || !tRow.IsNull("gRS") || !tRow.IsNull("gBE")
+                        || !tRow.IsNull("RS") || !tRow.IsNull("BE"))
+                    {
+                        Rüstung r = new Rüstung();
+                        r.Name = ausrüstung;
+                        neueAusrüstung = true;
+                        
+                        //einfaches Modell:
+                        if (!tRow.IsNull("BE"))
+                            r.BE = (int?)tRow.Field<double?>("BE");
+                        if (!tRow.IsNull("RS"))
+                            r.RS = (int?)tRow.Field<double?>("RS");
+                        //zonenmodell
+                        if (!tRow.IsNull("RS Kopf"))
+                            r.Kopf = (int?)tRow.Field<double?>("RS Kopf");
+                        if (!tRow.IsNull("RS Brust"))
+                            r.Brust = (int?)tRow.Field<double?>("RS Brust");
+                        if (!tRow.IsNull("RS Rücken"))
+                            r.Rücken = (int?)tRow.Field<double?>("RS Rücken");
+                        if (!tRow.IsNull("RS Bauch"))
+                            r.Bauch = (int?)tRow.Field<double?>("RS Bauch");
+                        if (!tRow.IsNull("RS Arm links"))
+                            r.LArm = (int?)tRow.Field<double?>("RS Arm links");
+                        if (!tRow.IsNull("RS Arm rechts"))
+                            r.RArm = (int?)tRow.Field<double?>("RS Arm rechts");
+                        if (!tRow.IsNull("RS Beine"))
+                            r.LBein = r.RBein = (int?)tRow.Field<double?>("RS Beine");
+
+                        a = r.Ausrüstung;
+                    }
+                }
+
+
                 if (a != null) //wenn gefunden
                 {
                     Held_Ausrüstung ha = _held.Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.AusrüstungGUID).FirstOrDefault();
@@ -949,6 +1064,8 @@ namespace MeisterGeister.Logic.HeldenImport
                     {
                         ha = new Held_Ausrüstung();
                         ha.AusrüstungGUID = a.AusrüstungGUID;
+                        if (neueAusrüstung)
+                            ha.Ausrüstung = a;
                         ha.HeldGUID = _held.HeldGUID;
                         ha.Angelegt = false;
                         ha.Anzahl = 1;
@@ -1077,7 +1194,7 @@ namespace MeisterGeister.Logic.HeldenImport
             if (_importLog.Count > 0)
             {
                 System.Windows.Window gui = new System.Windows.Window();
-                gui.Title = "Import von Helden-Software";
+                gui.Title = "Import vom Heldeblatt.ch";
                 gui.Height = 650;
                 gui.Width = 500;
                 string log = string.Empty;

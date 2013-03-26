@@ -13,7 +13,6 @@ namespace MeisterGeister.Model
         public Schild()
         {
             Ausrüstung = new Ausrüstung();
-            Ausrüstung.AusrüstungGUID = SchildGUID = Guid.NewGuid();
         }
 
         public bool Usergenerated
