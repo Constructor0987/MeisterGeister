@@ -489,40 +489,49 @@ namespace MeisterGeister.Logic.HeldenImport
             _held.Spieler = (string)row.Field<string>("Spieler");
             _held.Profession = (string)row.Field<string>("Profession");
             // Bild
-            _held.MU = (int?)row.Field<double?>("MU");
-            _held.KL = (int?)row.Field<double?>("KL");
-            _held.CH = (int?)row.Field<double?>("CH");
-            _held.IN = (int?)row.Field<double?>("IN");
-            _held.KK = (int?)row.Field<double?>("KK");
-            _held.GE = (int?)row.Field<double?>("GE");
-            _held.FF = (int?)row.Field<double?>("FF");
-            _held.KO = (int?)row.Field<double?>("KO");
-            _held.SO = (int?)row.Field<double?>("SO");
-            _held.LE_Mod = (int?)row.Field<double?>("LE_Mod");
-            _held.AU_Mod = (int?)row.Field<double?>("AU_Mod");
-            _held.AE_Mod = (int?)row.Field<double?>("AE_Mod");
-            _held.KE_Mod = (int?)row.Field<double?>("KE_Mod");
-            _held.MR_Mod = (int?)row.Field<double?>("MR_Mod");
-            _held.INI_Mod = (int?)row.Field<double?>("INI_Mod");
-            _held.LE_Aktuell = (int?)row.Field<double?>("LE_Aktuell");
-            _held.AU_Aktuell = (int?)row.Field<double?>("AU_Aktuell");
-            _held.AE_Aktuell = (int?)row.Field<double?>("AE_Aktuell");
-            _held.KE_Aktuell = (int?)row.Field<double?>("KE_Aktuell");
-            _held.Wunden = (int?)row.Field<double?>("Wunden");
-            _held.RSKopf = (int?)row.Field<double?>("RSKopf") ?? 0;
-            _held.RSBrust = (int?)row.Field<double?>("RSBrust") ?? 0;
-            _held.RSRücken = (int?)row.Field<double?>("RSRücken") ?? 0;
-            _held.RSArmL = (int?)row.Field<double?>("RSArmL") ?? 0;
-            _held.RSArmR = (int?)row.Field<double?>("RSArmR") ?? 0;
-            _held.RSBauch = (int?)row.Field<double?>("RSBauch") ?? 0;
-            _held.RSBeinL = (int?)row.Field<double?>("RSBeinL") ?? 0;
-            _held.RSBeinR = (int?)row.Field<double?>("RSBeinR") ?? 0;
-            _held.BE = (int?)row.Field<double?>("BE");
-            _held.Vermögen = row.Field<double?>("Vermögen");
-            _held.APGesamt = (int?)row.Field<double?>("APGesamt") ?? 0;
-            _held.APEingesetzt = (int?)row.Field<double?>("APEingesetzt") ?? 0;
+            _held.MU = (int?)GetField<double?>(row, "MU");
+            _held.KL = (int?)GetField<double?>(row, "KL");
+            _held.CH = (int?)GetField<double?>(row, "CH");
+            _held.IN = (int?)GetField<double?>(row, "IN");
+            _held.KK = (int?)GetField<double?>(row, "KK");
+            _held.GE = (int?)GetField<double?>(row, "GE");
+            _held.FF = (int?)GetField<double?>(row, "FF");
+            _held.KO = (int?)GetField<double?>(row, "KO");
+            _held.SO = (int?)GetField<double?>(row, "SO");
+            _held.LE_Mod = (int?)GetField<double?>(row, "LE_Mod");
+            _held.AU_Mod = (int?)GetField<double?>(row, "AU_Mod");
+            _held.AE_Mod = (int?)GetField<double?>(row, "AE_Mod");
+            _held.KE_Mod = (int?)GetField<double?>(row, "KE_Mod");
+            _held.MR_Mod = (int?)GetField<double?>(row, "MR_Mod");
+            _held.INI_Mod = (int?)GetField<double?>(row, "INI_Mod");
+            _held.LE_Aktuell = (int?)GetField<double?>(row, "LE_Aktuell");
+            _held.AU_Aktuell = (int?)GetField<double?>(row, "AU_Aktuell");
+            _held.AE_Aktuell = (int?)GetField<double?>(row, "AE_Aktuell");
+            _held.KE_Aktuell = (int?)GetField<double?>(row, "KE_Aktuell");
+            _held.Wunden = (int?)GetField<double?>(row, "Wunden");
+            _held.RSKopf = (int?)GetField<double?>(row, "RSKopf") ?? 0;
+            _held.RSBrust = (int?)GetField<double?>(row, "RSBrust") ?? 0;
+            _held.RSRücken = (int?)GetField<double?>(row, "RSRücken") ?? 0;
+            _held.RSArmL = (int?)GetField<double?>(row, "RSArmL") ?? 0;
+            _held.RSArmR = (int?)GetField<double?>(row, "RSArmR") ?? 0;
+            _held.RSBauch = (int?)GetField<double?>(row, "RSBauch") ?? 0;
+            _held.RSBeinL = (int?)GetField<double?>(row, "RSBeinL") ?? 0;
+            _held.RSBeinR = (int?)GetField<double?>(row, "RSBeinR") ?? 0;
+            _held.BE = (int?)GetField<double?>(row, "BE");
+            _held.Vermögen = GetField<double?>(row, "Vermögen");
+            _held.APGesamt = (int?)GetField<double?>(row, "APGesamt") ?? 0;
+            _held.APEingesetzt = (int?)GetField<double?>(row, "APEingesetzt") ?? 0;
 
             return _held;
+        }
+
+        private static T GetField<T>(DataRow row, string column)
+        {
+            if (!row.Table.Columns.Contains(column))
+                throw new Exception(String.Format("Die Spalte {0} konnte nicht in der Tabelle {1} gefunden werden.", column, row.Table.TableName));
+            if(row.Table.Columns[column].DataType != typeof(T))
+                return default(T);
+            return row.Field<T>(column);
         }
 
         private static Regex reKlammern = new Regex("([^\\(]+)\\((.+)\\)");
@@ -544,7 +553,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 zauberName = zRow.Field<string>("Name");
                 if (zauberName != null)
                     zauberName = zauberName.Trim();
-                wert = (int?)zRow.Field<double?>("ZfW") ?? 0;
+                wert = (int?)GetField<double?>(zRow, "ZfW") ?? 0;
                 rep = zRow.Field<string>("Rep");
                 if (rep != null)
                     rep = rep.Trim();
@@ -621,9 +630,9 @@ namespace MeisterGeister.Logic.HeldenImport
                 talentName = tRow.Field<string>("Name");
                 if (talentName != null)
                     talentName = talentName.Trim();
-                wert = (int?)tRow.Field<double?>("TaW") ?? 0;
-                atZuteilung = (int?)tRow.Field<double?>("ZuteilungAT");
-                paZuteilung = (int?)tRow.Field<double?>("ZuteilungPA");
+                wert = (int?)GetField<double?>(tRow, "TaW") ?? 0;
+                atZuteilung = (int?)GetField<double?>(tRow, "ZuteilungAT");
+                paZuteilung = (int?)GetField<double?>(tRow, "ZuteilungPA");
                 //Talentspezialisierung:
                 talentSpez1 = tRow.Field<string>("Spezialisierung 1");
                 talentSpez2 = tRow.Field<string>("Spezialisierung 2");
@@ -671,8 +680,9 @@ namespace MeisterGeister.Logic.HeldenImport
                         string spezTyp = "Talentspezialisierung"; //Typ anhand von der Talentgruppe
                         if(t.Talentgruppe.Gruppenname == "Kampftalent")
                             spezTyp = "Waffenspezialisierung";
+                        Sonderfertigkeit spezSf = Global.ContextHeld.LoadSonderfertigkeitByName(spezTyp);
                         //Prüfen ob vorhanden
-                        var hsf = _held.Held_Sonderfertigkeit.Where(_hsf => _hsf.Sonderfertigkeit.Name == spezTyp).FirstOrDefault();
+                        var hsf = _held.Held_Sonderfertigkeit.Where(_hsf => _hsf.SonderfertigkeitGUID  == ((spezSf == null)?Guid.Empty:spezSf.SonderfertigkeitGUID)).FirstOrDefault();
                         if (hsf == null)
                             AddSonderfertigkeit(spezTyp, t.Talentname, _held); //neu hinzufügen
                         else
@@ -934,21 +944,21 @@ namespace MeisterGeister.Logic.HeldenImport
                                             if(a.Waffe == null)
                                                 break; //die basisausrüstung ist keine waffe
                                             if (!tRow.IsNull("TP"))
-                                                a.Waffe.TPBonus += (int?)tRow.Field<double?>("TP") ?? 0;
+                                                a.Waffe.TPBonus += (int?)GetField<double?>(tRow, "TP") ?? 0;
                                             if (!tRow.IsNull("WM-AT"))
-                                                a.Waffe.WMAT += (int?)tRow.Field<double?>("WM-AT") ?? 0;
+                                                a.Waffe.WMAT += (int?)GetField<double?>(tRow, "WM-AT") ?? 0;
                                             if (!tRow.IsNull("WM-PA"))
-                                                a.Waffe.WMPA += (int?)tRow.Field<double?>("WM-PA") ?? 0;
+                                                a.Waffe.WMPA += (int?)GetField<double?>(tRow, "WM-PA") ?? 0;
                                             if (!tRow.IsNull("INI"))
-                                                a.Waffe.INI += (int?)tRow.Field<double?>("INI") ?? 0;
+                                                a.Waffe.INI += (int?)GetField<double?>(tRow, "INI") ?? 0;
                                             if (!tRow.IsNull("BF"))
-                                                a.Waffe.BF += (int?)tRow.Field<double?>("BF") ?? 0;
+                                                a.Waffe.BF += (int?)GetField<double?>(tRow, "BF") ?? 0;
                                             break;
                                         case "Fern": //fernwaffen
                                             if(a.Fernkampfwaffe == null)
                                                 break; //die basisausrüstung ist keine fernkampfwaffe
                                             if (!tRow.IsNull("TP"))
-                                                a.Fernkampfwaffe.TPBonus += (int?)tRow.Field<double?>("TP") ?? 0;
+                                                a.Fernkampfwaffe.TPBonus += (int?)GetField<double?>(tRow, "TP") ?? 0;
                                             if(!tRow.IsNull("Entfernungen"))
                                                 a.Fernkampfwaffe.Reichweiten = tRow.Field<string>("Entfernungen");
                                             if (!tRow.IsNull("TP_Entfernung"))
@@ -958,13 +968,13 @@ namespace MeisterGeister.Logic.HeldenImport
                                             if(a.Schild == null)
                                                 break; //die basisausrüstung ist kein Schild
                                             if (!tRow.IsNull("WM-AT"))
-                                                a.Schild.WMAT += (int?)tRow.Field<double?>("WM-AT") ?? 0;
+                                                a.Schild.WMAT += (int?)GetField<double?>(tRow, "WM-AT") ?? 0;
                                             if (!tRow.IsNull("WM-PA"))
-                                                a.Schild.WMPA += (int?)tRow.Field<double?>("WM-PA") ?? 0;
+                                                a.Schild.WMPA += (int?)GetField<double?>(tRow, "WM-PA") ?? 0;
                                             if (!tRow.IsNull("INI"))
-                                                a.Schild.INI += (int?)tRow.Field<double?>("INI") ?? 0;
+                                                a.Schild.INI += (int?)GetField<double?>(tRow, "INI") ?? 0;
                                             if (!tRow.IsNull("BF"))
-                                                a.Schild.BF += (int?)tRow.Field<double?>("BF") ?? 0;
+                                                a.Schild.BF += (int?)GetField<double?>(tRow, "BF") ?? 0;
                                             break;
                                     }
                                 }
@@ -1033,24 +1043,24 @@ namespace MeisterGeister.Logic.HeldenImport
                         
                         //einfaches Modell:
                         if (!tRow.IsNull("BE"))
-                            r.BE = (int?)tRow.Field<double?>("BE");
+                            r.BE = (int?)GetField<double?>(tRow, "BE");
                         if (!tRow.IsNull("RS"))
-                            r.RS = (int?)tRow.Field<double?>("RS");
+                            r.RS = (int?)GetField<double?>(tRow, "RS");
                         //zonenmodell
                         if (!tRow.IsNull("RS Kopf"))
-                            r.Kopf = (int?)tRow.Field<double?>("RS Kopf");
+                            r.Kopf = (int?)GetField<double?>(tRow, "RS Kopf");
                         if (!tRow.IsNull("RS Brust"))
-                            r.Brust = (int?)tRow.Field<double?>("RS Brust");
+                            r.Brust = (int?)GetField<double?>(tRow, "RS Brust");
                         if (!tRow.IsNull("RS Rücken"))
-                            r.Rücken = (int?)tRow.Field<double?>("RS Rücken");
+                            r.Rücken = (int?)GetField<double?>(tRow, "RS Rücken");
                         if (!tRow.IsNull("RS Bauch"))
-                            r.Bauch = (int?)tRow.Field<double?>("RS Bauch");
+                            r.Bauch = (int?)GetField<double?>(tRow, "RS Bauch");
                         if (!tRow.IsNull("RS Arm links"))
-                            r.LArm = (int?)tRow.Field<double?>("RS Arm links");
+                            r.LArm = (int?)GetField<double?>(tRow, "RS Arm links");
                         if (!tRow.IsNull("RS Arm rechts"))
-                            r.RArm = (int?)tRow.Field<double?>("RS Arm rechts");
+                            r.RArm = (int?)GetField<double?>(tRow, "RS Arm rechts");
                         if (!tRow.IsNull("RS Beine"))
-                            r.LBein = r.RBein = (int?)tRow.Field<double?>("RS Beine");
+                            r.LBein = r.RBein = (int?)GetField<double?>(tRow, "RS Beine");
 
                         a = r.Ausrüstung;
                     }
