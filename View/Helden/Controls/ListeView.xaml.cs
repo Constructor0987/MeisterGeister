@@ -53,12 +53,17 @@ namespace MeisterGeister.View.Helden.Controls {
                         ViewHelper.Popup(file + "\n\nFalscher Dateityp!");
                         continue;
                     }
-                    try {
+                    #if !DEBUG
+                    try
+                    {
+                    #endif
                         Global.SetIsBusy(true, string.Format("{0} wird importiert...", file));
                         importHeld = VM.ImportHeld(file);
+                    #if !DEBUG
                     } catch (Exception ex) {
                         ViewHelper.ShowError("Beim Import ist ein Fehler aufgetreten!", ex);
                     }
+                    #endif
                 }
                 VM.SelectedHeld = importHeld;
                 Global.SetIsBusy(false);
