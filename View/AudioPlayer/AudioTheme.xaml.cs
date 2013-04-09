@@ -88,7 +88,7 @@ namespace MeisterGeister.View.AudioPlayer
             }
         }
 
-        private void sldVolHintergrund_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void sldVolMusik_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ((Slider)sender).ToolTip = Math.Round(e.NewValue) + "%";
         }
