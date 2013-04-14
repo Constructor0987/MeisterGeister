@@ -120,7 +120,18 @@ namespace MeisterGeister.Model
             a.Fernkampfwaffe = f;
             a.Schild = s;
             a.Rüstung = r;
+
+            foreach (var item in this.Ausrüstung_Setting)
+                a.Ausrüstung_Setting.Add(Global.ContextInventar.Clone<Model.Ausrüstung_Setting>(item));
             return a;
+
+            // Auskommentiert bis Waffe später wirklich in die DB eingetragen wird
+            // Das Problem ist, dass die Ausrüstung/Waffe erst in der Datenbank geadded
+            // werden muss, damit es bei dem folgenden Befehl keine Exception gibt.
+            //foreach (Model.Talent t in this.Talent)
+            //{
+            //    a.Talent.Add(t);
+            //}
         }
     }
 }
