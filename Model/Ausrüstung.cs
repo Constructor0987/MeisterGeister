@@ -107,15 +107,27 @@ namespace MeisterGeister.Model
             Fernkampfwaffe f = null;
             Schild s = null;
             Rüstung r = null;
-            if(Waffe != null)
+            //Das Talentproblem ist nun mit Stubs gelöst. 
+            //see http://blogs.msdn.com/b/alexj/archive/2009/06/19/tip-26-how-to-avoid-database-queries-using-stub-entities.aspx
+            //Talentname ist für die Anzeige mit dabei. Prinzipiell ginge auch ein Service.Clone<Talent>() als Stub.
+            //TODO: Was passiert, wenn eine Waffe mit einem solchen Stub in den Hauptcontext übernommen wird?
+            if (Waffe != null)
+            {
                 w = Global.ContextInventar.Clone<Waffe>(Waffe);
+                foreach (Talent t in Waffe.Talent)
+                    w.Talent.Add(new Talent { TalentGUID = t.TalentGUID, Talentname = t.Talentname }); 
+            }
             if (Fernkampfwaffe != null)
+            {
                 f = Global.ContextInventar.Clone<Fernkampfwaffe>(Fernkampfwaffe);
+                foreach (Talent t in Fernkampfwaffe.Talent)
+                    f.Talent.Add(new Talent { TalentGUID = t.TalentGUID, Talentname = t.Talentname });
+            }
             if (Schild != null)
                 s = Global.ContextInventar.Clone<Schild>(Schild);
             if (Rüstung != null)
                 r = Global.ContextInventar.Clone<Rüstung>(Rüstung);
-            
+
             a.Waffe = w;
             a.Fernkampfwaffe = f;
             a.Schild = s;
@@ -124,14 +136,6 @@ namespace MeisterGeister.Model
             foreach (var item in this.Ausrüstung_Setting)
                 a.Ausrüstung_Setting.Add(Global.ContextInventar.Clone<Model.Ausrüstung_Setting>(item));
             return a;
-
-            // Auskommentiert bis Waffe später wirklich in die DB eingetragen wird
-            // Das Problem ist, dass die Ausrüstung/Waffe erst in der Datenbank geadded
-            // werden muss, damit es bei dem folgenden Befehl keine Exception gibt.
-            //foreach (Model.Talent t in this.Talent)
-            //{
-            //    a.Talent.Add(t);
-            //}
         }
     }
 }

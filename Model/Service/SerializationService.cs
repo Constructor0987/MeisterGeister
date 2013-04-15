@@ -69,6 +69,7 @@ namespace MeisterGeister.Model.Service
                 from a in Context.Held select a,
                 from a in Context.Held_Ausrüstung select a,
                 from a in Context.Ausrüstung where !a.AusrüstungGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.Ausrüstung_Setting where !a.AusrüstungGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Waffe where !a.WaffeGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Fernkampfwaffe where !a.FernkampfwaffeGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Schild where !a.SchildGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
@@ -76,6 +77,7 @@ namespace MeisterGeister.Model.Service
                 from a in Context.Held_Munition select a,
                 from a in Context.Munition where !a.MunitionGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Zauberzeichen where !a.ZauberzeichenGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.Zauberzeichen_Setting where !a.ZauberzeichenGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Held_Inventar select a,
                 from a in Context.Inventar select a,
                 from a in Context.GegnerBase where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
@@ -84,12 +86,14 @@ namespace MeisterGeister.Model.Service
                 from a in Context.GegnerBase_Kampfregel where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-") || !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-")  select a,
                 from a in Context.Held_Sonderfertigkeit select a,
                 from a in Context.Sonderfertigkeit where !a.SonderfertigkeitGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.Sonderfertigkeit_Setting where !a.SonderfertigkeitGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Held_VorNachteil select a,
                 from a in Context.VorNachteil where !a.VorNachteilGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Held_Talent select a,
                 from a in Context.Talent where !a.TalentGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
                 from a in Context.Held_Zauber select a,
                 from a in Context.Zauber where !a.ZauberGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.Zauber_Setting where !a.ZauberGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
             };
             IEnumerable<object> results;
             foreach (IQueryable<object> q in queries)
@@ -305,14 +309,24 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_Inventar.First().Inventar,
                     h => h.Held_Ausrüstung,
                     h => h.Held_Ausrüstung.First().Ausrüstung.WithoutUpdate(),
+                    h => h.Held_Ausrüstung.First().Ausrüstung.Ausrüstung_Setting.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Ausrüstung.Waffe.WithoutUpdate(),
+                    h => h.Held_Ausrüstung.First().Ausrüstung.Waffe.Talent.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Ausrüstung.Fernkampfwaffe.WithoutUpdate(),
+                    h => h.Held_Ausrüstung.First().Ausrüstung.Fernkampfwaffe.Talent.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Ausrüstung.Schild.WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Ausrüstung.Rüstung.WithoutUpdate(),
                     h => h.Held_Sonderfertigkeit,
+                    h => h.Held_Sonderfertigkeit.First().Sonderfertigkeit.WithoutUpdate(),
+                    h => h.Held_Sonderfertigkeit.First().Sonderfertigkeit.Sonderfertigkeit_Setting.First().WithoutUpdate(),
                     h => h.Held_Talent,
+                    h => h.Held_Talent.First().Talent.WithoutUpdate(),
                     h => h.Held_VorNachteil,
-                    h => h.Held_Zauber
+                    h => h.Held_VorNachteil.First().VorNachteil.WithoutUpdate(),
+                    h => h.Held_Zauber,
+                    h => h.Held_Zauber.First().Zauber.WithoutUpdate(),
+                    h => h.Held_Zauber.First().Zauber.Zauber_Setting.First().WithoutUpdate()
+                    
                 );
                 Save(); //TODO ??: Besser wäre ein check, ob was überschrieben wird und ein Aufruf, des Save aus dem UI
                 return output!=null;
