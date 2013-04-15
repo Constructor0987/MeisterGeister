@@ -43,29 +43,123 @@
                         Margin="4"
                         />
         </DataTemplate>
+        <Storyboard x:Key="btnNahkampEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="2"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnNahkampLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="2"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnFernkampfEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="2"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnFernkampfLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image1">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="2"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnSchildEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="2"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnSchildLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image2">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="2"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnRuestungEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="2"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnRuestungLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="image3">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="2"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnGeschossEnter">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="imgPfeil">
+        		<EasingThicknessKeyFrame KeyTime="0" Value="2"/>
+        		<EasingThicknessKeyFrame KeyTime="0:0:0.4" Value="-5"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="btnGeschossLeave">
+        	<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="imgPfeil">
+        		<SplineThicknessKeyFrame KeyTime="0" Value="-5"/>
+        		<SplineThicknessKeyFrame KeyTime="0:0:0.4" Value="2"/>
+        	</ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
+	<UserControl.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="button">
+			<BeginStoryboard x:Name="btnNahkampEnter_BeginStoryboard" Storyboard="{StaticResource btnNahkampEnter}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="button">
+			<BeginStoryboard x:Name="btnNahkampLeave_BeginStoryboard" Storyboard="{StaticResource btnNahkampLeave}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="button1">
+			<BeginStoryboard x:Name="btnFernkampfEnter_BeginStoryboard" Storyboard="{StaticResource btnFernkampfEnter}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="button1">
+			<BeginStoryboard x:Name="btnFernkampfEnter_BeginStoryboard1" Storyboard="{StaticResource btnFernkampfLeave}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="button2">
+			<BeginStoryboard x:Name="btnSchildEnter_BeginStoryboard" Storyboard="{StaticResource btnSchildEnter}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="button2">
+			<BeginStoryboard x:Name="btnSchildEnter_BeginStoryboard1" Storyboard="{StaticResource btnSchildLeave}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="button3">
+			<BeginStoryboard x:Name="btnRuestungEnter_BeginStoryboard" Storyboard="{StaticResource btnRuestungEnter}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="button3">
+			<BeginStoryboard x:Name="btnRuestungLeave_BeginStoryboard" Storyboard="{StaticResource btnRuestungLeave}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="button4">
+			<BeginStoryboard x:Name="btnGeschossEnter_BeginStoryboard" Storyboard="{StaticResource btnGeschossEnter}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="button4">
+			<BeginStoryboard x:Name="btnGeschossLeave_BeginStoryboard" Storyboard="{StaticResource btnGeschossLeave}"/>
+		</EventTrigger>
+	</UserControl.Triggers>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Margin="5" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left">
-            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeNahkampfwaffeViewModel}" ToolTip="Schmiede: Nahkampfwaffe" VerticalAlignment="Center" Height="50">
-                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2" />
+		<Border Margin="5" Grid.Column="0"  HorizontalAlignment="Left" Background="#389E804D" BorderBrush="#FFBEB3A3" BorderThickness="1" Padding="0">
+        <StackPanel Orientation="Vertical">
+            <Button x:Name="button" Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeNahkampfwaffeViewModel}" ToolTip="Schmiede: Nahkampfwaffe" VerticalAlignment="Center" Height="50" Background="#CC000000" BorderBrush="#FFBEB3A3" BorderThickness="1">
+                <Image x:Name="image" Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2" />
             </Button>
-            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeFernkampfwaffeViewModel}" ToolTip="Schmiede: Fernkampfwaffe" VerticalAlignment="Center" Height="50">
-                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Margin="2" />
+            <Button x:Name="button1" Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeFernkampfwaffeViewModel}" ToolTip="Schmiede: Fernkampfwaffe" VerticalAlignment="Center" Height="50" Background="#CC000000" BorderBrush="#FFBEB3A3" BorderThickness="1">
+                <Image x:Name="image1" Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Margin="2" />
             </Button>
-            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeSchildViewModel}" ToolTip="Schmiede: Schild" VerticalAlignment="Center" Height="50">
-                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2" />
+            <Button x:Name="button2" Command="{Binding AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeSchildViewModel}" ToolTip="Schmiede: Schild" VerticalAlignment="Center" Height="50" Background="#CC000000" BorderBrush="#FFBEB3A3" BorderThickness="1">
+            	<Image x:Name="image2" Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2" />
             </Button>
-            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeRüstungViewModel}" ToolTip="Schmiede: Rüstung" VerticalAlignment="Center" Height="50">
-                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/ruestung.png" Margin="2" />
+            <Button x:Name="button3" Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeRüstungViewModel}" ToolTip="Schmiede: Rüstung" VerticalAlignment="Center" Height="50" Background="#CC000000" BorderBrush="#FFBEB3A3" BorderThickness="1">
+                <Image x:Name="image3" Source="/DSA%20MeisterGeister;component/Images/Icons/ruestung.png" Margin="2" />
             </Button>
-            <Button Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeGeschossViewModel}" ToolTip="Schmiede: Geschoss" VerticalAlignment="Center" Height="50">
-                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/munition.png" Margin="2" />
+            <Button x:Name="button4" Command="{Binding Path=AddSchmiedeCommand}" CommandParameter="{x:Type vmSchmiede:SchmiedeGeschossViewModel}" ToolTip="Schmiede: Geschoss" VerticalAlignment="Center" Height="50" Background="#CC000000" BorderBrush="#FFBEB3A3" BorderThickness="1">
+                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/munition.png" Margin="2" x:Name="imgPfeil" />
             </Button>
         </StackPanel>
+		</Border>
         <TabControl Grid.Column="1" 
                     ItemsSource="{Binding Path=Schmieden}"
                     SelectedItem="{Binding Path=SelectedSchmiede}"

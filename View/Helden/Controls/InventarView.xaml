@@ -357,18 +357,7 @@
                 <SplineColorKeyFrame KeyTime="0:0:0.2" Value="#999D845D"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="MovingInfo" AutoReverse="False" RepeatBehavior="Forever">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="image5">
-                <SplineDoubleKeyFrame KeyTime="0" Value="76.667"/>
-                <SplineDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="image5">
-                <SplineDoubleKeyFrame KeyTime="0" Value="0.167"/>
-                <SplineDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
+        <Storyboard x:Key="MovingInfo" AutoReverse="False" RepeatBehavior="Forever"/>
 
     </UserControl.Resources>
     <UserControl.Triggers>
@@ -450,30 +439,21 @@
                                 <Grid Margin="60,0,0,0" MaxHeight="120" VerticalAlignment="Top">
                                     <Border x:Name="SkipDetailToRuestung" Style="{DynamicResource ControlContentBorder}" Cursor="Arrow" VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalAlignment="Stretch">
                                         <Grid>
-                                            <Border x:Name="btnGoRuestung" Style="{DynamicResource ControlContentBorder}" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Height="120" MouseDown="OpenRuestung" Background="#999D845D" ToolTipService.ToolTip="Rüstung">
-                                                <Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" >
+                                            <Border x:Name="btnGoRuestung" Style="{DynamicResource ControlContentBorder}" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Height="120" MouseDown="OpenRuestung" Background="#CC000000" ToolTipService.ToolTip="Rüstung">
+                                                <Grid>
+												<Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Margin="0,17,0,0" >
                                                     <Image.Effect>
                                                         <DropShadowEffect ShadowDepth="0"/>
                                                     </Image.Effect>
                                                 </Image>
-                                            </Border>
-                                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="254.466" Margin="74,0,0,0" >
-                                                <Image x:Name="image5" Source="/DSA MeisterGeister;component/Images/Icons/General/pfeil_links_rot.png" Width="30" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
-                                                    <Image.RenderTransform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform/>
-                                                            <SkewTransform/>
-                                                            <RotateTransform/>
-                                                            <TranslateTransform/>
-                                                        </TransformGroup>
-                                                    </Image.RenderTransform>
-                                                </Image>
-                                                <TextBlock TextWrapping="Wrap" Text="HINWEIS: Die Werte BE/RS müssen derzeit hier für globale Verwaltung gesetzt werden." Foreground="Red" FontStyle="Italic"  >
-                                                    <TextBlock.Effect>
-                                                        <DropShadowEffect ShadowDepth="0" Color="White"/>
-                                                    </TextBlock.Effect>
+												<TextBlock TextWrapping="Wrap" Text="RS/BE" Foreground="#FF40301D" FontStyle="Italic" HorizontalAlignment="Left" Width="60" Height="25.5" VerticalAlignment="Top" FontSize="21.333" Margin="7,0,0,0"  >
+                                                	<TextBlock.Effect>
+                                                		<DropShadowEffect ShadowDepth="0" Color="White"/>
+                                                	</TextBlock.Effect>
                                                 </TextBlock>
-                                            </StackPanel>
+												</Grid>
+                                            </Border>
+                                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="254.466" Margin="74,0,0,0" />
 
                                         </Grid>
                                     </Border>
@@ -1182,10 +1162,10 @@
                                 <Grid Grid.Column="1">
                                     <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                                         <StackPanel>
-                                            <Border x:Name="borderAll" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Alle Gegenstände" MouseLeftButtonDown="brdKlicked">
+                                            <Border x:Name="borderAll" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Alle Gegenstände" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
                                                 <Image x:Name="imageAll" Source="/DSA MeisterGeister;component/Images/Icons/General/filter.png"/>
                                             </Border>
-                                            <Border x:Name="borderNahkampf" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Nahkampfwaffen" MouseLeftButtonDown="brdKlicked">
+                                            <Border x:Name="borderNahkampf" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Nahkampfwaffen" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
                                                 <Image x:Name="image" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5">
                                                     <Image.RenderTransform>
                                                         <TransformGroup>
@@ -1197,16 +1177,16 @@
                                                     </Image.RenderTransform>
                                                 </Image>
                                             </Border>
-                                            <Border x:Name="borderFernkampf" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Fernkampfwaffen" MouseLeftButtonDown="brdKlicked">
+                                            <Border x:Name="borderFernkampf" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Fernkampfwaffen" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
                                                 <Image x:Name="image1" Source="/DSA MeisterGeister;component/Images/Icons/fernkampf.png"/>
                                             </Border>
-                                            <Border x:Name="borderSchild" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Schild" MouseLeftButtonDown="brdKlicked">
+                                            <Border x:Name="borderSchild" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Schild" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
                                                 <Image x:Name="image2" Source="/DSA MeisterGeister;component/Images/Icons/schild.png"/>
                                             </Border>
-                                            <Border x:Name="borderRuestung" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Rüstungen" MouseLeftButtonDown="brdKlicked">
+                                            <Border x:Name="borderRuestung" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Rüstungen" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
                                                 <Image x:Name="image3" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" Margin="-1,1,1,-1"/>
                                             </Border>
-                                            <Border x:Name="borderSonstiges" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
+                                            <Border x:Name="borderSonstiges" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" MouseLeftButtonDown="brdKlicked" Background="#FF463F34">
                                                 <Image x:Name="image4" Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
                                             </Border>
                                         </StackPanel>
