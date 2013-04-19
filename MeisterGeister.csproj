@@ -459,6 +459,9 @@
     <Compile Include="View\AudioPlayer\HitchPanel.xaml.cs">
       <DependentUpon>HitchPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\MusikZeile.xaml.cs">
+      <DependentUpon>MusikZeile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
       <DependentUpon>SliderRange.xaml</DependentUpon>
     </Compile>
@@ -816,11 +819,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AudioPlayer\GlasButton.xaml">
+    <Page Include="View\AudioPlayer\HitchPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AudioPlayer\HitchPanel.xaml">
+    <Page Include="View\AudioPlayer\MusikZeile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
