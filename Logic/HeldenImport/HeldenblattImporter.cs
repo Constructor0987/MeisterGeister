@@ -529,9 +529,12 @@ namespace MeisterGeister.Logic.HeldenImport
         {
             if (!row.Table.Columns.Contains(column))
                 throw new Exception(String.Format("Die Spalte {0} konnte nicht in der Tabelle {1} gefunden werden.", column, row.Table.TableName));
-            if(row.Table.Columns[column].DataType != typeof(T))
+            if (row.IsNull(column))
                 return default(T);
-            return row.Field<T>(column);
+            if(!typeof(T).IsAssignableFrom(row.Table.Columns[column].DataType))
+                return default(T);
+            T ret = (T)row[column];
+            return ret;
         }
 
         private static Regex reKlammern = new Regex("([^\\(]+)\\((.+)\\)");
