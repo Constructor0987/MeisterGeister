@@ -805,67 +805,79 @@ namespace MeisterGeister.Logic.HeldenImport
             string vorNachteilName = string.Empty;
             string wertString = string.Empty;
             
-            DataTable dt = GetTable(conn, "Select * from [MG_Vor$] where Aktiviert=True");
-
-            foreach (DataRow tRow in dt.Rows)
+            foreach(string select in new string[] {"Select * from [MG_Vor$] where Aktiviert=True", "Select * from [MG_Nach$] where Aktiviert=True" })
             {
-                vorNachteilName = tRow.Field<string>("Name");
-                if (vorNachteilName == null)
-                    continue;
-                vorNachteilName = vorNachteilName.Trim();
-                wertString = tRow.Field<string>("Wert");
-                if (wertString != null)
-                    wertString = wertString.Trim();
+                DataTable dt = GetTable(conn, select);
 
-                bool added = false;
+                foreach (DataRow tRow in dt.Rows)
+                {
+                    vorNachteilName = tRow.Field<string>("Name");
+                    if (vorNachteilName == null)
+                        continue;
+                    vorNachteilName = vorNachteilName.Trim();
+                    wertString = tRow.Field<string>("Wert");
+                    if (wertString != null)
+                        wertString = wertString.Trim();
 
-                if (!added && vorNachteilName == "Begabung für [Merkmal]")
-                    added = AddVorNachteil(string.Format("Begabung für Merkmal ({0})", wertString), null, _held); // Begabung für Merkmal
-                else if (!added && vorNachteilName == "Unfähigkeit für [Merkmal]")
-                    added = AddVorNachteil(string.Format("Unfähigkeit für Merkmal ({0})", wertString), null, _held); // Unfähigkeit für Merkmal
-                else if (!added && vorNachteilName == "Begabung für [Talentgruppe]")
-                {
-                    //TODO Talentgruppen gleichziehen
-                    added = AddVorNachteil(string.Format("Begabung für Talentgruppe ({0})", (wertString == "Körperlich" ? "Körper" : wertString)), null, _held); // Begabung für Talentgruppe
-                }
-                else if (!added && vorNachteilName == "Unfähigkeit für [Talentgruppe]")
-                {
-                    //TODO Talentgruppen gleichziehen
-                    added = AddVorNachteil(string.Format("Unfähigkeit für Talentgruppe ({0})", wertString), null, _held); // Unfähigkeit für Talentgruppe
-                }
-                else if (!added && vorNachteilName.StartsWith("Geweiht"))
-                {
-                    var m = reKlammern.Match(vorNachteilName);
-                    if (m.Groups.Count == 3)
+                    bool added = false;
+
+                    if (!added && vorNachteilName == "Begabung für [Merkmal]")
+                        added = AddVorNachteil(string.Format("Begabung für Merkmal ({0})", wertString), null, _held); // Begabung für Merkmal
+                    else if (!added && vorNachteilName == "Unfähigkeit für [Merkmal]")
+                        added = AddVorNachteil(string.Format("Unfähigkeit für Merkmal ({0})", wertString), null, _held); // Unfähigkeit für Merkmal
+                    else if (!added && vorNachteilName == "Herausragende Eigenschaft" && wertString != null)
                     {
-                        string göttername = m.Groups[2].Value;
-                        //nach Götternamen entscheiden: Praios -> zwölfgöttliche Kirche
-                        added = AddVorNachteil(string.Format("Geweiht [{0}]", GetGötterArt(göttername)), göttername, _held); // Geweiht
+                        var m = wertString.Split(' ');
+                        if (m.Length >= 2)
+                        {
+                            wertString = m[1];
+                            added = AddVorNachteil(string.Format("Herausragende Eigenschaft ({0})", m[0]), wertString, _held); //Herausragende Eigenschaft
+                        }
                     }
-                }
-                //TODO? Vorurteile, Angst, Herausragende sinne, Moralkodex
+                    else if (!added && vorNachteilName == "Begabung für [Talentgruppe]")
+                    {
+                        //TODO Talentgruppen gleichziehen
+                        added = AddVorNachteil(string.Format("Begabung für Talentgruppe ({0})", (wertString == "Körperlich" ? "Körper" : wertString)), null, _held); // Begabung für Talentgruppe
+                    }
+                    else if (!added && vorNachteilName == "Unfähigkeit für [Talentgruppe]")
+                    {
+                        //TODO Talentgruppen gleichziehen
+                        added = AddVorNachteil(string.Format("Unfähigkeit für Talentgruppe ({0})", wertString), null, _held); // Unfähigkeit für Talentgruppe
+                    }
+                    else if (!added && vorNachteilName.StartsWith("Geweiht"))
+                    {
+                        var m = reKlammern.Match(vorNachteilName);
+                        if (m.Groups.Count == 3)
+                        {
+                            string göttername = m.Groups[2].Value;
+                            //nach Götternamen entscheiden: Praios -> zwölfgöttliche Kirche
+                            added = AddVorNachteil(string.Format("Geweiht [{0}]", GetGötterArt(göttername)), göttername, _held); // Geweiht
+                        }
+                    }
+                    //TODO? Vorurteile, Angst, Herausragende sinne, Moralkodex
 
-                if (!added)
-                    added = AddVorNachteil(vorNachteilName, wertString, _held);
+                    if (!added)
+                        added = AddVorNachteil(vorNachteilName, wertString, _held);
 
-                // Vor-/Nachteil wurde nicht gefunden, evtl. Mapping möglich
-                if (!added)
-                {
-                    if (_vorNachteilMapping.ContainsKey(vorNachteilName.ToLowerInvariant()))
-                        added = AddVorNachteil(_vorNachteilMapping[vorNachteilName.ToLowerInvariant()], wertString, _held);
-                }
-                // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. mit Wert möglich
-                if (!added)
-                    added = AddVorNachteil(vorNachteilName + " " + wertString, null, _held);
-                // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
-                if (!added)
-                {
-                    if (_vorNachteilMapping.ContainsKey((vorNachteilName + " " + wertString).ToLowerInvariant()))
-                        added = AddVorNachteil(_vorNachteilMapping[(vorNachteilName + " " + wertString).ToLowerInvariant()], null, _held);
-                }
+                    // Vor-/Nachteil wurde nicht gefunden, evtl. Mapping möglich
+                    if (!added)
+                    {
+                        if (_vorNachteilMapping.ContainsKey(vorNachteilName.ToLowerInvariant()))
+                            added = AddVorNachteil(_vorNachteilMapping[vorNachteilName.ToLowerInvariant()], wertString, _held);
+                    }
+                    // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. mit Wert möglich
+                    if (!added)
+                        added = AddVorNachteil(vorNachteilName + " " + wertString, null, _held);
+                    // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
+                    if (!added)
+                    {
+                        if (_vorNachteilMapping.ContainsKey((vorNachteilName + " " + wertString).ToLowerInvariant()))
+                            added = AddVorNachteil(_vorNachteilMapping[(vorNachteilName + " " + wertString).ToLowerInvariant()], null, _held);
+                    }
 
-                if (!added) // Import nicht möglich
-                    AddImportLog(ImportTypen.VorNachteil, vorNachteilName, wertString, _importLog);
+                    if (!added) // Import nicht möglich
+                        AddImportLog(ImportTypen.VorNachteil, vorNachteilName, wertString, _importLog);
+                }
             }
         }
 
