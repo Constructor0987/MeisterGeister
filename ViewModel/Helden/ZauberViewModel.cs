@@ -80,13 +80,13 @@ namespace MeisterGeister.ViewModel.Helden
             get { return SelectedHeld == null ? null : SelectedHeld.ZauberWählbar; }
         }
 
-        public Dictionary<string,string> RepräsentationAuswahlListe
+        public List<Repräsentation> RepräsentationAuswahlListe
         {
             get { return Repräsentationen.RepräsentationenListe; }
         }
 
-        KeyValuePair<string, string> _selectedRepräsentation;
-        public KeyValuePair<string, string> SelectedRepräsentation
+        Repräsentation _selectedRepräsentation;
+        public Repräsentation SelectedRepräsentation
         {
             get { return _selectedRepräsentation; }
             set { _selectedRepräsentation = value; OnChanged("SelectedRepräsentation"); }
@@ -133,7 +133,7 @@ namespace MeisterGeister.ViewModel.Helden
 
             // Standard Repräsentation
             if (SelectedHeld != null)
-                SelectedRepräsentation = RepräsentationAuswahlListe.SingleOrDefault(r => r.Key == SelectedHeld.RepräsentationStandard);
+                SelectedRepräsentation = RepräsentationAuswahlListe.SingleOrDefault(r => r.Kürzel == SelectedHeld.RepräsentationStandard);
         }
 
         private void DeleteZauber(object sender)
@@ -152,13 +152,13 @@ namespace MeisterGeister.ViewModel.Helden
         {
             if (SelectedHeld != null && SelectedAddZauber != null)
             {
-                if (SelectedRepräsentation.Key == null)
+                if (SelectedRepräsentation.Kürzel == null)
                     PopUp("Es muss eine Repräsentation ausgewählt sein!");
-                else if (SelectedHeld.HatZauber(SelectedAddZauber, SelectedRepräsentation.Key))
-                    PopUp(String.Format("Der Held hat den Zauber '{0}' in der Repräsentation '{1}' bereits.", SelectedAddZauber.Name, SelectedRepräsentation.Key));
+                else if (SelectedHeld.HatZauber(SelectedAddZauber, SelectedRepräsentation.Kürzel))
+                    PopUp(String.Format("Der Held hat den Zauber '{0}' in der Repräsentation '{1}' bereits.", SelectedAddZauber.Name, SelectedRepräsentation.Kürzel));
                 else
                 {
-                    SelectedHeld.AddZauber(SelectedAddZauber, 0, SelectedRepräsentation.Key);
+                    SelectedHeld.AddZauber(SelectedAddZauber, 0, SelectedRepräsentation.Kürzel);
                     NotifyRefresh();
                 }
             }

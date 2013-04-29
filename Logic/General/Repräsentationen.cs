@@ -10,151 +10,152 @@ namespace MeisterGeister.Logic.General
     /// </summary>
     public static class Repräsentationen
     {
+        private static List<Repräsentation> repräsentationenListe = null;
         /// <summary>
         /// Erzeugt eine Liste von Repräsentationen.
         /// </summary>
-        public static Dictionary<string, string> RepräsentationenListe
+        public static List<Repräsentation> RepräsentationenListe
         {
             get
             {
-                Dictionary<string, string> list = new Dictionary<string, string>();
-                list.Add("Mag", "Gildenmagisch");
-                list.Add("Elf", "Elfisch");
-                list.Add("Dru", "Druidisch");
-                list.Add("Hex", "Hexisch");
-                list.Add("Geo", "Geodisch");
-                list.Add("Sch", "Schelmisch");
-                list.Add("Srl", "Scharlatanisch");
-                list.Add("Bor", "Borbaradianisch");
-                list.Add("Ach", "Achaz-Kristallomantisch");
-                list.Add("Dil", "Magiedilletant");
-                list.Add("Alh", "Alhanisch");
-                list.Add("Dru/Geo", "Druidisch-Geodisch");
-                list.Add("Gro", "Grolmisch");
-                list.Add("Gül", "Güldenländisch");
-                list.Add("Kop", "Kophtanisch");
-                list.Add("Mud", "Mudramulisch");
-                list.Add("Sat", "Satuarisch");
-                return list;
+                if (repräsentationenListe == null)
+                {
+                    List<Repräsentation> rlist = new List<Repräsentation>();
+                    rlist.Add(new Repräsentation("Gildenmagisch", "Mag", "KL", "WdZ 259"));
+                    rlist.Add(new Repräsentation("Elfisch", "Elf", "IN", "WdZ 321"));
+                    rlist.Add(new Repräsentation("Druidisch", "Dru", "KL", "WdZ 318"));
+                    rlist.Add(new Repräsentation("Hexisch", "Hex", "IN", "WdZ 309"));
+                    rlist.Add(new Repräsentation("Geodisch", "Geo", "KL", "WdZ 314"));
+                    rlist.Add(new Repräsentation("Schelmisch", "Sch", "IN", "WdZ 327"));
+                    rlist.Add(new Repräsentation("Scharlatanisch", "Srl", "KL", "WdZ 304"));
+                    rlist.Add(new Repräsentation("Borbaradianisch", "Bor", "KL", "WdZ 259"));
+                    rlist.Add(new Repräsentation("Achaz-Kristallomantisch", "Ach", "KL", "WdZ 323"));
+                    rlist.Add(new Repräsentation("Magiedilletant", "Dil", "IN", "WdZ 37")); //ist eigentlich keine Repräsentation
+                    rlist.Add(new Repräsentation("Alhanisch", "Alh", "IN", "OiC 49"));
+                    rlist.Add(new Repräsentation("Grolmisch", "Gro", "KL", "OiC 49"));
+                    rlist.Add(new Repräsentation("Güldenländisch", "Gül", "KL", "OiC 50"));
+                    rlist.Add(new Repräsentation("Kophtanisch", "Kop", "CH", "OiC 50"));
+                    rlist.Add(new Repräsentation("Mudramulisch", "Mud", "IN", "OiC 50"));
+                    rlist.Add(new Repräsentation("Satuarisch", "Sat", "IN", "OiC 51"));
+                    rlist.Add(new Repräsentation("Druidisch-Geodisch", "Dru/Geo", "KL", "OiC 49"));
+                    repräsentationenListe = rlist;
+                }
+                return repräsentationenListe;
             }
         }
 
         public static string GetKürzel(string rep)
         {
-            switch (rep)
-            {
-                case "Gildenmagisch":
-                    return "Mag";
-                case "Elfisch":
-                    return "Elf";
-                case "Druidisch":
-                    return "Dru";
-                case "Hexisch":
-                    return "Hex";
-                case "Geodisch":
-                    return "Geo";
-                case "Schelmisch":
-                    return "Sch";
-                case "Scharlatanisch":
-                    return "Srl";
-                case "Borbaradianisch":
-                    return "Bor";
-                case "Achaz-Kristallomantisch":
-                    return "Ach";
-                case "Magiedilletant":
-                    return "Dil";
-                case "Alhanisch":
-                    return "Alh";
-                case "Druidisch-Geodisch":
-                    return "Dru/Geo";
-                case "Grolmisch":
-                    return "Gro";
-                case "Güldenländisch":
-                    return "Gül";
-                case "Kophtanisch":
-                    return "Kop";
-                case "Mudramulisch":
-                    return "Mud";
-                case "Satuarisch":
-                    return "Sat";
-                default:
-                    return "Mag";
-            }
+            var r = GetRepräsentation(rep);
+            return r.Kürzel;
         }
 
         public static string GetName(string rep)
         {
-            switch (rep)
+            var r = GetRepräsentation(rep);
+            return r.Name;
+        }
+
+        public static Repräsentation GetRepräsentation(string rep)
+        {
+            Repräsentation ret = null;
+            ret = repräsentationenListe.Where(r => r.Name == rep || r.Kürzel == rep).FirstOrDefault();
+            if (ret == null)
             {
-                case "Mag":
-                    return "Gildenmagisch";
-                case "Magier":
-                    return "Gildenmagisch";
-                case "Elf":
-                    return "Elfisch";
-                case "Dru":
-                    return "Druidisch";
-                case "Druide":
-                    return "Druidisch";
-                case "Hex":
-                    return "Hexisch";
-                case "Hexe":
-                    return "Hexisch";
-                case "Geo":
-                    return "Geodisch";
-                case "Geode":
-                    return "Geodisch";
-                case "Sch":
-                    return "Schelmisch";
-                case "Schelm":
-                    return "Schelmisch";
-                case "Srl":
-                    return "Scharlatanisch";
-                case "Scharlatan":
-                    return "Scharlatanisch";
-                case "Borbaradianer":
-                    return "Borbaradianisch";
-                case "Bor":
-                    return "Borbaradianisch";
-                case "Ach":
-                    return "Achaz-Kristallomantisch";
-                case "Achaz":
-                    return "Achaz-Kristallomantisch";
-                case "Dil":
-                    return "Magiedilletant";
-                case "Magiedilletant":
-                    return "Magiedilletant";
-                case "Alh":
-                    return "Alhanisch";
-                case "Alhanisch":
-                    return "Alhanisch";
-                case "Dru/Geo":
-                    return "Druidisch-Geodisch";
-                case "Druide/Geode":
-                    return "Druidisch-Geodisch";
-                case "Gro":
-                    return "Grolmisch";
-                case "Grolmisch":
-                    return "Grolmisch";
-                case "Gül":
-                    return "Güldenländisch";
-                case "Güldenländisch":
-                    return "Güldenländisch";
-                case "Kop":
-                    return "Kophtanisch";
-                case "Kophtanisch":
-                    return "Kophtanisch";
-                case "Mud":
-                    return "Mudramulisch";
-                case "Mudramulisch":
-                    return "Mudramulisch";
-                case "Sat":
-                    return "Satuarisch";
-                case "Satuarisch":
-                    return "Satuarisch";
-                default:
-                    return "Gildenmagisch";
+                switch (rep)
+                {
+                    case "Magier":
+                        rep = "Gildenmagisch";
+                        break;
+                    case "Druide":
+                        rep = "Druidisch";
+                        break;
+                    case "Hexe":
+                        rep = "Hexisch";
+                        break;
+                    case "Geode":
+                        rep = "Geodisch";
+                        break;
+                    case "Schelm":
+                        rep = "Schelmisch";
+                        break;
+                    case "Scharlatan":
+                        rep = "Scharlatanisch";
+                        break;
+                    case "Borbaradianer":
+                        rep = "Borbaradianisch";
+                        break;
+                    case "Achaz":
+                        rep = "Achaz-Kristallomantisch";
+                        break;
+                    case "Druide/Geode":
+                        rep = "Druidisch-Geodisch";
+                        break;
+                    default:
+                        rep = "Gildenmagisch"; // sollte evtl. null oder Magiedilletant sein
+                        break;
+                }
+                ret = repräsentationenListe.Where(r => r.Name == rep || r.Kürzel == rep).FirstOrDefault();
             }
+            return ret;
+        }
+
+        private static string[] sonderfälle = new string[] { "Geodisch" };
+        public static string GetLeitattribut(Model.Held held, Repräsentation r)
+        {
+            if (held != null && r != null && sonderfälle.Contains(r.Name))
+            {
+                //Profession prüfen
+                if (held.Profession != null && held.Profession.Contains("Diener Sumus"))
+                    return "IN";
+            }
+            return r.Leitattribut;
+        }
+
+        public static string GetLeitattribut(Model.Held held, string rep)
+        {
+            var r = GetRepräsentation(rep);
+            return GetLeitattribut(held, r);
+        }
+    }
+
+    public class Repräsentation
+    {
+        string name;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        string kürzel;
+
+        public string Kürzel
+        {
+            get { return kürzel; }
+            set { kürzel = value; }
+        }
+        string leitattribut;
+
+        public string Leitattribut
+        {
+            get { return leitattribut; }
+            set { leitattribut = value; }
+        }
+        string literatur;
+
+        public string Literatur
+        {
+            get { return literatur; }
+            set { literatur = value; }
+        }
+
+        public Repräsentation(string name, string kürzel, string leitattribut, string literatur)
+        {
+            Name = name;
+            Kürzel = kürzel;
+            Leitattribut = leitattribut;
+            Literatur = literatur;
         }
     }
 }
