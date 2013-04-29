@@ -71,35 +71,48 @@ namespace MeisterGeister.View.General
             objDialog.DefaultExt = String.Empty;
             objDialog.Filter = String.Empty;
             //TODO: mehr extension-Typen?
+            Dictionary<string, string> dFilter = new Dictionary<string, string>();
             foreach (string extension in extensions)
             {
-                string filter = String.Empty;
+                string sname = "";
+                string sext = String.Format("*.{0}", extension);
                 switch (extension)
                 {
                     case "xml":
-                        filter = "XML-Dateien (*.xml)|*.xml";
+                        sname = "XML-Dateien";
                         break;
                     case "xls":
-                        filter = "Excel-8-Dateien (*.xls)|*.xls";
-                        break;
                     case "xlsx":
-                        filter = "Excel-12-Dateien (*.xlsx)|*.xlsx";
-                        break;
                     case "xlsb":
-                        filter = "Excel-12-Dateien (*.xlsb)|*.xlsb";
+                        sname = "Excel-Dateien";
                         break;
-                    case "*.*":
                     case "*":
-                        filter = "Alle Dateien (*.*)|*.*";
+                    case "*.*":
+                        sname = "Alle Dateien";
                         break;
-                    default:
-                        filter = String.Format("(*.{0})|*.{0}", extension);
+                   default:
+                        sname = String.Format("{0}-Dateien", extension);
                         break;
                 }
-                objDialog.Filter += (objDialog.Filter != String.Empty) ? "|" + filter : filter;
+                if (!dFilter.ContainsKey(sname))
+                    dFilter.Add(sname, sext);
+                else
+                    dFilter[sname] = dFilter[sname] + ";" + sext;
             }
-            if(objDialog.Filter==String.Empty)
-                objDialog.Filter = "Alle Dateien (*.*)|*.*";
+            string filter = string.Empty;
+            string allValid = string.Empty;
+            foreach (string sname in dFilter.Keys)
+            {
+                allValid += (filter != String.Empty) ? ";" + dFilter[sname] : dFilter[sname];
+                filter += (filter != String.Empty) ? "|" : "";
+                filter += sname + "|" + dFilter[sname];
+            }
+
+            if (filter == String.Empty)
+                filter = "Alle Dateien|*.*";
+            else
+                filter = "Alle erlaubten Dateien|" + allValid + "|" + filter;
+            objDialog.Filter = filter;
             
             objDialog.AddExtension = true;
             objDialog.FileName = filename;

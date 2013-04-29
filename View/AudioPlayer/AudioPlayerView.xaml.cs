@@ -743,7 +743,7 @@ namespace MeisterGeister.View.AudioPlayer {
 					((ListBoxItem)lbMusiktitellist.Items[i]).Background.ToString() != new SolidColorBrush(Color.FromArgb(100, 255, 255, 0)).ToString())     // Yellow
 				{                    
 					Audio_Playlist_Titel aktPlaylistTitel = _BGPlayer.AktPlaylist.Audio_Playlist_Titel.First(
-						t => t.Audio_Titel.Name == (((ListBoxItem)lbMusiktitellist.Items[i]).Content));
+						t => t.Audio_Titel.Name == (string)(((ListBoxItem)lbMusiktitellist.Items[i]).Content));
 					if (aktPlaylistTitel.Aktiv)
 					{
 						for (int bew = 0; bew <= aktPlaylistTitel.Rating; bew++)

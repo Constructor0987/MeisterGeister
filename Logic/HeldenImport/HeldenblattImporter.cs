@@ -94,6 +94,9 @@ namespace MeisterGeister.Logic.HeldenImport
 
         private static void SetSonderfertigkeitenMapping()
         {
+            _sonderfertigkeitMapping.Add("harmonisierte eis-humus-aura", "elementarharmonisierte aura (eis/humus)");
+            _sonderfertigkeitMapping.Add("harmonisierte luft-fels-aura", "elementarharmonisierte aura (fels/luft)");
+            _sonderfertigkeitMapping.Add("harmonisierte feuer-wasser-aura", "elementarharmonisierte aura (feuer/wasser)");
             _sonderfertigkeitMapping.Add("turniereiterei", "turnierreiterei");
             _sonderfertigkeitMapping.Add("akklimatisierung: hitze", "akklimatisierung (hitze)");
             _sonderfertigkeitMapping.Add("akklimatisierung: kälte", "akklimatisierung (kälte)");
@@ -1246,15 +1249,20 @@ namespace MeisterGeister.Logic.HeldenImport
             try
             {
                 conn.Open();
-                DataTable tables = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
                 //check tables: MG_Held, MG_INV, MG_Vor, MG_Nach, MG_SF
                 string[] mgtables = new string[] { "MG_Held", "MG_INV", "MG_Vor", "MG_Nach", "MG_SF", "MG_Talente" };
-                var view = tables.DefaultView;
                 foreach (string tablename in mgtables)
                 {
-                    view.RowFilter = String.Format("TABLE_NAME = '{0}$'", tablename);
-                    if (view.Count == 0)
+                    try
+                    {
+                        var c = conn.CreateCommand();
+                        c.CommandText = String.Format("SELECT TOP 1 * FROM [{0}$]", tablename);
+                        c.ExecuteNonQuery();
+                    }
+                    catch (OleDbException)
+                    {
                         return false;
+                    }
                 }
                 return true;
             }
