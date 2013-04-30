@@ -50,6 +50,7 @@ namespace MeisterGeister.ViewModel.Base {
         protected ViewModelBase(Func<string, string, bool> confirm, Action<string, Exception> showError) : this(null, confirm, null, null, null, showError) { }
         protected ViewModelBase(Action<string, Exception> showError) : this(null, null, null, null, null, showError) {}
         protected ViewModelBase() : this(null, null, null, null, null, null) { }
+        protected ViewModelBase(Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog) : this(null, null, null, showProbeDialog, null) { }
 
         #endregion
 

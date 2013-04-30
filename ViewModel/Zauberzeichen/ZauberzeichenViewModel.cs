@@ -244,6 +244,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 OnChanged("SelectedHeld");
                 resetKreise(); resetRunen(); resetZauberzeichen();
                 checkZusatzzeichen(value);
+                VerwendeteRitualkenntnis = Global.ContextHeld.GetMaxRitualkenntnis(value);
                 WertRitualkenntnis = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value);
                 WertRkWErschafferKreise = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value);
                 WertRkWErschafferRunen = Global.ContextHeld.LoadMaxRitualkenntnisWertByHeld(value);
@@ -268,6 +269,16 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
                 setWirkungsradiusZauberzeichen();
                 setWirkungsradiusRunen();
                 setWirkungsradiusKreise();
+            }
+        }
+
+        private Talent verwendeteRitualkenntnis = null;
+        public Talent VerwendeteRitualkenntnis
+        {
+            get { return verwendeteRitualkenntnis; }
+            set { 
+                verwendeteRitualkenntnis = value;
+                OnChanged("VerwendeteRitualkenntnis");
             }
         }
         #endregion
@@ -344,11 +355,11 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             get { return _wertHerstellungszeitZauberzeichen; }
             set
             {
-                int summe = value * 3 + WertAktivierungZauberzeichen + WertQualitätZauberzeichen;
+                int summe = value * 3 + WertAktivierungZauberzeichen * 2 + WertQualitätZauberzeichen;
                 if (summe <= _wertTaPÜberZauberzeichen && value >= 0)
                 {
                     _wertHerstellungszeitZauberzeichen = value;
-                    WertTaPZauberzeichen = _wertTaPÜberZauberzeichen - WertHerstellungszeitZauberzeichen * 3 - WertAktivierungZauberzeichen - WertQualitätZauberzeichen;
+                    WertTaPZauberzeichen = _wertTaPÜberZauberzeichen - WertHerstellungszeitZauberzeichen * 3 - WertAktivierungZauberzeichen * 2 - WertQualitätZauberzeichen;
                     OnChanged("WertHerstellungszeitZauberzeichen");
                     berechneAbhängigkeitenZauberzeichen();
                 }
@@ -360,11 +371,11 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             get { return _wertAktivierungZauberzeichen; }
             set
             {
-                int summe = _wertHerstellungszeitZauberzeichen * 3 + value + WertQualitätZauberzeichen;
+                int summe = _wertHerstellungszeitZauberzeichen * 3 + value * 2 + WertQualitätZauberzeichen;
                 if (summe <= _wertTaPÜberZauberzeichen && value >= 0)
                 {
                     _wertAktivierungZauberzeichen = value;
-                    WertTaPZauberzeichen = _wertTaPÜberZauberzeichen - WertHerstellungszeitZauberzeichen * 3 - WertAktivierungZauberzeichen - WertQualitätZauberzeichen;
+                    WertTaPZauberzeichen = _wertTaPÜberZauberzeichen - WertHerstellungszeitZauberzeichen * 3 - WertAktivierungZauberzeichen * 2 - WertQualitätZauberzeichen;
                     OnChanged("WertAktivierungZauberzeichen");
                     berechneAbhängigkeitenZauberzeichen();
                 }
@@ -375,11 +386,11 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             get { return _wertQualitätZauberzeichen; }
             set
             {
-                int summe = _wertHerstellungszeitZauberzeichen * 3 + WertAktivierungZauberzeichen + value;
+                int summe = _wertHerstellungszeitZauberzeichen * 3 + WertAktivierungZauberzeichen * 2 + value;
                 if (summe <= _wertTaPÜberZauberzeichen && value >= 0)
                 {
                     _wertQualitätZauberzeichen = value;
-                    WertTaPZauberzeichen = _wertTaPÜberZauberzeichen - WertHerstellungszeitZauberzeichen * 3 - WertAktivierungZauberzeichen - WertQualitätZauberzeichen;
+                    WertTaPZauberzeichen = _wertTaPÜberZauberzeichen - WertHerstellungszeitZauberzeichen * 3 - WertAktivierungZauberzeichen * 2 - WertQualitätZauberzeichen;
                     OnChanged("WertQualitätZauberzeichen");
                     berechneAbhängigkeitenZauberzeichen();
                 }
@@ -537,7 +548,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
 
         #region //---- KONSTRUKTOR ----
 
-        public ZauberzeichenViewModel()
+        public ZauberzeichenViewModel() : base(View.General.ViewHelper.ShowProbeDialog)
         {
             _onBauZauberzeichen = new Base.CommandBase(BauZauberzeichen, null);
             _onAktivierungZauberzeichen = new Base.CommandBase(AktivierungZauberzeichen, null);
@@ -545,7 +556,6 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             _onAktivierungRunen = new Base.CommandBase(AktivierungRunen, null);
             _onBauKreise = new Base.CommandBase(BauKreise, null);
             _onAktivierungKreise = new Base.CommandBase(AktivierungKreise, null);
-
             Init();
         }
 
@@ -1029,17 +1039,38 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             WertHerstellungszeitZauberzeichen = 0;
             WertAktivierungZauberzeichen = 0;
             WertQualitätZauberzeichen = 0;
-            //TODO ??: Probe auf Erstellung würfeln
-            WertTaPZauberzeichen = WertHandwerkZauberzeichen - 3;
-            _wertTaPÜberZauberzeichen = WertTaPZauberzeichen;
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null)
+            {
+                SelectedTalentZauberzeichen.Modifikator = WertKomplexitätZauberzeichen + WertErleichterungTaZauberzeichen;
+                SelectedTalentZauberzeichen.Fertigkeitswert = WertHandwerkZauberzeichen;
+                var ergebnis = ShowProbeDialog(SelectedTalentZauberzeichen, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    WertTaPZauberzeichen = ergebnis.Übrig;
+                    _wertTaPÜberZauberzeichen = WertTaPZauberzeichen;
+                }
+            }
         }
 
         void AktivierungZauberzeichen(object sender)
         {
-            //TODO ??: Probe auf Aktivierung würfeln
-            int rkpstern = 5;
-            if (CheckedSpontanzeichenZauberzeichen) WertRkPZauberzeichen = (int)Math.Round(((double)rkpstern / 2), MidpointRounding.AwayFromZero);
-            else WertRkPZauberzeichen = rkpstern;
+            //Probe auf Aktivierung würfeln
+            if (SelectedHeld != null && VerwendeteRitualkenntnis != null)
+            {
+                VerwendeteRitualkenntnis.Eigenschaft1 = "KL";
+                VerwendeteRitualkenntnis.Eigenschaft2 = "IN";
+                VerwendeteRitualkenntnis.Eigenschaft3 = "FF";
+                VerwendeteRitualkenntnis.Modifikator = WertErleichterungRkZauberzeichen;
+                VerwendeteRitualkenntnis.Fertigkeitswert = WertRitualkenntnis;
+                var ergebnis = ShowProbeDialog(VerwendeteRitualkenntnis, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    int rkpstern = ergebnis.Übrig;
+                    if (CheckedSpontanzeichenZauberzeichen) WertRkPZauberzeichen = (int)Math.Round(((double)rkpstern / 2), MidpointRounding.AwayFromZero);
+                    else WertRkPZauberzeichen = rkpstern;
+                }
+            }
         }
 
         void BauRunen(object sender)

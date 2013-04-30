@@ -127,20 +127,23 @@ namespace MeisterGeister.Model.Service {
             return runen;
         }
 
-        public int LoadMaxRitualkenntnisWertByHeld(Held held)
+        private string[] rkNamen = new string[] { "Ritualkenntnis (Gildenmagie)", "Ritualkenntnis (Kristallomantie)", "Ritualkenntnis (Alchimie)", "Ritualkenntnis (Zibiljas)", "Ritualkenntnis (Runenkunde)" };
+        public Talent GetMaxRitualkenntnis(Held held)
         {
             if (held == null)
-                return 0;
+                return null;
+            List<Talent> rkList = Liste<Talent>().Where(t => rkNamen.Contains(t.Talentname)).OrderByDescending(t => held.HatTalent(t)?held.Talentwert(t):-99).ToList();
+            if(rkList.Count == 0 || !held.HatTalent(rkList[0]))
+                return null;
+            return rkList[0];
+        }
 
-            List<int> werte= new List<int>();
-            if (held.HatTalent("Ritualkenntnis (Gildenmagie)")) werte.Add(held.Talentwert("Ritualkenntnis (Gildenmagie)"));
-            if (held.HatTalent("Ritualkenntnis (Kristallomantie)")) werte.Add(held.Talentwert("Ritualkenntnis (Kristallomantie)"));
-            if (held.HatTalent("Ritualkenntnis (Alchimie)")) werte.Add(held.Talentwert("Ritualkenntnis (Alchimie)"));
-            if (held.HatTalent("Ritualkenntnis (Zibiljas)")) werte.Add(held.Talentwert("Ritualkenntnis (Zibiljas)"));
-            if (held.HatTalent("Ritualkenntnis (Geister binden)")) werte.Add(held.Talentwert("Ritualkenntnis (Geister binden)"));
-            if (held.HatTalent("Ritualkenntnis (Runenkunde)")) werte.Add(held.Talentwert("Ritualkenntnis (Runenkunde)"));
-            werte.Sort();
-            return (werte.Count == 0) ? 0 : werte[werte.Count-1];
+        public int LoadMaxRitualkenntnisWertByHeld(Held held)
+        {
+            Talent rk = GetMaxRitualkenntnis(held);
+            if (rk == null)
+                return 0;
+            return held.Talentwert(rk);
         }
 
         public List<Talent> LoadZauberzeichenTalenteByHeld(Held held)
