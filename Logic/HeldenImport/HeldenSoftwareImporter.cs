@@ -8,6 +8,7 @@ using System.Xml;
 //using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Helden.Logic;
+using System.Text.RegularExpressions;
 
 namespace MeisterGeister.Logic.HeldenImport
 {
@@ -418,6 +419,19 @@ namespace MeisterGeister.Logic.HeldenImport
                     _held.Profession += " (" + prof.Attributes["art"].Value + ")";
             }
 
+            // Abenteuerpunkte
+            XmlNode ap = _xmlDoc.SelectSingleNode("helden/held/basis/abenteuerpunkte");
+            if (ap == null)
+                ap = _xmlDoc.SelectSingleNode("helden/held/abenteuerpunkte");
+            if (ap != null)
+                _held.APGesamt = Convert.ToInt32(ap.Attributes["value"].Value);
+            
+            ap = _xmlDoc.SelectSingleNode("helden/held/basis/freieabenteuerpunkte");
+            if (ap == null)
+                ap = _xmlDoc.SelectSingleNode("helden/held/freieabenteuerpunkte");
+            if (ap != null)
+                _held.APEingesetzt = _held.APGesamt - Convert.ToInt32(ap.Attributes["value"].Value);
+
             // Bild
             XmlNode bild = _xmlDoc.SelectSingleNode("helden/held/basis/portraet");
             if (bild == null)
@@ -496,6 +510,10 @@ namespace MeisterGeister.Logic.HeldenImport
                         break;
                 }
             }
+            _held.LebensenergieAktuell = _held.LebensenergieMax;
+            _held.AusdauerAktuell = _held.AusdauerMax;
+            _held.KarmaenergieAktuell = _held.KarmaenergieMax;
+            _held.AstralenergieAktuell = _held.AstralenergieMax;
 
             // Vor-/Nachteile
             ImportVorNachteile(_xmlDoc, _held, _importLog);
@@ -679,6 +697,8 @@ namespace MeisterGeister.Logic.HeldenImport
             }
         }
 
+        private static Regex reKlammern = new Regex("([^\\(]+)\\((.+)\\)");
+
         private static void ImportSonderfertigkeiten(XmlDocument _xmlDoc, Held _held, System.Collections.Generic.List<string> _importLog)
         {
             string sfName = string.Empty;
@@ -769,10 +789,18 @@ namespace MeisterGeister.Logic.HeldenImport
                     added = AddSonderfertigkeit(sfName.Replace("Ritual:", "Schamanenritual:"), wertString, _held); // Schamanenritual
                 if (!added)
                     added = AddSonderfertigkeit(sfName, wertString, _held);
+                if (!added && sfName.StartsWith("Liturgie:") && sfName.Contains("("))
+                {
+                    //Die original Liturgie ist im Klammern genannt
+                    Match m = reKlammern.Match(sfName);
+                    if (m != null && m.Groups.Count == 3)
+                        added = AddSonderfertigkeit(String.Format("Liturgie: {0}", m.Groups[2].Value.Trim()), wertString, _held);
+                }
                 if (!added)
                     added = AddSonderfertigkeit(string.Format("Waffenloses Manöver ({0})", sfName), wertString, _held); // Waffenlose Manöver
                 if (!added)
                     added = AddSonderfertigkeit(string.Format("Geländekunde ({0})", sfName), wertString, _held); // Geländekunden
+                
 
                 if (!added)
                 {
