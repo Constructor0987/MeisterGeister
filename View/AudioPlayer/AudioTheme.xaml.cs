@@ -26,44 +26,53 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void btnAudioTheme_MouseEnter(object sender, MouseEventArgs e)
         {
-            //inaktiv
-            if ( Convert.ToInt32(imgPlay.Tag) == 0)
+            if (imgPlay.Visibility != Visibility.Collapsed)
             {
-                //sofort spielen?
-                imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag))?
-                    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/play_grau.png")):
-                    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
-                imgPlay.Visibility = Visibility.Visible;
-            }
-            //aktiv
-            else
-            {
-                //sofort spielen?
-                imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag))?
-                    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/pause.png")):
-                    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
-                imgPlay.Visibility = Visibility.Visible;
+                //inaktiv
+                if (Convert.ToInt32(imgPlay.Tag) == 0)
+                {
+                    //sofort spielen?
+                    imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag)) ?
+                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/play_grau.png")) :
+                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
+                    imgPlay.Visibility = Visibility.Visible;
+                }
+                //aktiv
+                else
+                {
+                    if (Convert.ToInt32(imgPlay.Tag) != -1 && imgPlay.Visibility != Visibility.Collapsed)
+                    {
+                        //sofort spielen?
+                        imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag)) ?
+                            new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/pause.png")) :
+                            new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
+                        imgPlay.Visibility = Visibility.Visible;
+                    }
+                }
             }
         }
 
         private void btnAudioTheme_MouseLeave(object sender, MouseEventArgs e)
         {
-            //aktiv
-            if (Convert.ToInt32(imgPlay.Tag) == 1)
+            if (imgPlay.Visibility != Visibility.Collapsed)
             {
-                //sofort spielen?
-                imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag))?
-                    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/play.png")):
-                    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
+                //aktiv
+                if (Convert.ToInt32(imgPlay.Tag) == 1)
+                {
+                    //sofort spielen?
+                    imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag)) ?
+                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/play.png")) :
+                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
+                }
+                //inaktiv
+                else
+                    imgPlay.Visibility = Visibility.Hidden;
             }
-            //inaktiv
-            else
-                imgPlay.Visibility = Visibility.Hidden;
         }
 
         private void btnAudioTheme_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Source == sender)
+            if (imgPlay.Visibility != Visibility.Collapsed && e.Source == sender)
             {
                 //inaktiv
                 if (Convert.ToInt32(imgPlay.Tag) == 0)
@@ -78,12 +87,15 @@ namespace MeisterGeister.View.AudioPlayer
                 //aktiv
                 else
                 {
-                    //schalte inaktiv
-                    imgPlay.Tag = 0;
-                    //sofort spielen?
-                    imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag))?
-                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/play_grau.png")):
-                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
+                    if (Convert.ToInt32(imgPlay.Tag) != -1)
+                    {
+                        //schalte inaktiv
+                        imgPlay.Tag = 0;
+                        //sofort spielen?
+                        imgPlay.Source = (Convert.ToBoolean((this as AudioTheme).Tag)) ?
+                            new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/play_grau.png")) :
+                            new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/feder.png"));
+                    }
                 }
             }
         }

@@ -47,6 +47,22 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _audio_ThemeGUID;
+
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual System.Guid Audio_UnterThemeGUID
+        {
+            get { return _audio_UnterThemeGUID; }
+            set
+            {
+                _audio_UnterThemeGUID = value;
+                OnChanged("Audio_UnterThemeGUID");
+            }
+
+        }
+        private System.Guid _audio_UnterThemeGUID;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Name
@@ -61,19 +77,21 @@ namespace MeisterGeister.Model
         }
         private string _name;
     	///<summary>Database persistent property</summary>
+
     	[DataMember]
         public virtual int Hintergrund_VolMod
         {
             get { return _hintergrund_VolMod; }
             set
-    		{ 
-    			_hintergrund_VolMod = value;
+    		{
+                _hintergrund_VolMod = value;
     			OnChanged("Hintergrund_VolMod");
     		}
     
         }
         private int _hintergrund_VolMod;
     	///<summary>Database persistent property</summary>
+
     	[DataMember]
         public virtual int Klang_VolMod
         {
@@ -90,8 +108,8 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Navigation Properties
-    
-    	[DataMember]
+
+        [DataMember]
         public virtual ICollection<Audio_Playlist> Audio_Playlist
         {
             get
@@ -124,6 +142,38 @@ namespace MeisterGeister.Model
         }
         private ICollection<Audio_Playlist> _audio_Playlist;
 
+        public virtual ICollection<Audio_Theme> Audio_UnterTheme
+        {
+            get
+            {
+                if (_audio_UnterTheme == null)
+                {
+                    var newCollection = new FixupCollection<Audio_Theme>();
+                    newCollection.CollectionChanged += FixupAudio_Theme;
+                    _audio_UnterTheme = newCollection;
+                }
+                return _audio_UnterTheme;
+            }
+            set
+            {
+                if (!ReferenceEquals(_audio_UnterTheme, value))
+                {
+                    var previousValue = _audio_UnterTheme as FixupCollection<Audio_Playlist>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAudio_Theme;
+                    }
+                    _audio_UnterTheme = value;
+                    var newValue = value as FixupCollection<Audio_Playlist>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAudio_Theme;
+                    }
+                }
+            }
+        }
+        private ICollection<Audio_Theme> _audio_UnterTheme;
+
         #endregion
 
         #region Association Fixup
@@ -149,6 +199,33 @@ namespace MeisterGeister.Model
                     if (item.Audio_Theme.Contains(this))
                     {
                         item.Audio_Theme.Remove(this);
+                    }
+                }
+            }
+        }
+
+
+        private void FixupAudio_Theme(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnChanged("Audio_UnterTheme");
+            if (e.NewItems != null)
+            {
+                foreach (Audio_Theme item in e.NewItems)
+                {
+                    if (!item.Audio_UnterTheme.Contains(this))
+                    {
+                        item.Audio_UnterTheme.Add(this);
+                    }
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (Audio_Theme item in e.OldItems)
+                {
+                    if (item.Audio_UnterTheme.Contains(this))
+                    {
+                        item.Audio_UnterTheme.Remove(this);
                     }
                 }
             }

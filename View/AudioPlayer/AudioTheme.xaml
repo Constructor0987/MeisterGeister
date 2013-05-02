@@ -79,11 +79,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="68" />
             <ColumnDefinition Width="133*" />
-            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="44" />
-            <RowDefinition Height="18" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="17" />
             <RowDefinition Height="17" />
         </Grid.RowDefinitions>
@@ -92,20 +92,20 @@
             <ToggleButton.BindingGroup>
                 <BindingGroup Name="Themes" />
             </ToggleButton.BindingGroup>
-            <Grid Width="220">
+            <Grid Width="220" Name="grdTop">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
-                    <RowDefinition Height="20" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Image Name="imgPlay" Source="/Images/Icons/General/play_grau.png"  Visibility="Hidden" Grid.RowSpan="2" Tag="0" Margin="0,-6,-10,0" HorizontalAlignment="Right" Width="50" Height="50" />
                 <Label Name="lblThemeName" Content="Theme-Name" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="12" Padding="1" />
-                <Label Name="lblActBGTitel" Content="kein aktiver Musiktitel" Grid.Row="1" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="1" />                
+                <Label Name="lblActBGTitel" Content="kein aktiver Musiktitel" Grid.Row="1" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="1" Height="18" />                
             </Grid>
         </ToggleButton>
-        <ProgressBar Name="pbarActBGTitel" Grid.Row="1" Margin="2" Grid.ColumnSpan="3" Cursor="Hand" />
+        <ProgressBar Name="pbarActBGTitel" Grid.Row="1" Margin="2,1" Grid.ColumnSpan="3" Cursor="Hand" Height="14" Maximum="100000" />
         <Label Name="lblVolMusik" Content="Musik" Grid.Row="2" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
         <Label Name="lblVolGeraeusche" Content="Geräusche" Grid.Row="3" Grid.Column="0" Padding="0" Margin="3,0,0,0" />
         <Border x:Name="TrackVolHGBackground" BorderBrush="{StaticResource HorizontalSliderTrackNormalBorder}" BorderThickness="1" CornerRadius="1" Margin="5,0" VerticalAlignment="Center" Height="4" Grid.Row="2" Grid.Column="1" />

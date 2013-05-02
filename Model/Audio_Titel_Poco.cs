@@ -60,19 +60,20 @@ namespace MeisterGeister.Model
     
         }
         private string _name;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
+        ///<summary>Database persistent property</summary>
+        [DataMember]
         public virtual string Pfad
         {
             get { return _pfad; }
             set
-    		{ 
-    			_pfad = value;
-    			OnChanged("Pfad");
-    		}
-    
+            {
+                _pfad = value;
+                OnChanged("Pfad");
+            }
+
         }
         private string _pfad;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual Nullable<double> Länge

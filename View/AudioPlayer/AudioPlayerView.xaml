@@ -186,8 +186,11 @@
                             <ContentPresenter />
                         </Border>
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#38BEB3A3" />
+                            </Trigger>
                             <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#389E804D" /> 
+                                <Setter TargetName="Border" Property="Background" Value="#389E804D" />                                                                                          
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -246,7 +249,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*" MinHeight="150" />
-                        <RowDefinition Height="22" MinHeight="22" MaxHeight="195"/>
+                        <RowDefinition Height="22" MinHeight="22"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130" />
@@ -308,7 +311,7 @@
                         <Expander.Header>
                             <TextBlock Text="Theme - Editor" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
-                    <Grid Name="grdThemeEditor" Grid.Row="2" Grid.ColumnSpan="3" Background="{StaticResource Background1}">
+                        <Grid Name="grdThemeEditor" Grid.Row="2" Grid.ColumnSpan="3" Background="{StaticResource Background1}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="280" />
                             <ColumnDefinition Width="*" />
@@ -371,7 +374,7 @@
                                                 <ColumnDefinition Width="100" />
                                                 <ColumnDefinition Width="25" />
                                             </Grid.ColumnDefinitions>
-                                            <Label Content="Klang-Playlists" Name="lblKlangPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" />
+                                            <Label Content="Geräusch-Playlists" Name="lblKlangPlaylists" VerticalContentAlignment="Top" Margin="5,0,0,0" FontWeight="Bold" />
                                             <Border Grid.Column="1" Style="{DynamicResource ControlContentBorder}">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -387,8 +390,12 @@
                                             <Image Name="imgThemeKlangPlaylistRefresh" Source="/Images/Icons/General/refresh.png" Grid.Column="2" Cursor="Hand" MouseDown="imgThemeKlangPlaylistRefresh_MouseDown" />
                                         </Grid>
                                     </Border>
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" Name="scrKlang">
+                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" Margin="0,0,0,6" Name="scrKlang" VerticalContentAlignment="Stretch">
+                                    <StackPanel>
                                     <WrapPanel Margin="5" Name="WrapPnlGeraeusche" />
+                                    <WrapPanel Margin="5" Name="WrapPnlThemes" />
+                                    </StackPanel>
+
                                     </ScrollViewer>
                                 </Grid>
                             </Border>
@@ -551,9 +558,20 @@
                                 <ColumnDefinition Width="140" />
                                 <ColumnDefinition Width="60*" MinWidth="60" />
                             </Grid.ColumnDefinitions>
-                            <TextBox HorizontalAlignment="Stretch" Name="tboxPlaylistName" Style="{Binding}" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um die Playlist umzubenennen" Height="25" Grid.Column="1" Margin="5,0" Background="{x:Null}" LostFocus="tboxPlaylistName_LostFocus" ForceCursor="True" KeyUp="tboxPlaylistName_KeyUp" Visibility="Hidden"></TextBox>
+                            <TextBox HorizontalAlignment="Stretch" Name="tboxPlaylistName" Style="{Binding}" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um die Playlist umzubenennen" Height="25" Grid.Column="1" Margin="5,0" Background="{x:Null}" LostFocus="tboxPlaylistName_LostFocus" ForceCursor="True" KeyUp="tboxPlaylistName_KeyUp" Visibility="Hidden" />
+
+                            <Border Name="brdKlangKategorie" Height="Auto" Margin="0,6,20,6" Grid.Column="2" Grid.ColumnSpan="2" CornerRadius="5" HorizontalAlignment="Stretch" ToolTip="Kategorie" Visibility="Hidden" >
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                                        <GradientStop Color="Beige" Offset="0" />
+                                        <GradientStop Color="#FFFFFFC7" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <TextBox Name="tboxKlangKategorie" Padding="4,0,4,4" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" VerticalContentAlignment="Center" TextChanged="tboxKlangKategorie_TextChanged" />
+                            </Border>
+
                             <Label Content="Songs parallel" Height="28" Name="lblKlangSongsParallel" FlowDirection="LeftToRight" HorizontalAlignment="Left" Grid.Column="2" Visibility="Hidden" />
-                            <!-- <ViewGeneral:IntBox HorizontalAlignment="Left" Value="1"  ShowButtons="True" MinWidth="65" x:Name="klangsongparallel0" MaxValue="1" MinValue="1" NumValueChanged="klangsongparallel0_NumValueChanged" Visibility="Hidden" Grid.Column="3" /> -->
+
                             <RadioButton Content="Musikmusik" GroupName="TypListe" Height="17" IsChecked="True" Name="rbIstMusikPlaylist" VerticalAlignment="Center" HorizontalAlignment="Left" Width="112" Click="rbIstMusikPlaylist_Click" Grid.Column="5" Visibility="Hidden" />
                             <RadioButton Content="Klänge &amp; Geräusche" GroupName="TypListe" Height="17" IsChecked="False" Name="rbIstKlangPlaylist" VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Left" Click="rbIstKlangPlaylist_Click" Visibility="Hidden" />
 
