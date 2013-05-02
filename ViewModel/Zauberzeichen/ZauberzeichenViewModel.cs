@@ -276,7 +276,8 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
         public Talent VerwendeteRitualkenntnis
         {
             get { return verwendeteRitualkenntnis; }
-            set { 
+            set
+            {
                 verwendeteRitualkenntnis = value;
                 OnChanged("VerwendeteRitualkenntnis");
             }
@@ -548,7 +549,8 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
 
         #region //---- KONSTRUKTOR ----
 
-        public ZauberzeichenViewModel() : base(View.General.ViewHelper.ShowProbeDialog)
+        public ZauberzeichenViewModel()
+            : base(View.General.ViewHelper.ShowProbeDialog)
         {
             _onBauZauberzeichen = new Base.CommandBase(BauZauberzeichen, null);
             _onAktivierungZauberzeichen = new Base.CommandBase(AktivierungZauberzeichen, null);
@@ -1040,7 +1042,7 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             WertAktivierungZauberzeichen = 0;
             WertQualitätZauberzeichen = 0;
             //Probe auf Erstellung würfeln
-            if (SelectedHeld != null)
+            if (SelectedHeld != null && SelectedTalentZauberzeichen != null)
             {
                 SelectedTalentZauberzeichen.Modifikator = WertKomplexitätZauberzeichen + WertErleichterungTaZauberzeichen;
                 SelectedTalentZauberzeichen.Fertigkeitswert = WertHandwerkZauberzeichen;
@@ -1079,16 +1081,39 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             WertHerstellungszeitRunen = 0;
             WertAktivierungRunen = 0;
             WertQualitätRunen = 0;
-            //TODO ??: Probe auf Erstellung würfeln
-            WertTaPRunen = WertHandwerkRunen - 3;
-            _wertTaPÜberRunen = WertTaPRunen;
+
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null && SelectedTalentRunen != null)
+            {
+                SelectedTalentRunen.Modifikator = WertKomplexitätRunen + WertErleichterungTaRunen;
+                SelectedTalentRunen.Fertigkeitswert = WertHandwerkRunen;
+                var ergebnis = ShowProbeDialog(SelectedTalentRunen, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    WertTaPRunen = ergebnis.Übrig;
+                    _wertTaPÜberRunen = WertTaPRunen;
+                }
+            }
         }
 
         void AktivierungRunen(object sender)
         {
-            //TODO ??: Probe auf Aktivierung würfeln
-            int rkpstern = 5;
-            WertRkPRunen = rkpstern;
+            //Probe auf Aktivierung würfeln
+            if (SelectedHeld != null && VerwendeteRitualkenntnis != null)
+            {
+                VerwendeteRitualkenntnis.Eigenschaft1 = "KL";
+                VerwendeteRitualkenntnis.Eigenschaft2 = "IN";
+                VerwendeteRitualkenntnis.Eigenschaft3 = "FF";
+                VerwendeteRitualkenntnis.Modifikator = WertErleichterungRkRunen;
+                VerwendeteRitualkenntnis.Fertigkeitswert = WertRitualkenntnis;
+                var ergebnis = ShowProbeDialog(VerwendeteRitualkenntnis, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    int rkpstern = ergebnis.Übrig;
+                    if (CheckedSpontanzeichenRunen) WertRkPRunen = (int)Math.Round(((double)rkpstern / 2), MidpointRounding.AwayFromZero);
+                    else WertRkPRunen = rkpstern;
+                }
+            }
         }
 
         void BauKreise(object sender)
@@ -1097,18 +1122,41 @@ namespace MeisterGeister.ViewModel.Zauberzeichen
             WertHerstellungszeitKreise = 0;
             WertAktivierungKreise = 0;
             WertQualitätKreise = 0;
-            //TODO ??: Probe auf Erstellung würfeln
-            WertTaPKreise = WertHandwerkKreise - 3;
-            _wertTaPÜberKreise = WertTaPKreise;
+
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null && SelectedTalentKreise != null)
+            {
+                SelectedTalentKreise.Modifikator = WertKomplexitätKreise + WertErleichterungTaKreise;
+                SelectedTalentKreise.Fertigkeitswert = WertHandwerkKreise;
+                var ergebnis = ShowProbeDialog(SelectedTalentKreise, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    WertTaPKreise = ergebnis.Übrig;
+                    _wertTaPÜberKreise = WertTaPKreise;
+                }
+            }
         }
 
         void AktivierungKreise(object sender)
         {
-            //TODO ??: Probe auf Aktivierung würfeln
-            int rkpstern = 5;
-            if (CheckedSpontanzeichenKreise) WertRkPKreise = (int)Math.Round(((double)rkpstern / 2), MidpointRounding.AwayFromZero);
-            else WertRkPKreise = rkpstern;
-            WertZirkelstärkeKreise += WertRkPKreise;
+            //Probe auf Aktivierung würfeln
+            if (SelectedHeld != null && VerwendeteRitualkenntnis != null)
+            {
+                VerwendeteRitualkenntnis.Eigenschaft1 = "KL";
+                VerwendeteRitualkenntnis.Eigenschaft2 = "IN";
+                VerwendeteRitualkenntnis.Eigenschaft3 = "FF";
+                VerwendeteRitualkenntnis.Modifikator = WertErleichterungRkKreise;
+                VerwendeteRitualkenntnis.Fertigkeitswert = WertRitualkenntnis;
+                var ergebnis = ShowProbeDialog(VerwendeteRitualkenntnis, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    int rkpstern = ergebnis.Übrig;
+                    if (CheckedSpontanzeichenKreise) WertRkPKreise = (int)Math.Round(((double)rkpstern / 2), MidpointRounding.AwayFromZero);
+                    else WertRkPKreise = rkpstern;
+                    WertZirkelstärkeKreise = (CheckedSpezifscheArtKreise ? 3 : 0) + (CheckedBestimmteArtKreise?3:0) + WertRkPKreise;
+                }
+            }
+
         }
         #endregion
 
