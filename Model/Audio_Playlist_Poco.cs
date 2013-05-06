@@ -86,20 +86,6 @@ namespace MeisterGeister.Model
     
         }
         private int _maxSongsParallel;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual string Kategorie
-        {
-            get { return _kategorie; }
-            set
-            {
-                _kategorie = value;
-                OnChanged("Kategorie");
-            }
-
-        }
-        private string _kategorie;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual double Länge
@@ -113,6 +99,19 @@ namespace MeisterGeister.Model
     
         }
         private double _länge;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Kategorie
+        {
+            get { return _kategorie; }
+            set
+    		{ 
+    			_kategorie = value;
+    			OnChanged("Kategorie");
+    		}
+    
+        }
+        private string _kategorie;
 
         #endregion
 

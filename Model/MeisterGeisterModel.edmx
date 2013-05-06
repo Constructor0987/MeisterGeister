@@ -4,16 +4,19 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-<Schema Namespace="DatabaseDSAModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="DatabaseDSAModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DatabaseDSAModelStoreContainer">
           <EntitySet Name="Abenteuer" EntityType="DatabaseDSAModel.Store.Abenteuer" store:Type="Tables" />
           <EntitySet Name="Abenteuer_Ereignis" EntityType="DatabaseDSAModel.Store.Abenteuer_Ereignis" store:Type="Tables" />
           <EntitySet Name="Abenteuer_Szene" EntityType="DatabaseDSAModel.Store.Abenteuer_Szene" store:Type="Tables" />
           <EntitySet Name="Abenteuer_Verweis" EntityType="DatabaseDSAModel.Store.Abenteuer_Verweis" store:Type="Tables" />
+          <EntitySet Name="Alchimierezept" EntityType="DatabaseDSAModel.Store.Alchimierezept" store:Type="Tables" />
+          <EntitySet Name="Alchimierezept_Setting" EntityType="DatabaseDSAModel.Store.Alchimierezept_Setting" store:Type="Tables" />
           <EntitySet Name="Audio_Playlist" EntityType="DatabaseDSAModel.Store.Audio_Playlist" store:Type="Tables" />
           <EntitySet Name="Audio_Playlist_Titel" EntityType="DatabaseDSAModel.Store.Audio_Playlist_Titel" store:Type="Tables" />
           <EntitySet Name="Audio_Theme" EntityType="DatabaseDSAModel.Store.Audio_Theme" store:Type="Tables" />
           <EntitySet Name="Audio_Theme_Playlist" EntityType="DatabaseDSAModel.Store.Audio_Theme_Playlist" store:Type="Tables" />
+          <EntitySet Name="Audio_Theme_Theme" EntityType="DatabaseDSAModel.Store.Audio_Theme_Theme" store:Type="Tables" />
           <EntitySet Name="Audio_Titel" EntityType="DatabaseDSAModel.Store.Audio_Titel" store:Type="Tables" />
           <EntitySet Name="Ausrüstung" EntityType="DatabaseDSAModel.Store.Ausrüstung" store:Type="Tables" />
           <EntitySet Name="Ausrüstung_Setting" EntityType="DatabaseDSAModel.Store.Ausrüstung_Setting" store:Type="Tables" />
@@ -62,6 +65,7 @@
           <EntitySet Name="Waffe_Talent" EntityType="DatabaseDSAModel.Store.Waffe_Talent" store:Type="Tables" />
           <EntitySet Name="Zauber" EntityType="DatabaseDSAModel.Store.Zauber" store:Type="Tables" />
           <EntitySet Name="Zauber_Setting" EntityType="DatabaseDSAModel.Store.Zauber_Setting" store:Type="Tables" />
+          <EntitySet Name="Zauber_Variante" EntityType="DatabaseDSAModel.Store.Zauber_Variante" store:Type="Tables" />
           <EntitySet Name="Zauberzeichen" EntityType="DatabaseDSAModel.Store.Zauberzeichen" store:Type="Tables" />
           <EntitySet Name="Zauberzeichen_Setting" EntityType="DatabaseDSAModel.Store.Zauberzeichen_Setting" store:Type="Tables" />
           <AssociationSet Name="fk_AbenteuerEreignis_Szene" Association="DatabaseDSAModel.Store.fk_AbenteuerEreignis_Szene">
@@ -88,6 +92,14 @@
             <End Role="Abenteuer_Szene" EntitySet="Abenteuer_Szene" />
             <End Role="Abenteuer_Verweis" EntitySet="Abenteuer_Verweis" />
           </AssociationSet>
+          <AssociationSet Name="fk_AlchimierezeptSetting_Alchimierezept" Association="DatabaseDSAModel.Store.fk_AlchimierezeptSetting_Alchimierezept">
+            <End Role="Alchimierezept" EntitySet="Alchimierezept" />
+            <End Role="Alchimierezept_Setting" EntitySet="Alchimierezept_Setting" />
+          </AssociationSet>
+          <AssociationSet Name="fk_AlchimierezeptSetting_Setting" Association="DatabaseDSAModel.Store.fk_AlchimierezeptSetting_Setting">
+            <End Role="Setting" EntitySet="Setting" />
+            <End Role="Alchimierezept_Setting" EntitySet="Alchimierezept_Setting" />
+          </AssociationSet>
           <AssociationSet Name="fk_Audio_Playlist_Titel_Playlist" Association="DatabaseDSAModel.Store.fk_Audio_Playlist_Titel_Playlist">
             <End Role="Audio_Playlist" EntitySet="Audio_Playlist" />
             <End Role="Audio_Playlist_Titel" EntitySet="Audio_Playlist_Titel" />
@@ -103,6 +115,14 @@
           <AssociationSet Name="fk_Audio_Theme_Playlist_Theme" Association="DatabaseDSAModel.Store.fk_Audio_Theme_Playlist_Theme">
             <End Role="Audio_Theme" EntitySet="Audio_Theme" />
             <End Role="Audio_Theme_Playlist" EntitySet="Audio_Theme_Playlist" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Audio_Theme_Theme_Theme1" Association="DatabaseDSAModel.Store.fk_Audio_Theme_Theme_Theme1">
+            <End Role="Audio_Theme" EntitySet="Audio_Theme" />
+            <End Role="Audio_Theme_Theme" EntitySet="Audio_Theme_Theme" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Audio_Theme_Theme_Theme2" Association="DatabaseDSAModel.Store.fk_Audio_Theme_Theme_Theme2">
+            <End Role="Audio_Theme" EntitySet="Audio_Theme" />
+            <End Role="Audio_Theme_Theme" EntitySet="Audio_Theme_Theme" />
           </AssociationSet>
           <AssociationSet Name="fk_AusrüstungSetting_Ausrüstung" Association="DatabaseDSAModel.Store.fk_AusrüstungSetting_Ausrüstung">
             <End Role="Ausrüstung" EntitySet="Ausrüstung" />
@@ -248,6 +268,10 @@
             <End Role="Zauber" EntitySet="Zauber" />
             <End Role="Zauber_Setting" EntitySet="Zauber_Setting" />
           </AssociationSet>
+          <AssociationSet Name="fk_ZauberVariante_Zauber" Association="DatabaseDSAModel.Store.fk_ZauberVariante_Zauber">
+            <End Role="Zauber" EntitySet="Zauber" />
+            <End Role="Zauber_Variante" EntitySet="Zauber_Variante" />
+          </AssociationSet>
           <AssociationSet Name="FK_Zauberzeichen_Sonderfertigkeit" Association="DatabaseDSAModel.Store.FK_Zauberzeichen_Sonderfertigkeit">
             <End Role="Sonderfertigkeit" EntitySet="Sonderfertigkeit" />
             <End Role="Zauberzeichen" EntitySet="Zauberzeichen" />
@@ -330,6 +354,38 @@
           <Property Name="VonEreignisGUID" Type="uniqueidentifier" />
           <Property Name="NachEreignisGUID" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="Alchimierezept">
+          <Key>
+            <PropertyRef Name="AlchimierezeptGUID" />
+          </Key>
+          <Property Name="AlchimierezeptGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Gruppe" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Kategorie" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="Merkmale" Type="ntext" />
+          <Property Name="Brauschwierigkeit" Type="int" Nullable="false" />
+          <Property Name="Analyseschwierigkeit" Type="int" Nullable="false" />
+          <Property Name="Beschaffungsschwierigkeit" Type="int" Nullable="false" />
+          <Property Name="Beschaffungskosten" Type="float" Nullable="false" />
+          <Property Name="Haltbarkeit" Type="nvarchar" MaxLength="30" />
+          <Property Name="Haltbarkeitseinheit" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Labor" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Zutaten" Type="ntext" />
+          <Property Name="Substitute" Type="ntext" />
+          <Property Name="Bemerkung" Type="ntext" />
+          <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
+          <Property Name="Tags" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Alchimierezept_Setting">
+          <Key>
+            <PropertyRef Name="AlchimierezeptGUID" />
+            <PropertyRef Name="SettingGUID" />
+          </Key>
+          <Property Name="AlchimierezeptGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Preis" Type="nvarchar" MaxLength="100" />
+          <Property Name="Verbreitung" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Audio_Playlist">
           <Key>
             <PropertyRef Name="Audio_PlaylistGUID" />
@@ -339,6 +395,7 @@
           <Property Name="Hintergrundmusik" Type="bit" Nullable="false" />
           <Property Name="MaxSongsParallel" Type="int" Nullable="false" />
           <Property Name="Länge" Type="float" Nullable="false" />
+          <Property Name="Kategorie" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Audio_Playlist_Titel">
           <Key>
@@ -379,6 +436,14 @@
           </Key>
           <Property Name="Audio_ThemeGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Audio_PlaylistGUID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Audio_Theme_Theme">
+          <Key>
+            <PropertyRef Name="Audio_ThemeGUID" />
+            <PropertyRef Name="Audio_UnterThemeGUID" />
+          </Key>
+          <Property Name="Audio_ThemeGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Audio_UnterThemeGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Audio_Titel">
           <Key>
@@ -1069,6 +1134,15 @@
           <Property Name="Merkmale" Type="nvarchar" MaxLength="300" />
           <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
           <Property Name="ZauberGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Zauberdauer" Type="nvarchar" MaxLength="300" />
+          <Property Name="Wirkungsdauer" Type="nvarchar" MaxLength="300" />
+          <Property Name="Reichweite" Type="nvarchar" MaxLength="300" />
+          <Property Name="Wirkungsradius" Type="nvarchar" MaxLength="300" />
+          <Property Name="Zielobjekt" Type="nvarchar" MaxLength="300" />
+          <Property Name="Modifikationen" Type="nvarchar" MaxLength="300" />
+          <Property Name="Kosten" Type="nvarchar" MaxLength="300" />
+          <Property Name="Tags" Type="ntext" />
+          <Property Name="Bemerkung" Type="ntext" />
         </EntityType>
         <EntityType Name="Zauber_Setting">
           <Key>
@@ -1078,6 +1152,27 @@
           <Property Name="ZauberGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Repräsentationen" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Zauber_Variante">
+          <Key>
+            <PropertyRef Name="ZauberGUID" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="ZauberGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="SpoMod" Type="bit" Nullable="false" />
+          <Property Name="Eigenschaft1" Type="nvarchar" MaxLength="2" />
+          <Property Name="Eigenschaft2" Type="nvarchar" MaxLength="2" />
+          <Property Name="Eigenschaft3" Type="nvarchar" MaxLength="2" />
+          <Property Name="Merkmale" Type="nvarchar" MaxLength="300" />
+          <Property Name="Zauberdauer" Type="nvarchar" MaxLength="300" />
+          <Property Name="Wirkungsdauer" Type="nvarchar" MaxLength="300" />
+          <Property Name="Reichweite" Type="nvarchar" MaxLength="300" />
+          <Property Name="Wirkungsradius" Type="nvarchar" MaxLength="300" />
+          <Property Name="Zielobjekt" Type="nvarchar" MaxLength="300" />
+          <Property Name="Kosten" Type="nvarchar" MaxLength="300" />
+          <Property Name="Tags" Type="ntext" />
+          <Property Name="Bemerkung" Type="ntext" />
         </EntityType>
         <EntityType Name="Zauberzeichen">
           <Key>
@@ -1180,6 +1275,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_AlchimierezeptSetting_Alchimierezept">
+          <End Role="Alchimierezept" Type="DatabaseDSAModel.Store.Alchimierezept" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Alchimierezept_Setting" Type="DatabaseDSAModel.Store.Alchimierezept_Setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alchimierezept">
+              <PropertyRef Name="AlchimierezeptGUID" />
+            </Principal>
+            <Dependent Role="Alchimierezept_Setting">
+              <PropertyRef Name="AlchimierezeptGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_AlchimierezeptSetting_Setting">
+          <End Role="Setting" Type="DatabaseDSAModel.Store.Setting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Alchimierezept_Setting" Type="DatabaseDSAModel.Store.Alchimierezept_Setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Setting">
+              <PropertyRef Name="SettingGUID" />
+            </Principal>
+            <Dependent Role="Alchimierezept_Setting">
+              <PropertyRef Name="SettingGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Audio_Playlist_Titel_Playlist">
           <End Role="Audio_Playlist" Type="DatabaseDSAModel.Store.Audio_Playlist" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1233,6 +1356,32 @@
             </Principal>
             <Dependent Role="Audio_Theme_Playlist">
               <PropertyRef Name="Audio_ThemeGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Audio_Theme_Theme_Theme1">
+          <End Role="Audio_Theme" Type="DatabaseDSAModel.Store.Audio_Theme" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Audio_Theme_Theme" Type="DatabaseDSAModel.Store.Audio_Theme_Theme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Audio_Theme">
+              <PropertyRef Name="Audio_ThemeGUID" />
+            </Principal>
+            <Dependent Role="Audio_Theme_Theme">
+              <PropertyRef Name="Audio_ThemeGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Audio_Theme_Theme_Theme2">
+          <End Role="Audio_Theme" Type="DatabaseDSAModel.Store.Audio_Theme" Multiplicity="1" />
+          <End Role="Audio_Theme_Theme" Type="DatabaseDSAModel.Store.Audio_Theme_Theme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Audio_Theme">
+              <PropertyRef Name="Audio_ThemeGUID" />
+            </Principal>
+            <Dependent Role="Audio_Theme_Theme">
+              <PropertyRef Name="Audio_UnterThemeGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1740,6 +1889,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ZauberVariante_Zauber">
+          <End Role="Zauber" Type="DatabaseDSAModel.Store.Zauber" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Zauber_Variante" Type="DatabaseDSAModel.Store.Zauber_Variante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zauber">
+              <PropertyRef Name="ZauberGUID" />
+            </Principal>
+            <Dependent Role="Zauber_Variante">
+              <PropertyRef Name="ZauberGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Zauberzeichen_Sonderfertigkeit">
           <End Role="Sonderfertigkeit" Type="DatabaseDSAModel.Store.Sonderfertigkeit" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1907,12 +2070,12 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="upper"
-            Aggregate="false"
-            BuiltIn="true"
-            NiladicFunction="false"
-            IsComposable="true"
-            ParameterTypeSemantics="AllowImplicitConversion"
-            ReturnType="nvarchar">
+          Aggregate="false"
+          BuiltIn="true"
+          NiladicFunction="false"
+          IsComposable="true"
+          ParameterTypeSemantics="AllowImplicitConversion"
+          ReturnType="nvarchar">
           <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
         </Function>
       </Schema>
@@ -1925,6 +2088,8 @@
           <EntitySet Name="Abenteuer_Ereignis" EntityType="DatabaseDSAModel.Abenteuer_Ereignis" />
           <EntitySet Name="Abenteuer_Szene" EntityType="DatabaseDSAModel.Abenteuer_Szene" />
           <EntitySet Name="Abenteuer_Verweis" EntityType="DatabaseDSAModel.Abenteuer_Verweis" />
+          <EntitySet Name="Alchimierezept" EntityType="DatabaseDSAModel.Alchimierezept" />
+          <EntitySet Name="Alchimierezept_Setting" EntityType="DatabaseDSAModel.Alchimierezept_Setting" />
           <EntitySet Name="Audio_Playlist" EntityType="DatabaseDSAModel.Audio_Playlist" />
           <EntitySet Name="Audio_Playlist_Titel" EntityType="DatabaseDSAModel.Audio_Playlist_Titel" />
           <EntitySet Name="Audio_Theme" EntityType="DatabaseDSAModel.Audio_Theme" />
@@ -1974,6 +2139,7 @@
           <EntitySet Name="Waffe" EntityType="DatabaseDSAModel.Waffe" />
           <EntitySet Name="Zauber" EntityType="DatabaseDSAModel.Zauber" />
           <EntitySet Name="Zauber_Setting" EntityType="DatabaseDSAModel.Zauber_Setting" />
+          <EntitySet Name="Zauber_Variante" EntityType="DatabaseDSAModel.Zauber_Variante" />
           <EntitySet Name="Zauberzeichen" EntityType="DatabaseDSAModel.Zauberzeichen" />
           <EntitySet Name="Zauberzeichen_Setting" EntityType="DatabaseDSAModel.Zauberzeichen_Setting" />
           <AssociationSet Name="fk_AbenteuerSzene_Abenteuer" Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer">
@@ -1999,6 +2165,14 @@
           <AssociationSet Name="fk_AbenteuerVerweis_VonSzene" Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonSzene">
             <End Role="Abenteuer_Szene" EntitySet="Abenteuer_Szene" />
             <End Role="Abenteuer_Verweis" EntitySet="Abenteuer_Verweis" />
+          </AssociationSet>
+          <AssociationSet Name="fk_AlchimierezeptSetting_Alchimierezept" Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Alchimierezept">
+            <End Role="Alchimierezept" EntitySet="Alchimierezept" />
+            <End Role="Alchimierezept_Setting" EntitySet="Alchimierezept_Setting" />
+          </AssociationSet>
+          <AssociationSet Name="fk_AlchimierezeptSetting_Setting" Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting">
+            <End Role="Setting" EntitySet="Setting" />
+            <End Role="Alchimierezept_Setting" EntitySet="Alchimierezept_Setting" />
           </AssociationSet>
           <AssociationSet Name="fk_Audio_Playlist_Titel_Playlist" Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist">
             <End Role="Audio_Playlist" EntitySet="Audio_Playlist" />
@@ -2180,6 +2354,10 @@
             <End Role="Zauber" EntitySet="Zauber" />
             <End Role="Zauber_Setting" EntitySet="Zauber_Setting" />
           </AssociationSet>
+          <AssociationSet Name="fk_ZauberVariante_Zauber" Association="DatabaseDSAModel.fk_ZauberVariante_Zauber">
+            <End Role="Zauber" EntitySet="Zauber" />
+            <End Role="Zauber_Variante" EntitySet="Zauber_Variante" />
+          </AssociationSet>
           <AssociationSet Name="fk_ZauberzeichenSetting_Zauberzeichen" Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Zauberzeichen">
             <End Role="Zauberzeichen" EntitySet="Zauberzeichen" />
             <End Role="Zauberzeichen_Setting" EntitySet="Zauberzeichen_Setting" />
@@ -2187,6 +2365,10 @@
           <AssociationSet Name="Audio_Theme_Playlist" Association="DatabaseDSAModel.Audio_Theme_Playlist">
             <End Role="Audio_Playlist" EntitySet="Audio_Playlist" />
             <End Role="Audio_Theme" EntitySet="Audio_Theme" />
+          </AssociationSet>
+          <AssociationSet Name="Audio_Theme_Theme" Association="DatabaseDSAModel.Audio_Theme_Theme">
+            <End Role="Audio_Theme" EntitySet="Audio_Theme" />
+            <End Role="Audio_Theme1" EntitySet="Audio_Theme" />
           </AssociationSet>
           <AssociationSet Name="Fernkampfwaffe_Talent" Association="DatabaseDSAModel.Fernkampfwaffe_Talent">
             <End Role="Talent" EntitySet="Talent" />
@@ -2242,6 +2424,41 @@
           <NavigationProperty Name="Abenteuer_Szene" Relationship="DatabaseDSAModel.fk_AbenteuerVerweis_NachSzene" FromRole="Abenteuer_Verweis" ToRole="Abenteuer_Szene" />
           <NavigationProperty Name="Abenteuer_Szene1" Relationship="DatabaseDSAModel.fk_AbenteuerVerweis_VonSzene" FromRole="Abenteuer_Verweis" ToRole="Abenteuer_Szene" />
         </EntityType>
+        <EntityType Name="Alchimierezept">
+          <Key>
+            <PropertyRef Name="AlchimierezeptGUID" />
+          </Key>
+          <Property Type="Guid" Name="AlchimierezeptGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Gruppe" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Kategorie" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Merkmale" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Brauschwierigkeit" Nullable="false" />
+          <Property Type="Int32" Name="Analyseschwierigkeit" Nullable="false" />
+          <Property Type="Int32" Name="Beschaffungsschwierigkeit" Nullable="false" />
+          <Property Type="Double" Name="Beschaffungskosten" Nullable="false" />
+          <Property Type="String" Name="Haltbarkeit" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Haltbarkeitseinheit" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Labor" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Zutaten" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Substitute" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Tags" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Alchimierezept_Setting" Relationship="DatabaseDSAModel.fk_AlchimierezeptSetting_Alchimierezept" FromRole="Alchimierezept" ToRole="Alchimierezept_Setting" />
+        </EntityType>
+        <EntityType Name="Alchimierezept_Setting">
+          <Key>
+            <PropertyRef Name="AlchimierezeptGUID" />
+            <PropertyRef Name="SettingGUID" />
+          </Key>
+          <Property Type="Guid" Name="AlchimierezeptGUID" Nullable="false" />
+          <Property Type="Guid" Name="SettingGUID" Nullable="false" />
+          <Property Type="String" Name="Preis" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Verbreitung" Nullable="false" />
+          <NavigationProperty Name="Alchimierezept" Relationship="DatabaseDSAModel.fk_AlchimierezeptSetting_Alchimierezept" FromRole="Alchimierezept_Setting" ToRole="Alchimierezept" />
+          <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting" FromRole="Alchimierezept_Setting" ToRole="Setting" />
+        </EntityType>
         <EntityType Name="Audio_Playlist">
           <Key>
             <PropertyRef Name="Audio_PlaylistGUID" />
@@ -2253,6 +2470,7 @@
           <Property Type="Double" Name="Länge" Nullable="false" />
           <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
           <NavigationProperty Name="Audio_Theme" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Theme" />
+          <Property Type="String" Name="Kategorie" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Audio_Playlist_Titel">
           <Key>
@@ -2288,6 +2506,8 @@
           <Property Type="Int32" Name="Hintergrund_VolMod" Nullable="false" />
           <Property Type="Int32" Name="Klang_VolMod" Nullable="false" />
           <NavigationProperty Name="Audio_Playlist" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Theme" ToRole="Audio_Playlist" />
+          <NavigationProperty Name="Audio_Theme1" Relationship="DatabaseDSAModel.Audio_Theme_Theme" FromRole="Audio_Theme" ToRole="Audio_Theme1" />
+          <NavigationProperty Name="Audio_Theme2" Relationship="DatabaseDSAModel.Audio_Theme_Theme" FromRole="Audio_Theme1" ToRole="Audio_Theme" />
         </EntityType>
         <EntityType Name="Audio_Titel">
           <Key>
@@ -2916,6 +3136,7 @@
           <Property Type="Guid" Name="SettingGUID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="Aktiv" Nullable="false" />
+          <NavigationProperty Name="Alchimierezept_Setting" Relationship="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting" FromRole="Setting" ToRole="Alchimierezept_Setting" />
           <NavigationProperty Name="Ausrüstung_Setting" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Setting" FromRole="Setting" ToRole="Ausrüstung_Setting" />
           <NavigationProperty Name="Handelsgut_Setting" Relationship="DatabaseDSAModel.fk_HandelsgutSetting_Setting" FromRole="Setting" ToRole="Handelsgut_Setting" />
           <NavigationProperty Name="Sonderfertigkeit_Setting" Relationship="DatabaseDSAModel.fk_SonderfertigkeitSetting_Setting" FromRole="Setting" ToRole="Sonderfertigkeit_Setting" />
@@ -3047,8 +3268,18 @@
           <Property Type="String" Name="Merkmale" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Literatur" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Type="Guid" Name="ZauberGUID" Nullable="false" />
+          <Property Type="String" Name="Zauberdauer" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Wirkungsdauer" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Reichweite" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Wirkungsradius" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Zielobjekt" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Modifikationen" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Kosten" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Tags" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Held_Zauber" Relationship="DatabaseDSAModel.Zauber_FK" FromRole="Zauber" ToRole="Held_Zauber" />
           <NavigationProperty Name="Zauber_Setting" Relationship="DatabaseDSAModel.fk_ZauberSetting_Zauber" FromRole="Zauber" ToRole="Zauber_Setting" />
+          <NavigationProperty Name="Zauber_Variante" Relationship="DatabaseDSAModel.fk_ZauberVariante_Zauber" FromRole="Zauber" ToRole="Zauber_Variante" />
         </EntityType>
         <EntityType Name="Zauber_Setting">
           <Key>
@@ -3060,6 +3291,28 @@
           <Property Type="String" Name="Repräsentationen" MaxLength="300" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_ZauberSetting_Setting" FromRole="Zauber_Setting" ToRole="Setting" />
           <NavigationProperty Name="Zauber" Relationship="DatabaseDSAModel.fk_ZauberSetting_Zauber" FromRole="Zauber_Setting" ToRole="Zauber" />
+        </EntityType>
+        <EntityType Name="Zauber_Variante">
+          <Key>
+            <PropertyRef Name="ZauberGUID" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Type="Guid" Name="ZauberGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="SpoMod" Nullable="false" />
+          <Property Type="String" Name="Eigenschaft1" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Eigenschaft2" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Eigenschaft3" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Merkmale" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Zauberdauer" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Wirkungsdauer" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Reichweite" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Wirkungsradius" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Zielobjekt" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Kosten" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Tags" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Bemerkung" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Zauber" Relationship="DatabaseDSAModel.fk_ZauberVariante_Zauber" FromRole="Zauber_Variante" ToRole="Zauber" />
         </EntityType>
         <EntityType Name="Zauberzeichen">
           <Key>
@@ -3163,6 +3416,34 @@
             </Principal>
             <Dependent Role="Abenteuer_Verweis">
               <PropertyRef Name="VonSzeneGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_AlchimierezeptSetting_Alchimierezept">
+          <End Type="DatabaseDSAModel.Alchimierezept" Role="Alchimierezept" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.Alchimierezept_Setting" Role="Alchimierezept_Setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alchimierezept">
+              <PropertyRef Name="AlchimierezeptGUID" />
+            </Principal>
+            <Dependent Role="Alchimierezept_Setting">
+              <PropertyRef Name="AlchimierezeptGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_AlchimierezeptSetting_Setting">
+          <End Type="DatabaseDSAModel.Setting" Role="Setting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.Alchimierezept_Setting" Role="Alchimierezept_Setting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Setting">
+              <PropertyRef Name="SettingGUID" />
+            </Principal>
+            <Dependent Role="Alchimierezept_Setting">
+              <PropertyRef Name="SettingGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3794,6 +4075,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ZauberVariante_Zauber">
+          <End Type="DatabaseDSAModel.Zauber" Role="Zauber" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DatabaseDSAModel.Zauber_Variante" Role="Zauber_Variante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zauber">
+              <PropertyRef Name="ZauberGUID" />
+            </Principal>
+            <Dependent Role="Zauber_Variante">
+              <PropertyRef Name="ZauberGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_ZauberzeichenSetting_Zauberzeichen">
           <End Type="DatabaseDSAModel.Zauberzeichen" Role="Zauberzeichen" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3811,6 +4106,10 @@
         <Association Name="Audio_Theme_Playlist">
           <End Type="DatabaseDSAModel.Audio_Playlist" Role="Audio_Playlist" Multiplicity="*" />
           <End Type="DatabaseDSAModel.Audio_Theme" Role="Audio_Theme" Multiplicity="*" />
+        </Association>
+        <Association Name="Audio_Theme_Theme">
+          <End Type="DatabaseDSAModel.Audio_Theme" Role="Audio_Theme" Multiplicity="*" />
+          <End Type="DatabaseDSAModel.Audio_Theme" Role="Audio_Theme1" Multiplicity="*" />
         </Association>
         <Association Name="Fernkampfwaffe_Talent">
           <End Type="DatabaseDSAModel.Talent" Role="Talent" Multiplicity="*" />
@@ -3863,9 +4162,43 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Alchimierezept">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Alchimierezept">
+              <MappingFragment StoreEntitySet="Alchimierezept">
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Literatur" ColumnName="Literatur" />
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="Substitute" ColumnName="Substitute" />
+                <ScalarProperty Name="Zutaten" ColumnName="Zutaten" />
+                <ScalarProperty Name="Labor" ColumnName="Labor" />
+                <ScalarProperty Name="Haltbarkeitseinheit" ColumnName="Haltbarkeitseinheit" />
+                <ScalarProperty Name="Haltbarkeit" ColumnName="Haltbarkeit" />
+                <ScalarProperty Name="Beschaffungskosten" ColumnName="Beschaffungskosten" />
+                <ScalarProperty Name="Beschaffungsschwierigkeit" ColumnName="Beschaffungsschwierigkeit" />
+                <ScalarProperty Name="Analyseschwierigkeit" ColumnName="Analyseschwierigkeit" />
+                <ScalarProperty Name="Brauschwierigkeit" ColumnName="Brauschwierigkeit" />
+                <ScalarProperty Name="Merkmale" ColumnName="Merkmale" />
+                <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
+                <ScalarProperty Name="Gruppe" ColumnName="Gruppe" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AlchimierezeptGUID" ColumnName="AlchimierezeptGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alchimierezept_Setting">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Alchimierezept_Setting">
+              <MappingFragment StoreEntitySet="Alchimierezept_Setting">
+                <ScalarProperty Name="Verbreitung" ColumnName="Verbreitung" />
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+                <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
+                <ScalarProperty Name="AlchimierezeptGUID" ColumnName="AlchimierezeptGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Audio_Playlist">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Audio_Playlist">
               <MappingFragment StoreEntitySet="Audio_Playlist">
+                <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
                 <ScalarProperty Name="Länge" ColumnName="Länge" />
                 <ScalarProperty Name="MaxSongsParallel" ColumnName="MaxSongsParallel" />
                 <ScalarProperty Name="Hintergrundmusik" ColumnName="Hintergrundmusik" />
@@ -4591,6 +4924,15 @@
           <EntitySetMapping Name="Zauber">
             <EntityTypeMapping TypeName="DatabaseDSAModel.Zauber">
               <MappingFragment StoreEntitySet="Zauber">
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Kosten" ColumnName="Kosten" />
+                <ScalarProperty Name="Modifikationen" ColumnName="Modifikationen" />
+                <ScalarProperty Name="Zielobjekt" ColumnName="Zielobjekt" />
+                <ScalarProperty Name="Wirkungsradius" ColumnName="Wirkungsradius" />
+                <ScalarProperty Name="Reichweite" ColumnName="Reichweite" />
+                <ScalarProperty Name="Wirkungsdauer" ColumnName="Wirkungsdauer" />
+                <ScalarProperty Name="Zauberdauer" ColumnName="Zauberdauer" />
                 <ScalarProperty Name="ZauberGUID" ColumnName="ZauberGUID" />
                 <ScalarProperty Name="Literatur" ColumnName="Literatur" />
                 <ScalarProperty Name="Merkmale" ColumnName="Merkmale" />
@@ -4607,6 +4949,27 @@
               <MappingFragment StoreEntitySet="Zauber_Setting">
                 <ScalarProperty Name="Repräsentationen" ColumnName="Repräsentationen" />
                 <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
+                <ScalarProperty Name="ZauberGUID" ColumnName="ZauberGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zauber_Variante">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Zauber_Variante">
+              <MappingFragment StoreEntitySet="Zauber_Variante">
+                <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Kosten" ColumnName="Kosten" />
+                <ScalarProperty Name="Zielobjekt" ColumnName="Zielobjekt" />
+                <ScalarProperty Name="Wirkungsradius" ColumnName="Wirkungsradius" />
+                <ScalarProperty Name="Reichweite" ColumnName="Reichweite" />
+                <ScalarProperty Name="Wirkungsdauer" ColumnName="Wirkungsdauer" />
+                <ScalarProperty Name="Zauberdauer" ColumnName="Zauberdauer" />
+                <ScalarProperty Name="Merkmale" ColumnName="Merkmale" />
+                <ScalarProperty Name="Eigenschaft3" ColumnName="Eigenschaft3" />
+                <ScalarProperty Name="Eigenschaft2" ColumnName="Eigenschaft2" />
+                <ScalarProperty Name="Eigenschaft1" ColumnName="Eigenschaft1" />
+                <ScalarProperty Name="SpoMod" ColumnName="SpoMod" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ZauberGUID" ColumnName="ZauberGUID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4643,6 +5006,14 @@
             </EndProperty>
             <EndProperty Name="Audio_Playlist">
               <ScalarProperty Name="Audio_PlaylistGUID" ColumnName="Audio_PlaylistGUID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Audio_Theme_Theme" TypeName="DatabaseDSAModel.Audio_Theme_Theme" StoreEntitySet="Audio_Theme_Theme">
+            <EndProperty Name="Audio_Theme1">
+              <ScalarProperty Name="Audio_ThemeGUID" ColumnName="Audio_UnterThemeGUID" />
+            </EndProperty>
+            <EndProperty Name="Audio_Theme">
+              <ScalarProperty Name="Audio_ThemeGUID" ColumnName="Audio_ThemeGUID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Fernkampfwaffe_Talent" TypeName="DatabaseDSAModel.Fernkampfwaffe_Talent" StoreEntitySet="Fernkampfwaffe_Talent">
@@ -4683,67 +5054,72 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="MeisterGeisterModel" ZoomLevel="68">
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="8.4144301844827982" PointY="6.5016569674488425" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="10.727252326313057" PointY="3.0892329528412006" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="3.7143744098555178" PointY="2.9349090768652544" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="11.703409312154822" PointY="28.903998000968247" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="2.1263770433731271" PointY="0.097288906619552945" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="8.163636170403862" PointY="21.824819113046313" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="5.1018890128945413" PointY="28.489409832511754" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="4.4113900477119676" PointY="2.7961354119685176" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="11.091326716864169" PointY="9.8060002521639689" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="11.102346751420919" PointY="17.357467778659178" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellungen" Width="1.5" PointX="8.6640517379455524" PointY="2.7866641445023306" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="1.4037827986310156" PointY="18.562065535486706" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="0.5992686602283589" PointY="16.662701957236372" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="3.914992116352074" PointY="5.2280351841952815" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="2.6840120808612613" PointY="28.463956741832178" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="6.4265829224263245" PointY="14.346892259245223" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="0.48981137596527646" PointY="20.991986239790911" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.890413550608985" PointY="2.5054382097467025" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="7.7982727940186267" PointY="18.430220582722789" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="1.9992219461124492" PointY="4.9741149269855187" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="10.611409400874473" PointY="5.2036875063570625" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="3.89109695325191" PointY="10.215800409305748" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="2.7395833110155459" PointY="5.118782746195226" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="11.740632399795871" PointY="17.959250711816946" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="4.1843105164283472" PointY="6.0503214029829584" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="0.33943258427988393" PointY="8.6170752535653659" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="5.1918576514310475" PointY="5.1975657219055877" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="5.7169718377836851" PointY="19.651816347451796" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="1.0343385641623002" PointY="10.043940668014782" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="0.55919369708709121" PointY="25.242296469045009" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="9.1855987874723954" PointY="25.981056314884245" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="8.1549871695018314" PointY="9.2063820404961625" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="5.609900417556009" PointY="7.4228041951650772" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="7.6944957914270908" PointY="24.613051127927868" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="10.793115136582923" PointY="9.2582685841518781" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="5.2502779854695678" PointY="11.146650662248327" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="1.6780281484490391" PointY="24.6321430768036" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="7.8976410161227184" PointY="17.900450461497741" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="9.1539021009364649" PointY="25.527620387043626" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Regeln" Width="1.5" PointX="4.2211912647919689" PointY="28.479267014413729" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="6.5078808341677679" PointY="24.480728265121918" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="9.776202677644882" PointY="1.1070441459804048" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="10.334551193907181" PointY="8.5204792062381642" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="0.18822694578591126" PointY="28.108597947335149" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="2.1550230021379067" PointY="12.055953120838829" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="11.905200764492713" PointY="10.751453449368222" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="6.3521390214339553" PointY="12.088962053921522" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="4.6796943101471724" PointY="2.3160354207810179" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="5.7963956453820664" PointY="1.169876501508931" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="10.221024735933646" PointY="31.882751300876379" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="6.2250477383961194" PointY="6.6953019381944561" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="7.9416038803484312" PointY="1.8998927929903813" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="9.0185925406490419" PointY="21.758502895831363" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="1.5533750716379728" PointY="21.212810660345859" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="6.051446129591878" PointY="29.344807772592088" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="0.96694931432928388" PointY="21.774557257897481" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="10.92584617758442" PointY="25.199831035546879" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="1.751697220723935" PointY="15.72876121836191" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="5.0563453943731016" PointY="28.033892316759513" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="3.1586975525872307" PointY="7.0388677301997635" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="4.9298608381905877" PointY="21.288745666522878" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="11.375903611712111" PointY="26.978858781502982" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="9.0059780669426441" PointY="7.8056271708596627" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="10.849952017352894" PointY="16.729648284953853" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="8.5725372976495589" PointY="19.267101818354384" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="10.012235366745031" PointY="7.87564142415097" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="7.9915312118788862" PointY="6.1827491550625995" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellungen" Width="1.5" PointX="1.4551266494463788" PointY="5.045364352429921" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="9.0535776713181182" PointY="31.424367800086909" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="9.318227513375799" PointY="14.278751126620337" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="7.511944578733269" PointY="21.310957158594839" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="7.5460697987797065" PointY="27.959435788895671" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="3.5804742442353046" PointY="30.635172619780139" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="11.761084657051175" PointY="4.0011461246764037" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="4.3924612907657687" PointY="24.519147571418038" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="10.029093737727539" PointY="11.153976698943403" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="9.0941070956616237" PointY="13.028003728495913" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="8.6483826919684113" PointY="2.8597438348735422" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="6.5595395036784652" PointY="23.387373890442483" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="3.1334197275030515" PointY="2.6870426697130512" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="4.7603755093926452" PointY="29.815475790675485" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="9.30290237129801" PointY="29.216775654450419" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="5.642520655711424" PointY="26.702890080727119" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="0.17392775983266895" PointY="22.952840651829188" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="7.9948099888837021" PointY="31.625828236167241" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="8.8447077855675982" PointY="14.059219918241361" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="1.1944821054090196" PointY="26.14444234694561" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="7.1276308200916425" PointY="23.835338409913394" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="0.43720982616637361" PointY="2.3763071756699623" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="6.5365977988283142" PointY="25.380768892066911" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="3.166025532021199" PointY="24.932059254931314" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="1.8811568160919272" PointY="30.340951888980786" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="9.1960694441553521" PointY="15.545317612376678" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="5.8592584383949911" PointY="8.2827461698477833" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="5.6701482411800646" PointY="1.020593896983468" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="7.3324721284827561" PointY="0.75549989973916665" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Regeln" Width="1.5" PointX="8.6507181975295389" PointY="22.161564032622412" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="0.59415616308998143" PointY="22.2163764192799" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="10.688706563175053" PointY="22.906077142295462" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="4.8422677651244532" PointY="14.845041237233691" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="11.314261972584884" PointY="8.410051766973945" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="5.50561980786995" PointY="12.087401872541477" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="0.34997255371416575" PointY="12.685030049032081" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="2.9882591566947565" PointY="30.106509908152049" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="9.7578705780943249" PointY="31.227015435335698" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="0.63519411191120467" PointY="15.115798167472612" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="2.2336674100876168" PointY="14.975017047941227" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="9.8416154691211943" PointY="19.762275436782407" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="9.2996466054113789" PointY="26.466787767813909" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="1.7602214262635547" PointY="31.501404136187119" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="4.1543253418776791" PointY="24.181061189706" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="2.937167003255881" PointY="20.2988994067064" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="4.52721346007996" PointY="22.830387528441097" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerEreignis_Szene" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachEreignis" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonEreignis" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachSzene" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonSzene" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Alchimierezept" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" />
         <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" />
         <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" />
@@ -4789,8 +5165,10 @@
         <AssociationConnector Association="DatabaseDSAModel.FK_Zauberzeichen_Sonderfertigkeit" />
         <AssociationConnector Association="DatabaseDSAModel.Gruppe" />
         <AssociationConnector Association="DatabaseDSAModel.fk_ZauberSetting_Zauber" />
+        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberVariante_Zauber" />
         <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Zauberzeichen" />
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Playlist" />
+        <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" />
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" />
         <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" />
       </Diagram>

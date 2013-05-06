@@ -5587,7 +5587,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
             UpdateAudioThemeToolTip(_ThemeGruppe[aktiveThemeGruppe]);
 
-		    _ThemeGruppe[aktiveThemeGruppe].dbAudioTheme.Audio_UnterTheme.Add(aUnterTheme.dbAudioTheme);
+		    _ThemeGruppe[aktiveThemeGruppe].dbAudioTheme.Children.Add(aUnterTheme.dbAudioTheme);
 		    Global.ContextAudio.Update<Audio_Theme>(_ThemeGruppe[aktiveThemeGruppe].dbAudioTheme);
              
 		}

@@ -91,6 +91,18 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Abenteuer_Verweis> _abenteuer_Verweis;
     
+        public ObjectSet<Alchimierezept> Alchimierezept
+        {
+            get { return _alchimierezept  ?? (_alchimierezept = CreateObjectSet<Alchimierezept>("Alchimierezept")); }
+        }
+        private ObjectSet<Alchimierezept> _alchimierezept;
+    
+        public ObjectSet<Alchimierezept_Setting> Alchimierezept_Setting
+        {
+            get { return _alchimierezept_Setting  ?? (_alchimierezept_Setting = CreateObjectSet<Alchimierezept_Setting>("Alchimierezept_Setting")); }
+        }
+        private ObjectSet<Alchimierezept_Setting> _alchimierezept_Setting;
+    
         public ObjectSet<Audio_Playlist> Audio_Playlist
         {
             get { return _audio_Playlist  ?? (_audio_Playlist = CreateObjectSet<Audio_Playlist>("Audio_Playlist")); }
@@ -385,6 +397,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Zauber_Setting> _zauber_Setting;
     
+        public ObjectSet<Zauber_Variante> Zauber_Variante
+        {
+            get { return _zauber_Variante  ?? (_zauber_Variante = CreateObjectSet<Zauber_Variante>("Zauber_Variante")); }
+        }
+        private ObjectSet<Zauber_Variante> _zauber_Variante;
+    
         public ObjectSet<Zauberzeichen> Zauberzeichen
         {
             get { return _zauberzeichen  ?? (_zauberzeichen = CreateObjectSet<Zauberzeichen>("Zauberzeichen")); }
@@ -410,6 +428,10 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Abenteuer_Szene;
     		if(typeof(T) == typeof(Abenteuer_Verweis))
     				return (ObjectSet<T>)(Object)Abenteuer_Verweis;
+    		if(typeof(T) == typeof(Alchimierezept))
+    				return (ObjectSet<T>)(Object)Alchimierezept;
+    		if(typeof(T) == typeof(Alchimierezept_Setting))
+    				return (ObjectSet<T>)(Object)Alchimierezept_Setting;
     		if(typeof(T) == typeof(Audio_Playlist))
     				return (ObjectSet<T>)(Object)Audio_Playlist;
     		if(typeof(T) == typeof(Audio_Playlist_Titel))
@@ -508,6 +530,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Zauber;
     		if(typeof(T) == typeof(Zauber_Setting))
     				return (ObjectSet<T>)(Object)Zauber_Setting;
+    		if(typeof(T) == typeof(Zauber_Variante))
+    				return (ObjectSet<T>)(Object)Zauber_Variante;
     		if(typeof(T) == typeof(Zauberzeichen))
     				return (ObjectSet<T>)(Object)Zauberzeichen;
     		if(typeof(T) == typeof(Zauberzeichen_Setting))

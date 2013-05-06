@@ -47,22 +47,6 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _audio_ThemeGUID;
-
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual System.Guid Audio_UnterThemeGUID
-        {
-            get { return _audio_UnterThemeGUID; }
-            set
-            {
-                _audio_UnterThemeGUID = value;
-                OnChanged("Audio_UnterThemeGUID");
-            }
-
-        }
-        private System.Guid _audio_UnterThemeGUID;
-
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Name
@@ -77,21 +61,19 @@ namespace MeisterGeister.Model
         }
         private string _name;
     	///<summary>Database persistent property</summary>
-
     	[DataMember]
         public virtual int Hintergrund_VolMod
         {
             get { return _hintergrund_VolMod; }
             set
-    		{
-                _hintergrund_VolMod = value;
+    		{ 
+    			_hintergrund_VolMod = value;
     			OnChanged("Hintergrund_VolMod");
     		}
     
         }
         private int _hintergrund_VolMod;
     	///<summary>Database persistent property</summary>
-
     	[DataMember]
         public virtual int Klang_VolMod
         {
@@ -108,8 +90,8 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Navigation Properties
-
-        [DataMember]
+    
+    	[DataMember]
         public virtual ICollection<Audio_Playlist> Audio_Playlist
         {
             get
@@ -141,38 +123,72 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Audio_Playlist> _audio_Playlist;
-
-        public virtual ICollection<Audio_Theme> Audio_UnterTheme
+    
+    	[DataMember]
+        public virtual ICollection<Audio_Theme> Audio_Theme1
         {
             get
             {
-                if (_audio_UnterTheme == null)
+                if (_audio_Theme1 == null)
                 {
                     var newCollection = new FixupCollection<Audio_Theme>();
-                    newCollection.CollectionChanged += FixupAudio_Theme;
-                    _audio_UnterTheme = newCollection;
+                    newCollection.CollectionChanged += FixupAudio_Theme1;
+                    _audio_Theme1 = newCollection;
                 }
-                return _audio_UnterTheme;
+                return _audio_Theme1;
             }
             set
             {
-                if (!ReferenceEquals(_audio_UnterTheme, value))
+                if (!ReferenceEquals(_audio_Theme1, value))
                 {
-                    var previousValue = _audio_UnterTheme as FixupCollection<Audio_Playlist>;
+                    var previousValue = _audio_Theme1 as FixupCollection<Audio_Theme>;
                     if (previousValue != null)
                     {
-                        previousValue.CollectionChanged -= FixupAudio_Theme;
+                        previousValue.CollectionChanged -= FixupAudio_Theme1;
                     }
-                    _audio_UnterTheme = value;
-                    var newValue = value as FixupCollection<Audio_Playlist>;
+                    _audio_Theme1 = value;
+                    var newValue = value as FixupCollection<Audio_Theme>;
                     if (newValue != null)
                     {
-                        newValue.CollectionChanged += FixupAudio_Theme;
+                        newValue.CollectionChanged += FixupAudio_Theme1;
                     }
                 }
             }
         }
-        private ICollection<Audio_Theme> _audio_UnterTheme;
+        private ICollection<Audio_Theme> _audio_Theme1;
+    
+    	[DataMember]
+        public virtual ICollection<Audio_Theme> Audio_Theme2
+        {
+            get
+            {
+                if (_audio_Theme2 == null)
+                {
+                    var newCollection = new FixupCollection<Audio_Theme>();
+                    newCollection.CollectionChanged += FixupAudio_Theme2;
+                    _audio_Theme2 = newCollection;
+                }
+                return _audio_Theme2;
+            }
+            set
+            {
+                if (!ReferenceEquals(_audio_Theme2, value))
+                {
+                    var previousValue = _audio_Theme2 as FixupCollection<Audio_Theme>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAudio_Theme2;
+                    }
+                    _audio_Theme2 = value;
+                    var newValue = value as FixupCollection<Audio_Theme>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAudio_Theme2;
+                    }
+                }
+            }
+        }
+        private ICollection<Audio_Theme> _audio_Theme2;
 
         #endregion
 
@@ -203,29 +219,54 @@ namespace MeisterGeister.Model
                 }
             }
         }
-
-
-        private void FixupAudio_Theme(object sender, NotifyCollectionChangedEventArgs e)
+    
+        private void FixupAudio_Theme1(object sender, NotifyCollectionChangedEventArgs e)
         {
-            OnChanged("Audio_UnterTheme");
+    		OnChanged("Audio_Theme1");
             if (e.NewItems != null)
             {
                 foreach (Audio_Theme item in e.NewItems)
                 {
-                    if (!item.Audio_UnterTheme.Contains(this))
+                    if (!item.Audio_Theme2.Contains(this))
                     {
-                        item.Audio_UnterTheme.Add(this);
+                        item.Audio_Theme2.Add(this);
                     }
                 }
             }
-
+    
             if (e.OldItems != null)
             {
                 foreach (Audio_Theme item in e.OldItems)
                 {
-                    if (item.Audio_UnterTheme.Contains(this))
+                    if (item.Audio_Theme2.Contains(this))
                     {
-                        item.Audio_UnterTheme.Remove(this);
+                        item.Audio_Theme2.Remove(this);
+                    }
+                }
+            }
+        }
+    
+        private void FixupAudio_Theme2(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Audio_Theme2");
+            if (e.NewItems != null)
+            {
+                foreach (Audio_Theme item in e.NewItems)
+                {
+                    if (!item.Audio_Theme1.Contains(this))
+                    {
+                        item.Audio_Theme1.Add(this);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Audio_Theme item in e.OldItems)
+                {
+                    if (item.Audio_Theme1.Contains(this))
+                    {
+                        item.Audio_Theme1.Remove(this);
                     }
                 }
             }

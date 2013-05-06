@@ -79,6 +79,39 @@ namespace MeisterGeister.Model
         #region Navigation Properties
     
     	[DataMember]
+        public virtual ICollection<Alchimierezept_Setting> Alchimierezept_Setting
+        {
+            get
+            {
+                if (_alchimierezept_Setting == null)
+                {
+                    var newCollection = new FixupCollection<Alchimierezept_Setting>();
+                    newCollection.CollectionChanged += FixupAlchimierezept_Setting;
+                    _alchimierezept_Setting = newCollection;
+                }
+                return _alchimierezept_Setting;
+            }
+            set
+            {
+                if (!ReferenceEquals(_alchimierezept_Setting, value))
+                {
+                    var previousValue = _alchimierezept_Setting as FixupCollection<Alchimierezept_Setting>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupAlchimierezept_Setting;
+                    }
+                    _alchimierezept_Setting = value;
+                    var newValue = value as FixupCollection<Alchimierezept_Setting>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupAlchimierezept_Setting;
+                    }
+                }
+            }
+        }
+        private ICollection<Alchimierezept_Setting> _alchimierezept_Setting;
+    
+    	[DataMember]
         public virtual ICollection<Ausrüstung_Setting> Ausrüstung_Setting
         {
             get
@@ -246,6 +279,29 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Association Fixup
+    
+        private void FixupAlchimierezept_Setting(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Alchimierezept_Setting");
+            if (e.NewItems != null)
+            {
+                foreach (Alchimierezept_Setting item in e.NewItems)
+                {
+                    item.Setting = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Alchimierezept_Setting item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Setting, this))
+                    {
+                        item.Setting = null;
+                    }
+                }
+            }
+        }
     
         private void FixupAusrüstung_Setting(object sender, NotifyCollectionChangedEventArgs e)
         {

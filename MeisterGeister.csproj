@@ -184,6 +184,12 @@
     <Compile Include="Model\Abenteuer_Verweis_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Alchimierezept_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Alchimierezept_Setting_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Audio_Playlist_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -215,13 +221,13 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gegner.cs" />
+    <Compile Include="Model\GegnerBase_Angriff.cs" />
     <Compile Include="Model\GegnerBase_Angriff_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GegnerBase_Kampfregel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\GegnerBase_Angriff.cs" />
     <Compile Include="Model\GegnerBase_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -263,42 +269,18 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Inventar.cs" />
+    <Compile Include="Model\Audio_Titel.cs" />
+    <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Inventar_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Kampfregel_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Audio_Titel.cs" />
-    <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Kampfregel.cs" />
     <Compile Include="Model\GegnerBase.cs" />
     <Compile Include="Model\Audio_Theme.cs" />
     <Compile Include="Model\Audio_Theme_Playlist.cs" />
-    <Compile Include="Model\Zauberzeichen.cs" />
-    <Compile Include="Model\Notizen.cs" />
-    <Compile Include="Model\Service\AudioService.cs" />
-    <Compile Include="Model\Service\KampfService.cs" />
-    <Compile Include="Model\Service\NotizService.cs" />
-    <Compile Include="Model\Service\VorNachteilService.cs" />
-    <Compile Include="Model\Service\ZauberService.cs" />
-    <Compile Include="Model\Setting.cs" />
-    <Compile Include="Model\Setting_Poco.cs">
+    <Compile Include="Model\Kampfregel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Sonderfertigkeit_Setting_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Talent.cs" />
-    <Compile Include="Model\Trageort_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Zauber.cs" />
-    <Compile Include="Model\Munition.cs" />
-    <Compile Include="Model\Rasse_Farbe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Rüstung.cs" />
     <Compile Include="Model\Kultur_Name_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -320,6 +302,9 @@
     <Compile Include="Model\NscMerkmal_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Rasse_Farbe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Rasse_Kultur_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -332,21 +317,25 @@
     <Compile Include="Model\Rüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Schild.cs" />
     <Compile Include="Model\Schild_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Service\MenuLinkService.cs" />
-    <Compile Include="Model\Extensions\SqlFunctionsExtension.cs" />
-    <Compile Include="Model\Service\NamenService.cs" />
-    <Compile Include="Model\Service\RegelnService.cs" />
+    <Compile Include="Model\Setting_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Sonderfertigkeit_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Sonderfertigkeit_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Talentgruppe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Talent_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Trageort_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Version_Poco.cs">
@@ -358,6 +347,23 @@
     <Compile Include="Model\Waffe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Zauberzeichen.cs" />
+    <Compile Include="Model\Notizen.cs" />
+    <Compile Include="Model\Service\AudioService.cs" />
+    <Compile Include="Model\Service\KampfService.cs" />
+    <Compile Include="Model\Service\NotizService.cs" />
+    <Compile Include="Model\Service\VorNachteilService.cs" />
+    <Compile Include="Model\Service\ZauberService.cs" />
+    <Compile Include="Model\Setting.cs" />
+    <Compile Include="Model\Talent.cs" />
+    <Compile Include="Model\Zauber.cs" />
+    <Compile Include="Model\Munition.cs" />
+    <Compile Include="Model\Rüstung.cs" />
+    <Compile Include="Model\Schild.cs" />
+    <Compile Include="Model\Service\MenuLinkService.cs" />
+    <Compile Include="Model\Extensions\SqlFunctionsExtension.cs" />
+    <Compile Include="Model\Service\NamenService.cs" />
+    <Compile Include="Model\Service\RegelnService.cs" />
     <Compile Include="Model\Zauberzeichen_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -368,6 +374,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Zauber_Setting_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Zauber_Variante_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Net\Web\HttpService.cs" />

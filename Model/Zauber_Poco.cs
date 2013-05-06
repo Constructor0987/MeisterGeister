@@ -138,6 +138,123 @@ namespace MeisterGeister.Model
     
         }
         private System.Guid _zauberGUID;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Zauberdauer
+        {
+            get { return _zauberdauer; }
+            set
+    		{ 
+    			_zauberdauer = value;
+    			OnChanged("Zauberdauer");
+    		}
+    
+        }
+        private string _zauberdauer;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Wirkungsdauer
+        {
+            get { return _wirkungsdauer; }
+            set
+    		{ 
+    			_wirkungsdauer = value;
+    			OnChanged("Wirkungsdauer");
+    		}
+    
+        }
+        private string _wirkungsdauer;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Reichweite
+        {
+            get { return _reichweite; }
+            set
+    		{ 
+    			_reichweite = value;
+    			OnChanged("Reichweite");
+    		}
+    
+        }
+        private string _reichweite;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Wirkungsradius
+        {
+            get { return _wirkungsradius; }
+            set
+    		{ 
+    			_wirkungsradius = value;
+    			OnChanged("Wirkungsradius");
+    		}
+    
+        }
+        private string _wirkungsradius;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Zielobjekt
+        {
+            get { return _zielobjekt; }
+            set
+    		{ 
+    			_zielobjekt = value;
+    			OnChanged("Zielobjekt");
+    		}
+    
+        }
+        private string _zielobjekt;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Modifikationen
+        {
+            get { return _modifikationen; }
+            set
+    		{ 
+    			_modifikationen = value;
+    			OnChanged("Modifikationen");
+    		}
+    
+        }
+        private string _modifikationen;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Kosten
+        {
+            get { return _kosten; }
+            set
+    		{ 
+    			_kosten = value;
+    			OnChanged("Kosten");
+    		}
+    
+        }
+        private string _kosten;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Tags
+        {
+            get { return _tags; }
+            set
+    		{ 
+    			_tags = value;
+    			OnChanged("Tags");
+    		}
+    
+        }
+        private string _tags;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Bemerkung
+        {
+            get { return _bemerkung; }
+            set
+    		{ 
+    			_bemerkung = value;
+    			OnChanged("Bemerkung");
+    		}
+    
+        }
+        private string _bemerkung;
 
         #endregion
 
@@ -208,6 +325,39 @@ namespace MeisterGeister.Model
             }
         }
         private ICollection<Zauber_Setting> _zauber_Setting;
+    
+    	[DataMember]
+        public virtual ICollection<Zauber_Variante> Zauber_Variante
+        {
+            get
+            {
+                if (_zauber_Variante == null)
+                {
+                    var newCollection = new FixupCollection<Zauber_Variante>();
+                    newCollection.CollectionChanged += FixupZauber_Variante;
+                    _zauber_Variante = newCollection;
+                }
+                return _zauber_Variante;
+            }
+            set
+            {
+                if (!ReferenceEquals(_zauber_Variante, value))
+                {
+                    var previousValue = _zauber_Variante as FixupCollection<Zauber_Variante>;
+                    if (previousValue != null)
+                    {
+                        previousValue.CollectionChanged -= FixupZauber_Variante;
+                    }
+                    _zauber_Variante = value;
+                    var newValue = value as FixupCollection<Zauber_Variante>;
+                    if (newValue != null)
+                    {
+                        newValue.CollectionChanged += FixupZauber_Variante;
+                    }
+                }
+            }
+        }
+        private ICollection<Zauber_Variante> _zauber_Variante;
 
         #endregion
 
@@ -250,6 +400,29 @@ namespace MeisterGeister.Model
             if (e.OldItems != null)
             {
                 foreach (Zauber_Setting item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.Zauber, this))
+                    {
+                        item.Zauber = null;
+                    }
+                }
+            }
+        }
+    
+        private void FixupZauber_Variante(object sender, NotifyCollectionChangedEventArgs e)
+        {
+    		OnChanged("Zauber_Variante");
+            if (e.NewItems != null)
+            {
+                foreach (Zauber_Variante item in e.NewItems)
+                {
+                    item.Zauber = this;
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Zauber_Variante item in e.OldItems)
                 {
                     if (ReferenceEquals(item.Zauber, this))
                     {
