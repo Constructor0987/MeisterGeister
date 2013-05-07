@@ -166,6 +166,49 @@ namespace MeisterGeister.Model.Service {
         #endregion
 
         #region Alchimie
+        public List<Held> LoadHeldenGruppeWithAlchimie()
+        {
+            List<Held> tmp = Liste<Talent>().Where(s => s.Talentname == "Alchimie" || s.Talentname == "Kochen")
+                .Join(Context.Held_Talent, t => t.TalentGUID, ht => ht.TalentGUID, (t, ht) => ht)
+                .Join(Context.Held, hs => hs.HeldGUID, h => h.HeldGUID, (hs, h) => h).ToList();
+            return tmp.Distinct().ToList();
+        }
+
+        public List<Talent> LoadAlchimieHerstellungTalenteByHeld(Held held)
+        {
+            if (held == null)
+                return Liste<Talent>().Where(t => t.Talentname == "Alchimie" || t.Talentname == "Kochen").ToList();
+            List<Talent> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
+                .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Alchimie" || t.Talentname == "Kochen").ToList();
+            return talente;
+        }
+
+        public List<string> LoadAlchimieGruppe()
+        {
+            List<string> tmp = Liste<Alchimierezept>().Select(s => s.Gruppe).Distinct().ToList();
+            return tmp;
+        }
+
+        public List<Alchimierezept> LoadAlchimieRezepteByGruppe(string gruppe)
+        {
+            if (!string.IsNullOrEmpty(gruppe))
+            {
+                List<Alchimierezept> tmp = Liste<Alchimierezept>().Where(s => s.Gruppe == gruppe).ToList();
+                return tmp;
+            }
+            return new List<Alchimierezept>();
+        }
+
+        public string LoadAlchimieLaborByRezept(string rezept)
+        {
+            if (!string.IsNullOrEmpty(rezept))
+            {
+                List<string> tmp = Liste<Alchimierezept>().Where(s => s.Name == rezept).Select(s => s.Labor).Distinct().ToList();
+                return tmp[0];
+            }
+            return "";
+        }
+
         public List<string> LoadIntensitätsbestimmungFertigkeitenAlchimieByHeld(Held held)
         {
             if (held == null)
@@ -230,5 +273,6 @@ namespace MeisterGeister.Model.Service {
         }
 
         #endregion
+
     }
 }

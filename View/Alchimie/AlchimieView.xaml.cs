@@ -40,5 +40,10 @@ namespace MeisterGeister.View.Alchimie
                 errWin.ShowDialog();
             }
         }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

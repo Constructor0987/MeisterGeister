@@ -22,12 +22,14 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <StackPanel Orientation="Horizontal" >
-                    <TextBlock Text="{Binding string}"   FontSize="11"/>
-                    <RadioButton GroupName="Substitution" Margin="5,0,5,0" ToolTip="optimierende Substitution"/>
-                    <RadioButton GroupName="Substitution" Margin="5,0,5,0" ToolTip="gleichwertige Substitution" IsChecked="true"/>
-                    <RadioButton GroupName="Substitution" Margin="5,0,5,0" ToolTip="sinnvolle Substitution" />
-                    <RadioButton GroupName="Substitution" Margin="5,0,5,0" ToolTip="mögliche Substitution"/>
-                    <RadioButton GroupName="Substitution" Margin="5,0,5,0" ToolTip="unsinnige Substitution" />
+                    <TextBlock Text="{Binding Path=Anzahl}" Margin="5,0,0,0"  FontSize="11"/>
+                    <TextBlock Text="{Binding Path=Einheit}" Margin="5,0,0,0"  FontSize="11"/>
+                    <TextBlock Text="{Binding Path=Name}"  Margin="5,0,0,0" FontSize="11"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="15,0,0,0" ToolTip="optimierende Substitution"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="gleichwertige Substitution" IsChecked="true"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="sinnvolle Substitution" />
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="mögliche Substitution"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="unsinnige Substitution" />
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -43,9 +45,16 @@
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" >
+                            <ComboBox.ToolTip>
+                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
                     </StackPanel>
-                    <Expander Margin="4" IsExpanded="True">
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
                         <Expander.Header>
                             <TextBlock Text="Herstellung" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
@@ -53,7 +62,13 @@
                             <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Talent:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTalentHerstellung}" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Talentname" SelectedItem="{Binding SelectedTalentHerstellung}" />
+                                    <TextBlock Text="TaW" VerticalAlignment="Center" />
+                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaWTalent}" />
+                                </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListeHerstellung}" SelectedItem="{Binding SelectedGruppeHerstellung}" />
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
@@ -63,17 +78,21 @@
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Text="Labor:" FontWeight="Bold"/>
                                     <TextBlock Text=" (benötigt: " />
-                                    <TextBlock Text="{Binding WertLaborHerstellung}" />
+                                    <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Labor}"  />
                                     <TextBlock Text=")" FontWeight="Bold"/>
                                 </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                         <TextBlock Text="Art"/>
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTalentHerstellung}" />
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborArtListeHerstellung}" SelectedItem="{Binding SelectedLaborArtListeHerstellung}" IsEnabled="{Binding IsEnabledLaborArtListeHerstellung}" />
                                     </StackPanel>
                                     <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                         <TextBlock Text="Qualität des Labors"/>
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTalentHerstellung}" />
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListeHerstellung}" SelectedItem="{Binding SelectedLaborQualitätListeHerstellung}" IsEnabled="{Binding IsEnabledLaborQualitätListeHerstellung}" />
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Modifikator für Labor: "/>
+                                        <TextBlock Text="{Binding ModifikatorLaborHerstellung}"  />
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
@@ -96,8 +115,10 @@
                                 </StackPanel>
 
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Text="Substitutionen:" VerticalAlignment="Center" FontWeight="Bold"/>
-                                    <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_01.png" ToolTip="optimierende Substitution" Width="25"  VerticalAlignment="Center" />
+                                    <TextBlock Text="Anzahl"  Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Einheit" Margin="5,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Name" Margin="5,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <Image Margin="15,0,0,0" Source="/Images/Icons/substitution_01.png" ToolTip="optimierende Substitution" Width="25"  VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_02.png" ToolTip="gleichwertige Substitution" Width="25" VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_04.png" ToolTip="sinnvolle Substitution" Width="25" VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_05.png" ToolTip="mögliche Substitution" Width="25" VerticalAlignment="Center" />
@@ -120,6 +141,8 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" MinWidth="50" />
                                     <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -139,25 +162,41 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="Gruppe"  Grid.Row="0" />
-                                <TextBlock Text="{Binding HerstellungGruppe}" Grid.Row="0" Grid.Column="2" />
-                                <TextBlock Text="Labor"  Grid.Row="2" />
-                                <TextBlock Text="{Binding HerstellungLabor}" Grid.Row="2" Grid.Column="2" />
+                                <TextBlock Text="Kategorie"  Grid.Row="0" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Kategorie}" Grid.Row="0" Grid.Column="2" />
+                                <TextBlock Text="Gruppe"  Grid.Row="1" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Gruppe}" Grid.Row="1" Grid.Column="2" />
+                                <TextBlock Text="benutztes Labor"  Grid.Row="2" />
+                                <TextBlock Text="{Binding Path = SelectedLaborArtListeHerstellung}" Grid.Row="2" Grid.Column="2" />
                                 <TextBlock Text="Qualität"  Grid.Row="4" />
                                 <TextBlock Text="{Binding HerstellungQualität}" Grid.Row="4" Grid.Column="2" />
-                                <TextBlock Text="Komplexität"  Grid.Row="6" />
-                                <TextBlock Text="{Binding HerstellungKomplexität}" Grid.Row="6" Grid.Column="2" />
-                                <TextBlock Text="Haltbarkeit"  Grid.Row="8" />
-                                <TextBlock Text="{Binding HerstellungHaltbarkeit}" Grid.Row="8" Grid.Column="2" />
-                                <TextBlock Text="Preis"  Grid.Row="10" />
-                                <TextBlock Text="{Binding HerstellungPreis}" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="Brauschwierigkeit"  Grid.Row="6" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Brauschwierigkeit}" Grid.Row="6" Grid.Column="2" />
+                                <TextBlock Text="Analyseschwierigkeit"  Grid.Row="7" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Analyseschwierigkeit}" Grid.Row="7" Grid.Column="2" />
+                                <TextBlock Text="Beschaffungsschwierigkeit"  Grid.Row="8" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Beschaffungsschwierigkeit}" Grid.Row="8" Grid.Column="2" />
+                                <TextBlock Text="Beschaffungskosten (S)"  Grid.Row="9" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Beschaffungskosten}" Grid.Row="9" Grid.Column="2" />
+                                <TextBlock Text="Haltbarkeit"  Grid.Row="10" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeit}" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeitseinheit}" Grid.Row="10" Grid.Column="3" />
+                                <TextBlock Text="Preis"  Grid.Row="11" />
+                                <TextBlock Text="{Binding Path =SelectedRezeptHerstellung.Beschaffungskosten}" Grid.Row="11" Grid.Column="2" />
                                 <TextBlock Text="Merkmale"  Grid.Row="12" />
-                                <TextBlock Text="{Binding HerstellungMerkmale}" Grid.Row="12" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Merkmale}" Grid.Row="12" Grid.Column="2" />
                                 <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="14" />
                                 <TextBlock Text="{Binding HerstellungWirkung}" Grid.Row="14" Grid.Column="2" />
                                 <TextBlock Text="Zutaten"  Grid.Row="16" />
-                                <Grid Margin="20,10,20,10" Width="Auto" Grid.Row="16" Grid.Column ="2">
+                                <TextBlock Text="Bemerkung"  Grid.Row="17" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Bemerkung}" Grid.Row="17" Grid.Column="2" />
+                                <TextBlock Text="vorgeschlagene Substitute"  Grid.Row="19" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Substitute}" Grid.Row="19" Grid.Column="2" />
+                                <Grid Margin="20,10,20,10" Width="Auto" Grid.Row="20" Grid.Column ="2">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" MinWidth="50" />
                                         <ColumnDefinition Width="Auto" MinWidth="50" />
@@ -186,7 +225,14 @@
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
+                            <ComboBox.ToolTip>
+                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
                     </StackPanel>
 
                     <Expander Margin="4" IsExpanded="True">
@@ -196,8 +242,12 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListeHerstellung}" SelectedItem="{Binding SelectedGruppeHerstellung}" />
+                                </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListeAnalyse}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezeptAnalyse}" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezeptHerstellung}" />
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Intensitätsbestimmung:" FontWeight="Bold" />
@@ -293,7 +343,14 @@
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
+                            <ComboBox.ToolTip>
+                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
                     </StackPanel>
 
                     <Expander Margin="4" IsExpanded="True">
@@ -302,10 +359,14 @@
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                         <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                            <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListeVerdünnung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezeptVerdünnung}" />
-                            </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListeHerstellung}" SelectedItem="{Binding SelectedGruppeHerstellung}" />
+                                </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezeptHerstellung}" />
+                                </StackPanel>
                             <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                 <TextBlock Margin="0,3,5,0" Text="Qualität:" FontWeight="Bold" />
                                 <ComboBox Margin="0,0,5,0" Width="50" ItemsSource="{Binding QualitätListeVerdünnung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedQualitätVerdünnung}" />
