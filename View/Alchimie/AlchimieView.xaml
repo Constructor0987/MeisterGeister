@@ -99,10 +99,11 @@
                                     <TextBlock Text="Schale der Alchimie:" FontWeight="Bold"/>
                                 </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                    <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeitHerstellung}"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEisHerstellung}"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindungHerstellung}"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElementeHerstellung}"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyseHerstellung}" ToolTip="zur Analyse"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeitHerstellung}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEisHerstellung}" ToolTip="ermöglicht extreme Temperaturen"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindungHerstellung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElementeHerstellung}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen"/>
                                 </StackPanel>
                                 <TextBlock Margin="5,5,5,5" Text="Modifizierung:" FontWeight="Bold" FontSize="14"/>
                                 <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
@@ -223,7 +224,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
                         <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
                             <ComboBox.ToolTip>
@@ -341,7 +342,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" ToolTip="Einkaufender Held">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
                         <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
                             <ComboBox.ToolTip>
