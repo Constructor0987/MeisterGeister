@@ -383,6 +383,7 @@
     <Compile Include="Net\Web\RequestProcessor.cs" />
     <Compile Include="ViewModel\Abenteuer\AbenteuerViewModel.cs" />
     <Compile Include="ViewModel\Alchimie\AlchimieViewModel.cs" />
+    <Compile Include="ViewModel\Alchimie\Logic\Substitution.cs" />
     <Compile Include="ViewModel\Alchimie\Logic\Zutat.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />

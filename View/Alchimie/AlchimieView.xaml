@@ -13,6 +13,7 @@
     </UserControl.DataContext>
     
     <UserControl.Resources>
+        <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
         <DataTemplate x:Key="SubstitutionItemTemplate">
             <Border Margin="5" Padding="4" CornerRadius="5">
                 <Border.Background>
@@ -25,11 +26,11 @@
                     <TextBlock Text="{Binding Path=Anzahl}" Margin="5,0,0,0"  FontSize="11"/>
                     <TextBlock Text="{Binding Path=Einheit}" Margin="5,0,0,0"  FontSize="11"/>
                     <TextBlock Text="{Binding Path=Name}"  Margin="5,0,0,0" FontSize="11"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="15,0,0,0" ToolTip="optimierende Substitution"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="gleichwertige Substitution" IsChecked="true"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="sinnvolle Substitution" />
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="mögliche Substitution"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="unsinnige Substitution" />
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="15,0,0,0" ToolTip="optimierende Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=optimierend}"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="gleichwertige Substitution" IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=gleichwertig}"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="sinnvolle Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=sinnvoll}"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="mögliche Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=möglich}"/>
+                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="unsinnige Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=unsinnig}"/>
                 </StackPanel>
             </Border>
         </DataTemplate>

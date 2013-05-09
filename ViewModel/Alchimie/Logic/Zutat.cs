@@ -9,13 +9,14 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.ViewModel.Alchimie.Logic
 {
-    public class Zutat
+    public class Zutat : INotifyPropertyChanged
     {
         #region //---- FELDER ----
 
         private string _name;
         private int _anzahl;
         private string _einheit;
+        private Substitution _substitution = Substitution.gleichwertig;
         //Commands
 
         #endregion
@@ -25,6 +26,12 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         public string Name   {   get   {  return _name; }  }
         public int Anzahl { get { return _anzahl; } }
         public string Einheit { get { return _einheit; } }
+        
+        public Substitution Substitution
+        {
+            get { return _substitution; }
+            set { _substitution = value; OnChanged("Substitution"); }
+        }
 
         //Commands
 
@@ -48,7 +55,7 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
 
         #region //---- INotifyPropertyChanged Member ----
 
- /*       public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnChanged(String info)
         {
@@ -57,7 +64,7 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
-*/
+
         #endregion
     }
 
