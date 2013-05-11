@@ -119,8 +119,8 @@
 							<TextBlock Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="1">
 								<TextBlock.Text>
 									<MultiBinding StringFormat="{}{0}/{1}">
-										<Binding Path="ErstellteFernkampfwaffe.TPKKSchritt" />
-										<Binding Path="ErstellteFernkampfwaffe.TPKKSchwelle" />
+                                        <Binding Path="ErstellteFernkampfwaffe.TPKKSchwelle" />
+                                        <Binding Path="ErstellteFernkampfwaffe.TPKKSchritt" />
 									</MultiBinding>
 								</TextBlock.Text>
 							</TextBlock>
@@ -152,8 +152,8 @@
 							<TextBlock Margin="10,0" TextAlignment="Center" Grid.Row="1" Grid.Column="2">
 								<TextBlock.Text>
 									<MultiBinding StringFormat="{}{0}/{1}">
-										<Binding Path="ErstellteNahkampfwaffe.TPKKSchritt" />
-										<Binding Path="ErstellteNahkampfwaffe.TPKKSchwelle" />
+                                        <Binding Path="ErstellteNahkampfwaffe.TPKKSchwelle" />
+                                        <Binding Path="ErstellteNahkampfwaffe.TPKKSchritt" />
 									</MultiBinding>
 								</TextBlock.Text>
 							</TextBlock>
