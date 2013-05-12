@@ -441,6 +441,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\NiedrigeEnergieModifikatoren.cs" />
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
     <Compile Include="ViewModel\NscGenerator\Factorys\NamenFactory.cs" />
+    <Compile Include="ViewModel\NscGenerator\Factorys\NamenFactoryHelper.cs" />
     <Compile Include="ViewModel\NscGenerator\Logic\PersonNurName.cs" />
     <Compile Include="ViewModel\NscGenerator\Logic\Person.cs" />
     <Compile Include="ViewModel\NscGenerator\Person.cs">

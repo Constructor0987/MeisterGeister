@@ -13,6 +13,7 @@ namespace MeisterGeister.ViewModel.NscGenerator.Logic
         public Geschlecht Geschlecht { set; get; }
         public Model.Kultur Kultur { set; get; }
         public Model.Rasse Rasse { set; get; }
+        public String Namenstyp { set; get; } //auf GUID umstellen
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -29,8 +30,16 @@ namespace MeisterGeister.ViewModel.NscGenerator.Logic
 
     public enum Geschlecht
     {
-        geschlechtslos = 0,
+        geschlechtlos = 0,
         weiblich = 1,
         männlich = 2
+    }
+
+    public enum Stand
+    {
+        unfrei = 0;
+        landfrei = 1;
+        stadtfrei = 2;
+        adelig = 3;
     }
 }

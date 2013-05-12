@@ -6,44 +6,69 @@ using MeisterGeister.ViewModel.NscGenerator.Logic;
 
 namespace MeisterGeister.ViewModel.NscGenerator.Factorys
 {
-    abstract class NamenFactory
+    public abstract class NamenFactory
     {
-        #region //---- FELDER ----
-        //Die folgenden Strings sind für die Zuordnung Namenstyp.Name -> Factory nötig
-        const string THORWALERNAMEN = "Thorwaler Namen";
-
-        protected static Dictionary<string, NamenFactory> _namenFactorys = new Dictionary<string, NamenFactory>();
-
-        //Vorgaben für die Namensfactoys; evtl. unterscheiden in drei Grundklassen: 2x nur Vorname, Vorname + Nachname
-        protected List<String> _vornamenMännlich = new List<string>();
-        protected List<String> _vornamenWeiblich = new List<string>();
+        #region /---- Felder ----
+        protected String _informationenNamen; //später FlowDocuments nutzen; ggf. externe Ressource
         #endregion
 
-        #region //---- Klassenmethoden ----
-        protected static NamenFactory InstantiateFactory(string namenstyp)
-        {
-            switch (namenstyp)
-            {
-                case THORWALERNAMEN:
-                default: throw new NotImplementedException("Namenstyp "+namenstyp+" nicht verfügbar.");
-            }
-        }
-
-        public static NamenFactory GetFactory(string namenstyp)
-        {
-            NamenFactory nFactory;
-            if (!_namenFactorys.TryGetValue(namenstyp, out nFactory))
-            {
-                nFactory = InstantiateFactory(namenstyp);
-                if (nFactory!=null) _namenFactorys[namenstyp] = nFactory;
-            }
-            return nFactory;
-        }
+        #region /---- Eigenschaften ----
+        public bool VornamenWeiblichFürAlle { get; protected set; }
+        public bool GeneriertOrtsnamen { get; protected set; }
+        public bool InformationenNamenVerfügbar { get; protected set; }
+        public String Namenstyp { get; protected set; } //auf GUID umstellen
         #endregion
 
         #region //---- Instanzmethoden ----
-        public abstract PersonNurName GetName();
+        public abstract PersonNurName GetName(Geschlecht geschlecht, Stand stand);
+        
+        public String GetOrtsname()
+        {
+            return "";
+        }
         #endregion
     }
 
+    public abstract class NamenFactoryVorname : NamenFactory
+    {
+        #region /---- Felder ----
+        protected List<String> _vornamenMännlich = new List<String>();
+        protected List<String> _vornamenWeiblich = new List<String>();
+        #endregion
+
+        #region /---- Konstruktor ----
+        public NamenFactoryVorname(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false)
+        {
+            this.Namenstyp = namenstyp;
+            this.VornamenWeiblichFürAlle = vornamenWeiblichFürAlle;
+            this.InformationenNamenVerfügbar = informationenNamenVerfügbar;
+            this.GeneriertOrtsnamen = generiertOrtsnamen;
+            //TODO: Listen der Vornamen aus der Datenbank befüllen, vornameWeiblichFürAlle beachten
+            // Bedeutungen des Namen mitgenerieren -> Unterklasse
+        }
+        #endregion
+
+        #region /---- Instanzmethoden ----
+        // getName(Geschlecht geschlecht, Stand stand)) überschreiben
+        #endregion
+    }
+
+    public abstract class NamenFactoryVornameNachname : NamenFactoryVorname
+    {
+        #region /---- Felder ----
+        protected List<String> _nachnamen = new List<String>();
+        #endregion
+
+        #region /---- Konstruktor ----
+        public NamenFactoryVornameNachname(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
+            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertOrtsnamen)
+        {
+            //TODO: Listen der Nachnamen aus der Datenbank befüllen, vornameWeiblichFürAlle beachten
+        }
+        #endregion
+
+        #region /---- Instanzmethoden ----
+        // getName(Geschlecht geschlecht, Stand stand)) überschreiben
+        #endregion
+    }
 }
