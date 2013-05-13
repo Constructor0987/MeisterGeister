@@ -158,6 +158,7 @@
     <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\KeyEqualityComparer.cs" />
+    <Compile Include="Logic\General\Pdf.cs" />
     <Compile Include="Logic\General\Literatur.cs" />
     <Compile Include="Logic\General\MetaTalent.cs" />
     <Compile Include="Logic\General\Probe.cs" />

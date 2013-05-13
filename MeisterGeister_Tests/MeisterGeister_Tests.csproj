@@ -74,6 +74,7 @@
     <Compile Include="Kampf_Tests.cs" />
     <Compile Include="HeldenblattImport_Tests.cs" />
     <Compile Include="Kalender_Tests.cs" />
+    <Compile Include="Literatur_Tests.cs" />
     <Compile Include="Probe_Tests.cs" />
     <Compile Include="Serialization_Tests.cs" />
     <Compile Include="Update_Tests.cs" />

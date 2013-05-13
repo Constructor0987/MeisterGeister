@@ -279,6 +279,30 @@ namespace MeisterGeister.Logic.Settings
             }
         }
 
+        public static string PdfReaderCommand
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("PdfReaderCommand", null);
+            }
+            set
+            {
+                SetEinstellung<string>("PdfReaderCommand", value);
+            }
+        }
+        
+        public static string PdfReaderArguments
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("PdfReaderArguments", null);
+            }
+            set
+            {
+                SetEinstellung<string>("PdfReaderArguments", value);
+            }
+        }
+
 
         /// <summary>
         /// Gibt an, ob sich MeisterGeister im Nur-Lesen-Modus befindet.
