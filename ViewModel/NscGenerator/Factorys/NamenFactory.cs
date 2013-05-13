@@ -14,15 +14,28 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
 
         #region /---- Eigenschaften ----
         public bool VornamenWeiblichFürAlle { get; protected set; }
+        public bool StandHatAuswirkung { get; protected set; }
         public bool GeneriertOrtsnamen { get; protected set; }
         public bool InformationenNamenVerfügbar { get; protected set; }
         public String Namenstyp { get; protected set; } //auf GUID umstellen
         #endregion
 
+        #region /---- Konstruktor ----
+        public NamenFactory(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false)
+        {
+            this.Namenstyp = namenstyp;
+            this.VornamenWeiblichFürAlle = vornamenWeiblichFürAlle;
+            this.InformationenNamenVerfügbar = informationenNamenVerfügbar;
+            this.GeneriertOrtsnamen = generiertOrtsnamen;
+            this.InitListen();
+        }
+        public abstract void InitListen();
+        #endregion
+
         #region //---- Instanzmethoden ----
-        public abstract PersonNurName GetName(Geschlecht geschlecht, Stand stand);
+        public abstract PersonNurName GetName(Geschlecht geschlecht, Stand stand=Stand.stadtfrei);
         
-        public String GetOrtsname()
+        public virtual String GetOrtsname()
         {
             return "";
         }
@@ -37,19 +50,17 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
         #endregion
 
         #region /---- Konstruktor ----
-        public NamenFactoryVorname(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false)
+        public NamenFactoryVorname(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
+            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertOrtsnamen){}
+
+        public override void InitListen()
         {
-            this.Namenstyp = namenstyp;
-            this.VornamenWeiblichFürAlle = vornamenWeiblichFürAlle;
-            this.InformationenNamenVerfügbar = informationenNamenVerfügbar;
-            this.GeneriertOrtsnamen = generiertOrtsnamen;
-            //TODO: Listen der Vornamen aus der Datenbank befüllen, vornameWeiblichFürAlle beachten
-            // Bedeutungen des Namen mitgenerieren -> Unterklasse
+            //Liste der Vornamen (Weiblich/Männlich); boolean vornamenWeiblichFürAlle beachten
         }
         #endregion
 
         #region /---- Instanzmethoden ----
-        // getName(Geschlecht geschlecht, Stand stand)) überschreiben
+        //public override PersonNurName getName(Geschlecht geschlecht, Stand stand)
         #endregion
     }
 
@@ -61,14 +72,16 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
 
         #region /---- Konstruktor ----
         public NamenFactoryVornameNachname(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
-            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertOrtsnamen)
+            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertOrtsnamen){}
+
+        public override void InitListen()
         {
-            //TODO: Listen der Nachnamen aus der Datenbank befüllen, vornameWeiblichFürAlle beachten
+            base.InitListen();
         }
         #endregion
 
         #region /---- Instanzmethoden ----
-        // getName(Geschlecht geschlecht, Stand stand)) überschreiben
+        //public override PersonNurName getName(Geschlecht geschlecht, Stand stand)
         #endregion
     }
 }
