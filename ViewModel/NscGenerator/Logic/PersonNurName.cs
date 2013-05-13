@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.NscGenerator.Logic
 {
-    class PersonNurName
+    public class PersonNurName
     {
         #region //---- EIGENSCHAFTEN ----
         public String Name { set; get; }
@@ -37,9 +37,9 @@ namespace MeisterGeister.ViewModel.NscGenerator.Logic
 
     public enum Stand
     {
-        unfrei = 0;
-        landfrei = 1;
-        stadtfrei = 2;
-        adelig = 3;
+        unfrei = 0,
+        landfrei = 1,
+        stadtfrei = 2,
+        adelig = 3
     }
 }
