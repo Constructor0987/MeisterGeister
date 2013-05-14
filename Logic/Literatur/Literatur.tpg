@@ -1,0 +1,75 @@
+//Parser der Literaturangaben
+// http://www.meistergeister.org
+
+// Namespace allows you to define a different namespace for the Scanner, 
+//     Parser and ParseTree generated classes. By default this is set to "TinyPG"
+// Language allows you to define the language to generate.
+// Only C# (default) or VB are supported for now. 
+// OutputPath allows you to define the absolute or relative outputpath for the
+//     files. The relative path is relative to the grammar file. 
+//     By default this is set to "./"
+// Template path is relative to the TinyPG.exe file. By default this is set to 
+//     "Templates"
+<% @TinyPG Namespace="MeisterGeister.Logic.Literatur" Language="C#" 
+           OutputPath="./" TemplatePath="Templates/C#/" %>
+// the Generate parameter specifies wether the file
+// should be generated. By default this is set to True
+<% @Parser Generate="True" %>
+<% @ParseTree Generate="True" %>  // toggle generation of the the ParseTree.cs file
+<% @Scanner Generate="True" %> // toggle generation of the code for the Scanner
+<% @TextHighlighter Generate="False" %> // toggle generation of the code for the TextHighlighter
+
+NUMBER 	-> @"[0-9]+";
+BUCHTRENNER          -> @"\s?/\s?";
+SEITENTRENNER        -> @",\s?";
+ERRATA				-> @"(Errata|ERRATA)";
+WORT          -> @"[a-zA-ZäüößÄÜÖûÛ'/\-%&\+]+";
+BIS	     -> @"-";
+EOF         -> @"^$";
+WHITESPACE  -> @"\s+";
+
+Start 		-> Literaturliste? EOF
+{
+	return $Literaturliste;
+};
+
+Literaturliste -> Literaturangabe  (BUCHTRENNER WHITESPACE? Literaturangabe)*
+{
+	List<Literaturangabe> list = new List<Literaturangabe>();
+	list.Add((Literaturangabe)$Literaturangabe);
+	int i = 1;
+	while ($Literaturangabe[i] != null) { 
+		list.Add((Literaturangabe)$Literaturangabe[i++]); 
+	}
+	return list;
+};
+
+Seitenangabe -> (ERRATA WHITESPACE)? NUMBER (BIS NUMBER)?
+{
+	bool isErrata = ($ERRATA!=null);
+	int startSeite = Convert.ToInt32($NUMBER);
+	int endSeite = startSeite;
+	if($NUMBER[1] != null)
+		endSeite = Convert.ToInt32($NUMBER[1]);
+	return new Seitenangabe(startSeite, endSeite, isErrata);
+};
+
+Kuerzel -> WORT NUMBER?
+{
+	string k = Convert.ToString($WORT);
+	if($NUMBER != null)
+		k += Convert.ToString($NUMBER);
+	return k;
+};
+
+Literaturangabe -> Kuerzel WHITESPACE Seitenangabe (SEITENTRENNER WHITESPACE? Seitenangabe)*
+{
+	string kuerzel = Convert.ToString($Kuerzel);
+	List<Seitenangabe> list = new List<Seitenangabe>();
+	list.Add((Seitenangabe)$Seitenangabe);
+	int i = 1;
+	while ($Seitenangabe[i] != null) { 
+		list.Add((Seitenangabe)$Seitenangabe[i++]); 
+	}
+	return new Literaturangabe(kuerzel, list);
+};

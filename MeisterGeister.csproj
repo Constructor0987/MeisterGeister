@@ -170,6 +170,11 @@
     <Compile Include="Logic\General\Würfel.cs" />
     <Compile Include="Logic\Global\Tool.cs" />
     <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
+    <Compile Include="Logic\Literatur\Literaturangabe.cs" />
+    <Compile Include="Logic\Literatur\Parser.cs" />
+    <Compile Include="Logic\Literatur\ParseTree.cs" />
+    <Compile Include="Logic\Literatur\Scanner.cs" />
+    <Compile Include="Logic\Literatur\Seitenangabe.cs" />
     <Compile Include="Logic\Würfel\Parser.cs" />
     <Compile Include="Logic\Würfel\ParseTree.cs" />
     <Compile Include="Logic\Würfel\Scanner.cs" />
@@ -1140,6 +1145,7 @@
     <None Include="DereGlobusIndex.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Logic\Literatur\Literatur.tpg" />
     <None Include="Logic\Voraussetzungen\Voraussetzungen.tpg" />
     <None Include="Logic\Würfel\Würfel.tpg" />
     <None Include="Model\Model1.Context.tt">
