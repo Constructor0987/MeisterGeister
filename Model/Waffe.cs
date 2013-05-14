@@ -10,7 +10,7 @@ using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Waffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK
+    public partial class Waffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK, MeisterGeister.Logic.Literatur.ILiteratur
     {
         public Waffe()
         {

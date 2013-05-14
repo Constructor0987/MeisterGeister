@@ -8,7 +8,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Talent : Probe
+    public partial class Talent : Probe, MeisterGeister.Logic.Literatur.ILiteratur
     {
         public const string UNTERGRUPPE_NAHKAMPF = "Bewaffneter Nahkampf";
         public const string UNTERGRUPPE_FERNKAMPF = "Fernkampf";

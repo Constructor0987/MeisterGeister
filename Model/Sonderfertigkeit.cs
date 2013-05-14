@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace MeisterGeister.Model
 {
-    public partial class Sonderfertigkeit
+    public partial class Sonderfertigkeit : MeisterGeister.Logic.Literatur.ILiteratur
     {
         public bool Usergenerated
         {

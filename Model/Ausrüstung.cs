@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.Model
 {
-    public partial class Ausrüstung
+    public partial class Ausrüstung : MeisterGeister.Logic.Literatur.ILiteratur
     {
         public Ausrüstung()
         {

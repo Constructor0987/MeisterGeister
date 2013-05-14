@@ -6,7 +6,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Zauber : MeisterGeister.Logic.General.Probe
+    public partial class Zauber : MeisterGeister.Logic.General.Probe, MeisterGeister.Logic.Literatur.ILiteratur
     {
         #region //---- PROBE ----
 

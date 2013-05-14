@@ -9,7 +9,7 @@ using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Fernkampfwaffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK
+    public partial class Fernkampfwaffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK, MeisterGeister.Logic.Literatur.ILiteratur
     {
         #region //---- EIGENSCHAFTEN FÜR HANDELSGUT INTERFACE ----
 

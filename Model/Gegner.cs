@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace MeisterGeister.Model
 {
-    public partial class Gegner : KampfLogic.Wesen, KampfLogic.IKämpfer, KampfLogic.IGegnerBase, Extensions.IInitializable, KampfLogic.IHasZonenRs, IHasWunden
+    public partial class Gegner : KampfLogic.Wesen, KampfLogic.IKämpfer, KampfLogic.IGegnerBase, Extensions.IInitializable, KampfLogic.IHasZonenRs, IHasWunden, MeisterGeister.Logic.Literatur.ILiteratur
     {
         public Gegner() : base()
         {

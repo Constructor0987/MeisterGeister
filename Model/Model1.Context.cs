@@ -538,6 +538,127 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Zauberzeichen_Setting;
     		return null;
     	}
+    
+    	public System.Linq.IQueryable GetObjectSet(Type t)
+    	{
+    		if(t == typeof(Abenteuer))
+    				return Abenteuer;
+    		if(t == typeof(Abenteuer_Ereignis))
+    				return Abenteuer_Ereignis;
+    		if(t == typeof(Abenteuer_Szene))
+    				return Abenteuer_Szene;
+    		if(t == typeof(Abenteuer_Verweis))
+    				return Abenteuer_Verweis;
+    		if(t == typeof(Alchimierezept))
+    				return Alchimierezept;
+    		if(t == typeof(Alchimierezept_Setting))
+    				return Alchimierezept_Setting;
+    		if(t == typeof(Audio_Playlist))
+    				return Audio_Playlist;
+    		if(t == typeof(Audio_Playlist_Titel))
+    				return Audio_Playlist_Titel;
+    		if(t == typeof(Audio_Theme))
+    				return Audio_Theme;
+    		if(t == typeof(Audio_Titel))
+    				return Audio_Titel;
+    		if(t == typeof(Ausrüstung))
+    				return Ausrüstung;
+    		if(t == typeof(Ausrüstung_Setting))
+    				return Ausrüstung_Setting;
+    		if(t == typeof(Einstellungen))
+    				return Einstellungen;
+    		if(t == typeof(Farbe))
+    				return Farbe;
+    		if(t == typeof(Fernkampfwaffe))
+    				return Fernkampfwaffe;
+    		if(t == typeof(Gegner))
+    				return Gegner;
+    		if(t == typeof(GegnerBase))
+    				return GegnerBase;
+    		if(t == typeof(GegnerBase_Angriff))
+    				return GegnerBase_Angriff;
+    		if(t == typeof(GegnerBase_Kampfregel))
+    				return GegnerBase_Kampfregel;
+    		if(t == typeof(Handelsgut))
+    				return Handelsgut;
+    		if(t == typeof(Handelsgut_Setting))
+    				return Handelsgut_Setting;
+    		if(t == typeof(Held))
+    				return Held;
+    		if(t == typeof(Held_Ausrüstung))
+    				return Held_Ausrüstung;
+    		if(t == typeof(Held_Inventar))
+    				return Held_Inventar;
+    		if(t == typeof(Held_Munition))
+    				return Held_Munition;
+    		if(t == typeof(Held_Sonderfertigkeit))
+    				return Held_Sonderfertigkeit;
+    		if(t == typeof(Held_Talent))
+    				return Held_Talent;
+    		if(t == typeof(Held_VorNachteil))
+    				return Held_VorNachteil;
+    		if(t == typeof(Held_Zauber))
+    				return Held_Zauber;
+    		if(t == typeof(Inventar))
+    				return Inventar;
+    		if(t == typeof(Kampfregel))
+    				return Kampfregel;
+    		if(t == typeof(Kultur))
+    				return Kultur;
+    		if(t == typeof(Kultur_Name))
+    				return Kultur_Name;
+    		if(t == typeof(MenuLink))
+    				return MenuLink;
+    		if(t == typeof(Munition))
+    				return Munition;
+    		if(t == typeof(Name))
+    				return Name;
+    		if(t == typeof(Notizen))
+    				return Notizen;
+    		if(t == typeof(NscMerkmal))
+    				return NscMerkmal;
+    		if(t == typeof(Rasse))
+    				return Rasse;
+    		if(t == typeof(Rasse_Farbe))
+    				return Rasse_Farbe;
+    		if(t == typeof(Rasse_Kultur))
+    				return Rasse_Kultur;
+    		if(t == typeof(Regeln))
+    				return Regeln;
+    		if(t == typeof(Rüstung))
+    				return Rüstung;
+    		if(t == typeof(Schild))
+    				return Schild;
+    		if(t == typeof(Setting))
+    				return Setting;
+    		if(t == typeof(Sonderfertigkeit))
+    				return Sonderfertigkeit;
+    		if(t == typeof(Sonderfertigkeit_Setting))
+    				return Sonderfertigkeit_Setting;
+    		if(t == typeof(Talent))
+    				return Talent;
+    		if(t == typeof(Talentgruppe))
+    				return Talentgruppe;
+    		if(t == typeof(Trageort))
+    				return Trageort;
+    		if(t == typeof(Version))
+    				return Version;
+    		if(t == typeof(VorNachteil))
+    				return VorNachteil;
+    		if(t == typeof(Waffe))
+    				return Waffe;
+    		if(t == typeof(Zauber))
+    				return Zauber;
+    		if(t == typeof(Zauber_Setting))
+    				return Zauber_Setting;
+    		if(t == typeof(Zauber_Variante))
+    				return Zauber_Variante;
+    		if(t == typeof(Zauberzeichen))
+    				return Zauberzeichen;
+    		if(t == typeof(Zauberzeichen_Setting))
+    				return Zauberzeichen_Setting;
+    		return null;
+    	}
     	
 
         #endregion

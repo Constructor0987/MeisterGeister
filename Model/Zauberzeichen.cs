@@ -6,7 +6,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Zauberzeichen
+    public partial class Zauberzeichen : MeisterGeister.Logic.Literatur.ILiteratur
     {
         public bool Usergenerated
         {

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Kampfregel
+    public partial class Kampfregel : MeisterGeister.Logic.Literatur.ILiteratur
     {
         public Kampfregel()
         {

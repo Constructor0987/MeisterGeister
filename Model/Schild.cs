@@ -8,7 +8,7 @@ using InventarLogic = MeisterGeister.ViewModel.Inventar.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Schild : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung
+    public partial class Schild : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, MeisterGeister.Logic.Literatur.ILiteratur
     {
         public Schild()
         {

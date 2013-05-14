@@ -7,7 +7,7 @@ using BasarLogic = MeisterGeister.ViewModel.Basar.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Handelsgut : BasarLogic.IHandelsgut
+    public partial class Handelsgut : BasarLogic.IHandelsgut, MeisterGeister.Logic.Literatur.ILiteratur
     {
         public bool Usergenerated
         {

@@ -189,6 +189,20 @@ namespace <#=code.EscapeNamespace(namespaceName)#>
 #>
 		return null;
 	}
+
+	public System.Linq.IQueryable GetObjectSet(Type t)
+	{
+<#
+		foreach (EntitySet entitySet in container.BaseEntitySets.OfType<EntitySet>())
+        {
+#>
+		if(t == typeof(<#=code.Escape(entitySet.ElementType)#>))
+				return <#=code.Escape(entitySet)#>;
+<#
+		}
+#>
+		return null;
+	}
 	
 <#
 		region.End();

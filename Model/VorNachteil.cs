@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.Model
 {
-    public partial class VorNachteil
+    public partial class VorNachteil : MeisterGeister.Logic.Literatur.ILiteratur
     {
         public bool Usergenerated
         {

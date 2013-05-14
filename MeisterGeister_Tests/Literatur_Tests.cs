@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Global = MeisterGeister.Global;
 using MeisterGeister.Logic.Literatur;
 using Pdf = MeisterGeister.Logic.General.Pdf;
+using System.Linq;
 
 
 namespace MeisterGeister_Tests
@@ -30,6 +31,53 @@ namespace MeisterGeister_Tests
         [TearDown]
         public void TearDownTest()
         {
+        }
+
+        [Test]
+        public void ParseAllLiteratur()
+        {
+            Scanner scanner = new Scanner();
+            Parser parser = new Parser(scanner);
+            ParseTree tree;
+
+            System.Collections.Generic.Dictionary<Type, System.Collections.Generic.List<object[]>> errors = new System.Collections.Generic.Dictionary<Type, System.Collections.Generic.List<object[]>>();
+
+            MeisterGeister.Model.DatabaseDSAEntities context = new DatabaseDSAEntities(MeisterGeister.Model.Service.ServiceBase.ConnectionString);
+
+            var ass = System.Reflection.Assembly.GetAssembly(typeof(ILiteratur));
+            var literaturTypes = ass.GetTypes().Where(t => t.FullName.StartsWith("MeisterGeister.Model") && typeof(ILiteratur).IsAssignableFrom(t));
+            foreach (Type t in literaturTypes)
+            {
+                var os = context.GetObjectSet(t);
+                foreach (var o in os)
+                {
+                    if (!(o is ILiteratur))
+                        break;
+                    ILiteratur l = o as ILiteratur;
+                    if (l == null || l.Literatur == null)
+                        continue;
+                    tree = parser.Parse(l.Literatur);
+                    if (tree.Errors.Count != 0)
+                    {
+                        if (!errors.ContainsKey(t))
+                            errors.Add(t, new System.Collections.Generic.List<object[]>());
+                        var key = context.CreateEntityKey(t.Name, o);
+                        errors[t].Add(new object[] { key, l.Literatur });
+                    }
+                }
+            }
+            foreach (var t in errors.Keys)
+            {
+                System.Diagnostics.Debug.WriteLine("\n" + t.Name + "\n-------------");
+                foreach(var oarr in errors[t])
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        String.Join(", ", (oarr[0] as System.Data.EntityKey).EntityKeyValues.Select(ekv => Convert.ToString(ekv.Key) + ":\t" + Convert.ToString(ekv.Value)))
+                        + "\n" + (string)oarr[1]
+                        );
+                }
+            }
+            Assert.AreEqual(0, errors.Count);
         }
 
         [Test]

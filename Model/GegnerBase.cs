@@ -6,7 +6,7 @@ using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class GegnerBase : KampfLogic.IHasZonenRs
+    public partial class GegnerBase : KampfLogic.IHasZonenRs, MeisterGeister.Logic.Literatur.ILiteratur
     {
         public GegnerBase()
         {
