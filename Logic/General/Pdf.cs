@@ -62,9 +62,18 @@ namespace MeisterGeister.Logic.General
             return false;
         }
 
-        public static Process OpenReader(string literaturKürzel, int page = 1)
+        public static Process OpenReader(Literatur.Literaturangabe literaturangabe, Literatur.Seitenangabe seitenangabe)
         {
-            var l = Model.Literatur.GetByAbkürzung(literaturKürzel);
+            if (literaturangabe == null)
+                throw new ArgumentNullException("literaturangabe");
+            if (seitenangabe == null)
+                throw new ArgumentNullException("seitenangabe");
+            return OpenReader(literaturangabe.Kürzel, seitenangabe.Seite, seitenangabe.IsErrata);
+        }
+
+        public static Process OpenReader(string literaturKürzel, int page = 1, bool isErrata = false)
+        {
+            var l = Model.Literatur.GetByAbkürzung(literaturKürzel, isErrata);
             if (l == null || String.IsNullOrWhiteSpace(l.Pfad))
                 throw new Literatur.LiteraturPfadMissingException(literaturKürzel, l);
             string fileName = l.Pfad;

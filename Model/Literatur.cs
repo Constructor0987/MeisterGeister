@@ -59,9 +59,9 @@ namespace MeisterGeister.Model
         /// </summary>
         /// <param name="abkürzung">Abkürzung einer Literaturangabe</param>
         /// <returns></returns>
-        public static Literatur GetByAbkürzung(string abkürzung)
+        public static Literatur GetByAbkürzung(string abkürzung, bool isErrata = false)
         {
-            return Global.ContextHeld.LoadLiteraturByAbkürzung(abkürzung);
+            return Global.ContextHeld.LoadLiteraturByAbkürzung(abkürzung, isErrata);
         }
 
         /// <summary>
