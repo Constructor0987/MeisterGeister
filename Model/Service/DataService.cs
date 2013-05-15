@@ -274,5 +274,12 @@ namespace MeisterGeister.Model.Service {
 
         #endregion
 
+        #region Literatur/Wege des Wissens
+        public Literatur LoadLiteraturByAbkürzung(string abkürzung)
+        {
+            return Context.Literatur.Where(l => l.Abkürzung == abkürzung).FirstOrDefault();
+        }
+        #endregion
+
     }
 }

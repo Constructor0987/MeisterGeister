@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.Logic.Literatur
 {
-    interface ILiteratur
+    public interface ILiteratur
     {
         string Literatur { get; }
     }

@@ -53,5 +53,39 @@ namespace MeisterGeister.Model
                 return null;
             return (List<Literaturangabe>)tree.Eval();
         }
+
+        /// <summary>
+        /// Gibt eine Literatur-Instanz anhand der Abkürzung zurück.
+        /// </summary>
+        /// <param name="abkürzung">Abkürzung einer Literaturangabe</param>
+        /// <returns></returns>
+        public static Literatur GetByAbkürzung(string abkürzung)
+        {
+            return Global.ContextHeld.LoadLiteraturByAbkürzung(abkürzung);
+        }
+
+        /// <summary>
+        /// Tauscht abgekürzte Literturangaben gegen die Langfassung aus.
+        /// </summary>
+        /// <param name="litertur">Literturangaben mit Abkürzungen.</param>
+        /// <returns>Literurangaben in Langfassung.</returns>
+        public static string ReplaceAbkürzungen(string literatur)
+        {
+            
+            if (string.IsNullOrWhiteSpace(literatur))
+                return string.Empty;
+
+            string text = literatur;
+
+            foreach (var l in Global.ContextHeld.Liste<Literatur>())
+                text = text.Replace(l.Abkürzung, l.Name);
+
+            return text;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

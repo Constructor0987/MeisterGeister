@@ -423,6 +423,8 @@
         </Grid>
         <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="0,0,4,4" Name="_scrollViewerKämpferDetails" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <Border Style="{DynamicResource ControlContentBorder}">
+                <TabControl>
+                    <TabItem Header="Kämpfer">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -431,10 +433,12 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="92*" />
+                                <ColumnDefinition Width="15*"/>
+                                <ColumnDefinition Width="419*"/>
+                                <ColumnDefinition Width="130" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Margin="6,6,2,2" Text="{Binding SelectedKämpfer.Name}" FontWeight="Bold" VerticalAlignment="Top" >
+                    <TextBox Margin="6,6,2,0" Text="{Binding SelectedKämpfer.Name}" FontWeight="Bold" VerticalAlignment="Top" Grid.ColumnSpan="3" >
                         <TextBox.ToolTip>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -458,7 +462,7 @@
                             <SolidColorBrush />
                         </TextBox.Background>
                     </TextBox>
-                    <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="1" Margin="5" Height="120" Width="120" VerticalAlignment="Top">
+                    <Image Grid.Row="1" Grid.Column="3" Grid.RowSpan="1" Margin="5,5,5,0" Height="120" Width="120" VerticalAlignment="Top">
                         <Image.Source>
                             <Binding Path="SelectedKämpfer.Bild" IsAsync="True" Mode="OneWay">
                                 <Binding.FallbackValue>
@@ -475,7 +479,7 @@
                         </Image.Source>
                     </Image>
 
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" Grid.ColumnSpan="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
@@ -555,7 +559,7 @@
                         </Grid>
                     </Grid>
 
-                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="400" Width="Auto" />
                             <ColumnDefinition />
@@ -750,6 +754,34 @@
 
                     </Grid>
                 </Grid>
+                    </TabItem>
+                    <TabItem Header="Manöver">
+                        <!-- TODO JT: Manöverbindings -->
+                        <StackPanel>
+                            <!-- Manöverauswahl-->
+                            <ComboBox ItemsSource="{Binding MöglicheManöver}" SelectedItem="{Binding SelectedManöverInfo.Manöver}" DisplayMemberPath="Name"></ComboBox>
+                            <!-- Kombination von Manövern? -->
+                            <!-- Manöveroptionen? -->
+                            <!-- Waffen -> Ziele -->
+                            <ComboBox ItemsSource="{Binding MöglicheZiele}" SelectedItem="{Binding SelectedZiel}" DisplayMemberPath="Name"></ComboBox>
+                            <!-- Alle Kämpfer auch Freunde anzeigen - Checkbox -->
+                            <CheckBox />
+                            <!-- Optional, wenn das Manöver mehrere Ziele zulässt:-->
+                                <Button Command="{Binding AddSelectedZiel}">
+                                    <TextBlock Text="+" ToolTip="Ziel hinzufügen"/>
+                                </Button>
+                            <ListView ItemsSource="{Binding SelectedManöverInfo.Manöver.Ziele}">
+                            <!-- für jedes Ziel-->
+                                <!-- Ziel entfernen (bei mehreren zielen) -->
+                                <!-- Attackeprobe -->
+                                <!-- Parademanöverauswahl + Paradeprobe -->
+                            </ListView>
+                            <!-- Bestätigen -->
+                            <Button Command="{Binding ManöverAusführen}">
+                                <TextBlock Text="OK"/></Button>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
             </Border>
         </ScrollViewer>
         <Grid Grid.Row="0" Grid.Column="1" Margin="0,4,4,4">

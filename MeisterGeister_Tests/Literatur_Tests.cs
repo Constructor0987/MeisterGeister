@@ -15,7 +15,7 @@ namespace MeisterGeister_Tests
         [TestFixtureSetUp]
         public void SetupMethods()
         {
-            //Global.Init();
+            Global.Init();
         }
 
         [TestFixtureTearDown]
@@ -116,7 +116,14 @@ namespace MeisterGeister_Tests
         [Test]
         public void OpenPdfReaderTest()
         {
-            Pdf.OpenReader("WdA", 12);
+            Assert.Throws(typeof(LiteraturPfadMissingException), delegate() { Pdf.OpenReader("WdA", 2); });
+            Literatur wda = Global.ContextHeld.Liste<Literatur>().Where(l => l.Abkürzung == "WdA").FirstOrDefault();
+            Assert.IsNotNull(wda);
+            wda.Pfad = "Daten\\Pdf\\10Seiten.pdf";
+            Assert.IsTrue(Global.ContextHeld.Update<Literatur>(wda));
+            Assert.DoesNotThrow(delegate() { Pdf.OpenReader("WdA", 2); });
+            wda.Pfad = null;
+            Assert.IsTrue(Global.ContextHeld.Update<Literatur>(wda));
         }
     }
 }

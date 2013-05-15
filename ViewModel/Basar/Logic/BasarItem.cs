@@ -90,7 +90,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
 
         public string LiteraturLang
         {
-            get { return MeisterGeister.Logic.General.Literatur.ReplaceAbkürzungen(Literatur); }
+            get { return Model.Literatur.ReplaceAbkürzungen(Literatur); }
         }
 
         // Wird zum Ein-/Ausblendung in der GUI benötigt.

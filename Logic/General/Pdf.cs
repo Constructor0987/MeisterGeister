@@ -15,7 +15,7 @@ namespace MeisterGeister.Logic.General
                 if (Pdf.openCommand == null)
                 {
                     Pdf.openCommand = Settings.Einstellungen.PdfReaderCommand;
-                    if (Pdf.openCommand == null)
+                    if (String.IsNullOrWhiteSpace(Pdf.openCommand))
                         SetReader("Adobe Acrobat Reader");
                 }
                 return Pdf.openCommand; 
@@ -31,7 +31,7 @@ namespace MeisterGeister.Logic.General
                 if (Pdf.openArguments == null)
                 {
                     Pdf.openArguments = Settings.Einstellungen.PdfReaderArguments;
-                    if (Pdf.openArguments == null)
+                    if (String.IsNullOrWhiteSpace(Pdf.openArguments))
                         SetReader("Adobe Acrobat Reader");
                 } 
                 return Pdf.openArguments;
@@ -62,20 +62,25 @@ namespace MeisterGeister.Logic.General
             return false;
         }
 
-
-        public static void OpenReader(string litertaturShort, int page)
+        public static Process OpenReader(string literaturKürzel, int page = 1)
         {
-            string fileName = "C:\\Spiele\\DSA\\Books\\Wege der Alchimie - Preisliste.pdf";
-            OpenFile(fileName, page);
+            var l = Model.Literatur.GetByAbkürzung(literaturKürzel);
+            if (l == null || String.IsNullOrWhiteSpace(l.Pfad))
+                throw new Literatur.LiteraturPfadMissingException(literaturKürzel, l);
+            string fileName = l.Pfad;
+            return OpenFileInReader(fileName, page);
         }
 
-        public static void OpenFile(string fileName, int page)
+        public static Process OpenFileInReader(string fileName, int page = 1)
         {
+            if(String.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentNullException("fileName", "Dateiname (fileName) wurde nicht angegeben.");
             Process p = new Process();
-            ProcessStartInfo pi = new ProcessStartInfo("AcroRd32.exe", String.Format(openArguments, fileName, page));
+            ProcessStartInfo pi = new ProcessStartInfo(OpenCommand, String.Format(OpenArguments, fileName, page));
             p.StartInfo = pi;
             pi.UseShellExecute = true;
             p.Start();
+            return p;
         }
 
         

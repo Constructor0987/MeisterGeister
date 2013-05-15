@@ -159,7 +159,6 @@
     <Compile Include="Logic\General\AudioPlayer.cs" />
     <Compile Include="Logic\General\KeyEqualityComparer.cs" />
     <Compile Include="Logic\General\Pdf.cs" />
-    <Compile Include="Logic\General\Literatur.cs" />
     <Compile Include="Logic\General\MetaTalent.cs" />
     <Compile Include="Logic\General\Probe.cs" />
     <Compile Include="Logic\General\RandomNumberGenerator.cs" />
@@ -172,6 +171,7 @@
     <Compile Include="Logic\HeldenImport\HeldenblattImporter.cs" />
     <Compile Include="Logic\Literatur\ILiteratur.cs" />
     <Compile Include="Logic\Literatur\Literaturangabe.cs" />
+    <Compile Include="Logic\Literatur\LiteraturPfadMissingException.cs" />
     <Compile Include="Logic\Literatur\Parser.cs" />
     <Compile Include="Logic\Literatur\ParseTree.cs" />
     <Compile Include="Logic\Literatur\Scanner.cs" />
