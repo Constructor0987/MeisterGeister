@@ -43,10 +43,40 @@ namespace MeisterGeister.Logic.Literatur
 
 
             
+            tok = scanner.LookAhead(TokenType.WHITESPACE);
+            while (tok.Type == TokenType.WHITESPACE)
+            {
+                tok = scanner.Scan(TokenType.WHITESPACE);
+                n = node.CreateNode(tok, tok.ToString() );
+                node.Token.UpdateRange(tok);
+                node.Nodes.Add(n);
+                if (tok.Type != TokenType.WHITESPACE) {
+                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                    return;
+                }
+            tok = scanner.LookAhead(TokenType.WHITESPACE);
+            }
+
+            
             tok = scanner.LookAhead(TokenType.WORT);
             if (tok.Type == TokenType.WORT)
             {
                 ParseLiteraturliste(node);
+            }
+
+            
+            tok = scanner.LookAhead(TokenType.WHITESPACE);
+            while (tok.Type == TokenType.WHITESPACE)
+            {
+                tok = scanner.Scan(TokenType.WHITESPACE);
+                n = node.CreateNode(tok, tok.ToString() );
+                node.Token.UpdateRange(tok);
+                node.Nodes.Add(n);
+                if (tok.Type != TokenType.WHITESPACE) {
+                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                    return;
+                }
+            tok = scanner.LookAhead(TokenType.WHITESPACE);
             }
 
             
@@ -89,20 +119,6 @@ namespace MeisterGeister.Logic.Literatur
                 }
 
                 
-                tok = scanner.LookAhead(TokenType.WHITESPACE);
-                if (tok.Type == TokenType.WHITESPACE)
-                {
-                    tok = scanner.Scan(TokenType.WHITESPACE);
-                    n = node.CreateNode(tok, tok.ToString() );
-                    node.Token.UpdateRange(tok);
-                    node.Nodes.Add(n);
-                    if (tok.Type != TokenType.WHITESPACE) {
-                        tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
-                        return;
-                    }
-                }
-
-                
                 ParseLiteraturangabe(node);
             tok = scanner.LookAhead(TokenType.BUCHTRENNER);
             }
@@ -134,14 +150,17 @@ namespace MeisterGeister.Logic.Literatur
                 }
 
                 
-                tok = scanner.Scan(TokenType.WHITESPACE);
-                n = node.CreateNode(tok, tok.ToString() );
-                node.Token.UpdateRange(tok);
-                node.Nodes.Add(n);
-                if (tok.Type != TokenType.WHITESPACE) {
-                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
-                    return;
-                }
+                do {
+                    tok = scanner.Scan(TokenType.WHITESPACE);
+                    n = node.CreateNode(tok, tok.ToString() );
+                    node.Token.UpdateRange(tok);
+                    node.Nodes.Add(n);
+                    if (tok.Type != TokenType.WHITESPACE) {
+                        tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                        return;
+                    }
+                    tok = scanner.LookAhead(TokenType.WHITESPACE);
+                } while (tok.Type == TokenType.WHITESPACE);
             }
 
             
@@ -230,14 +249,17 @@ namespace MeisterGeister.Logic.Literatur
             ParseKuerzel(node);
 
             
-            tok = scanner.Scan(TokenType.WHITESPACE);
-            n = node.CreateNode(tok, tok.ToString() );
-            node.Token.UpdateRange(tok);
-            node.Nodes.Add(n);
-            if (tok.Type != TokenType.WHITESPACE) {
-                tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
-                return;
-            }
+            do {
+                tok = scanner.Scan(TokenType.WHITESPACE);
+                n = node.CreateNode(tok, tok.ToString() );
+                node.Token.UpdateRange(tok);
+                node.Nodes.Add(n);
+                if (tok.Type != TokenType.WHITESPACE) {
+                    tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
+                    return;
+                }
+                tok = scanner.LookAhead(TokenType.WHITESPACE);
+            } while (tok.Type == TokenType.WHITESPACE);
 
             
             ParseSeitenangabe(node);
@@ -255,20 +277,6 @@ namespace MeisterGeister.Logic.Literatur
                 if (tok.Type != TokenType.SEITENTRENNER) {
                     tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.SEITENTRENNER.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
                     return;
-                }
-
-                
-                tok = scanner.LookAhead(TokenType.WHITESPACE);
-                if (tok.Type == TokenType.WHITESPACE)
-                {
-                    tok = scanner.Scan(TokenType.WHITESPACE);
-                    n = node.CreateNode(tok, tok.ToString() );
-                    node.Token.UpdateRange(tok);
-                    node.Nodes.Add(n);
-                    if (tok.Type != TokenType.WHITESPACE) {
-                        tree.Errors.Add(new ParseError("Unexpected token '" + tok.Text.Replace("\n", "") + "' found. Expected " + TokenType.WHITESPACE.ToString(), 0x1001, 0, tok.StartPos, tok.StartPos, tok.Length));
-                        return;
-                    }
                 }
 
                 

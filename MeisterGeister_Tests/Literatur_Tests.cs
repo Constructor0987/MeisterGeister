@@ -41,6 +41,7 @@ namespace MeisterGeister_Tests
             ParseTree tree;
 
             System.Collections.Generic.Dictionary<Type, System.Collections.Generic.List<object[]>> errors = new System.Collections.Generic.Dictionary<Type, System.Collections.Generic.List<object[]>>();
+            System.Collections.Generic.List<string> pub = new System.Collections.Generic.List<string>();
 
             MeisterGeister.Model.DatabaseDSAEntities context = new DatabaseDSAEntities(MeisterGeister.Model.Service.ServiceBase.ConnectionString);
 
@@ -64,20 +65,31 @@ namespace MeisterGeister_Tests
                         var key = context.CreateEntityKey(t.Name, o);
                         errors[t].Add(new object[] { key, l.Literatur });
                     }
+                    var litList = (System.Collections.Generic.List<Literaturangabe>)tree.Eval();
+                    foreach (var la in litList)
+                    {
+                        if (!pub.Contains(la.Kürzel))
+                            pub.Add(la.Kürzel);
+                    }
                 }
             }
+            string errString = "";
             foreach (var t in errors.Keys)
             {
                 System.Diagnostics.Debug.WriteLine("\n" + t.Name + "\n-------------");
                 foreach(var oarr in errors[t])
                 {
-                    System.Diagnostics.Debug.WriteLine(
+                    errString += "\n" +
                         String.Join(", ", (oarr[0] as System.Data.EntityKey).EntityKeyValues.Select(ekv => Convert.ToString(ekv.Key) + ":\t" + Convert.ToString(ekv.Value)))
-                        + "\n" + (string)oarr[1]
-                        );
+                        + "\n" + (string)oarr[1];
                 }
             }
-            Assert.AreEqual(0, errors.Count);
+            Assert.AreEqual(0, errors.Count, "Es gibt Parserfehler bei folgenden Literaturangaben:\n" + errString);
+            
+            foreach (string abk in pub)
+            {
+                Assert.AreEqual(1, context.Literatur.Where(l => l.Abkürzung == abk).Count(), String.Format("Es gibt für die Abkürzung {0} keinen Eintrag in der Literaturliste.", abk));
+            }
         }
 
         [Test]

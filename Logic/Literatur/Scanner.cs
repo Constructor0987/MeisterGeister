@@ -38,11 +38,11 @@ namespace MeisterGeister.Logic.Literatur
             Patterns.Add(TokenType.NUMBER, regex);
             Tokens.Add(TokenType.NUMBER);
 
-            regex = new Regex(@"\s?/\s?", RegexOptions.Compiled);
+            regex = new Regex(@"\s*/\s*", RegexOptions.Compiled);
             Patterns.Add(TokenType.BUCHTRENNER, regex);
             Tokens.Add(TokenType.BUCHTRENNER);
 
-            regex = new Regex(@",\s?", RegexOptions.Compiled);
+            regex = new Regex(@",\s*", RegexOptions.Compiled);
             Patterns.Add(TokenType.SEITENTRENNER, regex);
             Tokens.Add(TokenType.SEITENTRENNER);
 

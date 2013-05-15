@@ -414,6 +414,12 @@ namespace MeisterGeister.Model
             get { return _zauberzeichen_Setting  ?? (_zauberzeichen_Setting = CreateObjectSet<Zauberzeichen_Setting>("Zauberzeichen_Setting")); }
         }
         private ObjectSet<Zauberzeichen_Setting> _zauberzeichen_Setting;
+    
+        public ObjectSet<Literatur> Literatur
+        {
+            get { return _literatur  ?? (_literatur = CreateObjectSet<Literatur>("Literatur")); }
+        }
+        private ObjectSet<Literatur> _literatur;
 
         #endregion
 
@@ -536,6 +542,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Zauberzeichen;
     		if(typeof(T) == typeof(Zauberzeichen_Setting))
     				return (ObjectSet<T>)(Object)Zauberzeichen_Setting;
+    		if(typeof(T) == typeof(Literatur))
+    				return (ObjectSet<T>)(Object)Literatur;
     		return null;
     	}
     
@@ -657,6 +665,8 @@ namespace MeisterGeister.Model
     				return Zauberzeichen;
     		if(t == typeof(Zauberzeichen_Setting))
     				return Zauberzeichen_Setting;
+    		if(t == typeof(Literatur))
+    				return Literatur;
     		return null;
     	}
     	

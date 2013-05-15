@@ -42,6 +42,7 @@
           <EntitySet Name="Kampfregel" EntityType="DatabaseDSAModel.Store.Kampfregel" store:Type="Tables" />
           <EntitySet Name="Kultur" EntityType="DatabaseDSAModel.Store.Kultur" store:Type="Tables" />
           <EntitySet Name="Kultur_Name" EntityType="DatabaseDSAModel.Store.Kultur_Name" store:Type="Tables" />
+          <EntitySet Name="Literatur" EntityType="DatabaseDSAModel.Store.Literatur" store:Type="Tables" />
           <EntitySet Name="MenuLink" EntityType="DatabaseDSAModel.Store.MenuLink" store:Type="Tables" />
           <EntitySet Name="Munition" EntityType="DatabaseDSAModel.Store.Munition" store:Type="Tables" />
           <EntitySet Name="Name" EntityType="DatabaseDSAModel.Store.Name" store:Type="Tables" />
@@ -865,6 +866,16 @@
           </Key>
           <Property Name="KulturGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Herkunft" Type="nvarchar" Nullable="false" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Literatur">
+          <Key>
+            <PropertyRef Name="LiteraturGUID" />
+          </Key>
+          <Property Name="LiteraturGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="Abkürzung" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Pfad" Type="nvarchar" MaxLength="500" />
+          <Property Name="Seitenoffset" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MenuLink">
           <Key>
@@ -2070,12 +2081,12 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="upper"
-          Aggregate="false"
-          BuiltIn="true"
-          NiladicFunction="false"
-          IsComposable="true"
-          ParameterTypeSemantics="AllowImplicitConversion"
-          ReturnType="nvarchar">
+            Aggregate="false"
+            BuiltIn="true"
+            NiladicFunction="false"
+            IsComposable="true"
+            ParameterTypeSemantics="AllowImplicitConversion"
+            ReturnType="nvarchar">
           <Parameter Name="guid" Type="uniqueidentifier" Mode="In" />
         </Function>
       </Schema>
@@ -2378,6 +2389,7 @@
             <End Role="Talent" EntitySet="Talent" />
             <End Role="Waffe" EntitySet="Waffe" />
           </AssociationSet>
+          <EntitySet Name="Literatur" EntityType="DatabaseDSAModel.Literatur" />
         </EntityContainer>
         <EntityType Name="Abenteuer">
           <Key>
@@ -4119,6 +4131,16 @@
           <End Type="DatabaseDSAModel.Talent" Role="Talent" Multiplicity="*" />
           <End Type="DatabaseDSAModel.Waffe" Role="Waffe" Multiplicity="*" />
         </Association>
+        <EntityType Name="Literatur">
+          <Key>
+            <PropertyRef Name="LiteraturGUID" />
+          </Key>
+          <Property Type="Guid" Name="LiteraturGUID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Abkürzung" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Pfad" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Seitenoffset" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5032,6 +5054,17 @@
               <ScalarProperty Name="TalentGUID" ColumnName="TalentGUID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Literatur">
+            <EntityTypeMapping TypeName="DatabaseDSAModel.Literatur">
+              <MappingFragment StoreEntitySet="Literatur">
+                <ScalarProperty Name="Seitenoffset" ColumnName="Seitenoffset" />
+                <ScalarProperty Name="Pfad" ColumnName="Pfad" />
+                <ScalarProperty Name="Abkürzung" ColumnName="Abkürzung" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LiteraturGUID" ColumnName="LiteraturGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -5171,6 +5204,7 @@
         <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" />
         <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" />
         <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="2.9923249776439391" PointY="18.00797645096107" />
       </Diagram>
     </Diagrams>
   </Designer>

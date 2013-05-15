@@ -20,20 +20,20 @@
 <% @TextHighlighter Generate="False" %> // toggle generation of the code for the TextHighlighter
 
 NUMBER 	-> @"[0-9]+";
-BUCHTRENNER          -> @"\s?/\s?";
-SEITENTRENNER        -> @",\s?";
+BUCHTRENNER          -> @"\s*/\s*";
+SEITENTRENNER        -> @",\s*";
 ERRATA				-> @"(Errata|ERRATA)";
 WORT          -> @"[a-zA-ZäüößÄÜÖûÛ'/\-%&\+]+";
 BIS	     -> @"-";
 EOF         -> @"^$";
 WHITESPACE  -> @"\s+";
 
-Start 		-> Literaturliste? EOF
+Start 		-> WHITESPACE* Literaturliste? WHITESPACE* EOF
 {
 	return $Literaturliste;
 };
 
-Literaturliste -> Literaturangabe  (BUCHTRENNER WHITESPACE? Literaturangabe)*
+Literaturliste -> Literaturangabe  (BUCHTRENNER Literaturangabe)*
 {
 	List<Literaturangabe> list = new List<Literaturangabe>();
 	list.Add((Literaturangabe)$Literaturangabe);
@@ -44,7 +44,7 @@ Literaturliste -> Literaturangabe  (BUCHTRENNER WHITESPACE? Literaturangabe)*
 	return list;
 };
 
-Seitenangabe -> (ERRATA WHITESPACE)? NUMBER (BIS NUMBER)?
+Seitenangabe -> (ERRATA WHITESPACE+)? NUMBER (BIS NUMBER)?
 {
 	bool isErrata = ($ERRATA!=null);
 	int startSeite = Convert.ToInt32($NUMBER);
@@ -62,7 +62,7 @@ Kuerzel -> WORT NUMBER?
 	return k;
 };
 
-Literaturangabe -> Kuerzel WHITESPACE Seitenangabe (SEITENTRENNER WHITESPACE? Seitenangabe)*
+Literaturangabe -> Kuerzel WHITESPACE+ Seitenangabe (SEITENTRENNER Seitenangabe)*
 {
 	string kuerzel = Convert.ToString($Kuerzel);
 	List<Seitenangabe> list = new List<Seitenangabe>();
