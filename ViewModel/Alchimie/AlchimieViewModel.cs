@@ -131,7 +131,18 @@ namespace MeisterGeister.ViewModel.Alchimie
         public List<Alchimierezept> RezeptListeHerstellung { get { return _rezeptListeHerstellung; } set { _rezeptListeHerstellung = value; OnChanged("RezeptListeHerstellung"); } }
         public List<string> LaborArtListeHerstellung { get { return _laborArtListeHerstellung; } set { _laborArtListeHerstellung = value; OnChanged("LaborArtListeHerstellung"); } }
         public List<string> LaborQualitätListeHerstellung { get { return _laborQualitätListeHerstellung; } set { _laborQualitätListeHerstellung = value; OnChanged("LaborQualitätListeHerstellung"); } }
-        public List<Zutat> SubstitutionListeHerstellung { get { return _substitutionListeHerstellung; } set { _substitutionListeHerstellung = value; OnChanged("SubstitutionListeHerstellung"); } }
+        public List<Zutat> SubstitutionListeHerstellung { 
+            get { return _substitutionListeHerstellung; }
+            set 
+            {
+                if (_substitutionListeHerstellung != null)
+                    _substitutionListeHerstellung.ForEach(z => z.PropertyChanged -= Zutat_PropertyChanged);
+                _substitutionListeHerstellung = value;
+                if (_substitutionListeHerstellung != null)
+                    _substitutionListeHerstellung.ForEach(z => z.PropertyChanged += Zutat_PropertyChanged);
+                OnChanged("SubstitutionListeHerstellung");
+            }
+        }
         //Selections
         public Talent SelectedTalentHerstellung { get { return _selectedTalentHerstellung; } set { 
             _selectedTalentHerstellung = value; 
@@ -267,6 +278,9 @@ namespace MeisterGeister.ViewModel.Alchimie
             }
             return new List<Zutat>();
         }
+
+        
+
         #endregion
         #region//-Analyse-
         private void resetAnalyse()
@@ -287,7 +301,10 @@ namespace MeisterGeister.ViewModel.Alchimie
         #endregion
 
         #region //---- EVENTS ----
-
+        void Zutat_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            //TODO: MP implement
+        }
 
         #endregion
 
