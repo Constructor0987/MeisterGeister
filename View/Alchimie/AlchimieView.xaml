@@ -62,18 +62,18 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Talent:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Talentname" SelectedItem="{Binding SelectedTalentHerstellung}" />
-                                    <TextBlock Text="TaW" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaWTalent}" />
-                                </StackPanel>
-                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
                                     <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListeHerstellung}" SelectedItem="{Binding SelectedGruppeHerstellung}" />
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
                                     <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezeptHerstellung}" />
+                                </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Talent:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Talentname" SelectedItem="{Binding SelectedTalentHerstellung}" />
+                                    <TextBlock Text="TaW" VerticalAlignment="Center" />
+                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaWTalent}" />
                                 </StackPanel>
                                 <TextBlock Margin="5,5,5,5" Text="Ausstattung:" FontWeight="Bold" FontSize="14"/>
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
@@ -92,7 +92,7 @@
                                         <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListeHerstellung}" SelectedItem="{Binding SelectedLaborQualitätListeHerstellung}" IsEnabled="{Binding IsEnabledLaborQualitätListeHerstellung}" />
                                     </StackPanel>
                                     <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                        <TextBlock Text="Modifikator für Labor: "/>
+                                        <TextBlock Text="Proben-Mod: "/>
                                         <TextBlock Text="{Binding ModifikatorLaborHerstellung}"  />
                                     </StackPanel>
                                 </StackPanel>
@@ -101,7 +101,13 @@
                                 </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                     <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyseHerstellung}" ToolTip="zur Analyse"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeitHerstellung}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen"/>
+                                    <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
+                                        <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeitHerstellung}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen"/>
+                                        <TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding ModifikatorCHHerstellung}" VerticalAlignment="Center" />
+                                        <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />
+                                    </StackPanel>
                                     <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEisHerstellung}" ToolTip="ermöglicht extreme Temperaturen"/>
                                     <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindungHerstellung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen"/>
                                     <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElementeHerstellung}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen"/>
@@ -110,10 +116,18 @@
                                 <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
                                     <TextBlock Text="TaP zurückhalten" VerticalAlignment="Center" />
                                     <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaPZurückhaltenHerstellung}" />
+                                    <TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding ModifikatorTaPZurückhaltenHerstellung}" VerticalAlignment="Center" />
+                                    <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding BonusTaPQualitätHerstellung}" VerticalAlignment="Center" />
                                 </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" IsEnabled="{Binding IsEnabledAufladen}">
-                                    <TextBlock Text="Astrales Aufladen" VerticalAlignment="Center" />
-                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAstralesAufladenHerstellung}" />
+                                    <TextBlock Text="Astrales Aufladen" VerticalAlignment="Center" ToolTip="Magiekunde und Alchimie 7+"/>
+                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertAstralesAufladenHerstellung}" ToolTip="Magiekunde und Alchimie 7+" />
+                                    <TextBlock Text="AsP Einsatz: " VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding ASPEinsatzHerstellung}" VerticalAlignment="Center" />
+                                    <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding BonusAAQualitätHerstellung}" VerticalAlignment="Center" />
                                 </StackPanel>
 
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
@@ -125,6 +139,10 @@
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_04.png" ToolTip="sinnvolle Substitution" Width="25" VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_05.png" ToolTip="mögliche Substitution" Width="25" VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_06.png" ToolTip="unsinnige Substitution" Width="25" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Text="Modifikator für Substitutionen: "/>
+                                    <TextBlock Text="{Binding ModifikatorSubstitutionenHerstellung}"  />
                                 </StackPanel>
                                 <ListBox Margin="5,0,5,5" SelectionMode="Extended" Background="Transparent" ItemsSource="{Binding SubstitutionListeHerstellung}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ItemTemplate="{StaticResource SubstitutionItemTemplate}"/>
                             </StackPanel>
@@ -173,9 +191,16 @@
                                 <TextBlock Text="Gruppe"  Grid.Row="1" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Gruppe}" Grid.Row="1" Grid.Column="2" />
                                 <TextBlock Text="benutztes Labor"  Grid.Row="2" />
-                                <TextBlock Text="{Binding Path = SelectedLaborArtListeHerstellung}" Grid.Row="2" Grid.Column="2" />
-                                <TextBlock Text="Qualität"  Grid.Row="4" />
-                                <TextBlock Text="{Binding HerstellungQualität}" Grid.Row="4" Grid.Column="2" />
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2">
+                                    <TextBlock Text="{Binding Path = SelectedLaborArtListeHerstellung}"  />
+                                    <TextBlock Text=" ("  />
+                                    <TextBlock Text="{Binding Path = SelectedLaborQualitätListeHerstellung}"  />
+                                    <TextBlock Text=")"  />
+                                </StackPanel>
+                                <TextBlock Text="Proben-Modifikator: "  Grid.Row="3" />
+                                <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="3" Grid.Column="2" />
+                                <TextBlock Text="Qualität-Bonus"  Grid.Row="4" />
+                                <TextBlock Text="{Binding BonusQualitätHerstellung}" Grid.Row="4" Grid.Column="2" />
                                 <TextBlock Text="Brauschwierigkeit"  Grid.Row="6" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Brauschwierigkeit}" Grid.Row="6" Grid.Column="2" />
                                 <TextBlock Text="Analyseschwierigkeit"  Grid.Row="7" />
@@ -192,7 +217,7 @@
                                 <TextBlock Text="Merkmale"  Grid.Row="12" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Merkmale}" Grid.Row="12" Grid.Column="2" />
                                 <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="14" />
-                                <TextBlock Text="{Binding HerstellungWirkung}" Grid.Row="14" Grid.Column="2" />
+                                <TextBlock Text="{Binding HerstellungWirkungM}" Grid.Row="14" Grid.Column="2" />
                                 <TextBlock Text="Zutaten"  Grid.Row="16" />
                                 <TextBlock Text="Bemerkung"  Grid.Row="17" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Bemerkung}" Grid.Row="17" Grid.Column="2" />

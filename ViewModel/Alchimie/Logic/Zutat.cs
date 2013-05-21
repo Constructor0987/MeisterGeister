@@ -17,6 +17,7 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         private int _anzahl;
         private string _einheit;
         private Substitution _substitution = Substitution.gleichwertig;
+        public string mod = "0";
         //Commands
 
         #endregion
@@ -50,7 +51,6 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
 
         #region //---- INSTANZMETHODEN ----
 
-
         #endregion
 
         #region //---- INotifyPropertyChanged Member ----
@@ -61,6 +61,16 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         {
             if (PropertyChanged != null)
             {
+                int n =0;
+                switch (Substitution.ToString())
+                {
+                    case "optimierend": n = -3; mod = n.ToString(); break;
+                    case "gleichwertig": n = 0; mod = n.ToString(); break;
+                    case "sinnvoll": n = +3; mod = n.ToString(); break;
+                    case "möglich": n = +6; mod = n.ToString(); break;
+                    case "unsinnig": mod = "nicht möglich"; break;
+                    default: n = 0; mod = n.ToString(); break;
+                }
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
