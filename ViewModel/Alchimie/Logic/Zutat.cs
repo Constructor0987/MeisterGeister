@@ -17,7 +17,7 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         private int _anzahl;
         private string _einheit;
         private Substitution _substitution = Substitution.gleichwertig;
-        public string mod = "0";
+        private int mod = 0;
         //Commands
 
         #endregion
@@ -27,11 +27,42 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         public string Name   {   get   {  return _name; }  }
         public int Anzahl { get { return _anzahl; } }
         public string Einheit { get { return _einheit; } }
+
+        public int Mod
+        {
+            get { return mod; }
+            set
+            {
+                mod = value;
+                OnChanged("Mod");
+            }
+        }
         
         public Substitution Substitution
         {
             get { return _substitution; }
-            set { _substitution = value; OnChanged("Substitution"); }
+            set { 
+                _substitution = value;
+                switch (value)
+                {
+                    case Substitution.optimierend:
+                        Mod = -3;
+                        break;
+                    case Substitution.gleichwertig:
+                        Mod = 0;
+                        break;
+                    case Substitution.sinnvoll:
+                        Mod = +3;
+                        break;
+                    case Substitution.möglich:
+                        Mod = +6;
+                        break;
+                    default:
+                        Mod = 0;
+                        break;
+                }
+                OnChanged("Substitution"); 
+            }
         }
 
         //Commands
@@ -61,16 +92,6 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         {
             if (PropertyChanged != null)
             {
-                int n =0;
-                switch (Substitution.ToString())
-                {
-                    case "optimierend": n = -3; mod = n.ToString(); break;
-                    case "gleichwertig": n = 0; mod = n.ToString(); break;
-                    case "sinnvoll": n = +3; mod = n.ToString(); break;
-                    case "möglich": n = +6; mod = n.ToString(); break;
-                    case "unsinnig": mod = "nicht möglich"; break;
-                    default: n = 0; mod = n.ToString(); break;
-                }
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }

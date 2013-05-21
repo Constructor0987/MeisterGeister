@@ -10,7 +10,6 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         optimierend,
         gleichwertig,
         sinnvoll,
-        möglich,
-        unsinnig
+        möglich
     }
 }

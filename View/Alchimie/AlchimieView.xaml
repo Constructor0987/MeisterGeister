@@ -30,7 +30,7 @@
                     <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="gleichwertige Substitution" IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=gleichwertig}"/>
                     <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="sinnvolle Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=sinnvoll}"/>
                     <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="mögliche Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=möglich}"/>
-                    <RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="unsinnige Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=unsinnig}"/>
+                    <!--<RadioButton GroupName="{Binding Path=Name}" Margin="5,0,0,0" ToolTip="unsinnige Substitution"  IsChecked="{Binding Path=Substitution, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=unsinnig}"/>-->
                 </StackPanel>
             </Border>
         </DataTemplate>
@@ -101,12 +101,12 @@
                                 </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                     <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyseHerstellung}" ToolTip="zur Analyse"/>
-                                    <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
+                                    <StackPanel Margin="0,0,5,0"  Orientation="Horizontal">
                                         <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeitHerstellung}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen"/>
-                                        <TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
+                                        <!--<TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
                                         <TextBlock Text="{Binding ModifikatorCHHerstellung}" VerticalAlignment="Center" />
                                         <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
                                     </StackPanel>
                                     <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEisHerstellung}" ToolTip="ermöglicht extreme Temperaturen"/>
                                     <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindungHerstellung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen"/>
@@ -138,7 +138,7 @@
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_02.png" ToolTip="gleichwertige Substitution" Width="25" VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_04.png" ToolTip="sinnvolle Substitution" Width="25" VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_05.png" ToolTip="mögliche Substitution" Width="25" VerticalAlignment="Center" />
-                                    <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_06.png" ToolTip="unsinnige Substitution" Width="25" VerticalAlignment="Center"/>
+                                    <!--<Image Margin="5,0,0,0" Source="/Images/Icons/substitution_06.png" ToolTip="unsinnige Substitution" Width="25" VerticalAlignment="Center"/>-->
                                 </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Text="Modifikator für Substitutionen: "/>
@@ -199,8 +199,18 @@
                                 </StackPanel>
                                 <TextBlock Text="Proben-Modifikator: "  Grid.Row="3" />
                                 <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="3" Grid.Column="2" />
-                                <TextBlock Text="Qualität-Bonus"  Grid.Row="4" />
-                                <TextBlock Text="{Binding BonusQualitätHerstellung}" Grid.Row="4" Grid.Column="2" />
+                                <TextBlock Text="Qualität:"  Grid.Row="4" />
+                                <TextBlock Text="{Binding BonusQualitätHerstellung}" Grid.Row="4" Grid.Column="2">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HerstellungUnmöglich}" Value="True">
+                                                    <Setter Property="Foreground" Value="Red" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                                 <TextBlock Text="Brauschwierigkeit"  Grid.Row="6" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Brauschwierigkeit}" Grid.Row="6" Grid.Column="2" />
                                 <TextBlock Text="Analyseschwierigkeit"  Grid.Row="7" />
@@ -210,8 +220,10 @@
                                 <TextBlock Text="Beschaffungskosten (S)"  Grid.Row="9" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Beschaffungskosten}" Grid.Row="9" Grid.Column="2" />
                                 <TextBlock Text="Haltbarkeit"  Grid.Row="10" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeit}" Grid.Row="10" Grid.Column="2" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeitseinheit}" Grid.Row="10" Grid.Column="3" />
+                                <StackPanel Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeit}"  />
+                                    <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeitseinheit}" Margin="5,0,0,0" />
+                                </StackPanel>
                                 <TextBlock Text="Preis"  Grid.Row="11" />
                                 <TextBlock Text="{Binding Path =SelectedRezeptHerstellung.Beschaffungskosten}" Grid.Row="11" Grid.Column="2" />
                                 <TextBlock Text="Merkmale"  Grid.Row="12" />
