@@ -126,7 +126,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
     }
 
-    public class WundenBrustModifikator : WundenModifikatorBase, IModPA, IModAT, IModKO, IModKK
+    public class WundenBrustModifikator : WundenModifikatorBase, IModPA, IModAT, IModKO, IModKK, IModFK
     {
         public override string Name
         {
@@ -135,7 +135,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public override string Auswirkung
         {
-            get { return "AT, PA, KO, KK -1"; }
+            get { return "AT, PA, FK, KO, KK -1"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -144,6 +144,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
 
         public int ApplyATMod(int wert)
+        {
+            return wert - 1;
+        }
+
+        public int ApplyFKMod(int wert)
         {
             return wert - 1;
         }
@@ -159,7 +164,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
     }
 
-    public class WundenArmLModifikator : WundenModifikatorBase, IModPAArmL, IModATArmL, IModFFArmL, IModKKArmL
+    public class WundenArmLModifikator : WundenModifikatorBase, IModPAArmL, IModATArmL, IModFFArmL, IModKKArmL, IModFK
     {
         public override string Name
         {
@@ -168,7 +173,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public override string Auswirkung
         {
-            get { return "AT, PA, FF, KK -2"; }
+            get { return "AT, PA, FK, FF, KK -2"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -177,6 +182,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
 
         public int ApplyATMod(int wert)
+        {
+            return wert - 2;
+        }
+
+        public int ApplyFKMod(int wert)
         {
             return wert - 2;
         }
@@ -192,7 +202,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
     }
 
-    public class WundenArmRModifikator : WundenModifikatorBase, IModPAArmR, IModATArmR, IModFFArmR, IModKKArmR
+    public class WundenArmRModifikator : WundenModifikatorBase, IModPAArmR, IModATArmR, IModFFArmR, IModKKArmR, IModFK
     {
         public override string Name
         {
@@ -201,7 +211,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public override string Auswirkung
         {
-            get { return "AT, PA, FF, KK -2"; }
+            get { return "AT, PA, FK, FF, KK -2"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -210,6 +220,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
 
         public int ApplyATMod(int wert)
+        {
+            return wert - 2;
+        }
+
+        public int ApplyFKMod(int wert)
         {
             return wert - 2;
         }
@@ -225,7 +240,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
     }
 
-    public class WundenBauchModifikator : WundenModifikatorBase, IModPA, IModAT, IModKO, IModKK, IModGS, IModINIBasis
+    public class WundenBauchModifikator : WundenModifikatorBase, IModPA, IModAT, IModKO, IModKK, IModGS, IModINIBasis, IModFK
     {
         public override string Name
         {
@@ -234,7 +249,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public override string Auswirkung
         {
-            get { return "AT, PA, KO, KK, GS, INI-Basis -1"; }
+            get { return "AT, PA, FK, KO, KK, GS, INI-Basis -1"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -243,6 +258,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
 
         public int ApplyATMod(int wert)
+        {
+            return wert - 1;
+        }
+
+        public int ApplyFKMod(int wert)
         {
             return wert - 1;
         }
@@ -268,7 +288,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
     }
 
-    public class WundenBeinLModifikator : WundenModifikatorBase, IModPA, IModAT, IModGE, IModGS, IModINIBasis
+    public class WundenBeinLModifikator : WundenModifikatorBase, IModPA, IModAT, IModGE, IModGS, IModINIBasis, IModFK
     {
         public override string Name
         {
@@ -277,7 +297,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public override string Auswirkung
         {
-            get { return "AT, PA, GE, INI-Basis -2; GS -1"; }
+            get { return "AT, PA, FK, GE, INI-Basis -2; GS -1"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -286,6 +306,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
 
         public int ApplyATMod(int wert)
+        {
+            return wert - 2;
+        }
+
+        public int ApplyFKMod(int wert)
         {
             return wert - 2;
         }
@@ -306,7 +331,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
     }
 
-    public class WundenBeinRModifikator : WundenModifikatorBase, IModPA, IModAT, IModGE, IModGS, IModINIBasis
+    public class WundenBeinRModifikator : WundenModifikatorBase, IModPA, IModAT, IModGE, IModGS, IModINIBasis, IModFK
     {
         public override string Name
         {
@@ -315,7 +340,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public override string Auswirkung
         {
-            get { return "AT, PA, GE, INI-Basis -2; GS -1"; }
+            get { return "AT, PA, FK, GE, INI-Basis -2; GS -1"; }
         }
 
         public int ApplyPAMod(int wert)
@@ -324,6 +349,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
 
         public int ApplyATMod(int wert)
+        {
+            return wert - 2;
+        }
+
+        public int ApplyFKMod(int wert)
         {
             return wert - 2;
         }
