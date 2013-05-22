@@ -617,7 +617,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 foreach (string zutat in tmp)
                 {
                     string[] tt = zutat.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    int anzahl = Convert.ToInt32(tt[0]);
+                    double anzahl = Convert.ToDouble(tt[0], System.Globalization.CultureInfo.InvariantCulture);
                     string einheit = tt[1];
                     string name = "";
                     for (int i = 2; i < tt.Length; i++)

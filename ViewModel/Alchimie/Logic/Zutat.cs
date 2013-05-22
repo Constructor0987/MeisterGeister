@@ -14,7 +14,7 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         #region //---- FELDER ----
 
         private string _name;
-        private int _anzahl;
+        private double _anzahl;
         private string _einheit;
         private Substitution _substitution = Substitution.gleichwertig;
         private int mod = 0;
@@ -25,7 +25,7 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
         #region //---- EIGENSCHAFTEN ----
 
         public string Name   {   get   {  return _name; }  }
-        public int Anzahl { get { return _anzahl; } }
+        public double Anzahl { get { return _anzahl; } }
         public string Einheit { get { return _einheit; } }
 
         public int Mod
@@ -71,7 +71,7 @@ namespace MeisterGeister.ViewModel.Alchimie.Logic
 
         #region //---- KONSTRUKTOR ----
 
-        public Zutat(int anzahl, string einheit, string name )
+        public Zutat(double anzahl, string einheit, string name )
         {
             _anzahl = anzahl;
             _einheit = einheit;

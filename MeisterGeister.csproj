@@ -1495,6 +1495,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0075.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0076.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0077.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0078.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="License\Apache License.txt">

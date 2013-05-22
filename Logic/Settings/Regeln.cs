@@ -14,18 +14,40 @@ namespace MeisterGeister.Logic.Settings
 
         static Regeln()
         {
-            if (Global.ContextRegeln != null)
+            if (Global.IsInitialized && Global.ContextRegeln != null)
                 _regelnListe = Global.ContextRegeln.RegelnListe;
             else
                 _regelnListe = new List<Model.Regeln>();
+        }
+
+        private static bool GetRegelValue(string name, bool defaultValue = true)
+        {
+            if (Global.IsInitialized && (_regelnListe == null || _regelnListe.Count == 0))
+                _regelnListe = Global.ContextRegeln.RegelnListe;
+            var t = _regelnListe.Where(n => n.Name == name).FirstOrDefault();
+            return (t == null || t.Anwenden == null)? defaultValue : t.Anwenden.Value;
+        }
+
+        private static void SetRegelValue(string name, bool value)
+        {
+            if (Global.IsInitialized && (_regelnListe == null || _regelnListe.Count == 0))
+                _regelnListe = Global.ContextRegeln.RegelnListe;
+            var t = _regelnListe.Where(n => n.Name == name).FirstOrDefault();
+            if (t == null)
+                return;
+            t.Anwenden = value;
+            Global.ContextRegeln.Update<Model.Regeln>(t);
         }
 
         public static bool EigenschaftenProbePatzerGlück
         {
             get
             {
-                var t = _regelnListe.Where(n => n.Name == "EigenschaftenProbePatzerGlück").FirstOrDefault();
-                return t == null ? true : t.Anwenden.Value;
+                return GetRegelValue("EigenschaftenProbePatzerGlück");
+            }
+            set
+            {
+                SetRegelValue("EigenschaftenProbePatzerGlück", value);
             }
         }
 
@@ -33,8 +55,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                var t = _regelnListe.Where(n => n.Name == "TPKK").FirstOrDefault();
-                return t == null ? true : t.Anwenden.Value;
+                return GetRegelValue("TPKK");
+            }
+            set
+            {
+                SetRegelValue("TPKK", value);
             }
         }
 
@@ -42,8 +67,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                var t = _regelnListe.Where(n => n.Name == "NiedrigeLE").FirstOrDefault();
-                return t == null ? true : t.Anwenden.Value;
+                return GetRegelValue("NiedrigeLE");
+            }
+            set
+            {
+                SetRegelValue("NiedrigeLE", value);
             }
         }
 
@@ -51,8 +79,11 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                var t = _regelnListe.Where(n => n.Name == "NiedrigeAU").FirstOrDefault();
-                return t == null ? true : t.Anwenden.Value;
+                return GetRegelValue("NiedrigeAU");
+            }
+            set
+            {
+                SetRegelValue("NiedrigeAU", value);
             }
         }
 
@@ -60,8 +91,23 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                var t = _regelnListe.Where(n => n.Name == "AusdauerImKampf").FirstOrDefault();
-                return t == null ? true : t.Anwenden.Value;
+                return GetRegelValue("AusdauerImKampf");
+            }
+            set
+            {
+                SetRegelValue("AusdauerImKampf", value);
+            }
+        }
+
+        public static bool NurDreiZonenWunden
+        {
+            get
+            {
+                return GetRegelValue("NurDreiZonenWunden");
+            }
+            set
+            {
+                SetRegelValue("NurDreiZonenWunden", value);
             }
         }
     }
