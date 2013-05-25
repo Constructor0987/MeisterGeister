@@ -89,82 +89,6 @@ namespace MeisterGeister.Model.Service {
 
         #endregion
 
-        #region Zauberzeichen
-        public List<Held> LoadHeldenGruppeWithZauberzeichen()
-        {
-            List<Held> tmp = Liste<Sonderfertigkeit>().Where(s => s.Name == "Zauberzeichen" || s.Name == "Runenkunde" || s.Name.StartsWith("Zauberzeichen: Bann") || s.Name.StartsWith("Zauberzeichen: Schutz"))
-                .Join(Context.Held_Sonderfertigkeit, s => s.SonderfertigkeitGUID, hs => hs.SonderfertigkeitGUID, (s, hs) => hs)
-                .Join(Context.Held, hs => hs.HeldGUID, h => h.HeldGUID, (hs, h) => h).ToList();
-            return tmp.Distinct().ToList();
-        }
-        public List<Zauberzeichen> LoadZauberzeichenByHeld(Model.Held held)
-        {
-            if (held == null)
-                return Liste<Zauberzeichen>().Where(z => z.Typ == "Arkanoglyphe").ToList();
-            List<Zauberzeichen> zauberzeichen = Liste<Held>().Where(h=>h.HeldGUID==held.HeldGUID).Join(Context.Held_Sonderfertigkeit,h=>h.HeldGUID,hs=>hs.HeldGUID,(h,hs)=>hs)
-                .Join(Context.Sonderfertigkeit,hs=>hs.SonderfertigkeitGUID,s=>s.SonderfertigkeitGUID,(hs,s)=>s)
-                .Join(Context.Zauberzeichen, s => s.SonderfertigkeitGUID, zz => zz.SonderfertigkeitGUID, (s, zz) => zz).Where(z => z.Typ == "Arkanoglyphe").ToList();
-            return zauberzeichen;
-        }
-
-        public List<Zauberzeichen> LoadKreiseByHeld(Held held)
-        {
-            if (held == null)
-                return Liste<Zauberzeichen>().Where(z => z.Typ == "Bannkreis" || z.Typ == "Schutzkreis").ToList();
-            List<Zauberzeichen> kreise = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
-                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
-                .Join(Context.Zauberzeichen, s => s.SonderfertigkeitGUID, zz => zz.SonderfertigkeitGUID, (s, zz) => zz).Where(z => z.Typ == "Bannkreis" || z.Typ == "Schutzkreis").ToList();
-            return kreise;
-        }
-
-        public List<Zauberzeichen> LoadRunenByHeld(Held held)
-        {
-            if (held == null)
-                return Liste<Zauberzeichen>().Where(z => z.Typ == "Rune").ToList();
-            List<Zauberzeichen> runen = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
-                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
-                .Join(Context.Zauberzeichen, s => s.SonderfertigkeitGUID, zz => zz.SonderfertigkeitGUID, (s, zz) => zz).Where(z => z.Typ == "Rune").ToList();
-            return runen;
-        }
-
-        private string[] rkNamen = new string[] { "Ritualkenntnis (Gildenmagie)", "Ritualkenntnis (Kristallomantie)", "Ritualkenntnis (Alchimie)", "Ritualkenntnis (Zibiljas)", "Ritualkenntnis (Runenkunde)" };
-        public Talent GetMaxRitualkenntnis(Held held)
-        {
-            if (held == null)
-                return null;
-            List<Talent> rkList = Liste<Talent>().Where(t => rkNamen.Contains(t.Talentname)).OrderByDescending(t => held.HatTalent(t)?held.Talentwert(t):-99).ToList();
-            if(rkList.Count == 0 || !held.HatTalent(rkList[0]))
-                return null;
-            return rkList[0];
-        }
-
-        public int LoadMaxRitualkenntnisWertByHeld(Held held)
-        {
-            Talent rk = GetMaxRitualkenntnis(held);
-            if (rk == null)
-                return 0;
-            return held.Talentwert(rk);
-        }
-
-        public List<Talent> LoadZauberzeichenTalenteByHeld(Held held)
-        {
-            if (held == null)
-                return Liste<Talent>().Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst").ToList();
-            List<Talent> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
-                .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst").ToList();
-            return talente;
-        }
-
-        public List<Talent> LoadRunenTalenteByHeld(Held held)
-        {
-            if (held == null)
-                return Liste<Talent>().Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst" || t.Talentname == "Tätowieren").ToList();
-            List<Talent> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
-                .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst" || t.Talentname == "Tätowieren").ToList();
-            return talente;
-        }
-        #endregion
-
         #region Alchimie
         public List<Held> LoadHeldenGruppeWithAlchimie()
         {
@@ -280,6 +204,90 @@ namespace MeisterGeister.Model.Service {
             if(isErrata)
                 abkürzung = abkürzung + " Errata";
             return Context.Literatur.Where(l => l.Abkürzung == abkürzung).FirstOrDefault();
+        }
+        #endregion
+
+        #region Namen und NSC
+        //später durch GUID-Variante ersetzen
+        public List<Name> LoadNamenByNamenstyp(string namenstyp)
+        {
+            return Context.Name.Where(n => n.Herkunft == namenstyp).ToList();
+        }
+        #endregion
+
+        #region Zauberzeichen
+        public List<Held> LoadHeldenGruppeWithZauberzeichen()
+        {
+            List<Held> tmp = Liste<Sonderfertigkeit>().Where(s => s.Name == "Zauberzeichen" || s.Name == "Runenkunde" || s.Name.StartsWith("Zauberzeichen: Bann") || s.Name.StartsWith("Zauberzeichen: Schutz"))
+                .Join(Context.Held_Sonderfertigkeit, s => s.SonderfertigkeitGUID, hs => hs.SonderfertigkeitGUID, (s, hs) => hs)
+                .Join(Context.Held, hs => hs.HeldGUID, h => h.HeldGUID, (hs, h) => h).ToList();
+            return tmp.Distinct().ToList();
+        }
+        public List<Zauberzeichen> LoadZauberzeichenByHeld(Model.Held held)
+        {
+            if (held == null)
+                return Liste<Zauberzeichen>().Where(z => z.Typ == "Arkanoglyphe").ToList();
+            List<Zauberzeichen> zauberzeichen = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
+                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
+                .Join(Context.Zauberzeichen, s => s.SonderfertigkeitGUID, zz => zz.SonderfertigkeitGUID, (s, zz) => zz).Where(z => z.Typ == "Arkanoglyphe").ToList();
+            return zauberzeichen;
+        }
+
+        public List<Zauberzeichen> LoadKreiseByHeld(Held held)
+        {
+            if (held == null)
+                return Liste<Zauberzeichen>().Where(z => z.Typ == "Bannkreis" || z.Typ == "Schutzkreis").ToList();
+            List<Zauberzeichen> kreise = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
+                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
+                .Join(Context.Zauberzeichen, s => s.SonderfertigkeitGUID, zz => zz.SonderfertigkeitGUID, (s, zz) => zz).Where(z => z.Typ == "Bannkreis" || z.Typ == "Schutzkreis").ToList();
+            return kreise;
+        }
+
+        public List<Zauberzeichen> LoadRunenByHeld(Held held)
+        {
+            if (held == null)
+                return Liste<Zauberzeichen>().Where(z => z.Typ == "Rune").ToList();
+            List<Zauberzeichen> runen = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
+                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
+                .Join(Context.Zauberzeichen, s => s.SonderfertigkeitGUID, zz => zz.SonderfertigkeitGUID, (s, zz) => zz).Where(z => z.Typ == "Rune").ToList();
+            return runen;
+        }
+
+        private string[] rkNamen = new string[] { "Ritualkenntnis (Gildenmagie)", "Ritualkenntnis (Kristallomantie)", "Ritualkenntnis (Alchimie)", "Ritualkenntnis (Zibiljas)", "Ritualkenntnis (Runenkunde)" };
+        public Talent GetMaxRitualkenntnis(Held held)
+        {
+            if (held == null)
+                return null;
+            List<Talent> rkList = Liste<Talent>().Where(t => rkNamen.Contains(t.Talentname)).OrderByDescending(t => held.HatTalent(t) ? held.Talentwert(t) : -99).ToList();
+            if (rkList.Count == 0 || !held.HatTalent(rkList[0]))
+                return null;
+            return rkList[0];
+        }
+
+        public int LoadMaxRitualkenntnisWertByHeld(Held held)
+        {
+            Talent rk = GetMaxRitualkenntnis(held);
+            if (rk == null)
+                return 0;
+            return held.Talentwert(rk);
+        }
+
+        public List<Talent> LoadZauberzeichenTalenteByHeld(Held held)
+        {
+            if (held == null)
+                return Liste<Talent>().Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst").ToList();
+            List<Talent> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
+                .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst").ToList();
+            return talente;
+        }
+
+        public List<Talent> LoadRunenTalenteByHeld(Held held)
+        {
+            if (held == null)
+                return Liste<Talent>().Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst" || t.Talentname == "Tätowieren").ToList();
+            List<Talent> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
+                .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Feinmechanik" || t.Talentname == "Holzbearbeitung" || t.Talentname == "Malen/Zeichnen" || t.Talentname == "Schneidern" || t.Talentname == "Webkunst" || t.Talentname == "Tätowieren").ToList();
+            return talente;
         }
         #endregion
 

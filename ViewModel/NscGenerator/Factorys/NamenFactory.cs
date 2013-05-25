@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MeisterGeister.ViewModel.NscGenerator.Logic;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.ViewModel.NscGenerator.Factorys
 {
     public abstract class NamenFactory
     {
+        #region /---- Konstanten für DB-Abfragen ----
+        public const string NAMENSARTVORNAMEN = "Vorname";
+        #endregion
+
         #region /---- Felder ----
-        protected String _informationenNamen; //später FlowDocuments nutzen; ggf. externe Ressource
+        protected string _informationenNamen; //später FlowDocuments nutzen; ggf. externe Ressource
         #endregion
 
         #region /---- Eigenschaften ----
@@ -17,57 +22,84 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
         public bool StandHatAuswirkung { get; protected set; }
         public bool GeneriertOrtsnamen { get; protected set; }
         public bool InformationenNamenVerfügbar { get; protected set; }
-        public String Namenstyp { get; protected set; } //auf GUID umstellen
+        public string Namenstyp { get; protected set; } //auf GUID umstellen
         #endregion
 
         #region /---- Konstruktor ----
-        public NamenFactory(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false)
+        public NamenFactory(string namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false)
         {
             this.Namenstyp = namenstyp;
             this.VornamenWeiblichFürAlle = vornamenWeiblichFürAlle;
             this.InformationenNamenVerfügbar = informationenNamenVerfügbar;
             this.GeneriertOrtsnamen = generiertOrtsnamen;
-            this.InitListen();
         }
         public abstract void InitListen();
         #endregion
 
         #region //---- Instanzmethoden ----
-        public abstract PersonNurName GetName(Geschlecht geschlecht, Stand stand=Stand.stadtfrei);
-        
-        public virtual String GetOrtsname()
+        public abstract PersonNurName GetPersonNurName(Geschlecht geschlecht, Stand stand = Stand.stadtfrei);
+        public abstract string GetName(Geschlecht geschlecht, Stand stand = Stand.stadtfrei);
+
+        public virtual string GeneriereOrtsname()
         {
             return "";
         }
         #endregion
     }
 
-    public abstract class NamenFactoryVorname : NamenFactory
+    public class NamenFactoryVorname : NamenFactory
     {
         #region /---- Felder ----
-        protected List<String> _vornamenMännlich = new List<String>();
-        protected List<String> _vornamenWeiblich = new List<String>();
+        protected List<string> _vornamenMännlich = new List<String>();
+        protected List<string> _vornamenWeiblich = new List<String>();
         #endregion
 
         #region /---- Konstruktor ----
-        public NamenFactoryVorname(String namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
-            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertOrtsnamen){}
+        public NamenFactoryVorname(string namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
+            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertOrtsnamen)
+        {
+            this.InitListen();
+        }
 
         public override void InitListen()
         {
-            //Liste der Vornamen (Weiblich/Männlich); boolean vornamenWeiblichFürAlle beachten
+            List<Model.Name> namensliste = Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp);
+            if (VornamenWeiblichFürAlle)
+            {
+                _vornamenWeiblich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN).Select(n => n.Name1));
+            }
+            else
+            {
+                _vornamenWeiblich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN && (n.Geschlecht == "w" || n.Geschlecht == null)).Select(n => n.Name1));
+                _vornamenMännlich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN && (n.Geschlecht == "m" || n.Geschlecht == null)).Select(n => n.Name1));
+            }
         }
         #endregion
 
         #region /---- Instanzmethoden ----
-        //public override PersonNurName getName(Geschlecht geschlecht, Stand stand)
+        public override PersonNurName GetPersonNurName(Geschlecht geschlecht, Stand stand = Stand.stadtfrei)
+        {
+            return new PersonNurName(this.GetName(geschlecht, stand), string.Empty, Namenstyp, geschlecht, stand);
+        }
+
+        public override string GetName(Geschlecht geschlecht, Stand stand = Stand.stadtfrei)
+        {
+            if (VornamenWeiblichFürAlle || geschlecht == Geschlecht.weiblich)
+            {
+                return _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())];
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                return _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())];
+            }
+        }
         #endregion
     }
 
-    public abstract class NamenFactoryVornameNachname : NamenFactoryVorname
+    public class NamenFactoryVornameNachname : NamenFactoryVorname
     {
         #region /---- Felder ----
-        protected List<String> _nachnamen = new List<String>();
+        protected List<string> _nachnamen = new List<String>();
         #endregion
 
         #region /---- Konstruktor ----

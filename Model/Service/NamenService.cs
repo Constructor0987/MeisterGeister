@@ -141,6 +141,9 @@ namespace MeisterGeister.Model.Service
             string name = vornamen[RandomNumberGenerator.Generator.Next(vornamen.Count)];
 
             return name;
+            //schnellere Version:
+            //ViewModel.NscGenerator.Logic.Geschlecht gsl = geschlecht == "w" ? ViewModel.NscGenerator.Logic.Geschlecht.weiblich : ViewModel.NscGenerator.Logic.Geschlecht.männlich;
+            //return ViewModel.NscGenerator.Factorys.NamenFactoryHelper.GetFactory("Utulu Namen").GetName(gsl);
         }
 
         private string createTocamuyacName(string geschlecht, Kultur kultur)

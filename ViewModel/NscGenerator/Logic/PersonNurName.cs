@@ -8,31 +8,29 @@ namespace MeisterGeister.ViewModel.NscGenerator.Logic
     public class PersonNurName
     {
         #region //---- EIGENSCHAFTEN ----
-        public String Name { set; get; }
-        public String Namensbedeutung { set; get; }
+        public string Name { set; get; }
+        public string Namensbedeutung { set; get; }
         public Geschlecht Geschlecht { set; get; }
-        public Model.Kultur Kultur { set; get; }
-        public Model.Rasse Rasse { set; get; }
-        public String Namenstyp { set; get; } //auf GUID umstellen
+        public Stand Stand { set; get; }
+        public string Namenstyp { set; get; } //auf GUID umstellen
         #endregion
 
         #region //---- KONSTRUKTOR ----
-        public PersonNurName(String name, String namensbedeutung, Geschlecht geschlecht, Model.Kultur kultur, Model.Rasse rasse)
+        public PersonNurName(string name, string namensbedeutung, string namenstyp, Geschlecht geschlecht, Stand stand)
         {
             Name = name;
             Namensbedeutung = namensbedeutung;
+            Namenstyp = namenstyp; 
             Geschlecht = geschlecht;
-            Kultur = kultur;
-            Rasse = rasse;
+            Stand = stand;
         }
         #endregion
     }
 
     public enum Geschlecht
     {
-        geschlechtlos = 0,
-        weiblich = 1,
-        männlich = 2
+        weiblich = 0,
+        männlich = 1
     }
 
     public enum Stand
