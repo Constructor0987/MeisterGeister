@@ -20,11 +20,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         #region //---- FELDER ----
         
         #region //-Allgemein-
-        /*
-                                    <RadioButton GroupName="Labor" ToolTip="archaisches Labor"  Content="archaisches Labor" IsChecked="true"/>
-                                    <RadioButton GroupName="Labor" ToolTip="Hexenküche" Content="Hexenküche"/>
-                                    <RadioButton GroupName="Labor" ToolTip="Alchimisten-Labor" Content="Alchimisten-Labor" IsEnabled="{Binding IsEnabledAlchimistenLaborHerstellung}"/>
-  */
         
         //intern
         bool IsLoaded = false;
@@ -71,6 +66,9 @@ namespace MeisterGeister.ViewModel.Alchimie
         private string _herstellungWirkungM;
         private int _aSPEinsatzHerstellung=0;
         private string _bonusQualitätHerstellung="2W6 + TaP* ";
+        private int _wertHaltbarkeitHerstellung = 0;
+        private int _taPHerstellung;
+
         //Checkboxen
         private bool _checkedChymischeHochzeitHerstellung;
         private bool _checkedFeuerUndEisHerstellung;
@@ -91,6 +89,7 @@ namespace MeisterGeister.ViewModel.Alchimie
         {
             SelectedHeld = null;
         }
+        private Base.CommandBase _onProbeHerstellung;
         #endregion
 
         #region//-Analyse-
@@ -123,13 +122,18 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
         //Selections
         public Held SelectedHeld { get { return _selectedHeld; } set { 
-            _selectedHeld = value; 
+            _selectedHeld = value;
+            if (value != null)
+            {
+                resetHerstellung();
+                resetAnalyse();
+                resetVerdünnung();
+                TalentListeHerstellung = Global.ContextHeld.LoadAlchimieHerstellungTalenteByHeld(value);
+                checkAufladen(value);
+            }
+            else IsEnabledAufladen = true;
             OnChanged("SelectedHeld");
-            resetHerstellung();
-            resetAnalyse();
-            resetVerdünnung();
-            TalentListeHerstellung = Global.ContextHeld.LoadAlchimieHerstellungTalenteByHeld(value);
-            checkAufladen(value);
+
         }
         }
         
@@ -250,12 +254,16 @@ namespace MeisterGeister.ViewModel.Alchimie
         public Alchimierezept SelectedRezeptHerstellung
         { 
             get { return _selectedRezeptHerstellung; } 
-            set { 
-                _selectedRezeptHerstellung = value;
-                OnChanged("SelectedRezeptHerstellung"); 
-                SubstitutionListeHerstellung = getZutatenByRezept(value); 
-                HerstellungWirkungM = getMWirkung(); 
-                calculateProbenModGes();
+            set {
+                if (value != null)
+                {
+                    _selectedRezeptHerstellung = value;
+                    WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezeptHerstellung.Haltbarkeit, true);
+                    OnChanged("SelectedRezeptHerstellung");
+                    SubstitutionListeHerstellung = getZutatenByRezept(_selectedRezeptHerstellung);
+                    HerstellungWirkungM = getMWirkung();
+                    calculateProbenModGes();
+                }
             } 
         }
         public string SelectedLaborArtListeHerstellung 
@@ -422,15 +430,35 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("ASPEinsatzHerstellung"); 
             } 
         }
-        public string BonusQualitätHerstellung 
-        { 
-            get { return _bonusQualitätHerstellung; } 
-            set {
-                _bonusQualitätHerstellung = value; 
-                OnChanged("BonusQualitätHerstellung"); 
-            } 
+        public string BonusQualitätHerstellung
+        {
+            get { return _bonusQualitätHerstellung; }
+            set
+            {
+                _bonusQualitätHerstellung = value;
+                OnChanged("BonusQualitätHerstellung");
+            }
+        }
+        public int WertHaltbarkeitHerstellung
+        {
+            get { return _wertHaltbarkeitHerstellung; }
+            set
+            {
+                _wertHaltbarkeitHerstellung = value;
+                OnChanged("WertHaltbarkeitHerstellung");
+            }
+        }
+        public int TaPHerstellung
+        {
+            get { return _taPHerstellung; }
+            set
+            {
+                _taPHerstellung = value;
+                OnChanged("TaPHerstellung");
+            }
         }
 
+        
         //Checkboxen
         public bool CheckedChymischeHochzeitHerstellung
         {
@@ -477,6 +505,11 @@ namespace MeisterGeister.ViewModel.Alchimie
             } 
         }
         //Commands
+
+        public Base.CommandBase OnProbeHerstellung
+        {
+            get { return _onProbeHerstellung; }
+        }
 
         #endregion
  
@@ -529,8 +562,9 @@ namespace MeisterGeister.ViewModel.Alchimie
         #region //---- KONSTRUKTOR ----
 
         public AlchimieViewModel()
+            : base(View.General.ViewHelper.ShowProbeDialog)
         {
-         
+            _onProbeHerstellung = new Base.CommandBase(ProbeHerstellung, null);
         }
 
         #endregion
@@ -551,6 +585,8 @@ namespace MeisterGeister.ViewModel.Alchimie
         private void checkAufladen(Held held)
         {
             //check Magiekunde>7 && Alchimie>7; set IsEnabledAufladen
+            if (held.Talentwert("Alchimie") >= 7 && held.Talentwert("Magiekunde") >= 7) IsEnabledAufladen=true;
+            else IsEnabledAufladen = false;
         }
 
         #endregion
@@ -676,6 +712,19 @@ namespace MeisterGeister.ViewModel.Alchimie
             return wirkungen[MeisterGeister.Logic.General.RandomNumberGenerator.RandomInt(0, wirkungen.Count-1)];
         }
 
+        private string getQualität(int qualitätszahl){
+            if(qualitätszahl<=6){
+                return "A";
+            }else if(qualitätszahl<=12){
+                return "B";
+            }else if(qualitätszahl<=18){
+                return "C";
+            }else if(qualitätszahl<=24){
+                return "D";
+            }else if(qualitätszahl<=30){
+                return"E";
+            }else return "F";
+        }
         #endregion
         #region//-Analyse-
         private void resetAnalyse()
@@ -701,8 +750,27 @@ namespace MeisterGeister.ViewModel.Alchimie
             calculateModSubstitutionen();
             calculateProbenModGes();
         }
-        #endregion
 
+        void ProbeHerstellung(object sender)
+        {
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null && SelectedTalentHerstellung != null)
+            {
+                SelectedTalentHerstellung.Modifikator = ProbenModGesHerstellung;
+                SelectedTalentHerstellung.Fertigkeitswert = WertTaWTalent;
+                var ergebnis = ShowProbeDialog(SelectedTalentHerstellung, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    TaPHerstellung = ergebnis.Übrig;
+                    BonusQualitätHerstellung = getQualität(MeisterGeister.Logic.General.Würfel.Parse("2W6", true) + TaPHerstellung + WertAstralesAufladenHerstellung);
+                }
+                else {
+                    TaPHerstellung = -1;
+                    BonusQualitätHerstellung = "M";
+                }
+            }
+        }
+        #endregion
 
         private List<string> wirkungen = new List<string>()
         {"Das Mittel hat keinerlei Wirkung.",
