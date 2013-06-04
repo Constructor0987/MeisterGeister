@@ -129,7 +129,10 @@
                                     <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
                                     <TextBlock Text="{Binding BonusAAQualitätHerstellung}" VerticalAlignment="Center" />
                                 </StackPanel>
-
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Text="Modifikator für Substitutionen: "/>
+                                    <TextBlock Text="{Binding ModifikatorSubstitutionenHerstellung}"  />
+                                </StackPanel>
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Text="Anzahl"  Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
                                     <TextBlock Text="Einheit" Margin="5,0,0,0"  FontWeight="Bold" VerticalAlignment="Center"/>
@@ -139,10 +142,6 @@
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_04.png" ToolTip="sinnvolle Substitution" Width="25" VerticalAlignment="Center" />
                                     <Image Margin="5,0,0,0" Source="/Images/Icons/substitution_05.png" ToolTip="mögliche Substitution" Width="25" VerticalAlignment="Center" />
                                     <!--<Image Margin="5,0,0,0" Source="/Images/Icons/substitution_06.png" ToolTip="unsinnige Substitution" Width="25" VerticalAlignment="Center"/>-->
-                                </StackPanel>
-                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Text="Modifikator für Substitutionen: "/>
-                                    <TextBlock Text="{Binding ModifikatorSubstitutionenHerstellung}"  />
                                 </StackPanel>
                                 <ListBox Margin="5,0,5,5" SelectionMode="Extended" Background="Transparent" ItemsSource="{Binding SubstitutionListeHerstellung}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ItemTemplate="{StaticResource SubstitutionItemTemplate}"/>
                             </StackPanel>
@@ -230,7 +229,7 @@
                                 <TextBlock Text="Beschaffungskosten (S)"  Grid.Row="12" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Beschaffungskosten}" Grid.Row="12" Grid.Column="2" />
                                 <TextBlock Text="Haltbarkeit"  Grid.Row="13" />
-                                <StackPanel Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                <StackPanel Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
                                     <TextBlock Text="{Binding WertHaltbarkeitHerstellung}"  />
                                     <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeitseinheit}" Margin="5,0,0,0" />
                                 </StackPanel>
@@ -241,8 +240,8 @@
                                 <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="18" />
                                 <TextBlock Text="{Binding HerstellungWirkungM}" Grid.Row="18" Grid.Column="2" />
                                 <TextBlock Text="Zutaten"  Grid.Row="19" />
-                                <TextBlock Text="Bemerkung"  Grid.Row="21" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Bemerkung}" Grid.Row="21" Grid.Column="2" />
+                                <TextBlock Text="Bemerkung"  Grid.Row="20" />
+                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Bemerkung}" Grid.Row="20" Grid.Column="2" />
                                 <TextBlock Text="vorgeschlagene Substitute"  Grid.Row="21" />
                                 <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Substitute}" Grid.Row="22" Grid.Column="2" />
                                 <TextBlock Text="Quelle"  Grid.Row="24" />

@@ -66,7 +66,7 @@ namespace MeisterGeister.ViewModel.Alchimie
         private string _herstellungWirkungM;
         private int _aSPEinsatzHerstellung=0;
         private string _bonusQualitätHerstellung="2W6 + TaP* ";
-        private int _wertHaltbarkeitHerstellung = 0;
+        private string _wertHaltbarkeitHerstellung;
         private int _taPHerstellung;
 
         //Checkboxen
@@ -257,9 +257,9 @@ namespace MeisterGeister.ViewModel.Alchimie
             set {
                 if (value != null)
                 {
-                    _selectedRezeptHerstellung = value;
-                    WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezeptHerstellung.Haltbarkeit, true);
+                    _selectedRezeptHerstellung = value;                    
                     OnChanged("SelectedRezeptHerstellung");
+                    WertHaltbarkeitHerstellung = SelectedRezeptHerstellung.Haltbarkeit;
                     SubstitutionListeHerstellung = getZutatenByRezept(_selectedRezeptHerstellung);
                     HerstellungWirkungM = getMWirkung();
                     calculateProbenModGes();
@@ -439,7 +439,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("BonusQualitätHerstellung");
             }
         }
-        public int WertHaltbarkeitHerstellung
+        public string WertHaltbarkeitHerstellung
         {
             get { return _wertHaltbarkeitHerstellung; }
             set
@@ -763,6 +763,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 {
                     TaPHerstellung = ergebnis.Übrig;
                     BonusQualitätHerstellung = getQualität(MeisterGeister.Logic.General.Würfel.Parse("2W6", true) + TaPHerstellung + WertAstralesAufladenHerstellung);
+                    WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezeptHerstellung.Haltbarkeit, true).ToString();
                 }
                 else {
                     TaPHerstellung = -1;
