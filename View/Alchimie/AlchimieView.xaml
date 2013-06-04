@@ -56,18 +56,72 @@
                     </StackPanel>
                     <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
                         <Expander.Header>
-                            <TextBlock Text="Herstellung" Style="{DynamicResource TextTitel}" />
+                            <TextBlock Text="Rezept" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListeHerstellung}" SelectedItem="{Binding SelectedGruppeHerstellung}" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezeptHerstellung}" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
                                 </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Ausstattung" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Text="Labor:" FontWeight="Bold"/>
+                                    <TextBlock Text=" (benötigt: " />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Labor}"  />
+                                    <TextBlock Text=")" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Art"/>
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborArtListe}" SelectedItem="{Binding SelectedLaborArtListe}" IsEnabled="{Binding IsEnabledLaborArtListe}" ToolTip="WdA 16"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Qualität des Labors"/>
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListe}" SelectedItem="{Binding SelectedLaborQualitätListe}" IsEnabled="{Binding IsEnabledLaborQualitätListe}" ToolTip="WdA 16"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Proben-Mod: "/>
+                                        <TextBlock Text="{Binding ModifikatorLabor}"  />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Text="Schale der Alchimie:" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                    <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyse}" ToolTip="zur Analyse | WdA 18"/>
+                                    <StackPanel Margin="0,0,5,0"  Orientation="Horizontal">
+                                        <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeit}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen | WdA 18"/>
+                                        <!--<TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding ModifikatorCHHerstellung}" VerticalAlignment="Center" />
+                                        <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
+                                    </StackPanel>
+                                    <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Herstellung" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top"> 
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Talent:" FontWeight="Bold" />
                                     <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Talentname" SelectedItem="{Binding SelectedTalentHerstellung}" />
@@ -75,43 +129,7 @@
                                     <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaWTalent}" />
                                     <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeHerstellung}"/>
                                 </StackPanel>
-                                <TextBlock Margin="5,5,5,5" Text="Ausstattung:" FontWeight="Bold" FontSize="14"/>
-                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Text="Labor:" FontWeight="Bold"/>
-                                    <TextBlock Text=" (benötigt: " />
-                                    <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Labor}"  />
-                                    <TextBlock Text=")" FontWeight="Bold"/>
-                                </StackPanel>
-                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                        <TextBlock Text="Art"/>
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborArtListeHerstellung}" SelectedItem="{Binding SelectedLaborArtListeHerstellung}" IsEnabled="{Binding IsEnabledLaborArtListeHerstellung}" ToolTip="WdA 16"/>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                        <TextBlock Text="Qualität des Labors"/>
-                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListeHerstellung}" SelectedItem="{Binding SelectedLaborQualitätListeHerstellung}" IsEnabled="{Binding IsEnabledLaborQualitätListeHerstellung}" ToolTip="WdA 16"/>
-                                    </StackPanel>
-                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                        <TextBlock Text="Proben-Mod: "/>
-                                        <TextBlock Text="{Binding ModifikatorLaborHerstellung}"  />
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Text="Schale der Alchimie:" FontWeight="Bold"/>
-                                </StackPanel>
-                                <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
-                                    <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyseHerstellung}" ToolTip="zur Analyse | WdA 18"/>
-                                    <StackPanel Margin="0,0,5,0"  Orientation="Horizontal">
-                                        <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeitHerstellung}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen | WdA 18"/>
-                                        <!--<TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding ModifikatorCHHerstellung}" VerticalAlignment="Center" />
-                                        <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
-                                    </StackPanel>
-                                    <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEisHerstellung}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindungHerstellung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
-                                    <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElementeHerstellung}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
-                                </StackPanel>
+ 
                                 <TextBlock Margin="5,5,5,5" Text="Modifizierung:" FontWeight="Bold" FontSize="14"/>
                                 <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
                                     <TextBlock Text="TaP zurückhalten" VerticalAlignment="Center" ToolTip="WdA 19" />
@@ -194,14 +212,14 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Text="Kategorie"  Grid.Row="0" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Kategorie}" Grid.Row="0" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Kategorie}" Grid.Row="0" Grid.Column="2" />
                                 <TextBlock Text="Gruppe"  Grid.Row="1" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Gruppe}" Grid.Row="1" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Gruppe}" Grid.Row="1" Grid.Column="2" />
                                 <TextBlock Text="benutztes Labor"  Grid.Row="2" />
                                 <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2">
-                                    <TextBlock Text="{Binding Path = SelectedLaborArtListeHerstellung}"  />
+                                    <TextBlock Text="{Binding Path = SelectedLaborArtListe}"  />
                                     <TextBlock Text=" ("  />
-                                    <TextBlock Text="{Binding Path = SelectedLaborQualitätListeHerstellung}"  />
+                                    <TextBlock Text="{Binding Path = SelectedLaborQualitätListe}"  />
                                     <TextBlock Text=")"  />
                                 </StackPanel>
                                 <TextBlock Text="Proben-Modifikator: "  Grid.Row="3" />
@@ -221,31 +239,31 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                                 <TextBlock Text="Brauschwierigkeit"  Grid.Row="7" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Brauschwierigkeit}" Grid.Row="7" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Brauschwierigkeit}" Grid.Row="7" Grid.Column="2" />
                                 <TextBlock Text="Analyseschwierigkeit"  Grid.Row="9" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Analyseschwierigkeit}" Grid.Row="9" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Analyseschwierigkeit}" Grid.Row="9" Grid.Column="2" />
                                 <TextBlock Text="Beschaffungsschwierigkeit"  Grid.Row="10" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Beschaffungsschwierigkeit}" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Beschaffungsschwierigkeit}" Grid.Row="10" Grid.Column="2" />
                                 <TextBlock Text="Beschaffungskosten (S)"  Grid.Row="12" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Beschaffungskosten}" Grid.Row="12" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Beschaffungskosten}" Grid.Row="12" Grid.Column="2" />
                                 <TextBlock Text="Haltbarkeit"  Grid.Row="13" />
                                 <StackPanel Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
                                     <TextBlock Text="{Binding WertHaltbarkeitHerstellung}"  />
-                                    <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Haltbarkeitseinheit}" Margin="5,0,0,0" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Haltbarkeitseinheit}" Margin="5,0,0,0" />
                                 </StackPanel>
                                 <TextBlock Text="Preis"  Grid.Row="15" />
-                                <TextBlock Text="{Binding Path =SelectedRezeptHerstellung.Beschaffungskosten}" Grid.Row="15" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path =SelectedRezept.Beschaffungskosten}" Grid.Row="15" Grid.Column="2" />
                                 <TextBlock Text="Merkmale"  Grid.Row="16" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Merkmale}" Grid.Row="16" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Merkmale}" Grid.Row="16" Grid.Column="2" />
                                 <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="18" />
                                 <TextBlock Text="{Binding HerstellungWirkungM}" Grid.Row="18" Grid.Column="2" />
                                 <TextBlock Text="Zutaten"  Grid.Row="19" />
                                 <TextBlock Text="Bemerkung"  Grid.Row="20" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Bemerkung}" Grid.Row="20" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Bemerkung}" Grid.Row="20" Grid.Column="2" />
                                 <TextBlock Text="vorgeschlagene Substitute"  Grid.Row="21" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Substitute}" Grid.Row="22" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Substitute}" Grid.Row="22" Grid.Column="2" />
                                 <TextBlock Text="Quelle"  Grid.Row="24" />
-                                <TextBlock Text="{Binding Path = SelectedRezeptHerstellung.Literatur}" Grid.Row="24" Grid.Column="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Literatur}" Grid.Row="24" Grid.Column="2" />
                                 <Grid Margin="20,10,20,10" Width="Auto" Grid.Row="20" Grid.Column ="2">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" MinWidth="50" />
@@ -284,7 +302,68 @@
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </Button>
                     </StackPanel>
-
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Rezept" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
+                                </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Ausstattung" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Text="Labor:" FontWeight="Bold"/>
+                                    <TextBlock Text=" (benötigt: " />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Labor}"  />
+                                    <TextBlock Text=")" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Art"/>
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborArtListe}" SelectedItem="{Binding SelectedLaborArtListe}" IsEnabled="{Binding IsEnabledLaborArtListe}" ToolTip="WdA 16"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Qualität des Labors"/>
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListe}" SelectedItem="{Binding SelectedLaborQualitätListe}" IsEnabled="{Binding IsEnabledLaborQualitätListe}" ToolTip="WdA 16"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Proben-Mod: "/>
+                                        <TextBlock Text="{Binding ModifikatorLabor}"  />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Text="Schale der Alchimie:" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                    <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyse}" ToolTip="zur Analyse | WdA 18"/>
+                                    <StackPanel Margin="0,0,5,0"  Orientation="Horizontal">
+                                        <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeit}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen | WdA 18"/>
+                                        <!--<TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding ModifikatorCHHerstellung}" VerticalAlignment="Center" />
+                                        <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
+                                    </StackPanel>
+                                    <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
                     <Expander Margin="4" IsExpanded="True">
                         <Expander.Header>
                             <TextBlock Text="Analyse" Style="{DynamicResource TextTitel}" />
@@ -292,22 +371,26 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListeHerstellung}" SelectedItem="{Binding SelectedGruppeHerstellung}" />
+                                    <TextBlock Margin="0,3,5,0" Text="Intensitätsbestimmung:" FontWeight="Bold" />                                    
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding IntensitätsbestimmungListeAnalyse}" SelectedItem="{Binding SelectedIntensitätsbestimmungAnalyse}" />
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListeHerstellung}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezeptHerstellung}" />
-                                </StackPanel>
-                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Intensitätsbestimmung:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding IntensitätsbestimmungListeAnalyse}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedIntensitätsbestimmungAnalyse}" />
+                                    <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
+                                    <TextBlock Margin="0,3,5,0" Text="{Binding AnalyseProbeIB}" FontWeight="Bold" />
+                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertIBAnalyse}" />
+                                    <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeIBAnalyse}"/>
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Strukturanalyse:" FontWeight="Bold" />
-                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding StrukturanalyseListeAnalyse}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedStrukturanalyseAnalyse}" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding StrukturanalyseListeAnalyse}" SelectedItem="{Binding SelectedStrukturanalyseAnalyse}" />
                                 </StackPanel>
-                                <TextBlock Margin="5,5,5,5" Text="Ausstattung:" FontWeight="Bold" FontSize="14"/>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
+                                    <TextBlock Margin="0,3,5,0" Text="{Binding AnalyseProbeSA}" FontWeight="Bold" />
+                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertSAAnalyse}" />
+                                    <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeSAAnalyse}"/>
+                                </StackPanel>
+                            <TextBlock Margin="5,5,5,5" Text="Ausstattung:" FontWeight="Bold" FontSize="14"/>
                                 <TextBlock Margin="5,5,5,5" Text="Modifizierung:" FontWeight="Bold" FontSize="14"/>
                                 <StackPanel Margin="5,0,5,0"  Orientation="Horizontal">
                                     <TextBlock Text="Qualität Analyse" VerticalAlignment="Center" />
@@ -350,18 +433,33 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="Gruppe"  Grid.Row="0" />
-                                <TextBlock Text="{Binding AnalyseGruppe}" Grid.Row="0" Grid.Column="2" />
-                                <TextBlock Text="Labor"  Grid.Row="2" />
-                                <TextBlock Text="{Binding AnalyseLabor}" Grid.Row="2" Grid.Column="2" />
-                                <TextBlock Text="Qualität"  Grid.Row="4" />
-                                <TextBlock Text="{Binding AnalyseQualität}" Grid.Row="4" Grid.Column="2" />
-                                <TextBlock Text="Anzahl"  Grid.Row="6" />
-                                <TextBlock Text="{Binding AnalyseAnzahl}" Grid.Row="6" Grid.Column="2" />
-                                <TextBlock Text="Kosten"  Grid.Row="10" />
-                                <TextBlock Text="{Binding AnalyseKosten}" Grid.Row="10" Grid.Column="2" />
-                                <TextBlock Text="Zeit"  Grid.Row="12" />
-                                <TextBlock Text="{Binding AnalyseZeit}" Grid.Row="12" Grid.Column="2" />
+                                <TextBlock Text="Kategorie"  Grid.Row="0" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Kategorie}" Grid.Row="0" Grid.Column="2" />
+                                <TextBlock Text="Gruppe"  Grid.Row="1" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Gruppe}" Grid.Row="1" Grid.Column="2" />
+                                <TextBlock Text="benutztes Labor"  Grid.Row="2" />
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2">
+                                    <TextBlock Text="{Binding Path = SelectedLaborArtListe}"  />
+                                    <TextBlock Text=" ("  />
+                                    <TextBlock Text="{Binding Path = SelectedLaborQualitätListe}"  />
+                                    <TextBlock Text=")"  />
+                                </StackPanel>
+                                <TextBlock Text="Proben-Modifikator: "  Grid.Row="3" />
+                                <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="3" Grid.Column="2" />
+                                <TextBlock Text="Brauschwierigkeit"  Grid.Row="7" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Brauschwierigkeit}" Grid.Row="7" Grid.Column="2" />
+                                <TextBlock Text="Analyseschwierigkeit"  Grid.Row="8" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Analyseschwierigkeit}" Grid.Row="8" Grid.Column="2" />
+                                <TextBlock Text="Detailgrad: "  Grid.Row="9" />
+                                <TextBlock Text="{Binding Path = WertDetailgradAnalyse}" Grid.Row="9" Grid.Column="2" />
+                                <TextBlock Text="Ergebnis Detailgrad: "  Grid.Row="10" />
+                                <TextBlock Text="{Binding Path = WertErgebnisDetailgradAnalyse}" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="Beschaffungsschwierigkeit"  Grid.Row="11" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Beschaffungsschwierigkeit}" Grid.Row="11" Grid.Column="2" />
+                                <TextBlock Text="Beschaffungskosten (S)"  Grid.Row="12" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Beschaffungskosten}" Grid.Row="12" Grid.Column="2" />
+                                <TextBlock Text="Zeit"  Grid.Row="13" />
+                                <TextBlock Text="{Binding AnalyseZeit}" Grid.Row="13" Grid.Column="2" />
                                 <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="14" />
                                 <TextBlock Text="{Binding AnalyseWirkung}" Grid.Row="14" Grid.Column="2" />
                                 <Grid Margin="20,10,20,10" Width="Auto" Grid.Row="16" Grid.Column ="2">

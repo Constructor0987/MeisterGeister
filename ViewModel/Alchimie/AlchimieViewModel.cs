@@ -24,38 +24,44 @@ namespace MeisterGeister.ViewModel.Alchimie
         //intern
         bool IsLoaded = false;
         //Enables
-
+        private bool _isEnabledLaborArtListe = true;
+        private bool _isEnabledLaborQualitätListe = true;
         //Listen
         private List<Held> _heldListe;
+        private List<string> _gruppeListe;
+        private List<Alchimierezept> _rezeptListe;
+        private List<string> _laborArtListe = new List<string>(new string[] { "Archaisches Labor", "Hexenküche", "Alchimistenlabor" });
+        private List<string> _laborQualitätListe = new List<string>(new string[] { "normal", "hochwertig", "aussergew. hochwertig", "beschädigt" });
+
         //Selections
         private Held _selectedHeld;
+        private string _selectedGruppe;
+        private Alchimierezept _selectedRezept;
+        private string _selectedLaborArtListe;
+        private string _selectedLaborQualitätListe;
         #endregion
+        //Rückgaben
+        private int _modifikatorLabor;
+        //Checkboxen
+        private bool _checkedChymischeHochzeit;
+        private bool _checkedFeuerUndEis;
+        private bool _checkedMandriconsBindung;
+        private bool _checkedTransmutationDerElemente;
 
         #region//-Herstellung-
         //Enables
  //       private bool _isEnabledAlchimistenLaborHerstellung;
         private bool _isEnabledAufladen = true;
-        private bool _isEnabledLaborArtListeHerstellung = true;
-        private bool _isEnabledLaborQualitätListeHerstellung = true;
         //Listen
         private List<Talent> _talentListeHerstellung ;
-        private List<string> _gruppeListeHerstellung;
-        private List<Alchimierezept> _rezeptListeHerstellung;
-        private List<string> _laborArtListeHerstellung = new List<string>(new string[] { "Archaisches Labor", "Hexenküche", "Alchimistenlabor" });
-        private List<string> _laborQualitätListeHerstellung = new List<string>(new string[] { "normal", "hochwertig", "aussergew. hochwertig", "beschädigt" });
         private List<Zutat> _substitutionListeHerstellung;
         //Selections
         private Talent _selectedTalentHerstellung;
-        private string _selectedGruppeHerstellung;
-        private Alchimierezept _selectedRezeptHerstellung;
-        private string _selectedLaborArtListeHerstellung;
-        private string _selectedLaborQualitätListeHerstellung;
         //Rückgaben
         private bool _herstellungUnmöglich = false;
         private int _wertTaWTalent;
         private int _wertTaPZurückhaltenHerstellung;
         private int _wertAstralesAufladenHerstellung;
-        private int _modifikatorLaborHerstellung;
         private int _modifikatorSubstitutionenHerstellung = 0;
         private int _modifikatorTaPZurückhaltenHerstellung = 0;
         private int _modifikatorCHHerstellung =0;
@@ -70,35 +76,46 @@ namespace MeisterGeister.ViewModel.Alchimie
         private int _taPHerstellung;
 
         //Checkboxen
-        private bool _checkedChymischeHochzeitHerstellung;
-        private bool _checkedFeuerUndEisHerstellung;
-        private bool _checkedMandriconsBindungHerstellung;
-        private bool _checkedTransmutationDerElementeHerstellung;
+
         //commands
-        private Base.CommandBase onClearSelectedHeld = null;
-        private Base.CommandBase OnClearSelectedHeld
-        {
-            get
-            {
-                if (onClearSelectedHeld == null)
-                    onClearSelectedHeld = new Base.CommandBase(ClearSelectedHeld, null);
-                return onClearSelectedHeld;
-            }
-        }
-        private void ClearSelectedHeld(object obj)
-        {
-            SelectedHeld = null;
-        }
+        private Base.CommandBase _onClearSelectedHeld;
         private Base.CommandBase _onProbeHerstellung;
         #endregion
 
         #region//-Analyse-
         //Listen
-        private List<string> _intensitätsbestimmungListeAnalyse;
+        private List<string> _intensitätsbestimmungListeAnalyse = new List<string>(new string[]
+        {"Odem Arcanum (Grundversion)",
+            "Odem Arcanum (Sichtbereich)",
+            "Odem Arcanum (Umgebung)",
+            "Oculus Astralis",
+            "Sicht auf Madas Welt",
+            "Magiegespür (gezielte Anwendung)",
+            "Magiegespür (ungezielte Anwendung)",
+            "Gespür der Keule",
+            "Blutblatt"});
+        private List<string> _strukturanalyseListeAnalyse= new List<string>(new string[]
+        {"Analyse nach Augenschein",
+            "Laboranalyse",
+            "Allegorische Analyse",
+            "ANALYS ARCANSTRUKTUR",
+            "Oculus Astralis",
+            "Infundibulum der Allweisen",
+            "Blick der Weberin",
+            "Blick durch Tairachs Augen"});
         //Selections
         private string _selectedIntensitätsbestimmungAnalyse;
-        private List<string> _strukturanalyseListeAnalyse;
         private string _selectedStrukturanalyseAnalyse;
+        //Rückgaben
+        private int _wertIBAnalyse;
+        private int _wertSAAnalyse;
+        private string _analyseProbeIB;
+        private string _analyseProbeSA;
+        private int _wertDetailgradAnalyse =0;
+        private string _wertErgebnisDetailgradAnalyse;
+        //Commands
+        private Base.CommandBase _onProbeIBAnalyse;
+        private Base.CommandBase _onProbeSAAnalyse;
         #endregion
 
         #region//-Verdünnung-
@@ -113,13 +130,70 @@ namespace MeisterGeister.ViewModel.Alchimie
 
         #region //---- EIGENSCHAFTEN ----
 
-        #region //-Allgemein-        
+        #region //-Allgemein-  
+        //Enables
+        public bool IsEnabledLaborArtListe
+        {
+            get { return _isEnabledLaborArtListe; }
+            set
+            {
+                _isEnabledLaborArtListe = value;
+                OnChanged("IsEnabledLaborArtListe");
+            }
+        }
+        public bool IsEnabledLaborQualitätListe
+        {
+            get { return _isEnabledLaborQualitätListe; }
+            set
+            {
+                _isEnabledLaborQualitätListe = value;
+                OnChanged("IsEnabledLaborQualitätListe");
+            }
+        }
+
         //Listen
         public List<Held> HeldListe 
         { 
             get { return Global.ContextHeld.LoadHeldenGruppeWithAlchimie(); }
             set { _heldListe = value; OnChanged("HeldListe"); } 
         }
+        public List<string> GruppeListe
+        {
+            get { return Global.ContextHeld.LoadAlchimieGruppe(); }
+            set
+            {
+                _gruppeListe = value;
+                OnChanged("GruppeListe");
+            }
+        }
+        public List<Alchimierezept> RezeptListe
+        {
+            get { return _rezeptListe; }
+            set
+            {
+                _rezeptListe = value;
+                OnChanged("RezeptListe");
+            }
+        }
+        public List<string> LaborArtListe
+        {
+            get { return _laborArtListe; }
+            set
+            {
+                _laborArtListe = value;
+                OnChanged("LaborArtListe");
+            }
+        }
+        public List<string> LaborQualitätListe
+        {
+            get { return _laborQualitätListe; }
+            set
+            {
+                _laborQualitätListe = value;
+                OnChanged("LaborQualitätListe");
+            }
+        }
+
         //Selections
         public Held SelectedHeld { get { return _selectedHeld; } set { 
             _selectedHeld = value;
@@ -136,7 +210,115 @@ namespace MeisterGeister.ViewModel.Alchimie
 
         }
         }
-        
+        public string SelectedGruppe
+        {
+            get { return _selectedGruppe; }
+            set
+            {
+                _selectedGruppe = value;
+                OnChanged("SelectedGruppe");
+                RezeptListe = Global.ContextHeld.LoadAlchimieRezepteByGruppe(value);
+            }
+        }
+        public Alchimierezept SelectedRezept
+        {
+            get { return _selectedRezept; }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedRezept = value;
+                    OnChanged("SelectedRezept");
+                    WertHaltbarkeitHerstellung = SelectedRezept.Haltbarkeit;
+                    SubstitutionListeHerstellung = getZutatenByRezept(_selectedRezept);
+                    HerstellungWirkungM = getMWirkung();
+                    calculateProbenModGes();
+                }
+            }
+        }
+        public string SelectedLaborArtListe
+        {
+            get { return _selectedLaborArtListe; }
+            set
+            {
+                _selectedLaborArtListe = value;
+                OnChanged("SelectedLaborArtListe");
+                calculateModLab();
+                calculateProbenModGes();
+            }
+        }
+        public string SelectedLaborQualitätListe
+        {
+            get { return _selectedLaborQualitätListe; }
+            set
+            {
+                _selectedLaborQualitätListe = value;
+                OnChanged("SelectedLaborQualitätListe");
+                calculateModLab();
+                calculateProbenModGes();
+            }
+        }
+        //Rückgaben
+        public int ModifikatorLabor
+        {
+            get { return _modifikatorLabor; }
+            set
+            {
+                _modifikatorLabor = value;
+                OnChanged("ModifikatorLabor");
+            }
+        }
+        //Checkboxen
+        public bool CheckedChymischeHochzeit
+        {
+            get { return _checkedChymischeHochzeit; }
+            set
+            {
+                _checkedChymischeHochzeit = value;
+                OnChanged("CheckedChymischeHochzeit");
+                if (value)
+                {
+                    ModifikatorCHHerstellung = -1;
+                    BonusCHQualitätHerstellung = 2;
+                }
+                else
+                {
+                    ModifikatorCHHerstellung = 0;
+                    BonusCHQualitätHerstellung = 0;
+                }
+                //TODO MP neccessary?!
+                WertAstralesAufladenHerstellung = WertAstralesAufladenHerstellung;
+                calculateProbenModGes();
+            }
+        }
+        public bool CheckedFeuerUndEis
+        {
+            get { return _checkedFeuerUndEis; }
+            set
+            {
+                _checkedFeuerUndEis = value;
+                OnChanged("CheckedFeuerUndEis");
+            }
+        }
+        public bool CheckedMandriconsBindung
+        {
+            get { return _checkedMandriconsBindung; }
+            set
+            {
+                _checkedMandriconsBindung = value;
+                OnChanged("CheckedMandriconsBindung");
+            }
+        }
+        public bool CheckedTransmutationDerElemente
+        {
+            get { return _checkedTransmutationDerElemente; }
+            set
+            {
+                _checkedTransmutationDerElemente = value;
+                OnChanged("CheckedTransmutationDerElemente");
+            }
+        }
+
         #endregion
 
         //TODO MP wrap Alchimierezept; add WirkungM, calc Haltbarkeit and others fix?!
@@ -161,22 +343,6 @@ namespace MeisterGeister.ViewModel.Alchimie
             } 
         }
 
-        public bool IsEnabledLaborArtListeHerstellung
-        { 
-            get { return _isEnabledLaborArtListeHerstellung; }
-            set {
-                _isEnabledLaborArtListeHerstellung = value;
-                OnChanged("IsEnabledLaborArtListeHerstellung");
-            }
-        }
-        public bool IsEnabledLaborQualitätListeHerstellung
-        { 
-            get { return _isEnabledLaborQualitätListeHerstellung; } 
-            set {
-                _isEnabledLaborQualitätListeHerstellung = value; 
-                OnChanged("IsEnabledLaborQualitätListeHerstellung"); 
-            } 
-        }
         //Listen
         public List<Talent> TalentListeHerstellung
         { 
@@ -187,38 +353,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("TalentListeHerstellung"); 
             } 
         }
-        public List<string> GruppeListeHerstellung
-        {
-            get { return Global.ContextHeld.LoadAlchimieGruppe(); } 
-            set { 
-                _gruppeListeHerstellung = value; 
-                OnChanged("GruppeListeHerstellung");
-            }
-        }
-        public List<Alchimierezept> RezeptListeHerstellung 
-        { 
-            get { return _rezeptListeHerstellung; }
-            set {
-                _rezeptListeHerstellung = value;
-                OnChanged("RezeptListeHerstellung");
-            } 
-        }
-        public List<string> LaborArtListeHerstellung
-        { 
-            get { return _laborArtListeHerstellung; }
-            set { 
-                _laborArtListeHerstellung = value;
-                OnChanged("LaborArtListeHerstellung"); 
-            } 
-        }
-        public List<string> LaborQualitätListeHerstellung
-        { 
-            get { return _laborQualitätListeHerstellung; } 
-            set {
-                _laborQualitätListeHerstellung = value;
-                OnChanged("LaborQualitätListeHerstellung");
-            } 
-        }
+
          public List<Zutat> SubstitutionListeHerstellung { 
             get { return _substitutionListeHerstellung; }
             set 
@@ -242,50 +377,6 @@ namespace MeisterGeister.ViewModel.Alchimie
                 WertTaWTalent = SelectedHeld == null ? 0 : SelectedHeld.Talentwert(value);
             }
         }
-        public string SelectedGruppeHerstellung
-        { 
-            get { return _selectedGruppeHerstellung; } 
-            set { 
-                _selectedGruppeHerstellung = value;
-                OnChanged("SelectedGruppeHerstellung"); 
-                RezeptListeHerstellung = Global.ContextHeld.LoadAlchimieRezepteByGruppe(value);
-            } 
-        }
-        public Alchimierezept SelectedRezeptHerstellung
-        { 
-            get { return _selectedRezeptHerstellung; } 
-            set {
-                if (value != null)
-                {
-                    _selectedRezeptHerstellung = value;                    
-                    OnChanged("SelectedRezeptHerstellung");
-                    WertHaltbarkeitHerstellung = SelectedRezeptHerstellung.Haltbarkeit;
-                    SubstitutionListeHerstellung = getZutatenByRezept(_selectedRezeptHerstellung);
-                    HerstellungWirkungM = getMWirkung();
-                    calculateProbenModGes();
-                }
-            } 
-        }
-        public string SelectedLaborArtListeHerstellung 
-        { 
-            get { return _selectedLaborArtListeHerstellung; } 
-            set {
-                _selectedLaborArtListeHerstellung = value; 
-                OnChanged("SelectedLaborArtListeHerstellung");
-                calculateModLab(); 
-                calculateProbenModGes();
-            } 
-        }
-        public string SelectedLaborQualitätListeHerstellung
-        { 
-            get { return _selectedLaborQualitätListeHerstellung; } 
-            set { 
-                _selectedLaborQualitätListeHerstellung = value; 
-                OnChanged("SelectedLaborQualitätListeHerstellung");
-                calculateModLab(); 
-                calculateProbenModGes();
-            } 
-        }
         //Rückgaben
         public int WertTaWTalent 
         { 
@@ -299,7 +390,7 @@ namespace MeisterGeister.ViewModel.Alchimie
         { 
             get { return _wertTaPZurückhaltenHerstellung; } 
             set {
-                if (SelectedRezeptHerstellung!=null && value >= 0 && value <= SelectedRezeptHerstellung.Brauschwierigkeit) 
+                if (SelectedRezept!=null && value >= 0 && value <= SelectedRezept.Brauschwierigkeit) 
                 { 
                     _wertTaPZurückhaltenHerstellung = value; 
                     OnChanged("WertTaPZurückhaltenHerstellung"); 
@@ -319,7 +410,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     if (value == 0 || value == 1) 
                     {
                         BonusAAQualitätHerstellung = value; 
-                        if (CheckedChymischeHochzeitHerstellung) 
+                        if (CheckedChymischeHochzeit) 
                             ASPEinsatzHerstellung = (int)Math.Ceiling(((double)value)/2); 
                         else 
                             ASPEinsatzHerstellung = value; 
@@ -327,7 +418,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     else if (((Math.Log10(value) / Math.Log10(2.0)) % 1) == 0) 
                     { 
                         BonusAAQualitätHerstellung = (int)(Math.Log10(value) / Math.Log10(2.0)) + 1;
-                        if (CheckedChymischeHochzeitHerstellung) 
+                        if (CheckedChymischeHochzeit) 
                             ASPEinsatzHerstellung = (int)Math.Ceiling((double)value / 2.0); 
                         else 
                             ASPEinsatzHerstellung = value; 
@@ -335,14 +426,6 @@ namespace MeisterGeister.ViewModel.Alchimie
                     OnChanged("WertAstralesAufladenHerstellung");
                 }
             }
-        }
-        public int ModifikatorLaborHerstellung
-        { 
-            get { return _modifikatorLaborHerstellung; } 
-            set {
-                _modifikatorLaborHerstellung = value; 
-                OnChanged("ModifikatorLaborHerstellung");
-            } 
         }
         public int ModifikatorSubstitutionenHerstellung
         { 
@@ -460,50 +543,6 @@ namespace MeisterGeister.ViewModel.Alchimie
 
         
         //Checkboxen
-        public bool CheckedChymischeHochzeitHerstellung
-        {
-            get { return _checkedChymischeHochzeitHerstellung; }
-            set {
-                _checkedChymischeHochzeitHerstellung = value;
-                OnChanged("CheckedChymischeHochzeitHerstellung");
-                if (value) 
-                { 
-                    ModifikatorCHHerstellung = -1; 
-                    BonusCHQualitätHerstellung = 2; 
-                }
-                else 
-                { 
-                    ModifikatorCHHerstellung = 0; 
-                    BonusCHQualitätHerstellung = 0;
-                } 
-                WertAstralesAufladenHerstellung = WertAstralesAufladenHerstellung; 
-                calculateProbenModGes();
-            }
-        }
-        public bool CheckedFeuerUndEisHerstellung
-        { 
-            get { return _checkedFeuerUndEisHerstellung; } 
-            set { 
-                _checkedFeuerUndEisHerstellung = value;
-                OnChanged("CheckedFeuerUndEisHerstellung");
-            } 
-        }
-        public bool CheckedMandriconsBindungHerstellung 
-        { 
-            get { return _checkedMandriconsBindungHerstellung; } 
-            set {
-                _checkedMandriconsBindungHerstellung = value; 
-                OnChanged("CheckedMandriconsBindungHerstellung");
-            }
-        }
-        public bool CheckedTransmutationDerElementeHerstellung 
-        { 
-            get { return _checkedTransmutationDerElementeHerstellung; } 
-            set {
-                _checkedTransmutationDerElementeHerstellung = value;
-                OnChanged("CheckedTransmutationDerElementeHerstellung");
-            } 
-        }
         //Commands
 
         public Base.CommandBase OnProbeHerstellung
@@ -538,6 +577,12 @@ namespace MeisterGeister.ViewModel.Alchimie
             set { 
                 _selectedIntensitätsbestimmungAnalyse = value;
                 OnChanged("SelectedIntensitätsbestimmungAnalyse");
+                AnalyseProbeIB = getIBTalent(SelectedIntensitätsbestimmungAnalyse);
+                if(SelectedHeld!=null){
+                    WertIBAnalyse = getIBFertigkeitswert(SelectedIntensitätsbestimmungAnalyse);
+                }else{
+                    WertIBAnalyse =0;
+                }                
             }
         }
         public string SelectedStrukturanalyseAnalyse 
@@ -546,9 +591,85 @@ namespace MeisterGeister.ViewModel.Alchimie
             set {
                 _selectedStrukturanalyseAnalyse = value;
                 OnChanged("SelectedStrukturanalyseAnalyse");
+                AnalyseProbeSA = getSATalent(SelectedStrukturanalyseAnalyse);
             }
         }
         
+        //Rückgaben
+        public int WertIBAnalyse
+        {
+            get{return _wertIBAnalyse;}
+            set{
+                _wertIBAnalyse = value;
+                OnChanged("WertIBAnalyse");
+            }
+        }
+                public string AnalyseProbeIB
+        {
+            get{return _analyseProbeIB;}
+            set{
+                _analyseProbeIB = value;
+                OnChanged("AnalyseProbeIB");
+            }
+        }
+        public int WertSAAnalyse
+        {
+            get{return _wertSAAnalyse;}
+            set{
+                _wertSAAnalyse = value;
+                OnChanged("WertSAAnalyse");
+            }
+        }
+        public int WertDetailgradAnalyse
+        {
+            get { return _wertDetailgradAnalyse; }
+            set{
+                _wertDetailgradAnalyse = value;
+                OnChanged("WertDetailgradAnalyse");
+                if (value == 0)
+                {
+                    WertErgebnisDetailgradAnalyse = "Keine Aussage möglich";
+                }
+                else if (value <= 2)
+                {
+                    WertErgebnisDetailgradAnalyse = "Ist ein alchimistisches Erzeugnis";
+                }
+                else
+                {
+                    WertErgebnisDetailgradAnalyse = "Schätzung der Qualität: schwach (Qualitäten M, A, B, C, D) oder stark (Qualitäten M, C, D, E, F)";
+                }                
+            }
+        }
+        public string WertErgebnisDetailgradAnalyse
+        {
+            get { return _wertErgebnisDetailgradAnalyse; }
+            set{
+                _wertErgebnisDetailgradAnalyse = value;
+                OnChanged("WertErgebnisDetailgradAnalyse");
+            }
+        }
+        public string AnalyseProbeSA
+        {
+            get { return _analyseProbeSA; }
+            set{
+                _analyseProbeSA = value;
+                OnChanged("AnalyseProbeSA");
+            }
+        }
+        //Commands
+
+        public Base.CommandBase OnProbeIBAnalyse
+        {
+            get { return _onProbeIBAnalyse; }
+        }
+        public Base.CommandBase OnProbeSAAnalyse
+        {
+            get { return _onProbeSAAnalyse; }
+        }
+        private Base.CommandBase OnClearSelectedHeld
+        {
+            get { return _onClearSelectedHeld;   }
+        }
         #endregion
         #region//-Verdünnung-
         //Listen
@@ -565,6 +686,9 @@ namespace MeisterGeister.ViewModel.Alchimie
             : base(View.General.ViewHelper.ShowProbeDialog)
         {
             _onProbeHerstellung = new Base.CommandBase(ProbeHerstellung, null);
+            _onProbeIBAnalyse = new Base.CommandBase(ProbeIBAnalyse, null);
+            _onProbeSAAnalyse = new Base.CommandBase(ProbeSAAnalyse, null);
+            _onClearSelectedHeld = new Base.CommandBase(ClearSelectedHeld, null);
         }
 
         #endregion
@@ -582,58 +706,58 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
 
 
-        private void checkAufladen(Held held)
-        {
-            //check Magiekunde>7 && Alchimie>7; set IsEnabledAufladen
-            if (held.Talentwert("Alchimie") >= 7 && held.Talentwert("Magiekunde") >= 7) IsEnabledAufladen=true;
-            else IsEnabledAufladen = false;
-        }
-
         #endregion
 
         #region //---- METHODEN ----
 
         #region //-Allgemein- 
-        #endregion
-        #region//-Herstellung-
-        private void resetHerstellung()
-        {
-            //TODO: MP implement
-        }
         private void calculateModLab()
         {
             int mod = 0;
-            if (SelectedRezeptHerstellung != null) {
+            if (SelectedRezept != null)
+            {
                 HerstellungUnmöglich = false;
-                switch (SelectedLaborArtListeHerstellung)
+                switch (SelectedLaborArtListe)
                 {
-                    case "Archaisches Labor": switch (SelectedRezeptHerstellung.Labor)
+                    case "Archaisches Labor": switch (SelectedRezept.Labor)
                         {
                             case "Hexenküche": mod = 7; break;
                             //keine Herstellung möglich
-                            case "Alchimistenlabor": HerstellungUnmöglich = true; ModifikatorLaborHerstellung = 0; return;
+                            case "Alchimistenlabor": HerstellungUnmöglich = true; ModifikatorLabor = 0; return;
                         }; break;
-                    case "Hexenküche": switch (SelectedRezeptHerstellung.Labor)
+                    case "Hexenküche": switch (SelectedRezept.Labor)
                         {
                             case "Alchimistenlabor": mod = 7; break;
                         }; break;
-                    case "Alchimistenlabor": switch (SelectedRezeptHerstellung.Labor)
+                    case "Alchimistenlabor": switch (SelectedRezept.Labor)
                         {
                             case "archaisches Labor": mod = -3; break;
                         }; break;
                     default: break;
                 }
             }
-            switch (SelectedLaborQualitätListeHerstellung)
+            switch (SelectedLaborQualitätListe)
             {
                 case "hochwertig": mod -= 3; break;
                 case "aussergew. hochwertig": mod -= 7; break;
                 case "beschädigt": mod += 3; break;
                 default: break;
             }
-            ModifikatorLaborHerstellung = mod;
+            ModifikatorLabor = mod;
         }
 
+        #endregion
+        #region//-Herstellung-
+        private void resetHerstellung()
+        {
+            //TODO: MP implement
+        }
+        private void checkAufladen(Held held)
+        {
+            //check Magiekunde>7 && Alchimie>7; set IsEnabledAufladen
+            if (held.Talentwert("Alchimie") >= 7 && held.Talentwert("Magiekunde") >= 7) IsEnabledAufladen = true;
+            else IsEnabledAufladen = false;
+        }
         private void calculateModSubstitutionen()
         {
             int mod = 0;
@@ -670,7 +794,7 @@ namespace MeisterGeister.ViewModel.Alchimie
 
         private void calculateProbenModGes()
         {
-            if (SelectedRezeptHerstellung == null)
+            if (SelectedRezept == null)
                 return;
             if (HerstellungUnmöglich)
             {
@@ -678,12 +802,12 @@ namespace MeisterGeister.ViewModel.Alchimie
             }
             else
             {
-                int mod = SelectedRezeptHerstellung.Brauschwierigkeit;
-                if (CheckedChymischeHochzeitHerstellung)
+                int mod = SelectedRezept.Brauschwierigkeit;
+                if (CheckedChymischeHochzeit)
                     mod += ModifikatorCHHerstellung;
                 mod += ModifikatorTaPZurückhaltenHerstellung;
                 mod += ModifikatorSubstitutionenHerstellung;
-                mod += ModifikatorLaborHerstellung;
+                mod += ModifikatorLabor;
                 ProbenModGesHerstellung = mod;
                 return;
             }
@@ -699,7 +823,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             else
             {
                 int mod = 0;
-                if (CheckedChymischeHochzeitHerstellung)
+                if (CheckedChymischeHochzeit)
                     mod += BonusCHQualitätHerstellung;
                 mod += BonusTaPQualitätHerstellung;
                 mod += BonusAAQualitätHerstellung;
@@ -727,10 +851,84 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
         #endregion
         #region//-Analyse-
+        private int getIBFertigkeitswert(string auswahl)
+        {
+            switch (auswahl)
+            {
+                case "Odem Arcanum (Grundversion)": 
+                case "Odem Arcanum (Sichtbereich)":
+                case "Odem Arcanum (Umgebung)":
+                    return SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
+                case "Oculus Astralis":
+                    return SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");
+                case "Sicht auf Madas Welt": return 0;
+                case "Magiegespür (gezielte Anwendung)": 
+                case "Magiegespür (ungezielte Anwendung)":
+                    return SelectedHeld.Talentwert("Magiegespür");
+                case "Gespür der Keule": return 0;
+                case "Blutblatt":
+                    return SelectedHeld.Talentwert("Pflanzenkunde");
+                default: return 0;
+            }
+        }
+        private string getIBTalent(string auswahl)
+        {
+            switch (auswahl)
+            {
+                case "Odem Arcanum (Grundversion)": return "Odem Arcanum";
+                case "Odem Arcanum (Sichtbereich)": return "Odem Arcanum";
+                case "Odem Arcanum (Umgebung)": return "Odem Arcanum";
+                case "Oculus Astralis": return "Oculus Astralis";
+                case "Sicht auf Madas Welt": return "Liturgiekenntnis";
+                case "Magiegespür (gezielte Anwendung)": return "Magiegespür";
+                case "Magiegespür (ungezielte Anwendung)": return "Magiegespür";
+                case "Gespür der Keule": return "Gespür-Probe";
+                case "Blutblatt": return "Pflanzenkunde";
+                default: return "";
+            }
+        }
+        private string getSATalent(string auswahl)
+        {
+            switch (auswahl)
+            {
+                case "Analyse nach Augenschein": return "Alchimie";
+                case "Laboranalyse": return "Alchimie";
+                case "Allegorische Analyse": return "Ritualkenntnis";
+                case "ANALYS ARCANSTRUKTUR": return "ANALYS ARCANSTRUKTUR";
+                case "Oculus Astralis": return "Oculus Astralis";
+                case "Infundibulum der Allweisen": return "Alchimie";
+                case "Blick der Weberin": return "Liturgiekenntnis";
+                case "Blick durch Tairachs Augen": return "Liturgiekenntnis";
+                default: return "";
+            }
+        }
         private void resetAnalyse()
         {
-            IntensitätsbestimmungListeAnalyse = Global.ContextHeld.LoadIntensitätsbestimmungFertigkeitenAlchimieByHeld(SelectedHeld);
-            StrukturanalyseListeAnalyse = Global.ContextHeld.LoadStrukturanalyseFertigkeitenAlchimieByHeld(SelectedHeld);
+            //hol mögliche Talente
+            List<string> fertigkeiten = Global.ContextHeld.LoadIntensitätsbestimmungFertigkeitenAlchimieByHeld(SelectedHeld);
+            List<string> ibListe=new List<string>();
+            if (fertigkeiten.Contains("Odem Arcanum"))
+            {
+                ibListe.Add("Odem Arcanum (Grundversion)");
+                ibListe.Add("Odem Arcanum (Sichtbereich)");
+                ibListe.Add("Odem Arcanum (Umgebung)");
+            }
+            if (fertigkeiten.Contains("Oculus Astralis"))
+            {
+                ibListe.Add("Oculus Astralis");
+            }
+            if (fertigkeiten.Contains("Magiegespür"))
+            {
+                ibListe.Add("Magiegespür (gezielte Anwendung)");
+                ibListe.Add("Magiegespür (ungezielte Anwendung)");
+            }
+            if (fertigkeiten.Contains("Pflanzenkunde"))
+            {
+                ibListe.Add("Blutblatt");
+            }
+            //add Sicht auf Mada && Gespür
+            IntensitätsbestimmungListeAnalyse = ibListe;
+            //StrukturanalyseListeAnalyse = Global.ContextHeld.LoadStrukturanalyseFertigkeitenAlchimieByHeld(SelectedHeld);
         }
         #endregion
         #region//-Verdünnung-
@@ -745,12 +943,16 @@ namespace MeisterGeister.ViewModel.Alchimie
         #endregion
 
         #region //---- EVENTS ----
+        private void ClearSelectedHeld(object obj)
+        {
+            SelectedHeld = null;
+        }
+        #region//-Herstellung-
         void Zutat_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             calculateModSubstitutionen();
             calculateProbenModGes();
         }
-
         void ProbeHerstellung(object sender)
         {
             //Probe auf Erstellung würfeln
@@ -763,7 +965,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 {
                     TaPHerstellung = ergebnis.Übrig;
                     BonusQualitätHerstellung = getQualität(MeisterGeister.Logic.General.Würfel.Parse("2W6", true) + TaPHerstellung + WertAstralesAufladenHerstellung);
-                    WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezeptHerstellung.Haltbarkeit, true).ToString();
+                    WertHaltbarkeitHerstellung = MeisterGeister.Logic.General.Würfel.Parse(_selectedRezept.Haltbarkeit, true).ToString();
                 }
                 else {
                     TaPHerstellung = -1;
@@ -771,9 +973,129 @@ namespace MeisterGeister.ViewModel.Alchimie
                 }
             }
         }
+        #endregion     
+        #region//-Analyse-
+        void ProbeIBAnalyse(object sender)
+        {
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null && SelectedIntensitätsbestimmungAnalyse != null)
+            {
+                //suche Probenart
+                switch (SelectedIntensitätsbestimmungAnalyse)
+                {
+                    case "Odem Arcanum (Grundversion)":
+                        Model.Zauber oag = Global.ContextHeld.LoadZauberByName("Odem Arcanum");
+                        oag.Modifikator = SelectedRezept.Analyseschwierigkeit;
+                        oag.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
+                        var ergebnisOAG = ShowProbeDialog(oag, SelectedHeld);
+                        if (ergebnisOAG != null && ergebnisOAG.Gelungen)
+                        {
+                            WertDetailgradAnalyse = ergebnisOAG.Übrig;
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
+                    case "Odem Arcanum (Sichtbereich)": 
+                        Model.Zauber oas = Global.ContextHeld.LoadZauberByName("Odem Arcanum");
+                        oas.Modifikator = SelectedRezept.Analyseschwierigkeit+2;
+                        oas.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
+                        var ergebnisOAS = ShowProbeDialog(oas, SelectedHeld);
+                        if (ergebnisOAS != null && ergebnisOAS.Gelungen)
+                        {
+                            WertDetailgradAnalyse = (int)Math.Ceiling((double)ergebnisOAS.Übrig / 2.0);
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
+                    case "Odem Arcanum (Umgebung)": 
+                        Model.Zauber oau = Global.ContextHeld.LoadZauberByName("Odem Arcanum");
+                        oau.Modifikator = SelectedRezept.Analyseschwierigkeit + 7;
+                        oau.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
+                        var ergebnisOAU = ShowProbeDialog(oau, SelectedHeld);
+                        if (ergebnisOAU != null && ergebnisOAU.Gelungen)
+                        {
+                            WertDetailgradAnalyse = (int)Math.Ceiling((double)ergebnisOAU.Übrig / 2.0);
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
+                    case "Oculus Astralis":
+                        Model.Zauber oa = Global.ContextHeld.LoadZauberByName("Oculus Astralis");
+                        oa.Modifikator = SelectedRezept.Analyseschwierigkeit;
+                        oa.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");
+                        var ergebnisOA = ShowProbeDialog(oa, SelectedHeld);
+                        if (ergebnisOA != null && ergebnisOA.Gelungen)
+                        {
+                            WertDetailgradAnalyse = ergebnisOA.Übrig;
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
+                    case "Sicht auf Madas Welt": break;
+                    case "Magiegespür (gezielte Anwendung)":
+                        Model.Talent mg = Global.ContextHeld.LoadTalentByName("Magiegespür");
+                        mg.Modifikator = SelectedRezept.Analyseschwierigkeit;
+                        mg.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Magiegespür");
+                        var ergebnisMG = ShowProbeDialog(mg, SelectedHeld);
+                        if (ergebnisMG != null && ergebnisMG.Gelungen)
+                        {
+                            WertDetailgradAnalyse = ergebnisMG.Übrig;
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
+                    case "Magiegespür (ungezielte Anwendung)": 
+                        Model.Talent mu = Global.ContextHeld.LoadTalentByName("Magiegespür");
+                        mu.Modifikator = SelectedRezept.Analyseschwierigkeit;
+                        mu.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Magiegespür");
+                        var ergebnisMU = ShowProbeDialog(mu, SelectedHeld);
+                        if (ergebnisMU != null && ergebnisMU.Gelungen)
+                        {
+                            WertDetailgradAnalyse = (int)Math.Ceiling((double)ergebnisMU.Übrig / 2.0);
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
+                    case "Blutblatt": 
+                        Model.Talent p = Global.ContextHeld.LoadTalentByName("Pflanzenkunde");
+                        p.Modifikator = SelectedRezept.Analyseschwierigkeit;
+                        p.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Pflanzenkunde");
+                        var ergebnisP = ShowProbeDialog(p, SelectedHeld);
+                        if (ergebnisP != null && ergebnisP.Gelungen)
+                        {
+                            WertDetailgradAnalyse = ergebnisP.Übrig;
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
+                    case "Gespür der Keule":
+                    default: break;
+                }
+            }
+        }
+
+        void ProbeSAAnalyse(object sender)
+        {
+        }
+            
+        #endregion
         #endregion
 
-        private List<string> wirkungen = new List<string>()
+        private static List<string> wirkungen = new List<string>()
         {"Das Mittel hat keinerlei Wirkung.",
          "Die Mixtur verdampft völlig ohne jeden Rückstand.",
          "Vom Braugut bleibt nichts zurück, als ein Klumpen unmagischer Schlacke oder Asche.",

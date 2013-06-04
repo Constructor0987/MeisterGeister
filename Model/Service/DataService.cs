@@ -140,8 +140,12 @@ namespace MeisterGeister.Model.Service {
 
             List<string> zauber = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Zauber, h => h.HeldGUID, hz => hz.HeldGUID, (h, hz) => hz)
                 .Join(Context.Zauber, hz => hz.ZauberGUID, z => z.ZauberGUID, (hz, z) => z).Where(z => z.Name == "Odem Arcanum" || z.Name == "Oculus Astralis").OrderBy(z => z.Name).Select(z => z.Name).ToList();
-            if (zauber.Contains("Odem Arcanum")) zauber.Add("Odem Arcanum (Sicht)");
-            //TODO ??: MP liturgie "Sicht auf Madas Welt"
+            if (zauber.Contains("Odem Arcanum"))
+            {
+                zauber.Add("Odem Arcanum (Sicht)");
+                zauber.Add("Odem Arcanum (Umgebung)");
+            }
+            //TODO ??: MP liturgie "Sicht auf Madas Welt"7
             List<string> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
                 .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Pflanzenkunde" || t.Talentname == "Magiegespür").Select(t => t.Talentname).ToList();
 
