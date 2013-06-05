@@ -83,6 +83,9 @@ namespace MeisterGeister.ViewModel.Alchimie
         #endregion
 
         #region//-Analyse-
+        //Checkboxen
+        private bool _checkedErhaltAnalyseVisibility = false;
+        private bool _checkedErhaltAnalyseIsChecked = false;
         //Listen
         private List<string> _intensitätsbestimmungListeAnalyse = new List<string>(new string[]
         {"Odem Arcanum (Grundversion)",
@@ -98,7 +101,7 @@ namespace MeisterGeister.ViewModel.Alchimie
         {"Analyse nach Augenschein",
             "Laboranalyse",
             "Allegorische Analyse",
-            "ANALYS ARCANSTRUKTUR",
+            "Analys Arcanstruktur",
             "Oculus Astralis",
             "Infundibulum der Allweisen",
             "Blick der Weberin",
@@ -111,8 +114,11 @@ namespace MeisterGeister.ViewModel.Alchimie
         private int _wertSAAnalyse;
         private string _analyseProbeIB;
         private string _analyseProbeSA;
+        private int _analyseDauerSA;
+        private string _analyseBemerkung;
         private int _wertDetailgradAnalyse =0;
         private string _wertErgebnisDetailgradAnalyse;
+        private int _wertStrukturergebnisAnalyse;
         //Commands
         private Base.CommandBase _onProbeIBAnalyse;
         private Base.CommandBase _onProbeSAAnalyse;
@@ -542,7 +548,24 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
 
         
-        //Checkboxen
+        //Checkboxen  
+        //TODO MP funktioniert nicht
+        public bool CheckedErhaltAnalyseVisibility 
+        { 
+            get { return _checkedErhaltAnalyseVisibility; } 
+            set { _checkedErhaltAnalyseVisibility = value; 
+                OnChanged("CheckedErhaltAnalyseVisibility"); 
+            }
+        }
+        public bool CheckedErhaltAnalyseIsChecked 
+        {
+            get { return _checkedErhaltAnalyseIsChecked; }
+            set
+            {
+                _checkedErhaltAnalyseIsChecked = value;
+            OnChanged("CheckedErhaltAnalyseIsChecked"); 
+            }
+        }
         //Commands
 
         public Base.CommandBase OnProbeHerstellung
@@ -592,6 +615,18 @@ namespace MeisterGeister.ViewModel.Alchimie
                 _selectedStrukturanalyseAnalyse = value;
                 OnChanged("SelectedStrukturanalyseAnalyse");
                 AnalyseProbeSA = getSATalent(SelectedStrukturanalyseAnalyse);
+                AnalyseDauerSA = getSADauer(SelectedStrukturanalyseAnalyse);
+                AnalyseBemerkung = getBemerkung(SelectedStrukturanalyseAnalyse);
+                if (SelectedHeld != null)
+                {
+                    WertSAAnalyse = getSAFertigkeitswert(SelectedStrukturanalyseAnalyse);
+                }
+                else
+                {
+                    WertSAAnalyse = 0;
+                }
+                if (SelectedStrukturanalyseAnalyse == "Laboranalyse") CheckedErhaltAnalyseVisibility = true;
+                else CheckedErhaltAnalyseVisibility = false;
             }
         }
         
@@ -604,7 +639,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("WertIBAnalyse");
             }
         }
-                public string AnalyseProbeIB
+        public string AnalyseProbeIB
         {
             get{return _analyseProbeIB;}
             set{
@@ -620,10 +655,38 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("WertSAAnalyse");
             }
         }
+        public string AnalyseProbeSA
+        {
+            get { return _analyseProbeSA; }
+            set
+            {
+                _analyseProbeSA = value;
+                OnChanged("AnalyseProbeSA");
+            }
+        }
+        public int AnalyseDauerSA
+        {
+            get { return _analyseDauerSA; }
+            set
+            {
+                _analyseDauerSA = value;
+                OnChanged("AnalyseDauerSA");
+            }
+        }
+        public string AnalyseBemerkung
+        {
+            get { return _analyseBemerkung; }
+            set
+            {
+                _analyseBemerkung = value;
+                OnChanged("AnalyseBemerkung");
+            }
+        }
         public int WertDetailgradAnalyse
         {
             get { return _wertDetailgradAnalyse; }
-            set{
+            set
+            {
                 _wertDetailgradAnalyse = value;
                 OnChanged("WertDetailgradAnalyse");
                 if (value == 0)
@@ -637,7 +700,16 @@ namespace MeisterGeister.ViewModel.Alchimie
                 else
                 {
                     WertErgebnisDetailgradAnalyse = "Schätzung der Qualität: schwach (Qualitäten M, A, B, C, D) oder stark (Qualitäten M, C, D, E, F)";
-                }                
+                }
+            }
+        }
+        public int WertStrukturergebnisAnalyse
+        {
+            get { return _wertStrukturergebnisAnalyse; }
+            set
+            {
+                _wertStrukturergebnisAnalyse = value;
+                OnChanged("WertStrukturergebnisAnalyse");
             }
         }
         public string WertErgebnisDetailgradAnalyse
@@ -648,14 +720,8 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("WertErgebnisDetailgradAnalyse");
             }
         }
-        public string AnalyseProbeSA
-        {
-            get { return _analyseProbeSA; }
-            set{
-                _analyseProbeSA = value;
-                OnChanged("AnalyseProbeSA");
-            }
-        }
+
+
         //Commands
 
         public Base.CommandBase OnProbeIBAnalyse
@@ -851,6 +917,26 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
         #endregion
         #region//-Analyse-
+        private int getSAFertigkeitswert(string auswahl)
+        {
+            switch (auswahl)
+            {
+                case "Analyse nach Augenschein":
+                case "Laboranalyse":
+                case "Infundibulum der Allweisen":
+                    return SelectedHeld.Talentwert("Alchimie");
+                case "Allegorische Analyse":
+                    return SelectedHeld.Talentwert("Ritualkenntnis");
+                case "Analys Arcanstruktur":
+                    return SelectedHeld.Zauberfertigkeitswert("Analys Arcanstruktur");
+                case "Oculus Astralis":
+                    return SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");                
+                case "Blick der Weberin": 
+                case "Blick durch Tairachs Augen":
+                    return SelectedHeld.Talentwert("Liturgiekenntnis");
+                default: return 0;
+            }
+        }
         private int getIBFertigkeitswert(string auswahl)
         {
             switch (auswahl)
@@ -861,7 +947,8 @@ namespace MeisterGeister.ViewModel.Alchimie
                     return SelectedHeld.Zauberfertigkeitswert("Odem Arcanum");
                 case "Oculus Astralis":
                     return SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");
-                case "Sicht auf Madas Welt": return 0;
+                case "Sicht auf Madas Welt":
+                    return SelectedHeld.Talentwert("Liturgiekenntnis");
                 case "Magiegespür (gezielte Anwendung)": 
                 case "Magiegespür (ungezielte Anwendung)":
                     return SelectedHeld.Talentwert("Magiegespür");
@@ -894,7 +981,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 case "Analyse nach Augenschein": return "Alchimie";
                 case "Laboranalyse": return "Alchimie";
                 case "Allegorische Analyse": return "Ritualkenntnis";
-                case "ANALYS ARCANSTRUKTUR": return "ANALYS ARCANSTRUKTUR";
+                case "Analys Arcanstruktur": return "Analys Arcanstruktur";
                 case "Oculus Astralis": return "Oculus Astralis";
                 case "Infundibulum der Allweisen": return "Alchimie";
                 case "Blick der Weberin": return "Liturgiekenntnis";
@@ -902,33 +989,133 @@ namespace MeisterGeister.ViewModel.Alchimie
                 default: return "";
             }
         }
+        private int getSADauer(string auswahl)
+        {
+            switch (auswahl)
+            {
+                case "Analyse nach Augenschein": return 1;
+                case "Laboranalyse": return SelectedRezept.Analyseschwierigkeit;
+                case "Allegorische Analyse": return 99;
+                case "Analys Arcanstruktur": return 99;
+                case "Oculus Astralis": return 99;
+                case "Infundibulum der Allweisen": return 99;
+                case "Blick der Weberin": return 99;
+                case "Blick durch Tairachs Augen": return 99;
+                default: return 0;
+            }
+        }
+        private string getBemerkung(string auswahl)
+        {
+            switch (auswahl)
+            {
+                case "Analyse nach Augenschein": return "kein Ansammeln möglich; max. Detailgrad 4;";
+                case "Laboranalyse": return "mind. Labor archaisch benötigt; kein Ansammeln möglich; eine Mengeneinheit kann verbraucht werden;";
+                case "Allegorische Analyse": return "Schale der Alchimie benötigt; kein Ansammeln möglich";
+                case "Analys Arcanstruktur": return "Ansammeln möglich;";
+                case "Oculus Astralis": return "Ansammeln möglich; IB & SA zur selben Zeit;";
+                case "Infundibulum der Allweisen": return "Infindibulum benötigt; kein Ansammeln möglich; eine Mengeneinheit wird verbraucht;";
+                case "Blick der Weberin": return "speziell; Ansammeln möglich;";
+                case "Blick durch Tairachs Augen": return "speziell; Ansammeln möglich;";
+                default: return "";
+            }
+        }
+        private int getModLab(string vorraussetzung)
+        {
+            int mod = 0;
+
+            HerstellungUnmöglich = false;
+            switch (vorraussetzung)
+            {
+                case "Archaisches Labor": switch (SelectedLaborArtListe)
+                    {
+                        case "archaisches Labor": mod = 0; break;
+                        case "Hexenküche": mod = 0; break;
+                        case "Alchimistenlabor": mod = -3; break;
+                        default: mod = 999; break;
+                    }; break;
+                case "Hexenküche": switch (SelectedLaborArtListe)
+                    {
+                        case "Archaisches Labor": mod = 7; break;
+                        case "Hexenküche": mod = 0; break;
+                        case "Alchimistenlabor": mod = 0; break;
+                        default: mod = 999; break;
+                    }; break;
+                case "Alchimistenlabor": switch (SelectedLaborArtListe)
+                    {
+                        case "archaisches Labor": mod = 999; break;
+                        case "Hexenküche": mod = 7; break;
+                        case "Alchimistenlabor": mod = 0; break;
+                        default: mod = 999; break;
+                    }; break;
+                default: mod = 999; break;
+            }
+            switch (SelectedLaborQualitätListe)
+            {
+                case "hochwertig": mod -= 3; break;
+                case "aussergew. hochwertig": mod -= 7; break;
+                case "beschädigt": mod += 3; break;
+                default: break;
+            }
+            return mod;
+        }
         private void resetAnalyse()
         {
             //hol mögliche Talente
-            List<string> fertigkeiten = Global.ContextHeld.LoadIntensitätsbestimmungFertigkeitenAlchimieByHeld(SelectedHeld);
+            List<string> iBfertigkeiten = Global.ContextHeld.LoadIntensitätsbestimmungFertigkeitenAlchimieByHeld(SelectedHeld);
             List<string> ibListe=new List<string>();
-            if (fertigkeiten.Contains("Odem Arcanum"))
+            if (iBfertigkeiten.Contains("Odem Arcanum"))
             {
                 ibListe.Add("Odem Arcanum (Grundversion)");
                 ibListe.Add("Odem Arcanum (Sichtbereich)");
                 ibListe.Add("Odem Arcanum (Umgebung)");
             }
-            if (fertigkeiten.Contains("Oculus Astralis"))
+            if (iBfertigkeiten.Contains("Oculus Astralis"))
             {
                 ibListe.Add("Oculus Astralis");
             }
-            if (fertigkeiten.Contains("Magiegespür"))
+            if (iBfertigkeiten.Contains("Magiegespür"))
             {
                 ibListe.Add("Magiegespür (gezielte Anwendung)");
                 ibListe.Add("Magiegespür (ungezielte Anwendung)");
             }
-            if (fertigkeiten.Contains("Pflanzenkunde"))
+            if (iBfertigkeiten.Contains("Pflanzenkunde"))
             {
                 ibListe.Add("Blutblatt");
             }
-            //add Sicht auf Mada && Gespür
+            if (iBfertigkeiten.Contains("Liturgiekenntnis"))
+            {
+                ibListe.Add("Sicht auf Madas Welt");
+            }
+            //add  Gespür
             IntensitätsbestimmungListeAnalyse = ibListe;
-            //StrukturanalyseListeAnalyse = Global.ContextHeld.LoadStrukturanalyseFertigkeitenAlchimieByHeld(SelectedHeld);
+
+            //hol mögliche Talente
+            List<string> sAfertigkeiten = Global.ContextHeld.LoadStrukturanalyseFertigkeitenAlchimieByHeld(SelectedHeld);
+            List<string> sAListe = new List<string>();
+            if (sAfertigkeiten.Contains("Alchimie"))
+            {
+                sAListe.Add("Analyse nach Augenschein");
+                sAListe.Add("Laboranalyse");
+                sAListe.Add("Infundibulum der Allweisen");
+            }
+            if (sAfertigkeiten.Contains("Ritualkenntnis"))
+            {
+                sAListe.Add("Allegorische Analyse");
+            }
+            if (sAfertigkeiten.Contains("Analys Arcanstruktur"))
+            {
+                sAListe.Add("Analys Arcanstruktur");
+            }
+            if (sAfertigkeiten.Contains("Oculus Astralis"))
+            {
+                sAListe.Add("Oculus Astralis");
+            }
+            if (sAfertigkeiten.Contains("Liturgiekenntnis"))
+            {
+                sAListe.Add("Blick der Weberin");
+                sAListe.Add("Blick durch Tairachs Augen");
+            }
+            StrukturanalyseListeAnalyse = sAListe;
         }
         #endregion
         #region//-Verdünnung-
@@ -1090,6 +1277,134 @@ namespace MeisterGeister.ViewModel.Alchimie
 
         void ProbeSAAnalyse(object sender)
         {
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null && SelectedStrukturanalyseAnalyse != null)
+            {
+                //suche Probenart
+                switch (SelectedStrukturanalyseAnalyse)
+                {
+                    case "Analyse nach Augenschein":
+                        Model.Talent ana = Global.ContextHeld.LoadTalentByName("Alchimie");
+                        int modANA = 0;
+                        if (SelectedHeld.Talentwert("Sinnesschärfe") >= 10)
+                        {
+                            modANA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Sinnesschärfe") - 7) / 3.0);
+                        }
+                        ana.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modANA;
+                        ana.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                        var ergebnisANA = ShowProbeDialog(ana, SelectedHeld);
+                        if (ergebnisANA != null && ergebnisANA.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = Math.Min((int)Math.Ceiling((double)ergebnisANA.Übrig/2.0),4);
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = 0;
+                        }
+                        break;
+                    case "Laboranalyse":
+                        Model.Talent la = Global.ContextHeld.LoadTalentByName("Alchimie");
+                        //Erhalt der Substanz
+                        int modLA = 0;
+                        if (CheckedErhaltAnalyseIsChecked) modLA += 3;
+                        if (SelectedHeld.Talentwert("Sinnesschärfe") >= 10 || SelectedHeld.Talentwert("Pflanzenkunde") >= 10)
+                        {
+                            int maxT = Math.Max(SelectedHeld.Talentwert("Sinnesschärfe"), SelectedHeld.Talentwert("Pflanzenkunde"));
+                            modLA = modLA - (int)Math.Floor((double)(maxT - 7) / 3.0);
+                        }
+                        
+                        la.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modLA + getModLab("Archaisches Labor");
+                        la.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                        var ergebnisLA = ShowProbeDialog(la, SelectedHeld);
+                        if (ergebnisLA != null && ergebnisLA.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = ergebnisLA.Übrig;
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = 0;
+                        }
+                        break;
+                    case "Infundibulum der Allweisen":
+                        Model.Talent ida = Global.ContextHeld.LoadTalentByName("Alchimie");
+                        //Erhalt der Substanz
+                        int modida = 3;
+                        //Spezialisierung Mag Analyse beachten!
+                        int wertMagiekunde = SelectedHeld.Talentwert("Magiekunde");
+                        Model.Talent magiekunde = Global.ContextHeld.LoadTalentByName("Magiekunde");
+                        var spez = magiekunde.Talentspezialisierungen(SelectedHeld);
+                        if (spez.Where(t => t.StartsWith("Magische Analyse")).Count() > 0) wertMagiekunde += 2;
+                        if (wertMagiekunde >= 10 || SelectedHeld.Talentwert("Pflanzenkunde") >= 10)
+                        {
+                            int maxT = Math.Max(wertMagiekunde, SelectedHeld.Talentwert("Pflanzenkunde"));
+                            modida = modida - (int)Math.Floor((double)(maxT - 7) / 3.0);
+                        }
+                        ida.Modifikator =  - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modida;
+                        ida.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                        var ergebnisIDA = ShowProbeDialog(ida, SelectedHeld);
+                        if (ergebnisIDA != null && ergebnisIDA.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = ergebnisIDA.Übrig+8;
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = 8;
+                        }
+                        break;
+                    case "Allegorische Analyse":
+                        Model.Talent aa = Global.ContextHeld.LoadTalentByName("Ritualkenntnis");
+                        //Erhalt der Substanz
+                        int modAA = 0;
+                        if (SelectedHeld.Talentwert("Alchimie") >= 10)
+                        {
+                            modAA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Alchimie") - 7) / 3.0);
+                        }
+                        aa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modAA;
+                        aa.Fertigkeitswert = SelectedHeld.Talentwert("Ritualkenntnis");
+                        var ergebnisAA = ShowProbeDialog(aa, SelectedHeld);
+                        if (ergebnisAA != null && ergebnisAA.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = ergebnisAA.Übrig;
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = 0;
+                        }
+                        break;
+                    case "Analys Arcanstruktur":
+                        Model.Zauber zaa = Global.ContextHeld.LoadZauberByName("Analys Arcanstruktur");
+                        //Erhalt der Substanz
+                        int modZAA = 0;
+                        if (SelectedHeld.Talentwert("Alchimie") >= 10)
+                        {
+                            modZAA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Alchimie") - 7) / 3.0);
+                            //TODO MP Spezielisierung abhandeln
+                        }
+                        zaa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modZAA;
+                        zaa.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Analys Arcanstruktur");
+                        var ergebnisZAA = ShowProbeDialog(zaa, SelectedHeld);
+                        if (ergebnisZAA != null && ergebnisZAA.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse+ ergebnisZAA.Übrig;
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = 0;
+                        }
+                        break;
+                    case "Oculus Astralis":
+  
+                        break;
+                    case "Blick der Weberin":
+
+                        break;
+                    case "Blick durch Tairachs Augen":
+
+                        break;
+                    case "Gespür der Keule":
+                    default: break;
+                }
+            }
         }
             
         #endregion
