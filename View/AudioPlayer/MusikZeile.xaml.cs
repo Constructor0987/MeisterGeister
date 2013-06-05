@@ -23,6 +23,16 @@ namespace MeisterGeister.View.AudioPlayer
         {
             InitializeComponent();
         }
+
+        private void tbtnCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            btnImgOK.Visibility = Visibility.Visible;
+        }
+
+        private void tbtnCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            btnImgOK.Visibility = Visibility.Hidden;
+        }
         
     }
 }
