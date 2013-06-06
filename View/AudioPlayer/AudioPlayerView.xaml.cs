@@ -198,7 +198,8 @@ namespace MeisterGeister.View.AudioPlayer {
 		private int fadingIntervall = 10;
 		public double fadingTime = 600;    // * fadingIntervall = Übergang in ms
 		private bool FadingIn_Started = false;
-		private bool stopFadingIn = false;
+        private bool stopFadingIn = false;
+        private string _playlistPfadUnterschied = "";
 
 		private int SliderTeile = 25;
 		private Int16 PauseSprung = 200;
@@ -503,14 +504,14 @@ namespace MeisterGeister.View.AudioPlayer {
                         break;
                     }
                 }
-                int zeile = _GrpObjecte[posObjGruppe]._listZeile.IndexOf(
+                if (posObjGruppe != -1)
+				{
+				int zeile = _GrpObjecte[posObjGruppe]._listZeile.IndexOf(
                     _GrpObjecte[posObjGruppe]._listZeile.FirstOrDefault(t => t.ID_Zeile == sollID_Zeile));
             
 
 
 			//	int posObjGruppe = GetPosObjGruppe(Convert.ToInt16(werte[0]));
-				if (posObjGruppe != -1)
-				{
 					_GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.pbarTitel.Value = 0;
 					if (_GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.chkKlangPauseMove.IsChecked == true)
 					{
@@ -1110,7 +1111,8 @@ namespace MeisterGeister.View.AudioPlayer {
 						}
                         tbKlangTopFilterX.Text = "";
 
-                        CheckBtnGleicherPfad();
+                        if (((TabItem)tcAudioPlayer.SelectedItem) == tiKlang)
+                            CheckBtnGleicherPfad();
 					}
 					else
 					{
@@ -1135,48 +1137,66 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void CheckBtnGleicherPfad()
         {
-            List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(AktKlangPlaylist);
-            
-            int cnt = titelliste[0].Pfad.LastIndexOf("\\");
+            btnKlangUpdateFiles.Tag = null;
+            btnKlangUpdateFiles.Visibility = Visibility.Hidden;
 
-            string titelRef = (titelliste[0].Pfad.Substring(1, 3) != @":\\") ?
-                 stdPfad + "\\" + titelliste[0].Pfad.Substring(0, cnt) : titelliste[0].Pfad.Substring(0, cnt);
+            List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(AktKlangPlaylist);
+
+            string titelRef = titelliste[0].Pfad.Substring(0, titelliste[0].Pfad.LastIndexOf("\\"));
+            titelRef = (titelRef.Substring(1, 2) != @":\") ? stdPfad + "\\" + titelRef : titelRef;
+
+            titelliste.ForEach(delegate(Audio_Titel aTitel)
+            {
+                string vergleich = (aTitel.Pfad.Substring(1, 2) != @":\") ? stdPfad + "\\" + aTitel.Pfad : aTitel.Pfad;
+
+                while (titelRef != vergleich.Substring(0, titelRef.Length))
+                {
+                    if (titelRef.Contains("\\"))
+                        titelRef = titelRef.Substring(0, titelRef.LastIndexOf("\\"));
+                    else break;
+                }
+            });
 
             if (!CheckAlleTitelGleicherPfad(titelRef, titelliste))
             {
-                string[] allFilesMP3 = Directory.GetFiles(titelRef, "*.mp3", SearchOption.TopDirectoryOnly);
-                string[] allFilesWAV = Directory.GetFiles(titelRef, "*.wav", SearchOption.TopDirectoryOnly);
-                string[] allFilesOGG = Directory.GetFiles(titelRef, "*.ogg", SearchOption.TopDirectoryOnly);
-                string[] allFilesWMA = Directory.GetFiles(titelRef, "*.wma", SearchOption.TopDirectoryOnly);
-
-                string[] allFiles = new string[allFilesMP3.Length + allFilesOGG.Length + allFilesWAV.Length + allFilesWMA.Length];
-
-                allFilesMP3.CopyTo(allFiles, 0);
-                allFilesWAV.CopyTo(allFiles, allFilesMP3.Length);
-                allFilesOGG.CopyTo(allFiles, allFilesMP3.Length + allFilesWAV.Length);
-                allFilesWMA.CopyTo(allFiles, allFilesMP3.Length + allFilesWAV.Length + allFilesOGG.Length);
-
-                List<string> neueFiles = new List<string>();
-                int durchlauf = 0;
-                string prefix = (titelliste[0].Pfad.Substring(1, 3) != @":\\") ?
-                    stdPfad + "\\" : "";
-
-                while (durchlauf < allFiles.Length)
-                {
-                    if (titelliste.FirstOrDefault(t => prefix + t.Pfad == allFiles[durchlauf]) == null) neueFiles.Add(allFiles[durchlauf]);
-                    durchlauf++;
-                }
-
-                btnKlangUpdateFiles.Visibility = (neueFiles.Count > 0) ? Visibility.Visible : Visibility.Hidden;
-
-                btnKlangUpdateFiles.ToolTip = "Automatisches Update aller Titel im Verzeichnis: " +
-                     Environment.NewLine + titelRef + Environment.NewLine +
-                    "Es werden " + neueFiles.Count + " Titel hinzugefügt";
-                btnKlangUpdateFiles.Tag = neueFiles;
+                btnKlangUpdateFiles.Tag = titelRef;
+                btnKlangUpdateFiles.Visibility = Visibility.Visible;
             }
-            else
-                btnKlangUpdateFiles.Visibility = Visibility.Hidden;
         }
+
+        /*
+
+        private void _bg_chkGleicherPfad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (_playlistPfadUnterschied != "")
+            {
+                btnKlangUpdateFiles.ToolTip = _playlistPfadUnterschied;
+                btnKlangUpdateFiles.Visibility = Visibility.Visible;
+                btnKlangUpdateFiles.Tag = _playlistPfadUnterschied_files;
+                btnKlangUpdateFiles.Visibility = (_playlistPfadUnterschied_files.Count > 0) ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        private void _bg_chkGleicherPfad_DoWork(object sender, DoWorkEventArgs e)
+        {            
+            List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(AktKlangPlaylist);
+
+            string titelRef = titelliste[0].Pfad.Substring(0, titelliste[0].Pfad.LastIndexOf("\\"));
+            titelRef = (titelRef.Substring(1, 2) != @":\") ?  stdPfad + "\\" + titelRef : titelRef;
+
+            titelliste.ForEach(delegate(Audio_Titel aTitel)
+            {
+                string vergleich = (aTitel.Pfad.Substring(1, 2) != @":\") ? stdPfad + "\\" + aTitel.Pfad : aTitel.Pfad;
+
+                while (titelRef != vergleich.Substring(0, titelRef.Length))
+                {
+                    if (titelRef.Contains("\\"))
+                        titelRef = titelRef.Substring(0, titelRef.LastIndexOf("\\"));
+                    else break;
+                }
+            });
+
+        }*/
 
         private bool CheckAlleTitelGleicherPfad(string pfad, List<Audio_Titel> lstTitel)
         {
@@ -2301,7 +2321,8 @@ namespace MeisterGeister.View.AudioPlayer {
 								KlangZeilenLaufend[durchlauf]._mplayer.Volume = sollWert;
 
 							//einmaliges ermitteln des Endzeitpunkts
-							if (KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Maximum == 100000 && KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan)
+							if (KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Maximum == 100000 && KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan &&
+                                KlangZeilenLaufend[durchlauf].audiotitel.Audio_Titel != null)
 							{
 								if (KlangZeilenLaufend[durchlauf].audiotitel.Audio_Titel.Länge != KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.TimeSpan.TotalMilliseconds)
 									Global.ContextAudio.Update<Audio_Titel>(KlangZeilenLaufend[durchlauf].audiotitel.Audio_Titel);
@@ -2645,16 +2666,15 @@ namespace MeisterGeister.View.AudioPlayer {
                         
             if (posObjGruppe == -1)
                 return;
+            
             int zeile = _GrpObjecte[posObjGruppe]._listZeile.IndexOf(
                 _GrpObjecte[posObjGruppe]._listZeile.FirstOrDefault(t => t.audioZeile.imgTrash == (Image)sender));
-            
+          
 			if (_GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.chkTitel.IsChecked.Value == true)
 			{
                 _GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.chkTitel.IsChecked = false;
                 chkTitel0_0_Click(_GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.chkTitel, new RoutedEventArgs());
 			}
-            _GrpObjecte[posObjGruppe].wpnl.Children.RemoveAt(zeile);
-            _GrpObjecte[posObjGruppe]._listZeile.RemoveAt(zeile);
 
             _GrpObjecte[posObjGruppe].NochZuSpielen.FindAll(t => t > zeile).ForEach(t => t--);
             _GrpObjecte[posObjGruppe].Gespielt.FindAll(t => t > zeile).ForEach(t => t--);
@@ -2675,6 +2695,8 @@ namespace MeisterGeister.View.AudioPlayer {
             if (_GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Audio_Titel == null)
 				ZeigeKlangSongsParallel(posObjGruppe, false);
 
+            _GrpObjecte[posObjGruppe].wpnl.Children.RemoveAt(zeile);
+            _GrpObjecte[posObjGruppe]._listZeile.RemoveAt(zeile);
             CheckBtnGleicherPfad();
 		}
 
@@ -4674,13 +4696,17 @@ namespace MeisterGeister.View.AudioPlayer {
 			for (int i = 0; i < _ThemeGruppe.Count; i++)
 				WrapPnlUebersicht.Children.Remove(_ThemeGruppe[i].pnlAudioTheme);
 			_ThemeGruppe.Clear();
-			
+
+            MyTimer.start_timer();
 			AktualisiereThemeGruppe(0, true);
-			ShowThemeGruppen(0);
+            MyTimer.stop_timer();
+            ShowThemeGruppen(0);
+            MyTimer.stop_timer();
 
 			btnThemeEdit.Visibility = Visibility.Visible;
 
-			ZeigeKlangGerneral(-1, false);
+            ZeigeKlangGerneral(-1, false);
+            MyTimer.stop_timer();
 
 			Global.SetIsBusy(false);
 		}
@@ -5646,7 +5672,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				if (Musikplaylist.FindIndex(t => t.Audio_PlaylistGUID.ToString() == ThemeLstBGPanel[i].Tag.ToString()) == -1)
 				{
 					WrapPnlMusik.Children.Remove(ThemeLstBGPanel[i]);     //Themelist-Panels löschen                    
-					ThemeLstBGPanel.RemoveAt(i);                                //Theme-Listen-Var löschen
+					ThemeLstBGPanel.RemoveAt(i);                            //Theme-Listen-Var löschen
 				}
 			}
 		}
@@ -6015,11 +6041,57 @@ namespace MeisterGeister.View.AudioPlayer {
 
 
         private void btnKlangUpdateFiles_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (string newFile in  (List<string>)((Button)(sender)).Tag)
-                KlangDateiHinzu(newFile);
-            
-            btnKlangUpdateFiles.Visibility = Visibility.Hidden;
+        {            
+			Global.SetIsBusy(true, string.Format("Neue Dateien werden integriert..."));
+            List<Audio_Titel> titelliste = Global.ContextAudio.LoadTitelByPlaylist(AktKlangPlaylist);
+            string titelRef = btnKlangUpdateFiles.Tag.ToString();
+            try
+            {
+                if (!CheckAlleTitelGleicherPfad(titelRef, titelliste))
+                {
+                    btnKlangUpdateFiles.Visibility = Visibility.Visible;
+
+                    string[] allFilesMP3 = Directory.GetFiles(titelRef, "*.mp3", SearchOption.AllDirectories);
+                    string[] allFilesWAV = Directory.GetFiles(titelRef, "*.wav", SearchOption.AllDirectories);
+                    string[] allFilesOGG = Directory.GetFiles(titelRef, "*.ogg", SearchOption.AllDirectories);
+                    string[] allFilesWMA = Directory.GetFiles(titelRef, "*.wma", SearchOption.AllDirectories);
+
+                    string[] allFiles = new string[allFilesMP3.Length + allFilesOGG.Length + allFilesWAV.Length + allFilesWMA.Length];
+
+                    allFilesMP3.CopyTo(allFiles, 0);
+                    allFilesWAV.CopyTo(allFiles, allFilesMP3.Length);
+                    allFilesOGG.CopyTo(allFiles, allFilesMP3.Length + allFilesWAV.Length);
+                    allFilesWMA.CopyTo(allFiles, allFilesMP3.Length + allFilesWAV.Length + allFilesOGG.Length);
+                    
+                    List<string> newfiles = new List<string>();
+                    int durchlauf = 0;
+                    string prefix = (titelliste[0].Pfad.Substring(1, 3) != @":\\") ?
+                        stdPfad + "\\" : "";
+
+                    while (durchlauf < allFiles.Length)
+                    {
+                        if (titelliste.FirstOrDefault(t => prefix + t.Pfad == allFiles[durchlauf]) == null) newfiles.Add(allFiles[durchlauf]);
+                        durchlauf++;
+                    }
+                    
+				    Global.SetIsBusy(true, string.Format(newfiles.Count + " Titel im Verzeichnis: " + Environment.NewLine + titelRef + "werden eingebunden"));
+                    
+                    foreach (string newFile in newfiles)
+                    {
+                        Global.SetIsBusy(true, string.Format(newfiles.Count + " Titel im Verzeichnis: " + Environment.NewLine + titelRef + "werden eingebunden"+
+                            Environment.NewLine + newFile));
+                        KlangDateiHinzu(newFile);
+                    }            
+                    btnKlangUpdateFiles.Visibility = Visibility.Hidden;       
+                    Global.SetIsBusy(false);       
+                }
+            }
+            catch (Exception ex)
+            {          
+                var errWin = new MsgWindow("Ungültiger Pfad", "Bitte überprüfen Sie das Verzeichnis:" + Environment.NewLine + titelRef, ex);
+				errWin.ShowDialog();
+				errWin.Close();
+            }
         }
         
         private void btnPListPListAbspielen_Click(object sender, RoutedEventArgs e)
