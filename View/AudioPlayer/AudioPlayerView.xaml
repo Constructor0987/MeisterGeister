@@ -704,7 +704,7 @@
                             <TextBlock Text="Geräusche-Playlists" Style="{DynamicResource TextTitel}" />
                         </Expander.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListBox Name="lbPListGeräusche" ItemContainerStyle="{StaticResource SimpleListBoxItem}" Background="Transparent" VerticalAlignment="Stretch" SelectionChanged="lbMusiktitellist_SelectionChanged" Style="{StaticResource ReadOnlyStyle}"></ListBox>
+                            <ListBox Name="lbPListGeräusche" ItemContainerStyle="{StaticResource SimpleListBoxItem}" Background="Transparent" VerticalAlignment="Stretch" Style="{StaticResource ReadOnlyStyle}"></ListBox>
                         </Border>
                     </Expander>
                 </Grid>

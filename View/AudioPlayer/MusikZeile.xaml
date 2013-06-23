@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="55" d:DesignWidth="718">
+             d:DesignHeight="55" d:DesignWidth="89">
     
         
-    <StackPanel Name="spnlMusikZeile">
+    <StackPanel Name="spnlMusikZeile" >
         <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -25,7 +25,7 @@
                 <TextBlock Name="tblkTitel" Padding="4,4,4,0" />                        
             </StackPanel>
             <ProgressBar HorizontalAlignment="Right" Name="pbarSong" Width="100" Value="0" ToolTip="Klicken um von der Liedstelle abzuspielen" Cursor="Hand" Margin="2,1" Visibility="Collapsed" />
-            <TextBlock Name="tblkLänge" Grid.Column="2" Padding="4,4,4,0" />
+            <TextBlock Name="tblkLänge" Grid.Column="2" Padding="4,4,4,0" HorizontalAlignment="Right" />
             <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="20,2,0,0" Height="Auto" CornerRadius="5" ToolTip="Kategorie">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
@@ -33,7 +33,7 @@
                         <GradientStop Color="#FFFFFFC7" Offset="1" />
                     </LinearGradientBrush>
                 </Border.Background>
-                <TextBox Name="tboxKategorie" Padding="4,0,4,4" FontSize="11" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" />
+                <TextBox Name="tboxKategorie" Padding="4,0,4,4" FontSize="11" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" Cursor="Pen" />
             </Border>
         </Grid>
     </StackPanel>

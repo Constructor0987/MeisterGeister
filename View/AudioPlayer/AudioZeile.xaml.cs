@@ -23,5 +23,17 @@ namespace MeisterGeister.View.AudioPlayer
         {
             InitializeComponent();
         }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sldPlaySpeed.Ticks.IndexOf(sldPlaySpeed.Value) - 1 >= 0)
+                sldPlaySpeed.Value = sldPlaySpeed.Ticks[sldPlaySpeed.Ticks.IndexOf(sldPlaySpeed.Value) - 1];
+        }
+
+        private void Image_MouseUp_1(object sender, MouseButtonEventArgs e)
+        {
+            if (sldPlaySpeed.Ticks.IndexOf(sldPlaySpeed.Value) <= sldPlaySpeed.Ticks.Count-2)
+                sldPlaySpeed.Value = sldPlaySpeed.Ticks[sldPlaySpeed.Ticks.IndexOf(sldPlaySpeed.Value) + 1];
+        }
     }
 }
