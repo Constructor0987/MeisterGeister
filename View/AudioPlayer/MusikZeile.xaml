@@ -18,7 +18,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Grid.RowSpan="2">
                 <ToggleButton Name="tbtnCheck" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Visibility="Collapsed" Checked="tbtnCheck_Checked" Unchecked="tbtnCheck_Unchecked">
                     <Image Source="/Images/Icons/General/OK.png" Name="btnImgOK" VerticalAlignment="Center" Visibility="Hidden" />                
                 </ToggleButton>

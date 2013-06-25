@@ -480,7 +480,7 @@
                                 <Image Name="imgbtnBGNext" Width="20" Height="20"  Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next_grau.png" />
                             </Button>
 
-                            <Button Width="26" Height="26" Name="btnBGSpeaker" Click="btnBGSpeaker_Click" Margin="170,0,0,0" Tag="50" Focusable="False">
+                            <Button Width="26" Height="26" Name="btnBGSpeaker" Click="btnBGSpeaker_Click" Margin="170,0,0,0" Tag="-1" Focusable="False">
                                 <Image Name="btnImgBGSpeaker" Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" />
                             </Button>
 
@@ -628,7 +628,7 @@
                                 </Button>
 
                                 <Button Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" Margin="0,0,5,0" IsEnabled="False" Focusable="False" Name="btnPListMusikPrev">
-                                    <Image Name="imgbtnPListMusikPrev" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_prev.png" />
+                                    <Image Name="imgbtnPListMusikPrev" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_prev_grau.png" />
                                 </Button>
 
                                 <Button IsEnabled="False" ClickMode="Press" AllowDrop="True" Tag="0"  Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click" Focusable="False" Name="btnPListMusikAbspielen">
@@ -636,14 +636,14 @@
                                 </Button>
 
                                 <Button IsEnabled="False" Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Margin="0,0,5,0" Click="btnBGNext_Click" Focusable="False" Name="btnPListMusikNext">
-                                    <Image Name="imgbtnPListMusikNext" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" />
+                                    <Image Name="imgbtnPListMusikNext" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next_grau.png" />
                                 </Button>
 
-                                <Button Width="26" Height="26" Click="btnBGSpeaker_Click" Tag="false" Focusable="False" Name="btnPListMusikSpeaker">
+                                <Button Width="26" Height="26" Click="btnBGSpeaker_Click" Focusable="False" Name="btnPListMusikSpeaker">
                                     <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnImgPListMusikSpeaker" />
                                 </Button>
 
-                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistMusikVolume_ValueChanged" Focusable="False" Name="slPlaylistMusikVolume" Margin="10,0,0,0" />
+                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistMusikVolume_ValueChanged" Focusable="False" MouseWheel="slVolume_MouseWheel" Name="slPlaylistMusikVolume" Margin="10,0,0,0" />
                             
                             </StackPanel>
                             <Border Grid.Row="1" HorizontalAlignment="Right" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Namens-Filter aller Musik-Playlists" Margin="0,0,20,0">
