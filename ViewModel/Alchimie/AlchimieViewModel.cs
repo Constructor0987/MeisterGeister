@@ -39,7 +39,7 @@ namespace MeisterGeister.ViewModel.Alchimie
         private Alchimierezept _selectedRezept;
         private string _selectedLaborArtListe;
         private string _selectedLaborQualitätListe;
-        #endregion
+
         //Rückgaben
         private int _modifikatorLabor;
         //Checkboxen
@@ -47,6 +47,8 @@ namespace MeisterGeister.ViewModel.Alchimie
         private bool _checkedFeuerUndEis;
         private bool _checkedMandriconsBindung;
         private bool _checkedTransmutationDerElemente;
+
+        #endregion
 
         #region//-Herstellung-
         //Enables
@@ -126,7 +128,24 @@ namespace MeisterGeister.ViewModel.Alchimie
         #endregion
 
         #region//-Verdünnung-
-        //Listen
+        //Listen 
+        private List<string> _qualitätListeVerdünnung = new List<string>(new string[] { "M", "A", "B", "C", "D", "E", "F" });
+        private List<string> _verdünnungQualitätListeVerdünnung = new List<string>(new string[] { "M", "A", "B", "C", "D", "E", "F" });
+        //Selections
+        private string _selectedQualitätVerdünnung;
+        private string _selectedVerdünnungQualitätVerdünnung;
+        //Rückgaben
+        private string _verdünnungProbe;
+        private int _wertProbeVerdünnung;
+        private int _wertTaPVerdünnung;
+        private int _wertZfPVerdünnung;
+        private string _verdünnungQualität;
+        private int _verdünnungAnzahl;
+        private string _verdünnungKosten;
+        private string _verdünnungZeit;
+        //Commands
+        private Base.CommandBase _onProbeVerdünnung;
+
         #endregion
 
         #region//-Laborbeute-
@@ -236,6 +255,8 @@ namespace MeisterGeister.ViewModel.Alchimie
                 {
                     _selectedRezept = value;
                     OnChanged("SelectedRezept");
+                    VerdünnungKosten = SelectedRezept.Brauschwierigkeit.ToString() + " D";
+                    VerdünnungZeit = SelectedRezept.Brauschwierigkeit.ToString() + " h";
                     WertHaltbarkeitHerstellung = SelectedRezept.Haltbarkeit;
                     SubstitutionListeHerstellung = getZutatenByRezept(_selectedRezept);
                     HerstellungWirkungM = getMWirkung();
@@ -748,6 +769,122 @@ namespace MeisterGeister.ViewModel.Alchimie
         #endregion
         #region//-Verdünnung-
         //Listen
+        public List<string> QualitätListeVerdünnung
+        {
+            get { return _qualitätListeVerdünnung; }
+            set
+            {
+                _qualitätListeVerdünnung = value;
+                OnChanged("QualitätListeVerdünnung");
+            }
+        }
+        public List<string> VerdünnungQualitätListeVerdünnung
+        {
+            get { return _verdünnungQualitätListeVerdünnung; }
+            set
+            {
+                _verdünnungQualitätListeVerdünnung = value;
+                OnChanged("VerdünnungQualitätListeVerdünnung");
+            }
+        }
+        //Selections
+        public string SelectedQualitätVerdünnung
+        {
+            get { return _selectedQualitätVerdünnung; }
+            set
+            {
+                _selectedQualitätVerdünnung = value;
+                OnChanged("SelectedQualitätVerdünnung");
+            }
+        }
+        public string SelectedVerdünnungQualitätVerdünnung
+        {
+            get { return _selectedVerdünnungQualitätVerdünnung; }
+            set
+            {
+                _selectedVerdünnungQualitätVerdünnung = value;
+                OnChanged("SelectedVerdünnungQualitätVerdünnung");
+            }
+        }
+        //Rückgaben
+        public string VerdünnungProbe
+        {
+            get { return _verdünnungProbe; }
+            set
+            {
+                _verdünnungProbe = value;
+                OnChanged("VerdünnungProbe");
+            }
+        }
+        public int WertProbeVerdünnung
+        {
+            get { return _wertProbeVerdünnung; }
+            set
+            {
+                _wertProbeVerdünnung = value;
+                OnChanged("WertProbeVerdünnung");
+            }
+        }
+        public int WertTaPVerdünnung
+        {
+            get { return _wertTaPVerdünnung; }
+            set
+            {
+                _wertTaPVerdünnung = value;
+                OnChanged("WertTaPVerdünnung");
+            }
+        }
+        public int WertZfPVerdünnung
+        {
+            get { return _wertZfPVerdünnung; }
+            set
+            {
+                _wertZfPVerdünnung = value;
+                OnChanged("WertZfPVerdünnung");
+            }
+        }
+        public string VerdünnungQualität
+        {
+            get { return _verdünnungQualität; }
+            set
+            {
+                _verdünnungQualität = value;
+                OnChanged("VerdünnungQualität");
+            }
+        }
+        public int VerdünnungAnzahl
+        {
+            get { return _verdünnungAnzahl; }
+            set
+            {
+                _verdünnungAnzahl = value;
+                OnChanged("VerdünnungAnzahl");
+            }
+        }
+        public string VerdünnungKosten
+        {
+            get { return _verdünnungKosten; }
+            set
+            {
+                _verdünnungKosten = value;
+                OnChanged("VerdünnungKosten");
+            }
+        }
+        public string VerdünnungZeit
+        {
+            get { return _verdünnungZeit; }
+            set
+            {
+                _verdünnungZeit = value;
+                OnChanged("VerdünnungZeit");
+            }
+        }
+        //Commands
+
+        public Base.CommandBase OnProbeVerdünnung
+        {
+            get { return _onProbeVerdünnung; }
+        }
         #endregion
         #region//-Laborbeute-
         //Listen
@@ -764,6 +901,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             _onProbeIBAnalyse = new Base.CommandBase(ProbeIBAnalyse, null);
             _onProbeSAAnalyse = new Base.CommandBase(ProbeSAAnalyse, null);
             _onClearSelectedHeld = new Base.CommandBase(ClearSelectedHeld, null);
+            _onProbeVerdünnung = new Base.CommandBase(ProbeVerdünnung, null);
         }
 
         #endregion
@@ -1038,7 +1176,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 case "Archaisches Labor": switch (SelectedLaborArtListe)
                     {
-                        case "archaisches Labor": mod = 0; break;
+                        case "Archaisches Labor": mod = 0; break;
                         case "Hexenküche": mod = 0; break;
                         case "Alchimistenlabor": mod = -3; break;
                         default: mod = 999; break;
@@ -1052,7 +1190,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     }; break;
                 case "Alchimistenlabor": switch (SelectedLaborArtListe)
                     {
-                        case "archaisches Labor": mod = 999; break;
+                        case "Archaisches Labor": mod = 999; break;
                         case "Hexenküche": mod = 7; break;
                         case "Alchimistenlabor": mod = 0; break;
                         default: mod = 999; break;
@@ -1139,7 +1277,8 @@ namespace MeisterGeister.ViewModel.Alchimie
         #region//-Verdünnung-
         private void resetVerdünnung()
         {
-            //TODO: MP implement
+            VerdünnungProbe = "Alchimie";
+            WertProbeVerdünnung = SelectedHeld.Talentwert("Alchimie");
         }
         #endregion
         #region//-Laborbeute-
@@ -1511,6 +1650,36 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
             
         #endregion
+
+        #region//-Verdünnung-
+        void ProbeVerdünnung(object sender)
+        {
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null)
+            { 
+                Model.Talent alchimie = Global.ContextHeld.LoadTalentByName("Alchimie");
+                int q = Convert.ToByte(Convert.ToChar(SelectedQualitätVerdünnung));
+                int vq = Convert.ToByte(Convert.ToChar(SelectedVerdünnungQualitätVerdünnung));
+                int diff = q - vq;
+                alchimie.Modifikator = (diff * SelectedRezept.Brauschwierigkeit) - (int)Math.Ceiling(((double)(WertTaPVerdünnung + WertZfPVerdünnung)) / 2) + getModLab("Archaisches Labor");
+                alchimie.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                var ergebnis = ShowProbeDialog(alchimie, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    VerdünnungQualität = SelectedVerdünnungQualitätVerdünnung;
+                    VerdünnungAnzahl = diff+1;
+                }
+                else
+                {
+                    VerdünnungQualität = "M";
+                    VerdünnungAnzahl = diff+1;
+                }
+
+            }
+        }
+         
+        #endregion
+
         #endregion
 
         private static List<string> wirkungen = new List<string>()
