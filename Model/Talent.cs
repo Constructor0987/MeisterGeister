@@ -50,6 +50,14 @@ namespace MeisterGeister.Model
             }
         }
 
+        public void WerteSetzen(Held h, string spezialisierung = null)
+        {
+            Fertigkeitswert = h.Talentwert(this);
+            if (spezialisierung != null && Talentspezialisierungen(h).Contains(spezialisierung))
+                Fertigkeitswert += 2;
+            Werte = new int[] { h.EigenschaftWert(Eigenschaft1), h.EigenschaftWert(Eigenschaft2), h.EigenschaftWert(Eigenschaft3) };
+        }
+
         #endregion //---- PROBE ----
 
         public bool HatVoraussetzungen
