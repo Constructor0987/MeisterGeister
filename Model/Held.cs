@@ -1050,28 +1050,45 @@ namespace MeisterGeister.Model
         }
 
         /// <summary>
-        /// Der TaW eines Talentes.
+        /// Held_Talent nach talentName.
+        /// exactMatch==false ermöglicht suche nach dem Muster talentName*.
+        /// Bei Mehrfachtreffern wird der Eintrag mit dem höchsten Modifizierten TaW zurückgegeben.
         /// </summary>
-        public int Talentwert(string talentName, bool nurPositiv, bool exactMatch = true)
+        public Held_Talent GetHeldTalent(string talentName, bool nurPositiv, out int taw, bool exactMatch = true)
         {
-            int maxtaw = 0;
+            Held_Talent ret = null;
+            int maxtaw = Int32.MinValue;
             foreach (Model.Held_Talent ht in Held_Talent.Where(h => (exactMatch && h.Talent.Talentname == talentName) || (!exactMatch && h.Talent.Talentname.StartsWith(talentName))))
             {
-                int taw = ht.TaW ?? 0;
+                int _taw = ht.TaW ?? 0;
                 if (Modifikatoren != null)
                 {
                     List<Mod.IModTalentwert> l = Modifikatoren.Where(m => m is Mod.IModTalentwert).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
                     foreach (Mod.IModTalentwert m in l)
                     {
-                        int tawneu = m.ApplyTalentwertMod(taw);
-                        if (!nurPositiv || tawneu > taw)
-                            taw = tawneu;
+                        int tawneu = m.ApplyTalentwertMod(_taw);
+                        if (!nurPositiv || tawneu > _taw)
+                            _taw = tawneu;
                     }
                 }
-                if (maxtaw < taw)
-                    maxtaw = taw;
+                if (maxtaw < _taw)
+                {
+                    maxtaw = _taw;
+                    ret = ht;
+                }
             }
-            return maxtaw;
+            taw = maxtaw;
+            return ret;
+        }
+
+        /// <summary>
+        /// Der TaW eines Talentes. Liefert bei exactMatch = false den höchsten TaW zurück.
+        /// </summary>
+        public int Talentwert(string talentName, bool nurPositiv, bool exactMatch = true)
+        {
+            int maxtaw = 0;
+            Held_Talent ht = GetHeldTalent(talentName, nurPositiv, out maxtaw, exactMatch);
+            return (maxtaw == Int32.MinValue)?0:maxtaw;
         }
 
         /// <summary>
@@ -1128,11 +1145,6 @@ namespace MeisterGeister.Model
             return HatTalent(t.Talentname, taw);
         }
         
-        public List<string> Talentspezialisierungen(Talent t)
-        {
-            return Talentspezialisierungen(t.Talentname);
-        }
-
         public List<string> Talentspezialisierungen(string talentName)
         {
             //TODO ??: bei GUID Umstellung statt Sonderfertigkeit.Name evtl auf GUID prüfen
@@ -1144,6 +1156,13 @@ namespace MeisterGeister.Model
             return null;
         }
 
+        public List<string> Talentspezialisierungen(Talent t)
+        {
+            if (t == null)
+                return null;
+            return Talentspezialisierungen(t.Talentname);
+        }
+
         public void AddBasisTalente()
         {
             foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis" && t.TalentgruppeID != 0).ToList())
@@ -1152,6 +1171,28 @@ namespace MeisterGeister.Model
                     AddTalent(t, 0);
                 else
                     AddTalent(t, 0, 0, 0);
+            }
+        }
+
+        /// <summary>
+        /// TODO UNFERTIG
+        /// </summary>
+        /// <returns></returns>
+        public ProbenErgebnis TalentProbe(Talent t, int mod, string spezialisierung = null)
+        {
+            if (!HatTalent(t)) //TODO: stattdessen Ableiten.
+                return ProbenErgebnis.KeinErgebnis;
+            t.WerteSetzen(this, spezialisierung);
+            t.Modifikator = mod;
+            t.IsBehinderung = true;
+            if (false) //automatisch würfeln
+            {
+                t.Modifikator += t.BehinderungEff;
+                return t.Würfeln();
+            }
+            else //per Dialog würfeln
+            {
+                return View.General.ViewHelper.ShowProbeDialog(t, this);
             }
         }
 
