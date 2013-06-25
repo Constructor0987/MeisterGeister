@@ -49,7 +49,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         private bool _checkedTransmutationDerElemente;
 
         #endregion
-
         #region//-Herstellung-
         //Enables
  //       private bool _isEnabledAlchimistenLaborHerstellung;
@@ -83,7 +82,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         private Base.CommandBase _onClearSelectedHeld;
         private Base.CommandBase _onProbeHerstellung;
         #endregion
-
         #region//-Analyse-
         //Checkboxen
         private bool _checkedErhaltAnalyseVisibility = false;
@@ -126,7 +124,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         private Base.CommandBase _onProbeIBAnalyse;
         private Base.CommandBase _onProbeSAAnalyse;
         #endregion
-
         #region//-Verdünnung-
         //Listen 
         private List<string> _qualitätListeVerdünnung = new List<string>(new string[] { "M", "A", "B", "C", "D", "E", "F" });
@@ -147,7 +144,14 @@ namespace MeisterGeister.ViewModel.Alchimie
         private Base.CommandBase _onProbeVerdünnung;
 
         #endregion
-
+        #region//-Haltbarkeit-
+        //Rückgaben
+        private int _wertProbeHaltbarkeit;
+        private string _haltbarkeitProbe;
+        private string _haltbarkeitWirkung;
+        //Commands
+        private Base.CommandBase _onProbeHaltbarkeit;
+        #endregion
         #region//-Laborbeute-
         //Listen
         #endregion
@@ -228,6 +232,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 resetHerstellung();
                 resetAnalyse();
                 resetVerdünnung();
+                resetHaltbarkeit();
                 TalentListeHerstellung = Global.ContextHeld.LoadAlchimieHerstellungTalenteByHeld(value);
                 checkAufladen(value);
             }
@@ -348,7 +353,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
 
         #endregion
-
         //TODO MP wrap Alchimierezept; add WirkungM, calc Haltbarkeit and others fix?!
         #region//-Herstellung-
         public bool HerstellungUnmöglich
@@ -595,8 +599,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             get { return _onProbeHerstellung; }
         }
 
-        #endregion
- 
+        #endregion 
         #region//-Analyse-
         //Listen
         public List<string> IntensitätsbestimmungListeAnalyse 
@@ -750,8 +753,6 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("WertErgebnisDetailgradAnalyse");
             }
         }
-
-
         //Commands
 
         public Base.CommandBase OnProbeIBAnalyse
@@ -886,6 +887,42 @@ namespace MeisterGeister.ViewModel.Alchimie
             get { return _onProbeVerdünnung; }
         }
         #endregion
+        #region//-Haltbarkeit-
+        public int WertProbeHaltbarkeit
+        {
+            get { return _wertProbeHaltbarkeit; }
+            set
+            {
+                _wertProbeHaltbarkeit = value;
+                OnChanged("WertProbeHaltbarkeit");
+            }
+        }
+        public string HaltbarkeitProbe
+        {
+            get { return _haltbarkeitProbe; }
+            set
+            {
+                _haltbarkeitProbe = value;
+                OnChanged("HaltbarkeitProbe");
+            }
+        }
+        public string HaltbarkeitWirkung
+        {
+            get { return _haltbarkeitWirkung; }
+            set
+            {
+                _haltbarkeitWirkung = value;
+                OnChanged("HaltbarkeitWirkung");
+            }
+        }
+        
+        //Commands
+
+        public Base.CommandBase OnProbeHaltbarkeit
+        {
+            get { return _onProbeHaltbarkeit; }
+        }
+        #endregion
         #region//-Laborbeute-
         //Listen
         #endregion
@@ -902,6 +939,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             _onProbeSAAnalyse = new Base.CommandBase(ProbeSAAnalyse, null);
             _onClearSelectedHeld = new Base.CommandBase(ClearSelectedHeld, null);
             _onProbeVerdünnung = new Base.CommandBase(ProbeVerdünnung, null);
+            _onProbeHaltbarkeit = new Base.CommandBase(ProbeHaltbarkeit, null);
         }
 
         #endregion
@@ -1277,6 +1315,13 @@ namespace MeisterGeister.ViewModel.Alchimie
         #region//-Verdünnung-
         private void resetVerdünnung()
         {
+            HaltbarkeitProbe = "Alchimie";
+            WertProbeHaltbarkeit = SelectedHeld.Talentwert("Alchimie");
+        }
+        #endregion
+        #region//-Haltbarkeit-
+        private void resetHaltbarkeit()
+        {
             VerdünnungProbe = "Alchimie";
             WertProbeVerdünnung = SelectedHeld.Talentwert("Alchimie");
         }
@@ -1384,6 +1429,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         break;
                     case "Sicht auf Madas Welt": 
+                        //Model.Held_Talent samw = SelectedHeld.GetHeldTalent("Liturgiekenntnis", true,taw,false);
                         Model.Talent samw = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
                         samw.Modifikator = SelectedRezept.Analyseschwierigkeit;
                         samw.Fertigkeitswert = SelectedHeld.Talentwert("Liturgiekenntnis");
@@ -1650,7 +1696,6 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
             
         #endregion
-
         #region//-Verdünnung-
         void ProbeVerdünnung(object sender)
         {
@@ -1679,9 +1724,47 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
          
         #endregion
+        #region//-Haltbarkeit-
+        void ProbeHaltbarkeit(object sender)
+        {
+            
+            //Probe auf Erstellung würfeln
+            if (SelectedHeld != null)
+            {
+                Model.Talent alchimie = Global.ContextHeld.LoadTalentByName("Alchimie");
+                alchimie.Modifikator = +9 + getModLab("Archaisches Labor");
+                alchimie.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
+                var ergebnis = ShowProbeDialog(alchimie, SelectedHeld);
+                if (ergebnis != null && ergebnis.Gelungen)
+                {
+                    HaltbarkeitWirkung = "Haltbarkeit verdoppelt";
+                }
+                else if (ergebnis.Ergebnis == MeisterGeister.Logic.General.ErgebnisTyp.PATZER || ergebnis.Ergebnis ==MeisterGeister.Logic.General.ErgebnisTyp.FATALER_PATZER)
+                {
+                    HaltbarkeitWirkung = wirkungenHaltbarkeit[MeisterGeister.Logic.General.Würfel.Parse("1W6 + 4", true)];
+                }
+                else{
+                    HaltbarkeitWirkung = wirkungenHaltbarkeit[MeisterGeister.Logic.General.Würfel.Parse("1W6", true)];
+                }
+
+            }
+        }
 
         #endregion
+        #endregion
 
+        private static List<string> wirkungenHaltbarkeit = new List<string>() 
+        { "doppelte Haltbarkeit",
+            "doppelte Haltbarkeit",
+            "anderthalbfache Haltbarkeit, Qualität sinkt um eine Stufe",
+            "keine Verlängerung der Haltbarkeit, Qualität sinkt um eine Stufe",
+            "anderthalbfache Haltbarkeit",
+            "Trank wird vollkommen wirkungslos",
+            "Trank wird vollkommen wirkungslos",
+            "Trank wird vollkommen wirkungslos",
+            "die Wirkung des Trankes schlägt um in ein Gift (siehe Mandragora, GA 213: Stufe 2, 1W6 SP, Brechreiz/1W3 SP, +3 auf Handlungen",
+            "die Wirkung des Trankes schlägt um in ein Gift (siehe Mandragora, GA 213: Stufe 2, 1W6 SP, Brechreiz/1W3 SP, +3 auf Handlungen"
+        };
         private static List<string> wirkungen = new List<string>()
         {"Das Mittel hat keinerlei Wirkung.",
          "Die Mixtur verdampft völlig ohne jeden Rückstand.",
