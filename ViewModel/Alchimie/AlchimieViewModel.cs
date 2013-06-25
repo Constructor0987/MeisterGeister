@@ -111,10 +111,11 @@ namespace MeisterGeister.ViewModel.Alchimie
         private string _selectedStrukturanalyseAnalyse;
         //Rückgaben
         private int _wertIBAnalyse;
+        private int _wertFIBAnalyse;
         private int _wertSAAnalyse;
         private string _analyseProbeIB;
         private string _analyseProbeSA;
-        private int _analyseDauerSA;
+        private string _analyseDauerSA;
         private string _analyseBemerkung;
         private int _wertDetailgradAnalyse =0;
         private string _wertErgebnisDetailgradAnalyse;
@@ -638,6 +639,14 @@ namespace MeisterGeister.ViewModel.Alchimie
                 _wertIBAnalyse = value;
                 OnChanged("WertIBAnalyse");
             }
+        }        
+        public int WertFIBAnalyse
+        {
+            get{return _wertFIBAnalyse;}
+            set{
+                _wertFIBAnalyse = value;
+                OnChanged("WertFIBAnalyse");
+            }
         }
         public string AnalyseProbeIB
         {
@@ -664,7 +673,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 OnChanged("AnalyseProbeSA");
             }
         }
-        public int AnalyseDauerSA
+        public string AnalyseDauerSA
         {
             get { return _analyseDauerSA; }
             set
@@ -930,7 +939,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 case "Analys Arcanstruktur":
                     return SelectedHeld.Zauberfertigkeitswert("Analys Arcanstruktur");
                 case "Oculus Astralis":
-                    return SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");                
+                    return SelectedHeld.Talentwert("Sinnenschärfe");                
                 case "Blick der Weberin": 
                 case "Blick durch Tairachs Augen":
                     return SelectedHeld.Talentwert("Liturgiekenntnis");
@@ -948,6 +957,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                 case "Oculus Astralis":
                     return SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");
                 case "Sicht auf Madas Welt":
+                    //TODO MP wie finde ich die passende Liturgiekenntnis, ohne alle abzufragen?!
                     return SelectedHeld.Talentwert("Liturgiekenntnis");
                 case "Magiegespür (gezielte Anwendung)": 
                 case "Magiegespür (ungezielte Anwendung)":
@@ -982,26 +992,26 @@ namespace MeisterGeister.ViewModel.Alchimie
                 case "Laboranalyse": return "Alchimie";
                 case "Allegorische Analyse": return "Ritualkenntnis";
                 case "Analys Arcanstruktur": return "Analys Arcanstruktur";
-                case "Oculus Astralis": return "Oculus Astralis";
+                case "Oculus Astralis": return "Sinnenschärfe";
                 case "Infundibulum der Allweisen": return "Alchimie";
                 case "Blick der Weberin": return "Liturgiekenntnis";
                 case "Blick durch Tairachs Augen": return "Liturgiekenntnis";
                 default: return "";
             }
         }
-        private int getSADauer(string auswahl)
+        private string getSADauer(string auswahl)
         {
             switch (auswahl)
             {
-                case "Analyse nach Augenschein": return 1;
-                case "Laboranalyse": return SelectedRezept.Analyseschwierigkeit;
-                case "Allegorische Analyse": return 99;
-                case "Analys Arcanstruktur": return 99;
-                case "Oculus Astralis": return 99;
-                case "Infundibulum der Allweisen": return 99;
-                case "Blick der Weberin": return 99;
-                case "Blick durch Tairachs Augen": return 99;
-                default: return 0;
+                case "Analyse nach Augenschein": return "1 SR";
+                case "Laboranalyse": return SelectedRezept.Analyseschwierigkeit.ToString() +  " h";
+                case "Allegorische Analyse": return "1 SR";
+                case "Analys Arcanstruktur": return "1 SR";
+                case "Oculus Astralis": return "1 SR";
+                case "Infundibulum der Allweisen": return "1 SR";
+                case "Blick der Weberin": return "0,5 h (Andacht)";
+                case "Blick durch Tairachs Augen": return "0,5 h (Andacht)";
+                default: return "";
             }
         }
         private string getBemerkung(string auswahl)
@@ -1082,9 +1092,13 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 ibListe.Add("Blutblatt");
             }
-            if (iBfertigkeiten.Contains("Liturgiekenntnis"))
+            if (iBfertigkeiten.Contains("Liturgie: Sicht auf Madas Welt"))
             {
                 ibListe.Add("Sicht auf Madas Welt");
+            }
+            if (iBfertigkeiten.Contains("Keulenritual: Gespür der Keule"))
+            {
+                ibListe.Add("Gespür der Keule");
             }
             //add  Gespür
             IntensitätsbestimmungListeAnalyse = ibListe;
@@ -1110,13 +1124,17 @@ namespace MeisterGeister.ViewModel.Alchimie
             {
                 sAListe.Add("Oculus Astralis");
             }
-            if (sAfertigkeiten.Contains("Liturgiekenntnis"))
+            if (sAfertigkeiten.Contains("Liturgie: Blick der Weberin"))
             {
                 sAListe.Add("Blick der Weberin");
+            }
+            if (sAfertigkeiten.Contains("Liturgie: Blick durch Tairachs Augen"))
+            {
                 sAListe.Add("Blick durch Tairachs Augen");
             }
             StrukturanalyseListeAnalyse = sAListe;
         }
+        
         #endregion
         #region//-Verdünnung-
         private void resetVerdünnung()
@@ -1219,18 +1237,31 @@ namespace MeisterGeister.ViewModel.Alchimie
                         var ergebnisOA = ShowProbeDialog(oa, SelectedHeld);
                         if (ergebnisOA != null && ergebnisOA.Gelungen)
                         {
-                            WertDetailgradAnalyse = ergebnisOA.Übrig;
+                            WertDetailgradAnalyse = (int)Math.Max(ergebnisOA.Übrig-SelectedRezept.Analyseschwierigkeit,0);
                         }
                         else
                         {
                             WertDetailgradAnalyse = 0;
                         }
                         break;
-                    case "Sicht auf Madas Welt": break;
+                    case "Sicht auf Madas Welt": 
+                        Model.Talent samw = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
+                        samw.Modifikator = SelectedRezept.Analyseschwierigkeit;
+                        samw.Fertigkeitswert = SelectedHeld.Talentwert("Liturgiekenntnis");
+                        var ergebnisSAMW = ShowProbeDialog(samw, SelectedHeld);
+                        if (ergebnisSAMW != null && ergebnisSAMW.Gelungen)
+                        {
+                            WertDetailgradAnalyse = ergebnisSAMW.Übrig;
+                        }
+                        else
+                        {
+                            WertDetailgradAnalyse = 0;
+                        }
+                        break;
                     case "Magiegespür (gezielte Anwendung)":
                         Model.Talent mg = Global.ContextHeld.LoadTalentByName("Magiegespür");
                         mg.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        mg.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Magiegespür");
+                        mg.Fertigkeitswert = SelectedHeld.Talentwert("Magiegespür");
                         var ergebnisMG = ShowProbeDialog(mg, SelectedHeld);
                         if (ergebnisMG != null && ergebnisMG.Gelungen)
                         {
@@ -1244,7 +1275,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                     case "Magiegespür (ungezielte Anwendung)": 
                         Model.Talent mu = Global.ContextHeld.LoadTalentByName("Magiegespür");
                         mu.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        mu.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Magiegespür");
+                        mu.Fertigkeitswert = SelectedHeld.Talentwert("Magiegespür");
                         var ergebnisMU = ShowProbeDialog(mu, SelectedHeld);
                         if (ergebnisMU != null && ergebnisMU.Gelungen)
                         {
@@ -1280,6 +1311,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             //Probe auf Erstellung würfeln
             if (SelectedHeld != null && SelectedStrukturanalyseAnalyse != null)
             {
+                int detailgrad = 0;
                 //suche Probenart
                 switch (SelectedStrukturanalyseAnalyse)
                 {
@@ -1290,7 +1322,8 @@ namespace MeisterGeister.ViewModel.Alchimie
                         {
                             modANA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Sinnesschärfe") - 7) / 3.0);
                         }
-                        ana.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modANA;
+                        detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
+                        ana.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modANA;
                         ana.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
                         var ergebnisANA = ShowProbeDialog(ana, SelectedHeld);
                         if (ergebnisANA != null && ergebnisANA.Gelungen)
@@ -1312,8 +1345,8 @@ namespace MeisterGeister.ViewModel.Alchimie
                             int maxT = Math.Max(SelectedHeld.Talentwert("Sinnesschärfe"), SelectedHeld.Talentwert("Pflanzenkunde"));
                             modLA = modLA - (int)Math.Floor((double)(maxT - 7) / 3.0);
                         }
-                        
-                        la.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modLA + getModLab("Archaisches Labor");
+                        detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
+                        la.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modLA + getModLab("Archaisches Labor");
                         la.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
                         var ergebnisLA = ShowProbeDialog(la, SelectedHeld);
                         if (ergebnisLA != null && ergebnisLA.Gelungen)
@@ -1327,19 +1360,18 @@ namespace MeisterGeister.ViewModel.Alchimie
                         break;
                     case "Infundibulum der Allweisen":
                         Model.Talent ida = Global.ContextHeld.LoadTalentByName("Alchimie");
-                        //Erhalt der Substanz
-                        int modida = 3;
+                        int modida = 0;
                         //Spezialisierung Mag Analyse beachten!
                         int wertMagiekunde = SelectedHeld.Talentwert("Magiekunde");
                         Model.Talent magiekunde = Global.ContextHeld.LoadTalentByName("Magiekunde");
                         var spez = magiekunde.Talentspezialisierungen(SelectedHeld);
-                        if (spez.Where(t => t.StartsWith("Magische Analyse")).Count() > 0) wertMagiekunde += 2;
+                        if (spez!=null && spez.Where(t => t.StartsWith("Magische Analyse")).Count() > 0) wertMagiekunde += 2;
                         if (wertMagiekunde >= 10 || SelectedHeld.Talentwert("Pflanzenkunde") >= 10)
                         {
                             int maxT = Math.Max(wertMagiekunde, SelectedHeld.Talentwert("Pflanzenkunde"));
                             modida = modida - (int)Math.Floor((double)(maxT - 7) / 3.0);
                         }
-                        ida.Modifikator =  - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modida;
+                        ida.Modifikator =  modida;
                         ida.Fertigkeitswert = SelectedHeld.Talentwert("Alchimie");
                         var ergebnisIDA = ShowProbeDialog(ida, SelectedHeld);
                         if (ergebnisIDA != null && ergebnisIDA.Gelungen)
@@ -1359,7 +1391,8 @@ namespace MeisterGeister.ViewModel.Alchimie
                         {
                             modAA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Alchimie") - 7) / 3.0);
                         }
-                        aa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modAA;
+                        detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
+                        aa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modAA;
                         aa.Fertigkeitswert = SelectedHeld.Talentwert("Ritualkenntnis");
                         var ergebnisAA = ShowProbeDialog(aa, SelectedHeld);
                         if (ergebnisAA != null && ergebnisAA.Gelungen)
@@ -1373,14 +1406,18 @@ namespace MeisterGeister.ViewModel.Alchimie
                         break;
                     case "Analys Arcanstruktur":
                         Model.Zauber zaa = Global.ContextHeld.LoadZauberByName("Analys Arcanstruktur");
-                        //Erhalt der Substanz
                         int modZAA = 0;
-                        if (SelectedHeld.Talentwert("Alchimie") >= 10)
-                        {
-                            modZAA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Alchimie") - 7) / 3.0);
-                            //TODO MP Spezielisierung abhandeln
+                        //Spezialisierung Mag Analyse beachten!
+                        int wertMagiekundeZAA = SelectedHeld.Talentwert("Magiekunde");
+                        Model.Talent magiekundeZAA = Global.ContextHeld.LoadTalentByName("Magiekunde");
+                        var spezZAA = magiekundeZAA.Talentspezialisierungen(SelectedHeld);
+                        if (spezZAA != null && spezZAA.Where(t => t.StartsWith("Magische Analyse")).Count() > 0) wertMagiekundeZAA += 2;
+                        if (SelectedHeld.Talentwert("Magiekunde") >= 10)
+                        { 
+                            modZAA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Magiekunde") - 7) / 3.0);
                         }
-                        zaa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modZAA;
+                        detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
+                        zaa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modZAA;
                         zaa.Fertigkeitswert = SelectedHeld.Zauberfertigkeitswert("Analys Arcanstruktur");
                         var ergebnisZAA = ShowProbeDialog(zaa, SelectedHeld);
                         if (ergebnisZAA != null && ergebnisZAA.Gelungen)
@@ -1389,19 +1426,85 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         else
                         {
-                            WertStrukturergebnisAnalyse = 0;
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse;
                         }
                         break;
                     case "Oculus Astralis":
-  
+                        Model.Talent toa = Global.ContextHeld.LoadTalentByName("Sinnenschärfe");
+                        int modZOA = 0;
+                        //Spezialisierung Mag Analyse beachten!
+                        int wertMagiekundeZOA = SelectedHeld.Talentwert("Magiekunde");
+                        Model.Talent magiekundeZOA = Global.ContextHeld.LoadTalentByName("Magiekunde");
+                        var spezZOA = magiekundeZOA.Talentspezialisierungen(SelectedHeld);
+                        if (spezZOA!=null && spezZOA.Where(t => t.StartsWith("Magische Analyse")).Count() > 0) wertMagiekundeZOA += 2;
+                        if (SelectedHeld.Talentwert("Alchimie") >= 10)
+                        {
+                            modZOA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Alchimie") - 7) / 3.0);
+                        }
+                        toa.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)WertDetailgradAnalyse) / 2) + modZOA;
+                        toa.Fertigkeitswert = SelectedHeld.Talentwert("Sinnenschärfe");
+                        var ergebnisZOA = ShowProbeDialog(toa, SelectedHeld);
+                        if (ergebnisZOA != null && ergebnisZOA.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse + ergebnisZOA.Übrig;
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse;
+                        }
                         break;
                     case "Blick der Weberin":
-
-                        break;
+                        Model.Talent bdw = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
+                        // TODO MP zusätzliche Erschwernisse berechnen
+                        int modBDW = 4;
+                        //Spezialisierung Mag Analyse beachten!
+                        int wertMagiekundeBDW = SelectedHeld.Talentwert("Magiekunde");
+                        Model.Talent magiekundeBDW = Global.ContextHeld.LoadTalentByName("Magiekunde");
+                        var spezBDW = magiekundeBDW.Talentspezialisierungen(SelectedHeld);
+                        if (spezBDW != null && spezBDW.Where(t => t.StartsWith("Magische Analyse")).Count() > 0) wertMagiekundeBDW += 2;
+                        if (SelectedHeld.Talentwert("Magiekunde") >= 10)
+                        {
+                            modBDW = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Magiekunde") - 7) / 3.0);
+                        }
+                        detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
+                        bdw.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modBDW;
+                        bdw.Fertigkeitswert = SelectedHeld.Talentwert("Liturgiekenntnis");
+                        var ergebnisBDW = ShowProbeDialog(bdw, SelectedHeld);
+                        if (ergebnisBDW != null && ergebnisBDW.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse + ergebnisBDW.Übrig+5;
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse;
+                        }
+                        break;                        
                     case "Blick durch Tairachs Augen":
-
-                        break;
-                    case "Gespür der Keule":
+                        Model.Talent bdta = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
+                        // TODO MP zusätzliche Erschwernisse berechnen
+                        int modBDTA = 4;
+                        //Spezialisierung Mag Analyse beachten!
+                        int wertMagiekundeBDTA = SelectedHeld.Talentwert("Magiekunde");
+                        Model.Talent magiekundeBDTA = Global.ContextHeld.LoadTalentByName("Magiekunde");
+                        var spezBDTA = magiekundeBDTA.Talentspezialisierungen(SelectedHeld);
+                        if (spezBDTA != null && spezBDTA.Where(t => t.StartsWith("Magische Analyse")).Count() > 0) wertMagiekundeBDTA += 2;
+                        if (SelectedHeld.Talentwert("Magiekunde") >= 10)
+                        {
+                            modBDTA = -(int)Math.Floor((double)(SelectedHeld.Talentwert("Magiekunde") - 7) / 3.0);
+                        }
+                        detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
+                        bdta.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modBDTA;
+                        bdta.Fertigkeitswert = SelectedHeld.Talentwert("Liturgiekenntnis");
+                        var ergebnisBDTA = ShowProbeDialog(bdta, SelectedHeld);
+                        if (ergebnisBDTA != null && ergebnisBDTA.Gelungen)
+                        {
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse + ergebnisBDTA.Übrig +5;
+                        }
+                        else
+                        {
+                            WertStrukturergebnisAnalyse = WertStrukturergebnisAnalyse;
+                        }
+                        break;                        
                     default: break;
                 }
             }

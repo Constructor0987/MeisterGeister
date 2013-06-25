@@ -215,17 +215,19 @@
                                 <TextBlock Text="{Binding Path = SelectedRezept.Kategorie}" Grid.Row="0" Grid.Column="2" />
                                 <TextBlock Text="Gruppe"  Grid.Row="1" />
                                 <TextBlock Text="{Binding Path = SelectedRezept.Gruppe}" Grid.Row="1" Grid.Column="2" />
-                                <TextBlock Text="benutztes Labor"  Grid.Row="2" />
-                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2">
+                                <TextBlock Text="benötigtes Labor"  Grid.Row="2" />
+                                <TextBlock Text="{Binding Path = SelectedRezept.Labor}" Grid.Row="2" Grid.Column="2" />
+                                <TextBlock Text="benutztes Labor"  Grid.Row="3" />
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2">
                                     <TextBlock Text="{Binding Path = SelectedLaborArtListe}"  />
                                     <TextBlock Text=" ("  />
                                     <TextBlock Text="{Binding Path = SelectedLaborQualitätListe}"  />
                                     <TextBlock Text=")"  />
                                 </StackPanel>
-                                <TextBlock Text="Proben-Modifikator: "  Grid.Row="3" />
-                                <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="3" Grid.Column="2" />
-                                <TextBlock Text="TaP*: "  Grid.Row="4" />
-                                <TextBlock Text="{Binding Path = TaPHerstellung}" Grid.Row="4" Grid.Column="2" />
+                                <TextBlock Text="Proben-Modifikator: "  Grid.Row="4" />
+                                <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="4" Grid.Column="2" />
+                                <TextBlock Text="TaP*: "  Grid.Row="5" />
+                                <TextBlock Text="{Binding Path = TaPHerstellung}" Grid.Row="5" Grid.Column="2" />
                                 <TextBlock Text="Qualität:"  Grid.Row="6" ToolTip="Wda 19"/>
                                 <TextBlock Text="{Binding BonusQualitätHerstellung}" Grid.Row="6" Grid.Column="2" ToolTip="Wda 19">
                                     <TextBlock.Style>
@@ -376,6 +378,10 @@
                                     <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeIBAnalyse}"/>
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Detailgrad früherer Intensitätsbestimmung:" FontWeight="Bold" />
+                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertFIBAnalyse}" />
+                                </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
                                     <TextBlock Margin="0,3,5,0" Text="Strukturanalyse:" FontWeight="Bold" />
                                     <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding StrukturanalyseListeAnalyse}" SelectedItem="{Binding SelectedStrukturanalyseAnalyse}" />
                                     <CheckBox Margin="0,0,5,0" Content="Erhalt der Substanz" Visibility="{Binding CheckedErhaltAnalyseVisibility}" IsChecked="{Binding CheckedErhaltAnalyseIsChecked}"/>
@@ -387,7 +393,7 @@
                                     <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeSAAnalyse}"/>
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <TextBlock Margin="0,3,5,0" Text="Dauer (h): " FontWeight="Bold" />
+                                    <TextBlock Margin="0,3,5,0" Text="Dauer: " FontWeight="Bold" />
                                     <TextBlock Margin="0,3,5,0" Text="{Binding AnalyseDauerSA}" FontWeight="Bold" />
                                 </StackPanel>
                                 <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
@@ -451,8 +457,6 @@
                                     <TextBlock Text="{Binding Path = SelectedLaborQualitätListe}"  />
                                     <TextBlock Text=")"  />
                                 </StackPanel>
-                                <TextBlock Text="Proben-Modifikator: "  Grid.Row="3" />
-                                <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="3" Grid.Column="2" />
                                 <TextBlock Text="Brauschwierigkeit"  Grid.Row="7" />
                                 <TextBlock Text="{Binding Path = SelectedRezept.Brauschwierigkeit}" Grid.Row="7" Grid.Column="2" />
                                 <TextBlock Text="Analyseschwierigkeit"  Grid.Row="8" />

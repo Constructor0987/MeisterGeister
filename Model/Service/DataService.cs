@@ -140,13 +140,16 @@ namespace MeisterGeister.Model.Service {
 
             List<string> zauber = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Zauber, h => h.HeldGUID, hz => hz.HeldGUID, (h, hz) => hz)
                 .Join(Context.Zauber, hz => hz.ZauberGUID, z => z.ZauberGUID, (hz, z) => z).Where(z => z.Name == "Odem Arcanum" || z.Name == "Oculus Astralis").OrderBy(z => z.Name).Select(z => z.Name).ToList();
-            //TODO ??: MP liturgie "Sicht auf Madas Welt"7
+            List<string> liturgien = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs =>hs.HeldGUID, (h,hs) => hs)
+                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs,s) =>s)
+                .Where(s=> s.Name == "Liturgie: Sicht auf Madas Welt"|| s.Name == "Keulenritual: Gespür der Keule").OrderBy(s=>s.Name).Select(s => s.Name).ToList();
             List<string> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
                 .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Pflanzenkunde" || t.Talentname == "Magiegespür").Select(t => t.Talentname).ToList();
 
             List<string> ret = new List<string>();
             ret.AddRange(zauber);
             ret.AddRange(talente);
+            ret.AddRange(liturgien);
             return ret;
         }
 
@@ -159,12 +162,13 @@ namespace MeisterGeister.Model.Service {
                 .Join(Context.Zauber, hz => hz.ZauberGUID, z => z.ZauberGUID, (hz, z) => z).Where(z => z.Name == "Analys Arcanstruktur" || z.Name == "Oculus Astralis").OrderBy(z => z.Name).Select(z => z.Name).ToList();
             List<string> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
                 .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Alchimie" || t.Talentname == "Ritualkenntnis" || t.Talentname == "Liturgiekenntnis").Select(t => t.Talentname).ToList();
-
-            //TODO ??: MP liturgien "Blick der Weberin" "Blick durch Tairachs Augen"
-            //TODO ??: MP Abfrage nach Allegorischer Analyse (Schale)
+            List<string> liturgien = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
+                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
+                .Where(s => s.Name == "Liturgie: Blick der Weberin" || s.Name == "Liturgie: Blick durch Tairachs Augen" || s.Name == "Schalenzauber: Allegorische Analyse").OrderBy(s => s.Name).Select(s => s.Name).ToList();
             List<string> ret = new List<string>(); 
             ret.AddRange(zauber);
             ret.AddRange(talente);
+            ret.AddRange(liturgien);
             return ret;
         }
         #endregion
