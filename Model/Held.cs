@@ -1181,7 +1181,11 @@ namespace MeisterGeister.Model
         public ProbenErgebnis TalentProbe(Talent t, int mod, string spezialisierung = null)
         {
             if (!HatTalent(t)) //TODO: stattdessen Ableiten.
-                return ProbenErgebnis.KeinErgebnis;
+            {
+                ProbenErgebnis pe = new ProbenErgebnis();
+                pe.Ergebnis = ErgebnisTyp.KEIN_ERGEBNIS;
+                return pe;
+            }
             t.WerteSetzen(this, spezialisierung);
             t.Modifikator = mod;
             t.IsBehinderung = true;
