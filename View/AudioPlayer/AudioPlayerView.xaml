@@ -497,7 +497,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="26" />
-                            <RowDefinition Height="388" />
+                            <RowDefinition Height="388*" />
                         </Grid.RowDefinitions>
                         <Border Grid.ColumnSpan="2"  Margin="2,1,8,0" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch" ToolTip="Musik Filter">
                             <Grid>
@@ -518,7 +518,7 @@
                                     <GradientStop Color="#FFFFFFC7" Offset="1" />
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <ListBox Padding="4" Name="lbBackground"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" Width="253" ItemContainerStyle="{StaticResource SimpleListBoxItem}" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged" ForceCursor="False" Tag="-1" />                       
+                            <ListBox Padding="4" Name="lbBackground"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" Width="253" ItemContainerStyle="{StaticResource SimpleListBoxItem}" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged" ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" />                       
                         </Border>
                         
                         <Border Grid.Column="3" Grid.Row="1" Height="240" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" Margin="2,46,2,72">
