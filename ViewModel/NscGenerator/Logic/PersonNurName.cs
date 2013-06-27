@@ -16,13 +16,15 @@ namespace MeisterGeister.ViewModel.NscGenerator.Logic
         #endregion
 
         #region //---- KONSTRUKTOR ----
-        public PersonNurName(string name, string namensbedeutung, string namenstyp, Geschlecht geschlecht, Stand stand)
+        public PersonNurName (string namenstyp, string name, string namensbedeutung, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.unfrei)
         {
-            Name = name;
-            Namensbedeutung = namensbedeutung;
-            Namenstyp = namenstyp; 
-            Geschlecht = geschlecht;
-            Stand = stand;
+
+        }
+
+        public PersonNurName()
+            : this(string.Empty, string.Empty, string.Empty)
+        {
+
         }
         #endregion
     }

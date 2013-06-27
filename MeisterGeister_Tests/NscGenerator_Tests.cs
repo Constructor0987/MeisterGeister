@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 using NUnit.Framework;
 
@@ -43,7 +44,7 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
-        public void NscGeneratorNamensgenerierungTest()
+        public void NscGeneratorNamensgenerierungStringTest()
         {
             MeisterGeister.ViewModel.NscGenerator.Factorys.NamenFactory aktuelleNamenFactory;
             foreach (String namenstyp in _namenstypen)
@@ -51,8 +52,34 @@ namespace MeisterGeister_Tests
                 aktuelleNamenFactory = MeisterGeister.ViewModel.NscGenerator.Factorys.NamenFactoryHelper.GetFactory(namenstyp);
                 if (aktuelleNamenFactory != null)
                 {
-                    Assert.IsNotEmpty(aktuelleNamenFactory.GetName(MeisterGeister.ViewModel.NscGenerator.Logic.Geschlecht.weiblich), "Leerer weiblicher Name bei Factory "+namenstyp+" generiert.");
-                    Assert.IsNotEmpty(aktuelleNamenFactory.GetName(MeisterGeister.ViewModel.NscGenerator.Logic.Geschlecht.männlich), "Leerer männlicher Name bei Factory " + namenstyp + " generiert.");
+                    foreach (MeisterGeister.ViewModel.NscGenerator.Logic.Geschlecht geschlecht in Enum.GetValues(typeof(MeisterGeister.ViewModel.NscGenerator.Logic.Geschlecht)))
+                    {
+                        foreach (MeisterGeister.ViewModel.NscGenerator.Logic.Stand stand in Enum.GetValues(typeof(MeisterGeister.ViewModel.NscGenerator.Logic.Stand)))
+                            Assert.IsNotEmpty(aktuelleNamenFactory.GetName(geschlecht, stand), "Leerer Name bei Factory " + namenstyp + " generiert (Parameter geschlecht=" + geschlecht.ToString() + ", stand=" + stand.ToString() + ").");
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public void NscGeneratorNamensbedeutungTest()
+        {
+            MeisterGeister.ViewModel.NscGenerator.Logic.PersonNurName person;
+            MeisterGeister.ViewModel.NscGenerator.Factorys.NamenFactory aktuelleNamenFactory;
+            foreach (String namenstyp in _namenstypen)
+            {
+                aktuelleNamenFactory = MeisterGeister.ViewModel.NscGenerator.Factorys.NamenFactoryHelper.GetFactory(namenstyp);
+                if (aktuelleNamenFactory != null && aktuelleNamenFactory.GeneriertNamensbedeutungen)
+                {
+                    foreach (MeisterGeister.ViewModel.NscGenerator.Logic.Geschlecht geschlecht in Enum.GetValues(typeof(MeisterGeister.ViewModel.NscGenerator.Logic.Geschlecht)))
+                    {
+                        foreach (MeisterGeister.ViewModel.NscGenerator.Logic.Stand stand in Enum.GetValues(typeof(MeisterGeister.ViewModel.NscGenerator.Logic.Stand)))
+                        {
+                            person = new MeisterGeister.ViewModel.NscGenerator.Logic.PersonNurName();
+                            aktuelleNamenFactory.RegeneratePersonNurName(ref person, geschlecht, stand);
+                            Assert.IsNotEmpty(person.Namensbedeutung, "Leerer Namensbedeutung bei Factory " + namenstyp + " generiert (Parameter geschlecht=" + geschlecht.ToString() + ", stand=" + stand.ToString() + ").");
+                        }
+                    }
                 }
             }
         }

@@ -11,21 +11,24 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
         #region //---- FELDER ----
         // Die folgenden Strings sind für die Datenbank-Zuordnungen nötig
         //auf GUID umstellen
+        //Aventurische Namen
         const string HOLBERKERNAMEN = "Holberker Namen";
         const string UTULUNAMEN = "Utulu Namen";
+        const string ZAHORINAMEN = "Zahori Namen";
 
-        // 
-        private static Dictionary<String, NamenFactory> _namenFactorys = new Dictionary<String, NamenFactory>();
+        private static Dictionary<String, NamenFactory> _namenFactorys = _namenFactorys = new Dictionary<String, NamenFactory>();
         #endregion
-
+        
         #region //---- Klassenmethoden ----
         private static NamenFactory InstantiateFactory(string namenstyp)
         {
             switch (namenstyp)
             {
-                case HOLBERKERNAMEN: return new NamenFactoryVorname(HOLBERKERNAMEN);
+                //Aventurische Namen
+                case HOLBERKERNAMEN: return new NamenFactoryVornameNachname(HOLBERKERNAMEN);
                 case UTULUNAMEN: return new NamenFactoryVorname(UTULUNAMEN, true);
-                default: throw new NotImplementedException("Namenstyp "+namenstyp+" nicht verfügbar.");
+                case ZAHORINAMEN: return new NamenFactoryVornameNachname(ZAHORINAMEN);
+                default: throw new NotImplementedException("Namenstyp " + namenstyp + " nicht verfügbar.");
             }
         }
 
@@ -41,5 +44,4 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
         }
         #endregion
     }
-
 }
