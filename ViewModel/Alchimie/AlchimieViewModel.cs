@@ -763,7 +763,7 @@ namespace MeisterGeister.ViewModel.Alchimie
         {
             get { return _onProbeSAAnalyse; }
         }
-        private Base.CommandBase OnClearSelectedHeld
+        public Base.CommandBase OnClearSelectedHeld
         {
             get { return _onClearSelectedHeld;   }
         }
@@ -1118,7 +1118,9 @@ namespace MeisterGeister.ViewModel.Alchimie
                     return SelectedHeld.Talentwert("Sinnenschärfe");                
                 case "Blick der Weberin": 
                 case "Blick durch Tairachs Augen":
-                    return SelectedHeld.Talentwert("Liturgiekenntnis");
+                    int taw;
+                    SelectedHeld.GetHeldTalent("Liturgiekenntnis",true,out taw,false);
+                    return taw;
                 default: return 0;
             }
         }
@@ -1133,8 +1135,9 @@ namespace MeisterGeister.ViewModel.Alchimie
                 case "Oculus Astralis":
                     return SelectedHeld.Zauberfertigkeitswert("Oculus Astralis");
                 case "Sicht auf Madas Welt":
-                    //TODO MP wie finde ich die passende Liturgiekenntnis, ohne alle abzufragen?!
-                    return SelectedHeld.Talentwert("Liturgiekenntnis");
+                    int taw;
+                    SelectedHeld.GetHeldTalent("Liturgiekenntnis",true,out taw,false);
+                    return taw;
                 case "Magiegespür (gezielte Anwendung)": 
                 case "Magiegespür (ungezielte Anwendung)":
                     return SelectedHeld.Talentwert("Magiegespür");
@@ -1337,12 +1340,12 @@ namespace MeisterGeister.ViewModel.Alchimie
             SelectedHeld = null;
         }
         #region//-Herstellung-
-        void Zutat_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Zutat_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             calculateModSubstitutionen();
             calculateProbenModGes();
         }
-        void ProbeHerstellung(object sender)
+        private void ProbeHerstellung(object sender)
         {
             //Probe auf Erstellung würfeln
             if (SelectedHeld != null && SelectedTalentHerstellung != null)
@@ -1364,7 +1367,7 @@ namespace MeisterGeister.ViewModel.Alchimie
         }
         #endregion     
         #region//-Analyse-
-        void ProbeIBAnalyse(object sender)
+        private void ProbeIBAnalyse(object sender)
         {
             //Probe auf Erstellung würfeln
             if (SelectedHeld != null && SelectedIntensitätsbestimmungAnalyse != null)
@@ -1429,10 +1432,10 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         break;
                     case "Sicht auf Madas Welt": 
-                        //Model.Held_Talent samw = SelectedHeld.GetHeldTalent("Liturgiekenntnis", true,taw,false);
-                        Model.Talent samw = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
+                        int taw;
+                        Model.Held_Talent samw=SelectedHeld.GetHeldTalent("Liturgiekenntnis", true, out taw,false);
                         samw.Modifikator = SelectedRezept.Analyseschwierigkeit;
-                        samw.Fertigkeitswert = SelectedHeld.Talentwert("Liturgiekenntnis");
+                        samw.Fertigkeitswert = taw;
                         var ergebnisSAMW = ShowProbeDialog(samw, SelectedHeld);
                         if (ergebnisSAMW != null && ergebnisSAMW.Gelungen)
                         {
@@ -1491,7 +1494,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             }
         }
 
-        void ProbeSAAnalyse(object sender)
+        private void ProbeSAAnalyse(object sender)
         {
             //Probe auf Erstellung würfeln
             if (SelectedHeld != null && SelectedStrukturanalyseAnalyse != null)
@@ -1639,7 +1642,9 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         break;
                     case "Blick der Weberin":
-                        Model.Talent bdw = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
+                        int taw;
+                        Model.Held_Talent bdw = SelectedHeld.GetHeldTalent("Liturgiekenntnis", true, out taw, false);
+                        //Model.Talent bdw = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
                         // TODO MP zusätzliche Erschwernisse berechnen
                         int modBDW = 4;
                         //Spezialisierung Mag Analyse beachten!
@@ -1653,7 +1658,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         bdw.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modBDW;
-                        bdw.Fertigkeitswert = SelectedHeld.Talentwert("Liturgiekenntnis");
+                        bdw.Fertigkeitswert = taw;
                         var ergebnisBDW = ShowProbeDialog(bdw, SelectedHeld);
                         if (ergebnisBDW != null && ergebnisBDW.Gelungen)
                         {
@@ -1665,7 +1670,9 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         break;                        
                     case "Blick durch Tairachs Augen":
-                        Model.Talent bdta = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
+                        int tawbdta;
+                        Model.Held_Talent bdta = SelectedHeld.GetHeldTalent("Liturgiekenntnis", true, out tawbdta, false);
+                        //Model.Talent bdta = Global.ContextHeld.LoadTalentByName("Liturgiekenntnis");
                         // TODO MP zusätzliche Erschwernisse berechnen
                         int modBDTA = 4;
                         //Spezialisierung Mag Analyse beachten!
@@ -1679,7 +1686,7 @@ namespace MeisterGeister.ViewModel.Alchimie
                         }
                         detailgrad = (int)Math.Max(WertDetailgradAnalyse, WertFIBAnalyse);
                         bdta.Modifikator = SelectedRezept.Analyseschwierigkeit - (int)Math.Ceiling(((double)detailgrad) / 2) + modBDTA;
-                        bdta.Fertigkeitswert = SelectedHeld.Talentwert("Liturgiekenntnis");
+                        bdta.Fertigkeitswert = tawbdta;
                         var ergebnisBDTA = ShowProbeDialog(bdta, SelectedHeld);
                         if (ergebnisBDTA != null && ergebnisBDTA.Gelungen)
                         {
@@ -1697,7 +1704,7 @@ namespace MeisterGeister.ViewModel.Alchimie
             
         #endregion
         #region//-Verdünnung-
-        void ProbeVerdünnung(object sender)
+        private void ProbeVerdünnung(object sender)
         {
             //Probe auf Erstellung würfeln
             if (SelectedHeld != null)
@@ -1725,7 +1732,7 @@ namespace MeisterGeister.ViewModel.Alchimie
          
         #endregion
         #region//-Haltbarkeit-
-        void ProbeHaltbarkeit(object sender)
+        private void ProbeHaltbarkeit(object sender)
         {
             
             //Probe auf Erstellung würfeln

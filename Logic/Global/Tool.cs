@@ -145,6 +145,13 @@ namespace MeisterGeister
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Alchimie.AlchimieView)
             });
+            ToolListe.Add("Beschwörung", new Tool()
+            {
+                Name = "Beschwörung",
+                Icon = "Icons/magie.png",
+                MenuGruppe = "Wege der Magie",
+                ViewType = typeof(View.Beschwörung.BeschwörungView)
+            });
             ToolListe.Add("Audio", new Tool()
             {
                 Name = "Audio",

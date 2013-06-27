@@ -153,6 +153,11 @@
                                     <Image Source="/Images/Icons/alchimie.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Height="28" x:Name="_menuItemBeschwörung" Click="ButtonTool_Click" Header="Beschwörung-Tool (INTERN)" Tag="Beschwörung" ToolTip="Beschwörung-Tool"  >
+                                <MenuItem.Icon>
+                                    <Image Source="/Images/Icons/magie.png" Margin="2" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Height="28" x:Name="_menuItemZauberzeichen" Click="ButtonTool_Click" Header="Zauberzeichen-Tool" Tag="Zauberzeichen" ToolTip="Zauberzeichen-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/zauberzeichen.png" Margin="2" />

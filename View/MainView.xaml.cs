@@ -97,6 +97,7 @@ namespace MeisterGeister.View
             _menuItemAudioPlayer.Visibility = System.Windows.Visibility.Collapsed;
             _menuItemAbenteuer.Visibility = System.Windows.Visibility.Collapsed;
             _menuItemAlchimie.Visibility = System.Windows.Visibility.Collapsed;
+            _menuItemBeschwörung.Visibility = System.Windows.Visibility.Collapsed;
 #endif
 
 #if TEST

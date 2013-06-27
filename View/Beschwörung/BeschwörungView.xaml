@@ -1,0 +1,584 @@
+﻿<UserControl x:Class="MeisterGeister.View.Beschwörung.BeschwörungView"                      
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Beschwörung"
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
+             mc:Ignorable="d" 
+             d:DesignHeight="571" d:DesignWidth="946" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+    <UserControl.DataContext>
+        <vm:BeschwörungViewModel />
+    </UserControl.DataContext>
+    
+    <UserControl.Resources>
+    </UserControl.Resources>
+    
+    <TabControl Background="Transparent">
+        <TabItem Header="Dämonen">
+            <Grid OpacityMask="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" >
+                            <ComboBox.ToolTip>
+                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Text="Vorauswahl" Style="{DynamicResource TextTitel}" />
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                                <TextBlock Text="Ausrüstung und Fähigkeiten: " Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="Probe +X" Style="{DynamicResource TextTitel}" />
+                            </StackPanel>
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                                <TextBlock Text="infos (Kontrollwert, etc)" Style="{DynamicResource TextTitel}" />
+                                
+                                
+                                <Grid Margin="0,0,0,0" Width="Auto" Grid.Row="20" Grid.Column ="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Ausrüstung" Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                                    <TextBlock Text="Anrufung" Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                                    <TextBlock Text="Kontrolle" Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="3"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Kleidung/Ausrüstung" IsChecked="{Binding DämonenCheckedKleidung}" Grid.Row="2" Grid.Column="0"/>
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertKleidungAnrufung}" IsEnabled="{Binding DämonenIsEnabledKleidung}" Grid.Row="2" Grid.Column="2" />
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertKleidungKontrolle}" IsEnabled="{Binding DämonenIsEnabledKleidung}" Grid.Row="2" Grid.Column="3" />
+
+                                    <CheckBox Margin="0,0,5,0" Content="Zauberkerzen" IsChecked="{Binding DämonenCheckedZauberkerzen}" Grid.Row="4" Grid.Column="0"/>
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertZauberkerzen}" IsEnabled="{Binding DämonenIsEnabledZauberkerzen}" Grid.Row="4" Grid.Column="2"/>
+
+
+                                    <CheckBox Margin="0,0,5,0" Content="Zauberkreide" IsChecked="{Binding DämonenCheckedZauberkreide}" Grid.Row="5" Grid.Column="0"/>
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertZauberkreide}" IsEnabled="{Binding DämonenIsEnabledZauberkreide}" Grid.Row="5" Grid.Column="2" />
+
+
+                                    <CheckBox Margin="0,0,5,0" Content="Donaria" IsChecked="{Binding DämonenCheckedDonaria}" Grid.Row="6" Grid.Column="0" />
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertDonariaAnrufung}" IsEnabled="{Binding DämonenIsEnabledDonariaAnrufung}" Grid.Row="6" Grid.Column="2"/>
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertDonariaKontrolle}" IsEnabled="{Binding DämonenIsEnabledDonariaKontrolle}" Grid.Row="6" Grid.Column="3"/>
+                                    
+                                    <CheckBox Margin="0,0,5,0" Content="Bannschwert" IsChecked="{Binding DämonenCheckedBannschwert}" Grid.Row="8" Grid.Column="0"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertBannschwert}" Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="8" Grid.Column="2" />
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertBannschwert}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="8" Grid.Column="3"/>
+
+                                    <TextBlock Text="Fähigkeiten" Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="9" Grid.Column="0"/>
+
+                                    <CheckBox Margin="0,0,5,0" Content="Affinität zu Dämonen" IsChecked="{Binding DämonenCheckedAffinität}" Grid.Row="10" Grid.Column="0"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertAffinitätKontrolle}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="10" Grid.Column="3"/>
+
+                                    <CheckBox Margin="0,0,5,0" Content="Paktierer (KdV)" IsChecked="{Binding DämonenCheckedPaktierer}" Grid.Row="11" Grid.Column="0" ToolTip="Muss gleiche Domäne sein!"/>
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertPaktierer}" IsEnabled="{Binding DämonenCheckedPaktierer}"  Grid.Row="11" Grid.Column="1"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertPaktiererAnrufung}" Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="11" Grid.Column="2" />
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertPaktiererKontrolle}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="11" Grid.Column="3"/>
+
+                                    <CheckBox Margin="0,0,5,0" Content="Pakt-GP" IsChecked="{Binding DämonenCheckedPaktGP}"  Grid.Row="12" Grid.Column="0" ToolTip="Muss gleiche Domäne sein!"/>
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertPaktGP}" IsEnabled="{Binding DämonenCheckedPaktGP}" Grid.Row="12" Grid.Column="1"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertPaktGPKontrolle}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="12" Grid.Column="3"/>
+
+                                    <TextBlock Text="Invocatio-Integra"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="13" Grid.Column="0" ToolTip="Sonderfertigkeit benötigt"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Integra Ritual" IsChecked="{Binding DämonenCheckedIntegra}" IsEnabled ="{Binding DämonenIsEnabledIntegra}" Grid.Row="14" Grid.Column="0" />
+
+                                    <TextBlock Margin="8,0,5,0" Text="Magiekunde (Dämonologie)" HorizontalAlignment="Left" Grid.Row="15" Grid.Column="0" />
+                                    <Button Margin="5,0,10,0" Content="Probe" Command="{Binding DämonenOnProbeMagiekunde}" IsEnabled="{Binding DämonenCheckedIntegra}" Grid.Row="15" Grid.Column="1"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertIntegraMagiekunde}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="15" Grid.Column="2"/>
+
+                                    <TextBlock Margin="8,0,5,0" Text="Malen/Zeichnen" HorizontalAlignment="Left" Grid.Row="16" Grid.Column="0" />
+                                    <Button Margin="5,0,10,0" Content="Probe" Command="{Binding DämonenOnProbeMalen}" IsEnabled="{Binding DämonenCheckedIntegra}" Grid.Row="16" Grid.Column="1"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertIntegraMalen}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="16" Grid.Column="2"/>
+
+                                    <TextBlock Margin="8,0,5,0" Text="Blutopfer"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="17" Grid.Column="0"/>
+
+                                </Grid>
+                                <TextBlock Text="Sonderfertigkeiten, Form der Formlosigkeit, Dämonenbindung.-... S190" Style="{DynamicResource TextTitel}" />
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Umstände" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="Ort" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="Zeit" Style="{DynamicResource TextTitel}" />
+                            
+                                <Grid Margin="0,0,0,0" Width="Auto" Grid.Row="20" Grid.Column ="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Ort" Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                                    <TextBlock Text="Anrufung" Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+                                    <TextBlock Text="Kontrolle" Style="{DynamicResource TextTitel}" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="3"/>
+                                    
+                                    <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding DämonenListeUmständeOrt}"  SelectedItem="{Binding SelectedListeUmständeOrt}" Grid.Row="2" Grid.Column="0" />
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertUmständeOrtAnrufung}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="2"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertUmständeOrtKontrolle}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="3"/>
+
+
+                                    <CheckBox Margin="0,0,5,0" Content="Kraftlinie" IsChecked="{Binding DämonenCheckedKraftlinie}" IsEnabled="{Binding DämonenIsEnabledKraftlinie}"  Grid.Row="3" Grid.Column="0" ToolTip="Sonderfertigkeit Kraftlinienmagie I benötigt"/>
+                                    <ViewGeneral:IntBox Margin="5,0,0,0" Height="23" Width="60" ShowButtons="True" Value="{Binding DämonenWertKraftlinieStärke}" IsEnabled="{Binding DämonenCheckedKraftlinie}" Grid.Row="3" Grid.Column="1"/>
+                                    <TextBlock Margin="8,0,5,0" Text="{Binding DämonenWertKraftlinieKontrolle}"  Style="{DynamicResource TextTitel}" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="2"/>
+
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Dämon" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding DämonenListeDämon}"  SelectedItem="{Binding SelectedListeDämon}" />
+
+                                <TextBlock Text="Anzahl, Auswahl und Infos" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="Sonderdienste" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="Zusätzliche Eigenschaften" Style="{DynamicResource TextTitel}" />
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                        <TextBlock Margin="0,3,5,0" Text="Talent:" FontWeight="Bold" />
+                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding TalentListeHerstellung}" DisplayMemberPath="Talentname" SelectedItem="{Binding SelectedTalentHerstellung}" />
+                        <TextBlock Text="TaW" VerticalAlignment="Center" />
+                        <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertTaWTalent}" />
+                        <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeHerstellung}"/>
+                    </StackPanel>
+                    <TextBlock Text="Modifikation" Style="{DynamicResource TextTitel}" />
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Übrige ZfP" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="Übrige ZfP" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="D" Style="{DynamicResource TextTitel}" />
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Befehl" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="Gesinnung" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="Dauer" Style="{DynamicResource TextTitel}" />
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Sonstige Modifikatoren" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                <TextBlock Text="Sonstige Mods" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Text="D" Style="{DynamicResource TextTitel}" />
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <TextBlock Text="Kontrollprobe" Style="{DynamicResource TextTitel}" />
+
+                </StackPanel>
+                <StackPanel Grid.Column="2" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
+                    
+
+                    <Expander Margin="4" IsExpanded="False" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+
+                            <StackPanel HorizontalAlignment="Left">
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                    <TextBlock Text="Dämon Werte" Style="{DynamicResource TextTitel}" />
+                                    <TextBlock Text="Misslungene Invocation" Style="{DynamicResource TextTitel}" />
+                                </StackPanel>
+                                <TextBlock Margin="20,20,20,10" Text="{Binding WertRezeptnameHerstellung}" FontWeight="Bold"/>
+                                <Grid Margin="20,10,20,10" Width="Auto">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Kategorie"  Grid.Row="0" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Kategorie}" Grid.Row="0" Grid.Column="2" />
+                                    <TextBlock Text="Gruppe"  Grid.Row="1" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Gruppe}" Grid.Row="1" Grid.Column="2" />
+                                    <TextBlock Text="benötigtes Labor"  Grid.Row="2" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Labor}" Grid.Row="2" Grid.Column="2" />
+                                    <TextBlock Text="benutztes Labor"  Grid.Row="3" />
+                                    <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2">
+                                        <TextBlock Text="{Binding Path = SelectedLaborArtListe}"  />
+                                        <TextBlock Text=" ("  />
+                                        <TextBlock Text="{Binding Path = SelectedLaborQualitätListe}"  />
+                                        <TextBlock Text=")"  />
+                                    </StackPanel>
+                                    <TextBlock Text="Proben-Modifikator: "  Grid.Row="4" />
+                                    <TextBlock Text="{Binding Path = ProbenModGesHerstellung}" Grid.Row="4" Grid.Column="2" />
+                                    <TextBlock Text="TaP*: "  Grid.Row="5" />
+                                    <TextBlock Text="{Binding Path = TaPHerstellung}" Grid.Row="5" Grid.Column="2" />
+                                    <TextBlock Text="Qualität:"  Grid.Row="6" ToolTip="Wda 19"/>
+                                    <TextBlock Text="{Binding BonusQualitätHerstellung}" Grid.Row="6" Grid.Column="2" ToolTip="Wda 19">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HerstellungUnmöglich}" Value="True">
+                                                        <Setter Property="Foreground" Value="Red" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Text="Brauschwierigkeit"  Grid.Row="7" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Brauschwierigkeit}" Grid.Row="7" Grid.Column="2" />
+                                    <TextBlock Text="Beschaffungsschwierigkeit"  Grid.Row="10" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Beschaffungsschwierigkeit}" Grid.Row="10" Grid.Column="2" />
+                                    <TextBlock Text="Beschaffungskosten (S)"  Grid.Row="12" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Beschaffungskosten}" Grid.Row="12" Grid.Column="2" />
+                                    <TextBlock Text="Haltbarkeit"  Grid.Row="13" />
+                                    <StackPanel Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding WertHaltbarkeitHerstellung}"  />
+                                        <TextBlock Text="{Binding Path = SelectedRezept.Haltbarkeitseinheit}" Margin="5,0,0,0" />
+                                    </StackPanel>
+                                    <TextBlock Text="Preis"  Grid.Row="15" />
+                                    <TextBlock Text="{Binding Path =SelectedRezept.Beschaffungskosten}" Grid.Row="15" Grid.Column="2" />
+                                    <TextBlock Text="Merkmale"  Grid.Row="16" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Merkmale}" Grid.Row="16" Grid.Column="2" />
+                                    <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="18" />
+                                    <TextBlock Text="{Binding HerstellungWirkungM}" Grid.Row="18" Grid.Column="2" />
+                                    <TextBlock Text="Zutaten"  Grid.Row="19" />
+                                    <TextBlock Text="Bemerkung"  Grid.Row="20" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Bemerkung}" Grid.Row="20" Grid.Column="2" />
+                                    <TextBlock Text="vorgeschlagene Substitute"  Grid.Row="21" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Substitute}" Grid.Row="22" Grid.Column="2" />
+                                    <TextBlock Text="Quelle"  Grid.Row="24" />
+                                    <TextBlock Text="{Binding Path = SelectedRezept.Literatur}" Grid.Row="24" Grid.Column="2" />
+                                    <Grid Margin="20,10,20,10" Width="Auto" Grid.Row="20" Grid.Column ="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="50" />
+                                            <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Elementare">
+            <Grid OpacityMask="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
+                            <ComboBox.ToolTip>
+                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
+                    </StackPanel>
+
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Rezept" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Gruppe:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding GruppeListe}" SelectedItem="{Binding SelectedGruppe}" />
+                                </StackPanel>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Rezept:" FontWeight="Bold" />
+                                    <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding RezeptListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRezept}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                </StackPanel>
+
+                <Expander Grid.Column="2" Margin="25" IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                    </Border>
+                </Expander>
+
+            </Grid>
+        </TabItem>
+        <TabItem Header="Geister">
+            <Grid OpacityMask="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Untote">
+            <Grid OpacityMask="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,25,0,0"  VerticalAlignment="Top" Background="Transparent">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold">
+                            <ComboBox.ToolTip>
+                                <TextBlock Text="HINWEIS: Es können nur Helden ausgewählt werden, die das passende Talent (z.B. Alchimie) besitzen." Margin="5,0,0,0" Width="300" TextWrapping="Wrap" />
+                            </ComboBox.ToolTip>
+                        </ComboBox>
+                        <Button Height="23" Command="{Binding OnClearSelectedHeld}" ToolTip="Helden-Auswahl löschen">
+                            <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
+                        </Button>
+                    </StackPanel>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Ausstattung" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <TextBlock Text="Labor:" FontWeight="Bold"/>
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Art"/>
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborArtListe}" SelectedItem="{Binding SelectedLaborArtListe}" IsEnabled="{Binding IsEnabledLaborArtListe}" ToolTip="WdA 16"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Qualität des Labors"/>
+                                        <ComboBox Margin="0,0,5,0" Width="140" ItemsSource="{Binding LaborQualitätListe}" SelectedItem="{Binding SelectedLaborQualitätListe}" IsEnabled="{Binding IsEnabledLaborQualitätListe}" ToolTip="WdA 16"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                        <TextBlock Text="Proben-Mod: "/>
+                                        <TextBlock Text="{Binding ModifikatorLabor}"  />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Text="Schale der Alchimie:" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                    <CheckBox Margin="0,0,5,0" Content="Allegorische Analyse" IsChecked="{Binding CheckedAllegorischeAnalyse}" ToolTip="zur Analyse | WdA 18"/>
+                                    <StackPanel Margin="0,0,5,0"  Orientation="Horizontal">
+                                        <CheckBox Margin="0,0,5,0" Content="Chymische Hochzeit" IsChecked="{Binding CheckedChymischeHochzeit}" ToolTip="Erleichtert Herstellung -1, Qualitätsanzahl +2, spart Hälfte beim Astralen Aufladen | WdA 18"/>
+                                        <!--<TextBlock Text="Proben-Mod: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding ModifikatorCHHerstellung}" VerticalAlignment="Center" />
+                                        <TextBlock Text=" Bonus Qualität-Wurf: " VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding BonusCHQualitätHerstellung}" VerticalAlignment="Center" />-->
+                                    </StackPanel>
+                                    <CheckBox Margin="0,0,5,0" Content="Feuer und Eis" IsChecked="{Binding CheckedFeuerUndEis}" ToolTip="ermöglicht extreme Temperaturen | WdA 18"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Mandricons Bindung" IsChecked="{Binding CheckedMandriconsBindung}" ToolTip="leichtere Kontrolle elementarer und dämonischer Subtanzen | WdA 18"/>
+                                    <CheckBox Margin="0,0,5,0" Content="Transmutation der Elemente" IsChecked="{Binding CheckedTransmutationDerElemente}" ToolTip="lässt reine Manifestationen elementarer Stoffe entstehen | WdA 18"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                    <Expander Margin="4" IsExpanded="True" Expanded="Expander_Expanded">
+                        <Expander.Header>
+                            <TextBlock Text="Haltbarkeit" Style="{DynamicResource TextTitel}" />
+                        </Expander.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <StackPanel Margin="5,0,5,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <TextBlock Margin="5,5,5,5" Text="Modifizierung:" FontWeight="Bold" FontSize="14"/>
+                                <StackPanel Margin="5,5,5,0" Orientation="Horizontal" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,3,5,0" Text="Probe: " FontWeight="Bold" />
+                                    <TextBlock Margin="0,3,5,0" Text="{Binding HaltbarkeitProbe}" FontWeight="Bold" />
+                                    <ViewGeneral:IntBox Margin="5,0,10,0" Height="23" Width="60" ShowButtons="True" Value="{Binding WertProbeHaltbarkeit}" />
+                                    <Button Margin="5,0,10,0" Content="Probe" Command="{Binding OnProbeHaltbarkeit}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Expander>
+                </StackPanel>
+
+                <Expander Grid.Column="2" Margin="25" IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="Ergebnis" Style="{DynamicResource TextTitel}" />
+                    </Expander.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <StackPanel HorizontalAlignment="Left">
+                            <TextBlock Margin="20,20,20,10" Text="{Binding WertRezeptnameVerdünnung}" FontWeight="Bold"/>
+                            <Grid Margin="20,10,20,10" Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    <ColumnDefinition Width="Auto" MinWidth="50" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="benutztes Labor"  Grid.Row="3" />
+                                <StackPanel Margin="5,0,5,0" Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2">
+                                    <TextBlock Text="{Binding Path = SelectedLaborArtListe}"  />
+                                    <TextBlock Text=" ("  />
+                                    <TextBlock Text="{Binding Path = SelectedLaborQualitätListe}"  />
+                                    <TextBlock Text=")"  />
+                                </StackPanel>
+                                <TextBlock Text="Kosten"  Grid.Row="10" />
+                                <TextBlock Text="1 Alraune" Grid.Row="10" Grid.Column="2" />
+                                <TextBlock Text="Wirkung"  Grid.Row="14" />
+                                <TextBlock Text="{Binding HaltbarkeitWirkung}" Grid.Row="14" Grid.Column="2" />
+                                <Grid Margin="20,10,20,10" Width="Auto" Grid.Row="16" Grid.Column ="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                        <ColumnDefinition Width="Auto" MinWidth="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Expander>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Golems">
+            <Grid OpacityMask="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Chimären">
+            <Grid OpacityMask="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</UserControl>

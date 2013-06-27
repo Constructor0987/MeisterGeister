@@ -402,6 +402,7 @@
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
+    <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
@@ -494,6 +495,9 @@
     </Compile>
     <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
       <DependentUpon>SliderRange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Beschwörung\BeschwörungView.xaml.cs">
+      <DependentUpon>BeschwörungView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\BindableSelectedItemBehavior.cs" />
     <Compile Include="View\General\BooleanToVisibilityConverter.cs" />
@@ -858,6 +862,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioPlayer\SliderRange.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Beschwörung\BeschwörungView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1619,7 +1627,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\Beschwörung\Logic\" />
+  </ItemGroup>
   <ItemGroup>
     <DesignData Include="SampleData\BasarViewModelSampleData.xaml" />
   </ItemGroup>
