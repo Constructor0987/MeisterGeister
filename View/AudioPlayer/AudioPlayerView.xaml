@@ -265,7 +265,7 @@
                                 <ColumnDefinition Width="140" />
                                 <ColumnDefinition Width="70" />
                             </Grid.ColumnDefinitions>
-                            <TextBox HorizontalAlignment="Stretch" Name="tboxPlaylistName" Style="{Binding}" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um die Playlist umzubenennen" Height="25" Grid.Column="1" Margin="5,0" Background="{x:Null}" LostFocus="tboxPlaylistName_LostFocus" ForceCursor="True" KeyUp="tboxPlaylistName_KeyUp" Visibility="Hidden" />
+                            <TextBox HorizontalAlignment="Stretch" Name="tboxPlaylistName" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um die Playlist umzubenennen" Height="25" Grid.Column="1" Margin="5,0" Background="{x:Null}" LostFocus="tboxPlaylistName_LostFocus" ForceCursor="True" KeyUp="tboxPlaylistName_KeyUp" Visibility="Hidden" />
 
                             <Border Name="brdKlangKategorie" Height="Auto" Margin="0,6,20,6" Grid.Column="2" Grid.ColumnSpan="2" CornerRadius="5" HorizontalAlignment="Stretch" ToolTip="Kategorie" Visibility="Hidden" >
                                 <Border.Background>
@@ -520,8 +520,8 @@
                             </Border.Background>
                             <ListBox Padding="4" Name="lbBackground"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" Width="253" ItemContainerStyle="{StaticResource SimpleListBoxItem}" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged" ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" />                       
                         </Border>
-                        
-                        <Border Grid.Column="3" Grid.Row="1" Height="240" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" Margin="2,46,2,72">
+
+                        <Border Grid.Column="3" Grid.Row="1" Height="240" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" Margin="2,46,2,72" >
                             <Grid Name="grdSongInfo" Visibility="Hidden">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50*" MinWidth="50"/>
@@ -556,17 +556,15 @@
                                 <Label Grid.Row="6" Content="--:--:--" HorizontalAlignment="Center" HorizontalContentAlignment="Right" Name="lblBgTimeMax" VerticalAlignment="Center" Grid.Column="3" />
                                 <ProgressBar Grid.Row="6" Height="25" HorizontalAlignment="Right" Name="pbarBGSong" VerticalAlignment="Top" Width="201.263" Value="0" UseLayoutRounding="False" Grid.ColumnSpan="2" MouseLeftButtonDown="pbarBGSong_MouseLeftButtonDown" ToolTip="Klicken um von der Liedstelle abzuspielen" Cursor="Hand" Grid.Column="1" />
                                 <CheckBox Name="chkbxPlayRange" Grid.Row="7" Content="Nur ein Teil des Songs" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Click="chkbxPlayRange_Click" Focusable="False" />
-                                <local:SliderRange x:Name="rsldTeilSong" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="195" LowerValue="0" UpperValue="10000" Minimum="0" Maximum="10000" Margin="0,2,0,0" Visibility="Hidden" PreviewMouseLeftButtonUp="rsldTeilSong_PreviewMouseLeftButtonUp" />
+                                <local:SliderRange x:Name="rsldTeilSong" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="200" LowerValue="0" UpperValue="10000" Minimum="0" Maximum="10000" Margin="7,2,0,0" PreviewMouseLeftButtonUp="rsldTeilSong_PreviewMouseLeftButtonUp" Visibility="Hidden" />
 
                                 <GroupBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Header="Gewichtung">
-                                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="30,0,0,0">
-                                    
+                                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="30,0,0,0">                                    
                                     <Image Name="imgBGStern0" Grid.Column="1" Tag="1" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
                                     <Image Name="imgBGStern1" Grid.Column="1" Tag="2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
                                     <Image Name="imgBGStern2" Grid.Column="1" Tag="3" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
                                     <Image Name="imgBGStern3" Grid.Column="1" Tag="4" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
-                                    <Image Name="imgBGStern4" Grid.Column="1" Tag="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>
-                                   
+                                    <Image Name="imgBGStern4" Grid.Column="1" Tag="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu_grau.png" MouseDown="imgBGStern_MouseDown"/>                                   
                                 </StackPanel> 
                                 </GroupBox>
                             </Grid>                            
@@ -666,7 +664,7 @@
                                 <Button ClickMode="Press" AllowDrop="True" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnPListPListAbspielen_Click" Focusable="False" Name="btnPListPListAbspielen" IsEnabled="False" >
                                     <Image Margin="5"  Width="30" Height="30" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" Name="btnimgPListPListAbspielen" />
                                 </Button>
-                                <Button Width="26" Height="26" Tag="50" Focusable="False" Name="btnPListPListSpeaker" Click="btnPListPListSpeaker_Click">
+                                <Button Width="26" Height="26" Tag="-1" Focusable="False" Name="btnPListPListSpeaker" Click="btnPListPListSpeaker_Click">
                                     <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnimgPListPListSpeaker" />
                                 </Button>
                                 <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" Focusable="False" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" />
@@ -755,7 +753,7 @@
                             <Label Padding="0" Name="btnLblThemeLöschen" Grid.Column="1" VerticalContentAlignment="Center">Theme löschen</Label>
                         </Grid>
                     </Button>
-                    <ToggleButton Name="btnThemeEdit" ClickMode="Press" Height="33" HorizontalAlignment="Left" IsTabStop="False" Width="90" Grid.Column="1" Margin="130,0,0,0" Visibility="Hidden" Click="btnThemeEdit_Click" IsChecked="True" Focusable="False" Style="{Binding}" Background="{x:Null}">
+                    <ToggleButton Name="btnThemeEdit" ClickMode="Press" Height="33" HorizontalAlignment="Left" IsTabStop="False" Width="90" Grid.Column="1" Margin="130,0,0,0" Visibility="Hidden" Click="btnThemeEdit_Click" IsChecked="True" Focusable="False" Background="{x:Null}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="22" />
@@ -766,7 +764,7 @@
                         </Grid>
                     </ToggleButton>                  
                     <Label Content="Name" Grid.Column="1" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Name="ThemeBezeichnung" HorizontalAlignment="Right" Visibility="{Binding ElementName=tboxThemeBezeichnung, Path=Visibility}" />
-                    <TextBox Background="{x:Null}" FontWeight="Bold" ForceCursor="True" Height="25" Width="240" Name="tboxThemeBezeichnung" Style="{Binding}" Grid.Column="2" Margin="0,5" Visibility="Hidden" KeyUp="tboxThemeBezeichnung_KeyUp" HorizontalAlignment="Left" />
+                    <TextBox Background="{x:Null}" FontWeight="Bold" ForceCursor="True" Height="25" Width="240" Name="tboxThemeBezeichnung" Grid.Column="2" Margin="0,5" Visibility="Hidden" KeyUp="tboxThemeBezeichnung_KeyUp" HorizontalAlignment="Left" />
 
                     <Label Content="keine Audio-Themes geladen"  Name="lblNoThemes" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.ColumnSpan="4" />
                     <ScrollViewer VerticalScrollBarVisibility="Visible" MinHeight="140" Margin="0,0,0,6" Grid.Row="1" Grid.ColumnSpan="4" Name="scrTheme">

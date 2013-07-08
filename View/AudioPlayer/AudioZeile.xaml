@@ -7,9 +7,9 @@
              d:DesignHeight="55" d:DesignWidth="900">
     <Grid Name="grd_parent">
         <ListBoxItem Name="lbiKlangRow" Height="55">
-            <Grid Name="grdKlangRow" VerticalAlignment="Center" Margin="0,5">
+            <Grid Name="grdKlangRow" VerticalAlignment="Center" Margin="0,2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="23" />
+                    <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -35,7 +35,7 @@
                 <Image Name="imgLaufstärke" Grid.Column="3" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" />
                 <Image Name="imgPause" Grid.Column="3" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" />
                 
-                <Slider Name="sldKlangVol"  Grid.Column="4" Height="23" Margin="6,0,4,0" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" />
+                <Slider Name="sldKlangVol"  Grid.Column="4" Margin="6,2,4,0" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" VerticalAlignment="Center" />
                 <CheckBox Name="chkVolMove" Grid.Column="5" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,1,0" />
                 <TextBox Name="tboxVolMin" Grid.Column="6" Text="0" HorizontalContentAlignment="Center" Margin="0,2,36,2" Tag="0" Padding="0" />
                 <Button Name="_btnVolMinMinus" Width="18" Height="18" Grid.Column="6" HorizontalAlignment="Right" Margin="18,0" Tag="-5" IsTabStop="False">
@@ -54,8 +54,8 @@
                 <Border VerticalAlignment="Bottom" Grid.ColumnSpan="5" BorderBrush="Gray" Margin="-5,-1,-5,-1" Height="1" Grid.Column="3" BorderThickness="1" Name="brdTrennstrich" />
 
 
-                <Slider Name="sldKlangPause" Grid.Column="4" Grid.Row="1" Margin="6,1,4,0" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
-                                                        Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000, 50000" Foreground="DarkSlateGray" />
+                <Slider Name="sldKlangPause" Grid.Column="4" Grid.Row="1" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
+                                                        Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000, 50000" Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,2,4,0" />
 
                 <CheckBox Name="chkKlangPauseMove" Grid.Column="5" Grid.Row="2" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,1,0" />
                 <TextBox Name="tboxPauseMin" Grid.Column="6" Grid.Row="2" Margin="0,2,36,2" Text="12345" HorizontalContentAlignment="Center" Tag="0" Padding="0" />
