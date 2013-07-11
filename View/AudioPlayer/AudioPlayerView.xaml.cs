@@ -373,8 +373,9 @@ namespace MeisterGeister.View.AudioPlayer {
 					}
 					else
 					{
-						_player.Volume = (seite == -1) ? vol / 100 : (vol * (_GrpObjecte[posObjGruppe].Vol_ThemeMod / 100)) / 100;
-						_player.Play();
+						_player.Volume = (seite == -1) ? vol / 100 : (vol * 
+                            (_GrpObjecte[posObjGruppe].Vol_ThemeMod / 100) *            // Theme Slider Modifikator
+                            (_GrpObjecte[posObjGruppe].Vol_PlaylistMod / 100)) / 100;   // Slider des PListModifikator                        
 					}						
 				}
 				catch (Exception ex2)
