@@ -196,7 +196,7 @@ namespace MeisterGeister.View.AudioPlayer {
 	public partial class AudioPlayerView : UserControl
 	{
 		private double Zeitüberlauf = 1000;   // in ms
-		public string stdPfad = @"C:\";
+		public string stdPfad = "C:\\";
 		private UInt16 tiErstellt = 0;
 		private UInt16 rowErstellt = 0;
 		private int fadingIntervall = 10;
@@ -249,7 +249,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			_BGPlayer.BG.Add(new Musik());
 
 			_rbtnGleichSpielen.IsChecked = Logic.Settings.Einstellungen.AudioDirektAbspielen;
-			stdPfad = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", @"C:\");
+			stdPfad = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", "C:\\");
 			_tbStdPfad.Text = stdPfad;
 			fadingTime = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("Fading", 600);
 
@@ -268,7 +268,7 @@ namespace MeisterGeister.View.AudioPlayer {
 		
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			_tbStdPfad.Text = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", @"C:\");
+			_tbStdPfad.Text = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", "C:\\");
 			_rbtnGleichSpielen.IsChecked = MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen;
 			_sldFading.Value = MeisterGeister.Logic.Settings.Einstellungen.Fading;
 			_sldFading.ToolTip = Math.Round(_sldFading.Value / 100, 1) + " Sekunden In-/Out-Fading";
@@ -1260,11 +1260,11 @@ namespace MeisterGeister.View.AudioPlayer {
 			if (titelliste.Count > 0)
 			{
 				string titelRef = titelliste[0].Pfad.LastIndexOf("\\") != -1? titelliste[0].Pfad.Substring(0, titelliste[0].Pfad.LastIndexOf("\\")) : titelliste[0].Pfad;
-				titelRef = (titelRef.Substring(1, 2) != @":\") ? stdPfad + "\\" + titelRef : titelRef;
+				titelRef = (titelRef.Substring(1, 2) != ":\\") ? stdPfad + "\\" + titelRef : titelRef;
 
 				titelliste.ForEach(delegate(Audio_Titel aTitel)
 				{
-					string vergleich = (aTitel.Pfad.Substring(1, 2) != @":\") ? stdPfad + "\\" + aTitel.Pfad : aTitel.Pfad;
+					string vergleich = (aTitel.Pfad.Substring(1, 2) != ":\\") ? stdPfad + "\\" + aTitel.Pfad : aTitel.Pfad;
 
 					while (!vergleich.StartsWith(titelRef))// titelRef != vergleich.Substring(0, vergleich.Length < titelRef.Length? vergleich.Length: titelRef.Length))
 					{
@@ -1662,9 +1662,9 @@ namespace MeisterGeister.View.AudioPlayer {
 				int zeile = _GrpObjecte[posObjGruppe]._listZeile.IndexOf(
 					_GrpObjecte[posObjGruppe]._listZeile.FirstOrDefault(t => t.audioZeile.chkTitel == (Control)sender));
 				string file = (sender as CheckBox).Tag.ToString();
-				if (file.Substring(1, 2) != @":\")
+				if (file.Substring(1, 2) != ":\\")
 				{
-					if (stdPfad.EndsWith(@"\"))
+					if (stdPfad.EndsWith("\\"))
 						file = stdPfad + file;
 					else
 						file = stdPfad + "\\" + file;
@@ -1680,7 +1680,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				}
 				if (!_GrpObjecte[posObjGruppe]._listZeile[zeile].istPause)
 				{
-					if (!File.Exists(file))
+					if (Directory.Exists(System.IO.Path.GetDirectoryName(file)) && !File.Exists(file))
 					{
 						_GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.lbiKlangRow.Background = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0));       // Red))
 						_GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.lbiKlangRow.ToolTip = "Datei nicht gefunden";
@@ -2235,15 +2235,15 @@ namespace MeisterGeister.View.AudioPlayer {
 				else
 				{
 					string file = titel.Pfad;
-					if (file.Substring(1, 2) != @":\")
+					if (file.Substring(1, 2) != ":\\")
 					{
-						if (stdPfad.EndsWith(@"\"))
+						if (stdPfad.EndsWith("\\"))
 							file = stdPfad + file;
 						else
 							file = stdPfad + "\\" + file;
 					}
 
-					if (!File.Exists(file))
+                    if (Directory.Exists(System.IO.Path.GetDirectoryName(file)) && !File.Exists(file))
 					{
 						lbItem.Background = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0));         // Brushes.Red;
 						lbItem.ToolTip = "Datei nicht gefunden";
@@ -4039,7 +4039,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			dlg.Multiselect = true;
 			dlg.DefaultExt = ".mp3;.wav;.wma;.ogg"; // Extensionen
 			dlg.Filter = "Alle Musikdateien |*.mp3;*.wav;*.wma;*.ogg|MP3-Dateien|*.mp3|Wave-Dateien|*.wav|Windows Media Player-Dateien|*.wma|OGG-Dateien|*.ogg"; // Filter Dateien pro extension
-			dlg.InitialDirectory = Directory.Exists(stdPfad)? stdPfad: @"C:\";
+			dlg.InitialDirectory = Directory.Exists(stdPfad)? stdPfad: "C:\\";
 
 			// Zeige File-Öffnen Dialog
 			Nullable<bool> result = dlg.ShowDialog();
@@ -5513,10 +5513,10 @@ namespace MeisterGeister.View.AudioPlayer {
 			for (int i = 0; i < plylst.Audio_Playlist_Titel.Count; i++)
 			{
 				file = plylst.Audio_Playlist_Titel.ElementAt(i).Audio_Titel.Pfad;
-				if (file.Substring(1, 2) != @":\")
-						file = (stdPfad.EndsWith(@"\"))? (stdPfad + file): (stdPfad + "\\" + file);
+				if (file.Substring(1, 2) != ":\\")
+						file = (stdPfad.EndsWith("\\"))? (stdPfad + file): (stdPfad + "\\" + file);
 
-				if (File.Exists(file))
+                if (Directory.Exists(System.IO.Path.GetDirectoryName(file)) && File.Exists(file))
 				{
 					mp.Volume = 0;
 					mp.Open(new Uri(file));
@@ -5647,7 +5647,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				var dialog = new System.Windows.Forms.FolderBrowserDialog();
 				
 				dialog.SelectedPath = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", 
-					Directory.Exists(_tbStdPfad.Text)? _tbStdPfad.Text: @"C:\");
+					Directory.Exists(_tbStdPfad.Text)? _tbStdPfad.Text: "C:\\");
 				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 				if (result == System.Windows.Forms.DialogResult.OK)
 					_tbStdPfad.Text = dialog.SelectedPath; //_btnStdPfad.Tag.ToString();
@@ -6234,7 +6234,7 @@ namespace MeisterGeister.View.AudioPlayer {
 					
 					List<string> newfiles = new List<string>();
 					int durchlauf = 0;
-					string prefix = (titelliste[0].Pfad.Substring(1, 3) != @":\\") ?
+					string prefix = (titelliste[0].Pfad.Substring(1, 3) != ":\\") ?
 						stdPfad + "\\" : "";
 
 					while (durchlauf < allFiles.Length)
