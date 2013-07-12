@@ -225,12 +225,12 @@
                         <ColumnDefinition Width="130" />
                         <ColumnDefinition Width="78" />
                         <ColumnDefinition Width="200*" MaxWidth="190" />
-                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="30"/>
                     </Grid.ColumnDefinitions>
                         
                     <Label Name="lblStdPfad" Content="Standard-Verzeichnis" />
-                    <TextBox Height="23" Name="_tbStdPfad" Background="{x:Null}" Text="C:\" Tag="C:\" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,1" TextChanged="_tbStdPfad_TextChanged"  />
-                    <Button Content="..." Height="21" HorizontalAlignment="Left" Name="_btnStdPfad" Width="20" Grid.Column="3" Click="_btnStdPfad_Click" />
+                    <TextBox Height="23" Name="_tbStdPfad" Background="{x:Null}" Text="C:\" Tag="C:\" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,1" TextChanged="_tbStdPfad_TextChanged" IsReadOnly="True" ToolTip="Wählen Sie den Auswahl-Button um den Standard-Pfad zu ändern" />
+                    <Button Content="..." Height="21" HorizontalAlignment="Left" Name="_btnStdPfad" Width="30" Grid.Column="3" Click="_btnStdPfad_Click" />
                                     
                     <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Margin="10,0,0,0" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Click="_rbtnGleichSpielen_Click" Focusable="False"/>
 

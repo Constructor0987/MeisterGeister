@@ -1165,7 +1165,8 @@ namespace MeisterGeister.View.AudioPlayer {
 								//*************** TEMP *********************
 								if (playlisttitel.Audio_Titel.Pfad.StartsWith(stdPfad))
 								{
-									playlisttitel.Audio_Titel.Pfad = playlisttitel.Audio_Titel.Pfad.Substring(stdPfad.Length+1);
+									playlisttitel.Audio_Titel.Pfad = playlisttitel.Audio_Titel.Pfad.Substring(stdPfad.Length);
+                                    if (playlisttitel.Audio_Titel.Pfad.StartsWith(@"\")) playlisttitel.Audio_Titel.Pfad = playlisttitel.Audio_Titel.Pfad.Substring(1);
 									Global.ContextAudio.Update<Audio_Titel>(playlisttitel.Audio_Titel);
 								}
 								//******************************************
@@ -1260,11 +1261,11 @@ namespace MeisterGeister.View.AudioPlayer {
 			if (titelliste.Count > 0)
 			{
 				string titelRef = titelliste[0].Pfad.LastIndexOf("\\") != -1? titelliste[0].Pfad.Substring(0, titelliste[0].Pfad.LastIndexOf("\\")) : titelliste[0].Pfad;
-				titelRef = (titelRef.Substring(1, 2) != ":\\") ? stdPfad + "\\" + titelRef : titelRef;
+				titelRef = (titelRef.Substring(1, 1) != ":") ? stdPfad + "\\" + titelRef : titelRef;
 
 				titelliste.ForEach(delegate(Audio_Titel aTitel)
 				{
-					string vergleich = (aTitel.Pfad.Substring(1, 2) != ":\\") ? stdPfad + "\\" + aTitel.Pfad : aTitel.Pfad;
+					string vergleich = (aTitel.Pfad.Substring(1, 1) != ":") ? stdPfad + "\\" + aTitel.Pfad : aTitel.Pfad;
 
 					while (!vergleich.StartsWith(titelRef))// titelRef != vergleich.Substring(0, vergleich.Length < titelRef.Length? vergleich.Length: titelRef.Length))
 					{
@@ -1662,7 +1663,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				int zeile = _GrpObjecte[posObjGruppe]._listZeile.IndexOf(
 					_GrpObjecte[posObjGruppe]._listZeile.FirstOrDefault(t => t.audioZeile.chkTitel == (Control)sender));
 				string file = (sender as CheckBox).Tag.ToString();
-				if (file.Substring(1, 2) != ":\\")
+				if (file.Substring(1, 1) != ":")
 				{
 					if (stdPfad.EndsWith("\\"))
 						file = stdPfad + file;
@@ -1852,10 +1853,13 @@ namespace MeisterGeister.View.AudioPlayer {
 			Audio_Titel titel = Global.ContextAudio.New<Audio_Titel>();
 			//eigenschaften setzen
 			titel.Name = System.IO.Path.GetFileNameWithoutExtension(datei);
-			if (datei.StartsWith(stdPfad))
-				titel.Pfad = datei.Substring(stdPfad.Length + 1);
-			else
-				titel.Pfad = datei;
+            if (datei.ToLower().StartsWith(stdPfad.ToLower()))
+            {
+                titel.Pfad = datei.Substring(stdPfad.Length);
+                if (titel.Pfad.StartsWith(@"\")) titel.Pfad = titel.Pfad.Substring(1);
+            }
+            else
+                titel.Pfad = datei;
 			
 			//zur datenbank hinzufügen
 			if (Global.ContextAudio.Insert<Audio_Titel>(titel))
@@ -2235,7 +2239,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				else
 				{
 					string file = titel.Pfad;
-					if (file.Substring(1, 2) != ":\\")
+					if (file.Substring(1, 1) != ":")
 					{
 						if (stdPfad.EndsWith("\\"))
 							file = stdPfad + file;
@@ -5513,7 +5517,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			for (int i = 0; i < plylst.Audio_Playlist_Titel.Count; i++)
 			{
 				file = plylst.Audio_Playlist_Titel.ElementAt(i).Audio_Titel.Pfad;
-				if (file.Substring(1, 2) != ":\\")
+				if (file.Substring(1, 1) != ":")
 						file = (stdPfad.EndsWith("\\"))? (stdPfad + file): (stdPfad + "\\" + file);
 
                 if (Directory.Exists(System.IO.Path.GetDirectoryName(file)) && File.Exists(file))
@@ -6234,7 +6238,7 @@ namespace MeisterGeister.View.AudioPlayer {
 					
 					List<string> newfiles = new List<string>();
 					int durchlauf = 0;
-					string prefix = (titelliste[0].Pfad.Substring(1, 3) != ":\\") ?
+					string prefix = (titelliste[0].Pfad.Substring(1, 1) != ":") ?
 						stdPfad + "\\" : "";
 
 					while (durchlauf < allFiles.Length)
