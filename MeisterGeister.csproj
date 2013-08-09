@@ -490,6 +490,9 @@
     <Compile Include="View\AudioPlayer\HitchPanel.xaml.cs">
       <DependentUpon>HitchPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\HotKeyZeile.xaml.cs">
+      <DependentUpon>HotKeyZeile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AudioPlayer\MusikZeile.xaml.cs">
       <DependentUpon>MusikZeile.xaml</DependentUpon>
     </Compile>
@@ -854,6 +857,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioPlayer\HitchPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\HotKeyZeile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1309,8 +1316,6 @@
     <Resource Include="Images\Icons\General\zeile.png" />
     <Resource Include="Images\Icons\General\entf_all.png" />
     <Resource Include="Images\Icons\General\shuffle.png" />
-    <Resource Include="Images\Icons\General\pause_grau.png" />
-    <Resource Include="Images\Icons\General\play_grau.png" />
     <Resource Include="Images\Icons\General\sort.png" />
     <Resource Include="Images\Icons\nahkampf_03.png" />
     <Resource Include="Images\Icons\General\hase.png" />
@@ -1480,7 +1485,6 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0060.sql" />
     <Resource Include="Daten\Helden\Demohelden\Gero Kalai von Rodaschquell.xml" />
     <Resource Include="Images\Icons\General\play_prev.png" />
-    <Resource Include="Images\Icons\General\play_stop-grau.png" />
     <Resource Include="Images\Icons\General\repeat.png" />
     <Resource Include="Images\Icons\General\speaker-mute.png" />
     <Resource Include="Images\Icons\General\speaker.png" />
@@ -1504,8 +1508,6 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0076.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0077.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0078.sql" />
-    <Resource Include="Images\Icons\General\play_next_grau.png" />
-    <Resource Include="Images\Icons\General\play_prev_grau.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="License\Apache License.txt">

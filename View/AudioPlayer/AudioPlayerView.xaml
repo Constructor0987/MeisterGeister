@@ -9,9 +9,17 @@
     xmlns:local="clr-namespace:MeisterGeister.View.AudioPlayer"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  	    
     mc:Ignorable="d" 
-    d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded" Unloaded="Window_Unloaded" Margin="0,5,5,0">
+    d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded" Unloaded="Window_Unloaded" KeyDown="Window_KeyDown" Margin="0,5,5,0">
 
     <UserControl.Resources>
+        <Style x:Key="ImageEnabled" TargetType="Image">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.25"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
         <Style x:Key="GlasButton" TargetType="{x:Type Button}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -196,7 +204,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>        
     </UserControl.Resources>
     
     <Grid>
@@ -242,11 +250,12 @@
             </StackPanel>
             </Border>
           </Expander>
-        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
             <TabItem Header="Playlist-Editor" Name="tiKlang" GotFocus="tiKlang_Loaded" >
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="178" />
+                        <ColumnDefinition Width="89" />
+                        <ColumnDefinition Width="89" />
                         <ColumnDefinition Width="581*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -254,7 +263,7 @@
                         <RowDefinition Height="312*" />
                     </Grid.RowDefinitions>
 
-                    <Border Grid.Column="1" Height="40" HorizontalAlignment="Stretch" Margin="0" Name="brdKlang" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}">
+                    <Border Grid.Column="2" Height="40" HorizontalAlignment="Stretch" Margin="0" Name="brdKlang" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}">
                         <Grid Name="grdKlangPlaylistInfo">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5" />
@@ -303,7 +312,7 @@
                         </Grid>
                     </Border>
 
-                    <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcKlang" Grid.Column="1" Grid.Row="1" Margin="3,8,6,9" SelectionChanged="tcKlang_SelectionChanged" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" >
+                    <TabControl Background="{StaticResource Background1}" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" Name="tcKlang" Grid.Column="2" Grid.Row="1" Margin="3,8,6,9" SelectionChanged="tcKlang_SelectionChanged" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" >
                         <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" >
                                 <TabItem.Header>
                                 <StackPanel>
@@ -415,9 +424,22 @@
                         </TabItem>
                     </TabControl>
 
-                    <Button Content="Neue Liste" HorizontalAlignment="Left" Name="btnNeuePlaylist" Click="bntNeuePlaylist_Click" Height="23" Width="65" Margin="93,3,3,0" Visibility="Visible" />
-                    <Button Content="Liste löschen" HorizontalAlignment="Left" Name="btnPlaylistLoeschen" Height="23" Width="80" Margin="3,3,3,0" IsEnabled="False" Click="btnPlaylistLoeschen_Click" />
-                    <GroupBox Header="Anzeige Playlists" Name="groupBox1" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                        <Button Name="btnNeuePlaylist" ToolTip="Neue Liste" Click="bntNeuePlaylist_Click" Height="30" Width="35" Margin="10,0,0,0" Visibility="Visible" Grid.Column="1"  >
+                            <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
+                        </Button>
+                        <Button Name="btnPlaylistLoeschen" ToolTip="Liste löschen" Click="btnPlaylistLoeschen_Click" Height="30" Width="35" Margin="5,0,0,0" IsEnabled="False" >
+                            <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
+                        </Button>
+                        <Button Name="btnPlaylistImport" ToolTip="Liste importieren" Click="bntImportPlaylist_Click" Height="30" Width="35" Margin="5,0,0,0" >
+                            <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
+                        </Button>
+                        <Button Name="btnPlaylistExport" ToolTip="Liste exportieren" Click="bntExportPlaylist_Click" Height="30" Width="35" Margin="5,0,0,0" IsEnabled="False" Grid.Column="1" >
+                            <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" />
+                        </Button>
+                    </StackPanel>
+
+                    <GroupBox Header="Anzeige Playlists" Name="groupBox1" Grid.Row="1" Grid.ColumnSpan="2">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="26" />
@@ -432,7 +454,7 @@
                                         <ColumnDefinition Width="20" />
                                     </Grid.ColumnDefinitions>                                
                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                    <TextBox Margin="2,1" Name="tbKlangPlaylistFilter" Grid.Column="1" TextChanged="tbKlangPlaylistFilter_TextChanged" />
+                                    <TextBox Margin="2,1" Name="tbKlangPlaylistFilter" Grid.Column="1" TextChanged="tbKlangPlaylistFilter_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen"/>
                                 </Grid>
                             </Border>
@@ -456,7 +478,7 @@
                         <Grid>
                             <Border BorderBrush="Silver" BorderThickness="1" Height="45" Name="border3" Width="402" CornerRadius="20" />
                             <ToggleButton Height="24" Name="btnShuffle" Margin="-320,0,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsEnabled="True" IsChecked="True" ToolTip="Shuffle-Mode" IsTabStop="False" Focusable="False">
-                                <Image Name="btnShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" />
+                                <Image Name="btnShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" Style="{StaticResource ImageEnabled}" />
                             </ToggleButton>
 
                             <ToggleButton Name="btnBGRepeat" Height="24" Margin="-260,0,0,0" Width="24" ClickMode="Press" IsEnabled="True" ToolTip="Wiederholen" IsTabStop="False" Focusable="False">
@@ -465,19 +487,19 @@
 
                             <Border Width="2" Height="26" Margin="-205,0,0,0" />
                             <Button Width="26" Height="26" Click="btnBGStoppen_Click" Name="btnBGStoppen" Margin="-150,0,0,0" IsEnabled="False" Focusable="False">
-                                <Image Name="btnImgBGStoppen" Width="13" Height="13" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_stop-grau.png" />
+                                <Image Name="btnImgBGStoppen" Width="13" Height="13" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_stop.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
                             <Button Name="btnBGPrev" Width="30" Height="30" Background="Black" Margin="-80,0,0,0" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" IsEnabled="False" Focusable="False" >
-                                <Image Name="imgbtnBGPrev" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_prev_grau.png" />
+                                <Image Name="imgbtnBGPrev" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_prev.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
                             <Button Name="btnBGAbspielen" IsEnabled="False" ClickMode="Press" AllowDrop="True" Tag="0" Grid.Column="2" Width="40" Height="40" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click" Focusable="False">
-                                <Image Name="btnImgBGAbspielen" Margin="5"  Width="30" Height="30" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" />
+                                <Image Name="btnImgBGAbspielen" Margin="5"  Width="30" Height="30" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
                             <Button Name="btnBGNext" IsEnabled="False" Grid.Column="2" Width="30" Height="30" Background="Black"  Margin="80,0,0,0" Style="{StaticResource GlasButton}" Click="btnBGNext_Click" Focusable="False">
-                                <Image Name="imgbtnBGNext" Width="20" Height="20"  Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next_grau.png" />
+                                <Image Name="imgbtnBGNext" Width="20" Height="20"  Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
                             <Button Width="26" Height="26" Name="btnBGSpeaker" Click="btnBGSpeaker_Click" Margin="170,0,0,0" Tag="-1" Focusable="False">
@@ -507,7 +529,7 @@
                                     <ColumnDefinition Width="20" />
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                <TextBox Margin="2,1" Name="tbBGFilter" Grid.Column="1" TextChanged="tbKBGFilter_TextChanged" />
+                                <TextBox Margin="2,1" Name="tbBGFilter" Grid.Column="1" TextChanged="tbKBGFilter_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                 <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Grid.Column="2" Stretch="Fill" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen" HorizontalAlignment="Left" />
                             </Grid>
                         </Border>
@@ -518,7 +540,7 @@
                                     <GradientStop Color="#FFFFFFC7" Offset="1" />
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <ListBox Padding="4" Name="lbBackground"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" Width="253" ItemContainerStyle="{StaticResource SimpleListBoxItem}" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged" ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" />                       
+                            <ListBox Padding="4" Name="lbBackground"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" Width="253" ItemContainerStyle="{StaticResource SimpleListBoxItem}" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged" ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" />
                         </Border>
 
                         <Border Grid.Column="3" Grid.Row="1" Height="240" Name="border2" Width="310" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" Margin="2,46,2,72" >
@@ -614,34 +636,34 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                    <TextBox Name="tbPListKategorie" Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" />
+                                    <TextBox Name="tbPListKategorie" Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Grid.Column="2" Stretch="Fill" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen" HorizontalAlignment="Left" />
                                 </Grid>
                             </Border>
                             <Border Grid.Row="2" HorizontalAlignment="Right" Width="2" Margin="0,0,-1,0" />
                             <Border Grid.ColumnSpan="2" />
                             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top">
-                                <Button Width="26" Height="26" Click="btnBGStoppen_Click" IsEnabled="False" Focusable="False" Margin="0,0,5,0" Name="btnPListMusikStoppen">
-                                    <Image Width="13" Height="13" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_stop-grau.png" Name="btnImgPListMusikStoppen" />
+                                <Button Width="26" Height="26" Click="btnBGStoppen_Click" IsEnabled="False" Margin="0,0,5,0" Name="btnPListMusikStoppen">
+                                    <Image Name="btnImgPListMusikStoppen" Width="13" Height="13" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_stop.png" Style="{StaticResource ImageEnabled}" />
                                 </Button>
 
-                                <Button Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" Margin="0,0,5,0" IsEnabled="False" Focusable="False" Name="btnPListMusikPrev">
-                                    <Image Name="imgbtnPListMusikPrev" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_prev_grau.png" />
+                                <Button Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" Margin="0,0,5,0" IsEnabled="False" Name="btnPListMusikPrev">
+                                    <Image Name="imgbtnPListMusikPrev" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_prev.png" Style="{StaticResource ImageEnabled}" />
                                 </Button>
 
-                                <Button IsEnabled="False" ClickMode="Press" AllowDrop="True" Tag="0"  Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click" Focusable="False" Name="btnPListMusikAbspielen">
-                                    <Image Margin="5"  Width="30" Height="30" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" Name="btnImgPListMusikAbspielen" />
+                                <Button IsEnabled="False" ClickMode="Press" AllowDrop="True" Tag="0"  Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click" Name="btnPListMusikAbspielen">
+                                    <Image Name="btnImgPListMusikAbspielen" Margin="5"  Width="30" Height="30" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" Style="{StaticResource ImageEnabled}" />
                                 </Button>
 
-                                <Button IsEnabled="False" Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Margin="0,0,5,0" Click="btnBGNext_Click" Focusable="False" Name="btnPListMusikNext">
-                                    <Image Name="imgbtnPListMusikNext" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next_grau.png" />
+                                <Button IsEnabled="False" Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Margin="0,0,5,0" Click="btnBGNext_Click" Name="btnPListMusikNext">
+                                    <Image Name="imgbtnPListMusikNext" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" Style="{StaticResource ImageEnabled}" />
                                 </Button>
 
-                                <Button Width="26" Height="26" Click="btnBGSpeaker_Click" Focusable="False" Name="btnPListMusikSpeaker">
+                                <Button Width="26" Height="26" Click="btnBGSpeaker_Click" Name="btnPListMusikSpeaker">
                                     <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnImgPListMusikSpeaker" />
                                 </Button>
 
-                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistMusikVolume_ValueChanged" Focusable="False" MouseWheel="slVolume_MouseWheel" Name="slPlaylistMusikVolume" Margin="10,0,0,0" />
+                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistMusikVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistMusikVolume" Margin="10,0,0,0" />
                             
                             </StackPanel>
                             <Border Grid.Row="1" HorizontalAlignment="Right" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Namens-Filter aller Musik-Playlists" Margin="0,0,20,0">
@@ -655,19 +677,19 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                    <TextBox Name="tbPListMusik" Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" />
+                                    <TextBox Name="tbPListMusik" Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Grid.Column="2" Stretch="Fill" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen" HorizontalAlignment="Left" />
                                 </Grid>
                             </Border>
                             
                             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left"  Margin="45,0,0,0" VerticalAlignment="Center">
-                                <Button ClickMode="Press" AllowDrop="True" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnPListPListAbspielen_Click" Focusable="False" Name="btnPListPListAbspielen" IsEnabled="False" >
-                                    <Image Margin="5"  Width="30" Height="30" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" Name="btnimgPListPListAbspielen" />
+                                <Button ClickMode="Press" AllowDrop="True" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnPListPListAbspielen_Click" Name="btnPListPListAbspielen" IsEnabled="False" >
+                                    <Image Name="btnimgPListPListAbspielen" Width="30" Height="30" Margin="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" Style="{StaticResource ImageEnabled}" />
                                 </Button>
-                                <Button Width="26" Height="26" Tag="-1" Focusable="False" Name="btnPListPListSpeaker" Click="btnPListPListSpeaker_Click">
+                                <Button Width="26" Height="26" Tag="-1" Name="btnPListPListSpeaker" Click="btnPListPListSpeaker_Click">
                                     <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnimgPListPListSpeaker" />
                                 </Button>
-                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" Focusable="False" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" />
+                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" />
                             </StackPanel>
 
                             <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Namens-Filter aller Geräusche-Playlists" Margin="0,0,20,0">
@@ -681,7 +703,7 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                    <TextBox Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" Name="tbPListGeräusche" />
+                                    <TextBox Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" Name="tbPListGeräusche" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Grid.Column="2" Stretch="Fill" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen" HorizontalAlignment="Left" />
                                 </Grid>
                             </Border>
@@ -720,9 +742,8 @@
                         <ColumnDefinition Width="300" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Border Name="brdThemeTop" Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="3" Margin="-1,0,1,0">
+                    <Border Name="brdThemeTop" Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="3" Margin="-1,0,1,0" />
                         
-                    </Border>
                     <Button Height="30" Grid.Column="2" Name="btnThemeUpdate" Click="btnThemeUpdate_Click" Width="120" HorizontalAlignment="Right" Margin="5" IsTabStop="False" Focusable="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -809,7 +830,7 @@
                                                         <ColumnDefinition Width="20" />
                                                     </Grid.ColumnDefinitions>
                                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                                    <TextBox Margin="2,1" Name="tbThemeBGPlaylistFilter" Grid.Column="1" TextChanged="tbThemeBGPlaylistFilter_TextChanged"/>
+                                                    <TextBox Margin="2,1" Name="tbThemeBGPlaylistFilter" Grid.Column="1" TextChanged="tbThemeBGPlaylistFilter_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen"/>
                                                 </Grid>
                                             </Border>
@@ -847,7 +868,7 @@
                                                         <ColumnDefinition Width="20" />
                                                     </Grid.ColumnDefinitions>
                                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                                    <TextBox Margin="2,1" Name="tbThemeKlangPlaylistFilter" Grid.Column="1" TextChanged="tbThemeKlangPlaylistFilter_TextChanged"/>
+                                                    <TextBox Margin="2,1" Name="tbThemeKlangPlaylistFilter" Grid.Column="1" TextChanged="tbThemeKlangPlaylistFilter_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Grid.Column="2" Width="15" MouseUp="imgBGFilter_MouseUp" ToolTip="Filter löschen"/>
                                                 </Grid>
                                             </Border>
@@ -867,7 +888,29 @@
                      </Expander>
                 </Grid>
             </TabItem>
+            <TabItem  Header="HotKey" Name="tiHotkey" GotFocus="tiHotkey_GotFocus">
+                <Grid Background="{StaticResource Background1}" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*" MinHeight="150" />
+                        <RowDefinition Height="22" MinHeight="22"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>                        
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Style="{DynamicResource ControlContentBorder}" Grid.ColumnSpan="3" Margin="-1,0,1,0" />
+
+                    <ListBox Name="lbHotKey" Margin="50,10" Grid.Row="1" Padding="4" Background="Transparent" FontSize="14" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Left" MinWidth="300" />
+                </Grid>
+            </TabItem>
         </TabControl>
         <Image Grid.RowSpan="2" Height="35" HorizontalAlignment="Left" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="35" Source="/DSA%20MeisterGeister;component/Images/Icons/General/info.png" MouseDown="image1_MouseDown" Cursor="Hand" FlowDirection="LeftToRight" Margin="10,0,0,0" ToolTip="Audio-Codec Informationen" />
+        <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Height="45" Margin="80,0,20,0" Visibility="Collapsed" >
+            <Grid Name="gbxHotkeysgrdHotkeys" >
+                <StackPanel Name="spnlHotkeys" Orientation="Horizontal" >
+
+                </StackPanel>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>
