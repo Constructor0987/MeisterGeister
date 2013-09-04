@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="MeisterGeister.View.AudioPlayer.AudioZeile"
+﻿<ContentControl x:Class="MeisterGeister.View.AudioPlayer.AudioZeile"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Name="_audioZeile"
              d:DesignHeight="55" d:DesignWidth="900">
     <Grid Name="grd_parent">
         <ListBoxItem Name="lbiKlangRow" Height="55">
@@ -55,7 +55,8 @@
 
 
                 <Slider Name="sldKlangPause" Grid.Column="4" Grid.Row="1" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
-                                                        Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000, 50000" Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,2,4,0" />
+                        Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,2,4,0" 
+                        Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000, 50000" />
 
                 <CheckBox Name="chkKlangPauseMove" Grid.Column="5" Grid.Row="2" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,1,0" />
                 <TextBox Name="tboxPauseMin" Grid.Column="6" Grid.Row="2" Margin="0,2,36,2" Text="12345" HorizontalContentAlignment="Center" Tag="0" Padding="0" />
@@ -78,4 +79,4 @@
             </Grid>
         </ListBoxItem>
     </Grid>
-</UserControl>
+</ContentControl>

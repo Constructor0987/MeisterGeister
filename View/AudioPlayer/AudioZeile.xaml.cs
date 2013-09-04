@@ -17,7 +17,7 @@ namespace MeisterGeister.View.AudioPlayer
     /// <summary>
     /// Interaktionslogik für AudioZeile.xaml
     /// </summary>
-    public partial class AudioZeile : UserControl
+    public partial class AudioZeile : ContentControl
     {
         public AudioZeile()
         {

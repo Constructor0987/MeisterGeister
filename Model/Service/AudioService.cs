@@ -50,10 +50,10 @@ namespace MeisterGeister.Model.Service {
             return tmp;
         }        
 
-        public List<Audio_Theme> LoadThemesByGUID(Guid Audio_Theme_GUID)
+        public Audio_Theme LoadThemesByGUID(Guid Audio_Theme_GUID)
         {
-            List<Audio_Theme> tmp = Context.Audio_Theme
-                .Where(pt => pt.Audio_ThemeGUID == Audio_Theme_GUID).ToList();
+            Audio_Theme tmp = Context.Audio_Theme
+                .FirstOrDefault(pt => pt.Audio_ThemeGUID == Audio_Theme_GUID);
             return tmp;
         }
 
