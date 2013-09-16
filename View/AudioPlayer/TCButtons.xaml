@@ -1,0 +1,21 @@
+﻿<TabItem x:Class="MeisterGeister.View.AudioPlayer.TCButtons"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" AllowDrop="True" Height="20" LostFocus="TabItem_LostFocus" GotFocus="TabItem_GotFocus">
+    <TabItem.Header>
+        <StackPanel Orientation="Horizontal" >
+            <TextBlock Name="_tbText" Text="Neuer Tab" Margin="4, 0, 0, 0" VerticalAlignment="Center" FontSize="11" />
+            <TextBox Name="_tbEditText" VerticalAlignment="Center" FontSize="17" Margin="3" Visibility="Collapsed" Background="Khaki" />
+            <Button Name="_btnEditOkay"  Margin="8,0,0,0" Height="18" ToolTip="Umbenennen" HorizontalAlignment="Center" Visibility="Collapsed" VerticalAlignment="Center" >
+                <DockPanel>
+                    <Image Name="_imgEdit" Source="/Images/Icons/General/feder.png" Stretch="Fill" MouseDown="imgEdit_MouseDown" />
+                    <Image Name="_imgOk" Source="/Images/Icons/General/ok.png" Stretch="Fill" Visibility="Collapsed" MouseDown="imgOk_MouseDown" />
+                </DockPanel>
+            </Button>
+            <Button Name="_buttonClose" Height="18" Width="18" Margin="4, 0, 0, 0" Tag="0" Visibility="Collapsed" BorderThickness="0.5" Opacity="0.5" ToolTip="Tool schließen (auch mit mittlerer Maustaste)" Click="ButtonClose_Click" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
+                <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
+            </Button>
+        </StackPanel>
+    </TabItem.Header>
+</TabItem>
