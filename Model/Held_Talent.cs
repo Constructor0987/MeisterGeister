@@ -223,7 +223,7 @@ namespace MeisterGeister.Model
             get
             {
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK)
-                    return AttackeBasisOhneMod + BerechneEffBehinderung();
+                    return AttackeBasisOhneMod - BerechneEffBehinderung();
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return FernkampfwertOhneMod;
                 return AttackeBasisOhneMod - (int)Math.Floor(BerechneEffBehinderung() / 2.0);
@@ -236,7 +236,7 @@ namespace MeisterGeister.Model
             get
             {
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_ATTECHNIK)
-                    return AttackeOhneBE + BerechneEffBehinderung();
+                    return AttackeOhneBE - BerechneEffBehinderung();
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return Fernkampfwert;
                 return AttackeOhneBE - (int)Math.Floor(BerechneEffBehinderung() / 2.0);
