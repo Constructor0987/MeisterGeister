@@ -351,6 +351,11 @@ namespace MeisterGeister.Logic.General
         public int Qualität { get; set; }
         public int Übrig { get; set; }
         public int[] Würfe { get; set; }
+
+        public static ProbenErgebnis KeinErgebnis
+        {
+            get { return new ProbenErgebnis() { Ergebnis = ErgebnisTyp.KEIN_ERGEBNIS, Qualität = 0, Übrig = 0, Würfe = new int[] { 0, 0, 0 } }; }
+        }
     }
 
     [Flags]
