@@ -72,6 +72,12 @@ namespace MeisterGeister.Model
             return this.Gruppe == "Hervorragende Kette";
         }
 
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}): RS {3}, BE {4}, gRS {5}, gBE {6}, Kopf {7}, Brust {8}, Rücken {9}, Bauch {10}, LArm {11}, RArm {12}, LBein {13}, RBein {14}",
+                Name, Art, RS, RS, BE, gRS, gBE, Kopf, Brust, Rücken, Bauch, LArm, RArm, LBein, RBein);
+        }
+
         /// <summary>
         /// gibt zurück, ob für jede Zone ein Rüstungswert gesetzt wurde
         /// (gRS, RS, gBE und BE werden nicht geprüft)

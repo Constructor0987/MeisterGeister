@@ -31,6 +31,28 @@ namespace MeisterGeister.ViewModel.Schmiede
 
         #endregion
 
+        #region //---- COMMANDS ----
+        private Base.CommandBase onAddZuNotizen = null;
+        public Base.CommandBase OnAddZuNotizen
+        {
+            get
+            {
+                if (onAddZuNotizen == null)
+                    onAddZuNotizen = new Base.CommandBase(AddZuNotizen, null);
+                return onAddZuNotizen;
+            }
+        }
+        private void AddZuNotizen(object sender)
+        {
+            if (_selectedSchild != null )
+            {
+                string fromschmiede = "\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n";
+                fromschmiede += _selectedSchild.ToString();
+                Global.ContextNotizen.NotizAllgemein.AppendText(fromschmiede);
+            }
+        }
+        #endregion
+
         #region //---- EIGENSCHAFTEN ----
 
         //Felder        

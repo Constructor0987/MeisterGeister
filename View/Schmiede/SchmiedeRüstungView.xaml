@@ -48,66 +48,84 @@
 					<TextBlock Text="Werte der Rüstung" Style="{DynamicResource TextTitel}" />
 				</Expander.Header>
 				<Border Style="{DynamicResource ControlContentBorder}">
-					<StackPanel>
-						<StackPanel Orientation="Horizontal">
-							<TextBlock Margin="20,10,1,10" FontWeight="Bold" Text="{Binding Path=SelectedRüstung.Name}" />
-							<TextBlock Margin="2,10,20,10" Text="{Binding Path=SelectedRüstung.Art, StringFormat={}({0}) }" />
-						</StackPanel>
-						<StackPanel Orientation="Horizontal" Margin="20,10">
-							<TextBlock Text="{Binding Path=SelectedRüstung.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
-							<TextBlock Text="{Binding Path=SelectedRüstung.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
-						</StackPanel>
-						<Grid Margin="20,10,20,10">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" MinWidth="120"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-							</Grid.ColumnDefinitions>
-							<Grid.RowDefinitions>
-								<RowDefinition />
-								<RowDefinition />
-							</Grid.RowDefinitions>
-							<TextBlock Text="Art" FontWeight="Bold" Margin="0,0,10,0" />
-							<TextBlock Text="V" FontWeight="Bold" ToolTip="Sterne" Margin="5,0" Grid.Column="1" TextAlignment="Center" />
-							<TextBlock Text="Ko" FontWeight="Bold" ToolTip="Kopf" Margin="5,0" Grid.Column="2" TextAlignment="Center" />
-							<TextBlock Text="Br" FontWeight="Bold" ToolTip="Brust" Margin="5,0" Grid.Column="3" TextAlignment="Center" />
-							<TextBlock Text="Rü" FontWeight="Bold" ToolTip="Rücken" Margin="5,0" Grid.Column="4" TextAlignment="Center" />
-							<TextBlock Text="Ba" FontWeight="Bold" ToolTip="Bauch" Margin="5,0" Grid.Column="5" TextAlignment="Center" />
-							<TextBlock Text="LA" FontWeight="Bold" ToolTip="linker Arm" Margin="5,0" Grid.Column="6" TextAlignment="Center" />
-							<TextBlock Text="RA" FontWeight="Bold" ToolTip="rechterArm" Margin="5,0" Grid.Column="7" TextAlignment="Center" />
-							<TextBlock Text="LB" FontWeight="Bold" ToolTip="linkes Bein" Margin="5,0" Grid.Column="8" TextAlignment="Center" />
-							<TextBlock Text="RB" FontWeight="Bold" ToolTip="rechtes Bein" Margin="5,0" Grid.Column="9" TextAlignment="Center" />
-							<TextBlock Text="gRS" FontWeight="Bold" Margin="5,0" ToolTip="Zonensystem" Grid.Column="10" TextAlignment="Center" />
-							<TextBlock Text="gBE" FontWeight="Bold" Margin="5,0" ToolTip="Zonensystem" Grid.Column="11" TextAlignment="Center" />
-							<TextBlock Text="RS" FontWeight="Bold" Margin="5,0" Grid.Column="12" TextAlignment="Center" />
-							<TextBlock Text="BE" FontWeight="Bold" Grid.Column="13" Margin="10,0,0,0" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.Gruppe}" Grid.Row="1" Grid.Column="0" />
-							<TextBlock Text="{Binding SelectedRüstung.Verarbeitung}" Grid.Row="1" Grid.Column="1" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.Kopf}" Grid.Row="1" Grid.Column="2" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.Brust}" Grid.Row="1" Grid.Column="3" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.Rücken}" Grid.Row="1" Grid.Column="4" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.Bauch}" Grid.Row="1" Grid.Column="5" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.LArm}" Grid.Row="1" Grid.Column="6" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.RArm}" Grid.Row="1" Grid.Column="7" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.LBein}" Grid.Row="1" Grid.Column="8" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.RBein}" Grid.Row="1" Grid.Column="9" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.gRS}" Grid.Row="1" Grid.Column="10" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.gBE}" Grid.Row="1" Grid.Column="11" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.RS}" Grid.Row="1" Grid.Column="12" TextAlignment="Center" />
-							<TextBlock Text="{Binding SelectedRüstung.BE}" Grid.Row="1" Grid.Column="13" TextAlignment="Center" />
-						</Grid>
-					</StackPanel>
+                    <Grid>
+                        <Button Grid.ZIndex="1" Height="24" Margin="10" Width="24" Command="{Binding OnAddZuNotizen}" HorizontalAlignment="Right" Name="_buttonSave" VerticalAlignment="Top">
+                            <Button.Content>
+                                <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
+                            </Button.Content>
+                            <Button.ToolTip>
+                                <TextBlock Height="Auto" Width="350" TextWrapping="Wrap">Waffe in Notiz 'Allgemein' speichern.</TextBlock>
+                            </Button.ToolTip>
+                        </Button>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Margin="20,10,1,10" FontWeight="Bold" Text="{Binding Path=SelectedRüstung.Name}" />
+                                <TextBlock Margin="2,10,20,10" Text="{Binding Path=SelectedRüstung.Art, StringFormat={}({0}) }" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="20,10">
+                                <TextBlock Text="{Binding Path=SelectedRüstung.Preis, StringFormat={}{0} S.}" MinWidth="120" ToolTip="Preis in Silbertaler" />
+                                <TextBlock Text="{Binding Path=SelectedRüstung.Gewicht, StringFormat={}{0} Unzen}" MinWidth="120" ToolTip="Gewicht in Unzen" />
+                            </StackPanel>
+                            <Grid Margin="20,10,20,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="120"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="Art" FontWeight="Bold" Margin="0,0,10,0" />
+                                <TextBlock Text="RS" FontWeight="Bold" Margin="5,0" Grid.Column="1" TextAlignment="Center" />
+                                <TextBlock Text="BE" FontWeight="Bold" Grid.Column="2" Margin="5,0" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.Gruppe}" Grid.Row="1" />
+                                <TextBlock Text="{Binding SelectedRüstung.RS}" Grid.Row="1" Grid.Column="1" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.BE}" Grid.Row="1" Grid.Column="2" TextAlignment="Center" />
+                            </Grid>
+                            <Grid Margin="20,10,20,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="V" FontWeight="Bold" ToolTip="Sterne" Margin="5,0" Grid.Column="0" TextAlignment="Center" />
+                                <TextBlock Text="Kopf" FontWeight="Bold" ToolTip="Rüstungsschutz am Kopf" Margin="5,0" Grid.Column="1" TextAlignment="Center" />
+                                <TextBlock Text="Brust" FontWeight="Bold" ToolTip="Rüstungsschutz an der Brust" Margin="5,0" Grid.Column="2" TextAlignment="Center" />
+                                <TextBlock Text="Rücken" FontWeight="Bold" ToolTip="Rüstungsschutz am Rücken" Margin="5,0" Grid.Column="3" TextAlignment="Center" />
+                                <TextBlock Text="Bauch" FontWeight="Bold" ToolTip="Rüstungsschutz am Bauch" Margin="5,0" Grid.Column="4" TextAlignment="Center" />
+                                <TextBlock Text="LArm" FontWeight="Bold" ToolTip="Rüstungsschutz am linker Arm" Margin="5,0" Grid.Column="5" TextAlignment="Center" />
+                                <TextBlock Text="RArm" FontWeight="Bold" ToolTip="Rüstungsschutz am rechterArm" Margin="5,0" Grid.Column="6" TextAlignment="Center" />
+                                <TextBlock Text="LBein" FontWeight="Bold" ToolTip="Rüstungsschutz am linkes Bein" Margin="5,0" Grid.Column="7" TextAlignment="Center" />
+                                <TextBlock Text="RBein" FontWeight="Bold" ToolTip="Rüstungsschutz am rechtes Bein" Margin="5,0" Grid.Column="8" TextAlignment="Center" />
+                                <TextBlock Text="gRS" FontWeight="Bold" Margin="5,0" ToolTip="Gesamtrüstungsschutz Zonensystem" Grid.Column="9" TextAlignment="Center" />
+                                <TextBlock Text="gBE" FontWeight="Bold" Margin="5,0" ToolTip="Behinderung Zonensystem" Grid.Column="10" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.Verarbeitung}" Grid.Row="1" Grid.Column="0" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.Kopf}" Grid.Row="1" Grid.Column="1" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.Brust}" Grid.Row="1" Grid.Column="2" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.Rücken}" Grid.Row="1" Grid.Column="3" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.Bauch}" Grid.Row="1" Grid.Column="4" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.LArm}" Grid.Row="1" Grid.Column="5" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.RArm}" Grid.Row="1" Grid.Column="6" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.LBein}" Grid.Row="1" Grid.Column="7" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.RBein}" Grid.Row="1" Grid.Column="8" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.gRS}" Grid.Row="1" Grid.Column="9" TextAlignment="Center" />
+                                <TextBlock Text="{Binding SelectedRüstung.gBE}" Grid.Row="1" Grid.Column="10" TextAlignment="Center" />
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
 				</Border>
 			</Expander>
 			<Expander Margin="5" IsExpanded="True">

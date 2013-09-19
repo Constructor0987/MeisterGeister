@@ -20,6 +20,12 @@ namespace MeisterGeister.Model
             get { return !SchildGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
+        public override string ToString()
+        {
+            return string.Format("{0} ({1}, {2}): WM {3}/{4}, INI {5}, BF {6}",
+                Name, Typ, Größe, WMAT, WMPA, INI, BF);
+        }
+
         #region //---- IAusrüstung ----
         public string Name
         {

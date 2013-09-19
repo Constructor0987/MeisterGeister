@@ -39,6 +39,14 @@ namespace MeisterGeister.Model
             }
         }
 
+        public override string ToString()
+        {
+            // Name TP, DK, TP/KK, WM, INI, BF            
+            string TPAusdauer = AusdauerSchaden ? "(A)" : string.Empty;
+            return string.Format("{0}: {1} TP{2}, DK {3}, TP/KK {4}/{5}, WM {6}/{7}, INI {8}, BF {9}",
+                Name, TPString, TPAusdauer, DK, TPKKSchwelle, TPKKSchritt, WMAT, WMPA, INI, BF);
+        }
+
         #region Helper-Methoden
         public static KampfLogic.Distanzklasse ParseDistanzklasse(string DK)
         {

@@ -147,6 +147,15 @@ namespace MeisterGeister.Model
             return Waffe.TPKKBonus(held, this);
         }
 
+        public override string ToString()
+        {
+            //Name TP, TP/KK, RW, TP/RW, Laden
+            string TPAusdauer = AusdauerSchaden ? "(A)" : string.Empty;
+            string TPVerwundend = Verwundend ? "*" : string.Empty;
+            return string.Format("{0}: {1}{2} TP{3}, TP/KK {4}/{5}, Reichweite {6}, {7}, Laden {8}",
+                Name, TPString, TPVerwundend, TPAusdauer, TPKKSchwelle, TPKKSchritt, Reichweiten, TPReichweiten, Laden);
+        }
+
         #region IAusrüstung
         public string Name
         {
