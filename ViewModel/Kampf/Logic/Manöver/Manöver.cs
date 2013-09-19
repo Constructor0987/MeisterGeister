@@ -35,6 +35,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             }
         }
 
+        public static bool BeherrschtManöver(KämpferInfo ausführender)
+        {
+            return true;
+        }
+
         protected Manöver(KämpferInfo ausführender)
             : this(ausführender, new Dictionary<IWaffe, KämpferInfo>(1), 1)
         {
@@ -174,7 +179,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             AktionenVerbrauchen();
             VerbleibendeDauer--;
             RaiseOnAusführung();
-            if(VerbleibendeDauer > 0)
+            if(VerbleibendeDauer > 0) //TODO Inkorrekt. Ich glaube die Probe wird am Anfang ausgeführt.
                 return null;
             return Probe;
         }
