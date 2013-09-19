@@ -8,5 +8,6 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
     public interface INahkampfwaffe : IWaffe
     {
         Distanzklasse Distanzklasse { get; }
+        int PA { get; }
     }
 }

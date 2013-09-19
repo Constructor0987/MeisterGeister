@@ -535,6 +535,16 @@ namespace MeisterGeister.ViewModel.Kampf
                     return 0;
                 }
             }
+
+            public int PA
+            {
+                get
+                {
+                    if (_gegner_angriff != null)
+                        return _gegner_angriff.PA;
+                    return 0;
+                }
+            }
         }
 
         public class KämpferFernkampfwaffe : Logic.IFernkampfwaffe
