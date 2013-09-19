@@ -277,22 +277,37 @@ namespace MeisterGeister.Model
             set { _be = value; OnChanged("BE"); }
         }
 
-        [DependentProperty("Konstitution")]
+        [DependentProperty("Konstitution"), DependentProperty("LebensenergieMax")]
         public int Wundschwelle
         {
-            get { return (int)Math.Round(Konstitution / 2.0, MidpointRounding.AwayFromZero); }
+            get {
+                if (Konstitution == 0)
+                    return (int)Math.Round(LebensenergieMax / 6.0, MidpointRounding.AwayFromZero); //ZBA 10, inoffizielle Errata Wiki Aventurica
+                else
+                    return (int)Math.Round(Konstitution / 2.0, MidpointRounding.AwayFromZero);
+            }
         }
 
         [DependentProperty("Konstitution")]
         public int Wundschwelle2
         {
-            get { return Konstitution; }
+            get {
+                if (Konstitution == 0)
+                    return (int)Math.Round(LebensenergieMax / 3.0, MidpointRounding.AwayFromZero);
+                else
+                    return Konstitution; 
+            }
         }
 
         [DependentProperty("Konstitution")]
         public int Wundschwelle3
         {
-            get { return (int)Math.Round(Konstitution * 1.5, MidpointRounding.AwayFromZero); }
+            get {
+                if (Konstitution == 0)
+                    return (int)Math.Round(LebensenergieMax / 2.0, MidpointRounding.AwayFromZero);
+                else
+                    return (int)Math.Round(Konstitution * 1.5, MidpointRounding.AwayFromZero); 
+            }
         }
 
         private Wunden kämpferWunden = null;
