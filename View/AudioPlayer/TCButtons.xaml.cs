@@ -23,15 +23,14 @@ namespace MeisterGeister.View.AudioPlayer
 {
     public partial class TCButtons : TabItem
     {
-        bool editMode = false;        
+        bool editMode = false;
 
         public TCButtons()
         {
             this.MouseDown += new MouseButtonEventHandler(spnlHeader_MouseDown);
             InitializeComponent();
         }
-
-
+        
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             CloseTool();
@@ -49,7 +48,13 @@ namespace MeisterGeister.View.AudioPlayer
         private void spnlHeader_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Middle && e.ButtonState == MouseButtonState.Pressed)
-                CloseTool();            
+                CloseTool();
+        }
+
+        private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!editMode)
+                _btnEditOkay.Visibility = Visibility.Visible;
         }
         
         private void imgEdit_MouseDown(object sender, MouseButtonEventArgs e)
@@ -84,7 +89,7 @@ namespace MeisterGeister.View.AudioPlayer
         }
 
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
-        {
+        {            
             _btnEditOkay.Visibility = Visibility.Visible;
         }
     }

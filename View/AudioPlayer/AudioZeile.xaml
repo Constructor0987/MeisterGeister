@@ -6,8 +6,8 @@
              mc:Ignorable="d" Name="_audioZeile"
              d:DesignHeight="55" d:DesignWidth="900">
     <Grid Name="grd_parent">
-        <ListBoxItem Name="lbiKlangRow" Height="55">
-            <Grid Name="grdKlangRow" VerticalAlignment="Center" Margin="0,2">
+        <ListBoxItem Name="lbiEditorRow" Height="55">
+            <Grid Name="grdEditorRow" VerticalAlignment="Center" Margin="0,2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="25" />
