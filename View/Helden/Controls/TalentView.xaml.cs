@@ -126,13 +126,13 @@ namespace MeisterGeister.View.Helden.Controls {
 
         //LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
         private void TalentLoaded(object sender, System.Windows.RoutedEventArgs e) {
+            VM = new VM.TalentViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowProbeDialog, View.General.ViewHelper.ShowError);
             try {
                 VM.Init();
             } catch (Exception) {
             }
             if (VM != null)
                 VM.ListenToChangeEvents = IsVisible;
-            VM = new VM.TalentViewModel(View.General.ViewHelper.Popup, View.General.ViewHelper.Confirm, View.General.ViewHelper.ShowProbeDialog, View.General.ViewHelper.ShowError);
         }
 
         #endregion // ---- EVENTS ----
