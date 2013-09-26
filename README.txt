@@ -60,7 +60,7 @@ Lizenzhinweise
 MeisterGeister ist ein nicht-kommerzielles Fan-Projekt zum Pen&Paper Rollenspiel "Das Schwarze Auge". Das Programm darf frei verteilt, jedoch nicht verändert werden.
 
 Das Urheberrecht der MeisterGeister-Software und des gesamten Quellcodes und allen darin enthaltenen Dateien liegt beim MeisterGeister-Team (falls nicht anders angegeben):
-Projektgründer: Markus Traut / 1. Projektleiter: Markus Traut, 2. Projektleiter: Jonas Tampier / Entwickler: Jürgen Bos, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Matthias Egenolf, Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann.
+Projektgründer: Markus Traut / Projektleiter: Jonas Tampier / Entwickler: Markus Traut, Jürgen Bos, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Matthias Egenolf, Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann.
 
 Einige Icon-Grafiken wurden uns freundlicherweise vom DereGlobus-Projekts zur Verfügung gestellt. Diese unterliegen der DereGlobus-Lizenz (http://www.dereglobus.org/lizenz).
 

@@ -73,7 +73,7 @@
                     <SolidColorBrush />
                 </TextBox.Background>
             </TextBox>
-            <TextBox Margin="5,4,4,0" TextWrapping="Wrap" Text="Projektgründer: Markus Traut / 1. Projektleiter: Markus Traut, 2. Projektleiter: Jonas Tampier / Entwickler: Jürgen Bos, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Matthias Egenolf, Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann." IsReadOnly="True" BorderThickness="0"
+            <TextBox Margin="5,4,4,0" TextWrapping="Wrap" Text="Projektgründer: Markus Traut / Projektleiter: Jonas Tampier / Entwickler: Markus Traut, Jürgen Bos, Marianus Ifland, Fabian Kretzschmar, Michael Prim, Manuel Poppe, Christopher Syben, Dominic Winterstein / Grafik: Joachim C. Fink / Jingle: Martin Zimny / Weitere Mitarbeiter: Matthias Egenolf, Florian Oldach, Marc Scharff, Bruno Stentzler, Andreas Widmann." IsReadOnly="True" BorderThickness="0"
                  Padding="5" FontStyle="Normal" TextAlignment="Justify" FontSize="11">
                 <TextBox.Background>
                     <SolidColorBrush />
