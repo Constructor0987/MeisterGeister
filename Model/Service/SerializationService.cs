@@ -221,7 +221,7 @@ namespace MeisterGeister.Model.Service
             }
             return obj;
         }
-
+        
         public static void SerializeObject<T>(Stream stream, T o) where T : class
         {
             DataContractSerializer serializer = new DataContractSerializer(o.GetType(), null, int.MaxValue, false, true, null, new ProxyDataContractResolver());
@@ -353,6 +353,14 @@ namespace MeisterGeister.Model.Service
             xml = xml.Replace(String.Format("<HeldGUID>{0}</HeldGUID>", held.HeldGUID), String.Format("<HeldGUID>{0}</HeldGUID>", newGuid));
             Held newHeld = DeserializeObject<Held>(xml);
             return newHeld;
+        }
+
+        private static Audio_Playlist ReplaceGuid(Audio_Playlist audio, Guid newGuid)
+        {
+            string xml = SerializeObject<Audio_Playlist>(audio);
+            xml = xml.Replace(String.Format("<Audio_PlaylistGUID>{0}</Audio_PlaylistGUID>", audio.Audio_PlaylistGUID), String.Format("<Audio_PlaylistGUID>{0}</Audio_PlaylistGUID>", newGuid));
+            Audio_Playlist newAudio = DeserializeObject<Audio_Playlist>(xml);
+            return newAudio;
         }
 
         public Guid CloneHeld(Guid heldGuid, Guid newGuid)
@@ -516,6 +524,135 @@ namespace MeisterGeister.Model.Service
             xml = xml.Replace(String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", gegner.GegnerBaseGUID), String.Format("<GegnerBaseGUID>{0}</GegnerBaseGUID>", newGuid));
             GegnerBase newHeld = DeserializeObject<GegnerBase>(xml);
             return newHeld;
+        }
+        #endregion
+
+        #region Audio
+
+        public bool InsertOrUpdateAudio(Audio_Playlist audio)
+        {
+            // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
+            // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
+#if !DEBUG
+            try
+            {
+#endif
+            
+            DeleteAudioData(audio);            
+            Global.ContextAudio.Insert<Audio_Playlist>(audio);
+            return true;// output != null;
+#if !DEBUG
+        }
+            catch (Exception e)
+            {
+                throw e;
+                //Debug.WriteLine(e.Message);
+                //Debug.WriteLine(e.InnerException);
+                //return false;
+            }
+#endif
+        }
+
+
+        public bool InsertOrUpdateAudio(Audio_Theme aTheme)
+        {
+            // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
+            // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
+
+            DeleteAudioData(aTheme);
+            Global.ContextAudio.Insert<Audio_Theme>(aTheme);
+            return true;// output != null;
+        }
+
+
+
+        public void ExportAudio(ExportPListTheme aPListTheme, string pfad)
+        {
+            //Userdaten geladen
+            //Audio_Playlist audio = Context.Audio_Playlist.Where(a => a.Audio_PlaylistGUID == audio_playlistGuid).First();
+            if (aPListTheme != null)
+            {
+                SerializeObject<ExportPListTheme>(pfad, aPListTheme);
+            }
+        }
+
+
+        /// <summary>
+        /// Importiert einen Helden aus einer XML-Datei. Bestehende Daten werden überschrieben.
+        /// </summary>
+        /// <param name="pfad">Xml-Datei</param>
+        public Guid ImportAudio(string pfad)
+        {
+            return ImportAudio(pfad, Guid.Empty);
+        }
+        
+        /// <summary>
+        /// Importiert einen Helden aus einer XML-Datei.
+        /// </summary>
+        /// <param name="pfad">Xml-Datei</param>
+        /// <param name="newGuid">Wenn Guid.Empty, dann wird überschrieben, sonst wird eine Kopie mit der neuen Guid importiert.</param>
+        /// <returns>Guid des importierten Helden oder Guid.Empty</returns>
+        public Guid ImportAudio(string pfad, Guid newGuid)
+        {
+                //Userdaten geladen
+            ExportPListTheme aPListTheme = DeserializeObjectFromFile<ExportPListTheme> (pfad);
+              //  List<Audio_Playlist> audiolist = DeserializeObjectFromFile<List<Audio_Playlist>>(pfad);
+            foreach (Audio_Theme aTheme in aPListTheme.aTheme)
+            {
+                if (aTheme != null)
+                    InsertOrUpdateAudio(aTheme);
+            }
+                foreach (Audio_Playlist aList in aPListTheme.aPlayList)
+                {
+                    if (aList != null)
+                        InsertOrUpdateAudio(aList);
+                }
+            return Guid.Empty;
+        }
+        public bool DeleteAudioData(Audio_Playlist a)
+        {
+            if(a==null)
+                return false;
+            if (Context.Audio_Playlist.Where(h => h.Audio_PlaylistGUID == a.Audio_PlaylistGUID).Count() == 0)
+                return true;
+            List<object> toDelete = new List<object>();
+
+            toDelete.AddRange(Context.Audio_Playlist_Titel.Where(h => h.Audio_PlaylistGUID == a.Audio_PlaylistGUID).AsEnumerable<object>());
+
+            try
+            {
+                foreach (object o in toDelete)
+                    Context.DeleteObject(o);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+        
+        public bool DeleteAudioData(Audio_Theme a)
+        {
+            if(a==null)
+                return false;
+            if (Context.Audio_Theme.Where(h => h.Audio_ThemeGUID == a.Audio_ThemeGUID).Count() == 0)
+                return true;
+            List<object> toDelete = new List<object>();
+
+            //toDelete.AddRange(Context.Audio_Playlist_Titel.Where(h => h.Audio_PlaylistGUID == a.Audio_PlaylistGUID).AsEnumerable<object>());
+
+            try
+            {
+                foreach (object o in toDelete)
+                    Context.DeleteObject(o);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
         #endregion
 

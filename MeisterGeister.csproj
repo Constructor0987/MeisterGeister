@@ -481,14 +481,8 @@
     <Compile Include="View\AresPlayer\AresPlayerView.xaml.cs">
       <DependentUpon>AresPlayerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AudioPlayer\AudioTheme.xaml.cs">
-      <DependentUpon>AudioTheme.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\AudioPlayer\AudioZeile.xaml.cs">
       <DependentUpon>AudioZeile.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AudioPlayer\HitchPanel.xaml.cs">
-      <DependentUpon>HitchPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\HotKeyZeile.xaml.cs">
       <DependentUpon>HotKeyZeile.xaml</DependentUpon>
@@ -854,15 +848,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AudioPlayer\AudioTheme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\AudioPlayer\AudioZeile.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\AudioPlayer\HitchPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
