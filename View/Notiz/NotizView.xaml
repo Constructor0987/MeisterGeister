@@ -6,7 +6,7 @@
              xmlns:vmNotiz="clr-namespace:MeisterGeister.ViewModel.Notiz"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+             d:DesignHeight="432" d:DesignWidth="746" Loaded="UserControl_Loaded" Background="{StaticResource Background1}" Unloaded="UserControl_Unloaded">
     <UserControl.DataContext>
         <vmNotiz:NotizViewModel />
     </UserControl.DataContext>

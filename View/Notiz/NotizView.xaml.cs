@@ -56,6 +56,16 @@ namespace MeisterGeister.View.Notiz
             }
             catch (Exception) { }
         }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Notiz-Document freigeben
+            try
+            {
+                RTBNotiz.Document = new FlowDocument();
+            }
+            catch (Exception) { }
+        }
         
     }
 }
