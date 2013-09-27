@@ -207,6 +207,7 @@ namespace MeisterGeister.ViewModel.Notiz
 
         public void LoadDaten()
         {
+            int selectedNotizID = _selectedNotiz != null ? _selectedNotiz.EntityNotiz.NotizID : -1;
             NotizListe = new ObservableCollection<NotizItem>();
 
             NotizItem tmpNotiz;
@@ -221,6 +222,10 @@ namespace MeisterGeister.ViewModel.Notiz
             tmpNotiz = new NotizItem(null);
             tmpNotiz.AddNewNotizItem += (s, e) => { AddNotiz(s); };
             NotizListe.Add(tmpNotiz);
+
+            // zuletzt gewählte Notiz erneut auswählen
+            if (selectedNotizID != -1 && NotizListe.Count > 0)
+                SelectedNotiz = NotizListe.Where(n => (n.EntityNotiz != null ? n.EntityNotiz.NotizID : -1) == selectedNotizID).SingleOrDefault();
         }
 
         #endregion
