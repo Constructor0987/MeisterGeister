@@ -474,7 +474,7 @@
                                 <RowDefinition Height="297*" />
                             </Grid.RowDefinitions>
                                 
-                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" MaxHeight="200" Margin="0,-1,7,1" VerticalAlignment="Top" VerticalContentAlignment="Top" Name="exKlangTheme">
+                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" MaxHeight="200" Margin="0,-1,7,10" VerticalAlignment="Top" VerticalContentAlignment="Top" Name="exKlangTheme">
                                 <Expander.Header>
                                     <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
@@ -511,14 +511,14 @@
                                             </Grid>
                                         </Border>
                                             
-                                        <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,10" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
+                                        <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
                                             <ListBox Background="Transparent" Name="lbEditorTheme" SelectionChanged="lbEditorTheme_SelectionChanged" />
                                         </Border>
                                     </Grid>
                                 </Border>
                             </Expander>
 
-                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,1" Name="exKlangPList">
+                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" Name="exKlangPList">
                                 <Expander.Header>
                                     <TextBlock Text="Playlists" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
@@ -564,7 +564,7 @@
                                             </Grid>
                                         </Border>
 
-                                        <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,10" Style="{DynamicResource ControlContentBorder}"> 
+                                        <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}"> 
                                             <ListBox Background="Transparent" Name="lbEditor" VerticalAlignment="Stretch" SelectionChanged="lbEditor_SelectionChanged" />                                                
                                         </Border>
                                     </Grid>
