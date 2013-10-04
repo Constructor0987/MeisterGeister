@@ -2504,11 +2504,11 @@ namespace MeisterGeister.View.AudioPlayer {
         private void UpdateHotkeys()
         {
 
-           /* foreach (Audio_Playlist aPlayList in Global.ContextAudio.PlaylistListe.FindAll(t => t.Key != null))
+          /*  foreach (Audio_Playlist aPlayList in Global.ContextAudio.PlaylistListe.FindAll(t => t.Key != null))
             {
                 if (aPlayList.Key != null)
-                {
-            */
+                {*/
+
                     //  key = aPlayList.Key;
 
                     //if (hotkeys.FirstOrDefault(t => t.aPlaylistGuid == AktKlangPlaylist.Audio_PlaylistGUID) != null)
@@ -2533,8 +2533,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
                                 spnlHotkeys.Children.Add(btnHotKey);
                                 _GrpObjecte[GetPosObjGruppe(GetObjGruppe(tcEditor.SelectedIndex))].btnTopHotkeySet.Content = btnHotKey.Content.ToString();*/
-     //           }
-     //       }
+        //        }
+        //    }
         }
 
         private void btnTopHotkeySet_Click(object sender, RoutedEventArgs e)
@@ -5289,28 +5289,7 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             catch (Exception) { }
         }
-
-        private void exTheme_Expanded(object sender, RoutedEventArgs e)
-        {
-            ((RowDefinition)grdtiPList.RowDefinitions[1]).Height = new GridLength(1, GridUnitType.Star);
-        }
-
-        private void exTheme_Collapsed(object sender, RoutedEventArgs e)
-        {
-            ((RowDefinition)grdtiPList.RowDefinitions[1]).Height = new GridLength(1, GridUnitType.Auto);
-        }
-
-        private void exPList_Expanded(object sender, RoutedEventArgs e)
-        {
-            ((RowDefinition)grdtiPList.RowDefinitions[2]).Height = new GridLength(1, GridUnitType.Star);
-        }
-
-        private void exPList_Collapsed(object sender, RoutedEventArgs e)
-        {
-            ((RowDefinition)grdtiPList.RowDefinitions[2]).Height = !exPListMusik.IsExpanded && !exPListPlaylists.IsExpanded ?
-                new GridLength(1, GridUnitType.Auto) : new GridLength(1, GridUnitType.Star);
-        }
-
+        
         private void btnTopKlangOpen_Click(object sender, RoutedEventArgs e)
         {
             try
