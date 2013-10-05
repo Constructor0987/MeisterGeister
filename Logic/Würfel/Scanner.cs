@@ -51,7 +51,7 @@ namespace MeisterGeister.Logic.Würfel
             Patterns.Add(TokenType.BRCLOSE, regex);
             Tokens.Add(TokenType.BRCLOSE);
 
-            regex = new Regex(@"W", RegexOptions.Compiled);
+            regex = new Regex(@"[W|w]", RegexOptions.Compiled);
             Patterns.Add(TokenType.W, regex);
             Tokens.Add(TokenType.W);
 

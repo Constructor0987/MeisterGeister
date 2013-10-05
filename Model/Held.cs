@@ -1946,8 +1946,8 @@ namespace MeisterGeister.Model
             get { throw new NotImplementedException(); }
         }
 
-        private System.Windows.Media.Brush _farbmarkierung = System.Windows.Media.Brushes.Transparent;
-        public System.Windows.Media.Brush Farbmarkierung
+        private System.Windows.Media.Color _farbmarkierung = System.Windows.Media.Color.FromArgb(0,0,0,0);
+        public System.Windows.Media.Color Farbmarkierung
         {
             get { return _farbmarkierung; }
             set { _farbmarkierung = value; OnChanged("Farbmarkierung"); }

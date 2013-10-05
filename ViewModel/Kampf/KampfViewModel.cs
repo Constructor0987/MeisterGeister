@@ -240,9 +240,8 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             if (SelectedKämpferInfo != null && SelectedKämpferInfo.Kämpfer != null && obj != null)
             {
-                System.Windows.Media.BrushConverter conv = new System.Windows.Media.BrushConverter();
-                System.Windows.Media.SolidColorBrush brush = conv.ConvertFromString(obj.ToString()) as System.Windows.Media.SolidColorBrush;
-                SelectedKämpferInfo.Kämpfer.Farbmarkierung = brush;
+                System.Windows.Media.Color color = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(obj.ToString());
+                SelectedKämpferInfo.Kämpfer.Farbmarkierung = color;
             }
 
         }

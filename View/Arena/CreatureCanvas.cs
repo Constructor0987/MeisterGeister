@@ -36,7 +36,7 @@ namespace MeisterGeister.View.Arena
             _creature = wesen;
             _arenaViewer = arenaViewer;
 
-            _color = wesen is Model.Held ? ArenaViewer.DEFAULT_HERO_COLOR : ArenaViewer.DEFAULT_ENEMY_COLOR;
+            _color = wesen.Farbmarkierung != Color.FromArgb(0,0,0,0)? wesen.Farbmarkierung : (wesen is Model.Held ? ArenaViewer.DEFAULT_HERO_COLOR : ArenaViewer.DEFAULT_ENEMY_COLOR);
             
             MouseDragElementBehavior dragBehavior = new MouseDragElementBehavior();
             dragBehavior.Attach(this);

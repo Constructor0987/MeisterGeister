@@ -23,7 +23,7 @@ NUMBER 	-> @"[0-9]+";
 NUMBER2 	-> @"[0-9]+";
 BROPEN 	->  @"[\(\[]";
 BRCLOSE 	->  @"[\)\]]";
-W		-> @"W";
+W		-> @"[W|w]";
 PLUSMINUS 	-> @"(\+|-)"; 
 EOF         -> @"^$";
 [Skip] WHITESPACE  -> @"\s+";

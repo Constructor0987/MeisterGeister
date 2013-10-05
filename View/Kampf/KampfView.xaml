@@ -7,6 +7,7 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
@@ -14,6 +15,7 @@
         <ViewGeneral:EnumItemsSource x:Key="TrefferzonenValues" Type="{x:Type KampfLogic:Trefferzone}" />
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
+        <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
         <ViewGeneral:ValueConverterGroup x:Key="EnumMatchThenInvert">
             <ViewGeneral:EnumMatchToBooleanConverter />
             <ViewGeneral:InverseBooleanConverter />
@@ -60,13 +62,13 @@
         </Style>
         <DataTemplate x:Key="InitiativeListManöverTemplate">
             <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}">
-                <Rectangle Margin="4,0" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                <Rectangle Margin="4,0" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung, Converter={StaticResource ColorToBrushConverter}}" />
                 <TextBlock Text="{Binding Manöver.Name}" />
             </StackPanel>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="InitiativeListTemplate" ItemsSource="{Binding ThisAsList}" ItemTemplate="{StaticResource InitiativeListManöverTemplate}">
             <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}" Margin="0,2">
-                <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung, Converter={StaticResource ColorToBrushConverter}}" />
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
                         <StackPanel.ToolTip>
@@ -342,23 +344,16 @@
                             <TreeView.ContextMenu>
                                 <ContextMenu Opened="ContextMenu_Opened">
                                     <ContextMenu.Items>
-                                        <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" Header="Farbmarkierung setzen...">
+                                        <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28">
+                                            <MenuItem.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Farbe: " />
+                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="False" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" />
+                                                </StackPanel>
+                                            </MenuItem.Header>
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Transparent" Background="Transparent" Header="Transparent" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Blue" Background="Blue" Header="Blau" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="DarkBlue" Background="DarkBlue" Header="Dunkelblau" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Green" Background="Green" Header="Grün" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="DarkGreen" Background="DarkGreen" Header="Dunkelgrün" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Orange" Background="Orange" Header="Orange" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Red" Background="Red" Header="Rot" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="DarkRed" Background="DarkRed" Header="Dunkelrot" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Gold" Background="Gold" Header="Gold" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Magenta" Background="Magenta" Header="Magenta" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Brown" Background="Brown" Header="Braun" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="Black" Background="Black" Foreground="White" Header="Schwarz" />
-                                            <MenuItem Command="{Binding OnEinfärbenKämpfer}" CommandParameter="White" Background="White" Header="Weiß" />
                                         </MenuItem>
                                         <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Aktion ausführen" Command="{Binding OnAktionAusführen}">
                                             <MenuItem.Icon>

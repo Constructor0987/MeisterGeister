@@ -145,6 +145,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -504,6 +508,7 @@
     </Compile>
     <Compile Include="View\General\BindableSelectedItemBehavior.cs" />
     <Compile Include="View\General\BooleanToVisibilityConverter.cs" />
+    <Compile Include="View\General\ColorToSolidBrushConverter.cs" />
     <Compile Include="View\General\DereGlobusLinkControl.xaml.cs">
       <DependentUpon>DereGlobusLinkControl.xaml</DependentUpon>
     </Compile>
@@ -566,6 +571,7 @@
       <DependentUpon>ImageDuplicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\InverseBooleanConverter.cs" />
+    <Compile Include="View\General\SolidBrushToColorConverter.cs" />
     <Compile Include="View\General\LoadCachedImageConverter.cs" />
     <Compile Include="View\General\ModInfoBox.xaml.cs">
       <DependentUpon>ModInfoBox.xaml</DependentUpon>
@@ -1509,9 +1515,10 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0076.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0077.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0078.sql" />
-    <Content Include="Daten\Updateskripte\UpdateTo_V0079.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0079.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
+    <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />
     <Content Include="License\Apache License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

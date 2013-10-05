@@ -95,7 +95,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         /// </summary>
         IList<IWaffe> Angriffswaffen { get; }
 
-        System.Windows.Media.Brush Farbmarkierung { get; set; }
+        System.Windows.Media.Color Farbmarkierung { get; set; }
         string HinweisText { get; set; }
     }
 }
