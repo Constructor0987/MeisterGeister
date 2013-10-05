@@ -25,7 +25,11 @@ namespace MeisterGeister.Logic.General
             if (pt.Errors.Count != 0)
                 //TODO ??: Fehlermeldung ausgeben?
                 return 0;
-            return (int)pt.Eval();
+            try
+            {
+                return (int)pt.Eval();
+            }
+            catch { return 0; }
         }
 
         public static int Parse(string w, bool random)
@@ -34,7 +38,11 @@ namespace MeisterGeister.Logic.General
             if (pt.Errors.Count != 0)
                 //TODO ??: Fehlermeldung ausgeben?
                 return 0;
-            return (int)pt.Eval(random);
+            try
+            {
+                return (int)pt.Eval(random);
+            }
+            catch { return 0; }
         }
 
         public static bool Validate(string w)
