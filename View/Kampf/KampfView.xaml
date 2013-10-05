@@ -348,7 +348,7 @@
                                             <MenuItem.Header>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Farbe: " />
-                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="False" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" />
+                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" />
                                                 </StackPanel>
                                             </MenuItem.Header>
                                             <MenuItem.Icon>
