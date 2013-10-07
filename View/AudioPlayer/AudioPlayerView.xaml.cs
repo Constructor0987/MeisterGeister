@@ -2595,6 +2595,8 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {
+                if(AktKlangPlaylist == null)
+                    return;
                 if (((ComboBox)sender).SelectedIndex != -1)
                 {
                     Int16 posobjGruppe = GetPosObjGruppe(GetObjGruppe(tcEditor.SelectedIndex));
@@ -2625,8 +2627,11 @@ namespace MeisterGeister.View.AudioPlayer {
                         spnlHotkeys.Children.Add(btnHotKey);
                         _GrpObjecte[GetPosObjGruppe(GetObjGruppe(tcEditor.SelectedIndex))].btnTopHotkeySet.Content = btnHotKey.Content.ToString();
                     }
-                    ((ListboxItemIcon)lbEditor.SelectedItem).Focus();
-                    lbEditor.ScrollIntoView(lbEditor.SelectedItem);
+                    if ((ListboxItemIcon)lbEditor.SelectedItem != null)
+                    {
+                        ((ListboxItemIcon)lbEditor.SelectedItem).Focus();
+                        lbEditor.ScrollIntoView(lbEditor.SelectedItem);
+                    }
                     gbxHotkeys.Visibility = (spnlHotkeys.Children.Count > 0) ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
@@ -2643,7 +2648,9 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {
-                hotkey hkey = hotkeys.First(t => t.aPlaylistGuid == _GrpObjecte[GetPosObjGruppe(GetObjGruppe(tcEditor.SelectedIndex))].aPlaylist.Audio_PlaylistGUID);
+                hotkey hkey = hotkeys.FirstOrDefault(t => t.aPlaylistGuid == _GrpObjecte[GetPosObjGruppe(GetObjGruppe(tcEditor.SelectedIndex))].aPlaylist.Audio_PlaylistGUID);
+                if (hkey == null)
+                    return;
 
                 foreach (Button btnHotKey in spnlHotkeys.Children.OfType<Button>())
                 {

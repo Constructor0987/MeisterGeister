@@ -265,6 +265,12 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Kultur_Name> _kultur_Name;
     
+        public ObjectSet<Literatur> Literatur
+        {
+            get { return _literatur  ?? (_literatur = CreateObjectSet<Literatur>("Literatur")); }
+        }
+        private ObjectSet<Literatur> _literatur;
+    
         public ObjectSet<MenuLink> MenuLink
         {
             get { return _menuLink  ?? (_menuLink = CreateObjectSet<MenuLink>("MenuLink")); }
@@ -414,12 +420,6 @@ namespace MeisterGeister.Model
             get { return _zauberzeichen_Setting  ?? (_zauberzeichen_Setting = CreateObjectSet<Zauberzeichen_Setting>("Zauberzeichen_Setting")); }
         }
         private ObjectSet<Zauberzeichen_Setting> _zauberzeichen_Setting;
-    
-        public ObjectSet<Literatur> Literatur
-        {
-            get { return _literatur  ?? (_literatur = CreateObjectSet<Literatur>("Literatur")); }
-        }
-        private ObjectSet<Literatur> _literatur;
 
         #endregion
 
@@ -492,6 +492,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Kultur;
     		if(typeof(T) == typeof(Kultur_Name))
     				return (ObjectSet<T>)(Object)Kultur_Name;
+    		if(typeof(T) == typeof(Literatur))
+    				return (ObjectSet<T>)(Object)Literatur;
     		if(typeof(T) == typeof(MenuLink))
     				return (ObjectSet<T>)(Object)MenuLink;
     		if(typeof(T) == typeof(Munition))
@@ -542,8 +544,6 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Zauberzeichen;
     		if(typeof(T) == typeof(Zauberzeichen_Setting))
     				return (ObjectSet<T>)(Object)Zauberzeichen_Setting;
-    		if(typeof(T) == typeof(Literatur))
-    				return (ObjectSet<T>)(Object)Literatur;
     		return null;
     	}
     
@@ -615,6 +615,8 @@ namespace MeisterGeister.Model
     				return Kultur;
     		if(t == typeof(Kultur_Name))
     				return Kultur_Name;
+    		if(t == typeof(Literatur))
+    				return Literatur;
     		if(t == typeof(MenuLink))
     				return MenuLink;
     		if(t == typeof(Munition))
@@ -665,8 +667,6 @@ namespace MeisterGeister.Model
     				return Zauberzeichen;
     		if(t == typeof(Zauberzeichen_Setting))
     				return Zauberzeichen_Setting;
-    		if(t == typeof(Literatur))
-    				return Literatur;
     		return null;
     	}
     	

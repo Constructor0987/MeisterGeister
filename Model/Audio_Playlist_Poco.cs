@@ -112,6 +112,32 @@ namespace MeisterGeister.Model
     
         }
         private string _kategorie;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Key
+        {
+            get { return _key; }
+            set
+    		{ 
+    			_key = value;
+    			OnChanged("Key");
+    		}
+    
+        }
+        private string _key;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Modifiers
+        {
+            get { return _modifiers; }
+            set
+    		{ 
+    			_modifiers = value;
+    			OnChanged("Modifiers");
+    		}
+    
+        }
+        private string _modifiers;
 
         #endregion
 
