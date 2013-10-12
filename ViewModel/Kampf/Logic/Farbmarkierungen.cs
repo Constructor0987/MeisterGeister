@@ -46,8 +46,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         var colorStrings = Einstellungen.KampfRecentColors.Split(',');
                         foreach (var cs in colorStrings)
                         {
-                            Color c = (Color)ColorConverter.ConvertFromString(cs);
-                            if (c != null)
+                            if (String.IsNullOrWhiteSpace(cs))
+                                continue;
+                            Color c = Colors.Transparent;
+                            try
+                            {
+                                c = (Color)ColorConverter.ConvertFromString(cs);
+                            }
+                            catch(Exception e)
+                            {
+                                var m = e.Message;
+                            }
+                            if (c != Colors.Transparent)
                                 recentColors.Add(new ColorItem(c, cs));
                         }
                     }

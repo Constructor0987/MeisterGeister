@@ -567,6 +567,7 @@
     <Compile Include="View\Basar\BasarView.xaml.cs">
       <DependentUpon>BasarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\HandlingEventTrigger.cs" />
     <Compile Include="View\General\ImageDuplicator.xaml.cs">
       <DependentUpon>ImageDuplicator.xaml</DependentUpon>
     </Compile>

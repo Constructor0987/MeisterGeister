@@ -8,6 +8,7 @@
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              xmlns:VM="clr-namespace:MeisterGeister.ViewModel.Kampf"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
@@ -348,7 +349,11 @@
                                             <MenuItem.Header>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Farbe: " />
-                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker" SelectedColorChanged="colorPicker_SelectedColorChanged"/>
+                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker">
+                                                        <i:Interaction.Triggers>
+                                                            <!-- <ViewGeneral:HandlingEventTrigger EventName="Click" /> Genügt leider nicht um den MouseUp-Event zuu fangen--> 
+                                                        </i:Interaction.Triggers>
+                                                    </xctk:ColorPicker>
                                                 </StackPanel>
                                             </MenuItem.Header>
                                             <MenuItem.Icon>
