@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using MeisterGeister.Model;
 using VM = MeisterGeister.ViewModel.Kampf;
 using MeisterGeister.View.General;
+using Settings = MeisterGeister.Logic.Settings;
 
 namespace MeisterGeister.View.Kampf.Controls
 {
@@ -117,6 +118,28 @@ namespace MeisterGeister.View.Kampf.Controls
             // Nachdem ein Eintrag selektiert wurde, wird die Liste in den Sichtbereich gescrollt
             if (sender != null && sender is ListBox)
                 (sender as ListBox).ScrollIntoView(e.AddedItems.Count > 0 ? e.AddedItems[0] : null);
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Expanded Sections
+            string sections = Settings.Einstellungen.GegnerViewExpandedSections;
+            if (sections.Length >= 1)
+                expanderFilter.IsExpanded = (sections[0] == '1');
+            if (sections.Length >= 2)
+                expanderStichwortFilter.IsExpanded = (sections[1] == '1');
+        }
+
+        private void Expander_ExpandedCollapsed(object sender, RoutedEventArgs e)
+        {
+            // Expanded Sections speichern
+            if (IsInitialized && IsLoaded)
+            {
+                string sections = string.Empty;
+                sections += (expanderFilter.IsExpanded ? "1" : "0");
+                sections += (expanderStichwortFilter.IsExpanded ? "1" : "0");
+                Settings.Einstellungen.GegnerViewExpandedSections = sections;
+            }
         }
 	}
 }

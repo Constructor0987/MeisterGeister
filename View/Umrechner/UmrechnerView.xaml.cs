@@ -255,17 +255,17 @@ namespace MeisterGeister.View.Umrechner
         {
             // Expanded Sections
             string sections = Einstellungen.UmrechnerExpandedSections;
-            if (Einstellungen.UmrechnerExpandedSections.Length >= 1)
+            if (sections.Length >= 1)
                 _expanderLänge.IsExpanded = (sections[0] == '1');
-            if (Einstellungen.UmrechnerExpandedSections.Length >= 2)
+            if (sections.Length >= 2)
                 _expanderMasse.IsExpanded = (sections[1] == '1');
-            if (Einstellungen.UmrechnerExpandedSections.Length >= 3)
+            if (sections.Length >= 3)
                 _expanderVolumen.IsExpanded = (sections[2] == '1');
-            if (Einstellungen.UmrechnerExpandedSections.Length >= 4)
+            if (sections.Length >= 4)
                 _expanderFläche.IsExpanded = (sections[3] == '1');
-            if (Einstellungen.UmrechnerExpandedSections.Length >= 5)
+            if (sections.Length >= 5)
                 _expanderWährung.IsExpanded = (sections[4] == '1');
-            if (Einstellungen.UmrechnerExpandedSections.Length >= 6)
+            if (sections.Length >= 6)
                 _expanderZeit.IsExpanded = (sections[5] == '1');
         }
 

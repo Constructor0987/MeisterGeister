@@ -10,7 +10,8 @@
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
     xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
 	x:Name="UserControl" Background="{DynamicResource Background1}"
-	d:DesignWidth="739.291" d:DesignHeight="543.038">
+	d:DesignWidth="739.291" d:DesignHeight="543.038"
+    Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
@@ -24,7 +25,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Expander IsExpanded="True" Grid.Row="0">
+            <Expander IsExpanded="True" Grid.Row="0" Name="expanderFilter" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                 <Expander.Header>
                     <TextBlock Text="Filter" Style="{DynamicResource TextTitel}" />
                 </Expander.Header>
@@ -38,7 +39,7 @@
                 </Border>
             </Expander>
 
-            <Expander IsExpanded="True" Grid.Row="1">
+            <Expander IsExpanded="True" Grid.Row="1" Name="expanderStichwortFilter" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Margin="15,0,0,0" Text="Stichwort-Filter (" Style="{DynamicResource TextTitel}" />
@@ -72,20 +73,24 @@
 
             <Border Grid.Row="3" Style="{DynamicResource ControlContentBorder}">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="26*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <DockPanel ToolTip="Aktive Filter">
+                    <DockPanel ToolTip="Aktive Filter" Grid.ColumnSpan="2">
                         <Image Margin="2" Source="/Images/Icons/General/filter.png" Width="12" />
                         <TextBlock DockPanel.Dock="Left" Margin="2" FontSize="9" Text="{Binding AktiveFilter}" />
                         <Button DockPanel.Dock="Right" Height="18" Width="18" ToolTip="Alle Filter entfernen" HorizontalAlignment="Right" Command="{Binding OnClearFilter}">
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </Button>
                     </DockPanel>
-                        <ListBox x:Name="_listBoxGegnerBase" Grid.Row="1" Padding="4" Background="Transparent" AllowDrop="True" 
-				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding FilteredGegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000" SelectionChanged="ListBoxGegnerBase_SelectionChanged" MouseDoubleClick="_listBoxGegnerBase_MouseDoubleClick">
+                    <ListBox x:Name="_listBoxGegnerBase" Grid.Row="1" Padding="4" Background="Transparent" AllowDrop="True" 
+				MouseDown="ListBoxGegner_MouseDown" ItemsSource="{Binding FilteredGegnerBaseListe}" SelectedItem="{Binding SelectedGegnerBase}" Drop="ListBoxGegnerBase_Drop" BorderBrush="#00000000" SelectionChanged="ListBoxGegnerBase_SelectionChanged" MouseDoubleClick="_listBoxGegnerBase_MouseDoubleClick" Grid.ColumnSpan="2">
                         <ListBox.InputBindings>
                             <KeyBinding Key="Delete" Command="{Binding OnDeleteGegnerBase}" />
                         </ListBox.InputBindings>
@@ -154,7 +159,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal">
+                    <StackPanel Grid.Row="2" Margin="5" Orientation="Horizontal" Grid.ColumnSpan="2">
                         <Button Height="23" Width="25" Click="ButtonHeldNeu_Click" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Gegner einfügen">
                             <Button.ContextMenu>
                                 <ContextMenu>
@@ -189,6 +194,6 @@
         </Grid>
 
         <Gegner:GegnerDetailView Grid.Column="1" Width="Auto" IsEnabled="{Binding SelectedGegnerBaseIsNotNull}" />
-        
+
     </Grid>
 </UserControl>

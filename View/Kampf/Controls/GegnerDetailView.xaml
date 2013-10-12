@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kampf"
-    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
-    xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
-	x:Name="UserControl" Background="{DynamicResource Background1}" d:DesignHeight="543.038" Width="675.291">
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+             x:Name="UserControl" Background="{DynamicResource Background1}" d:DesignHeight="543.038" Width="675.291"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="DistanzklasseValues" MethodName="GetNames" ObjectType="{x:Type KampfLogic:Distanzklasse}">
             <ObjectDataProvider.MethodParameters>
@@ -59,7 +60,7 @@
                         <DropShadowEffect ShadowDepth="0" Color="White"/>
                     </TextBlock.Effect>
                 </TextBlock>
-                <Expander IsExpanded="True" Grid.Row="1">
+                <Expander IsExpanded="True" Grid.Row="1" Name="expanderBasisinformationen" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Basisinformationen" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -258,7 +259,7 @@
                         </Grid>
                     </Border>
                 </Expander>
-                <Expander IsExpanded="True" Grid.Row="2">
+                <Expander IsExpanded="True" Grid.Row="2" Name="expanderAngriffe" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Angriffe" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -377,7 +378,7 @@
 
                     </Border>
                 </Expander>
-                <Expander IsExpanded="False" Grid.Row="3">
+                <Expander IsExpanded="False" Grid.Row="3" Name="expanderJagd" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Werte für Beschwörung und Jagd" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>

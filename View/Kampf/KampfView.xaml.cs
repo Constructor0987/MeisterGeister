@@ -140,6 +140,10 @@ namespace MeisterGeister.View.Kampf
             return returnVal as T;
         }
 
+        private void colorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+        }
+
     }
 
     public delegate void ProbeWürfelnEventHandler(string talentname);

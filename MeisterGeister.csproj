@@ -615,6 +615,7 @@
     <Compile Include="View\Kampf\Controls\GegnerView.xaml.cs">
       <DependentUpon>GegnerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Kampf\Logic\Farbmarkierungen.cs" />
     <Compile Include="View\Kampf\GegnerWindow.xaml.cs">
       <DependentUpon>GegnerWindow.xaml</DependentUpon>
     </Compile>
@@ -1519,6 +1520,7 @@
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />
+    <Content Include="Libs\Xceed.Wpf.Toolkit.pdb" />
     <Content Include="License\Apache License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Settings = MeisterGeister.Logic.Settings;
 
 namespace MeisterGeister.View.Kampf.Controls
 {
@@ -38,6 +39,31 @@ namespace MeisterGeister.View.Kampf.Controls
         {
             if (e.Key == Key.Enter && sender != null && sender is TextBox)
                 (sender as TextBox).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Expanded Sections
+            string sections = Settings.Einstellungen.GegnerDetailViewExpandedSections;
+            if (sections.Length >= 1)
+                expanderBasisinformationen.IsExpanded = (sections[0] == '1');
+            if (sections.Length >= 2)
+                expanderAngriffe.IsExpanded = (sections[1] == '1');
+            if (sections.Length >= 3)
+                expanderJagd.IsExpanded = (sections[2] == '1');
+        }
+
+        private void Expander_ExpandedCollapsed(object sender, RoutedEventArgs e)
+        {
+            // Expanded Sections speichern
+            if (IsInitialized && IsLoaded)
+            {
+                string sections = string.Empty;
+                sections += (expanderBasisinformationen.IsExpanded ? "1" : "0");
+                sections += (expanderAngriffe.IsExpanded ? "1" : "0");
+                sections += (expanderJagd.IsExpanded ? "1" : "0");
+                Settings.Einstellungen.GegnerDetailViewExpandedSections = sections;
+            }
         }
     }
 }

@@ -230,6 +230,30 @@ namespace MeisterGeister.Logic.Settings
                 SetEinstellung<string>("UmrechnerExpandedSections", value);
             }
         }
+
+        public static string GegnerViewExpandedSections
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("GegnerViewExpandedSections", "11");
+            }
+            set
+            {
+                SetEinstellung<string>("GegnerViewExpandedSections", value);
+            }
+        }
+
+        public static string GegnerDetailViewExpandedSections
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("GegnerDetailViewExpandedSections", "110");
+            }
+            set
+            {
+                SetEinstellung<string>("GegnerDetailViewExpandedSections", value);
+            }
+        }
         
         public static string Standort
         {
@@ -323,5 +347,17 @@ namespace MeisterGeister.Logic.Settings
         }
 
         public static EventHandler IsReadOnlyChanged;
+
+        public static string KampfRecentColors
+        {
+            get
+            {
+                return GetOrCreateEinstellung<string>("KampfRecentColors", null);
+            }
+            set
+            {
+                SetEinstellung<string>("KampfRecentColors", value);
+            }
+        }
     }
 }

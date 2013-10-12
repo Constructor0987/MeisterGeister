@@ -257,6 +257,30 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> recentColors = Farbmarkierungen.RecentColors;
+        public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> RecentColors
+        {
+            get { return recentColors; }
+            set
+            {
+                recentColors = value;
+                Farbmarkierungen.RecentColors = value;
+                OnChanged("RecentColors");
+            }
+        }
+
+        private ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> standardColors = Farbmarkierungen.StandardColors;
+        public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> StandardColors
+        {
+            get { return standardColors; }
+            set {
+                Farbmarkierungen.StandardColors = value;
+                standardColors = value;
+                OnChanged("StandardColors");
+            }
+        }
+
+
         private void ShowGegnerView(object obj)
         {
             if (showGegnerView != null)
