@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:MeisterGeister.View.AudioPlayer"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  	    
     mc:Ignorable="d" 
-    d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded" Unloaded="Window_Unloaded" KeyDown="Window_KeyDown" Margin="0,5,5,0">
+    d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded" Unloaded="Window_Unloaded" KeyDown="Window_KeyDown" Margin="0,5,5,0" IsEnabled="True">
 
     <UserControl.Resources>
         <Style x:Key="ImageEnabled" TargetType="Image">
@@ -250,7 +250,7 @@
                 </StackPanel>
             </Border>
         </Expander>
-        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <TabItem Header="Editor" Name="tiEditor" GotFocus="tiEditor_GotFocus" >
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
@@ -433,6 +433,14 @@
                                             </Grid>
                                             
                                         </StackPanel>
+
+                                        <Button Name="btnTopChPfadX" HorizontalAlignment="Right" Width="30" Height="30" ToolTip="Anpassen des Playlist-Verzeichnisses" Grid.Column="7" Visibility="Hidden" Margin="0,0,10,0">
+                                            <Grid>
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/suchen.png" Width="20" />
+                                            </Grid>
+                                        </Button>
+
                                         <Button Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpenX" Width="30" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="8" VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" >
                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" />
                                         </Button>
@@ -465,11 +473,11 @@
                     <Border Grid.Row="1" Margin="0,0,0,10" MinWidth="100">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" MaxHeight="200" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="297*" />
                             </Grid.RowDefinitions>
                                 
-                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" MaxHeight="200" Margin="0,-1,7,10" VerticalAlignment="Top" VerticalContentAlignment="Top" Name="exKlangTheme">
+                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Margin="0,-1,7,10" VerticalAlignment="Top" VerticalContentAlignment="Top" Name="exKlangTheme">
                                 <Expander.Header>
                                     <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
@@ -512,6 +520,8 @@
                                     </Grid>
                                 </Border>
                             </Expander>
+
+                            <GridSplitter Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" />
 
                             <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" Name="exKlangPList">
                                 <Expander.Header>
@@ -588,8 +598,8 @@
                             </ToggleButton>
 
                             <Border Width="2" Height="26" Margin="-205,0,0,0" />
-                            <Button Width="26" Height="26" Click="btnBGStoppen_Click" Name="btnBGStoppen" Margin="-150,0,0,0" IsEnabled="False">
-                                <Image Name="btnImgBGStoppen" Width="13" Height="13" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_stop.png" Style="{StaticResource ImageEnabled}" />
+                            <Button Width="30" Height="30" Click="btnBGStoppen_Click" Name="btnBGStoppen" Margin="-150,0,0,0" IsEnabled="False" Style="{StaticResource GlasButton}" Background="Black" >
+                                <Image Name="btnImgBGStoppen" Source="/DSA%20MeisterGeister;component/Images/Icons/General/stop.png" Style="{StaticResource ImageEnabled}" Margin="5,5,4,4" />
                             </Button>
 
                             <Button Name="btnBGPrev" Width="30" Height="30" Background="Black" Margin="-80,0,0,0" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" IsEnabled="False" >
@@ -766,8 +776,8 @@
                                     <ColumnDefinition Width="187*" MinWidth="100" MaxWidth="280" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top">
-                                    <Button Width="26" Height="26" Click="btnBGStoppen_Click" IsEnabled="False" Margin="0,0,5,0" Name="btnPListMusikStoppen">
-                                        <Image Name="btnImgPListMusikStoppen" Width="13" Height="13" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_stop.png" Style="{StaticResource ImageEnabled}" />
+                                <Button Width="30" Height="30" Click="btnBGStoppen_Click" IsEnabled="False" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Name="btnPListMusikStoppen">
+                                        <Image Name="btnImgPListMusikStoppen" Source="/DSA%20MeisterGeister;component/Images/Icons/General/stop.png" Style="{StaticResource ImageEnabled}" Margin="5,5,4,4" />
                                     </Button>
 
                                     <Button Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" Margin="0,0,5,0" IsEnabled="False" Name="btnPListMusikPrev">
@@ -782,7 +792,7 @@
                                         <Image Name="imgbtnPListMusikNext" Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" Style="{StaticResource ImageEnabled}" />
                                     </Button>
 
-                                    <Button Width="26" Height="26" Click="btnBGSpeaker_Click" Name="btnPListMusikSpeaker">
+                                    <Button Width="26" Height="26" Click="btnBGSpeaker_Click" Name="btnPListMusikSpeaker" >
                                         <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnImgPListMusikSpeaker" />
                                     </Button>
 
@@ -886,12 +896,17 @@
             </StackPanel>
         </Border>
 
-        <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="150,-5,10,0" Height="60" Padding="0,-1,0,-3" Visibility="Collapsed">
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+        <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="150,-5,10,0" Height="60" Padding="0,-1,0,-3" Visibility="Collapsed" >
+            <StackPanel Orientation="Horizontal">
+                <Button Height="30" Style="{StaticResource GlasButton}" Background="Black" Width="30" ToolTip="Stoppen aller laufenden Hotkeys" Name="btnHotkeyStop" Click="btnHotkeyStop_Click" IsEnabled="False">
+                    <Image Source="/Images/Icons/General/stop.png" Margin="5,5,4,4" />
+                </Button>
+                <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
                 <Grid Name="gbxHotkeysgrdHotkeys" >
-                    <StackPanel Name="spnlHotkeys" Orientation="Horizontal" />
+                    <StackPanel Name="spnlHotkeys" Orientation="Horizontal" Margin="5,0,0,0" />
                 </Grid>
             </ScrollViewer>
+            </StackPanel>
         </GroupBox>
     </Grid>
 </UserControl>
