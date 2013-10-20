@@ -1671,7 +1671,9 @@ namespace MeisterGeister.View.AudioPlayer {
                     MessageBoxResult mbResult = MessageBox.Show("Ändern des Bezugs-Verzeichnisses von" + Environment.NewLine + titelRef + Environment.NewLine +
                     "Auf das ausgwählte Verzeichnis" + Environment.NewLine + browse.SelectedPath + Environment.NewLine + Environment.NewLine + Environment.NewLine +
                     "Von " + titelliste.Count + " Audiodateien konnten " + found + " Übereinstimmungen in dem ausgewählten Verzeichnis gefunden werden." + Environment.NewLine + Environment.NewLine +
-                    dateiGefundenInSub.Count + " Dateien konnten in den Unterverzeichnissen gefunden werden" + Environment.NewLine + Environment.NewLine +
+                    (dateiGefundenInSub!=null?
+                    dateiGefundenInSub.Count + " Dateien konnten in den Unterverzeichnissen gefunden werden" :"")
+                    + Environment.NewLine + Environment.NewLine +
                     "Sollen ALLE gefundenen Audio-Pfade geändert werden?" + Environment.NewLine + Environment.NewLine +
                     "Nicht gefundene Dateien werden nicht verändert", "Änderungseinstellung", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
 
