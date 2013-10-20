@@ -219,10 +219,11 @@ namespace MeisterGeister.View.AudioPlayer {
         private int SliderTeile = 25;
         private Int16 PauseSprung = 200;
         private Int16 VolSprung = 5;
-        
+       
         private List<hotkey> hotkeys = new List<hotkey>();
 
         private List<Audio_Playlist_Titel> plyTitelToSave = new List<Audio_Playlist_Titel>();
+
         private MusikView _BGPlayer = new MusikView();
         private List<GruppenObjekt> _GrpObjecte = new List<GruppenObjekt>();
 
@@ -231,10 +232,11 @@ namespace MeisterGeister.View.AudioPlayer {
         private Audio_Playlist AktKlangPlaylist;
         private Audio_Playlist aPlaylistLengthCheck;
         private Audio_Theme AktKlangTheme = null;
-
+        
         System.Timers.Timer BGSongTimer = new System.Timers.Timer();
         DispatcherTimer KlangPlayEndetimer;
         DispatcherTimer plyTitelToSaveTimer = new DispatcherTimer();
+        
 
         DispatcherTimer KlangProgBarTimer = new DispatcherTimer();
         DispatcherTimer MusikProgBarTimer = new DispatcherTimer();
@@ -249,8 +251,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
             _BGPlayer.BG.Add(new Musik());
             _BGPlayer.BG.Add(new Musik());
-
-
+            
             _rbtnGleichSpielen.IsChecked = Logic.Settings.Einstellungen.AudioDirektAbspielen;
             stdPfad = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", "C:\\");
             _tbStdPfad.Text = stdPfad;
@@ -869,6 +870,8 @@ namespace MeisterGeister.View.AudioPlayer {
                                     ListBoxItem lbitem = new ListBoxItem();
                                     lbitem.Tag = aTitel.Audio_TitelGUID;
                                     lbitem.Content = aTitel.Name;
+                                    lbitem.ToolTip = (System.IO.Path.GetDirectoryName(aTitel.Pfad).Substring(1, 1) != ":") ?
+                                        "[Standard-Verzeichnis]" + @"\" + aTitel.Pfad : aTitel.Pfad;
 
                                     if (!playlistliste.Audio_Playlist_Titel.First(t => t.Audio_TitelGUID == aTitel.Audio_TitelGUID).Aktiv)
                                     {
@@ -1631,7 +1634,6 @@ namespace MeisterGeister.View.AudioPlayer {
                         }
                     }
                 });
-                
 
                 System.Windows.Forms.FolderBrowserDialog browse = new System.Windows.Forms.FolderBrowserDialog();
                 browse.Description = "Ändern des Bezug-Pfades für die Playlist '" + AktKlangPlaylist.Name + "' - Aktuelles Bezugs-Verzeichnis: " + titelRef;
@@ -1641,31 +1643,61 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (browse.ShowDialog() != System.Windows.Forms.DialogResult.Cancel)
                 {
                     int found = 0;
+                    string ausweichPfad = browse.SelectedPath;
+                    List<string> dateiGefundenInSub = null;;
                     titelliste.ForEach(delegate(Audio_Titel aTitel)
                     {
                         string vergleich = (aTitel.Pfad.Substring(1, 1) != ":") ? stdPfad + @"\" + aTitel.Pfad : aTitel.Pfad;
                         if (File.Exists(browse.SelectedPath + vergleich.Substring(titelRef.Length)))
                             found++;
+                        else
+                        {
+                            if (File.Exists(ausweichPfad + vergleich.Substring(titelRef.Length)))
+                                dateiGefundenInSub.Add(ausweichPfad + @"\" + aTitel.Pfad);
+                            else
+                            {
+                                MyTimer.start_timer();
+                                string inSub = Directory.GetFiles(aTitel.Pfad, System.IO.Path.GetFileName(vergleich), SearchOption.AllDirectories).FirstOrDefault();
+                                MyTimer.stop_timer();
+                                if (inSub != null)
+                                {
+                                    dateiGefundenInSub.Add(inSub);
+                                    ausweichPfad = System.IO.Path.GetDirectoryName(inSub);
+                                }
+                            }
+                        }
                     });
 
                     MessageBoxResult mbResult = MessageBox.Show("Ändern des Bezugs-Verzeichnisses von" + Environment.NewLine + titelRef + Environment.NewLine +
                     "Auf das ausgwählte Verzeichnis" + Environment.NewLine + browse.SelectedPath + Environment.NewLine + Environment.NewLine + Environment.NewLine +
                     "Von " + titelliste.Count + " Audiodateien konnten " + found + " Übereinstimmungen in dem ausgewählten Verzeichnis gefunden werden." + Environment.NewLine + Environment.NewLine +
-                    "Klicken Sie 'Ja' wenn Sie NUR Audio-Pfade ändern wollen, deren Datei gefunden werden konnte?" + Environment.NewLine +
-                    "Klicken Sie 'Nein' um alle Audio-Pfade zu ersetzen.", "Änderungseinstellung", MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
+                    dateiGefundenInSub.Count + " Dateien konnten in den Unterverzeichnissen gefunden werden" + Environment.NewLine + Environment.NewLine +
+                    "Sollen ALLE gefundenen Audio-Pfade geändert werden?" + Environment.NewLine + Environment.NewLine +
+                    "Nicht gefundene Dateien werden nicht verändert", "Änderungseinstellung", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Yes);
 
                     if (mbResult != MessageBoxResult.Cancel)
                     {
                         titelliste.ForEach(delegate(Audio_Titel aTitel)
                         {
                             string vergleich = (aTitel.Pfad.Substring(1, 1) != ":") ? stdPfad + @"\" + aTitel.Pfad : aTitel.Pfad;
-                            if (mbResult == MessageBoxResult.Yes && File.Exists(browse.SelectedPath + vergleich.Substring(titelRef.Length)))
+                            if (mbResult == MessageBoxResult.OK)
                             {
-                                aTitel.Pfad = browse.SelectedPath + vergleich.Substring(titelRef.Length);
+                                if (File.Exists(browse.SelectedPath + vergleich.Substring(titelRef.Length)))
+                                    aTitel.Pfad = browse.SelectedPath + vergleich.Substring(titelRef.Length);
+                                else
+                                {
+                                    dateiGefundenInSub.ForEach(delegate(string pathDatei)
+                                    {
+                                        if (System.IO.Path.GetFileName(pathDatei) == System.IO.Path.GetFileName(vergleich))
+                                            aTitel.Pfad = pathDatei;
+                                    });
+                                }
                                 Global.ContextAudio.Update<Audio_Titel>(aTitel);
 
                                 _GrpObjecte[GetPosObjGruppe(GetObjGruppe(Convert.ToInt16(tcEditor.Tag)))].
-                                    _listZeile.FirstOrDefault(t => t.audiotitel.Audio_TitelGUID == aTitel.Audio_TitelGUID).audioZeile.chkTitel.ToolTip = aTitel.Pfad;
+                                    _listZeile.FirstOrDefault(t => t.audiotitel.Audio_TitelGUID == aTitel.Audio_TitelGUID).audioZeile.chkTitel.ToolTip =
+                                        (System.IO.Path.GetDirectoryName(aTitel.Pfad).Substring(1, 1) != ":") ?
+                                        "[Standard-Verzeichnis]" + @"\" + aTitel.Pfad : aTitel.Pfad;
                             }
                         });
                     }
@@ -1689,20 +1721,19 @@ namespace MeisterGeister.View.AudioPlayer {
                      Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
                     dlg.CheckFileExists = true;
                     dlg.Multiselect = false;
-                    //dlg.DefaultExt = ".mp3;.wav;.wma;.ogg"; // Extensionen
-                    //dlg.FileName = System.IO.Path.GetFileName(vergleich);
                     dlg.Filter = "Musikdatei |" + System.IO.Path.GetFileName(vergleich); // Filter Dateien pro extension
-                    dlg.InitialDirectory = System.IO.Path.GetDirectoryName(kZeile.audiotitel.Audio_Titel.Pfad);
+                    dlg.InitialDirectory = System.IO.Path.GetDirectoryName(vergleich);
                     
                     Nullable<bool> result = dlg.ShowDialog();
                     if (result == true)
                     {
                         kZeile.audiotitel.Audio_Titel.Pfad = dlg.FileName;
                         kZeile.audioZeile.chkTitel.Content = System.IO.Path.GetFileNameWithoutExtension(dlg.FileName);
-                        kZeile.audioZeile.chkTitel.ToolTip = dlg.FileName;
+                        kZeile.audioZeile.chkTitel.ToolTip =
+                            (System.IO.Path.GetDirectoryName(dlg.FileName).Substring(1, 1) != ":") ?
+                            "[Standard-Verzeichnis]" + @"\" + dlg.FileName : dlg.FileName;
                         Global.ContextAudio.Update<Audio_Titel>(kZeile.audiotitel.Audio_Titel);
-                    }
-                    MessageBox.Show("test " + kZeile.audiotitel.Audio_Titel.Pfad);                    
+                    }               
                     break;
             }
         }
@@ -1746,7 +1777,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
                         _GrpObjecte[posObjGruppe].btnKlangUpdateFiles.ToolTip = "Update der Titel im Verzeichnis  " + titelRef +"  :" + Environment.NewLine +
                             titelliste.Count + " Dateien sind in der Playlist vorhanden." + Environment.NewLine +
-                            allFiles.Length + " Sound-Dateien wurden incl. Unterverzeichnisse gefunden:" + Environment.NewLine + Environment.NewLine +
+                            (allFiles.Length-titelliste.Count) + " Sound-Dateien zusätzlich wurden incl. Unterverzeichnisse gefunden:" + Environment.NewLine + Environment.NewLine +
                             allFilesMP3.Length + " MP3-Dateien,   " + allFilesOGG.Length + " OGG-Dateien," + Environment.NewLine +
                             allFilesWAV.Length + " WAV-Dateien,   " + allFilesWMA.Length + " WMA-Dateien." + Environment.NewLine + Environment.NewLine +
                             "Klicken Sie um alle Dateien zu integrieren.";
@@ -2010,7 +2041,9 @@ namespace MeisterGeister.View.AudioPlayer {
             
             klZeile.audioZeile.chkTitel.Tag = (System.IO.Path.GetDirectoryName(songdatei).StartsWith(stdPfad)) ?
                 songdatei.Substring(stdPfad.Length) : songdatei;
-            klZeile.audioZeile.chkTitel.ToolTip = songdatei;
+            klZeile.audioZeile.chkTitel.ToolTip =
+                (System.IO.Path.GetDirectoryName(songdatei).Substring(1, 1) != ":") ?
+                "[Standard-Verzeichnis]" + @"\" + songdatei : songdatei;
             klZeile.audioZeile.chkTitel.ContextMenu = cMenu;
 
             // Schieberegler Lautstärke
@@ -3838,6 +3871,20 @@ namespace MeisterGeister.View.AudioPlayer {
             catch (Exception) { }
         }
 
+        /*
+        void _chkTitelNochBenutzt_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.AppStarting;
+            
+            int gefunden = Global.ContextAudio.PlaylistTitelListe.FindAll(t => t.Audio_Titel == (CheckDeleteAudioTitel)).Count;
+            if (gefunden <= 1)
+                Global.ContextAudio.RemoveTitel(CheckDeleteAudioTitel);
+        }
+        void _chkTitelNochBenutzt_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Mouse.OverrideCursor = Cursors.Arrow;
+        }*/
+
         private void imgTrash0_0_MouseUp(object sender, MouseButtonEventArgs e)
         {
             try
@@ -3858,47 +3905,21 @@ namespace MeisterGeister.View.AudioPlayer {
                         chkTitel0_0_Click(_GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.chkTitel, new RoutedEventArgs());
                     }
                     _GrpObjecte[posObjGruppe].Gespielt.FindAll(t => t > zeile).ForEach(t => t--);
-
-                    MyTimer.start_timer();
-                   // int anz = 0;
-             //       List<Audio_Titel> lstATitel = Global.ContextAudio.PlaylistTitelListe.FindAll(
-              //          t => t.Audio_Titel == _GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Audio_Titel).ToList();
-                    int gefunden = Global.ContextAudio.PlaylistTitelListe.FindAll(
-                        t => t.Audio_Titel == _GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Audio_Titel).Count;
-                    
-/*
-                    while (anz < Global.ContextAudio.PlaylistListe.Count && gefunden <= 1)
-                    {
-                        gefunden += Convert.ToUInt16((Global.ContextAudio.LoadPlaylist_TitelByPlaylist(Global.ContextAudio.PlaylistListe[anz],
-                            _GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Audio_Titel)).Count);
-                        anz++;
-                    }*/
-                    MyTimer.stop_timer();
                     Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, _GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Audio_Titel);
-
-                    MyTimer.stop_timer();
-                    if (gefunden <= 1)
-                        Global.ContextAudio.RemoveTitel(_GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Audio_Titel);
 
                     if (_GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Audio_Titel == null)
                         ZeigeKlangSongsParallel(posObjGruppe, false);
 
-                    MyTimer.stop_timer();
                     _GrpObjecte[posObjGruppe].wpnl.Children.RemoveAt(zeile);
                     _GrpObjecte[posObjGruppe]._listZeile.RemoveAt(zeile);
 
-                    MyTimer.stop_timer();
                     CheckBtnGleicherPfad(posObjGruppe);
                     if (_GrpObjecte[posObjGruppe]._listZeile.Count > 0)
                         CheckChPfadHatBezug(posObjGruppe);
                     else
                         _GrpObjecte[posObjGruppe].btnTopChPfad.Visibility = Visibility.Hidden;
-
-                    MyTimer.stop_timer();
                 }
                 GC.GetTotalMemory(true);
-
-                MyTimer.stop_timer();
             }
             catch (Exception) { }
         }
