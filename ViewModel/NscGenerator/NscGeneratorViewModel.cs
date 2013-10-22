@@ -345,7 +345,7 @@ namespace MeisterGeister.ViewModel.NscGenerator
                 SelectedGeschlecht = "m/w";
                 GeschlechtListeIsEnabled = true;
 
-                GenNumber = 5;
+                GenNumber = 1;
 
                 IsLoaded = true;
             }
