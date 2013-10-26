@@ -13,7 +13,7 @@
                     <Image Name="_imgOk" Source="/Images/Icons/General/ok.png" Stretch="Fill" Visibility="Collapsed" MouseDown="imgOk_MouseDown" />
                 </DockPanel>
             </Button>
-            <Button Name="_buttonClose" Height="18" Width="18" Margin="4, 0, 0, 0" Visibility="Collapsed" BorderThickness="0.5" Opacity="0.5" ToolTip="Playlist entfernen" Click="ButtonClose_Click" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
+            <Button Name="_buttonClose" Height="18" Width="18" Margin="4, 0, 0, 0" Visibility="Collapsed" BorderThickness="0.5" Opacity="0.5" ToolTip="Playlist aus Theme entfernen" Click="ButtonClose_Click" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
                 <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />
             </Button>
         </StackPanel>

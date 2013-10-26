@@ -488,6 +488,9 @@
     <Compile Include="View\AudioPlayer\AudioZeile.xaml.cs">
       <DependentUpon>AudioZeile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\boxThemeTheme.xaml.cs">
+      <DependentUpon>boxThemeTheme.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AudioPlayer\HotKeyZeile.xaml.cs">
       <DependentUpon>HotKeyZeile.xaml</DependentUpon>
     </Compile>
@@ -857,6 +860,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AudioPlayer\AudioZeile.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\boxThemeTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
