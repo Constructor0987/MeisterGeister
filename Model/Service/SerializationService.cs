@@ -65,6 +65,16 @@ namespace MeisterGeister.Model.Service
         /// </summary>
         private void LoadAllUserData()
         {
+            LoadHeldUserData();
+            LoadGegnerUserData();
+            LoadAudioUserData();
+        }
+
+        private bool heldLoaded = false;
+        private void LoadHeldUserData()
+        {
+            if (heldLoaded)
+                return;
             var queries = new IQueryable<object>[] {
                 from a in Context.Held select a,
                 from a in Context.Held_Ausrüstung select a,
@@ -98,7 +108,43 @@ namespace MeisterGeister.Model.Service
             IEnumerable<object> results;
             foreach (IQueryable<object> q in queries)
                 results = q.ToList();
+            heldLoaded = true;
         }
+
+        bool gegnerLoaded = false;
+        private void LoadGegnerUserData()
+        {
+            if (gegnerLoaded)
+                return;
+            var queries = new IQueryable<object>[] {
+                from a in Context.GegnerBase where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.Kampfregel where !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.GegnerBase_Angriff where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-") select a,
+                from a in Context.GegnerBase_Kampfregel where !a.GegnerBaseGUID.StringConvert().StartsWith("00000000-0000-0000-") || !a.KampfregelGUID.StringConvert().StartsWith("00000000-0000-0000-")  select a,
+            };
+            IEnumerable<object> results;
+            foreach (IQueryable<object> q in queries)
+                results = q.ToList();
+            gegnerLoaded = true;
+        }
+
+        bool audioLoaded = false;
+        private void LoadAudioUserData()
+        {
+            if (audioLoaded)
+                return;
+            var queries = new IQueryable<object>[] {
+                from a in Context.Audio_Theme select a,
+                from a in Context.Audio_Playlist select a,
+                from a in Context.Audio_Playlist_Titel select a,
+                from a in Context.Audio_Titel select a,
+            };
+            IEnumerable<object> results;
+            foreach (IQueryable<object> q in queries)
+                results = q.ToList();
+            audioLoaded = true;
+        }
+
 
         #region Insert/Update/Delete/Save/New/Discard
         public virtual bool Insert<T>(T aModelObject) where T : class
@@ -297,6 +343,7 @@ namespace MeisterGeister.Model.Service
         /// </summary>
         public bool InsertOrUpdateHeld(Held held)
         {
+            LoadHeldUserData();
             // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
             // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
 #if !DEBUG
@@ -355,17 +402,15 @@ namespace MeisterGeister.Model.Service
             return newHeld;
         }
 
-        private static Audio_Playlist ReplaceGuid(Audio_Playlist audio, Guid newGuid)
+        public Held GetHeld(Guid heldGuid)
         {
-            string xml = SerializeObject<Audio_Playlist>(audio);
-            xml = xml.Replace(String.Format("<Audio_PlaylistGUID>{0}</Audio_PlaylistGUID>", audio.Audio_PlaylistGUID), String.Format("<Audio_PlaylistGUID>{0}</Audio_PlaylistGUID>", newGuid));
-            Audio_Playlist newAudio = DeserializeObject<Audio_Playlist>(xml);
-            return newAudio;
+            LoadHeldUserData();
+            return Context.Held.Where(h => h.HeldGUID == heldGuid).First();
         }
 
         public Guid CloneHeld(Guid heldGuid, Guid newGuid)
         {
-            Held held = Context.Held.Where(h => h.HeldGUID == heldGuid).First();
+            var held = GetHeld(heldGuid);
             if (held != null)
             {
                 Held newHeld = ReplaceGuid(held, newGuid);
@@ -377,8 +422,7 @@ namespace MeisterGeister.Model.Service
 
         public void ExportHeld(Guid heldGuid, string pfad)
         {
-            //Userdaten geladen
-            Held held = Context.Held.Where(h => h.HeldGUID == heldGuid).First();
+            var held = GetHeld(heldGuid);
             if (held != null)
             {
                 SerializeObject<Held>(pfad, held);
@@ -422,6 +466,7 @@ namespace MeisterGeister.Model.Service
         /// <returns></returns>
         public bool DeleteHeldData(Held h)
         {
+            LoadHeldUserData();
             if(h==null)
                 return false;
             if (Context.Held.Where(a => a.HeldGUID == h.HeldGUID).Count() == 0)
@@ -457,10 +502,12 @@ namespace MeisterGeister.Model.Service
         /// </summary>
         public bool InsertOrUpdateGegner(GegnerBase gegner)
         {
+            LoadGegnerUserData();
             // Mögliche erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
             // So kann man z.B. einen Guid/ID-Filter realisieren um userdaten von stammdaten zu trennen bzw stammdaten nciht zu überschreiben
             try
             {
+                DeleteGegnerData(gegner);
                 Context.AttachObjectGraph(gegner,
                     h => h.GegnerBase_Angriff,
                     h => h.GegnerBase_Kampfregel,
@@ -477,10 +524,15 @@ namespace MeisterGeister.Model.Service
             }
         }
 
+        public GegnerBase GetGegner(Guid gegnerGuid)
+        {
+            LoadGegnerUserData();
+            return Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
+        }
+
         public void ExportGegner(Guid gegnerGuid, string pfad)
         {
-            //Userdaten geladen
-            GegnerBase gegner = Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
+            var gegner = GetGegner(gegnerGuid);
             if (gegner != null)
             {
                 SerializeObject<GegnerBase>(pfad, gegner);
@@ -508,7 +560,7 @@ namespace MeisterGeister.Model.Service
 
         public Guid CloneGegner(Guid gegnerGuid, Guid newGuid)
         {
-            GegnerBase gegner = Context.GegnerBase.Where(h => h.GegnerBaseGUID == gegnerGuid).First();
+            var gegner = GetGegner(gegnerGuid);
             if (gegner != null)
             {
                 GegnerBase newGegner = ReplaceGuid(gegner, newGuid);
@@ -525,22 +577,49 @@ namespace MeisterGeister.Model.Service
             GegnerBase newHeld = DeserializeObject<GegnerBase>(xml);
             return newHeld;
         }
+
+        public bool DeleteGegnerData(GegnerBase a)
+        {
+            LoadGegnerUserData();
+            if (a == null)
+                return false;
+            if (Context.GegnerBase.Where(h => h.GegnerBaseGUID == a.GegnerBaseGUID).Count() == 0)
+                return true;
+            List<object> toDelete = new List<object>();
+
+            toDelete.AddRange(Context.GegnerBase_Angriff.Where(h => h.GegnerBaseGUID == a.GegnerBaseGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.GegnerBase_Kampfregel.Where(h => h.GegnerBaseGUID == a.GegnerBaseGUID).AsEnumerable<object>());
+
+            try
+            {
+                foreach (object o in toDelete)
+                    Context.DeleteObject(o);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
         #endregion
 
         #region Audio
 
         public bool InsertOrUpdateAudio(Audio_Playlist audio)
         {
-            // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
-            // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
+            LoadAudioUserData();
 #if !DEBUG
             try
             {
 #endif
             
             DeleteAudioData(audio);            
-            Global.ContextAudio.Insert<Audio_Playlist>(audio);
-            return true;// output != null;
+            Audio_Playlist output = Context.AttachObjectGraph(audio,
+                    h => h.Audio_Playlist_Titel,
+                    h => h.Audio_Playlist_Titel.First().Audio_Titel
+                );
+            Save();
+            return output != null;
 #if !DEBUG
         }
             catch (Exception e)
@@ -556,61 +635,115 @@ namespace MeisterGeister.Model.Service
 
         public bool InsertOrUpdateAudio(Audio_Theme aTheme)
         {
-            // Mögliche Erweiterung der ObjectContextExtension mit einer weiteren Methode, die eine Filterbedigung auf die verknüpfte IEnumerable anwendet
-            // So kann man z.B. einen Guid/ID-Filter realisieren, um Userdaten von Stammdaten zu trennen bzw Stammdaten nicht zu überschreiben
+            LoadAudioUserData();
 
             DeleteAudioData(aTheme);
-            Global.ContextAudio.Insert<Audio_Theme>(aTheme);
-            return true;// output != null;
+            Audio_Theme output = Context.AttachObjectGraph(aTheme,
+                    h => h.Audio_Playlist,
+                    h => h.Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+                    //Child-Ebene 1
+                    h => h.Audio_Theme2,
+                    h => h.Audio_Theme2.First().Audio_Playlist,
+                    h => h.Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+                    //2
+                    h => h.Audio_Theme2.First().Audio_Theme2,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+                    //3
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+                    //4
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+                    //5
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+                    //6
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+                    //7
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist,
+                    h => h.Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel
+                );
+#if !DEBUG
+            try
+            {
+#endif
+            Save();
+#if !DEBUG
+        }
+            catch (Exception e)
+            {
+                throw e;
+                //Debug.WriteLine(e.Message);
+                //Debug.WriteLine(e.InnerException);
+                //return false;
+            }
+#endif
+            return output != null;
         }
 
+        public Audio_Playlist GetAudioPlaylist(Guid audioPlaylistGuid)
+        {
+            LoadAudioUserData();
+            return Context.Audio_Playlist.Where(h => h.Audio_PlaylistGUID == audioPlaylistGuid).First();
+        }
 
+        public Audio_Theme GetAudioTheme(Guid audioThemeGuid)
+        {
+            LoadAudioUserData();
+            return Context.Audio_Theme.Where(h => h.Audio_ThemeGUID == audioThemeGuid).First();
+        }
 
-        public void ExportAudio(ExportPListTheme aPListTheme, string pfad)
+        public void ExportAudioPlaylist(Guid audioPlaylistGuid, string pfad)
         {
             //Userdaten geladen
-            //Audio_Playlist audio = Context.Audio_Playlist.Where(a => a.Audio_PlaylistGUID == audio_playlistGuid).First();
-            if (aPListTheme != null)
+            var o = GetAudioPlaylist(audioPlaylistGuid);
+            if (o != null)
             {
-                SerializeObject<ExportPListTheme>(pfad, aPListTheme);
+                //keine Themes mitexportieren
+                o.Audio_Theme.Clear();
+                //keine anderen playlisten mitexportieren. Also alle anderen entfernen
+                foreach (var pt in o.Audio_Playlist_Titel)
+                    pt.Audio_Titel.Audio_Playlist_Titel = pt.Audio_Titel.Audio_Playlist_Titel.Where(apt => apt.Audio_PlaylistGUID == o.Audio_PlaylistGUID).ToList();
+
+                SerializeObject<Audio_Playlist>(pfad, o);
             }
         }
 
-
         /// <summary>
-        /// Importiert einen Helden aus einer XML-Datei. Bestehende Daten werden überschrieben.
+        /// Importiert Playlisten und Themes aus einer XML-Datei. Bestehende Daten werden überschrieben.
         /// </summary>
         /// <param name="pfad">Xml-Datei</param>
         public Guid ImportAudio(string pfad)
         {
-            return ImportAudio(pfad, Guid.Empty);
-        }
-        
-        /// <summary>
-        /// Importiert einen Helden aus einer XML-Datei.
-        /// </summary>
-        /// <param name="pfad">Xml-Datei</param>
-        /// <param name="newGuid">Wenn Guid.Empty, dann wird überschrieben, sonst wird eine Kopie mit der neuen Guid importiert.</param>
-        /// <returns>Guid des importierten Helden oder Guid.Empty</returns>
-        public Guid ImportAudio(string pfad, Guid newGuid)
-        {
-                //Userdaten geladen
-            ExportPListTheme aPListTheme = DeserializeObjectFromFile<ExportPListTheme> (pfad);
-              //  List<Audio_Playlist> audiolist = DeserializeObjectFromFile<List<Audio_Playlist>>(pfad);
-            foreach (Audio_Theme aTheme in aPListTheme.aTheme)
+            var typ = MeistergeisterFileType(pfad);
+            if (typ == "Audio_Playlist")
             {
-                if (aTheme != null)
-                    InsertOrUpdateAudio(aTheme);
-            }
-                foreach (Audio_Playlist aList in aPListTheme.aPlayList)
+                var ap = DeserializeObjectFromFile<Audio_Playlist>(pfad);
+                if (ap != null)
                 {
-                    if (aList != null)
-                        InsertOrUpdateAudio(aList);
+                    InsertOrUpdateAudio(ap);
+                    return ap.Audio_PlaylistGUID;
                 }
+            }
+            else if (typ == "Audio_Theme")
+            {
+                var at = DeserializeObjectFromFile<Audio_Theme>(pfad);
+                InsertOrUpdateAudio(at);
+                return at.Audio_ThemeGUID;
+            }
             return Guid.Empty;
         }
+
         public bool DeleteAudioData(Audio_Playlist a)
         {
+            LoadAudioUserData();
             if(a==null)
                 return false;
             if (Context.Audio_Playlist.Where(h => h.Audio_PlaylistGUID == a.Audio_PlaylistGUID).Count() == 0)
@@ -618,7 +751,21 @@ namespace MeisterGeister.Model.Service
             List<object> toDelete = new List<object>();
 
             toDelete.AddRange(Context.Audio_Playlist_Titel.Where(h => h.Audio_PlaylistGUID == a.Audio_PlaylistGUID).AsEnumerable<object>());
+            toDelete.AddRange(Context.Audio_Playlist_Titel.Where(h => h.Audio_PlaylistGUID == a.Audio_PlaylistGUID).AsEnumerable<object>());
 
+            try
+            {
+                foreach (object o in toDelete)
+                    Context.DeleteObject(o);
+            }
+            catch
+            {
+                return false;
+            }
+
+            //verwaiste Titel entfernen
+            toDelete.Clear();
+            toDelete.AddRange(Context.Audio_Titel.Where(h => h.Audio_Playlist_Titel.Count == 0).AsEnumerable<object>());
             try
             {
                 foreach (object o in toDelete)
@@ -634,6 +781,7 @@ namespace MeisterGeister.Model.Service
         
         public bool DeleteAudioData(Audio_Theme a)
         {
+            LoadAudioUserData();
             if(a==null)
                 return false;
             if (Context.Audio_Theme.Where(h => h.Audio_ThemeGUID == a.Audio_ThemeGUID).Count() == 0)
@@ -654,9 +802,17 @@ namespace MeisterGeister.Model.Service
 
             return true;
         }
+
+        private static Audio_Playlist ReplaceGuid(Audio_Playlist audio, Guid newGuid)
+        {
+            string xml = SerializeObject<Audio_Playlist>(audio);
+            xml = xml.Replace(String.Format("<Audio_PlaylistGUID>{0}</Audio_PlaylistGUID>", audio.Audio_PlaylistGUID), String.Format("<Audio_PlaylistGUID>{0}</Audio_PlaylistGUID>", newGuid));
+            Audio_Playlist newAudio = DeserializeObject<Audio_Playlist>(xml);
+            return newAudio;
+        }
         #endregion
 
-        public static bool IsMeistergeisterFile(string xmlFile)
+        public static string MeistergeisterFileType(string xmlFile)
         {
             System.IO.FileStream fs = null;
             System.IO.StreamReader sr = null;
@@ -668,12 +824,15 @@ namespace MeisterGeister.Model.Service
                 sr.Read(buffer, 0, 400);
                 string line = new string(buffer);
                 if (line.Contains("MeisterGeister.Model"))
-                    return true;
-                
+                {
+                    string typ = line.Substring(1, line.IndexOf(' '));
+                    return typ;
+                }
+
             }
             catch
             {
-                return false;
+                return null;
             }
             finally
             {
@@ -682,7 +841,16 @@ namespace MeisterGeister.Model.Service
                 if (fs != null)
                     fs.Close();
             }
-            return false;
+            return null;
         }
+
+        public static bool IsMeistergeisterFile(string xmlFile, string typ = null)
+        {
+            var t = MeistergeisterFileType(xmlFile);
+            if (t == null)
+                return false;
+            return t == typ;
+        }
+
     }
 }

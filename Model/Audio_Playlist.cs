@@ -19,15 +19,15 @@ namespace MeisterGeister.Model
         }
 
         #region Import Export
+        //public static Audio_Playlist Import(string pfad, bool batch = false)
+        //{
+        //    return Import(pfad, Guid.Empty, batch);
+        //}
+
         public static Audio_Playlist Import(string pfad, bool batch = false)
         {
-            return Import(pfad, Guid.Empty, batch);
-        }
-
-        public static Audio_Playlist Import(string pfad, Guid newGuid, bool batch = false)
-        {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            Guid audio_playlistGuid = serialization.ImportAudio(pfad, newGuid);
+            Guid audio_playlistGuid = serialization.ImportAudio(pfad);
             
             UpdateLists();
             return Global.ContextAudio.Liste<Audio_Playlist>().Where(a => a.Audio_PlaylistGUID == audio_playlistGuid).FirstOrDefault();
@@ -40,7 +40,7 @@ namespace MeisterGeister.Model
             aPListTheme.aTheme = Global.ContextAudio.ThemeListe;
 
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            serialization.ExportAudio(aPListTheme, pfad);
+            serialization.ExportAudioPlaylist(Audio_PlaylistGUID, pfad);
         }
 
 

@@ -7271,8 +7271,9 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void btnAudioDatenExport_Click(object sender, RoutedEventArgs e)
         {
+            Global.ContextAudio.Save();
             try
-            { 
+            {
                 Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
                 dlg.CheckFileExists = false;
                 dlg.DefaultExt = ".xml";

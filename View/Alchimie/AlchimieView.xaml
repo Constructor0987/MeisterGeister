@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Alchimie"
+             xmlns:m="clr-namespace:MeisterGeister.Model"
+             xmlns:vml="clr-namespace:MeisterGeister.ViewModel.Alchimie.Logic"
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
              mc:Ignorable="d" 
-             d:DesignHeight="571" d:DesignWidth="946" Loaded="UserControl_Loaded" Background="{StaticResource Background1}">
+             d:DesignHeight="571" d:DesignWidth="946" Loaded="UserControl_Loaded" Background="{StaticResource Background1}"
+             d:DataContext="{d:DesignInstance vm:AlchimieViewModel,IsDesignTimeCreatable=True}">
     <UserControl.DataContext>
         <vm:AlchimieViewModel />
     </UserControl.DataContext>
@@ -261,7 +264,8 @@
                                         <TextBlock Text="{Binding Path = SelectedRezept.Haltbarkeitseinheit}" Margin="5,0,0,0" TextWrapping="Wrap" />
                                     </StackPanel>
                                     <TextBlock Text="Preis"  Grid.Row="15" />
-                                    <TextBlock Text="{Binding Path =SelectedRezept.Beschaffungskosten}" Grid.Row="15" Grid.Column="2" TextWrapping="Wrap" />
+                                    <!--<TextBlock Text="{Binding Path =SelectedRezept.Preis}" Grid.Row="15" Grid.Column="2" TextWrapping="Wrap" />-->
+                                    <TextBlock Text="N/A" Grid.Row="15" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="Merkmale"  Grid.Row="16" />
                                     <TextBlock Text="{Binding Path = SelectedRezept.Merkmale}" Grid.Row="16" Grid.Column="2" TextWrapping="Wrap" />
                                     <TextBlock Text="Wirkung (mißlungen)"  Grid.Row="18" />
