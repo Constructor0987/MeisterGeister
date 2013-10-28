@@ -9,6 +9,7 @@ using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Extensions;
 using System.ComponentModel;
+using ImpromptuInterface;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -17,7 +18,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
     //Wenn die VerbleibendeDauer auf 0 geht wird es angewandt.
     public class Manöver : INotifyPropertyChanged
     {
-        protected static Object syncRoot;
+        protected static Object syncRoot = new Object();
         protected static volatile List<Type> _manöverListe = null;
         public static List<Type> ManöverListe
         {
@@ -33,6 +34,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 }
                 return Manöver._manöverListe;
             }
+        }
+
+        public static List<Type> MöglicheManöver(KämpferInfo ausführender)
+        {
+            var staticContext = InvokeContext.CreateStatic;
+            List<Type> l = new List<Type>();
+            foreach (Type t in ManöverListe)
+            {
+                if ((bool)Impromptu.InvokeMember(staticContext(t), "BeherrschtManöver", ausführender))
+                    l.Add(t);
+            }
+            return l;
         }
 
         public static bool BeherrschtManöver(KämpferInfo ausführender)

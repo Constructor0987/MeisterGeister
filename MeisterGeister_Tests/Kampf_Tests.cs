@@ -206,6 +206,24 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
+        public void MöglicheManöverTest()
+        {
+            Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
+            Assert.IsNotNull(gero);
+            //einen Kampf anlegen
+            Kampf kampf = new Kampf();
+            //gero hinzufügen
+            kampf.Kämpfer.Add(gero); // Implizit Team 1
+            kampf.Kämpfer[gero].Initiative = 21;
+            kampf.Kämpfer[gero].Kampfstil = Kampfstil.Parierwaffenstil;
+            var ki = kampf.Kämpfer[gero];
+            var möglicheManöver = Manöver.MöglicheManöver(ki);
+            Assert.Greater(möglicheManöver.Count, 0);
+            Assert.IsTrue(möglicheManöver.Contains(typeof(TodVonLinks)));
+            Assert.IsFalse(möglicheManöver.Contains(typeof(Gegenhalten)));
+        }
+
+        [Test]
         public void LängerfristigeHandlungTest()
         {
             Held gero = Global.ContextKampf.Liste<Held>().Where(g => g.Name == "Gero Kalai von Rodaschquell").FirstOrDefault();
