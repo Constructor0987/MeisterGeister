@@ -71,9 +71,9 @@
                             <Label Grid.Column="1" Content="(Gesamt)" FontWeight="Bold" Margin="0,0,20,0" />
                             <MeisterGeister_View_General:IntBox Grid.Column="2" ShowButtons="True" Value="{Binding SelectedHeld.APEingesetzt}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" />
                             <Label Grid.Column="3" Content="(Eingesetzt)" FontWeight="Bold" Margin="0,0,20,0" />
-                            <MeisterGeister_View_General:IntBox Grid.Column="4" Value="{Binding SelectedHeld.APGuthaben}" IsReadOnly="True" />
+                            <MeisterGeister_View_General:IntBox Grid.Column="4" Value="{Binding SelectedHeld.APGuthaben}" IsReadOnly="{Binding IsReadOnly}" />
                             <Label Grid.Column="5" Content="(Guthaben)" FontWeight="Bold" Margin="0,0,20,0" />
-                            <MeisterGeister_View_General:IntBox Grid.Column="6" Value="{Binding SelectedHeld.Stufe}" IsReadOnly="True" />
+                            <MeisterGeister_View_General:IntBox Grid.Column="6" Value="{Binding SelectedHeld.Stufe}" IsReadOnly="{Binding IsReadOnly}" />
                             <Label Grid.Column="7" Content="(Stufe)" FontWeight="Bold" Margin="0,0,20,0" />
                         </Grid>
                         

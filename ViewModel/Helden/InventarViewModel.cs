@@ -658,6 +658,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             }
 
             if (SelectedHeld != null) {
+                //Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
                 //SelectedHeld.BE = HeldRuestungImInventar.Sum(item => item.EntityR.BE);
             }
         }
@@ -737,7 +738,8 @@ namespace MeisterGeister.ViewModel.Inventar {
                 RuestungItem tmp = HeldRuestungImInventar.Where(s => s.EntityHA.Ausrüstung.Rüstung == SelectedRuestung && s.EntityHA.HeldGUID == SelectedHeld.HeldGUID).FirstOrDefault();
                 RuestungItem newItem = CreateItemVonRuestung(SelectedRuestung);
                 HeldRuestungImInventar.Add(newItem);
-                SelectedHeld.BE += newItem.EntityR.BE;
+                //Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
+                //SelectedHeld.BE += newItem.EntityR.BE;
                 OnChanged("HeldRuestungImInventar");
                 IsRuestungVorhanden = Visibility.Visible;
                 Global.ContextInventar.InsertHeldAusruestung(newItem.EntityHA);
@@ -841,7 +843,8 @@ namespace MeisterGeister.ViewModel.Inventar {
                         HeldRuestungImInventar.Remove(item);
                         OnChanged("HeldRuestungImInventar");
                         AktuellesGewicht -= item.EntityR.Gewicht / 2;
-                        SelectedHeld.BE -= item.EntityR.BE;
+                        //Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
+                        //SelectedHeld.BE -= item.EntityR.BE;
                         if (HeldRuestungImInventar.Count() == 0) {
                             IsRuestungVorhanden = Visibility.Collapsed;
                         }
@@ -1233,43 +1236,3 @@ namespace MeisterGeister.ViewModel.Inventar {
     #endregion
 
 }
-
-////////////////////////
-//DSA Regelwerke
-////////////////////////
-//RüstungsBE + 
-
-//Rüstung angelegt 1/2
-
-//Tragkraft in Stein (1Stein = 40 Unze) = KK => implemented in OnHeldCHanged
-
-//pro angefangene 50% über Tragkraft steigt BE um 1
-
-//Strategisch prop Stunde marsch erschöpfung + 1 erleiden
-//Übersteigt Gewicht doppelte Tragkraft muss KO-Runden 1 Runde gerastet werden, Sprint nicht mehr möglich
-
-//Übersteigt 4x Tragkraft muss KO * 5 Schritt 1Min mit absetzen verschnauft werden
-
-//+ BE durch Erschöpfung
-//WdS (Bei Ausdauer)
-
-////////////////////////
-//CodeGenerated-Animation
-////////////////////////
-//public void AnimateLabelRotationInCode( object sender,
-//  RoutedEventArgs e )
-//{
-//  DoubleAnimation oLabelAngleAnimation
-//    = new DoubleAnimation();
-
-//  oLabelAngleAnimation.From = 0;
-//  oLabelAngleAnimation.To = 360;
-//  oLabelAngleAnimation.Duration
-//    = new Duration( new TimeSpan( 0, 0, 0, 0, 500 ) );
-//  oLabelAngleAnimation.RepeatBehavior = new RepeatBehavior( 4 );
-
-//  RotateTransform oTransform
-//    = (RotateTransform) lblHello.RenderTransform;
-//  oTransform.BeginAnimation( RotateTransform.AngleProperty,
-//    oLabelAngleAnimation );
-//}
