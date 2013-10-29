@@ -596,7 +596,7 @@
 
                                             </StackPanel>
 
-                                            <Button Name="btnTopChPfadX" HorizontalAlignment="Right" Width="30" Height="30" ToolTip="Anpassen des Playlist-Verzeichnisses" Grid.Column="7" Visibility="Hidden" Margin="0,0,10,0">
+                                            <Button Name="btnTopChPfadX" Width="30" Height="30" ToolTip="Anpassen des Playlist-Verzeichnisses" Grid.Column="8" HorizontalAlignment="Left" Visibility="Hidden">
                                                 <Grid>
                                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
                                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/suchen.png" Width="20" />
@@ -607,7 +607,7 @@
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" />
                                             </Button>
 
-                                            <Button Name="btnKlangUpdateFilesX" HorizontalAlignment="Left" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="8" ToolTipService.ShowDuration="10000" >
+                                            <Button Name="btnKlangUpdateFilesX" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="7" HorizontalAlignment="Right" Margin="0,0,10,0" ToolTipService.ShowDuration="10000" Visibility="Hidden" >
                                                 <Grid>
                                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
                                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/refresh.png" Width="20" />

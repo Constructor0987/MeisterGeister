@@ -40,7 +40,17 @@ namespace MeisterGeister.Model
             aPListTheme.aTheme = Global.ContextAudio.ThemeListe;
 
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            serialization.ExportAudioPlaylist(Audio_PlaylistGUID, pfad);
+
+            Global.ContextAudio.PlaylistListe.ForEach(delegate(Audio_Playlist aPlaylist)
+            {
+                serialization.ExportAudioPlaylist(aPlaylist._audio_PlaylistGUID, pfad);
+            });
+
+            Global.ContextAudio.ThemeListe.ForEach(delegate(Audio_Theme aTheme)
+            {
+                serialization.ExportAudioTheme(aTheme.Audio_ThemeGUID, pfad);
+            });
+            // Audio_PlaylistGUID
         }
 
 

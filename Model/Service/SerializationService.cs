@@ -300,6 +300,18 @@ namespace MeisterGeister.Model.Service
                 stream.Close();
             }
         }
+
+        /// <summary>
+        /// Save to a file (Append).
+        /// </summary>
+        public static void SerializeObjectExist<T>(string fileName, T o) where T : class
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Append))
+            {
+                SerializeObject<T>(stream, o);
+                stream.Close();
+            }
+        }
         #endregion
 
         #region ObjectState
@@ -712,7 +724,18 @@ namespace MeisterGeister.Model.Service
                 foreach (var pt in o.Audio_Playlist_Titel)
                     pt.Audio_Titel.Audio_Playlist_Titel = pt.Audio_Titel.Audio_Playlist_Titel.Where(apt => apt.Audio_PlaylistGUID == o.Audio_PlaylistGUID).ToList();
 
-                SerializeObject<Audio_Playlist>(pfad, o);
+                SerializeObjectExist<Audio_Playlist>(pfad, o);
+            }
+        }
+
+
+        public void ExportAudioTheme(Guid audioThemeGuid, string pfad)
+        {
+            //Userdaten geladen
+            var o = GetAudioTheme(audioThemeGuid);
+            if (o != null)
+            {
+                SerializeObjectExist<Audio_Theme>(pfad, o);
             }
         }
 
@@ -723,7 +746,7 @@ namespace MeisterGeister.Model.Service
         public Guid ImportAudio(string pfad)
         {
             var typ = MeistergeisterFileType(pfad);
-            if (typ == "Audio_Playlist")
+            if (typ == "Audio_Playlist ")
             {
                 var ap = DeserializeObjectFromFile<Audio_Playlist>(pfad);
                 if (ap != null)
@@ -732,7 +755,7 @@ namespace MeisterGeister.Model.Service
                     return ap.Audio_PlaylistGUID;
                 }
             }
-            else if (typ == "Audio_Theme")
+            else if (typ == "Audio_Theme ")
             {
                 var at = DeserializeObjectFromFile<Audio_Theme>(pfad);
                 InsertOrUpdateAudio(at);
