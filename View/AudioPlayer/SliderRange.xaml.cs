@@ -39,15 +39,22 @@ namespace MeisterGeister.View.AudioPlayer
             UpperSlider.Value = Math.Max(UpperSlider.Value, LowerSlider.Value);
             UpperValue = UpperSlider.Value;
 
+            LowerSlider.ToolTip = TimeSpan.FromMilliseconds(LowerValue).ToString(@"mm\:ss");
+            UpperSlider.ToolTip = TimeSpan.FromMilliseconds(UpperValue).ToString(@"mm\:ss");
+
             brdLine.Margin = new Thickness(posLeft, 0, brdLine.Margin.Right, 0);
         }
 
         private void UpperSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            double posRight = this.Width -17 - (root.ActualWidth -17) / (LowerSlider.Maximum / e.NewValue);
+            double posRight = this.ActualWidth - 17 - (root.ActualWidth - 17) / (LowerSlider.Maximum / e.NewValue);
 
             LowerSlider.Value = Math.Min(UpperSlider.Value, LowerSlider.Value);
             LowerValue = LowerSlider.Value;
+
+            LowerSlider.ToolTip = TimeSpan.FromMilliseconds(LowerValue).ToString(@"mm\:ss");
+            UpperSlider.ToolTip = TimeSpan.FromMilliseconds(UpperValue).ToString(@"mm\:ss");
+
             brdLine.Margin = new Thickness(brdLine.Margin.Left, 0, posRight, 0);  
         }
 

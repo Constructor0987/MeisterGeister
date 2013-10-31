@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Name="_audioZeile"
+             xmlns:local="clr-namespace:MeisterGeister.View.AudioPlayer"
              d:DesignHeight="55" d:DesignWidth="900">
     <Grid Name="grd_parent">
         <ListBoxItem Name="lbiEditorRow" Height="55">
@@ -27,9 +28,18 @@
                 <Image Name="imgTrash" Margin="7" Grid.RowSpan="2"  Tag="0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" AllowDrop="False" />
                 <ProgressBar Name="pbarTitel" Height="18" Margin="15,0,0,0" Grid.Column="1" Grid.RowSpan="2" />
                 <CheckBox Name="chkTitel" Grid.Column="1" Grid.RowSpan="2" Content="Titel" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" IsTabStop="False" />
-                <Label Name="lblDauer" Content="-:--" Grid.Column="2" Grid.RowSpan="2" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Label Name="lblDauer" Content="-:--" Grid.Column="2" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                
+                <local:SliderRange x:Name="rsldTeilSong" Grid.Column="1" Grid.RowSpan="2" LowerValue="0" UpperValue="10000" Minimum="0" Maximum="10000" Margin="17,2,0,0" VerticalAlignment="Center" Visibility="Hidden" />
+                <Button Name="btnGewichtung" Grid.Column="2" Grid.Row="1" ToolTip="Gewichtung 0" Tag="0" Click="btnGewichtung_Click" Margin="2,0,2,1">
+                    <Grid Name="grdbtnGewichtung">
+                        <Image Tag="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="-3" />
+                        <Image Tag="3" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="3,-3,-3,-3" />
+                        <Image Tag="1" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="9,-3,-3,-3" />
+                        <Image Tag="2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="15,-3,-3,-3" />
+                        <Image Tag="4" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="21,-3,-3,-3" />
+                    </Grid>
+                </Button>
                 <!--<TextBox Name="tboxKategorie" Grid.Column="1" Grid.Row="1" FontStyle="Italic" Text="ruhig, erholsam, gemütlich" Padding="2" Margin="15,0,0,0" Foreground="DarkSlateGray" Background="#83F5F5DC" />-->
 
                 <Image Name="imgLaufstärke" Grid.Column="3" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" />
@@ -51,7 +61,7 @@
                 <Button Name="_btnVolMaxPlus" Width="18" Height="18" Grid.Column="7" HorizontalAlignment="Right" Tag="5" IsTabStop="False">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <Border VerticalAlignment="Bottom" Grid.ColumnSpan="5" BorderBrush="Gray" Margin="-5,-1,-5,-1" Height="1" Grid.Column="3" BorderThickness="1" Name="brdTrennstrich" />
+                <Border VerticalAlignment="Bottom" Grid.ColumnSpan="5" BorderBrush="Gray" Margin="0,-1,-5,-1" Height="1" Grid.Column="3" BorderThickness="1" Name="brdTrennstrich" />
 
 
                 <Slider Name="sldKlangPause" Grid.Column="4" Grid.Row="1" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 

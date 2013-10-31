@@ -75,7 +75,7 @@
         <!--   <ProgressBar x:Name="prgBar" Margin="0,2" MinHeight="16"></ProgressBar>
 -->
         <Border BorderThickness="1" BorderBrush="Black" VerticalAlignment="Center" Height="2" 
-                Margin="0,0,0,0" Name="brdLine"/>
+                Margin="0,0,0,0" Name="brdLine" Opacity="0.5" />
         <Slider x:Name="LowerSlider"
                 Minimum="{Binding ElementName=root, Path=Minimum}"
                 Maximum="{Binding ElementName=root, Path=Maximum}"
