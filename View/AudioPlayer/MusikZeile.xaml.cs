@@ -33,6 +33,11 @@ namespace MeisterGeister.View.AudioPlayer
         {
             btnImgOK.Visibility = Visibility.Hidden;
         }
+
+        private void chkbxForceVol_Click(object sender, RoutedEventArgs e)
+        {
+            grdForceVol.ColumnDefinitions[1].Width = ((CheckBox)sender).IsChecked.Value ? new GridLength(70) : new GridLength(0);
+        }
         
     }
 }

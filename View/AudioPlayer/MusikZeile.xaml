@@ -26,15 +26,28 @@
             </StackPanel>
             <ProgressBar HorizontalAlignment="Right" Name="pbarSong" Width="100" Value="0" ToolTip="Klicken um von der Liedstelle abzuspielen" Cursor="Hand" Margin="2,1" Visibility="Collapsed" />
             <TextBlock Name="tblkLänge" Grid.Column="2" Padding="4,2,4,0" HorizontalAlignment="Right" />
-            <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="20,1,0,0" Height="Auto" CornerRadius="5" ToolTip="Kategorie">
-                <Border.Background>
-                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
-                        <GradientStop Color="Beige" Offset="0" />
-                        <GradientStop Color="#FFFFFFC7" Offset="1" />
-                    </LinearGradientBrush>
-                </Border.Background>
-                <TextBox Name="tboxKategorie" Padding="4,0,4,4" FontSize="11" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" Cursor="Pen" />
-            </Border>
+
+            <Grid Name="grdForceVol" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,1,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0" />
+                    <ColumnDefinition Width="0" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox Name="chkbxForceVol" Content="Force Volume" Click="chkbxForceVol_Click" VerticalAlignment="Center" Margin="20,1,0,0" FontSize="10" FontStyle="Italic" HorizontalAlignment="Center" />
+                <Slider Name="sldForceVolume" Grid.Column="1" ToolTip="Manueller Volumeregler" LargeChange="10" SmallChange="1" Maximum="100" VerticalAlignment="Center" Value="50" />
+                
+                <Border Grid.Column="2" Margin="10,1,0,0" Height="Auto" CornerRadius="5" ToolTip="Kategorie">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                            <GradientStop Color="Beige" Offset="0" />
+                            <GradientStop Color="#FFFFFFC7" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <TextBox Name="tboxKategorie" Padding="4,0,4,4" FontSize="11" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" Cursor="Pen" />
+                </Border>
+            </Grid>
+
+            
         </Grid>
     </StackPanel>
 </ListBoxItem>

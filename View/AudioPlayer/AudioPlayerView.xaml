@@ -8,7 +8,7 @@
     xmlns:MeisterGeister_View_General="clr-namespace:MeisterGeister.View.General"
     xmlns:local="clr-namespace:MeisterGeister.View.AudioPlayer"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  	    
-    mc:Ignorable="d" 
+    mc:Ignorable="d"
     d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded" Unloaded="Window_Unloaded" KeyDown="Window_KeyDown" Margin="0,5,5,0" IsEnabled="True">
 
     <UserControl.Resources>
@@ -885,7 +885,14 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="187*" MinWidth="100" MaxWidth="280" />
                             </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"  Margin="45,0,0,0" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"  Margin="27,0,00,0" VerticalAlignment="Center">
+                                <Button Name="btnFilterAktiv" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,20,0" ToolTip="Nur aktive Playlists zeigen" Click="btnFilterAktiv_Click" >
+                                    <Grid>
+                                        <Image Source="/Images/Icons/General/OK.png" VerticalAlignment="Center" />
+                                        <Image Source="/Images/Icons/General/Filter.png" VerticalAlignment="Center" Margin="4,-2,-8,-2" />
+                                    </Grid>
+                                </Button>
+                                <TextBlock Name="tblkTitel" Padding="4,2,4,0" />
                                 <Button ClickMode="Press" AllowDrop="True" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnPListPListAbspielen_Click" Name="btnPListPListAbspielen" IsEnabled="False" >
                                     <Image Name="btnimgPListPListAbspielen" Width="30" Height="30" Margin="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" Style="{StaticResource ImageEnabled}" />
                                 </Button>
