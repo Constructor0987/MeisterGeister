@@ -12,34 +12,32 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 //Eigene Usings
-using VMS = MeisterGeister.ViewModel.Schmiede;
+using VMR = MeisterGeister.ViewModel.Reise;
 using MeisterGeister.View.General;
-//Weitere Usings
-using System.Diagnostics;
 
-namespace MeisterGeister.View.Schmiede          
+namespace MeisterGeister.View.Reise
 {
     /// <summary>
-    /// Interaktionslogik für SchmiedeView.xaml
+    /// Interaktionslogik für ReiseView.xaml
     /// </summary>
-    public partial class SchmiedeView : UserControl
+    public partial class ReiseView : UserControl
     {
-        public SchmiedeView()
+        public ReiseView()
         {
             InitializeComponent();
-            VM = new VMS.SchmiedeViewModel();
+            VM = new VMR.ReiseViewModel();
         }
 
         /// <summary>
         /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
         /// </summary>
-        public VMS.SchmiedeViewModel VM
+        public VMR.ReiseViewModel VM
         {
             get
             {
-                if (DataContext == null || !(DataContext is VMS.SchmiedeViewModel))
+                if (DataContext == null || !(DataContext is VMR.ReiseViewModel))
                     return null;
-                return DataContext as VMS.SchmiedeViewModel;
+                return DataContext as VMR.ReiseViewModel;
             }
             set { DataContext = value; }
         }

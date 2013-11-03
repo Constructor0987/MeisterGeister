@@ -65,7 +65,7 @@ namespace MeisterGeister
                 Name = "NSCs",
                 Icon = "Icons/meisterperson.png",
                 MenuGruppe = "Wege des Meisters",
-                ViewType = typeof(View.NscGenerator.NscGeneratorView)
+                ViewType = typeof(View.NscGeneratorAlt.NscGeneratorAltView)
             });
             ToolListe.Add("Umrechner", new Tool()
             {
@@ -165,6 +165,20 @@ namespace MeisterGeister
                 Icon = "Icons/meistertools_02.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Abenteuer.AbenteuerView)
+            });
+            ToolListe.Add("NSCs_neu", new Tool()
+            {
+                Name = "NSCs_neu",
+                Icon = "Icons/meisterperson.png",
+                MenuGruppe = "Wege des Meisters",
+                ViewType = typeof(View.NscGenerator.NscGeneratorView)
+            });
+            ToolListe.Add("Reise", new Tool()
+            {
+                Name = "Reise",
+                Icon = "Icons/kartenzeichnen.png",
+                MenuGruppe = "Wege des Wanderers",
+                ViewType = typeof(View.Reise.ReiseView)
             });
 #endif
         }

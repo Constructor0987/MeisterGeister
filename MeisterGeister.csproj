@@ -459,6 +459,8 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\NiedrigeEnergieModifikatoren.cs" />
+    <Compile Include="ViewModel\NscGeneratorAlt\NscGeneratorAltViewModel.cs" />
+    <Compile Include="ViewModel\NscGeneratorAlt\Person.cs" />
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
     <Compile Include="ViewModel\NscGenerator\Factorys\NamenFactory.cs" />
     <Compile Include="ViewModel\NscGenerator\Factorys\NamenFactoryHelper.cs" />
@@ -470,6 +472,7 @@
     <Compile Include="ViewModel\Proben\ProbeControlViewModel.cs" />
     <Compile Include="ViewModel\Proben\ProbeDialogViewModel.cs" />
     <Compile Include="ViewModel\Proben\ProbenViewModel.cs" />
+    <Compile Include="ViewModel\Reise\ReiseViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeGeschossViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeRüstungViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeFernkampfwaffeViewModel.cs" />
@@ -627,6 +630,9 @@
     <Compile Include="View\Kampf\KampfInfoView.xaml.cs">
       <DependentUpon>KampfInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
+      <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Proben\ProbenSpielerInfoView.xaml.cs">
       <DependentUpon>ProbenSpielerInfoView.xaml</DependentUpon>
     </Compile>
@@ -638,6 +644,9 @@
     </Compile>
     <Compile Include="View\Proben\ProbenView.xaml.cs">
       <DependentUpon>ProbenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Reise\ReiseView.xaml.cs">
+      <DependentUpon>ReiseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Schmiede\SchmiedeGeschossView.xaml.cs">
       <DependentUpon>SchmiedeGeschossView.xaml</DependentUpon>
@@ -984,6 +993,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Proben\ProbenSpielerInfoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -997,6 +1010,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Proben\ProbenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Reise\ReiseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

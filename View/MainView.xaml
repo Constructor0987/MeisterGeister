@@ -92,6 +92,11 @@
                                     <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem x:Name="_menuItemNSCneu" Height="28" Click="ButtonTool_Click" Header="NSC-Tool (INTERN)" Tag="NSCs_neu" ToolTip="NSC-Tool"  >
+                                <MenuItem.Icon>
+                                    <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Würfel-Tool" Tag="Würfel" ToolTip="Würfel-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/wuerfelbecher.png" Margin="2" />
@@ -204,6 +209,11 @@
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="Kalender-Tool" Tag="Kalender" ToolTip="Kalender-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/kalender.png" Margin="2" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="_menuItemReise" Height="28" Click="ButtonTool_Click" Header="Reise-Tool (INTERN)" Tag="Reise" ToolTip="Reise-Tool"  >
+                                <MenuItem.Icon>
+                                    <Image Source="/Images/Icons/kartenzeichnen.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="ZooBot-Tool" Tag="ZooBot"  >
