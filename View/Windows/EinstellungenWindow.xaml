@@ -23,45 +23,67 @@
                 <TextBlock Text="{Binding Path=Beschreibung}" TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
-    </Window.Resources>
+    </Window.Resources>    
     <Grid>
         <ScrollViewer>
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Regelsystem:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top" />
-                    <ComboBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="_comboBoxRegelsystem" VerticalAlignment="Top" Width="64" Text="DSA4.1" SelectedIndex="0">
-                        <ComboBoxItem Content="DSA4.1" />
-                    </ComboBox>
-                </StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Expander Margin="4" IsExpanded="True">
-                        <Expander.Header>
+            <Grid>
+                <TabControl Background="{x:Null}">
+                    <TabItem x:Name="tbiAllgemein">
+                        <TabItem.Header>
+                            <TextBlock Text="Allgemeine Einstellungen" Style="{DynamicResource TextTitel}" />
+                        </TabItem.Header>                        
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <ListBox BorderThickness="0" Background="Transparent">
+                                <StackPanel Margin="4" Orientation="Horizontal">
+                                    <CheckBox x:Name="_checkBoxFrageNeueKampfrundeAbstellen" Margin="2" Checked="_checkBoxFrageNeueKampfrundeAbstellen_Checked" Unchecked="_checkBoxFrageNeueKampfrundeAbstellen_Unchecked" />
+                                    <TextBlock Margin="4,0,0,0" Text="Ende der Kämpfer-Liste (Frage): Soll eine neue KR begonnen werden? (Abstellen)" Width="398" TextWrapping="WrapWithOverflow" />
+                                </StackPanel>
+                                <StackPanel Margin="4" Orientation="Horizontal">
+                                    <CheckBox x:Name="_checkBoxJingleAbstellen" Margin="2" VerticalAlignment="Center" Checked="CheckBoxJingleAbstellen_Checked" Unchecked="CheckBoxJingleAbstellen_Unchecked" />
+                                    <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="Jingle beim Programmstart abstellen?" TextWrapping="WrapWithOverflow" />
+                                    <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
+                                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
+                                    </Button>
+                                    <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Margin="4" Orientation="Horizontal">
+                                    <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
+                                    <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">
+                                    <Label x:Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
+                                    <TextBox Height="23" x:Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
+                                    <Button Content="..." Height="21" HorizontalAlignment="Left" x:Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
+                                    <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                                </StackPanel>
+                            </ListBox>
+                        </Border>
+                    </TabItem>
+                    <TabItem x:Name="tbiRegeln">
+                        <TabItem.Header>
                             <TextBlock Text="Regel-Optionen" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
+                        </TabItem.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel>
                                 <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
-                                <ListBox ItemsSource="{Binding}" ItemTemplate="{StaticResource RegelnListTemplate}" BorderThickness="0">
-                                    <ListBox.Background>
-                                        <SolidColorBrush />
-                                    </ListBox.Background>
-                                </ListBox>
+                                <ListBox ItemsSource="{Binding}" ItemTemplate="{StaticResource RegelnListTemplate}" BorderThickness="0" Background="#00000000"/>
                             </StackPanel>
                         </Border>
-                    </Expander>
-
-                    <Expander Margin="4" Grid.Column="1" IsExpanded="True">
-                        <Expander.Header>
+                    </TabItem>
+                    <TabItem x:Name="tbiSetting">
+                        <TabItem.Header>
                             <TextBlock Text="Settings" Style="{DynamicResource TextTitel}" />
-                        </Expander.Header>
+                        </TabItem.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel>
-                                <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" Width="200" TextWrapping="Wrap" FontStyle="Italic" />
-                                <ListBox Name="_listBoxSettings" BorderThickness="0" Background="Transparent">
+                                <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
+                                <ListBox x:Name="_listBoxSettings" BorderThickness="0" Background="Transparent">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Margin="4" Orientation="Horizontal">
@@ -73,99 +95,55 @@
                                 </ListBox>
                             </StackPanel>
                         </Border>
-                    </Expander>
-                </Grid>
-                <Expander Margin="4" IsExpanded="True">
-                    <Expander.Header>
-                        <TextBlock Text="Allg. Einstellungen" Style="{DynamicResource TextTitel}" />
-                    </Expander.Header>
-                    <Border Style="{DynamicResource ControlContentBorder}">
-                        <ListBox BorderThickness="0">
-                            <ListBox.Background>
-                                <SolidColorBrush />
-                            </ListBox.Background>
-                            <StackPanel Margin="4" Orientation="Horizontal">
-                                <CheckBox Name="_checkBoxFrageNeueKampfrundeAbstellen" Margin="2" Checked="_checkBoxFrageNeueKampfrundeAbstellen_Checked" Unchecked="_checkBoxFrageNeueKampfrundeAbstellen_Unchecked" />
-                                <TextBlock Margin="4,0,0,0" Text="Ende der Kämpfer-Liste (Frage): Soll eine neue KR begonnen werden? (Abstellen)" Width="398" TextWrapping="WrapWithOverflow" />
-                            </StackPanel>
-                            <StackPanel Margin="4" Orientation="Horizontal">
-                                <CheckBox Name="_checkBoxJingleAbstellen" Margin="2" VerticalAlignment="Center" Checked="CheckBoxJingleAbstellen_Checked" Unchecked="CheckBoxJingleAbstellen_Unchecked" />
-                                <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="Jingle beim Programmstart abstellen?" TextWrapping="WrapWithOverflow" />
-                                <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
-                                    <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
-                                </Button>
-                                <TextBlock Margin="15,0,5,0" VerticalAlignment="Center">
-                                <Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate">Mehr Infos zum Jingle.</Hyperlink>
-                                </TextBlock>
-                            </StackPanel>
-
-                            <StackPanel Margin="4" Orientation="Horizontal">
-                                <CheckBox Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
-                                <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
-                            </StackPanel>
-
-                            <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" Name="spStdPfad" Orientation="Horizontal">
-                                <Label Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
-                                <TextBox Height="23" Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
-                                <Button Content="..." Height="21" HorizontalAlignment="Left" Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
-                                <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
-                            </StackPanel>
-                        </ListBox>
-                    </Border>
-                </Expander>
-                
-                <!-- Inventar Settings -->
-                <!-- Container -->
-                <Expander Margin="4" IsExpanded="False">
-                    <Expander.Header>
-                        <TextBlock Text="Inventar" Style="{DynamicResource TextTitel}" />
-                    </Expander.Header>
-                    <Border Style="{DynamicResource ControlContentBorder}">
-                        <!-- BodyStructure -->
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <!-- RS -->
-                            <StackPanel Margin="4" Grid.Row="0">
-                                <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Rüstung eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
-                                <StackPanel>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting">Automatisch (Werte werden vom Programm ermittelt)</RadioButton>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting">Keine Zonen, eingegeben (Ein Wert RS wird für den Helden verwendet)</RadioButton>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting">Mit Zonen, eingegeben (Rüstung besteht aus einzelnen RS-Werten je Zone)</RadioButton>
+                    </TabItem>
+                    <TabItem x:Name="tbiInventar">
+                        <TabItem.Header>
+                            <TextBlock Text="Inventar" Style="{DynamicResource TextTitel}" />
+                        </TabItem.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <ListBox Background="{x:Null}">
+                                <StackPanel Margin="4" Grid.Row="0">
+                                    <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Rüstung eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
+                                    <StackPanel>
+                                        <RadioButton Margin="2" GroupName="RuestungSetting" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
+                                        <RadioButton Margin="2" GroupName="RuestungSetting" Content="Keine Zonen, eingegeben (Ein Wert RS wird für den Helden verwendet)"/>
+                                        <RadioButton Margin="2" GroupName="RuestungSetting" Content="Mit Zonen, eingegeben (Rüstung besteht aus einzelnen RS-Werten je Zone)"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                            <!-- BE -->
-                            <StackPanel Margin="4" Grid.Row="1">
-                                <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Behinderung(BE) eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
-                                <StackPanel>
-                                    <RadioButton Margin="2" GroupName="BehinderungSetting">Automatisch (Werte werden vom Programm ermittelt)</RadioButton>
-                                    <RadioButton Margin="2" GroupName="BehinderungSetting">Eingabe (Der Wert BE wird eingegeben)</RadioButton>
+                                <!-- BE -->
+                                <StackPanel Margin="4" Grid.Row="1">
+                                    <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Behinderung(BE) eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
+                                    <StackPanel>
+                                        <RadioButton Margin="2" GroupName="BehinderungSetting" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
+                                        <RadioButton Margin="2" GroupName="BehinderungSetting" Content="Eingabe (Der Wert BE wird eingegeben)"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                            <!-- Überlastung -->
-                            
+                                <!-- Überlastung -->
                                 <StackPanel Grid.Row="2" Margin="4">
                                     <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="0,5,0,0"/> <TextBlock Margin="4" FontWeight="Bold" Text="Spielt die Gruppe mit Überlastung?" TextWrapping="WrapWithOverflow" />                                                                        
+                                        <CheckBox Margin="0,5,0,0"/>
+                                        <TextBlock Margin="4" FontWeight="Bold" Text="Spielt die Gruppe mit Überlastung?" TextWrapping="WrapWithOverflow" />
                                     </StackPanel>
-                                <Border Background="#33191919" >
-                                    <StackPanel>                                    
-                                        <RadioButton Margin="2" GroupName="BehinderungSetting">Automatisch (Werte werden vom Programm ermittelt)</RadioButton>
-                                        <RadioButton Margin="2" GroupName="BehinderungSetting">Eingabe (Der Wert wird eingegeben)</RadioButton>
-                                    </StackPanel>
-                                </Border>
-                            </StackPanel>                           
-                        </Grid>
-                    </Border>
-                </Expander>
-            </StackPanel>
+                                    <Border Background="#33191919">
+                                        <StackPanel>
+                                            <RadioButton Margin="2" GroupName="BehinderungSetting" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
+                                            <RadioButton Margin="2" GroupName="BehinderungSetting" Content="Eingabe (Der Wert wird eingegeben)"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>                                
+                            </ListBox>
+                        </Border>
+                    </TabItem>
+                </TabControl>
+                <Grid x:Name="grdRegelsystem" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal" d:IsLocked="True">
+                        <Label Content="Regelsystem:" HorizontalAlignment="Left" />
+                        <ComboBox Margin="12,0,0,0" x:Name="_comboBoxRegelsystem" VerticalAlignment="Top" Text="DSA4.1" SelectedIndex="0">
+                            <ComboBoxItem Content="DSA4.1" />
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Window>

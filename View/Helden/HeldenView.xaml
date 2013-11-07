@@ -13,7 +13,7 @@
             mc:Ignorable="d"
             d:DesignHeight="571"
             d:DesignWidth="1027">
-    <UserControl.Resources>	
+    <UserControl.Resources>
         <Style x:Key="ReadOnlyStyle" TargetType="{x:Type Control}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsReadOnly}" Value="true">
@@ -22,11 +22,11 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    
-	<UserControl.Background>
-		<StaticResource ResourceKey="Background1"/>
-	</UserControl.Background>
-    
+
+    <UserControl.Background>
+        <StaticResource ResourceKey="Background1"/>
+    </UserControl.Background>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
@@ -52,12 +52,12 @@
                 <ColumnDefinition Width="370*" />
             </Grid.ColumnDefinitions>
             <TabControl Grid.Row="1" IsEnabled="{Binding SelectedHeldIsNotNull}" Margin="5,5,5,5" Background="{StaticResource Background1}" x:Name="tabControl1" SelectedItem="{Binding SelectedTabItem}" SelectedIndex="{Binding SelectedTabIndex}">
-                <TabItem Header="Allgemein" x:Name="_tabItemAllgemein">                	
-					<Held:AllgemeinView />
+                <TabItem Header="Allgemein" x:Name="_tabItemAllgemein">
+                    <Held:AllgemeinView />
                 </TabItem>
                 <TabItem Header="Eigenschaften" x:Name="_tabItemEigenschaften">
                     <Held:EigenschaftenView />
-                </TabItem>                
+                </TabItem>
                 <TabItem Header="Talente" x:Name="_tabItemTalente">
                     <Held:TalentView/>
                 </TabItem>
@@ -73,14 +73,11 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Inventar" />
-                            <Border Margin="2,0,0,0" VerticalAlignment="Top" Padding="2,0" CornerRadius="1" BorderBrush="White">
-                                <TextBlock Text="BETA" FontSize="8" FontWeight="Normal" Foreground="DarkCyan" />
-                            </Border>
+                            <TextBlock Text="Inventar / Rüstung" />
                         </StackPanel>
                     </TabItem.Header>
                     <Held:InventarView x:Name="_inventarControl" />
-                </TabItem>				
+                </TabItem>
             </TabControl>
         </Grid>
     </Grid>
