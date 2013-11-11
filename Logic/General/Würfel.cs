@@ -173,7 +173,7 @@ namespace MeisterGeister.Logic.General
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 

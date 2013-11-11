@@ -351,7 +351,7 @@
                                                     <TextBlock Text="Farbe: " />
                                                     <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker">
                                                         <i:Interaction.Triggers>
-                                                            <!-- <ViewGeneral:HandlingEventTrigger EventName="Click" /> Genügt leider nicht um den MouseUp-Event zuu fangen--> 
+                                                            <ViewGeneral:HandlingEventTrigger EventName="Click" /> <!--Genügt leider nicht um den MouseUp-Event zuu fangen-->
                                                         </i:Interaction.Triggers>
                                                     </xctk:ColorPicker>
                                                 </StackPanel>

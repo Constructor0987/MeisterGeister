@@ -158,6 +158,7 @@
     <Compile Include="Daten\DatabaseTools.cs" />
     <Compile Include="Daten\DatabaseUpdate.cs" />
     <Compile Include="Daten\SqlCeUpgrade.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Logic\Extensions\ObservableDictionary.cs" />
     <Compile Include="Logic\Extensions\ObservableSortedDictionary.cs" />
     <Compile Include="Logic\General\AudioPlayer.cs" />
@@ -1544,6 +1545,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0078.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0079.sql" />
     <Resource Include="Images\Icons\General\stop.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0080.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />

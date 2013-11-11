@@ -118,7 +118,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get
             {
                 if (i >= types.Count)
-                    throw new IndexOutOfRangeException();
+                    //throw new IndexOutOfRangeException();
+                    throw new ArgumentOutOfRangeException();
                 return this[types[i]];
             }
         }
@@ -129,7 +130,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get
             {
                 if (!types.Contains(t))
-                    throw new IndexOutOfRangeException();
+                    //throw new IndexOutOfRangeException();
+                    throw new ArgumentOutOfRangeException();
                 var d = new ObservableDictionary<string, object>();
                 //d.CollectionChanged
                 d.CollectionChanged += d_CollectionChanged;
@@ -233,6 +235,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         }
 
         public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        ~CustomModifikatorFactory()
+        {
+            Dispose(false);
+        }
+
+        protected virtual void Dispose(bool disposing)
         {
             foreach (var o in objectWithRegisteredEvents)
                 o.CollectionChanged -= d_CollectionChanged;

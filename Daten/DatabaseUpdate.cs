@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 79;
+        public const int DatenbankVersionAktuell = 80;
 
         private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
@@ -165,7 +165,7 @@ namespace MeisterGeister.Daten
                 // lies die Insert-Befehle aus der Resourcen-Datei
                 StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/InsertHandelsgut.sql", UriKind.Relative)).Stream, Encoding.UTF8);
                 string inserts = reader.ReadToEnd();
-                ExecuteSqlCommand(inserts, "InsertHandelsgut", connection, transaction, false);
+                ExecuteSqlCommands(inserts, "InsertHandelsgut", connection, transaction, false);
                 if (transaction != null)
                     transaction.Commit();
             }
@@ -258,9 +258,9 @@ namespace MeisterGeister.Daten
             {
                 connection.Open();
                 transaction = connection.BeginTransaction();
-                
+
                 foreach (var command in sqlCommands)
-                    ExecuteSqlCommand(command.Value, command.Key, connection, transaction, false);
+                    ExecuteSqlCommands(command.Value, command.Key, connection, transaction, false);
 
                 // Neue Versionsnummer setzen
                 UpdateTo_SetDatabaseVersion(version, connection);
@@ -286,40 +286,45 @@ namespace MeisterGeister.Daten
         {
             if (skript == null)
                 return skript;
-            var r = new System.Text.RegularExpressions.Regex(@"(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|(--.*)");
+            //Entfernt alle Kommentare, auss sie beginnen mit --# solche kommentare sind laufzeitanweisungen für das Update.
+            var r = new System.Text.RegularExpressions.Regex(@"(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|(--(?!#).*)");
             skript = r.Replace(skript, string.Empty);
             return skript;
         }
 
-        public static void ExecuteSqlCommand(string commands, string skriptName, SqlCeConnection connection, SqlCeTransaction transaction, bool closeConnection = true)
+        public static void ExecuteSqlCommands(string commands, string skriptName, SqlCeConnection connection, SqlCeTransaction transaction, bool closeConnection = true)
         {
             try
             {
-                SqlCeCommand command = new SqlCeCommand();
-                command.Connection = connection;
-                command.Transaction = transaction;
-
+                //Kommentare entfernen
                 commands = StripSqlComments(commands);
 
                 string[] statements = null;
                 statements = commands.Split(new string[] { "GO" + Environment.NewLine, ";" + Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
+                //Trim auf alle
+                for (int i = 0; i < statements.Length; i++)
+                {
+                    var statement = statements[i];
+                    statement = statement.Trim();
+                    if (statement.EndsWith(Environment.NewLine + "GO"))
+                        statement = statement.Substring(0, statement.Length - (Environment.NewLine + "GO").Length);
+                    if (statement.EndsWith("GO"))
+                        statement = statement.Substring(0, statement.Length - ("GO").Length);
+                    if (statement.EndsWith(";"))
+                        statement = statement.Substring(0, statement.Length - (";").Length);
+                    statements[i] = statement;
+                }
+
                 if (connection.State == System.Data.ConnectionState.Closed)
                     connection.Open();
-                foreach (string statement in statements)
+                try
                 {
-                    string statementtrimmed = statement.Trim();
-                    if (statementtrimmed.EndsWith(Environment.NewLine + "GO"))
-                        statementtrimmed = statementtrimmed.Substring(0, statementtrimmed.Length - (Environment.NewLine + "GO").Length);
-                    if (statementtrimmed.EndsWith("GO"))
-                        statementtrimmed = statementtrimmed.Substring(0, statementtrimmed.Length - ("GO").Length);
-                    if (statementtrimmed == string.Empty)
-                    {
-                        break;
-                    }
-                    UpdateSkript = skriptName + Environment.NewLine + statementtrimmed;
-                    command.CommandText = statementtrimmed;
-                    command.ExecuteNonQuery();
+                    RecursiveExecuteSqlCommands(statements, skriptName, connection, transaction);
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
             catch (Exception)
@@ -330,6 +335,93 @@ namespace MeisterGeister.Daten
             {
                 if (closeConnection && connection != null)
                     connection.Close();
+            }
+        }
+
+        private static void RecursiveExecuteSqlCommands(string[] statements, string skriptName, SqlCeConnection connection, SqlCeTransaction transaction)
+        {
+            try {
+                SqlCeCommand command = new SqlCeCommand();
+                command.Connection = connection;
+                command.Transaction = transaction;
+                for(int i=0; i<statements.Length; i++)
+                {
+                    string statement = statements[i];
+                    if (statement == string.Empty || statement == null)
+                        continue;
+
+                    if (statement.StartsWith("--#")) //Sonderbefehl
+                    {
+                        if (statement == "--#WHILE")
+                        {
+                            //find next non-empty statement
+                            int j = i;
+                            statement = null;
+                            while (String.IsNullOrWhiteSpace(statement))
+                            {
+                                j++;
+                                if (j >= statements.Length)
+                                    throw new Exception("Das Updateskript hat eine unbeendete --#WHILE-Anweisung");
+                                statement = statements[j];
+                            }
+                            if (!statements[j].StartsWith("SELECT"))
+                                throw new Exception("Hinter --#WHILE fehlt eine skalare SELECT-Anweisung mit einem integer als Rückgabewert.");
+
+                            SqlCeCommand conditionCmd = new SqlCeCommand();
+                            conditionCmd.Connection = connection;
+                            conditionCmd.Transaction = transaction;
+                            conditionCmd.CommandText = statement;
+
+                            statement = null;
+                            while (String.IsNullOrWhiteSpace(statement))
+                            {
+                                j++;
+                                if (j >= statements.Length)
+                                    throw new Exception("Das Updateskript hat eine unbeendete --#WHILE-Anweisung");
+                                statement = statements[j];
+                            }
+                            if (statement != "--#DO")
+                                throw new Exception("Hinter --#WHILE fehlt das --#DO ... --#END mit dem auszuführenden Block.");
+                            j++;
+                            int blockStart = j; //erstes block statement
+                            while (statement != "--#END")
+                            {
+                                j++;
+                                if (j >= statements.Length)
+                                    throw new Exception("Das Updateskript hat eine unbeendete --#WHILE-Anweisung");
+                                statement = statements[j];
+                            }
+                            int blockEnd = j - 1;
+
+                            string[] statementBlock = new string[blockEnd - blockStart + 1];
+                            Array.Copy(statements, blockStart, statementBlock, 0, blockEnd - blockStart + 1);
+                            while ((int)conditionCmd.ExecuteScalar() != 0)
+                            {
+                                try
+                                {
+                                    RecursiveExecuteSqlCommands(statementBlock, skriptName, connection, transaction);
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw;
+                                }
+                            }
+                            i = j;
+                        }
+                        else
+                            throw new Exception("Unbekannter SQL-Makrobefehl");
+                    }
+                    else //normaler befehl
+                    {
+                        UpdateSkript = skriptName + Environment.NewLine + statement;
+                        command.CommandText = statement;
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 
@@ -344,9 +436,9 @@ namespace MeisterGeister.Daten
                 com.Connection.Open();
                 result = com.ExecuteScalar();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
             finally
             {

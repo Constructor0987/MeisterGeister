@@ -18,7 +18,7 @@ namespace MeisterGeister.Model
             get { return "Fernkampfwaffe"; }
         }
 
-        // Als 'Tags' werden die möglichen alente zurück gegeben
+        // Als 'Tags' werden die möglichen Talente zurück gegeben
         string BasarLogic.IHandelsgut.Tags
         {
             get

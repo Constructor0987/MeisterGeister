@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace MeisterGeister.Net.Web
 {
-    public class HttpService
+    public class HttpService : IDisposable
     {
         private readonly HttpListener _listener;
         private readonly Thread _listenerThread;

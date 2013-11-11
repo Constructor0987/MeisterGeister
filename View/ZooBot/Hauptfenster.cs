@@ -108,7 +108,7 @@ namespace MeisterGeister.View.ZooBot
             }
             catch (ArgumentOutOfRangeException e)
             {
-                throw (e);
+                throw;
             }
 
             if (this.Kraeuter_BoxSuchmonat.Items.Contains(Suchmonat))
@@ -126,7 +126,7 @@ namespace MeisterGeister.View.ZooBot
             }
             catch (ArgumentOutOfRangeException e)
             {
-                throw (e);
+                throw;
             }
 
         }

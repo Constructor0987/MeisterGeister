@@ -1552,11 +1552,16 @@ namespace MeisterGeister.Model
         {
             if (sf == null)
                 return null;
+            
             IEnumerable<Held_Sonderfertigkeit> existierendeZuordnung = Held_Sonderfertigkeit.Where(heldsf => heldsf.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && heldsf.HeldGUID == HeldGUID);
-            if (existierendeZuordnung.Count() != 0)
+            if (existierendeZuordnung.Count() != 0) //es gibt bereits eine solche sonderfertigkeit auf dem helden
             {
-                //Oder eine Exception werfen?
-                return existierendeZuordnung.First().Sonderfertigkeit;
+                if (!sf.HatWert ?? false)
+                    //Da es eine ohne Wert ist, darf sie nur einmal vergeben werden
+                    return existierendeZuordnung.First().Sonderfertigkeit;
+                else if (existierendeZuordnung.Where(hsf => hsf.Wert == wert).Count() != 0)
+                    //Wenn sie mit diesem Wert bereits existiert, dann darf sie auch nciht nochmal hinzugefügt werden.
+                    return existierendeZuordnung.Where(hsf => hsf.Wert == wert).First().Sonderfertigkeit;
             }
 
             Held_Sonderfertigkeit hs = Global.ContextHeld.New<Held_Sonderfertigkeit>();            
@@ -1722,11 +1727,18 @@ namespace MeisterGeister.Model
         /// Die Sonderfertigkeiten des Helden.
         /// Nicht zum ändern von Werten, da die Werte in Held_Sonderfertigkeit stehen.
         /// </summary>
-        public IDictionary<Sonderfertigkeit, string> Sonderfertigkeiten
+        public IDictionary<Sonderfertigkeit, ICollection<string>> Sonderfertigkeiten
         {
             get
             {
-                return Held_Sonderfertigkeit.ToDictionary(hsf => hsf.Sonderfertigkeit, hsf => hsf.Wert);
+                Dictionary<Sonderfertigkeit, ICollection<string>> d = new Dictionary<Sonderfertigkeit, ICollection<string>>();
+                foreach (var hsf in Held_Sonderfertigkeit)
+                {
+                    if (!d.ContainsKey(hsf.Sonderfertigkeit))
+                        d.Add(hsf.Sonderfertigkeit, new List<string> {});
+                    d[hsf.Sonderfertigkeit].Add(hsf.Wert);
+                }
+                return d;
             }
         }
 
@@ -1738,7 +1750,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return Global.ContextHeld.SonderfertigkeitListe.Except(Sonderfertigkeiten.Keys).OrderBy(sf => sf.Name).ToList();
+                return Global.ContextHeld.SonderfertigkeitListe.Except(Sonderfertigkeiten.Keys.Where(s => !s.HatWert??false)).OrderBy(sf => sf.Name).ToList();
             }
         }
 
