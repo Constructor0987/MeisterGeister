@@ -1040,9 +1040,9 @@ namespace MeisterGeister.Logic.HeldenImport
             finally
             {
                 if (sr != null)
-                    sr.Close();
+                    sr.Dispose();
                 if (fs != null)
-                    fs.Close();
+                    fs.Dispose();
             }
             return false;
         }
@@ -1081,9 +1081,9 @@ namespace MeisterGeister.Logic.HeldenImport
             finally
             {
                 if (sr != null)
-                    sr.Close();
+                    sr.Dispose();
                 if (fs != null)
-                    fs.Close();
+                    fs.Dispose();
             }
             return null;
         }
@@ -1094,8 +1094,13 @@ namespace MeisterGeister.Logic.HeldenImport
             double gewicht = 0.0;
             double preis = 0.0;
             int anzahl = 0;
-            string vtXpath = "helden/held/gegenstand";
-            XmlNodeList gegenstaende = _xmlDoc.SelectNodes(vtXpath);
+            string xpath = "helden/held/gegenstände/gegenstand";
+            XmlNodeList gegenstaende = _xmlDoc.SelectNodes(xpath);
+            if (gegenstaende.Count == 0)
+            {
+                xpath = "helden/held/gegenstand";
+                gegenstaende = _xmlDoc.SelectNodes(xpath);
+            }
 
             foreach (XmlNode gegenstand in gegenstaende)
             {
