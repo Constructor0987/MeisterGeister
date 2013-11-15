@@ -34,10 +34,9 @@ namespace MeisterGeister.View.AudioPlayer
             btnImgOK.Visibility = Visibility.Hidden;
         }
 
-        private void chkbxForceVol_Click(object sender, RoutedEventArgs e)
+        private void sldForceVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            grdForceVol.ColumnDefinitions[1].Width = ((CheckBox)sender).IsChecked.Value ? new GridLength(70) : new GridLength(0);
-        }
-        
+            ((Slider)sender).ToolTip = "Manuelles Volume = " + Math.Round(((Slider)sender).Value) + " %";
+        }        
     }
 }

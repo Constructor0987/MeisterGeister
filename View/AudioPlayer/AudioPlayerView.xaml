@@ -384,18 +384,22 @@
                         <Grid Name="grdEditorPlaylistInfo">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="250" />
-                                <ColumnDefinition Width="15" />
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="50" />
                                 <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
                             <Label Content="Themename" VerticalContentAlignment="Center" Margin="10,0,0,0" />
                             <TextBox HorizontalAlignment="Stretch" Name="tboxKlangThemeName" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um den Theme umzubenennen" Height="25" Grid.Column="1" Background="{x:Null}" LostFocus="tboxKlangTheme_LostFocus" ForceCursor="True" KeyUp="tboxKlangTheme_KeyUp" GotFocus="tbGotFocus" />
                             
-                            <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" Click="btnTopThemeAddTheme_Click" ToolTip="Untergeordnetes Theme hinzufügen" >
+                            <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" Click="btnTopThemeAddTheme_Click" ToolTip="Untergeordnetes Theme hinzufügen" Width="30" HorizontalAlignment="Left">
                                 <Grid Width="35" Height="25">
                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" />
                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/add.png" Width="20" Height="20" Margin="-20,-3,0,0" />
                                 </Grid>
+                            </Button>
+                            <Button Name="btnTopThemeExport" Grid.Column="4" Margin="5" ToolTip="Theme exportieren" >
+                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/export.png" />
                             </Button>
                         </Grid>
                     </Border>
@@ -843,7 +847,7 @@
                                         <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnImgPListMusikSpeaker" />
                                     </Button>
 
-                                    <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistMusikVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistMusikVolume" Margin="10,0,0,0" />
+                                    <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistMusikVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistMusikVolume" Margin="10,0,0,0" ToolTip="50 %" />
                                 </StackPanel>
                                 <Border Grid.Column="2" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Namens-Filter aller Musik-Playlists" Margin="3,0,20,0">
                                     <Grid>
@@ -892,6 +896,7 @@
                                         <Image Source="/Images/Icons/General/Filter.png" VerticalAlignment="Center" Margin="4,-2,-8,-2" />
                                     </Grid>
                                 </Button>
+                                
                                 <TextBlock Name="tblkTitel" Padding="4,2,4,0" />
                                 <Button ClickMode="Press" AllowDrop="True" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnPListPListAbspielen_Click" Name="btnPListPListAbspielen" IsEnabled="False" >
                                     <Image Name="btnimgPListPListAbspielen" Width="30" Height="30" Margin="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" Style="{StaticResource ImageEnabled}" />
@@ -899,7 +904,7 @@
                                 <Button Width="26" Height="26" Tag="-1" Name="btnPListPListSpeaker" Click="btnPListPListSpeaker_Click">
                                     <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnimgPListPListSpeaker" />
                                 </Button>
-                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" />
+                                <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" ToolTip="50 %" />
                             </StackPanel>
                             <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Namens-Filter aller Geräusche-Playlists" Margin="3,0,20,0">
                                 <Grid>

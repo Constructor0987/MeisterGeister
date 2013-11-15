@@ -739,6 +739,17 @@ namespace MeisterGeister.Model.Service
             }
         }
 
+
+        public void ExportAudioTheme(Audio_Theme aTheme, string pfad)
+        {
+            //Userdaten geladen
+            LoadAudioUserData();
+            if (aTheme != null)
+            {
+                SerializeObjectExist<Audio_Theme>(pfad, aTheme);
+            }
+        }
+
         /// <summary>
         /// Importiert Playlisten und Themes aus einer XML-Datei. Bestehende Daten werden überschrieben.
         /// </summary>
@@ -758,7 +769,25 @@ namespace MeisterGeister.Model.Service
             else if (typ == "Audio_Theme ")
             {
                 var at = DeserializeObjectFromFile<Audio_Theme>(pfad);
-                InsertOrUpdateAudio(at);
+                if (at.GetType() == typeof(Audio_Theme))
+                {
+                    int i = 1;
+
+                    int max = ((Audio_Theme)at).Audio_Playlist.Count;
+                    foreach (Audio_Playlist aPlaylist in ((Audio_Theme)at).Audio_Playlist)
+                    {
+                        Global.SetIsBusy(true, string.Format("Importiere Playlist " + i + " von " + max));
+                        InsertOrUpdateAudio(aPlaylist);
+                    }
+                    i = 1;
+                    max = ((Audio_Theme)at).Audio_Theme1.Count;
+                    foreach (Audio_Theme aTheme in ((Audio_Theme)at).Audio_Theme1)
+                    {
+                        Global.SetIsBusy(true, string.Format("Importiere Playlist " + i + " von " + max));
+                        InsertOrUpdateAudio(aTheme);
+                    }
+                }
+                //InsertOrUpdateAudio(at);
                 return at.Audio_ThemeGUID;
             }
             return Guid.Empty;

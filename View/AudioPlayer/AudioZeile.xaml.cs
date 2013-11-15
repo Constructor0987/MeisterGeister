@@ -41,8 +41,9 @@ namespace MeisterGeister.View.AudioPlayer
             int gewichtung = Convert.ToInt32(((Button)sender).Tag);
             gewichtung++;
             if (gewichtung == 6) gewichtung = 0;
-            foreach (Image img in grdbtnGewichtung.Children)
-                img.Visibility = ((Convert.ToInt32(img.Tag)) <= gewichtung && gewichtung > 0)? Visibility.Visible : Visibility.Hidden;
+            foreach (var img in grdbtnGewichtung.Children)
+                if (img.GetType() == typeof(Image))
+                    ((Image)img).Visibility = ((Convert.ToInt32(((Image)img).Tag)) <= gewichtung && gewichtung > 0)? Visibility.Visible : Visibility.Hidden;
             ((Button)sender).Tag = gewichtung;
             ((Button)sender).ToolTip = "Gewichtung " + gewichtung;
         }

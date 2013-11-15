@@ -35,13 +35,21 @@ namespace MeisterGeister.Model
         
         public void Export(string pfad, bool batch = true)
         {
-            ExportPListTheme aPListTheme = new ExportPListTheme();
+            Audio_Theme aTheme_ALL = new Model.Audio_Theme();
+            aTheme_ALL.Audio_Playlist = Global.ContextAudio.PlaylistListe;
+            aTheme_ALL.Audio_Theme1 = Global.ContextAudio.ThemeListe;
+            Global.ContextAudio.Update<Audio_Theme>(aTheme_ALL);
+         /*   ExportPListTheme aPListTheme = new ExportPListTheme();
             aPListTheme.aPlayList = Global.ContextAudio.PlaylistListe;
             aPListTheme.aTheme = Global.ContextAudio.ThemeListe;
-
+            */
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
 
-            Global.ContextAudio.PlaylistListe.ForEach(delegate(Audio_Playlist aPlaylist)
+        //    serialization.ExportAudioTheme(aTheme_ALL.Audio_ThemeGUID, pfad);
+            serialization.ExportAudioTheme(aTheme_ALL, pfad);
+
+            Global.ContextAudio.Delete<Audio_Theme>(aTheme_ALL);
+        /*    Global.ContextAudio.PlaylistListe.ForEach(delegate(Audio_Playlist aPlaylist)
             {
                 serialization.ExportAudioPlaylist(aPlaylist._audio_PlaylistGUID, pfad);
             });
@@ -49,7 +57,7 @@ namespace MeisterGeister.Model
             Global.ContextAudio.ThemeListe.ForEach(delegate(Audio_Theme aTheme)
             {
                 serialization.ExportAudioTheme(aTheme.Audio_ThemeGUID, pfad);
-            });
+            });*/
             // Audio_PlaylistGUID
         }
 
