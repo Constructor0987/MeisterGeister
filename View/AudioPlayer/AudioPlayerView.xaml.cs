@@ -1518,11 +1518,12 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         Mouse.OverrideCursor = Cursors.Wait;
 
+                            int was = lbEditor.SelectedIndex;
+
                         if (tcEditor.SelectedItem == null ||
                             (tcEditor.SelectedItem.GetType() == typeof(TCButtons) && ((TCButtons)tcEditor.SelectedItem).Visibility != Visibility.Visible) ||
                             (tcEditor.SelectedItem.GetType() == typeof(TabItem)))
                         {
-                            int was = lbEditor.SelectedIndex;
                             tiPlus_MouseUp(tiPlus, null);
                             lbEditor.SelectionChanged -= lbEditor_SelectionChanged;
                             lbEditor.SelectedIndex = was;
@@ -1670,6 +1671,9 @@ namespace MeisterGeister.View.AudioPlayer {
                                     Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
                                     Global.ContextAudio.Update<Audio_Theme>(AktKlangTheme);
                                 }
+                                lbEditor.SelectionChanged -= lbEditor_SelectionChanged;
+                                lbEditor.SelectedIndex = was;
+                                lbEditor.SelectionChanged += lbEditor_SelectionChanged;
                             }
                             tbEditorTopFilterX.Text = "";
 
@@ -1777,6 +1781,7 @@ namespace MeisterGeister.View.AudioPlayer {
                                             }
                                         }
                                     }
+                                    AktKlangPlaylist = _GrpObjecte.FirstOrDefault(t => t.ticKlang == tcEditor.SelectedItem).aPlaylist;
                                     CheckBtnGleicherPfad(_GrpObjecte.FirstOrDefault(t => t.ticKlang == tcEditor.SelectedItem));
                                     tboxKlangThemeName.Text = atheme.Name;
                                 }
