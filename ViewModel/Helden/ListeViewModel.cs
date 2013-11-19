@@ -210,7 +210,7 @@ namespace MeisterGeister.ViewModel.Helden {
                 System.IO.Directory.CreateDirectory("Daten\\Helden\\Demohelden");
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();
             foreach (Held h in HeldListe) {
-                string fileName = System.IO.Path.Combine("Daten\\Helden\\Demohelden", System.IO.Path.ChangeExtension(h.Name, "xml"));
+                string fileName = View.General.ViewHelper.GetValidFilename(System.IO.Path.Combine("Daten\\Helden\\Demohelden", System.IO.Path.ChangeExtension(h.Name, "xml")));
                 h.Export(fileName, true);
             }
             MeisterGeister.Model.Service.SerializationService.DestroyInstance();

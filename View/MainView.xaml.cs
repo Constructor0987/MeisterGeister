@@ -504,7 +504,7 @@ namespace MeisterGeister.View
 
         private void MenuItemHilfeForum_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://meistergeister.siteboard.org/");
+            System.Diagnostics.Process.Start("http://meistergeister.orkenspalter.de/");
         }
 
         private void MenuItemHilfeFacebook_Click(object sender, RoutedEventArgs e)

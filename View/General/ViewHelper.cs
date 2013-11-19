@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using MeisterGeister.Logic.General;
 using MeisterGeister.View.Kampf;
 using MeisterGeister.View.Windows;
+using System.Text.RegularExpressions;
 
 namespace MeisterGeister.View.General
 {
@@ -60,8 +61,20 @@ namespace MeisterGeister.View.General
             return input;
         }
 
+        private static Regex invalidChars = null;
+        public static string GetValidFilename(string path)
+        {
+            if (invalidChars == null)
+            {
+                string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+                invalidChars = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
+            }
+            return invalidChars.Replace(path, "_");
+        }
+
         public static string ChooseFile(string title, string filename, bool saveFile, params string[] extensions)
         {
+            filename = GetValidFilename(filename);
             FileDialog objDialog;
             if (saveFile)
                 objDialog = new SaveFileDialog();

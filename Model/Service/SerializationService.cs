@@ -292,9 +292,9 @@ namespace MeisterGeister.Model.Service
         /// <summary>
         /// Save to a file.
         /// </summary>
-        public static void SerializeObject<T>(string fileName, T o) where T : class
+        public static void SerializeObject<T>(string fileName, T o, bool append = false) where T : class
         {
-            using (Stream stream = File.Open(fileName, FileMode.Create))
+            using (Stream stream = File.Open(fileName, append?FileMode.Append:FileMode.Create))
             {
                 SerializeObject<T>(stream, o);
                 stream.Close();
@@ -306,11 +306,7 @@ namespace MeisterGeister.Model.Service
         /// </summary>
         public static void SerializeObjectExist<T>(string fileName, T o) where T : class
         {
-            using (Stream stream = File.Open(fileName, FileMode.Append))
-            {
-                SerializeObject<T>(stream, o);
-                stream.Close();
-            }
+            SerializeObject<T>(fileName, o, true);
         }
         #endregion
 
@@ -742,12 +738,8 @@ namespace MeisterGeister.Model.Service
 
         public void ExportAudioTheme(Audio_Theme aTheme, string pfad)
         {
-            //Userdaten geladen
-            LoadAudioUserData();
             if (aTheme != null)
-            {
-                SerializeObjectExist<Audio_Theme>(pfad, aTheme);
-            }
+                ExportAudioTheme(aTheme.Audio_ThemeGUID, pfad);
         }
 
         /// <summary>
@@ -760,35 +752,36 @@ namespace MeisterGeister.Model.Service
             if (typ == "Audio_Playlist ")
             {
                 var ap = DeserializeObjectFromFile<Audio_Playlist>(pfad);
-                if (ap != null)
+                if (ap != null && InsertOrUpdateAudio(ap))
                 {
-                    InsertOrUpdateAudio(ap);
                     return ap.Audio_PlaylistGUID;
                 }
             }
             else if (typ == "Audio_Theme ")
             {
                 var at = DeserializeObjectFromFile<Audio_Theme>(pfad);
-                if (at.GetType() == typeof(Audio_Theme))
-                {
-                    int i = 1;
+                //if (at.GetType() == typeof(Audio_Theme))
+                //{
+                //    int i = 1;
 
-                    int max = ((Audio_Theme)at).Audio_Playlist.Count;
-                    foreach (Audio_Playlist aPlaylist in ((Audio_Theme)at).Audio_Playlist)
-                    {
-                        Global.SetIsBusy(true, string.Format("Importiere Playlist " + i + " von " + max));
-                        InsertOrUpdateAudio(aPlaylist);
-                    }
-                    i = 1;
-                    max = ((Audio_Theme)at).Audio_Theme1.Count;
-                    foreach (Audio_Theme aTheme in ((Audio_Theme)at).Audio_Theme1)
-                    {
-                        Global.SetIsBusy(true, string.Format("Importiere Playlist " + i + " von " + max));
-                        InsertOrUpdateAudio(aTheme);
-                    }
+                //    int max = ((Audio_Theme)at).Audio_Playlist.Count;
+                //    foreach (Audio_Playlist aPlaylist in ((Audio_Theme)at).Audio_Playlist)
+                //    {
+                //        Global.SetIsBusy(true, string.Format("Importiere Playlist " + i + " von " + max));
+                //        InsertOrUpdateAudio(aPlaylist);
+                //    }
+                //    i = 1;
+                //    max = ((Audio_Theme)at).Audio_Theme1.Count;
+                //    foreach (Audio_Theme aTheme in ((Audio_Theme)at).Audio_Theme1)
+                //    {
+                //        Global.SetIsBusy(true, string.Format("Importiere Playlist " + i + " von " + max));
+                //        InsertOrUpdateAudio(aTheme);
+                //    }
+                //}
+                if (at != null && InsertOrUpdateAudio(at))
+                { 
+                    return at.Audio_ThemeGUID;
                 }
-                //InsertOrUpdateAudio(at);
-                return at.Audio_ThemeGUID;
             }
             return Guid.Empty;
         }
