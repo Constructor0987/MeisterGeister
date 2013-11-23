@@ -255,7 +255,7 @@
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="178" MinWidth="178" />
-                        <ColumnDefinition Width="417" />
+                        <ColumnDefinition Width="380" />
                         <ColumnDefinition Width="246*" />
                         <ColumnDefinition Width="180" />
                     </Grid.ColumnDefinitions>
@@ -293,8 +293,8 @@
                                                 <Button Name="btnKlangNeuTheme" ToolTip="Neues Theme" Click="btnKlangNeuTheme_Click" Height="28" Width="28" Grid.Column="1"  >
                                                     <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
                                                 </Button>
-                                                <Button  Name="btnKlangThemeLoeschen" ToolTip="Theme löschen" Click="btnKlangThemeLoeschen_Click" Height="28" Width="28" Margin="5,0,0,0" IsEnabled="False">
-                                                    <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
+                                                <Button  Name="btnKlangThemeImport" ToolTip="Theme importieren" Click="btnKlangThemeImport_Click" Height="28" Width="28" Margin="5,0,0,0" >
+                                                    <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
                                                 </Button>
                                             </StackPanel>
                                         </Border>
@@ -349,8 +349,8 @@
                                             <Button Name="btnNeuePlaylist" ToolTip="Neue Playlist" Click="btnNeuePlaylist_Click" Height="28" Width="28" Grid.Column="1" >
                                                 <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
-                                            <Button Name="btnPlaylistLoeschen" ToolTip="Playist löschen" Click="btnPlaylistLoeschen_Click" Height="28" Width="28" Margin="5,0,0,0" IsEnabled="False">
-                                                <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
+                                            <Button Name="btnPlaylistImport" ToolTip="Playist importieren" Click="btnPlaylistImport_Click" Height="28" Width="28" Margin="5,0,0,0" >
+                                                <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
                                         </StackPanel>
 
@@ -387,7 +387,6 @@
                                 <ColumnDefinition Width="220" />
                                 <ColumnDefinition Width="5" />
                                 <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
                             <Label Content="Themename" VerticalContentAlignment="Center" Margin="10,0,0,0" />
                             <TextBox HorizontalAlignment="Stretch" Name="tboxKlangThemeName" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um den Theme umzubenennen" Height="25" Grid.Column="1" Background="{x:Null}" LostFocus="tboxKlangTheme_LostFocus" ForceCursor="True" KeyUp="tboxKlangTheme_KeyUp" GotFocus="tbGotFocus" />
@@ -397,10 +396,7 @@
                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" />
                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/add.png" Width="20" Height="20" Margin="-20,-3,0,0" />
                                 </Grid>
-                            </Button>
-                            <Button Name="btnTopThemeExport" Grid.Column="4" Margin="5" ToolTip="Theme exportieren" >
-                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/export.png" />
-                            </Button>
+                            </Button>                            
                         </Grid>
                     </Border>
                     <Border Style="{DynamicResource ControlContentBorder}" Margin="3,0,0,-10" HorizontalAlignment="Left" Grid.Column="3" >
@@ -408,10 +404,10 @@
                             <Image Grid.RowSpan="2" Height="35" HorizontalAlignment="Left" Name="image1" Stretch="Fill" VerticalAlignment="Center" Width="35" Source="/DSA%20MeisterGeister;component/Images/Icons/General/info.png" MouseDown="image1_MouseDown" Cursor="Hand" FlowDirection="LeftToRight" Margin="3,5,0,0" ToolTip="Audio-Codec Informationen" />
                             <GroupBox Header="Import/Export" Margin="5,-2,2,2">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="2,0">
-                                    <Button Name="btnAudioDatenImport" ToolTip="Audio-Daten importieren" Click="btnAudioDatenImport_Click"  Margin="5,0,0,0" VerticalAlignment="Top">
+                                    <Button Name="btnAudioDatenImport" ToolTip="Komplette Audio-Daten importieren" Click="btnAudioDatenImport_Click"  Margin="5,0,0,0" VerticalAlignment="Top">
                                         <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
                                     </Button>
-                                    <Button Name="btnAudioDatenExport" ToolTip="Audio-Daten exportieren" Click="btnAudioDatenExport_Click" Margin="5,0,0,0" Grid.Column="1" VerticalAlignment="Top">
+                                    <Button Name="btnAudioDatenExport" ToolTip="Komplette Audio-Daten exportieren" Click="btnAudioDatenExport_Click" Margin="5,0,0,0" Grid.Column="1" VerticalAlignment="Top">
                                         <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" />
                                     </Button>
                                 </StackPanel>
@@ -499,7 +495,7 @@
                                                 </StackPanel>
                                             </GroupBox>
 
-                                            <StackPanel Name="spnlTopHotkeyX" Orientation="Horizontal" Grid.Column="4" Grid.ColumnSpan="4" Margin="0,1,100,1" >
+                                            <StackPanel Name="spnlTopHotkeyX" Orientation="Horizontal" Grid.Column="4" Grid.ColumnSpan="4" Margin="0,1,100,1" Visibility="Collapsed" >
                                                 <Label Content="Hotkey" />
                                                 <Button Content="nicht definiert" Width="80" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySetX" />
                                                 <ComboBox Name="cmboxTopHotkeyX" Grid.Column="4" Grid.ColumnSpan="4" Width="80" Visibility="Collapsed" />
@@ -531,9 +527,9 @@
                                                 </Grid>
                                             </Border>
 
-                                            <Button Name="btnKlangPauseX" ClickMode="Press" Tag="true" Grid.Column="2" Margin="252,35,0,0" Width="30" Height="30" Click="btnKlangPauseX_Click" HorizontalAlignment="Left" Grid.RowSpan="3" ToolTip="Playlist abspielen/pausieren" VerticalAlignment="Top" >
-                                                <Image Name="btnImgKlangPauseX" Margin="5"  Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
-                                            </Button>
+                                            <ToggleButton Name="tbtnKlangPauseX" Tag="true" Grid.Column="2" Margin="252,35,0,0" Width="30" Height="30" Checked="tbtnKlangPause_Checked" Unchecked="tbtnKlangPause_Unchecked" HorizontalAlignment="Left" Grid.RowSpan="3" ToolTip="Playlist abspielen/pausieren" VerticalAlignment="Top" Background="#00000000">
+                                                <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
+                                            </ToggleButton>
                                             <CheckBox Name="chkbxTopAktivX" Grid.Column="2" Grid.Row="2" Height="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Click="chkbxTopAktivX_Click" Tag="0" IsTabStop="False" Content="Titel an/aus" />
                                             <Label Name="lblTopDauerX" Content="Dauer" Grid.Column="3" Margin="0" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
 
@@ -575,9 +571,9 @@
                                                     <Border VerticalAlignment="Bottom" Grid.ColumnSpan="7" BorderBrush="Gray" Margin="-5,-1,-5,-1" Height="1" BorderThickness="1" Name="brdTrennstrichX" />
 
                                                     <Image Name="imgPauseX" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" ToolTip="Pausenzeit aller aktiven Songs" />
-                                                    <Button Name="btnTopPauseMinX" Content="&lt;&lt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Pausenzeit aller aktiven Klänge verringern" Click="btnAllPauseUp_Click" Tag="-2" IsTabStop="False" />
+                                                    <Button Name="btnTopPauseMinX" Content="&lt;&lt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Minimum setzen" Click="btnAllPauseUp_Click" Tag="-2" IsTabStop="False" />
                                                     <Button Name="btnTopPauseDownX" Content="&lt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Pausenzeit aller aktiven Klänge verringern" Click="btnAllPauseUp_Click" Tag="-1" IsTabStop="False" />
-                                                    <Button Name="btnTopPauseMaxX" Content="&gt;&gt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Tag="2" Click="btnAllPauseUp_Click" IsTabStop="False" />
+                                                    <Button Name="btnTopPauseMaxX" Content="&gt;&gt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Maximum setzen" Tag="2" Click="btnAllPauseUp_Click" IsTabStop="False" />
                                                     <Button Name="btnTopPauseUpX" Content="&gt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Click="btnAllPauseUp_Click" Tag="1" IsTabStop="False" />
 
                                                     <CheckBox Name="chkbxTopPauseChangeX" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" Click="chkbxTopVolChangeX_Click" Tag="0" IsTabStop="False" Content="Auto" FlowDirection="RightToLeft" />
@@ -890,13 +886,16 @@
                                 <ColumnDefinition Width="187*" MinWidth="100" MaxWidth="280" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"  Margin="27,0,00,0" VerticalAlignment="Center">
-                                <Button Name="btnFilterAktiv" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,20,0" ToolTip="Nur aktive Playlists zeigen" Click="btnFilterAktiv_Click" >
+                                <Button Name="btnFilterAktiv" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,10,0" ToolTip="Nur aktive Playlists zeigen" Click="btnFilterAktiv_Click" >
                                     <Grid>
                                         <Image Source="/Images/Icons/General/OK.png" VerticalAlignment="Center" />
                                         <Image Source="/Images/Icons/General/Filter.png" VerticalAlignment="Center" Margin="4,-2,-8,-2" />
                                     </Grid>
                                 </Button>
-                                
+                                <Button Grid.Column="2" Click="btnPListAktFilter_Click" ToolTip="Aktiv-Filter löschen" Width="20" Height="25"  Name="btnPListAktFilter" Margin="0,0,10,0"  >
+                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                </Button>
+
                                 <TextBlock Name="tblkTitel" Padding="4,2,4,0" />
                                 <Button ClickMode="Press" AllowDrop="True" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnPListPListAbspielen_Click" Name="btnPListPListAbspielen" IsEnabled="False" >
                                     <Image Name="btnimgPListPListAbspielen" Width="30" Height="30" Margin="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_grau.png" Style="{StaticResource ImageEnabled}" />

@@ -23,6 +23,24 @@ namespace MeisterGeister.View.AudioPlayer
         public ListboxItemIcon()
         {
             InitializeComponent();
-        }        
+        }
+
+        private void spnllbiIcon_MouseEnter(object sender, MouseEventArgs e)
+        {
+            double d = ((Border)((ListBox)this.Parent).Parent).ActualWidth - grd.ColumnDefinitions[0].ActualWidth - 10;
+            double anzVis = ((ListBox)this.Parent).Items.Count * this.ActualHeight;
+            if (lbText.ActualWidth != d - btnExport.Width - btnLöschen.Width)
+                lbText.Width = d - btnExport.Width - btnLöschen.Width -
+                 ((((ListBox)this.Parent).ActualHeight < anzVis)? 18: 0);
+            btnExport.Visibility = Visibility.Visible;
+            btnLöschen.Visibility = Visibility.Visible;
+        }
+
+        private void spnllbiIcon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            btnExport.Visibility = Visibility.Collapsed;
+            btnLöschen.Visibility = Visibility.Collapsed;
+            lbText.Width = double.NaN;
+        }
     }
 }

@@ -32,35 +32,27 @@ namespace MeisterGeister.Model
             UpdateLists();
             return Global.ContextAudio.Liste<Audio_Playlist>().Where(a => a.Audio_PlaylistGUID == audio_playlistGuid).FirstOrDefault();
         }
-        
-        public void Export(string pfad, bool batch = true)
+
+        public void ExportAll(string pfad, bool batch = true)
         {
             Audio_Theme aTheme_ALL = new Model.Audio_Theme();
             aTheme_ALL.Audio_Playlist = Global.ContextAudio.PlaylistListe;
             aTheme_ALL.Audio_Theme1 = Global.ContextAudio.ThemeListe;
             Global.ContextAudio.Update<Audio_Theme>(aTheme_ALL);
-         /*   ExportPListTheme aPListTheme = new ExportPListTheme();
-            aPListTheme.aPlayList = Global.ContextAudio.PlaylistListe;
-            aPListTheme.aTheme = Global.ContextAudio.ThemeListe;
-            */
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-
-        //    serialization.ExportAudioTheme(aTheme_ALL.Audio_ThemeGUID, pfad);
             serialization.ExportAudioTheme(aTheme_ALL, pfad);
-
             Global.ContextAudio.Delete<Audio_Theme>(aTheme_ALL);
-        /*    Global.ContextAudio.PlaylistListe.ForEach(delegate(Audio_Playlist aPlaylist)
-            {
-                serialization.ExportAudioPlaylist(aPlaylist._audio_PlaylistGUID, pfad);
-            });
-
-            Global.ContextAudio.ThemeListe.ForEach(delegate(Audio_Theme aTheme)
-            {
-                serialization.ExportAudioTheme(aTheme.Audio_ThemeGUID, pfad);
-            });*/
-            // Audio_PlaylistGUID
         }
-
+        
+        public void ExportPList(string pfad, Guid guid, bool batch = true)
+        {
+            Audio_Playlist aPlaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t._audio_PlaylistGUID == guid);
+            if (aPlaylist != null)
+            {
+                Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
+                serialization.ExportAudioPlaylist(guid, pfad);
+            }
+        }
 
         public static void UpdateLists()
         {

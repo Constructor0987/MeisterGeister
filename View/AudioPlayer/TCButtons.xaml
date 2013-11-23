@@ -16,10 +16,7 @@
                     <Image Name="_imgEdit" Source="/Images/Icons/General/feder.png" Stretch="Fill" MouseDown="imgEdit_MouseDown" />
                     <Image Name="_imgOk" Source="/Images/Icons/General/ok.png" Stretch="Fill" Visibility="Collapsed" MouseDown="imgOk_MouseDown" />
                 </DockPanel>
-            </Button>
-            <Button Name="_buttonExport" Height="18" Width="18" Margin="4, 0, 0, 0" BorderThickness="0.5" Opacity="0.5" Visibility="Collapsed" ToolTip="Playlist exportieren" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
-                <Image Source="/Images/Icons/General/export.png" Stretch="Fill" />
-            </Button>
+            </Button>            
         </StackPanel>
     </TabItem.Header>
 </TabItem>
