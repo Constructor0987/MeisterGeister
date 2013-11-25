@@ -8083,7 +8083,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 Global.SetIsBusy(true, string.Format("Bestehende Daten werden gesichert..." + Environment.NewLine + saveTMPdatei));
                 this.UpdateLayout();
                 if (Global.ContextAudio.PlaylistListe.Count > 0)
-                    Global.ContextAudio.PlaylistListe[0].ExportAll(saveTMPdatei);
+                    Audio_Theme.ExportAll(saveTMPdatei);
             }
             if (mrRes == MessageBoxResult.No || allesloeschen)
             {
@@ -8604,7 +8604,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
                         File.Delete(dlg.FileName);
-                        aPlaylist.ExportPList(dlg.FileName, g);
+                        aPlaylist.Export(dlg.FileName);
 
                         Global.SetIsBusy(false);
                         MessageBox.Show("Die Playlist-Daten wurden erfolgreich gesichert.");
@@ -8648,7 +8648,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             try
                             {
                                 File.Delete(pfad);
-                                a.ExportAll(pfad);
+                                Audio_Theme.ExportAll(pfad);
                                 Global.SetIsBusy(false);
                                 MessageBox.Show("Die Audio-Daten wurden in \'" + pfad + "\' gespeichert.");
                             }

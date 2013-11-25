@@ -57,6 +57,29 @@ namespace MeisterGeister.Model.Service {
             return tmp;
         }
 
+        /// <summary>
+        /// Das Theme, welches alles andere beinhaltet, wird geladen oder neu angelegt.
+        /// </summary>
+        /// <returns></returns>
+        public Audio_Theme GetThemeAll()
+        {
+            Audio_Theme aTheme_ALL = null;
+            aTheme_ALL = Global.ContextAudio.Liste<Audio_Theme>().Where(th => th.Audio_ThemeGUID == Guid.Parse("00000000-0000-0000-0000-00000000A11E")).FirstOrDefault();
+            if (aTheme_ALL == null)
+            {
+                aTheme_ALL = new Model.Audio_Theme();
+                aTheme_ALL.Audio_ThemeGUID = Guid.Parse("00000000-0000-0000-0000-00000000A11E");
+                aTheme_ALL.Name = "Alle";
+                Global.ContextAudio.Insert<Audio_Theme>(aTheme_ALL);
+            }
+
+            //add everything
+            Global.ContextAudio.PlaylistListe.Where(pl => pl.Audio_Theme.Count == 0).ToList().ForEach(pl => aTheme_ALL.Audio_Playlist.Add(pl));
+            Global.ContextAudio.ThemeListe.ToList().ForEach(th => aTheme_ALL.Children.Add(th));
+            Global.ContextAudio.Update<Audio_Theme>(aTheme_ALL);
+            return aTheme_ALL;
+        }
+
      /*   public List<Audio_Theme_Playlist> LoadThemePlaylist_ByTheme(Audio_Theme aTheme)
         {
             List<Audio_Theme_Playlist> tmp = Context.Audio_Theme_Playlist

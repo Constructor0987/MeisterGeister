@@ -5,12 +5,6 @@ using System.Text;
 
 namespace MeisterGeister.Model
 {
-    public class ExportPListTheme
-    {
-        public List<Audio_Playlist> aPlayList = new List<Audio_Playlist>();
-        public List<Audio_Theme> aTheme = new List<Audio_Theme>();
-    }
-
     public partial class Audio_Playlist
     {
         public Audio_Playlist()
@@ -19,11 +13,6 @@ namespace MeisterGeister.Model
         }
 
         #region Import Export
-        //public static Audio_Playlist Import(string pfad, bool batch = false)
-        //{
-        //    return Import(pfad, Guid.Empty, batch);
-        //}
-
         public static Audio_Playlist Import(string pfad, bool batch = false)
         {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
@@ -33,25 +22,11 @@ namespace MeisterGeister.Model
             return Global.ContextAudio.Liste<Audio_Playlist>().Where(a => a.Audio_PlaylistGUID == audio_playlistGuid).FirstOrDefault();
         }
 
-        public void ExportAll(string pfad, bool batch = true)
-        {
-            Audio_Theme aTheme_ALL = new Model.Audio_Theme();
-            aTheme_ALL.Audio_Playlist = Global.ContextAudio.PlaylistListe;
-            aTheme_ALL.Audio_Theme1 = Global.ContextAudio.ThemeListe;
-            Global.ContextAudio.Update<Audio_Theme>(aTheme_ALL);
-            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            serialization.ExportAudioTheme(aTheme_ALL, pfad);
-            Global.ContextAudio.Delete<Audio_Theme>(aTheme_ALL);
-        }
         
-        public void ExportPList(string pfad, Guid guid, bool batch = true)
+        public void Export(string pfad, bool batch = true)
         {
-            Audio_Playlist aPlaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t._audio_PlaylistGUID == guid);
-            if (aPlaylist != null)
-            {
-                Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-                serialization.ExportAudioPlaylist(guid, pfad);
-            }
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
+            serialization.ExportAudioPlaylist(Audio_PlaylistGUID, pfad);
         }
 
         public static void UpdateLists()
@@ -59,8 +34,6 @@ namespace MeisterGeister.Model
             Global.ContextAudio.UpdateList<Audio_Titel>();
             Global.ContextAudio.UpdateList<Audio_Playlist>();
             Global.ContextAudio.UpdateList<Audio_Playlist_Titel>();
-            Global.ContextAudio.UpdateList<Audio_Theme>();
-            Global.ContextAudio.UpdateList<Audio_Theme_Playlist>();
         }
         #endregion
     }

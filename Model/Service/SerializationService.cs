@@ -134,7 +134,7 @@ namespace MeisterGeister.Model.Service
             if (audioLoaded)
                 return;
             var queries = new IQueryable<object>[] {
-                from a in Context.Audio_Theme select a,
+                from a in Context.Audio_Theme.Include("Audio_Theme2").Include("Audio_Playlist") select a,
                 from a in Context.Audio_Playlist select a,
                 from a in Context.Audio_Playlist_Titel select a,
                 from a in Context.Audio_Titel select a,
@@ -699,13 +699,13 @@ namespace MeisterGeister.Model.Service
         public Audio_Playlist GetAudioPlaylist(Guid audioPlaylistGuid)
         {
             LoadAudioUserData();
-            return Context.Audio_Playlist.Where(h => h.Audio_PlaylistGUID == audioPlaylistGuid).First();
+            return Context.Audio_Playlist.Where(h => h.Audio_PlaylistGUID == audioPlaylistGuid).FirstOrDefault();
         }
 
         public Audio_Theme GetAudioTheme(Guid audioThemeGuid)
         {
             LoadAudioUserData();
-            return Context.Audio_Theme.Where(h => h.Audio_ThemeGUID == audioThemeGuid).First();
+            return Context.Audio_Theme.Where(h => h.Audio_ThemeGUID == audioThemeGuid).FirstOrDefault();
         }
 
         public void ExportAudioPlaylist(Guid audioPlaylistGuid, string pfad)
@@ -740,6 +740,12 @@ namespace MeisterGeister.Model.Service
         {
             if (aTheme != null)
                 ExportAudioTheme(aTheme.Audio_ThemeGUID, pfad);
+
+            //var o = aTheme;
+            //if (o != null)
+            //{
+            //    SerializeObjectExist<Audio_Theme>(pfad, o);
+            //}
         }
 
         /// <summary>
