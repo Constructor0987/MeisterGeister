@@ -133,9 +133,13 @@ namespace MeisterGeister.Model.Extensions
                 context.TryGetObjectByKey(entityKey, out attachedEntity);
             if (attachedEntity == null)
             {
-                attachedEntity = context.GetShallowClone(entity);
-                context.AddObject(context.GetEntitySetName(entity.GetType()), attachedEntity);
-                //((IEntityWithKey)entity).EntityKey = ((IEntityWithKey)attachedEntity).EntityKey;
+                //avoid adding the same object multiple times.
+                if(context.GetChangedObjects().Where(ose => context.GetEntityKeyFromPrimaryKey(ose.Entity) == entityKey).Count() == 0)
+                {
+                    attachedEntity = context.GetShallowClone(entity);
+                    context.AddObject(context.GetEntitySetName(entity.GetType()), attachedEntity);
+                    //((IEntityWithKey)entity).EntityKey = ((IEntityWithKey)attachedEntity).EntityKey;
+                }
                 return attachedEntity;
             }
             else
@@ -323,8 +327,11 @@ namespace MeisterGeister.Model.Extensions
                     foreach (var relatedinstance in (IEnumerable)related)
                     {
                         object attachedinstance = context.AddOrAttachInstance(relatedinstance, !property.NoUpdate);
-                        newlist.Add(attachedinstance);
-                        NavigatePropertySet(context, childnode, relatedinstance, attachedinstance);
+                        if (attachedinstance != null)
+                        {
+                            newlist.Add(attachedinstance);
+                            NavigatePropertySet(context, childnode, relatedinstance, attachedinstance);
+                        }
                     }
 
                     //// Synchronise lists:

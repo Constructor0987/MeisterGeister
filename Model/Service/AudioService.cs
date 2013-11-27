@@ -58,7 +58,7 @@ namespace MeisterGeister.Model.Service {
         }
 
         /// <summary>
-        /// Das Theme, welches alles andere beinhaltet, wird geladen oder neu angelegt.
+        /// Das Theme, welches alles andere beinhaltet, wird aktualisiert oder neu angelegt.
         /// </summary>
         /// <returns></returns>
         public Audio_Theme GetThemeAll()
@@ -74,8 +74,12 @@ namespace MeisterGeister.Model.Service {
             }
 
             //add everything
+            aTheme_ALL.Audio_Playlist.Clear();
+            aTheme_ALL.Children.Clear();
+            //playlist without theme
             Global.ContextAudio.PlaylistListe.Where(pl => pl.Audio_Theme.Count == 0).ToList().ForEach(pl => aTheme_ALL.Audio_Playlist.Add(pl));
-            Global.ContextAudio.ThemeListe.ToList().ForEach(th => aTheme_ALL.Children.Add(th));
+            //all themes except itself
+            Global.ContextAudio.ThemeListe.Where(t => t.Audio_ThemeGUID != aTheme_ALL.Audio_ThemeGUID).ToList().ForEach(th => aTheme_ALL.Children.Add(th));
             Global.ContextAudio.Update<Audio_Theme>(aTheme_ALL);
             return aTheme_ALL;
         }
@@ -123,10 +127,11 @@ namespace MeisterGeister.Model.Service {
 
         public List<Audio_Titel> LoadTitelByPlaylist(Audio_Playlist aPlaylist)
         {
-            List<Audio_Titel> tmp = Context.Audio_Playlist_Titel
-                .Where(pt => pt.Audio_PlaylistGUID == aPlaylist.Audio_PlaylistGUID)
-                    .Select(pt => pt.Audio_Titel).ToList();
-            return tmp;
+            return aPlaylist.Audio_Playlist_Titel.Select(a => a.Audio_Titel).ToList();
+            //List<Audio_Titel> tmp = Context.Audio_Playlist_Titel
+            //    .Where(pt => pt.Audio_PlaylistGUID == aPlaylist.Audio_PlaylistGUID)
+            //        .Select(pt => pt.Audio_Titel).ToList();
+            //return tmp;
         }
         
         public List<Audio_Titel> LoadTitelByGUID(object titelGUID)
@@ -140,10 +145,9 @@ namespace MeisterGeister.Model.Service {
 
         public List<Audio_Playlist_Titel> LoadPlaylist_TitelByPlaylist(Audio_Playlist aPlaylist, Audio_Titel aTitel)
         {
-            List<Audio_Playlist_Titel> tmp = Context.Audio_Playlist_Titel
-                .Where(pt => pt.Audio_PlaylistGUID == aPlaylist.Audio_PlaylistGUID)
-                    .Where(pt => pt.Audio_TitelGUID == aTitel.Audio_TitelGUID)
-                    .Select(pt => pt).ToList();
+            var tmp = aPlaylist.Audio_Playlist_Titel
+                .Where(pt => pt.Audio_TitelGUID == aTitel.Audio_TitelGUID)
+                    .ToList();
             return tmp;
         }
 
