@@ -23,10 +23,10 @@ namespace MeisterGeister.Model
         }
 
         
-        public void Export(string pfad, bool batch = true)
+        public void Export(string pfad, Guid g, bool batch = true)
         {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            serialization.ExportAudioPlaylist(Audio_PlaylistGUID, pfad);
+            serialization.ExportAudioPlaylist(g, pfad); //Audio_PlaylistGUID
         }
 
         public static void UpdateLists()
