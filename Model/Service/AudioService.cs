@@ -81,6 +81,7 @@ namespace MeisterGeister.Model.Service {
             //all themes except itself
             Global.ContextAudio.ThemeListe.Where(t => t.Audio_ThemeGUID != aTheme_ALL.Audio_ThemeGUID).ToList().ForEach(th => aTheme_ALL.Children.Add(th));
             Global.ContextAudio.Update<Audio_Theme>(aTheme_ALL);
+            Global.ContextAudio.Save();
             return aTheme_ALL;
         }
 

@@ -892,7 +892,7 @@
                                         <Image Source="/Images/Icons/General/Filter.png" VerticalAlignment="Center" Margin="4,-2,-8,-2" />
                                     </Grid>
                                 </Button>
-                                <Button Grid.Column="2" Click="btnPListAktFilter_Click" ToolTip="Aktiv-Filter löschen" Width="20" Height="25"  Name="btnPListAktFilter" Margin="0,0,10,0"  >
+                                <Button Grid.Column="2" Click="btnPListAktFilter_Click" ToolTip="Aktiv-Filter löschen" Width="20" Height="25"  Name="btnPListAktFilter" Margin="0,0,10,0" Visibility="Hidden">
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                 </Button>
 
@@ -938,11 +938,12 @@
             </TabItem>   
         </TabControl>
 
-        <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3"  Visibility="Collapsed" >
+        <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3" Visibility="Collapsed" >
             <StackPanel Orientation="Horizontal">
                 <Button Height="30" Style="{StaticResource GlasButton}" Background="Black" Width="30" ToolTip="Stoppen aller laufenden Hotkeys" Name="btnHotkeyStop" Click="btnHotkeyStop_Click" IsEnabled="False">
                     <Image Source="/Images/Icons/General/stop.png" Margin="5,6,4,4" />
                 </Button>
+                <Slider Width="22" Maximum="100" Name="slHotkey" UseLayoutRounding="True" Value="50" SmallChange="1" LargeChange="10" ValueChanged="slHotkey_ValueChanged" Orientation="Vertical" Margin="2" ToolTip="50 %" />
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
                 <Grid Name="gbxHotkeysgrdHotkeys" >
                     <StackPanel Name="spnlHotkeys" Orientation="Horizontal" Margin="5,0,0,0" />

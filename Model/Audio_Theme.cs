@@ -39,20 +39,23 @@ namespace MeisterGeister.Model
         public static void ExportAll(string pfad)
         {
             Audio_Theme aTheme_ALL = Global.ContextAudio.GetThemeAll();
-            Service.SerializationService serialization = Service.SerializationService.GetInstance(false);
+            Service.SerializationService serialization = Service.SerializationService.GetInstance(true);
             serialization.ExportAudioTheme(aTheme_ALL, pfad);
         }
-
+        
         public static void UpdateLists()
         {
             Global.ContextAudio.UpdateList<Audio_Theme>();
             Model.Audio_Playlist.UpdateLists();
         }
 
-        public void Export(string pfad, bool batch = true)
+        public void Export(string pfad, Guid g,bool batch = true)
         {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
-            serialization.ExportAudioTheme(Audio_ThemeGUID, pfad);
+            if (g == Guid.Empty)
+                serialization.ExportAudioTheme(Audio_ThemeGUID, pfad);
+            else
+                serialization.ExportAudioTheme(g, pfad);
         }
     }
 }

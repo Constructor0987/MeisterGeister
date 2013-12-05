@@ -25,15 +25,44 @@ namespace MeisterGeister.View.AudioPlayer
             InitializeComponent();
         }
 
+        public static Visual GetDescendantByType(Visual element, Type type)
+        {
+            if (element == null)
+                return null;
+
+            if (element.GetType() == type)
+                return element;
+
+            Visual foundElement = null;
+            if (element is FrameworkElement)
+                (element as FrameworkElement).ApplyTemplate();
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            {
+                Visual visual = VisualTreeHelper.GetChild(element, i) as Visual;
+                foundElement = GetDescendantByType(visual, type);
+                if (foundElement != null)
+                    break;
+
+            }
+            return foundElement;
+        }
+
         private void spnllbiIcon_MouseEnter(object sender, MouseEventArgs e)
         {
-            double d = ((Border)((ListBox)this.Parent).Parent).ActualWidth - grd.ColumnDefinitions[0].ActualWidth - 10;
-            double anzVis = ((ListBox)this.Parent).Items.Count * this.ActualHeight;
-            if (lbText.ActualWidth != d - btnExport.Width - btnLöschen.Width)
-                lbText.Width = d - btnExport.Width - btnLöschen.Width -
-                 ((((ListBox)this.Parent).ActualHeight < anzVis)? 18: 0);
-            btnExport.Visibility = Visibility.Visible;
-            btnLöschen.Visibility = Visibility.Visible;
+            if (this.Parent.GetType() == typeof(ListBox))
+            {
+                double d = ((Border)((ListBox)this.Parent).Parent).ActualWidth - grd.ColumnDefinitions[0].ActualWidth - 10;
+
+                var scrollViewer = GetDescendantByType((ListBox)this.Parent, typeof(ScrollViewer)) as ScrollViewer;
+
+                lbText.Width = (((ScrollViewer)scrollViewer).ComputedVerticalScrollBarVisibility == Visibility.Visible) ?
+                    d - btnExport.Width - btnLöschen.Width - 18 :
+                    d - btnExport.Width - btnLöschen.Width;
+
+                btnExport.Visibility = Visibility.Visible;
+                btnLöschen.Visibility = Visibility.Visible;
+            }
         }
 
         private void spnllbiIcon_MouseLeave(object sender, MouseEventArgs e)

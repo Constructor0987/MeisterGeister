@@ -36,7 +36,7 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void sldForceVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ((Slider)sender).ToolTip = "Manuelles Volume = " + Math.Round(((Slider)sender).Value) + " %";
+            ((Slider)sender).ToolTip = Math.Round(((Slider)sender).Value) + " %";
         }        
     }
 }
