@@ -185,7 +185,7 @@ namespace MeisterGeister.Net.Web
         static void SetMeisterGeisterLocationFromDereGlobus(System.Net.HttpListenerContext context)
         {
             //gespeicherte dg-location auf die heldengruppe anwenden.
-            Global.HeldenLon = dglat;
+            Global.HeldenLat = dglat;
             Global.HeldenLon = dglon;
             
             //müsste anhand der koordinaten aus einer datenbank bestimmt werden.

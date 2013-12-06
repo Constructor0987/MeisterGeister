@@ -238,8 +238,8 @@ namespace MeisterGeister
         static void OnStandortChanged()
         {
             Logic.Settings.Einstellungen.Standort = string.Format("{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
-            Double.TryParse(Standort.Longitude, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLon);
-            Double.TryParse(Standort.Latitude, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLat);
+            Double.TryParse(Standort.Longitude.Replace(',','.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLon);
+            Double.TryParse(Standort.Latitude.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLat);
 
             if (StandortChanged != null)
                 StandortChanged(null, new EventArgs());
