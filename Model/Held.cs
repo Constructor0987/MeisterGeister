@@ -1804,7 +1804,7 @@ namespace MeisterGeister.Model
             }
         }
 
-        [DependentProperty("GeschwindigkeitOhneMod")]
+        [DependentProperty("GeschwindigkeitOhneMod"), DependentProperty("Behinderung")]
         [DependsOnModifikator(typeof(Mod.IModGS))]
         public double Geschwindigkeit
         {
@@ -1812,7 +1812,7 @@ namespace MeisterGeister.Model
                 int gs = GeschwindigkeitOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModGS).Select(m => (Mod.IModGS)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => gs = m.ApplyGSMod(gs));
-                return gs; 
+                return gs - Behinderung;
             }
         }
 
@@ -1919,9 +1919,11 @@ namespace MeisterGeister.Model
         }
 
         /// <summary>
-        /// Ausweichen-Wert inklusive Akrobatik, Sonderfertigkeiten und Behinderung.
+        /// Ausweichen-Wert inklusive Akrobatik und Sonderfertigkeiten.
         /// </summary>
-        public int? Ausweichen
+        [DependentProperty("ParadeBasis")]
+        //[DependsOnModifikator(typeof(Mod.IModAusweichen))] //gibt noch keinen Mod für das Ausweichen
+        public int AusweichenOhneMod
         {
             get {
                 int ausweichen = ParadeBasis;
@@ -1932,8 +1934,20 @@ namespace MeisterGeister.Model
                 if (HatSonderfertigkeitUndVoraussetzungen("Ausweichen III"))
                     ausweichen += 3;
                 ausweichen += (Math.Max(Talentwert("Akrobatik") - 9, 0) / 3);
-                ausweichen -= Behinderung;
                 return ausweichen;
+            }
+        }
+
+        /// <summary>
+        /// Ausweichen-Wert inklusive Akrobatik, Sonderfertigkeiten und Behinderung.
+        /// </summary>
+        [DependentProperty("AusweichenOhneMod"), DependentProperty("Behinderung")]
+        //[DependsOnModifikator(typeof(Mod.IModAusweichen))] //gibt noch keinen Mod für das Ausweichen
+        public int? Ausweichen
+        {
+            get
+            {
+                return AusweichenOhneMod - Behinderung;
             }
         }
 
