@@ -119,6 +119,9 @@
                     <TextBlock Grid.Column="1" Grid.Row="6" Margin="6,0,0,0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding SelectedHeld.Wundschwellen}" TextAlignment="Center" ToolTip="Wundschwelle" />
                     <Label Grid.Column="3" Grid.Row="6" Margin="3,3,0,3" Content="SO:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <ViewGeneral:IntBox Grid.Column="4" Grid.Row="6" Margin="3,4,0,4" HorizontalAlignment="Left" MinWidth="65" ShowButtons="True" ToolTip="Sozialstatus" Value="{Binding SelectedHeld.SO}" VerticalAlignment="Center" Height="24" IsReadOnly="{Binding IsReadOnly}" Style="{StaticResource ReadOnlyStyle}" />
+                    <Label Grid.Column="0" Grid.Row="7" Margin="3,3,0,3" Content="GS:" ToolTip="Geschwindigkeit" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+                    <ViewGeneral:TextBoxModInfo Grid.Column="1" Grid.Row="7" ModListe="{Binding SelectedHeld.ModifikatorenListeGS}" WertName="GS" 
+                                                        StartWert="{Binding SelectedHeld.GeschwindigkeitOhneMod}" Wert="{Binding SelectedHeld.Geschwindigkeit}" />
 
                     <!-- Magieresistenz -->
                     <Label Grid.Column="7" Grid.Row="6" Margin="3,3,0,3" Content="MR:" HorizontalAlignment="Left" x:Name="_labelMR" VerticalAlignment="Center" FontWeight="Bold" />

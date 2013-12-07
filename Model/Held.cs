@@ -170,6 +170,14 @@ namespace MeisterGeister.Model
                 return ModifikatorenListe(typeof(Mod.IModMR), Magieresistenz);
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModGS))]
+        public List<dynamic> ModifikatorenListeGS
+        {
+            get
+            {
+                return ModifikatorenListe(typeof(Mod.IModGS), GeschwindigkeitOhneMod);
+            }
+        }
 
         #endregion
 
