@@ -1285,9 +1285,10 @@ namespace MeisterGeister.View.AudioPlayer {
                     if (Convert.ToInt16(lbBackground.Tag) == lbBackground.SelectedIndex )          // Auswahl Playliste nicht geändert
                     {
                         FadingIn_Started = false;
+                              
                         _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true;
-                        if (_BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted)
-                            _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = false;
+                  //      if (_BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted)
+                  //          _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = false;
                         BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], false, true);
                         _BGPlayer.BG[_BGPlayer.aktiv].aPlaylist = null;
                     }
@@ -6900,14 +6901,17 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             DispatcherTimer _timer = new DispatcherTimer();
 
+            MediaPlayer mpBezug = BG.mPlayer;
             double stVol = BG.mPlayer.Volume;
             double aktVol = 0;
             _timer.Interval = TimeSpan.FromMilliseconds(fadingIntervall);
 
-            DateTime fadOutStart = DateTime.Now;
+            DateTime fadOutStart = DateTime.MinValue;
 
             _timer.Tick += new EventHandler(delegate(object s, EventArgs a)
             {
+                if (fadOutStart == DateTime.MinValue)
+                    fadOutStart = DateTime.Now;
                 double _vergangeneZeit = DateTime.Now.Subtract(fadOutStart).TotalMilliseconds;
                 if (!sofort && _vergangeneZeit > 5000)  //maximale Wartezeit zum FadingOut
                     sofort = true;
@@ -6925,10 +6929,11 @@ namespace MeisterGeister.View.AudioPlayer {
                             if (slBGVolume.Value / 100 != stVol)        // wenn während des Fading die Lautstärke verändert wird
                                 stVol = slBGVolume.Value / 100;
                                  
-                            if (BG.mPlayer.Volume != aktVol)
-                                BG.mPlayer.Volume = aktVol; 
+                            if (BG.mPlayer.Volume != aktVol && BG.mPlayer == mpBezug)
+                                BG.mPlayer.Volume = aktVol;
 
-                            if (aktVol == 0)
+                            if (BG.mPlayer != mpBezug ||
+                                aktVol == 0)
                             {
                                 if (playerStoppen && BG.FadingOutStarted)   //bei Volume 0 Fadingauf false und MediaPlayer freigeben
                                 {
@@ -6962,14 +6967,17 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             DispatcherTimer _timer = new DispatcherTimer();
 
+            MediaPlayer mpBezug = klZeile._mplayer;
             double stVol = ((klZeile._mplayer != null) ? klZeile._mplayer.Volume : .5);
             double aktVol = 0;
             _timer.Interval = TimeSpan.FromMilliseconds(fadingIntervall);
-            DateTime fadOutStart = DateTime.Now;
+            DateTime fadOutStart = DateTime.MinValue;
             bool fadingIn = FadingIn_Started;
             
             _timer.Tick += new EventHandler(delegate(object s, EventArgs a)
             {
+                if (fadOutStart == DateTime.MinValue)
+                    fadOutStart = DateTime.Now;
                 double _vergangeneZeit = DateTime.Now.Subtract(fadOutStart).TotalMilliseconds;
 
                 if (!sofort && _vergangeneZeit > 5000)                                 //maximale Wartezeit zum FadingOut
@@ -6992,10 +7000,12 @@ namespace MeisterGeister.View.AudioPlayer {
                             aktVol = (fadingTime != 0) ? stVol - stVol * (_vergangeneZeit / (fadingTime * fadingIntervall)) : 0;
                             aktVol = aktVol < 0 ? 0 : aktVol;
 
-                            if (klZeile._mplayer.Volume != aktVol)
+                            if (klZeile._mplayer.Volume != aktVol && klZeile._mplayer == mpBezug)
                                 klZeile._mplayer.Volume = aktVol;
 
-                            if (aktVol == 0 || _vergangeneZeit > (fadingTime * fadingIntervall))
+                            if (klZeile._mplayer != mpBezug ||
+                                aktVol == 0 || 
+                                _vergangeneZeit > (fadingTime * fadingIntervall))
                             {
                                 if (playerStoppen)
                                 {
@@ -7032,14 +7042,16 @@ namespace MeisterGeister.View.AudioPlayer {
         public void FadingIn(MediaPlayer mplayer, double zielVol)
         {
             DispatcherTimer _timer = new DispatcherTimer();
-
+            MediaPlayer mpBezug = mplayer;
             double aktVol = 0;
             mplayer.Volume = 0;
             _timer.Interval = TimeSpan.FromMilliseconds(fadingIntervall);
-            DateTime fadInStart = DateTime.Now;
-
+            DateTime fadInStart = DateTime.MinValue;
+            
             _timer.Tick += new EventHandler(delegate(object s, EventArgs a)
             {
+                if (fadInStart == DateTime.MinValue)
+                    fadInStart = DateTime.Now;
                 double _vergangeneZeit = DateTime.Now.Subtract(fadInStart).TotalMilliseconds;
                 FadingIn_Started = true;
                 aktVol = (fadingTime != 0) ? zielVol * (_vergangeneZeit / (fadingTime * fadingIntervall)) : zielVol;
@@ -7047,9 +7059,11 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (slBGVolume.Value/100 != zielVol)        // wenn während des Fading die Lautstärke verändert wird
                     zielVol = slBGVolume.Value/100;
 
-                if (mplayer != null) mplayer.Volume = aktVol;
+                if (mplayer != null && mplayer == mpBezug) mplayer.Volume = aktVol;
 
-                if (stopFadingIn || aktVol >= zielVol || _vergangeneZeit > (fadingTime * fadingIntervall))
+                if (mplayer != mpBezug || 
+                    stopFadingIn || aktVol >= zielVol || 
+                    _vergangeneZeit > (fadingTime * fadingIntervall))
                 {
                     _timer.Stop();
                     FadingIn_Started = false;
