@@ -26,7 +26,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Name="imgTrash" Margin="7" Grid.RowSpan="2"  Tag="0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" AllowDrop="False" />
-                <ProgressBar Name="pbarTitel" Height="18" Margin="15,0,0,0" Grid.Column="1" Grid.RowSpan="2" />
+                <ProgressBar Name="pbarTitel" Height="18" Margin="15,0,0,0" Grid.Column="1" Grid.RowSpan="2" ToolTip="Rechte Maustaste für mehr Einstellungen" />
                 <CheckBox Name="chkTitel" Grid.Column="1" Grid.RowSpan="2" Content="Titel" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" IsTabStop="False" />
                 <Label Name="lblDauer" Content="-:--" Grid.Column="2" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
 

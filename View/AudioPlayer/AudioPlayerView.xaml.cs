@@ -68,7 +68,7 @@ public class KlangZeile
 	public UInt16 ID_Zeile;
 	public MediaPlayer _mplayer = null; 
 	public Audio_Playlist_Titel audiotitel = new Audio_Playlist_Titel();
-	public int mediaHashCode = 0;
+    public int mediaHashCode = 0;
 	public bool FadingOutStarted = false;
 	public bool istPause = false;
 	public bool istLaufend = false;
@@ -174,7 +174,7 @@ public class GruppenObjekt
 
 public class Musik
 {
-	public bool FadingOutStarted = false;
+    public bool FadingOutStarted = false;
 	public bool isPaused = false;
     public Audio_Playlist aPlaylist = null;
 	public MediaPlayer mPlayer = null;
@@ -241,6 +241,7 @@ namespace MeisterGeister.View.AudioPlayer {
         private int SliderTeile = 25;
         private Int16 PauseSprung = 200;
         private Int16 VolSprung = 5;
+        //MediaPlayer mpFadingInBezug;
        
         private List<hotkey> hotkeys = new List<hotkey>();
 
@@ -472,10 +473,10 @@ namespace MeisterGeister.View.AudioPlayer {
 
                 try
                 {
-                    bool neuAbspielen = false;
+                 //   bool neuAbspielen = false;
                     if (_player.Source == null || _player.Source.LocalPath.ToString() != url)
                     {
-                        neuAbspielen = true;
+                  //      neuAbspielen = true;
                         _player.IsMuted = (notMusikPlayer) ? 
                             (!_GrpObjecte[posObjGruppe].visuell && Convert.ToInt32(btnPListPListSpeaker.Tag) != -1 ? true : false) :
                             (Convert.ToInt16(btnBGSpeaker.Tag) != -1) ? true : false;
@@ -502,11 +503,11 @@ namespace MeisterGeister.View.AudioPlayer {
                              _GrpObjecte[posObjGruppe].Vol_ThemeMod / 100 *
                              _GrpObjecte[posObjGruppe].Vol_PlaylistMod / 100);
 
-                        //if (!neuAbspielen)
+             /*           if (!neuAbspielen)
                             _player.Position = (klZeile.audiotitel.TeilAbspielen) ?
                                 TimeSpan.FromMilliseconds(klZeile.audiotitel.TeilStart.Value) :
                                 TimeSpan.FromMilliseconds(0);
-
+                        */
                         MyTimer.stop_timer(Convert.ToString(_player.Volume)); //MUSS vorerst drinnnen bleiben, damit das Volume richtig wiedergegben wird (Zeit)?!? 
                         _player.Play();
                     }
@@ -688,15 +689,14 @@ namespace MeisterGeister.View.AudioPlayer {
                     if (grpobj.visuell)
                     {
                         grpobj._listZeile[zeile].audioZeile.pbarTitel.Value = 0;
-                        if (grpobj._listZeile[zeile].audiotitel.PauseChange) // .audioZeile.chkKlangPauseMove.IsChecked == true)
+                        if (grpobj._listZeile[zeile].audiotitel.PauseChange)
                         {
                             if (Convert.ToUInt16(grpobj._listZeile[zeile].audioZeile.tboxPauseMin.Text) >
                                 Convert.ToUInt16(grpobj._listZeile[zeile].audioZeile.tboxPauseMax.Text))
                                 grpobj._listZeile[zeile].audioZeile.tboxPauseMax.Text = grpobj._listZeile[zeile].audioZeile.tboxPauseMin.Text;
 
-                            neu = (new Random()).Next(Convert.ToUInt16(grpobj._listZeile[zeile].audiotitel.PauseMin), // Convert.ToUInt16(grpobj._listZeile[zeile].audioZeile.tboxPauseMin.Text),
+                            neu = (new Random()).Next(Convert.ToUInt16(grpobj._listZeile[zeile].audiotitel.PauseMin),
                                                       Convert.ToUInt16(grpobj._listZeile[zeile].audiotitel.PauseMax));
-                            //   Convert.ToUInt16(grpobj._listZeile[zeile].audioZeile.tboxPauseMax.Text));
 
                             wertPlus = grpobj._listZeile[zeile].audioZeile.sldKlangPause.Ticks.First(t => t >= neu);
                             IndexPlus = grpobj._listZeile[zeile].audioZeile.sldKlangPause.Ticks.IndexOf(wertPlus);
@@ -816,7 +816,6 @@ namespace MeisterGeister.View.AudioPlayer {
                                 _GrpObjecte[posObjGruppe]._listZeile[zeile].pauseMax_wert)):
                             TimeSpan.FromMilliseconds(_GrpObjecte[posObjGruppe]._listZeile[zeile].audiotitel.Pause);
                             
-                          //  _GrpObjecte[posObjGruppe]._listZeile[zeile].audioZeile.sldKlangPause.Value);
                         _GrpObjecte[posObjGruppe]._listZeile[zeile].istWartezeit = true;
                         KlangPlayEndetimer.Tag = _GrpObjecte[posObjGruppe]._listZeile[zeile].ID_Zeile;
                         KlangPlayEndetimer.Tick += new EventHandler(KlangPlayEndetimer_Tick);
@@ -904,10 +903,9 @@ namespace MeisterGeister.View.AudioPlayer {
                     grpobj._listZeile[zeile].istStandby = false;
                     grpobj._listZeile[zeile].playable = false;
 
-                    //if (grpobj._listZeile.FindAll(t => t.playable).Count != grpobj._listZeile.FindAll(t => t.audiotitel.Aktiv).Count)
                     foreach (MusikZeile mZeile in lbPListGeräusche.Items)
                     {
-                        if ((Guid)mZeile.Tag == grpobj.aPlaylist.Audio_PlaylistGUID)// ._listZeile[zeile].audiotitel.Audio_TitelGUID)
+                        if ((Guid)mZeile.Tag == grpobj.aPlaylist.Audio_PlaylistGUID)
                         {
                             mZeile.spnlMusikZeile.Background = new SolidColorBrush(Color.FromArgb(100, 255, 255, 80));   // Brushes.Yellow
                             mZeile.spnlMusikZeile.ToolTip = grpobj._listZeile.FindAll(t => t.playable).Count + " von " + grpobj._listZeile.FindAll(t => t.audiotitel.Aktiv).Count + " Titel abspielbar";
@@ -1263,8 +1261,10 @@ namespace MeisterGeister.View.AudioPlayer {
                             lbMusiktitellist.SelectionChanged += lbMusiktitellist_SelectionChanged;
                         }
                         _BGPlayer.BG[_BGPlayer.aktiv].aPlaylist = _BGPlayer.AktPlaylist;
+                        
                         _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = false;
-                        FadingIn_Started = false;
+                        FadingIn_Started = false;                           
+
                         _BGPlayer.BG[_BGPlayer.aktiv].isPaused = false;
                         FadingIn(_BGPlayer.BG[_BGPlayer.aktiv].mPlayer, Convert.ToDouble(_BGPlayer.AktPlaylistTitel.Volume) / 100);
                         btnBGAbspielen.Tag = true;
@@ -1287,8 +1287,6 @@ namespace MeisterGeister.View.AudioPlayer {
                         FadingIn_Started = false;
                               
                         _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true;
-                  //      if (_BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted)
-                  //          _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = false;
                         BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], false, true);
                         _BGPlayer.BG[_BGPlayer.aktiv].aPlaylist = null;
                     }
@@ -2891,6 +2889,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     if (!(sender as CheckBox).IsChecked.Value && grpobj._listZeile[zeile].istLaufend)
                     {
                         grpobj._listZeile[zeile]._mplayer.Pause();
+                        grpobj._listZeile[zeile]._mplayer.Position = TimeSpan.FromMilliseconds(0);
                         grpobj._listZeile[zeile].istLaufend = false;
                         
                     }
@@ -3955,17 +3954,20 @@ namespace MeisterGeister.View.AudioPlayer {
                                 if (_BGPlayer.BG[_BGPlayer.aktiv].mPlayer != null && _BGPlayer.BG[_BGPlayer.aktiv].mPlayer.Position.TotalMilliseconds > 0 &&
                                     !_BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted)
                                 {
-                                    if (_BGPlayer.BG[0].FadingOutStarted && _BGPlayer.BG[1].FadingOutStarted)
-                                        _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = false;
-                                    FadingIn_Started = false;
 
-                                    _BGPlayer.BG[_BGPlayer.aktiv == 0 ? 1 : 0].FadingOutStarted = false;
-                                    if (!_BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted && lbMusiktitellist.SelectedIndex != -1)
+                                    FadingIn_Started = false;
+                                    if (lbMusiktitellist.SelectedIndex != -1)
                                     {
-                                        _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true;
-                                        BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], false, false);
+                                       // _BGPlayer.BG[_BGPlayer.aktiv == 0 ? 1 : 0].FadingOutStarted = false;
+                                        if (!_BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted && lbMusiktitellist.SelectedIndex != -1)
+                                        {
+                                            _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true;
+                                            BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], false, false);
+                                        }
+                                        _BGPlayer.aktiv = (_BGPlayer.aktiv == 0) ? 1 : 0;
+                                    //    _BGPlayer.BG[_BGPlayer.aktiv].FadingOutStarted = true;
+                                    //    BGFadingOut(_BGPlayer.BG[_BGPlayer.aktiv], false, false);
                                     }
-                                    _BGPlayer.aktiv = (_BGPlayer.aktiv == 0) ? 1 : 0;
                                 }
                                 _BGPlayer.BG[_BGPlayer.aktiv].isPaused = false;
 
@@ -4075,7 +4077,6 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         if (KlangProgBarTimer.Interval == TimeSpan.FromMilliseconds(1000))
                             KlangProgBarTimer.Interval = TimeSpan.FromMilliseconds(100);
-                        found = true;
                         for (int durchlauf = 0; durchlauf < KlangZeilenLaufend.Count; durchlauf++)
                         {
                             if (KlangZeilenLaufend[durchlauf].istPause)
@@ -4084,8 +4085,10 @@ namespace MeisterGeister.View.AudioPlayer {
                             int objGruppe = _GrpObjecte[posObjGruppe].objGruppe;
                             if (objGruppe == -1)
                                 break;
+                            found = true;
 
-                            if (_GrpObjecte[posObjGruppe].visuell &&
+                            if (_GrpObjecte[posObjGruppe].visuell && 
+                                KlangZeilenLaufend[durchlauf].audioZeile != null &&
                                 KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel != null &&
                                 KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Tag != null)
                             {
@@ -4141,19 +4144,19 @@ namespace MeisterGeister.View.AudioPlayer {
                                         KlangZeilenLaufend[durchlauf].Aktuell_Volume -= speed :
                                         KlangZeilenLaufend[durchlauf].Aktuell_Volume += speed;
 
-                                    if (_GrpObjecte[posObjGruppe].visuell &&
+                                    if (_GrpObjecte[posObjGruppe].visuell && KlangZeilenLaufend[durchlauf].audioZeile != null &&
                                         _GrpObjecte[posObjGruppe].ticKlang.Visibility == Visibility.Visible)
                                         KlangZeilenLaufend[durchlauf].audioZeile.sldKlangVol.Value = KlangZeilenLaufend[durchlauf].Aktuell_Volume;
                                 }
                                 double sollWert = (KlangZeilenLaufend[durchlauf].Aktuell_Volume / 100) * (_GrpObjecte[posObjGruppe].Vol_ThemeMod) / 100 * _GrpObjecte[posObjGruppe].Vol_PlaylistMod / 100;
-                                if (_GrpObjecte[posObjGruppe].force_Volume != null)
+                                if (!FadingIn_Started && !KlangZeilenLaufend[durchlauf].FadingOutStarted && _GrpObjecte[posObjGruppe].force_Volume != null)
                                     KlangZeilenLaufend[durchlauf]._mplayer.Volume = _GrpObjecte[posObjGruppe].force_Volume.Value;
                                 else
                                     if (!FadingIn_Started && !KlangZeilenLaufend[durchlauf].FadingOutStarted && sollWert != KlangZeilenLaufend[durchlauf]._mplayer.Volume)
                                         KlangZeilenLaufend[durchlauf]._mplayer.Volume = sollWert;
 
                                 //einmaliges ermitteln des Endzeitpunkts
-                                if (_GrpObjecte[posObjGruppe].visuell &&
+                                if (_GrpObjecte[posObjGruppe].visuell && KlangZeilenLaufend[durchlauf].audioZeile != null &&
                                     KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Maximum == 100000 && KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan &&
                                     KlangZeilenLaufend[durchlauf].audiotitel.Audio_Titel != null)
                                 {
@@ -4168,7 +4171,7 @@ namespace MeisterGeister.View.AudioPlayer {
                                 }
 
                                 //aktualisiere ProgressBar - bei Wartezeit auf Maximum
-                                if (_GrpObjecte[posObjGruppe].visuell &&
+                                if (_GrpObjecte[posObjGruppe].visuell && KlangZeilenLaufend[durchlauf].audioZeile != null &&
                                     _GrpObjecte[posObjGruppe].ticKlang.Visibility == Visibility.Visible &&
                                     KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan)
                                     KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Value =
@@ -4181,49 +4184,16 @@ namespace MeisterGeister.View.AudioPlayer {
                                     KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan && KlangZeilenLaufend[durchlauf].audiotitel.TeilAbspielen &&
                                     KlangZeilenLaufend[durchlauf]._mplayer.Position.TotalMilliseconds < KlangZeilenLaufend[durchlauf].audiotitel.TeilStart)
                                     KlangZeilenLaufend[durchlauf]._mplayer.Position = TimeSpan.FromMilliseconds(KlangZeilenLaufend[durchlauf].audiotitel.TeilStart.Value);
-                                                                    
-                                //Endposisiton überprüfen
-                                if (KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan && KlangZeilenLaufend[durchlauf].audiotitel.TeilAbspielen &&
-                                    KlangZeilenLaufend[durchlauf]._mplayer.Position.TotalMilliseconds + 
-                                    ((_GrpObjecte[posObjGruppe].istMusik)? TimeSpan.FromMilliseconds(fadingTime * fadingIntervall).TotalMilliseconds: 0) >= KlangZeilenLaufend[durchlauf].audiotitel.TeilEnde)
-                                {
-                                    if (_GrpObjecte[posObjGruppe].visuell)
-                                        KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Value = KlangZeilenLaufend[durchlauf].audiotitel.TeilEnde.Value;
-                                    if (_GrpObjecte[posObjGruppe].istMusik)
-                                    {
-                                        _GrpObjecte[posObjGruppe].Gespielt.Add(Convert.ToUInt16(durchlauf));
-
-                                        if (!KlangZeilenLaufend[durchlauf].FadingOutStarted)
-                                        {
-                                            KlangZeilenLaufend[durchlauf].FadingOutStarted = true;
-                                            FadingOut(KlangZeilenLaufend[durchlauf], true, false);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //KlangZeilenLaufend[durchlauf]._mplayer.Stop();
-
-                                        Player_Ended(KlangZeilenLaufend[durchlauf]._mplayer, new EventArgs());
-                                    }
-
-/*                                    KlangZeilenLaufend[durchlauf].istLaufend = false;
-                                    
-                                    bool nurEinLiedAktiv = (_GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.audiotitel.Aktiv).Count == 1)? true : false;
-                                    KlangZeilenLaufend[durchlauf].istStandby = nurEinLiedAktiv;
-                                        
-                                    KlangZeilenLaufend[durchlauf].istPause = false;
-                                    */
-                                    CheckPlayStandbySongs(_GrpObjecte[posObjGruppe]);
-                                    
-                                    //if (!nurEinLiedAktiv)
-                                     //   KlangZeilenLaufend[durchlauf].istStandby = true;
-                                }
-
-
+                                       
                                 //Bei Musikplaylists die Endposition vor Fading überprüfen
                                 if (_GrpObjecte[posObjGruppe].istMusik && !KlangZeilenLaufend[durchlauf].FadingOutStarted &&
-                                    KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan && !KlangZeilenLaufend[durchlauf].audiotitel.TeilAbspielen &&
-                                    KlangZeilenLaufend[durchlauf]._mplayer.Position.TotalMilliseconds + TimeSpan.FromMilliseconds(fadingTime * fadingIntervall).TotalMilliseconds >= KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.TimeSpan.TotalMilliseconds)
+                                    KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.HasTimeSpan)
+                                    if ((KlangZeilenLaufend[durchlauf].audiotitel.TeilAbspielen &&
+                                         KlangZeilenLaufend[durchlauf]._mplayer.Position.TotalMilliseconds + TimeSpan.FromMilliseconds(fadingTime * fadingIntervall).TotalMilliseconds >= KlangZeilenLaufend[durchlauf].audiotitel.TeilEnde) 
+                                        ||                                      
+                                        (!KlangZeilenLaufend[durchlauf].audiotitel.TeilAbspielen &&
+                                        KlangZeilenLaufend[durchlauf]._mplayer.Position.TotalMilliseconds + TimeSpan.FromMilliseconds(fadingTime * fadingIntervall).TotalMilliseconds >= KlangZeilenLaufend[durchlauf]._mplayer.NaturalDuration.TimeSpan.TotalMilliseconds)
+                                        )
                                 {
                                     _GrpObjecte[posObjGruppe].Gespielt.Add(Convert.ToUInt16(durchlauf));
 
@@ -4231,13 +4201,24 @@ namespace MeisterGeister.View.AudioPlayer {
                                     {
                                         KlangZeilenLaufend[durchlauf].FadingOutStarted = true;
                                         FadingOut(KlangZeilenLaufend[durchlauf], true, false);
-                                    }
+                                    } 
+                                    if (_GrpObjecte[posObjGruppe].visuell && KlangZeilenLaufend[durchlauf].audioZeile != null)
+                                        KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Value = KlangZeilenLaufend[durchlauf].audiotitel.TeilEnde.Value;
 
                                     KlangZeilenLaufend[durchlauf].istLaufend = false;
-                                    KlangZeilenLaufend[durchlauf].istStandby = true;
+                                    //KlangZeilenLaufend[durchlauf].istStandby = true;
                                     KlangZeilenLaufend[durchlauf].istPause = false;
+
+                                    bool nurEinLiedAktiv = (_GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.audiotitel.Aktiv).Count == 1) ? true : false;
+                                    KlangZeilenLaufend[durchlauf].istStandby = nurEinLiedAktiv;
+                                    
                                     CheckPlayStandbySongs(_GrpObjecte[posObjGruppe]);
-                                    KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Value = 0;
+                                    
+                                    if (!nurEinLiedAktiv)
+                                        KlangZeilenLaufend[durchlauf].istStandby = true;
+
+                                    if (KlangZeilenLaufend[durchlauf].audioZeile != null)
+                                        KlangZeilenLaufend[durchlauf].audioZeile.pbarTitel.Value = 0;
                                 }
                             }
                         }
@@ -5832,10 +5813,12 @@ namespace MeisterGeister.View.AudioPlayer {
                     }
                     else
                     {
-                        if (!grpobj._listZeile[i].FadingOutStarted)
+                        if (!grpobj._listZeile[i].FadingOutStarted && grpobj._listZeile[i].istLaufend)
                         {
                             grpobj._listZeile[i].FadingOutStarted = true;
                             FadingOut(grpobj._listZeile[i], false, true);
+                        //    grpobj._listZeile[i].istLaufend = false;
+                            grpobj._listZeile[i].istStandby = true;
                         }
                     }
                 }
@@ -6896,23 +6879,25 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             catch (Exception) { }
         }
-
+        
         public void BGFadingOut(Musik BG, bool playerStoppen, bool sofort)
         {
             DispatcherTimer _timer = new DispatcherTimer();
 
-            MediaPlayer mpBezug = BG.mPlayer;
             double stVol = BG.mPlayer.Volume;
             double aktVol = 0;
             _timer.Interval = TimeSpan.FromMilliseconds(fadingIntervall);
 
             DateTime fadOutStart = DateTime.MinValue;
+            double _vergangeneZeit;
 
             _timer.Tick += new EventHandler(delegate(object s, EventArgs a)
             {
                 if (fadOutStart == DateTime.MinValue)
-                    fadOutStart = DateTime.Now;
-                double _vergangeneZeit = DateTime.Now.Subtract(fadOutStart).TotalMilliseconds;
+                    fadOutStart = DateTime.Now; 
+                
+                _vergangeneZeit = DateTime.Now.Subtract(fadOutStart).TotalMilliseconds;
+
                 if (!sofort && _vergangeneZeit > 5000)  //maximale Wartezeit zum FadingOut
                     sofort = true;
 
@@ -6923,17 +6908,13 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         if (BG.mPlayer != null)
                         {
-                            aktVol = (fadingTime != 0) ? stVol - stVol * (_vergangeneZeit / (fadingTime * fadingIntervall)): 0;
+                            aktVol = (fadingTime != 0) ? stVol - stVol * (_vergangeneZeit / (fadingTime * fadingIntervall)) : 0;
                             aktVol = aktVol < 0 ? 0 : aktVol;
 
-                            if (slBGVolume.Value / 100 != stVol)        // wenn während des Fading die Lautstärke verändert wird
-                                stVol = slBGVolume.Value / 100;
-                                 
-                            if (BG.mPlayer.Volume != aktVol && BG.mPlayer == mpBezug)
+                            if (BG.mPlayer.Volume != aktVol)
                                 BG.mPlayer.Volume = aktVol;
 
-                            if (BG.mPlayer != mpBezug ||
-                                aktVol == 0)
+                            if (BG.mPlayer.Volume == 0)
                             {
                                 if (playerStoppen && BG.FadingOutStarted)   //bei Volume 0 Fadingauf false und MediaPlayer freigeben
                                 {
@@ -6943,6 +6924,7 @@ namespace MeisterGeister.View.AudioPlayer {
                                 if (!playerStoppen && BG.FadingOutStarted)
                                 {
                                     BG.mPlayer.Pause();
+                                    BG.mPlayer.Position = TimeSpan.FromMilliseconds(0);
                                     BG.isPaused = true;
                                 }
 
@@ -6967,60 +6949,47 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             DispatcherTimer _timer = new DispatcherTimer();
 
-            MediaPlayer mpBezug = klZeile._mplayer;
-            double stVol = ((klZeile._mplayer != null) ? klZeile._mplayer.Volume : .5);
+            double stVol = (klZeile._mplayer != null) ? klZeile._mplayer.Volume : .5;
             double aktVol = 0;
+
             _timer.Interval = TimeSpan.FromMilliseconds(fadingIntervall);
+
             DateTime fadOutStart = DateTime.MinValue;
-            bool fadingIn = FadingIn_Started;
-            
+            double _vergangeneZeit;
+
             _timer.Tick += new EventHandler(delegate(object s, EventArgs a)
             {
                 if (fadOutStart == DateTime.MinValue)
                     fadOutStart = DateTime.Now;
-                double _vergangeneZeit = DateTime.Now.Subtract(fadOutStart).TotalMilliseconds;
+                _vergangeneZeit = DateTime.Now.Subtract(fadOutStart).TotalMilliseconds;
 
                 if (!sofort && _vergangeneZeit > 5000)                                 //maximale Wartezeit zum FadingOut
                     sofort = true;
 
-                if (!fadingIn && FadingIn_Started)
-                    fadingIn = true;
-
-                if (fadingIn || sofort)
+                if (FadingIn_Started || sofort)
                 {
-                    if (sofort)
-                    {
-                        sofort = false;
-                        fadingIn = true;
-                    }
-                    if (klZeile.FadingOutStarted)            //solange Volume runterregeln bis der Titel extern das Fadingstoppt
+                    sofort = true;
+                    if (klZeile.FadingOutStarted)                                   //solange Volume runterregeln bis der Titel extern das Fadingstoppt
                     {
                         if (klZeile._mplayer != null)
                         {
                             aktVol = (fadingTime != 0) ? stVol - stVol * (_vergangeneZeit / (fadingTime * fadingIntervall)) : 0;
                             aktVol = aktVol < 0 ? 0 : aktVol;
 
-                            if (klZeile._mplayer.Volume != aktVol && klZeile._mplayer == mpBezug)
+                            if (klZeile._mplayer.Volume != aktVol)
                                 klZeile._mplayer.Volume = aktVol;
-
-                            if (klZeile._mplayer != mpBezug ||
-                                aktVol == 0 || 
-                                _vergangeneZeit > (fadingTime * fadingIntervall))
+                                                        
+                            if (klZeile._mplayer.Volume == 0)
                             {
-                                if (playerStoppen)
+                                if (playerStoppen && klZeile.FadingOutStarted)     //bei Volume 0 Fadingauf false und MediaPlayer freigeben
                                 {
-                                    if (klZeile.FadingOutStarted)     //bei Volume 0 Fadingauf false und MediaPlayer freigeben
-                                    {
-                                        klZeile._mplayer.Stop();
-                                        if (!klZeile.audiotitel.TeilAbspielen)
-                                            klZeile._mplayer.Close();
-                                    }
+                                    klZeile._mplayer.Stop();
+                                    klZeile._mplayer.Close();
                                 }
-                                else
+                                if (!playerStoppen && klZeile.FadingOutStarted)
                                 {
-                                    if (klZeile.FadingOutStarted)
-                                        klZeile._mplayer.Pause();
-                                    klZeile.istPause = true;
+                                    klZeile._mplayer.Pause();
+                                    klZeile._mplayer.Position = TimeSpan.FromMilliseconds(0);
                                 }
                                 klZeile.FadingOutStarted = false;
                                 _timer.Stop();
@@ -7042,28 +7011,27 @@ namespace MeisterGeister.View.AudioPlayer {
         public void FadingIn(MediaPlayer mplayer, double zielVol)
         {
             DispatcherTimer _timer = new DispatcherTimer();
-            MediaPlayer mpBezug = mplayer;
+
             double aktVol = 0;
-            mplayer.Volume = 0;
             _timer.Interval = TimeSpan.FromMilliseconds(fadingIntervall);
             DateTime fadInStart = DateTime.MinValue;
-            
+
             _timer.Tick += new EventHandler(delegate(object s, EventArgs a)
             {
                 if (fadInStart == DateTime.MinValue)
                     fadInStart = DateTime.Now;
-                double _vergangeneZeit = DateTime.Now.Subtract(fadInStart).TotalMilliseconds;
                 FadingIn_Started = true;
+                double _vergangeneZeit = DateTime.Now.Subtract(fadInStart).TotalMilliseconds;
+
                 aktVol = (fadingTime != 0) ? zielVol * (_vergangeneZeit / (fadingTime * fadingIntervall)) : zielVol;
 
-                if (slBGVolume.Value/100 != zielVol)        // wenn während des Fading die Lautstärke verändert wird
-                    zielVol = slBGVolume.Value/100;
+                if (slBGVolume.Value / 100 != zielVol)        // wenn während des Fading die Lautstärke verändert wird
+                    zielVol = slBGVolume.Value / 100;
 
-                if (mplayer != null && mplayer == mpBezug) mplayer.Volume = aktVol;
-
-                if (mplayer != mpBezug || 
-                    stopFadingIn || aktVol >= zielVol || 
-                    _vergangeneZeit > (fadingTime * fadingIntervall))
+                if (mplayer != null)
+                    mplayer.Volume = aktVol;
+                
+                if (stopFadingIn || mplayer.Volume >= zielVol)
                 {
                     _timer.Stop();
                     FadingIn_Started = false;
@@ -7074,11 +7042,11 @@ namespace MeisterGeister.View.AudioPlayer {
             _timer.Start();
         }
 
+
         public void btnEditorGewichtung_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //int posObjGruppe = GetPosObjGruppe(GetObjGruppe(tcEditor.SelectedIndex));
                 GruppenObjekt grpobj = _GrpObjecte.FindAll(t => t.visuell).FirstOrDefault(t => t.ticKlang == tcEditor.SelectedItem);
                 if (grpobj == null)
                     return;
@@ -7538,6 +7506,9 @@ namespace MeisterGeister.View.AudioPlayer {
 
                 GruppenObjekt grpobj = ((ToggleButton)sender).Tag == null ? null : _GrpObjecte.FindAll(t => t.visuell).FirstOrDefault(t => t.objGruppe == Convert.ToInt32(((ToggleButton)sender).Tag));
                 
+                if (grpobj == null)
+                    grpobj = _GrpObjecte.FirstOrDefault(t => t.objGruppe == Convert.ToInt32(mZeile.tbtnCheck.Tag));
+
                 Guid war = AktKlangPlaylist != null ? AktKlangPlaylist.Audio_PlaylistGUID : Guid.Empty;
                 int warTag = Convert.ToInt32(tcEditor.Tag);
                 if (grpobj == null)
