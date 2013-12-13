@@ -1,0 +1,9 @@
+﻿<Window x:Class="MeisterGeister.View.Bodenplan.BattlegroundWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bodenplan="clr-namespace:MeisterGeister.View.Bodenplan"
+        Title="BattlegroundWindow" Height="1024" Width="1280">
+    <Grid>
+        <bodenplan:BattlegroundView x:Name="battlegroundView1"/>
+    </Grid>
+</Window>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Model;
 using MeisterGeister.Model.Extensions;
+using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using K = MeisterGeister.ViewModel.Kampf.Logic.Kampf;
 
@@ -38,16 +39,29 @@ namespace MeisterGeister.ViewModel.Kampf
             OnChanged("InitiativListe");
         }
 
-        private View.Arena.ArenaWindow _bodenplanWindow;
-        public View.Arena.ArenaWindow BodenplanWindow
+        //private View.Arena.ArenaWindow _bodenplanWindow;
+        //public View.Arena.ArenaWindow BodenplanWindow
+        //{
+        //    get { return _bodenplanWindow; }
+        //    set 
+        //    { 
+        //        _bodenplanWindow = value;
+        //        Kampf.Bodenplan = value == null ? null : value.Arena;
+        //        OnChanged("BodenplanWindow"); }
+        //}
+
+        private View.Bodenplan.BattlegroundWindow _bodenplanWindow;
+        public View.Bodenplan.BattlegroundWindow BodenplanWindow
         {
             get { return _bodenplanWindow; }
-            set 
-            { 
+            set
+            {
                 _bodenplanWindow = value;
-                Kampf.Bodenplan = value == null ? null : value.Arena;
-                OnChanged("BodenplanWindow"); }
+                Kampf.Bodenplan = value ?? null;
+                OnChanged("BodenplanWindow");
+            }
         }
+        
 
         public K Kampf
         {
@@ -168,11 +182,10 @@ namespace MeisterGeister.ViewModel.Kampf
                     KämpferListe.Add(held);
 
                     if (BodenplanWindow != null)
-                        BodenplanWindow.Arena.AddHeld(held, new System.Windows.Point(10, 10));
+                       ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).AddHero(held);
+                    
                 }
             }
-            if (BodenplanWindow != null)
-                BodenplanWindow.DrawArena();
             var k = KämpferListe.FirstOrDefault();
         }
 
@@ -195,8 +208,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 KämpferListe.Remove(SelectedKämpferInfo);
                 if (BodenplanWindow != null)
                 {
-                    BodenplanWindow.Arena.RemoveCreature(k);
-                    BodenplanWindow.DrawArena();
+                    ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).RemoveCreature(k);
                 }
             }
         }
@@ -219,8 +231,7 @@ namespace MeisterGeister.ViewModel.Kampf
                 KämpferListe.Clear();
                 if (BodenplanWindow != null)
                 {
-                    BodenplanWindow.Arena.RemoveCreatureAll();
-                    BodenplanWindow.DrawArena();
+                    ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).RemoveCreatureAll();
                 }
             }
         }

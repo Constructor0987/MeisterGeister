@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MeisterGeister.ViewModel.Bodenplan;
 
 namespace MeisterGeister.View.Kampf
 {
@@ -65,12 +66,12 @@ namespace MeisterGeister.View.Kampf
 
                     // zur Arena hinzufügen
                     if (_kampf.Bodenplan != null)
-                        _kampf.Bodenplan.AddGegner(gegner, new System.Windows.Point(15, 15));
+                        ((BattlegroundViewModel)_kampf.Bodenplan.battlegroundView1.DataContext).AddEnemy(gegner);
                 }
 
                 // Arena neu zeichnen
-                if (_kampf.Bodenplan != null)
-                    _kampf.Bodenplan.BodenplanWindow.DrawArena();
+                //if (_kampf.Bodenplan != null)
+                //    _kampf.Bodenplan.BodenplanWindow.DrawArena();
             }
         }
     }

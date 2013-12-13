@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using MeisterGeister.View.Bodenplan;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
 using MeisterGeister.Logic.Extensions;
 using System.Collections.Specialized;
@@ -38,7 +39,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             Kampfrunde = 0;
         }
 
-        public Arena.Arena Bodenplan { get; set; }
+        //public Arena.Arena Bodenplan { get; set; }
+        public BattlegroundWindow Bodenplan { get; set; }
 
         private ObservableCollection<string> _kampfLog = new ObservableCollection<string>();
         public ObservableCollection<string> KampfLog

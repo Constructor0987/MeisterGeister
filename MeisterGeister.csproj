@@ -408,6 +408,18 @@
     <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
+    <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCreature.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundEnemy.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundHero.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundUtilities.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\FilledPathLine.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\ImageObject.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\PathLine.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\Ressources.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\VisualTreeExtensions.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
@@ -513,6 +525,16 @@
     </Compile>
     <Compile Include="View\Beschwörung\BeschwörungView.xaml.cs">
       <DependentUpon>BeschwörungView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Bodenplan\BattlegroundView.xaml.cs">
+      <DependentUpon>BattlegroundView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Bodenplan\BattlegroundWindow.xaml.cs">
+      <DependentUpon>BattlegroundWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Bodenplan\DragScrollViewer.cs" />
+    <Compile Include="View\Bodenplan\SliderWithDisplayTextBox.xaml.cs">
+      <DependentUpon>SliderWithDisplayTextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\BindableSelectedItemBehavior.cs" />
     <Compile Include="View\General\BooleanToVisibilityConverter.cs" />
@@ -899,6 +921,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Beschwörung\BeschwörungView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Bodenplan\BattlegroundView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Bodenplan\BattlegroundWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Bodenplan\SliderWithDisplayTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1546,6 +1580,15 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0079.sql" />
     <Resource Include="Images\Icons\General\stop.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0080.sql" />
+    <Resource Include="Images\Bodenplan\pic_horse1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bodenplan\pic_stone1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Bodenplan\pic_tree1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />
@@ -1642,7 +1685,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 und x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

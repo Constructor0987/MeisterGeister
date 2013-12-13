@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.View.Arena;
+using MeisterGeister.View.Bodenplan;
+using MeisterGeister.ViewModel.Bodenplan;
 using MeisterGeister.ViewModel.Kampf.Logic;
 using VM = MeisterGeister.ViewModel.Kampf;
 using System.Windows.Media;
@@ -65,23 +67,37 @@ namespace MeisterGeister.View.Kampf
 
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
-            // TODO ??: In Command verschieben
+            //// TODO ??: In Command verschieben
             if (VM.BodenplanWindow != null)
             {
                 VM.BodenplanWindow.Activate();
             }
             else
             {
-                ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? VM : null);
-                VM.BodenplanWindow = arenaWindow;
-                arenaWindow.Width = 1200;
-                arenaWindow.Height = 800;
-                arenaWindow.Closed += ArenaWindow_Closed;
-                arenaWindow.Show();
+                BattlegroundWindow bw = new BattlegroundWindow();
+                //VM.BodenplanWindow = bw;
+                ((BattlegroundViewModel) bw.battlegroundView1.DataContext).KampfVM = VM;
+                bw.Closed += Bodenplan_Closed;
+                bw.Show();
             }
+
+            //// TODO ??: In Command verschieben
+            //if (VM.BodenplanWindow != null)
+            //{
+            //    VM.BodenplanWindow.Activate();
+            //}
+            //else
+            //{
+            //    ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? VM : null);
+            //    VM.BodenplanWindow = arenaWindow;
+            //    arenaWindow.Width = 1200;
+            //    arenaWindow.Height = 800;
+            //    arenaWindow.Closed += ArenaWindow_Closed;
+            //    arenaWindow.Show();
+            //}
         }
 
-        void ArenaWindow_Closed(object sender, EventArgs e)
+        void Bodenplan_Closed(object sender, EventArgs e)
         {
             VM.BodenplanWindow = null;
         }
