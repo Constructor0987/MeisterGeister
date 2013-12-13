@@ -4,7 +4,7 @@ using System.Windows.Input;
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     // Serves as an abstraction of Actions performed by the user via interaction with the UI (Button Click,...)
-    class BattlegroundCommand:ICommand
+    public class BattlegroundCommand:ICommand
     {
         public Action Action { get; set; }
 

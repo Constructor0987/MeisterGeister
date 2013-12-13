@@ -13,7 +13,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
-    class BattlegroundViewModel:INotifyPropertyChanged
+    public class BattlegroundViewModel:INotifyPropertyChanged
     {
 
 //        KampfViewModel KampfVM 
@@ -52,25 +52,42 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (KampfVM != null)
                 {
                     _kampfVM.KämpferListe.CollectionChanged -= OnKämpferListeChanged;
-                    _kampfVM.KämpferListe.PropertyChanged -= OnKampfPropertyChanged;
+                    _kampfVM.PropertyChanged -= OnKampfPropertyChanged;
                 }
                 _kampfVM = value;
                 if (KampfVM != null)
                 {
                     _kampfVM.KämpferListe.CollectionChanged += OnKämpferListeChanged;
-                    _kampfVM.KämpferListe.PropertyChanged += OnKampfPropertyChanged;
+                    _kampfVM.PropertyChanged += OnKampfPropertyChanged;
                 }
             }
         }
 
         private void OnKampfPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            
+            if(e.PropertyName == "SelectedKämpferInfo")
+            { 
+                Console.WriteLine("Ein anderer Kämpfer ({0}) wurde ausgewählt", KampfVM.SelectedKämpfer.Name );
+            }
             //Console.WriteLine("Property Changed");
         }
 
         private void OnKämpferListeChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            switch(e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                default:
+                    return;
+            }
             //Console.WriteLine("Kämpferliste Changed!");
             foreach (var creature in KampfVM.KämpferListe.Kämpfer)
             {

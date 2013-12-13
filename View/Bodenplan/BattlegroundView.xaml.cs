@@ -32,11 +32,18 @@ namespace MeisterGeister.View.Bodenplan
         public BattlegroundView()
         {
             InitializeComponent();
-            DataContext = new BattlegroundViewModel();
-            var vm = DataContext as BattlegroundViewModel;
-            vm.TilePathData = BattlegroundUtilities.HexCellTile(100);
+            VM = new BattlegroundViewModel();
+
+            VM.TilePathData = BattlegroundUtilities.HexCellTile(100); //evtl in den setter rein?
+            
             ArenaGrid.Cursor = Cursors.Arrow;
             AddPictureButtons();
+        }
+
+        public BattlegroundViewModel VM
+        {
+            get { return DataContext as BattlegroundViewModel; }
+            set { DataContext = value; }
         }
 
         //Adds dynamicly created Picturebuttons for each picture in folder "Pictures".

@@ -28,14 +28,18 @@ namespace MeisterGeister.Net.Web
         public void Start(int port, string url = "")
         {
             _listener.Prefixes.Add(String.Format(@"http://localhost:{0}/{1}", port, url));
-            _listener.Start();
-            _listenerThread.Start();
-
-            for (int i = 0; i < _workers.Length; i++)
+            try
             {
-                _workers[i] = new Thread(Worker);
-                _workers[i].Start();
+                _listener.Start(); //TODO JT: schmeisst httplistenerexception, wenn der Port bereits genutzt wird.
+                _listenerThread.Start();
+
+                for (int i = 0; i < _workers.Length; i++)
+                {
+                    _workers[i] = new Thread(Worker);
+                    _workers[i].Start();
+                }
             }
+            catch { }
         }
 
         public void Dispose()
@@ -43,11 +47,15 @@ namespace MeisterGeister.Net.Web
 
         public void Stop()
         {
-            _stop.Set();
-            _listenerThread.Join();
-            foreach (Thread worker in _workers)
-                worker.Join();
-            _listener.Stop();
+            try
+            {
+                _stop.Set();
+                _listenerThread.Join();
+                foreach (Thread worker in _workers)
+                    worker.Join();
+                _listener.Stop();
+            }
+            catch { } //TODO JT: sauber lösen
         }
 
         private void HandleRequests()

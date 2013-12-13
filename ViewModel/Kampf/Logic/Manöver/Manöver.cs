@@ -10,6 +10,7 @@ using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Extensions;
 using System.ComponentModel;
 using ImpromptuInterface;
+using System.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 {
@@ -166,7 +167,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                     return;
                 verbleibendeDauer = value;
                 if (value == 0 && Ausführender != null)
-                    Ausführender.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion);
+                    Ausführender.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitAktion); //TODO das gilt zB nicht für freie aktionen.
                 OnChanged("VerbleibendeDauer");
             }
         }
@@ -176,10 +177,80 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             get { return Ansage + Grunderschwernis; }
         }
 
-        //TODO: muss eine Probe für das UI anbieten
-        public virtual Probe Probe
+        public virtual int ProbenAnzahl
         {
-            get { return null; }
+            get { return 1; }
+        }
+
+        protected virtual void ProbenAnlegen()
+        {
+            var p = new Probe();
+            p.Probenname = "Manöverprobe";
+            p.Werte = new int[] { 10 };
+            p.IsBehinderung = false;
+            Proben[0] = p;
+        }
+
+        protected List<Probe> proben = null;
+        public List<Probe> Proben
+        {
+            get
+            {
+                if (proben == null)
+                {
+                    proben = new List<Probe>(ProbenAnzahl);
+                    ProbenAnlegen();
+                }
+                return proben;
+            }
+        }
+
+        private ObservableCollection<ProbenErgebnis> probenErgebnisse = null;
+        /// <summary>
+        /// Speichert die ProbenErgebnisse.
+        /// </summary>
+        public ObservableCollection<ProbenErgebnis> ProbenErgebnisse
+        {
+            get
+            {
+                if (probenErgebnisse == null)
+                {
+                    probenErgebnisse = new ObservableCollection<ProbenErgebnis>();
+                    for (int i = 0; i < ProbenAnzahl; i++ )
+                        probenErgebnisse.Add(ProbenErgebnis.KeinErgebnis);
+                }
+                return probenErgebnisse;
+            }
+            set
+            { probenErgebnisse = value; OnChanged("ProbenErgebnisse"); }
+        }
+
+        private bool ergebnisseAkzeptiert = false;
+        /// <summary>
+        /// Akzeptiert die eingetragenen ProbenErgebnisse.
+        /// Wenn nicht genug Ergebnisse eingetragen wurden, dann werden diese zufällig bestimmt.
+        /// </summary>
+        public bool ErgebnisseAkzeptiert
+        {
+            get { return ergebnisseAkzeptiert; }
+            set { 
+                ergebnisseAkzeptiert = value;
+                for (int i = 0; i < ProbenAnzahl; i++)
+                {
+                    if (ProbenErgebnisse[i].Ergebnis == ErgebnisTyp.KEIN_ERGEBNIS)
+                        ProbenErgebnisse[i] = Proben[i].Würfeln();
+                }
+                OnChanged("ErgebnisseAkzeptiert"); }
+        }
+
+        private bool auswirkungenAngewendet = false;
+        public bool AuswirkungenAngewendet
+        {
+            get { return auswirkungenAngewendet; }
+            set { 
+                auswirkungenAngewendet = value;
+                OnChanged("AuswirkungenAngewendet");
+            }
         }
 
         /// <summary>
@@ -187,14 +258,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         /// Verbraucht Aktion(en) des Kämpfers.
         /// </summary>
         /// <returns></returns>
-        public virtual Probe Ausführen()
+        public virtual List<Probe> Ausführen()
         {
             AktionenVerbrauchen();
             VerbleibendeDauer--;
             RaiseOnAusführung();
             if(VerbleibendeDauer > 0) //TODO Inkorrekt. Ich glaube die Probe wird am Anfang ausgeführt.
                 return null;
-            return Probe;
+            return Proben;
         }
 
         /// <summary>

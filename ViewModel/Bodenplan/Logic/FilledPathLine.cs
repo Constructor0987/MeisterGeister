@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
-    class FilledPathLine : BattlegroundBaseObject
+    public class FilledPathLine : BattlegroundBaseObject
     {
         private PathGeometry _pathGeometryData = new PathGeometry();
         private PathFigureCollection _pathFigureCollection = new PathFigureCollection();

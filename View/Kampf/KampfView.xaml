@@ -183,6 +183,9 @@
                                 </StackPanel>
                             </ViewGeneral:ImageDuplicator.ToolTip>
                         </ViewGeneral:ImageDuplicator>
+                        <TextBlock Text="{Binding KämpferInfo.VerbrauchteAbwehraktionen}" />
+                        <TextBlock Text="/" />
+                        <TextBlock Text="{Binding KämpferInfo.VerbrauchteAngriffsaktionen}" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -860,11 +863,11 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Button Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="51" Height="55" HorizontalAlignment="Left" Margin="4" Background="DarkGreen" Click="ButtonArena_Click" ToolTip="Bodenplan öffnen...">
+                            <Button Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="51" Height="55" HorizontalAlignment="Left" Margin="4" Background="DarkGreen" Command="{Binding OnShowBodenplanView}" ToolTip="Bodenplan öffnen...">
                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Stretch="Uniform" />
                             </Button>
-                            <CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox>
-                            <Button Grid.Column="1" Grid.Row="0" Name="_buttonSpielerInfo" Height="28" Width="28"  Click="ButtonSpielerInfo_Click" Visibility="Visible" Margin="4,4,4,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <!--<CheckBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"  Name="_cbArena" FontSize="10" ToolTip="Kämpfer aus Liste in die Arena übernehmen" IsChecked="True">übernehmen</CheckBox> -->
+                            <Button Grid.Column="1" Grid.Row="0" Name="_buttonSpielerInfo" Height="28" Width="28" Click="ButtonSpielerInfo_Click" Visibility="Visible" Margin="4,4,4,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <Button.ToolTip>
                                     <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
             		Den Spielern die INI-Liste in einem separaten Fenster zeigen.

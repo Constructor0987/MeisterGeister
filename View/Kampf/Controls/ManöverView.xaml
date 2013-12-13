@@ -1,0 +1,21 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="MeisterGeister.View.Kampf.Controls.ManöverView"
+    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
+    xmlns:Gegner="clr-namespace:MeisterGeister.View.Kampf.Controls" 
+    xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+    xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+	x:Name="UserControl"
+	d:DesignWidth="739.291" d:DesignHeight="543.038"
+    Loaded="UserControl_Loaded"
+    >
+    <Grid>
+        <StackPanel>
+            <ListBox/>
+        </StackPanel>
+    </Grid>
+</UserControl>

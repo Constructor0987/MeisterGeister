@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
-    class ImageObject : BattlegroundBaseObject
+    public class ImageObject : BattlegroundBaseObject
     {
         private string _pictureUrl;
         private double _imageWidth = 100;

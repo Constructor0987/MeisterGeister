@@ -25,7 +25,7 @@ namespace MeisterGeister.View.Kampf
         public KampfView()
         {
             InitializeComponent();
-            VM = new VM.KampfViewModel(View.General.ViewHelper.ShowGegnerView, View.General.ViewHelper.Confirm);
+            VM = new VM.KampfViewModel(ShowBodenplanWindow, View.General.ViewHelper.ShowGegnerView, View.General.ViewHelper.Confirm);
 
             View.General.EnumItemsSource tpValues = (View.General.EnumItemsSource)Resources["TrefferzonenValues"];
             tpValues.Remove("Gesamt");
@@ -65,6 +65,39 @@ namespace MeisterGeister.View.Kampf
             }
         }
 
+        private BattlegroundWindow battlegroundWindow = null;
+
+        private void ShowBodenplanWindow(MeisterGeister.ViewModel.Kampf.KampfViewModel vm)
+        {
+            if (battlegroundWindow == null)
+            {
+                battlegroundWindow = new BattlegroundWindow();
+
+                battlegroundWindow.VM.KampfVM = vm;
+                battlegroundWindow.Show();
+            }
+            else
+            {
+                battlegroundWindow.Activate();
+            }
+
+            //// TODO ??: In Command verschieben
+            //if (VM.BodenplanWindow != null)
+            //{
+            //    VM.BodenplanWindow.Activate();
+            //}
+            //else
+            //{
+            //    ArenaWindow arenaWindow = new ArenaWindow(_cbArena.IsChecked == true ? VM : null);
+            //    VM.BodenplanWindow = arenaWindow;
+            //    arenaWindow.Width = 1200;
+            //    arenaWindow.Height = 800;
+            //    arenaWindow.Closed += ArenaWindow_Closed;
+            //    arenaWindow.Show();
+            //}
+        }
+
+        /*
         private void ButtonArena_Click(object sender, RoutedEventArgs e)
         {
             //// TODO ??: In Command verschieben
@@ -96,11 +129,13 @@ namespace MeisterGeister.View.Kampf
             //    arenaWindow.Show();
             //}
         }
-
+        
         void Bodenplan_Closed(object sender, EventArgs e)
         {
             VM.BodenplanWindow = null;
         }
+         */
+
 
         private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)
         {

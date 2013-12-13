@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.ViewModel.Bodenplan;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,12 @@ namespace MeisterGeister.View.Bodenplan
         public BattlegroundWindow()
         {
             InitializeComponent();
+        }
+
+        public BattlegroundViewModel VM
+        {
+            get { return battlegroundView1.VM; }
+            set { battlegroundView1.VM = value; }
         }
     }
 }

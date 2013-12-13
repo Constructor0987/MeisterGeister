@@ -118,7 +118,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         /// <param name="msg">Zu speichernder Log-Text.</param>
         public void Log(string msg)
         {
-            KampfLog.Insert(0, string.Format("{0}: {1}", DateTime.Now.ToShortTimeString(), msg));
+            KampfLog.Insert(0, string.Format("{0}.{1}: {2}", Kampfrunde, INIPhase, msg));
         }
 
         public ManöverInfo Next()
@@ -127,12 +127,31 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 KampfBeginn();
             if (AktuelleAktion != null && !AktuelleAktion.Ausgeführt)
             {
+                //Was muss in ManöverInfo und was ins Manöver?
+
+                //Die aktuelle Aktion wurde noch nicht ausgeführt
+                //es wurde kein Ergebnis zugewiesen.
+                if (!AktuelleAktion.Manöver.ErgebnisseAkzeptiert)
+                {
+                    //das eingetragene bzw. vorgeschlagene ProbenErgebnis anwenden
+                    AktuelleAktion.Manöver.ErgebnisseAkzeptiert = true;
+                }
+                else
+                {
+                    //Next darf nicht weitergehen, wenn die letzte Aktion des Manövers dran ist und die Auswirkungen noch nicht bestätigt wurden (neues feld im Manöver oder ManöverInfo?)
+                    //if(AktuelleAktion.Manöver.VerbleibendeDauer == 1)
+                }
+                //aktion wurde in dieser Runde bearbeitet, aktionen werden verbraucht
                 AktuelleAktion.Ausgeführt = true;
+                //irgendwie müssen die Auswirkungen noch zum tragen kommen und bestätigt werden
+                //AktuelleAktion.Manöver.AuswirkungenAkzeptiert
+
                 //if (AktuelleAktion.Manöver != null)
                 //{
-                //    var probe = AktuelleAktion.Manöver.Ausführen();
+                //    var probe = AktuelleAktion.Manöver.Ausführen(); //dies darf vielleicht keine Methode sein. Es sollte ein property sein, die gebunden werden kann.
                 //    if (probe != null)
                 //    {
+                //        var pe = probe.Würfeln();
                 //        //TODO JT: Probe anzeigen und Erfolg oder Misserfolg auswerten.
                 //        //Das ist keine gute idee. Eine Probe und die Parade muss auch schon angezeigt werden, wenn das Manöver nur ausgewählt wird.
                 //        //Hier muss noch mehr am Konzept gearbeitet werden.
@@ -141,6 +160,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 UmwandelnMöglich = false;
             }
 
+            //neues Manöver auswählen und neue INIPhase setzen
             foreach (ManöverInfo mi in InitiativListe)
             {
                 if (!(mi.Manöver is Manöver.KeineAktion) && !mi.Ausgeführt)
@@ -148,6 +168,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     AktuelleAktion = mi;
                     INIPhase = mi.Initiative;
                     return mi;
+                    //in diesem Zustand muss das UI die Manöverdetails und die Proben anzeigen.
                 }
             }
             NeueKampfrunde();
@@ -166,7 +187,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 {
                     var probe = mi.Manöver.Ausführen();
                     //Siehe kommentar in next() ... das design ist mist.
-                    //Wenn die probe ignoriert wird passiert auch nichts weiter, auss dass die Verbleibenden Aktionen sinken.
+                    //Wenn die probe ignoriert wird passiert auch nichts weiter, ausser dass die Verbleibenden Aktionen sinken.
                 }
                 else
                     mi.Ausgeführt = true;
@@ -177,7 +198,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             foreach (KämpferInfo ki in Kämpfer)
             {
                 ki.Kämpfer.Modifikatoren.RemoveAll(m => m is Mod.IEndetMitKampfrunde);
-                
+
+                //sollte in KämpferInfo rein
+                ki.VerbrauchteAbwehraktionen = 0;
+                ki.VerbrauchteAngriffsaktionen = 0;
+                ki.VerbrauchteFreieAktionen = 0;
+
                 ki.AktionenBerechnen();
                 StandardAktionenSetzen(ki);
 

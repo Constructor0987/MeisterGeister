@@ -182,21 +182,21 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public int VerbrauchteAngriffsaktionen
         {
             get { return _verbrauchteAngriffsaktionen; }
-            set { _verbrauchteAngriffsaktionen = value; }
+            set { _verbrauchteAngriffsaktionen = value; OnChanged("VerbrauchteAngriffsaktionen"); }
         }
 
         private int _verbrauchteAbwehraktionen = 0;
         public int VerbrauchteAbwehraktionen
         {
             get { return _verbrauchteAbwehraktionen; }
-            set { _verbrauchteAbwehraktionen = value; }
+            set { _verbrauchteAbwehraktionen = value; OnChanged("VerbrauchteAbwehraktionen"); }
         }
 
         private int _verbrauchteFreieAktionen = 0;
         public int VerbrauchteFreieAktionen
         {
             get { return _verbrauchteFreieAktionen; }
-            set { _verbrauchteFreieAktionen = value; }
+            set { _verbrauchteFreieAktionen = value; OnChanged("VerbrauchteFreieAktionen"); }
         }
 
         public void AktionenBerechnen()

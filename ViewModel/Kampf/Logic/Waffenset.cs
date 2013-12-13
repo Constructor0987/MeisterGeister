@@ -19,16 +19,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //Name
         //HeldGUID
 
-        //Liste von
-        //WaffeId
-        //Ort
-        //Talentname
-
-        //Liste von
-        //RüstungId
-        //Ort
-
         //WaffenloserStil
         //Kampfstil
+
+        //Liste von Held_Ausrüstung
     }
 }

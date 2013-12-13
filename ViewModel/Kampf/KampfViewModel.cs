@@ -14,9 +14,21 @@ namespace MeisterGeister.ViewModel.Kampf
     public class KampfViewModel : Base.ViewModelBase
     {
         private K _kampf = null;
-        public KampfViewModel(Action<K> showGegnerView, Func<string, string, bool> confirm) : base(confirm, View.General.ViewHelper.ShowError)
+
+        public KampfViewModel() : this(null, View.General.ViewHelper.Confirm)
+        {
+        }
+
+        public KampfViewModel(Action<K> showGegnerView, Func<string, string, bool> confirm) 
+            : this(null, showGegnerView, confirm)
+        {
+        }
+
+        public KampfViewModel(Action<KampfViewModel> showBodenplanView, Action<K> showGegnerView, Func<string, string, bool> confirm)
+            : base(confirm, View.General.ViewHelper.ShowError)
         {
             this.showGegnerView = showGegnerView;
+            this.showBodenplanView = showBodenplanView;
 
             _kampf = new K();
             _kampf.OnNeueKampfrunde += _kampf_OnNeueKampfRunde;
@@ -268,6 +280,17 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
+        private Base.CommandBase onShowBodenplanView = null;
+        public Base.CommandBase OnShowBodenplanView
+        {
+            get
+            {
+                if (onShowBodenplanView == null)
+                    onShowBodenplanView = new Base.CommandBase(ShowBodenplanView, null);
+                return onShowBodenplanView;
+            }
+        }
+
         private ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> recentColors = Farbmarkierungen.RecentColors;
         public ObservableCollection<Xceed.Wpf.Toolkit.ColorItem> RecentColors
         {
@@ -299,6 +322,14 @@ namespace MeisterGeister.ViewModel.Kampf
         }
 
         private Action<K> showGegnerView;
+
+        private Action<KampfViewModel> showBodenplanView;
+
+        private void ShowBodenplanView(object obj)
+        {
+            if (showBodenplanView != null)
+                showBodenplanView(this);
+        }
 
 
         private Base.CommandBase onNext = null;

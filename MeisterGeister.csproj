@@ -643,6 +643,9 @@
     <Compile Include="View\Kampf\Controls\GegnerDetailView.xaml.cs">
       <DependentUpon>GegnerDetailView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Kampf\Controls\ManöverView.xaml.cs">
+      <DependentUpon>ManöverView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Kampf\Controls\GegnerView.xaml.cs">
       <DependentUpon>GegnerView.xaml</DependentUpon>
     </Compile>
@@ -1015,6 +1018,10 @@
     <Page Include="View\Kampf\Controls\GegnerDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Kampf\Controls\ManöverView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Kampf\Controls\GegnerView.xaml">
       <Generator>MSBuild:Compile</Generator>
