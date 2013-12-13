@@ -66,15 +66,29 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private void OnKampfPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             
-            Console.WriteLine("Property Changed");
+            //Console.WriteLine("Property Changed");
         }
 
         private void OnKämpferListeChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Console.WriteLine("Kämpferliste Changed!");
-            foreach (var creature in KampfVM.KämpferListe)
+            //Console.WriteLine("Kämpferliste Changed!");
+            foreach (var creature in KampfVM.KämpferListe.Kämpfer)
             {
-                
+                if (creature is Model.Held)
+                {
+                    //var test = BattlegroundObjects.Select(x=>x is BattlegroundHero).Where(x=>x); 
+                    if (!BattlegroundObjects.Any(x => x is BattlegroundHero && x.ObjektName.Equals(creature.Name)))
+                    {
+                        AddHero((Held)creature);
+                    }
+                }
+                else if (creature is Model.Gegner) 
+                {
+                    if (!BattlegroundObjects.Any(x => x is BattlegroundEnemy && x.ObjektName.Equals(creature.Name)))
+                    {
+                        AddEnemy((Gegner)creature);
+                    }
+                }
             }
         }
 
