@@ -92,5 +92,15 @@ namespace MeisterGeister.View.AudioPlayer
         {            
             _btnEditOkay.Visibility = Visibility.Visible;
         }
+
+        private void _tbEditText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                _imgOk.RaiseEvent(new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
+                {
+                    RoutedEvent = Mouse.MouseDownEvent,
+                    Source = this,
+                });
+        }
     }
 }

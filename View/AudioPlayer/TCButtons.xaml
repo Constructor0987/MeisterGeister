@@ -6,7 +6,7 @@
     <TabItem.Header>
         <StackPanel Orientation="Horizontal" >
             <TextBlock Name="_tbText" Text="Neuer Tab" Margin="4, 0, 0, 0" VerticalAlignment="Center" FontSize="11" />
-            <TextBox Name="_tbEditText" VerticalAlignment="Center" FontSize="17" Margin="3" Visibility="Collapsed" Background="Khaki" />
+            <TextBox Name="_tbEditText" VerticalAlignment="Center" FontSize="17" Margin="3" Visibility="Collapsed" Background="Khaki" KeyDown="_tbEditText_KeyDown" />
             
             <Button Name="_buttonClose" Height="18" Width="18" Margin="4, 0, 0, 0" Visibility="Collapsed" BorderThickness="0.5" Opacity="0.5" ToolTip="Playlist aus Theme entfernen" Click="ButtonClose_Click" HorizontalAlignment="Center" VerticalAlignment="Center" AllowDrop="False">
                 <Image Source="/Images/Icons/General/entf_01.png" Stretch="Fill" />

@@ -436,7 +436,7 @@
                             </Expander>
                         </Border>
 
-                        <TabControl Background="{StaticResource Background1}" Name="tcEditor" Margin="3,8,6,9" SelectionChanged="tcEditor_SelectionChanged" Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2">
+                        <TabControl Background="{StaticResource Background1}" Name="tcEditor" Margin="3,8,6,9" SelectionChanged="tcEditor_SelectionChanged" PreviewMouseMove="TabItem_PreviewMouseMove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2">
                             <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" ToolTip="Hinzufügen einer Playlist in das Theme">
                                 <TabItem.Header>
                                     <StackPanel>
