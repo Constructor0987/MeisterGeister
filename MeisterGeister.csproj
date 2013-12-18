@@ -1583,15 +1583,6 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0079.sql" />
     <Resource Include="Images\Icons\General\stop.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0080.sql" />
-    <Content Include="Daten\Bodenplan\pic_horse1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="Daten\Bodenplan\pic_stone1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Daten\Bodenplan\pic_tree1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Daten\Updateskripte\UpdateTo_V0081.sql" />
     <Content Include="Daten\Bodenplan\Stein.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
