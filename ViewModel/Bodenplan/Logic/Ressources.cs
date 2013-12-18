@@ -21,7 +21,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             String[] filenames = new string[0];
             try
             {
-               filenames = System.IO.Directory.GetFiles("Images\\Bodenplan");
+               filenames = System.IO.Directory.GetFiles("Daten\\Bodenplan");
             }
             catch (Exception e)
             {
