@@ -8,71 +8,90 @@ namespace MeisterGeister.Logic.Settings
 {
     public static class Einstellungen
     {
-        public static T GetOrCreateEinstellung<T>(string name, T defaultValue)
+        private static List<Model.Einstellung> GetDefaults()
         {
-            if (Global.IsInitialized)
+            return new List<Model.Einstellung>()
             {
-                Model.Einstellungen e = Global.ContextHeld.LoadEinstellungByName(name);
-                if (e == null)
+                new Model.Einstellung() { Name = "FrageNeueKampfrundeAbstellen", Kontext = "Kampf", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
+                new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
+                new Model.Einstellung() { Name = "WuerfelSoundAbspielen", Kontext = "Proben", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "True" },
+                new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
+                new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
+                new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
+                new Model.Einstellung() { Name = "SelectedTab", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Integer", Beschreibung = "", Wert = "0" },
+                new Model.Einstellung() { Name = "SelectedHeldenTab", Kontext = "Helden", Kategorie = "Versteckt", Typ = "Integer", Beschreibung = "", Wert = "0" },
+                new Model.Einstellung() { Name = "StartTabs", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "" },
+                new Model.Einstellung() { Name = "KalenderExpandedSections", Kontext = "Kalender", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "111111" },
+                new Model.Einstellung() { Name = "ProbenAnzeigeModus", Kontext = "Proben", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Zeile" },
+                new Model.Einstellung() { Name = "DatumAktuell", Kontext = "Kalender", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "1|0|993|0" },
+                new Model.Einstellung() { Name = "UmrechnerExpandedSections", Kontext = "Umrechner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "111111" },
+                new Model.Einstellung() { Name = "GegnerViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "11" },
+                new Model.Einstellung() { Name = "GegnerDetailViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "110" },
+                new Model.Einstellung() { Name = "Standort", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Gareth#29.79180235685203#3.735098459067687" },
+                new Model.Einstellung() { Name = "SelectedHeld", Kontext = "Helden", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
+                new Model.Einstellung() { Name = "ProbenFavoriten", Kontext = "Proben", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
+                new Model.Einstellung() { Name = "PdfReaderCommand", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "", Wert = null },
+                new Model.Einstellung() { Name = "PdfReaderArguments", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "", Wert = null },
+                new Model.Einstellung() { Name = "KampfRecentColors", Kontext = "Kampf", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
+                new Model.Einstellung() { Name = "TPKK", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Trefferpunkte und Körperkraft (TP/KK) (WdS 81f)", Wert = "True" },
+                new Model.Einstellung() { Name = "NiedrigeLE", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Auswirkungen niedriger LE (WdS 57)", Wert = "True" },
+                new Model.Einstellung() { Name = "NiedrigeAU", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Auswirkungen niedriger AU (WdS 83)", Wert = "True" },
+                new Model.Einstellung() { Name = "AusdauerImKampf", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Ausdauerverlust (WdS 83)", Wert = "True" },
+                new Model.Einstellung() { Name = "NurDreiZonenWunden", Kontext = "Kampf", Kategorie = "Unklarheit", Typ = "Boolean", Beschreibung = "Maximal drei Wunden pro Trefferzone", Wert = "True" },
+                new Model.Einstellung() { Name = "EigenschaftenProbePatzerGlück", Kontext = "Proben", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Patzer und Glückswürfe bei Eigenschafts-Proben (WdS 7)", Wert = "True" },
+                new Model.Einstellung() { Name = "AudioVerzeichnis", Kontext = "Audioplayer", Kategorie = null, Typ = "String", Beschreibung = null, Wert = "C:\\" },
+            };
+        }
+        private static Dictionary<string, Model.Einstellung> defaultValues = null;
+        private static Dictionary<string, Model.Einstellung> DefaultValues
+        {
+            get { 
+                if(defaultValues == null && Global.IsInitialized)
                 {
-                    e = Einstellungen.SetEinstellung<T>(name, defaultValue);
+                    defaultValues = new Dictionary<string, Model.Einstellung>();
+                    foreach(var e in GetDefaults())
+                        defaultValues.Add(e.Name, e);
                 }
-                if (typeof(T) == typeof(Boolean) || typeof(T) == typeof(bool))
-                {
-                    if (e.WertBool != null)
-                        return (T)(object)e.WertBool;
-                    return defaultValue;
-                }
-                else if (typeof(T) == typeof(int) || typeof(T) == typeof(Int32) || typeof(T) == typeof(Int64))
-                {
-                    if (e.WertInt != null)
-                        return (T)(object)e.WertInt;
-                    return defaultValue;
-                }
-                else if (typeof(T) == typeof(string) || typeof(T) == typeof(String))
-                {
-                    if (e.WertText != null && e.WertText != String.Empty)
-                        return (T)(object)e.WertText;
-                    else
-                        return (T)(object)e.WertString;
-                }
+                return defaultValues; 
             }
-            return defaultValue;
         }
 
-        public static Model.Einstellungen SetEinstellung<T>(string name, T value)
+        public static T GetEinstellung<T>(string name)
         {
             if (Global.IsInitialized)
             {
-                Model.Einstellungen e = Global.ContextHeld.LoadEinstellungByName(name);
-                bool isnew = false;
+                Model.Einstellung e = Global.ContextHeld.LoadEinstellungByName(name);
                 if (e == null)
-                {
-                    e = Global.ContextHeld.New<Model.Einstellungen>();
-                    e.Name = name;
-                    isnew = true;
-                }
-                if (typeof(T) == typeof(Boolean) || typeof(T) == typeof(bool))
-                    e.WertBool = (bool)(object)value;
-                else if (typeof(T) == typeof(int) || typeof(T) == typeof(Int32) || typeof(T) == typeof(Int64))
-                    e.WertInt = (int)(object)value;
-                else if (typeof(T) == typeof(string) || typeof(T) == typeof(String))
-                {
-                    if (value == null || ((string)(object)value).Length > 300)
-                    {
-                        e.WertString = String.Empty;
-                        e.WertText = (string)(object)value;
-                    }
-                    else
-                    {
-                        e.WertText = String.Empty;
-                        e.WertString = (string)(object)value;
-                    }
-                }
-                if(isnew)
-                    Global.ContextHeld.Insert<Model.Einstellungen>(e);
-                else
-                    Global.ContextHeld.Update<Model.Einstellungen>(e);
+                    e = CreateEinstellung<T>(name);
+                return e.Get<T>();
+            }
+            return default(T);
+        }
+
+        public static Model.Einstellung CreateEinstellung<T>(string name)
+        {
+            var d = DefaultValues[name];
+            var e = Global.ContextHeld.New<Model.Einstellung>();
+            System.Diagnostics.Debug.Assert(d.Typ == typeof(T).Name);
+            e.Typ = d.Typ;
+            e.Kontext = d.Kontext;
+            e.Kategorie = d.Kategorie;
+            e.Name = d.Name;
+            e.Beschreibung = d.Beschreibung;
+            e.Wert = d.Wert;
+            Global.ContextHeld.Insert<Model.Einstellung>(e);
+            return e;
+        }
+
+        public static Model.Einstellung SetEinstellung<T>(string name, T value)
+        {
+            if (Global.IsInitialized)
+            {
+                Model.Einstellung e = Global.ContextHeld.LoadEinstellungByName(name);
+                if (e == null)
+                    e = CreateEinstellung<T>(name);
+                e.Set<T>(value);
+                    Global.ContextHeld.Update<Model.Einstellung>(e);
                 return e;
             }
             return null;
@@ -82,7 +101,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<bool>("FrageNeueKampfrundeAbstellen", false);
+                return GetEinstellung<bool>("FrageNeueKampfrundeAbstellen");
             }
             set
             {
@@ -95,7 +114,7 @@ namespace MeisterGeister.Logic.Settings
             get
             {
                 if (Global.IsInitialized)
-                    return GetOrCreateEinstellung<bool>("JingleAbstellen", false);
+                    return GetEinstellung<bool>("JingleAbstellen");
                 try
                 {
                     return Convert.ToBoolean(Daten.DatabaseUpdate.GetScalarFromDatabase("SELECT WertBool FROM Einstellungen WHERE Name = 'JingleAbstellen'", 
@@ -115,7 +134,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<bool>("WuerfelSoundAbspielen", false);
+                return GetEinstellung<bool>("WuerfelSoundAbspielen");
             }
             set
             {
@@ -131,7 +150,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<bool>("AudioDirektAbspielen", false);
+                return GetEinstellung<bool>("AudioDirektAbspielen");
             }
             set
             {
@@ -142,12 +161,23 @@ namespace MeisterGeister.Logic.Settings
         }
         public static EventHandler AudioDirektAbspielen_Click;
 
+        public static string AudioVerzeichnis
+        {
+            get
+            {
+                return GetEinstellung<string>("AudioVerzeichnis");
+            }
+            set
+            {
+                SetEinstellung<string>("AudioVerzeichnis", value);
+            }
+        }
 
         public static int Fading
         {
             get
             {
-                return GetOrCreateEinstellung<int>("Fading", 600);
+                return GetEinstellung<int>("Fading");
             }
             set
             {
@@ -163,7 +193,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<int>("SelectedTab", 0);
+                return GetEinstellung<int>("SelectedTab");
             }
             set
             {
@@ -175,7 +205,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("StartTabs", String.Empty);
+                return GetEinstellung<string>("StartTabs");
             }
             set
             {
@@ -187,7 +217,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("KalenderExpandedSections", "111111");
+                return GetEinstellung<string>("KalenderExpandedSections");
             }
             set
             {
@@ -199,7 +229,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("ProbenAnzeigeModus", "Zeile");
+                return GetEinstellung<string>("ProbenAnzeigeModus");
             }
             set
             {
@@ -211,7 +241,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("DatumAktuell", "1|0|993|0");
+                return GetEinstellung<string>("DatumAktuell");
             }
             set
             {
@@ -223,7 +253,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("UmrechnerExpandedSections", "111111");
+                return GetEinstellung<string>("UmrechnerExpandedSections");
             }
             set
             {
@@ -235,7 +265,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("GegnerViewExpandedSections", "11");
+                return GetEinstellung<string>("GegnerViewExpandedSections");
             }
             set
             {
@@ -247,7 +277,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("GegnerDetailViewExpandedSections", "110");
+                return GetEinstellung<string>("GegnerDetailViewExpandedSections");
             }
             set
             {
@@ -259,7 +289,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("Standort", "Gareth#29.79180235685203#3.735098459067687");
+                return GetEinstellung<string>("Standort");
             }
             set
             {
@@ -271,7 +301,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("SelectedHeld", null);
+                return GetEinstellung<string>("SelectedHeld");
             }
             set
             {
@@ -283,7 +313,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<int>("SelectedHeldenTab", 0);
+                return GetEinstellung<int>("SelectedHeldenTab");
             }
             set
             {
@@ -295,7 +325,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("ProbenFavoriten", null);
+                return GetEinstellung<string>("ProbenFavoriten");
             }
             set
             {
@@ -307,7 +337,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("PdfReaderCommand", null);
+                return GetEinstellung<string>("PdfReaderCommand");
             }
             set
             {
@@ -319,7 +349,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("PdfReaderArguments", null);
+                return GetEinstellung<string>("PdfReaderArguments");
             }
             set
             {
@@ -336,7 +366,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<bool>("IsReadOnly", false);
+                return GetEinstellung<bool>("IsReadOnly");
             }
             set
             {
@@ -352,7 +382,7 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetOrCreateEinstellung<string>("KampfRecentColors", null);
+                return GetEinstellung<string>("KampfRecentColors");
             }
             set
             {

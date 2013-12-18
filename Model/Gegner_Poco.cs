@@ -20,19 +20,6 @@ namespace MeisterGeister.Model
     [DataContract(IsReference=true)]
     public partial class Gegner : INotifyPropertyChanged
     {
-        #region INotifyPropertyChanged
-    	public event PropertyChangedEventHandler PropertyChanged;
-    	
-    	public void OnChanged(String info)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
-        }
-
-        #endregion
-
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]

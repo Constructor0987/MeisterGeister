@@ -139,11 +139,11 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Ausrüstung_Setting> _ausrüstung_Setting;
     
-        public ObjectSet<Einstellungen> Einstellungen
+        public ObjectSet<Einstellung> Einstellung
         {
-            get { return _einstellungen  ?? (_einstellungen = CreateObjectSet<Einstellungen>("Einstellungen")); }
+            get { return _einstellung  ?? (_einstellung = CreateObjectSet<Einstellung>("Einstellung")); }
         }
-        private ObjectSet<Einstellungen> _einstellungen;
+        private ObjectSet<Einstellung> _einstellung;
     
         public ObjectSet<Farbe> Farbe
         {
@@ -319,12 +319,6 @@ namespace MeisterGeister.Model
         }
         private ObjectSet<Rasse_Kultur> _rasse_Kultur;
     
-        public ObjectSet<Regeln> Regeln
-        {
-            get { return _regeln  ?? (_regeln = CreateObjectSet<Regeln>("Regeln")); }
-        }
-        private ObjectSet<Regeln> _regeln;
-    
         public ObjectSet<Rüstung> Rüstung
         {
             get { return _rüstung  ?? (_rüstung = CreateObjectSet<Rüstung>("Rüstung")); }
@@ -450,8 +444,8 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Ausrüstung;
     		if(typeof(T) == typeof(Ausrüstung_Setting))
     				return (ObjectSet<T>)(Object)Ausrüstung_Setting;
-    		if(typeof(T) == typeof(Einstellungen))
-    				return (ObjectSet<T>)(Object)Einstellungen;
+    		if(typeof(T) == typeof(Einstellung))
+    				return (ObjectSet<T>)(Object)Einstellung;
     		if(typeof(T) == typeof(Farbe))
     				return (ObjectSet<T>)(Object)Farbe;
     		if(typeof(T) == typeof(Fernkampfwaffe))
@@ -510,8 +504,6 @@ namespace MeisterGeister.Model
     				return (ObjectSet<T>)(Object)Rasse_Farbe;
     		if(typeof(T) == typeof(Rasse_Kultur))
     				return (ObjectSet<T>)(Object)Rasse_Kultur;
-    		if(typeof(T) == typeof(Regeln))
-    				return (ObjectSet<T>)(Object)Regeln;
     		if(typeof(T) == typeof(Rüstung))
     				return (ObjectSet<T>)(Object)Rüstung;
     		if(typeof(T) == typeof(Schild))
@@ -573,8 +565,8 @@ namespace MeisterGeister.Model
     				return Ausrüstung;
     		if(t == typeof(Ausrüstung_Setting))
     				return Ausrüstung_Setting;
-    		if(t == typeof(Einstellungen))
-    				return Einstellungen;
+    		if(t == typeof(Einstellung))
+    				return Einstellung;
     		if(t == typeof(Farbe))
     				return Farbe;
     		if(t == typeof(Fernkampfwaffe))
@@ -633,8 +625,6 @@ namespace MeisterGeister.Model
     				return Rasse_Farbe;
     		if(t == typeof(Rasse_Kultur))
     				return Rasse_Kultur;
-    		if(t == typeof(Regeln))
-    				return Regeln;
     		if(t == typeof(Rüstung))
     				return Rüstung;
     		if(t == typeof(Schild))

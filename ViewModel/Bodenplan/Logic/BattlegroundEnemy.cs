@@ -24,7 +24,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _enemyPictureUrl = value;
-                OnPropertyChanged("EnemyPictureUrl");
+                OnChanged("EnemyPictureUrl");
             }
         }
 
@@ -35,7 +35,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _enemyWidth = value;
-                OnPropertyChanged("EnemyWidth");
+                OnChanged("EnemyWidth");
             }
         }
 
@@ -46,7 +46,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _enemyHeight = value;
-                OnPropertyChanged("EnemyHeight");
+                OnChanged("EnemyHeight");
             }
         }
         
@@ -58,7 +58,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _enemy = value;
-                OnPropertyChanged("Enemy");
+                OnChanged("Enemy");
             }
         }
 
@@ -69,7 +69,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _enemyImage = value;
-                OnPropertyChanged("EnemyImage");
+                OnChanged("EnemyImage");
             }
         } 
 

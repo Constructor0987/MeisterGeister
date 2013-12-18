@@ -24,6 +24,7 @@ EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(inputFile);
 string namespaceName = code.VsNamespaceSuggestion();
 
 bool implementINotifyPropertyChanged = true;
+List<string> exceptionsForINotifyPropertyChanged = new List<string>() {"Held", "Gegner"};
 
 EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
 
@@ -44,7 +45,7 @@ foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e =>
 <#=Accessibility.ForType(entity)#> <#=code.SpaceAfter(code.AbstractOption(entity))#>partial class <#=code.Escape(entity)#><#=code.StringBefore(" : ", code.Escape(entity.BaseType))#><#=code.StringBefore((entity.BaseType==null)?" : ":string.Empty, implementINotifyPropertyChanged?"INotifyPropertyChanged":null)#>
 {
 <#
-	if(implementINotifyPropertyChanged)
+	if(implementINotifyPropertyChanged && !exceptionsForINotifyPropertyChanged.Contains(entity.Name))
 	{
 		region.Begin("INotifyPropertyChanged");
 #>

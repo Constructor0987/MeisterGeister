@@ -15,8 +15,10 @@ using System.Diagnostics;
 using GeneralLogic = MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Settings;
 using MeisterGeister.View.AudioPlayer;
+using MeisterGeister.View.Windows;
+using MeisterGeister.ViewModel.Settings;
 
-namespace MeisterGeister.View.Windows
+namespace MeisterGeister.View.Settings
 {
     /// <summary>
     /// Interaktionslogik für EinstellungenWindow.xaml
@@ -28,19 +30,26 @@ namespace MeisterGeister.View.Windows
             InitializeComponent();
 
             // DataContext setzen
-            DataContext = Global.ContextRegeln.RegelnListe;
+            //DataContext = Global.ContextHeld.Liste<Model.Einstellung>(); //TODO CRAP! FIXME - ein echtes VM muss her.
+            VM = new EinstellungenViewModel();
 
-            _listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
+            //_listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
+        }
+
+        public EinstellungenViewModel VM
+        {
+            get { return DataContext as EinstellungenViewModel; }
+            set { DataContext = value; }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _checkBoxFrageNeueKampfrundeAbstellen.IsChecked = Einstellungen.FrageNeueKampfrundeAbstellen;
-            _checkBoxJingleAbstellen.IsChecked = Einstellungen.JingleAbstellen;
+            //_checkBoxFrageNeueKampfrundeAbstellen.IsChecked = Einstellungen.FrageNeueKampfrundeAbstellen;
+            //_checkBoxJingleAbstellen.IsChecked = Einstellungen.JingleAbstellen;
 
-            _checkboxGleichSpielen.IsChecked = Einstellungen.AudioDirektAbspielen;
-            _sldFading.Value = Einstellungen.Fading;
-            tbStdPfad.Text = Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", @"C:\");
+            //_checkboxGleichSpielen.IsChecked = Einstellungen.AudioDirektAbspielen;
+            //_sldFading.Value = Einstellungen.Fading;
+            //tbStdPfad.Text = Einstellungen.GetEinstellung("AudioVerzeichnis", @"C:\");
         }
 
         private void _checkBoxFrageNeueKampfrundeAbstellen_Checked(object sender, RoutedEventArgs e)
@@ -86,7 +95,7 @@ namespace MeisterGeister.View.Windows
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Global.ContextRegeln.Save();
+            Global.ContextHeld.Save();
         }
 
         private void _checkboxGleichSpielen_Checked(object sender, RoutedEventArgs e)
@@ -104,11 +113,11 @@ namespace MeisterGeister.View.Windows
             try
             {
                 var dialog = new System.Windows.Forms.FolderBrowserDialog();
-                dialog.SelectedPath = Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis",@"C:\"); // btnStdPfad.Tag.ToString(); 
+                dialog.SelectedPath = Einstellungen.AudioVerzeichnis; // btnStdPfad.Tag.ToString(); 
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    MeisterGeister.Logic.Settings.Einstellungen.SetEinstellung("AudioVerzeichnis", dialog.SelectedPath);
+                    MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis = dialog.SelectedPath;
                     btnStdPfad.Tag = dialog.SelectedPath;                    
                     tbStdPfad.Text = btnStdPfad.Tag.ToString();
                 }

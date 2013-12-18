@@ -41,7 +41,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _objectSize = value;
                 ScalePicture(value);
-                OnPropertyChanged("ObjectSize");
+                OnChanged("ObjectSize");
             }
         }
 
@@ -51,7 +51,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _imagePositionX = value;
-                OnPropertyChanged("ImagePositionX");
+                OnChanged("ImagePositionX");
             }
         }
 
@@ -61,7 +61,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _imagePositionY = value;
-                OnPropertyChanged("ImagePositionY");
+                OnChanged("ImagePositionY");
             }
         }
 
@@ -71,7 +71,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _imageWidth = value;
-                OnPropertyChanged("ImageWidth");
+                OnChanged("ImageWidth");
             }
         }
         public double ImageHeight
@@ -80,7 +80,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _imageHeight = value;
-                OnPropertyChanged("ImageHeight");
+                OnChanged("ImageHeight");
             }
         }
 
@@ -90,7 +90,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _pictureUrl = value;
-                OnPropertyChanged("PictureUrl");
+                OnChanged("PictureUrl");
             }
         }
 

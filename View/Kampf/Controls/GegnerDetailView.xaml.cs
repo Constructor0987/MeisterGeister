@@ -44,7 +44,7 @@ namespace MeisterGeister.View.Kampf.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Expanded Sections
-            string sections = Settings.Einstellungen.GegnerDetailViewExpandedSections;
+            string sections = Logic.Settings.Einstellungen.GegnerDetailViewExpandedSections;
             if (sections.Length >= 1)
                 expanderBasisinformationen.IsExpanded = (sections[0] == '1');
             if (sections.Length >= 2)
@@ -62,7 +62,7 @@ namespace MeisterGeister.View.Kampf.Controls
                 sections += (expanderBasisinformationen.IsExpanded ? "1" : "0");
                 sections += (expanderAngriffe.IsExpanded ? "1" : "0");
                 sections += (expanderJagd.IsExpanded ? "1" : "0");
-                Settings.Einstellungen.GegnerDetailViewExpandedSections = sections;
+                Logic.Settings.Einstellungen.GegnerDetailViewExpandedSections = sections;
             }
         }
     }

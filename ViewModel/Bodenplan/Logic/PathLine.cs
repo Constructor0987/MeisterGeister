@@ -27,7 +27,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _pathGeometryData = value;
-                OnPropertyChanged("PathGeometryData");
+                OnChanged("PathGeometryData");
             }
         }
 
@@ -48,7 +48,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             LineSegment l = new LineSegment(p, true);
             l.IsSmoothJoin = true;
             _pathSegmentCollection.Add(l);
-            OnPropertyChanged("PathGeometryData");
+            OnChanged("PathGeometryData");
         }
 
         public void ChangeFirstPoint(Point p)
@@ -56,13 +56,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             _pathFigure.StartPoint = p;
             ZDisplayX = p.X+10;
             ZDisplayY = p.Y+10;
-            OnPropertyChanged("PathGeometryData");
+            OnChanged("PathGeometryData");
         }
 
         public void ChangeLastPoint(Point p) 
         {
             ((LineSegment)_pathSegmentCollection[_pathSegmentCollection.Count - 1]).Point = p;
-            OnPropertyChanged("PathGeometryData");
+            OnChanged("PathGeometryData");
         }
 
         public void MoveObject(double deltaX, double deltaY)

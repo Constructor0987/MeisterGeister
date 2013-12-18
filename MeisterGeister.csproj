@@ -221,7 +221,7 @@
     <Compile Include="Model\Ausrüstung_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Einstellungen_Poco.cs">
+    <Compile Include="Model\Einstellung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Extensions\DependentPropertyAttribute.cs" />
@@ -294,6 +294,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Alchimierezept.cs" />
+    <Compile Include="Model\Einstellung.cs" />
     <Compile Include="Model\Literatur.cs" />
     <Compile Include="Model\Literatur_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -328,9 +329,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rasse_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Regeln_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rüstung_Poco.cs">
@@ -382,7 +380,6 @@
     <Compile Include="Model\Service\MenuLinkService.cs" />
     <Compile Include="Model\Extensions\SqlFunctionsExtension.cs" />
     <Compile Include="Model\Service\NamenService.cs" />
-    <Compile Include="Model\Service\RegelnService.cs" />
     <Compile Include="Model\Zauberzeichen_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -420,6 +417,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\PathLine.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\Ressources.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\VisualTreeExtensions.cs" />
+    <Compile Include="ViewModel\Settings\EinstellungenViewModel.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
@@ -799,7 +797,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Waffenset.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Wesen.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Wunden.cs" />
-    <Compile Include="View\Windows\EinstellungenWindow.xaml.cs">
+    <Compile Include="View\Settings\EinstellungenWindow.xaml.cs">
       <DependentUpon>EinstellungenWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MsgWindow.xaml.cs">
@@ -1163,7 +1161,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Windows\EinstellungenWindow.xaml">
+    <Page Include="View\Settings\EinstellungenWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1596,6 +1594,7 @@
     <Resource Include="Images\Bodenplan\pic_tree1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0081.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />

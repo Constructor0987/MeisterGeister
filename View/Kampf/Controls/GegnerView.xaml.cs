@@ -123,7 +123,7 @@ namespace MeisterGeister.View.Kampf.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Expanded Sections
-            string sections = Settings.Einstellungen.GegnerViewExpandedSections;
+            string sections = Logic.Settings.Einstellungen.GegnerViewExpandedSections;
             if (sections.Length >= 1)
                 expanderFilter.IsExpanded = (sections[0] == '1');
             if (sections.Length >= 2)
@@ -138,7 +138,7 @@ namespace MeisterGeister.View.Kampf.Controls
                 string sections = string.Empty;
                 sections += (expanderFilter.IsExpanded ? "1" : "0");
                 sections += (expanderStichwortFilter.IsExpanded ? "1" : "0");
-                Settings.Einstellungen.GegnerViewExpandedSections = sections;
+                Logic.Settings.Einstellungen.GegnerViewExpandedSections = sections;
             }
         }
 	}

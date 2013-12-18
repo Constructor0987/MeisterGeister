@@ -276,9 +276,9 @@ namespace MeisterGeister.View.AudioPlayer {
             _BGPlayer.BG.Add(new Musik());
             
             _rbtnGleichSpielen.IsChecked = Logic.Settings.Einstellungen.AudioDirektAbspielen;
-            stdPfad = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", "C:\\");
+            stdPfad = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
             _tbStdPfad.Text = stdPfad;
-            fadingTime = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("Fading", 600);
+            fadingTime = MeisterGeister.Logic.Settings.Einstellungen.Fading;
 
             DataContext = _zeile;
 
@@ -360,7 +360,7 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {
-                _tbStdPfad.Text = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", "C:\\");
+                _tbStdPfad.Text = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
                 _rbtnGleichSpielen.IsChecked = MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen;
                 _sldFading.Value = MeisterGeister.Logic.Settings.Einstellungen.Fading;
                 _sldFading.ToolTip = Math.Round(_sldFading.Value / 100, 1) + " Sekunden In-/Out-Fading";
@@ -7191,8 +7191,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
                 var dialog = new System.Windows.Forms.FolderBrowserDialog();
 
-                dialog.SelectedPath = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis",
-                    Directory.Exists(_tbStdPfad.Text) ? _tbStdPfad.Text : "C:\\");
+                dialog.SelectedPath = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
                     _tbStdPfad.Text = dialog.SelectedPath; 
@@ -7992,9 +7991,9 @@ namespace MeisterGeister.View.AudioPlayer {
             _BGPlayer.BG.Add(new Musik());
 
             _rbtnGleichSpielen.IsChecked = Logic.Settings.Einstellungen.AudioDirektAbspielen;
-            stdPfad = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("AudioVerzeichnis", "C:\\");
+            stdPfad = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
             _tbStdPfad.Text = stdPfad;
-            fadingTime = MeisterGeister.Logic.Settings.Einstellungen.GetOrCreateEinstellung("Fading", 600);
+            fadingTime = MeisterGeister.Logic.Settings.Einstellungen.Fading;
 
             DataContext = _zeile;
         }

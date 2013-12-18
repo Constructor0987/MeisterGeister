@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 80;
+        public const int DatenbankVersionAktuell = 81;
 
         private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
@@ -401,7 +401,7 @@ namespace MeisterGeister.Daten
                                 {
                                     RecursiveExecuteSqlCommands(statementBlock, skriptName, connection, transaction);
                                 }
-                                catch (Exception ex)
+                                catch (Exception)
                                 {
                                     throw;
                                 }
@@ -419,7 +419,7 @@ namespace MeisterGeister.Daten
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

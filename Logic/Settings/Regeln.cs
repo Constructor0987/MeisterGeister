@@ -9,34 +9,32 @@ namespace MeisterGeister.Logic.Settings
 {
     static class Regeln
     {
-        //Entitylisten
-        private static List<Model.Regeln> _regelnListe = null;
-
         static Regeln()
         {
-            if (Global.IsInitialized && Global.ContextRegeln != null)
-                _regelnListe = Global.ContextRegeln.RegelnListe;
-            else
-                _regelnListe = new List<Model.Regeln>();
         }
 
         private static bool GetRegelValue(string name, bool defaultValue = true)
         {
-            if (Global.IsInitialized && (_regelnListe == null || _regelnListe.Count == 0))
-                _regelnListe = Global.ContextRegeln.RegelnListe;
-            var t = _regelnListe.Where(n => n.Name == name).FirstOrDefault();
-            return (t == null || t.Anwenden == null)? defaultValue : t.Anwenden.Value;
+            if (Global.IsInitialized)
+            {
+                Model.Einstellung e = Global.ContextHeld.LoadEinstellungByName(name);
+                if (e == null)
+                    return defaultValue;
+                return e.Get<Boolean>();
+            }
+            return defaultValue;
         }
 
         private static void SetRegelValue(string name, bool value)
         {
-            if (Global.IsInitialized && (_regelnListe == null || _regelnListe.Count == 0))
-                _regelnListe = Global.ContextRegeln.RegelnListe;
-            var t = _regelnListe.Where(n => n.Name == name).FirstOrDefault();
-            if (t == null)
-                return;
-            t.Anwenden = value;
-            Global.ContextRegeln.Update<Model.Regeln>(t);
+            if (Global.IsInitialized)
+            {
+                Model.Einstellung e = Global.ContextHeld.LoadEinstellungByName(name);
+                if (e == null)
+                    return;
+                e.Set<Boolean>(value);
+                Global.ContextHeld.Update<Model.Einstellung>(e);
+            }
         }
 
         public static bool EigenschaftenProbePatzerGlück

@@ -106,7 +106,7 @@ namespace MeisterGeister.View.ZooBot
                 this.Jagd_IstScharfschuetze.Checked = Scharfschuetze;
                 this.Jagd_IstMeisterschuetze.Checked = Meisterschuetze;
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 throw;
             }
@@ -124,7 +124,7 @@ namespace MeisterGeister.View.ZooBot
             {
                 this.Registerkontrolle.SelectedIndex = AktiverReiter;
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 throw;
             }

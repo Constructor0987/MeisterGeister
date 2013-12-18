@@ -23,7 +23,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _enemyX = value;
-                OnPropertyChanged("EnemyX");
+                OnChanged("EnemyX");
             }
         }
 
@@ -33,7 +33,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _enemyY = value;
-                OnPropertyChanged("EnemyY");
+                OnChanged("EnemyY");
             }
         }
 

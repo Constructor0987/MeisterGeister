@@ -1,8 +1,10 @@
-﻿<Window x:Class="MeisterGeister.View.Windows.EinstellungenWindow"
+﻿<Window x:Class="MeisterGeister.View.Settings.EinstellungenWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings"
+        xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
         mc:Ignorable="d"
         Title="Einstellungen"        
         Width="695.724"        
@@ -13,7 +15,8 @@
         Background="{StaticResource Background1}" 
         Closed="Window_Closed"
         TextOptions.TextFormattingMode="Display" 
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        d:DataContext="{d:DesignInstance vm:EinstellungenViewModel, IsDesignTimeCreatable=False}">
     <Window.Resources>
         <DataTemplate x:Key="RegelnListTemplate">
             <StackPanel Margin="4" Orientation="Horizontal">
@@ -132,6 +135,45 @@
                                     </Border>
                                 </StackPanel>                                
                             </ListBox>
+                        </Border>
+                    </TabItem>
+                    <TabItem x:Name="tbiKampf">
+                        <TabItem.Header>
+                            <TextBlock Text="Kampf" Style="{DynamicResource TextTitel}" />
+                        </TabItem.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <ListView Background="{x:Null}" ItemsSource="{Binding KampfListe}">
+                                <ListView.Resources>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                            <CheckBox IsChecked="{Binding Wert}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                            <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                            <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                            <TextBox Text="{Binding Wert}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.Resources>
+                            </ListView>
                         </Border>
                     </TabItem>
                 </TabControl>

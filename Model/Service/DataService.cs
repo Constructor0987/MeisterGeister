@@ -174,9 +174,9 @@ namespace MeisterGeister.Model.Service {
         #endregion
 
         #region Einstellungen/Settings
-        public Einstellungen LoadEinstellungByName(string name)
+        public Einstellung LoadEinstellungByName(string name)
         {
-            return Context.Einstellungen.Where(e => e.Name == name).FirstOrDefault();
+            return Context.Einstellung.Where(e => e.Name == name).FirstOrDefault();
         }
 
         /// <summary>
@@ -184,9 +184,9 @@ namespace MeisterGeister.Model.Service {
         /// </summary>
         /// <param name="name">Anfang des Namens (case insensitiv)</param>
         /// <returns></returns>
-        public IList<Einstellungen> LoadEinstellungenByName(string name)
+        public IList<Einstellung> LoadEinstellungenByName(string name)
         {
-            return Context.Einstellungen.Where(e => e.Name.ToLower().StartsWith(name)).ToList();
+            return Context.Einstellung.Where(e => e.Name.ToLower().StartsWith(name)).ToList();
         }
         #endregion
 

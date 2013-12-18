@@ -171,7 +171,7 @@ namespace MeisterGeister.Logic.General
             {
                 AudioPlayer.PlayWürfel();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

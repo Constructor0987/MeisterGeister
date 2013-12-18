@@ -17,6 +17,7 @@ using MeisterGeister.View.Windows;
 using MeisterGeister.View.SpielerScreen;
 using MeisterGeister.Daten;
 using System.Windows.Media.Animation;
+using MeisterGeister.View.Settings;
 
 namespace MeisterGeister.View
 {

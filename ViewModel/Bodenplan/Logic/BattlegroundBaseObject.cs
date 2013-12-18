@@ -27,7 +27,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _objektName = value;
-                OnPropertyChanged("ObjektName");
+                OnChanged("ObjektName");
             }
         }
 
@@ -38,7 +38,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _isVisible = value;
-                OnPropertyChanged("IsVisible");
+                OnChanged("IsVisible");
             }
         }
 
@@ -49,7 +49,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _isHighlighted = value;
-                OnPropertyChanged("IsHighlighted");
+                OnChanged("IsHighlighted");
             }
         }
 
@@ -60,7 +60,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _isNew = value;
-                OnPropertyChanged("IsNew");
+                OnChanged("IsNew");
             }
         }
 
@@ -70,7 +70,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _isMoving = value;
-                OnPropertyChanged("IsMoving");
+                OnChanged("IsMoving");
             }
         }
 
@@ -81,7 +81,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _objectColor = value;
-                OnPropertyChanged("ObjectColor");
+                OnChanged("ObjectColor");
             }
         }
 
@@ -92,7 +92,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _fillColor = value;
-                OnPropertyChanged("FillColor");
+                OnChanged("FillColor");
             }
         }
 
@@ -103,7 +103,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _strokethickness = value;
-                OnPropertyChanged("StrokeThickness");
+                OnChanged("StrokeThickness");
             }
         }
 
@@ -114,7 +114,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _opacity = value;
-                OnPropertyChanged("Opacity");
+                OnChanged("Opacity");
             }
         }
 
@@ -125,7 +125,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _zLevel = value;
-                OnPropertyChanged("ZLevel");
+                OnChanged("ZLevel");
             }
         }
 
@@ -135,7 +135,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _zDisplayX = value;
-                OnPropertyChanged("ZDisplayX");
+                OnChanged("ZDisplayX");
             }
         }
 
@@ -145,16 +145,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _zDisplayY = value;
-                OnPropertyChanged("ZDisplayY");
+                OnChanged("ZDisplayY");
             }
         }
 
-
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

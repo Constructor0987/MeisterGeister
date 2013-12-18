@@ -15,7 +15,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set
             {
                 _hero = value;
-                OnPropertyChanged("Hero");
+                OnChanged("Hero");
             }
         }
 
