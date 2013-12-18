@@ -59,7 +59,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public int Team
         {
             get { return _team; }
-            set { _team = value; OnChanged("Team"); }
+            set { 
+                _team = value;
+                OnChanged("Team");
+                //ZLevel für den Bodenplan abhängig vom Team setzen und aktualisieren.
+                if (Kämpfer != null)
+                {
+                    var w = Kämpfer as Wesen;
+                    if (w != null)
+                        w.ZLevel = 100 + _team;
+                }
+            }
         }
 
         private Kampf kampf;

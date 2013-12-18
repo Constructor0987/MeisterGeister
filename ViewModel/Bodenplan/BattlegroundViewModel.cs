@@ -15,19 +15,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
 {
     public class BattlegroundViewModel:INotifyPropertyChanged
     {
-
-//        KampfViewModel KampfVM 
-//  {
-//  get { ...}
-//  set {
-//  if(kampfvm)
-//      kampfvm.KämpferListe.CollectionChanged -= OnKämpferListeChanged;
-//  kampfvm = value;
-//  if(kampfvm)
-//    kampfvm.KämpferListe.CollectionChanged += OnKämpferListeChanged;
-//  }
-//  (12:25:06) Lord Helmchen: dann in deiner neuen Methode OnKämpferListeChanged den event verarbeiten und die liste abgleichen
-//  (12:25:45) Lord Helmchen: oh und beim set des VM evtl auch einen abgleich machen und die lsite neu aufbauen
+//  *Hintergrundfarbe
+//  *Namen anzeigen
+//  *ZLevel bei initialisierung fix
+//  *Bilder Fixen!
+//  *Größe Kreaturen
 
         private bool _pathLine = false;
         private bool _filledPathLine = false;
@@ -55,7 +47,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     _kampfVM.PropertyChanged -= OnKampfPropertyChanged;
                 }
                 _kampfVM = value;
-                //...
+                AddAllCreatures();
                 if (KampfVM != null)
                 {
                     _kampfVM.KämpferListe.CollectionChanged += OnKämpferListeChanged;
@@ -66,7 +58,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private void OnKampfPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "SelectedKämpferInfo")
+            if(e.PropertyName == "SelectedKämpferInfo"&&KampfVM.SelectedKämpfer!=null)
             { 
                 Console.WriteLine("Ein anderer Kämpfer ({0}) wurde ausgewählt", KampfVM.SelectedKämpfer.Name );
             }
@@ -79,75 +71,92 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 case NotifyCollectionChangedAction.Add:
                     //e.NewItems
+                    var l1 = e.NewItems;
+                    foreach (var item in l1)
+                    {
+                        AddCreature(((KämpferInfo)item).Kämpfer);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     //e.OldItems
+                    var l2 = e.OldItems;
+                    foreach (var item in l2)
+                    {
+                        RemoveCreature(((KämpferInfo)item).Kämpfer);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Replace:
+                    var l3 = e.OldItems;
+                    foreach (var item in l3)
+                    {
+                        RemoveCreature(((KämpferInfo)item).Kämpfer);
+                    }
+
+                    var l4 = e.NewItems;
+                    foreach (var item in l4)
+                    {
+                        AddCreature(((KämpferInfo)item).Kämpfer);
+                    }
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    //KampfVM.KämpferListe
+                    RemoveCreatureAll();
+                    AddAllCreatures();
                     break;
                 case NotifyCollectionChangedAction.Move:
+                    //TODO: args.. what exaclty?
+                    break;
                 default:
                     return;
             }
             //Console.WriteLine("Kämpferliste Changed!");
-            foreach (var creature in KampfVM.KämpferListe.Kämpfer)
+            //foreach (var creature in KampfVM.KämpferListe.Kämpfer)
+            //{
+            //    if (creature is Model.Held)
+            //    {
+            //        //var test = BattlegroundObjects.Select(x=>x is BattlegroundHero).Where(x=>x); 
+            //        if (!BattlegroundObjects.Any(x => x is BattlegroundHero && x.ObjektName.Equals(creature.Name)))
+            //        {
+            //            AddHero((Held)creature);
+            //        }
+            //    }
+            //    else if (creature is Model.Gegner) 
+            //    {
+            //        if (!BattlegroundObjects.Any(x => x is BattlegroundEnemy && x.ObjektName.Equals(creature.Name)))
+            //        {
+            //            AddEnemy((Gegner)creature);
+            //        }
+            //    }
+            //}
+        }
+
+        public void AddCreature(IKämpfer kämpfer)
+        {
+            if (((Wesen) kämpfer).IsHeld)
             {
-                if (creature is Model.Held)
-                {
-                    //var test = BattlegroundObjects.Select(x=>x is BattlegroundHero).Where(x=>x); 
-                    if (!BattlegroundObjects.Any(x => x is BattlegroundHero && x.ObjektName.Equals(creature.Name)))
-                    {
-                        AddHero((Held)creature);
-                    }
-                }
-                else if (creature is Model.Gegner) 
-                {
-                    if (!BattlegroundObjects.Any(x => x is BattlegroundEnemy && x.ObjektName.Equals(creature.Name)))
-                    {
-                        AddEnemy((Gegner)creature);
-                    }
-                }
+                ((Held)kämpfer).LoadBattlegroundPortrait(((Held)kämpfer).Bild,true);
+                BattlegroundObjects.Add(((Held) kämpfer));
+            }
+            else
+            {
+                ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, true);
+                BattlegroundObjects.Add(((Gegner)kämpfer));
             }
         }
 
-        public void AddKämpfer(IKämpfer kämpfer)
+        public void AddAllCreatures()
         {
-            if (kämpfer is Held)
-                AddHero(kämpfer as Held);
-            else if (kämpfer is Gegner)
-                AddEnemy(kämpfer as Gegner);
-        }
-
-        //AddHero
-        public void AddHero(Held hero)
-        {
-            BattlegroundObjects.Add(new BattlegroundHero(){Hero = hero,ObjektName = hero.Name});
-            Console.WriteLine("Add Hero: "+hero.Name);   
-        }
-
-        public void AddEnemy(Gegner enemy)
-        {
-            BattlegroundObjects.Add(new BattlegroundEnemy(enemy){ObjektName = enemy.Name});
-            Console.WriteLine("Add Enemy: "+enemy.Name);
+            foreach (var k in KampfVM.KämpferListe)
+            {
+                AddCreature(k.Kämpfer);
+            }
         }
 
         public void RemoveCreature(IKämpfer creature)
         {
 
-            foreach (var bgo in BattlegroundObjects)
-            {
-                if (bgo.ObjektName.Equals(creature.Name))
-                {
-                    BattlegroundObjects.Remove(bgo);
-                    Console.WriteLine("Remove Creature" + creature.Name);
-                    return;
-                }
-               
-            }
+            BattlegroundObjects.Remove((Wesen)creature);
         }
+        
 
         public void RemoveCreatureAll()
         {
@@ -264,7 +273,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return SelectedObject != null ? SelectedObject.Opacity : 1; }
             set
             {
-                if (SelectedObject != null) SelectedObject.Opacity = value;
+                if (SelectedObject != null)
+                {
+                    Console.WriteLine("SetOpacity from: {0} to {1}", Opacity, value);
+                    SelectedObject.Opacity = value;
+                }
+                
                 OnPropertyChanged("Opacity");
             }
         }
@@ -465,6 +479,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 else if (SelectedObject is ImageObject)
                 {
                     ((ImageObject)SelectedObject).MoveObject(xNew - xOld, yNew - yOld);
+                }
+                else if (SelectedObject is BattlegroundCreature)
+                {
+                    ((BattlegroundCreature)SelectedObject).MoveObject(xNew - xOld, yNew - yOld);
                 }
             }
         }

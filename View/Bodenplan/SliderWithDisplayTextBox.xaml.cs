@@ -106,7 +106,7 @@ namespace MeisterGeister.View.Bodenplan
 
         private void UIStrokeThicknessTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (SliderValue != Convert.ToDouble(UIStrokeThicknessTextBox.Text, CultureInfo.InvariantCulture)) UpdateSliderAndValue();
+            if (SliderValue != Convert.ToDouble(UIStrokeThicknessTextBox.Text)) UpdateSliderAndValue(); //, CultureInfo.InvariantCulture
         }
 
         private void UIStrokeThicknessTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -116,7 +116,7 @@ namespace MeisterGeister.View.Bodenplan
 
         private void UpdateSliderAndValue()
         {
-            if(UIStrokeThicknessTextBox.Text!="") SliderValue = Convert.ToDouble(UIStrokeThicknessTextBox.Text, CultureInfo.InvariantCulture);
+            if(UIStrokeThicknessTextBox.Text!="") SliderValue = Convert.ToDouble(UIStrokeThicknessTextBox.Text);
         }
 
         private void UIStrokeThicknessTextBox_TextChanged(object sender, TextChangedEventArgs e)

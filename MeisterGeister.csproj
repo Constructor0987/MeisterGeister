@@ -409,8 +409,6 @@
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundBaseObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCreature.cs" />
-    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundEnemy.cs" />
-    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundHero.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundUtilities.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\FilledPathLine.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\ImageObject.cs" />
@@ -1585,13 +1583,13 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0079.sql" />
     <Resource Include="Images\Icons\General\stop.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0080.sql" />
-    <Resource Include="Images\Bodenplan\pic_horse1.png">
+    <Content Include="Daten\Bodenplan\pic_horse1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Daten\Bodenplan\pic_stone1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\Bodenplan\pic_stone1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Bodenplan\pic_tree1.png">
+    <Resource Include="Daten\Bodenplan\pic_tree1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Daten\Updateskripte\UpdateTo_V0081.sql" />
@@ -1732,6 +1730,7 @@
     <PostBuildEvent>mkdir "$(TargetDir)Daten"
 copy "$(ProjectDir)Daten\DatabaseDSA.sdf" "$(TargetDir)Daten\DatabaseDSA_Standard.sdf"
 mkdir "$(TargetDir)Daten\Helden"
+mkdir "$(TargetDir)Daten\Bodenplan"
 mkdir "$(TargetDir)Daten\Helden\Demohelden"
 copy "$(ProjectDir)Daten\Helden\Demohelden\*.xml" "$(TargetDir)Daten\Helden\Demohelden\"
 

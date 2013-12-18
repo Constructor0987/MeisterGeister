@@ -6,26 +6,32 @@
              xmlns:local="clr-namespace:MeisterGeister.View.Bodenplan"
              xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              xmlns:model="clr-namespace:MeisterGeister.ViewModel.Bodenplan.Logic"
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:localsolution="clr-namespace:MeisterGeister"
+             xmlns:dbmodel="clr-namespace:MeisterGeister.Model"
              mc:Ignorable="d" 
              x:Name="view"
              d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp">   
     <Grid>
         <Grid.Resources>
+            <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
-            <!--Datatemplate BattlegroundEnemy-->
-            <DataTemplate DataType="{x:Type model:BattlegroundEnemy}">
+            <!--Datatemplate BattlegroundCreature (Hero & Enemy)-->
+            <DataTemplate DataType="{x:Type model:BattlegroundCreature}">
                 <Thumb DragDelta="Thumb_Drag" 
                            IsEnabled="{Binding IsSelected,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
                     <Thumb.Template>
                         <ControlTemplate TargetType="Thumb">
                             <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
-                                <Image Source="{Binding EnemyPictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding EnemyY}" Canvas.Left="{Binding EnemyX}" Width="{Binding EnemyWidth}" Height="{Binding EnemyHeight}" Stretch="Fill" VerticalAlignment="Top" />
+                                <Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />
                                 <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" IsHitTestVisible="False" FontSize="10" 
                                            Visibility="{Binding DataContext.ShowZ, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <Canvas.Effect>
+                                    <DropShadowEffect Color="{Binding Farbmarkierung}" ShadowDepth="4" BlurRadius="11" />
+                                </Canvas.Effect>
                             </Canvas>
                             <ControlTemplate.Triggers>
                                 <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
@@ -161,7 +167,7 @@
             <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,128,0,0" x:Name="sliderWithDisplayTextBox_Opacity" SliderValue="{Binding Opacity, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0.1" SliderMaxValue="1" TickFrequencyValue="0.1" SliderLabelTextValue="Transparenz" SliderMinTextValue="10%" SliderMaxTextValue="100%" Width="160" />
             <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,192,0,0" x:Name="sliderWithDisplayTextBox_ObjectSize" SliderValue="{Binding ObjectSize, Mode=TwoWay}" Height="57" VerticalAlignment="Top" SliderMinValue="0.3" SliderMaxValue="3" SliderLabelTextValue="Objektgröße" SliderMinTextValue="0.3x" SliderMaxTextValue="3x" TickFrequencyValue="0.1" Width="160" />
             <xctk:ColorPicker HorizontalAlignment="Left" Margin="72,35,0,0" Name="colorPicker2" SelectedColor="{Binding SelectedFillColor}" VerticalAlignment="Top" Width="88" Grid.Column="1" Grid.Row="1" />
-            <Label Content="Line Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label1" Width="56" FontSize="10" Margin="10,7,0,135" />
+            <Label Content="Line Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label1" Width="56" FontSize="10" Margin="10,7,0,273" />
             <Label Content="Fill Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label2" Width="56" FontSize="10" Margin="10,29,0,0" Height="28" VerticalAlignment="Top" />
             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateLine, Mode=TwoWay}" Content="[1] Line" Name="PathLineButton" Height="25" HorizontalAlignment="Left" Width="77" VerticalAlignment="Top" />
             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateFilledLine, Mode=TwoWay}" Content="[2] Fläche" Name="FilledPathLineButton" Height="25" HorizontalAlignment="Right" Width="77" VerticalAlignment="Top" />
