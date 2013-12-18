@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Runtime.Serialization;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
-    class BattlegroundCreature:BattlegroundBaseObject
+    [DataContract(IsReference = true)]
+    public class BattlegroundCreature:BattlegroundBaseObject
     {
         private string _portraitFilename;
         private double _enemyX=100;

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Windows.Media;
+using System.Runtime.Serialization;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
+    [DataContract(IsReference = true)]
     public abstract class BattlegroundBaseObject:INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

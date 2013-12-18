@@ -69,9 +69,11 @@ namespace MeisterGeister.View.Kampf
 
         private void ShowBodenplanWindow(MeisterGeister.ViewModel.Kampf.KampfViewModel vm)
         {
+#if DEBUG
             if (battlegroundWindow == null)
             {
                 battlegroundWindow = new BattlegroundWindow();
+                battlegroundWindow.Closed += Bodenplan_Closed;
 
                 battlegroundWindow.VM.KampfVM = vm;
                 battlegroundWindow.Show();
@@ -80,7 +82,7 @@ namespace MeisterGeister.View.Kampf
             {
                 battlegroundWindow.Activate();
             }
-
+#else
             //// TODO ??: In Command verschieben
             //if (VM.BodenplanWindow != null)
             //{
@@ -95,6 +97,7 @@ namespace MeisterGeister.View.Kampf
             //    arenaWindow.Closed += ArenaWindow_Closed;
             //    arenaWindow.Show();
             //}
+#endif
         }
 
         /*
@@ -130,11 +133,12 @@ namespace MeisterGeister.View.Kampf
             //}
         }
         
+         */
         void Bodenplan_Closed(object sender, EventArgs e)
         {
-            VM.BodenplanWindow = null;
+            battlegroundWindow = null;
         }
-         */
+         
 
 
         private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)

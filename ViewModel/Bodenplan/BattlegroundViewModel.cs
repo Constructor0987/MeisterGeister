@@ -55,6 +55,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     _kampfVM.PropertyChanged -= OnKampfPropertyChanged;
                 }
                 _kampfVM = value;
+                //...
                 if (KampfVM != null)
                 {
                     _kampfVM.KämpferListe.CollectionChanged += OnKämpferListeChanged;
@@ -77,12 +78,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
             switch(e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+                    //e.NewItems
                     break;
                 case NotifyCollectionChangedAction.Remove:
+                    //e.OldItems
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     break;
                 case NotifyCollectionChangedAction.Reset:
+                    //KampfVM.KämpferListe
                     break;
                 case NotifyCollectionChangedAction.Move:
                 default:
@@ -107,6 +111,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     }
                 }
             }
+        }
+
+        public void AddKämpfer(IKämpfer kämpfer)
+        {
+            if (kämpfer is Held)
+                AddHero(kämpfer as Held);
+            else if (kämpfer is Gegner)
+                AddEnemy(kämpfer as Gegner);
         }
 
         //AddHero

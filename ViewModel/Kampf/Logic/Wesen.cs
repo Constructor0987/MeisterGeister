@@ -16,9 +16,9 @@ using MeisterGeister.ViewModel.Helden.Logic;
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
     [DataContract(IsReference=true)]
-    public class Wesen
+    public class Wesen : MeisterGeister.ViewModel.Bodenplan.Logic.BattlegroundCreature
     {
-        public Wesen()
+        public Wesen() : base()
         {
             Modifikatoren.CollectionChanged += OnModifikatorenChanged;
             ModifikatorenChanged += DependsOnModifikator.OnModifikatorenChanged;
