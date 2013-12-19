@@ -244,6 +244,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private bool _showCreatureName = true;
+        public bool ShowCreatureName
+        {
+            get { return _showCreatureName; }
+            set
+            {
+                _showCreatureName = value;
+                OnPropertyChanged("ShowCreatureName");
+            }
+        }
+        
+
         //get / set stroke thickness
         public double StrokeThickness
         {
@@ -259,11 +271,20 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get
             {
-                return SelectedObject != null ? (SelectedObject is ImageObject ? ((ImageObject) SelectedObject).ObjectSize : 1) : 1;
+                if (SelectedObject != null)
+                {
+                    if (SelectedObject is ImageObject) return ((ImageObject)SelectedObject).ObjectSize;
+                    if (SelectedObject is BattlegroundCreature) return ((BattlegroundCreature) SelectedObject).ObjectSize;
+                }
+                return 1;
             }
             set
             {
-                if (SelectedObject != null) if (SelectedObject is ImageObject) ((ImageObject)SelectedObject).ObjectSize = value;
+                if (SelectedObject != null)
+                {
+                    if (SelectedObject is ImageObject) ((ImageObject)SelectedObject).ObjectSize = value;
+                    if (SelectedObject is BattlegroundCreature) ((BattlegroundCreature)SelectedObject).ObjectSize = value;
+                }
                 OnPropertyChanged("ObjectSize");
             }
         }

@@ -15,9 +15,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _creatureX = 100;
         private double _creatureY = 100;
         private Random r;
-        private double _objectSize = 1;
-        private double _imageOriginalWidth = 90;
-        private double _imageOriginalHeigth = 90;
+        private double _imageOriginalWidth = 80;
+        private double _imageOriginalHeigth = 80;
 
         public static String ICON_DIR = "/Images/Icons/General/";
 
@@ -27,6 +26,19 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureX += r.Next(0, 500);
             r = new Random();
             CreatureY += r.Next(0, 500);
+            MoveObject(0,0); //for initial position of ZLevel Display
+        }
+
+        public double _objectSize = 1;
+        public double ObjectSize
+        {
+            get { return _objectSize; }
+            set
+            {
+                _objectSize = value;
+                ScalePicture(value);
+                OnChanged("ObjectSize");
+            }
         }
 
         public double CreatureX
@@ -60,18 +72,29 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public double ObjectSize
+        private double _creatureNameY = 90;
+        public double CreatureNameY
         {
-            get { return _objectSize; }
+            get { return _creatureNameY; }
             set
             {
-                _objectSize = value;
-                ScalePicture(value);
-                OnChanged("ObjectSize");
+                _creatureNameY = value;
+                OnChanged("CreatureNameY");
             }
         }
 
-        private double _creatureWidth = 90;
+        private double _creatureNameX = 90;
+        public double CreatureNameX
+        {
+            get { return _creatureNameX; }
+            set
+            {
+                _creatureNameX = value;
+                OnChanged("CreatureNameX");
+            }
+        }
+
+        private double _creatureWidth = 80;
         public double CreatureWidth
         {
             get { return _creatureWidth; }
@@ -82,7 +105,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        private double _creatureHeight = 90;
+        private double _creatureHeight = 80;
         public double CreatureHeight
         {
             get { return _creatureHeight; }
@@ -117,9 +140,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureY = CreatureY + deltaY;
             ZDisplayX = CreatureX - 10;
             ZDisplayY = CreatureY - 10;
-
-            //Console.WriteLine(CreatureX + "  "+CreatureY);
-
+            CreatureNameX = CreatureX - 40;
+            CreatureNameY = CreatureY - 25;
         }
 
         //public Image LoadImage(Uri uri)
