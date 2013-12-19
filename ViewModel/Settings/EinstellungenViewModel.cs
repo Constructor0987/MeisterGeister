@@ -10,23 +10,6 @@ namespace MeisterGeister.ViewModel.Settings
 {
     public class EinstellungenViewModel : Base.ViewModelBase
     {
-        public EinstellungenViewModel()
-        {
-            LoadDaten();
-        }
-
-        public void Refresh()
-        {
-            // derzeit nichts beim erneuten Anzeigen erforderlich
-        }
-
-        public void LoadDaten()
-        {
-            if (Global.ContextHeld != null)
-            {
-                EinstellungListe = Global.ContextHeld.Liste<Model.Einstellung>().Where(e => e.Kategorie != "Versteckt") .OrderBy(h => h.Name).Select(e => EinstellungItem.GetTypedEinstellungItem(e)).ToList();
-            }
-        }
 
         #region Bindable Properties
         private List<EinstellungItem> einstellungListe;
@@ -49,6 +32,7 @@ namespace MeisterGeister.ViewModel.Settings
                     return null;
                 return EinstellungListe.Select(e => e.Kontext).Distinct().ToList();
             }
+            set { KontextListe = value; }
         }
 
         [DependentProperty("EinstellungListe")]
@@ -59,7 +43,7 @@ namespace MeisterGeister.ViewModel.Settings
                 if (EinstellungListe == null)
                     return null;
                 return EinstellungListe.Where(e => e.Kontext == "Allgemein").ToList();
-            }
+            }            
         }
 
         [DependentProperty("EinstellungListe")]
@@ -70,7 +54,7 @@ namespace MeisterGeister.ViewModel.Settings
                 if (EinstellungListe == null)
                     return null;
                 return EinstellungListe.Where(e => e.Kontext == "Proben").ToList();
-            }
+            }            
         }
 
         [DependentProperty("EinstellungListe")]
@@ -81,7 +65,7 @@ namespace MeisterGeister.ViewModel.Settings
                 if (EinstellungListe == null)
                     return null;
                 return EinstellungListe.Where(e => e.Kontext == "Kampf").ToList();
-            }
+            }            
         }
 
         [DependentProperty("EinstellungListe")]
@@ -92,7 +76,7 @@ namespace MeisterGeister.ViewModel.Settings
                 if (EinstellungListe == null)
                     return null;
                 return EinstellungListe.Where(e => e.Kontext == "Audioplayer").ToList();
-            }
+            }            
         }
 
         [DependentProperty("EinstellungListe")]
@@ -103,11 +87,51 @@ namespace MeisterGeister.ViewModel.Settings
                 if (EinstellungListe == null)
                     return null;
                 return EinstellungListe.Where(e => e.Kontext == "Almanach").ToList();
-            }
+            }            
+        }
+
+        [DependentProperty("EinstellungListe")]
+        public List<EinstellungItem> InventarListe
+        {
+            get
+            {
+                if (EinstellungListe == null)
+                    return null;
+                return EinstellungListe.Where(e => e.Kontext == "Inventar").ToList();
+            }            
+        }
+
+        private List<Model.Setting> settingListe;
+        [DependentProperty("EinstellungListe")]        
+        public List<Model.Setting> SettingListe
+        {
+            get
+            {
+                if (settingListe == null)
+                    return null;
+                return settingListe;
+            }            
         }
         #endregion
 
+        public EinstellungenViewModel()
+        {
+            LoadDaten();
+        }
 
+        public void Refresh()
+        {
+            // derzeit nichts beim erneuten Anzeigen erforderlich
+        }
+
+        public void LoadDaten()
+        {            
+            if (Global.ContextHeld != null)
+            {
+                EinstellungListe = Global.ContextHeld.Liste<Model.Einstellung>().Where(e => e.Kategorie != "Versteckt").OrderBy(h => h.Name).Select(e => EinstellungItem.GetTypedEinstellungItem(e)).ToList();
+                settingListe = Global.ContextHeld.Liste<Model.Setting>().ToList();
+            }            
+        }        
     }
 
     #region EinstellungItem

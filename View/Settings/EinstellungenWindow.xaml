@@ -16,7 +16,7 @@
         Closed="Window_Closed"
         TextOptions.TextFormattingMode="Display" 
         WindowStartupLocation="CenterOwner"
-        d:DataContext="{d:DesignInstance vm:EinstellungenViewModel, IsDesignTimeCreatable=False}">
+     >
     <Window.Resources>
         <DataTemplate x:Key="RegelnListTemplate">
             <StackPanel Margin="4" Orientation="Horizontal">
@@ -37,6 +37,17 @@
                         </TabItem.Header>                        
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <ListBox BorderThickness="0" Background="Transparent">
+                                <StackPanel>
+                                    <Grid x:Name="grdRegelsystem" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                        <StackPanel Orientation="Horizontal" d:IsLocked="True">
+                                            <ComboBox Margin="7,3,0,0" x:Name="_comboBoxRegelsystem" VerticalAlignment="Top" Text="DSA4.1" SelectedIndex="0">
+                                                <ComboBoxItem Content="DSA4.1" />
+                                            </ComboBox>
+                                            <Label Content="Regelsystem:" HorizontalAlignment="Left" />                                            
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                                
                                 <StackPanel Margin="4" Orientation="Horizontal">
                                     <CheckBox x:Name="_checkBoxFrageNeueKampfrundeAbstellen" Margin="2" Checked="_checkBoxFrageNeueKampfrundeAbstellen_Checked" Unchecked="_checkBoxFrageNeueKampfrundeAbstellen_Unchecked" />
                                     <TextBlock Margin="4,0,0,0" Text="Ende der Kämpfer-Liste (Frage): Soll eine neue KR begonnen werden? (Abstellen)" Width="398" TextWrapping="WrapWithOverflow" />
@@ -67,18 +78,7 @@
                                 </StackPanel>
                             </ListBox>
                         </Border>
-                    </TabItem>
-                    <TabItem x:Name="tbiRegeln">
-                        <TabItem.Header>
-                            <TextBlock Text="Regel-Optionen" Style="{DynamicResource TextTitel}" />
-                        </TabItem.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
-                                <ListBox ItemsSource="{Binding}" ItemTemplate="{StaticResource RegelnListTemplate}" BorderThickness="0" Background="#00000000"/>
-                            </StackPanel>
-                        </Border>
-                    </TabItem>
+                    </TabItem>                    
                     <TabItem x:Name="tbiSetting">
                         <TabItem.Header>
                             <TextBlock Text="Settings" Style="{DynamicResource TextTitel}" />
@@ -86,7 +86,7 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel>
                                 <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
-                                <ListBox x:Name="_listBoxSettings" BorderThickness="0" Background="Transparent">
+                                <ListBox x:Name="_listBoxSettings" BorderThickness="0" Background="Transparent" ItemsSource="{Binding SettingListe}" >
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Margin="4" Orientation="Horizontal">
@@ -108,7 +108,7 @@
                                 <StackPanel Margin="4" Grid.Row="0">
                                     <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Rüstung eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
                                     <StackPanel>
-                                        <RadioButton Margin="2" GroupName="RuestungSetting" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
+                                        <RadioButton Margin="2" GroupName="RuestungSetting" Content="Automatisch (Werte werden vom Programm ermittelt)" />
                                         <RadioButton Margin="2" GroupName="RuestungSetting" Content="Keine Zonen, eingegeben (Ein Wert RS wird für den Helden verwendet)"/>
                                         <RadioButton Margin="2" GroupName="RuestungSetting" Content="Mit Zonen, eingegeben (Rüstung besteht aus einzelnen RS-Werten je Zone)"/>
                                     </StackPanel>
@@ -142,49 +142,142 @@
                             <TextBlock Text="Kampf" Style="{DynamicResource TextTitel}" />
                         </TabItem.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListView Background="{x:Null}" ItemsSource="{Binding KampfListe}">
-                                <ListView.Resources>
+                            <ListBox Background="Transparent" ItemsSource="{Binding KampfListe}">
+                                <ListBox.Resources>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                        <StackPanel Orientation="Vertical" Margin="4">
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.Resources>
+                            </ListBox>
+                        </Border>
+                    </TabItem>
+                    <TabItem x:Name="tbiAudioplayer">
+                        <TabItem.Header>
+                            <TextBlock Text="Audioplayer" Style="{DynamicResource TextTitel}" />
+                        </TabItem.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <ListBox Background="{x:Null}" ItemsSource="{Binding AlmanachListe}">
+                                <ListBox.Resources>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                        <StackPanel Orientation="Vertical" Margin="4">
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.Resources>
+                            </ListBox>
+                        </Border>
+                    </TabItem>
+                    <TabItem x:Name="tbiProben">
+                        <TabItem.Header>
+                            <TextBlock Text="Proben" Style="{DynamicResource TextTitel}" />
+                        </TabItem.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <ListBox Background="{x:Null}" ItemsSource="{Binding ProbenListe}">
+                                <ListBox.Resources>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                        <StackPanel Orientation="Horizontal" Margin="4">
+                                            <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                        <StackPanel Orientation="Vertical" Margin="4">
+                                            <TextBlock Text="{Binding Beschreibung}" />
+                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.Resources>
+                            </ListBox>
+                        </Border>
+                    </TabItem>
+                    <TabItem x:Name="tbiAlmanach">
+                        <TabItem.Header>
+                            <TextBlock Text="Almanach" Style="{DynamicResource TextTitel}" />
+                        </TabItem.Header>
+                        <Border Style="{DynamicResource ControlContentBorder}">
+                            <ListBox Background="{x:Null}" ItemsSource="{Binding AlmanachListe}">
+                                <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />
-                                            <CheckBox IsChecked="{Binding Wert}" />
+                                            <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />
                                             <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />                                            
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />
                                             <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                            <TextBlock Text="{Binding Beschreibung}" />                                            
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" />
+                                        <StackPanel Orientation="Vertical" Margin="4">
                                             <TextBlock Text="{Binding Beschreibung}" />
-                                            <TextBox Text="{Binding Wert}" />
+                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
                                         </StackPanel>
                                     </DataTemplate>
-                                </ListView.Resources>
-                            </ListView>
+                                </ListBox.Resources>
+                            </ListBox>
                         </Border>
                     </TabItem>
-                </TabControl>
-                <Grid x:Name="grdRegelsystem" VerticalAlignment="Top" HorizontalAlignment="Right">
-                    <StackPanel Orientation="Horizontal" d:IsLocked="True">
-                        <Label Content="Regelsystem:" HorizontalAlignment="Left" />
-                        <ComboBox Margin="12,0,0,0" x:Name="_comboBoxRegelsystem" VerticalAlignment="Top" Text="DSA4.1" SelectedIndex="0">
-                            <ComboBoxItem Content="DSA4.1" />
-                        </ComboBox>
-                    </StackPanel>
-                </Grid>
+                </TabControl>                
             </Grid>
         </ScrollViewer>
     </Grid>

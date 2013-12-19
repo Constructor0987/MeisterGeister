@@ -30,10 +30,9 @@ namespace MeisterGeister.View.Settings
             InitializeComponent();
 
             // DataContext setzen
-            //DataContext = Global.ContextHeld.Liste<Model.Einstellung>(); //TODO CRAP! FIXME - ein echtes VM muss her.
             VM = new EinstellungenViewModel();
 
-            //_listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
+            _listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
         }
 
         public EinstellungenViewModel VM
@@ -46,7 +45,6 @@ namespace MeisterGeister.View.Settings
         {
             //_checkBoxFrageNeueKampfrundeAbstellen.IsChecked = Einstellungen.FrageNeueKampfrundeAbstellen;
             //_checkBoxJingleAbstellen.IsChecked = Einstellungen.JingleAbstellen;
-
             //_checkboxGleichSpielen.IsChecked = Einstellungen.AudioDirektAbspielen;
             //_sldFading.Value = Einstellungen.Fading;
             //tbStdPfad.Text = Einstellungen.GetEinstellung("AudioVerzeichnis", @"C:\");
