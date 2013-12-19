@@ -1885,9 +1885,10 @@ namespace MeisterGeister.Model
             get { return null; }
         }
 
+        //TODO ??: Wert der aktuellen Waffe verwenden.
         public int? AT
         {
-            get { return null; }
+            get { return Attacke; }
         }
 
         //TODO ??: Wert der aktuellen Waffe verwenden.

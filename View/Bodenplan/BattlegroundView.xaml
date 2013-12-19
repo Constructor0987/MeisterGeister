@@ -26,7 +26,7 @@
                             <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
                                     <Rectangle.Fill>
-                                        <ImageBrush ImageSource="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Stretch="Fill"/>                                        
+                                        <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Opacity="{Binding Opacity}" Stretch="Fill"/>                                        
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <!--<Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />-->
@@ -39,7 +39,7 @@
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 <Canvas.Effect>
-                                    <DropShadowEffect Color="{Binding Farbmarkierung}" ShadowDepth="4" BlurRadius="11" />
+                                    <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}} }" ShadowDepth="4" BlurRadius="11" />
                                 </Canvas.Effect>
                             </Canvas>
                             <ControlTemplate.Triggers>
