@@ -9,6 +9,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel.Helden.Logic;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace MeisterGeister.Model
 {
@@ -62,6 +63,27 @@ namespace MeisterGeister.Model
             //Angriffsaktionen = Aktionen - Abwehraktionen;
         }
         #endregion
+
+        private static Regex klammern = new Regex("\\((\\d+)\\)", RegexOptions.RightToLeft);
+        [DependentProperty("Name")]
+        public string Kurzname
+        {
+            get
+            {
+                string kurzname = Name;
+                if (kurzname == null)
+                    return null;
+                if (kurzname.Length <= 18)
+                    return kurzname;
+                var m = klammern.Match(kurzname);
+                if(m != null)
+                {
+                    kurzname = klammern.Replace(kurzname, "");
+                    kurzname = kurzname.Substring(0, Math.Min(12, kurzname.Length)) + ".. " + m.Value;
+                }
+                return kurzname;
+            }
+        }
 
         #region IKämpfer
 

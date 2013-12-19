@@ -24,7 +24,7 @@
                     <Thumb.Template>
                         <ControlTemplate TargetType="Thumb">
                             <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
-                                <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" >
+                                <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
                                     <Rectangle.Fill>
                                         <ImageBrush ImageSource="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Stretch="Fill"/>                                        
                                     </Rectangle.Fill>
@@ -34,7 +34,7 @@
                                            Visibility="{Binding DataContext.ShowZ, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
-                                <TextBlock Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" Text="{Binding Name}" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" 
+                                <TextBlock Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" Width="160" TextAlignment="Center" Text="{Binding Kurzname}" FontWeight="Normal" IsHitTestVisible="False" FontSize="17" 
                                            Visibility="{Binding DataContext.ShowCreatureName, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
