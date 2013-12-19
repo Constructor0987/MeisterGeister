@@ -16,6 +16,30 @@
     <Grid>
         <StackPanel>
             <ListBox/>
+            <!-- TODO JT: Manöverbindings ->
+                        <StackPanel>
+                            <!- Manöverauswahl->
+                            <ComboBox ItemsSource="{Binding MöglicheManöver}" SelectedItem="{Binding SelectedManöverInfo.Manöver}" DisplayMemberPath="Name"></ComboBox>
+                            <!- Kombination von Manövern? ->
+                            <!- Manöveroptionen? ->
+                            <!- Waffen -> Ziele ->
+                            <ComboBox ItemsSource="{Binding MöglicheZiele}" SelectedItem="{Binding SelectedZiel}" DisplayMemberPath="Name"></ComboBox>
+                            <!- Alle Kämpfer auch Freunde anzeigen - Checkbox ->
+                            <CheckBox />
+                            <!- Optional, wenn das Manöver mehrere Ziele zulässt:->
+                                <Button Command="{Binding AddSelectedZiel}">
+                                    <TextBlock Text="+" ToolTip="Ziel hinzufügen"/>
+                                </Button>
+                            <ListView ItemsSource="{Binding SelectedManöverInfo.Manöver.Ziele}">
+                            <!- für jedes Ziel->
+                                <!- Ziel entfernen (bei mehreren zielen) ->
+                                <!- Attackeprobe ->
+                                <!- Parademanöverauswahl + Paradeprobe ->
+                            </ListView>
+                            <!- Bestätigen ->
+                            <Button Command="{Binding ManöverAusführen}">
+                                <TextBlock Text="OK"/></Button>
+                        </StackPanel> -->
         </StackPanel>
     </Grid>
 </UserControl>
