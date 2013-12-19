@@ -60,7 +60,9 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             if(e.PropertyName == "SelectedKämpferInfo"&&KampfVM.SelectedKämpfer!=null)
             { 
-                Console.WriteLine("Ein anderer Kämpfer ({0}) wurde ausgewählt", KampfVM.SelectedKämpfer.Name );
+                //TODO: Update SelectedObject
+                //SelectedObject = BattlegroundObjects.Select(x=>x is BattlegroundCreature).First(x=>((BattlegroundCreature)x) == KampfVM.SelectedKämpfer);
+                //Console.WriteLine("Ein anderer Kämpfer ({0}) wurde ausgewählt", KampfVM.SelectedKämpfer.Name );
             }
             //Console.WriteLine("Property Changed");
         }
@@ -366,8 +368,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (!IsMoving)
                 {
                     BattlegroundObjects.ToList().ForEach(x => x.IsHighlighted = false);
-
                     _selectedObject = value;
+                    if (SelectedObject is BattlegroundCreature) KampfVM.SelectedKämpfer = ((IKämpfer)SelectedObject);
                     OnPropertyChanged("SelectedObject");
                 }
             }
@@ -382,10 +384,11 @@ namespace MeisterGeister.ViewModel.Bodenplan
             get { return _deleteCommand ?? (_deleteCommand = new BattlegroundCommand(Delete)); }
         }
 
-        private void Delete()
+        public void Delete()
         {
             if (SelectedObject !=null)
-                BattlegroundObjects.Remove(SelectedObject);
+                if(SelectedObject is BattlegroundCreature) KampfVM.DeleteKämpfer(null);
+                else BattlegroundObjects.Remove(SelectedObject);
         }
 
         #region different lines 

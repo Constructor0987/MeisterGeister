@@ -236,6 +236,7 @@ namespace MeisterGeister.View.Bodenplan
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
+                if (e.Key == Key.Delete && vm.SelectedObject != null) vm.Delete(); 
                 if (_leftShiftPressed && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
                 {
                     _x2 = _xMovingOld;
@@ -246,6 +247,7 @@ namespace MeisterGeister.View.Bodenplan
             if (e.Key == Key.Escape) UnselectObjects();
             if (e.Key == Key.D1) ToggleLinePathButton();
             if (e.Key == Key.D2) ToggleFilledLinePathButton();
+
         }
 
         private void UserControl_KeyUp(object sender, KeyEventArgs e)

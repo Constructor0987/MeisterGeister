@@ -212,7 +212,7 @@ namespace MeisterGeister.ViewModel.Kampf
             }
         }
 
-        private void DeleteKämpfer(object obj)
+        public void DeleteKämpfer(object obj)
         {
             if (SelectedKämpferInfo != null && Confirm("Kämpfer entfernen", String.Format("Soll der Kämpfer {0} entfernt werden?", SelectedKämpferInfo.Kämpfer.Name)))
             {
