@@ -1747,6 +1747,7 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)README.txt" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Daten\DatabaseDSA_Standard.sdf" "$(ProjectDir)publish\$(TargetName)\Daten"
    copy  "$(TargetDir)Daten\Helden\Demohelden\*.xml" "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden\"
+   copy  "$(TargetDir)Daten\Bodenplan\*.*" "$(ProjectDir)publish\$(TargetName)\Daten\Bodenplan\"
    copy "$(TargetDir)DG-Suche.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Interactions.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Effects.dll" "$(ProjectDir)publish\$(TargetName)"
@@ -1758,6 +1759,7 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)Audio\meistergeister.wav" "$(ProjectDir)publish\$(TargetName)\Audio"
    copy "$(TargetDir)Audio\WuerfelnSound0000.wav" "$(ProjectDir)publish\$(TargetName)\Audio"
    copy "$(TargetDir)License\Apache License.txt" "$(ProjectDir)publish\$(TargetName)\License"
+   copy "$(TargetDir)Xceed.Wpf.Toolkit.dll" "$(ProjectDir)publish\$(TargetName)"
    call "C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetName).zip" "$(ProjectDir)publish\$(TargetName)" -mx
    move  "$(TargetDir)$(TargetName).zip" "$(ProjectDir)publish"
 )</PostBuildEvent>

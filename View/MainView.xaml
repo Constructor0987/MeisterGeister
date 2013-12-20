@@ -115,7 +115,7 @@
                                     <Image Source="/Images/Icons/meistertools_02.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem x:Name="_menuItemAudioPlayer" Height="28" Click="ButtonTool_Click" Header="Audio-Player (INTERN)" Tag="Audio" ToolTip="Audio-Player"  >
+                            <MenuItem x:Name="_menuItemAudioPlayer" Height="28" Click="ButtonTool_Click" Header="Audio-Player" Tag="Audio" ToolTip="Audio-Player"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/General/audio.png" Margin="2" />
                                 </MenuItem.Icon>
