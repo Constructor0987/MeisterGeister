@@ -813,7 +813,7 @@
                         <ViewGeneral:IntBox Height="25" HorizontalAlignment="Left" Margin="60,9,0,0" x:Name="_intBoxAktionDauer" VerticalAlignment="Top" Width="75" Value="2" Grid.Row="2" ToolTip="Aktions-Dauer in Aktionen." ShowButtons="True" />
                         <Label Content="Dauer:" Height="28" HorizontalAlignment="Left" Margin="2,9,0,0" VerticalAlignment="Top" Grid.Row="2" />
                         <Label Content="Aktionen" Height="28" HorizontalAlignment="Left" Margin="156,10,0,0" VerticalAlignment="Top" FontStyle="Italic" Grid.Row="2" />
-                        <Button Grid.Row="2" Height="23" Width="25" Margin="0,11,4,0" HorizontalAlignment="Right" ToolTip="Aktion einfügen" Command="{Binding OnAddAktion}">
+                        <Button Grid.Row="2" Height="23" Width="25" Margin="0,11,4,0" HorizontalAlignment="Right" ToolTip="Aktion einfügen"><!--="{Binding OnAddAktion}" --> 
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Stretch="Fill" />
                         </Button>
                         <!-- TODO ??: Entfernen wenn Aktionen fertig sind -->
