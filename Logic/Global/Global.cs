@@ -177,6 +177,8 @@ namespace MeisterGeister
 
             IsInitialized = true;
 
+            Logic.Settings.Einstellungen.UpdateEinstellungen();
+
             if (Logic.Settings.Einstellungen.SelectedHeld != null)
             {
                 Guid heldguid;

@@ -49,32 +49,12 @@
                                 </StackPanel>
                                 
                                 <StackPanel Margin="4" Orientation="Horizontal">
-                                    <CheckBox x:Name="_checkBoxFrageNeueKampfrundeAbstellen" Margin="2" Checked="_checkBoxFrageNeueKampfrundeAbstellen_Checked" Unchecked="_checkBoxFrageNeueKampfrundeAbstellen_Unchecked" />
-                                    <TextBlock Margin="4,0,0,0" Text="Ende der Kämpfer-Liste (Frage): Soll eine neue KR begonnen werden? (Abstellen)" Width="398" TextWrapping="WrapWithOverflow" />
-                                </StackPanel>
-                                <StackPanel Margin="4" Orientation="Horizontal">
                                     <CheckBox x:Name="_checkBoxJingleAbstellen" Margin="2" VerticalAlignment="Center" Checked="CheckBoxJingleAbstellen_Checked" Unchecked="CheckBoxJingleAbstellen_Unchecked" />
                                     <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="Jingle beim Programmstart abstellen?" TextWrapping="WrapWithOverflow" />
                                     <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
                                         <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
                                     </Button>
                                     <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Margin="4" Orientation="Horizontal">
-                                    <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
-                                    <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
-                                </StackPanel>
-
-                                <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">
-                                    <Label x:Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
-                                    <TextBox Height="23" x:Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
-                                    <Button Content="..." Height="21" HorizontalAlignment="Left" x:Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
-                                    <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
                                 </StackPanel>
                             </ListBox>
                         </Border>
@@ -99,7 +79,7 @@
                             </StackPanel>
                         </Border>
                     </TabItem>
-                    <TabItem x:Name="tbiInventar">
+                    <TabItem x:Name="tbiInventar" Visibility="Collapsed">
                         <TabItem.Header>
                             <TextBlock Text="Inventar" Style="{DynamicResource TextTitel}" />
                         </TabItem.Header>
@@ -177,7 +157,7 @@
                             <TextBlock Text="Audioplayer" Style="{DynamicResource TextTitel}" />
                         </TabItem.Header>
                         <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListBox Background="{x:Null}" ItemsSource="{Binding AlmanachListe}">
+                            <ListBox Background="{x:Null}">
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal" Margin="4">
@@ -204,6 +184,21 @@
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.Resources>
+                                <StackPanel Margin="4" Orientation="Horizontal">
+                                    <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
+                                    <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">
+                                    <Label x:Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
+                                    <TextBox Height="23" x:Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
+                                    <Button Content="..." Height="21" HorizontalAlignment="Left" x:Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
+                                    <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                                </StackPanel>
                             </ListBox>
                         </Border>
                     </TabItem>
@@ -242,7 +237,7 @@
                             </ListBox>
                         </Border>
                     </TabItem>
-                    <TabItem x:Name="tbiAlmanach">
+                    <TabItem x:Name="tbiAlmanach" Visibility="Collapsed">
                         <TabItem.Header>
                             <TextBlock Text="Almanach" Style="{DynamicResource TextTitel}" />
                         </TabItem.Header>

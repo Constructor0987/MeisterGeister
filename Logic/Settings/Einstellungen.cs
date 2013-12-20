@@ -8,16 +8,53 @@ namespace MeisterGeister.Logic.Settings
 {
     public static class Einstellungen
     {
+        public static void UpdateEinstellungen()
+        {
+            if(Global.IsInitialized)
+            {
+                foreach(var e in Global.ContextHeld.Liste<Model.Einstellung>())
+                {
+                    CopyDefaultValues(e.Name, e);
+                    Global.ContextHeld.Update<Model.Einstellung>(e);
+                }
+                Global.ContextHeld.Save();
+            }
+        }
+
+
         private static List<Model.Einstellung> GetDefaults()
         {
             return new List<Model.Einstellung>()
             {
-                new Model.Einstellung() { Name = "FrageNeueKampfrundeAbstellen", Kontext = "Kampf", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
-                new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
-                new Model.Einstellung() { Name = "WuerfelSoundAbspielen", Kontext = "Proben", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "True" },
+                new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Jingle beim Start deaktivieren", Wert = "False" },
+
                 new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
-                new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
+                new Model.Einstellung() { Name = "AudioVerzeichnis", Kontext = "Audioplayer", Kategorie = null, Typ = "String", Beschreibung = null, Wert = "C:\\" },
+
+                new Model.Einstellung() { Name = "PdfReaderCommand", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "Befehl zum starten des PDF-Readers", Wert = null },
+                new Model.Einstellung() { Name = "PdfReaderArguments", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "Parameter für den Aufruf des PDF-Readers", Wert = null },
+
+                new Model.Einstellung() { Name = "FrageNeueKampfrundeAbstellen", Kontext = "Kampf", Kategorie = null, Typ = "Boolean", Beschreibung = "Frage bei neuer Kampfrunde unterbinden", Wert = "False" },
+                new Model.Einstellung() { Name = "TPKK", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Trefferpunkte und Körperkraft (TP/KK) (WdS 81f)", Wert = "True" },
+                new Model.Einstellung() { Name = "NiedrigeLE", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Auswirkungen niedriger LE (WdS 57)", Wert = "True" },
+                new Model.Einstellung() { Name = "NiedrigeAU", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Auswirkungen niedriger AU (WdS 83)", Wert = "True" },
+                new Model.Einstellung() { Name = "AusdauerImKampf", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Ausdauerverlust (WdS 83)", Wert = "True" },
+                new Model.Einstellung() { Name = "NurDreiZonenWunden", Kontext = "Kampf", Kategorie = "Unklarheit", Typ = "Boolean", Beschreibung = "Maximal drei Wunden pro Trefferzone", Wert = "True" },
+                
+                new Model.Einstellung() { Name = "EigenschaftenProbePatzerGlück", Kontext = "Proben", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Patzer und Glückswürfe bei Eigenschafts-Proben (WdS 7)", Wert = "True" },
+                new Model.Einstellung() { Name = "WuerfelSoundAbspielen", Kontext = "Proben", Kategorie = null, Typ = "Boolean", Beschreibung = "Würfelsound abspielen", Wert = "True" },
+
+                new Model.Einstellung() { Name = "01_RSBerechnung", Kontext = "Inventar", Kategorie = null, Typ = "Integer", Beschreibung = "Wie wird die Rüstung eines Helden ermittelt?", Wert = "0" },
+                new Model.Einstellung() { Name = "02_BEBerechnung", Kontext = "Inventar", Kategorie = null, Typ = "Integer", Beschreibung = "Wie wird die Behinderung eines Helden ermittelt?", Wert = "0" },
+                new Model.Einstellung() { Name = "03_UeberlastungBerechnung", Kontext = "Inventar", Kategorie = null, Typ = "Integer", Beschreibung = "Spielt die Gruppe mit Überlastung?", Wert = "0" },
+                
+                //Versteckte
+                new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
+                new Model.Einstellung() { Name = "Standort", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Gareth#29.79180235685203#3.735098459067687" },
+                new Model.Einstellung() { Name = "SelectedHeld", Kontext = "Helden", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
+                new Model.Einstellung() { Name = "ProbenFavoriten", Kontext = "Proben", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
+                new Model.Einstellung() { Name = "KampfRecentColors", Kontext = "Kampf", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
                 new Model.Einstellung() { Name = "SelectedTab", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Integer", Beschreibung = "", Wert = "0" },
                 new Model.Einstellung() { Name = "SelectedHeldenTab", Kontext = "Helden", Kategorie = "Versteckt", Typ = "Integer", Beschreibung = "", Wert = "0" },
                 new Model.Einstellung() { Name = "StartTabs", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "" },
@@ -27,19 +64,6 @@ namespace MeisterGeister.Logic.Settings
                 new Model.Einstellung() { Name = "UmrechnerExpandedSections", Kontext = "Umrechner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "111111" },
                 new Model.Einstellung() { Name = "GegnerViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "11" },
                 new Model.Einstellung() { Name = "GegnerDetailViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "110" },
-                new Model.Einstellung() { Name = "Standort", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Gareth#29.79180235685203#3.735098459067687" },
-                new Model.Einstellung() { Name = "SelectedHeld", Kontext = "Helden", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
-                new Model.Einstellung() { Name = "ProbenFavoriten", Kontext = "Proben", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
-                new Model.Einstellung() { Name = "PdfReaderCommand", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "", Wert = null },
-                new Model.Einstellung() { Name = "PdfReaderArguments", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "", Wert = null },
-                new Model.Einstellung() { Name = "KampfRecentColors", Kontext = "Kampf", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = null },
-                new Model.Einstellung() { Name = "TPKK", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Trefferpunkte und Körperkraft (TP/KK) (WdS 81f)", Wert = "True" },
-                new Model.Einstellung() { Name = "NiedrigeLE", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Auswirkungen niedriger LE (WdS 57)", Wert = "True" },
-                new Model.Einstellung() { Name = "NiedrigeAU", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Auswirkungen niedriger AU (WdS 83)", Wert = "True" },
-                new Model.Einstellung() { Name = "AusdauerImKampf", Kontext = "Kampf", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Ausdauerverlust (WdS 83)", Wert = "True" },
-                new Model.Einstellung() { Name = "NurDreiZonenWunden", Kontext = "Kampf", Kategorie = "Unklarheit", Typ = "Boolean", Beschreibung = "Maximal drei Wunden pro Trefferzone", Wert = "True" },
-                new Model.Einstellung() { Name = "EigenschaftenProbePatzerGlück", Kontext = "Proben", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "Patzer und Glückswürfe bei Eigenschafts-Proben (WdS 7)", Wert = "True" },
-                new Model.Einstellung() { Name = "AudioVerzeichnis", Kontext = "Audioplayer", Kategorie = null, Typ = "String", Beschreibung = null, Wert = "C:\\" },
             };
         }
         private static Dictionary<string, Model.Einstellung> defaultValues = null;
@@ -70,17 +94,23 @@ namespace MeisterGeister.Logic.Settings
 
         public static Model.Einstellung CreateEinstellung<T>(string name)
         {
-            var d = DefaultValues[name];
             var e = Global.ContextHeld.New<Model.Einstellung>();
-            System.Diagnostics.Debug.Assert(d.Typ == typeof(T).Name);
-            e.Typ = d.Typ;
-            e.Kontext = d.Kontext;
-            e.Kategorie = d.Kategorie;
-            e.Name = d.Name;
-            e.Beschreibung = d.Beschreibung;
-            e.Wert = d.Wert;
+            CopyDefaultValues(name, e, true);
+            System.Diagnostics.Debug.Assert(e.Typ == typeof(T).Name);
             Global.ContextHeld.Insert<Model.Einstellung>(e);
             return e;
+        }
+
+        private static void CopyDefaultValues(string name, Model.Einstellung target, bool mitWert = false)
+        {
+            var source = DefaultValues[name];
+            target.Typ = source.Typ;
+            target.Kontext = source.Kontext;
+            target.Kategorie = source.Kategorie;
+            target.Name = source.Name;
+            target.Beschreibung = source.Beschreibung;
+            if(mitWert)
+                target.Wert = source.Wert;
         }
 
         public static Model.Einstellung SetEinstellung<T>(string name, T value)
@@ -91,10 +121,46 @@ namespace MeisterGeister.Logic.Settings
                 if (e == null)
                     e = CreateEinstellung<T>(name);
                 e.Set<T>(value);
-                    Global.ContextHeld.Update<Model.Einstellung>(e);
+                Global.ContextHeld.Update<Model.Einstellung>(e);
                 return e;
             }
             return null;
+        }
+
+        public static int RSBerechnung
+        {
+            get
+            {
+                return GetEinstellung<int>("01_RSBerechnung");
+            }
+            set
+            {
+                SetEinstellung<int>("01_RSBerechnung", value);
+            }
+        }
+
+        public static int BEBerechnung
+        {
+            get
+            {
+                return GetEinstellung<int>("02_BEBerechnung");
+            }
+            set
+            {
+                SetEinstellung<int>("02_BEBerechnung", value);
+            }
+        }
+
+        public static int UeberlastungBerechnung
+        {
+            get
+            {
+                return GetEinstellung<int>("03_UeberlastungBerechnung");
+            }
+            set
+            {
+                SetEinstellung<int>("03_UeberlastungBerechnung", value);
+            }
         }
 
         public static bool FrageNeueKampfrundeAbstellen

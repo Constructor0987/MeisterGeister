@@ -50,16 +50,6 @@ namespace MeisterGeister.View.Settings
             //tbStdPfad.Text = Einstellungen.GetEinstellung("AudioVerzeichnis", @"C:\");
         }
 
-        private void _checkBoxFrageNeueKampfrundeAbstellen_Checked(object sender, RoutedEventArgs e)
-        {
-            Einstellungen.FrageNeueKampfrundeAbstellen = (bool)_checkBoxFrageNeueKampfrundeAbstellen.IsChecked;
-        }
-
-        private void _checkBoxFrageNeueKampfrundeAbstellen_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Einstellungen.FrageNeueKampfrundeAbstellen = (bool)_checkBoxFrageNeueKampfrundeAbstellen.IsChecked;
-        }
-
         private void CheckBoxJingleAbstellen_Checked(object sender, RoutedEventArgs e)
         {
             Einstellungen.JingleAbstellen = (bool)_checkBoxJingleAbstellen.IsChecked;
