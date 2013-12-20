@@ -1567,9 +1567,9 @@ namespace MeisterGeister.Model
                 if (!sf.HatWert ?? false)
                     //Da es eine ohne Wert ist, darf sie nur einmal vergeben werden
                     return existierendeZuordnung.First().Sonderfertigkeit;
-                else if (existierendeZuordnung.Where(hsf => hsf.Wert == wert).Count() != 0)
-                    //Wenn sie mit diesem Wert bereits existiert, dann darf sie auch nciht nochmal hinzugefügt werden.
-                    return existierendeZuordnung.Where(hsf => hsf.Wert == wert).First().Sonderfertigkeit;
+                else if (existierendeZuordnung.Where(hsf => hsf.Wert == wert || (string.IsNullOrWhiteSpace(wert) && string.IsNullOrWhiteSpace(hsf.Wert))).Count() != 0)
+                    //Wenn sie mit diesem Wert bereits existiert, dann darf sie auch nicht nochmal hinzugefügt werden.
+                    return existierendeZuordnung.Where(hsf => hsf.Wert == wert || (string.IsNullOrWhiteSpace(wert) && string.IsNullOrWhiteSpace(hsf.Wert))).First().Sonderfertigkeit;
             }
 
             Held_Sonderfertigkeit hs = Global.ContextHeld.New<Held_Sonderfertigkeit>();            
