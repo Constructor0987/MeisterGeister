@@ -88,6 +88,13 @@ namespace MeisterGeister
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.SpielerScreen.SpielerScreenControlView)
             });
+            ToolListe.Add("Audio", new Tool()
+            {
+                Name = "Audio",
+                Icon = "Icons/General/audio.png",
+                MenuGruppe = "Wege des Meisters",
+                ViewType = typeof(View.AudioPlayer.AudioPlayerView)
+            });
             ToolListe.Add("Basar", new Tool()
             {
                 Name = "Basar",
@@ -151,13 +158,6 @@ namespace MeisterGeister
                 Icon = "Icons/magie.png",
                 MenuGruppe = "Wege der Magie",
                 ViewType = typeof(View.Beschwörung.BeschwörungView)
-            });
-            ToolListe.Add("Audio", new Tool()
-            {
-                Name = "Audio",
-                Icon = "Icons/General/audio.png",
-                MenuGruppe = "Wege des Meisters",
-                ViewType = typeof(View.AudioPlayer.AudioPlayerView)
             });
             ToolListe.Add("Abenteuer", new Tool()
             {
