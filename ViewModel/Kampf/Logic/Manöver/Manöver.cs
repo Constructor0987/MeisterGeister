@@ -188,7 +188,10 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             p.Probenname = "Manöverprobe";
             p.Werte = new int[] { 10 };
             p.IsBehinderung = false;
-            Proben[0] = p;
+            if (Proben.Count >= 1)
+                Proben[0] = p;
+            else
+                Proben.Add(p);
         }
 
         protected List<Probe> proben = null;
