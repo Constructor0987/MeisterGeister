@@ -1061,7 +1061,7 @@ namespace MeisterGeister.Logic.HeldenImport
             System.IO.StreamReader sr = null;
             try
             {
-                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open);
+                fs = new System.IO.FileStream(xmlFile, System.IO.FileMode.Open, System.IO.FileAccess.Read);
                 sr = new System.IO.StreamReader(fs);
                 for (int i = 1; i <= 6 && !sr.EndOfStream; i++)
                 {
@@ -1074,8 +1074,10 @@ namespace MeisterGeister.Logic.HeldenImport
                     }
                 }
             }
-            catch
+            catch(Exception e)
             {
+                if (e is SystemException)
+                    throw;
                 return null;
             }
             finally

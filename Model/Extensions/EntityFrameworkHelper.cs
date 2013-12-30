@@ -49,12 +49,14 @@ namespace MeisterGeister.Model.Extensions
 
 					// Handle special marker method 'WithoutUpdate':
                     if (cexp.Method.Name == "WithoutUpdate")
-                    {
                         members.Last().NoUpdate = true;
-                    }
+
+                    // Handle special marker method 'AlwaysInsert':
+                    else if (cexp.Method.Name == "AlwaysInsert")
+                        members.Last().AlwaysInsert = true;
 
 					// Handle special marker method 'ReferenceOnly':
-					if (cexp.Method.Name == "ReferenceOnly")
+					else if (cexp.Method.Name == "ReferenceOnly")
 						members.Last().ReferenceOnly = true;
 
 					break;
@@ -81,6 +83,8 @@ namespace MeisterGeister.Model.Extensions
 		public bool NoUpdate { get; set; }
 
 		public bool ReferenceOnly { get; set; }
+        
+        public bool AlwaysInsert { get; set; }
 
 		public override bool Equals(object obj)
 		{

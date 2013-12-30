@@ -261,7 +261,7 @@ namespace MeisterGeister.Model.Service
         public static T DeserializeObjectFromFile<T>(string fileName) where T : class
         {
             T obj = null;
-            using (Stream stream = File.Open(fileName, FileMode.Open))
+            using (Stream stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
             {
                 obj = DeserializeObject<T>(stream);
                 stream.Close();
@@ -372,7 +372,7 @@ namespace MeisterGeister.Model.Service
                     h => h.Held_Ausrüstung.First().Ausrüstung.Fernkampfwaffe.Talent.First().WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Ausrüstung.Schild.WithoutUpdate(),
                     h => h.Held_Ausrüstung.First().Ausrüstung.Rüstung.WithoutUpdate(),
-                    h => h.Held_Sonderfertigkeit,
+                    h => h.Held_Sonderfertigkeit.First().AlwaysInsert(), //simply always insert
                     h => h.Held_Sonderfertigkeit.First().Sonderfertigkeit.WithoutUpdate(),
                     h => h.Held_Sonderfertigkeit.First().Sonderfertigkeit.Sonderfertigkeit_Setting.First().WithoutUpdate(),
                     h => h.Held_Talent,

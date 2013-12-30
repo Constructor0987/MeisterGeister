@@ -123,12 +123,18 @@ namespace MeisterGeister.Model.Extensions
         /// the entity is attached, otherwise a clone of it is added.
         /// </summary>
         /// <returns>The attached entity.</returns>
-        public static object AddOrAttachInstance(this ObjectContext context, object entity, bool applyChanges)
+        public static object AddOrAttachInstance(this ObjectContext context, object entity, bool applyChanges, bool alwaysAdd = false)
         {
             //try { context.MetadataWorkspace.LoadFromAssembly(entity.GetType().Assembly); }
             //catch { }
-            EntityKey entityKey = context.GetEntityKeyFromPrimaryKey(entity);
             object attachedEntity = null;
+            if(alwaysAdd) //always just add the entity, if this is set
+            {
+                attachedEntity = context.GetShallowClone(entity);
+                context.AddObject(context.GetEntitySetName(entity.GetType()), attachedEntity);
+                return attachedEntity;
+            }
+            EntityKey entityKey = context.GetEntityKeyFromPrimaryKey(entity);
             if (entityKey != null && entityKey.EntityKeyValues != null)
                 context.TryGetObjectByKey(entityKey, out attachedEntity);
             if (attachedEntity == null)
@@ -290,6 +296,15 @@ namespace MeisterGeister.Model.Extensions
             throw new InvalidOperationException("The WithoutUpdate() method is a marker method in entity property paths and should not be effectively invoked.");
         }
 
+        /// <summary>
+        /// Marker method to indicate the instances the method is called on
+        /// within path expressions should always be inserted.
+        /// </summary>
+        public static object AlwaysInsert(this System.ComponentModel.INotifyPropertyChanged entity)
+        {
+            throw new InvalidOperationException("The AlwaysInsert() method is a marker method in entity property paths and should not be effectively invoked.");
+        }
+
         #endregion
 
         /// <summary>
@@ -326,7 +341,7 @@ namespace MeisterGeister.Model.Extensions
                     List<object> newlist = new List<object>();
                     foreach (var relatedinstance in (IEnumerable)related)
                     {
-                        object attachedinstance = context.AddOrAttachInstance(relatedinstance, !property.NoUpdate);
+                        object attachedinstance = context.AddOrAttachInstance(relatedinstance, !property.NoUpdate, property.AlwaysInsert);
                         if (attachedinstance != null)
                         {
                             newlist.Add(attachedinstance);
@@ -359,7 +374,7 @@ namespace MeisterGeister.Model.Extensions
                         attachedinstance = null;
                     else
                     {
-                        attachedinstance = context.AddOrAttachInstance(related, !property.NoUpdate);
+                        attachedinstance = context.AddOrAttachInstance(related, !property.NoUpdate, property.AlwaysInsert);
                         NavigatePropertySet(context, childnode, related, attachedinstance);
                     }
 
