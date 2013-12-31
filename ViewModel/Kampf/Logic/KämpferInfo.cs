@@ -195,6 +195,12 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { _verbrauchteAngriffsaktionen = value; OnChanged("VerbrauchteAngriffsaktionen"); }
         }
 
+        [DependentProperty("VerbrauchteAngriffsaktionen"), DependentProperty("Angriffsaktionen")]
+        public int AngriffsaktionenÜbrig
+        {
+            get { return Angriffsaktionen - VerbrauchteAngriffsaktionen; }
+        }
+
         private int _verbrauchteAbwehraktionen = 0;
         public int VerbrauchteAbwehraktionen
         {
@@ -202,11 +208,23 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             set { _verbrauchteAbwehraktionen = value; OnChanged("VerbrauchteAbwehraktionen"); }
         }
 
+        [DependentProperty("VerbrauchteAbwehraktionen"), DependentProperty("Abwehraktionen")]
+        public int AbwehraktionenÜbrig
+        {
+            get { return Abwehraktionen - VerbrauchteAbwehraktionen; }
+        }
+
         private int _verbrauchteFreieAktionen = 0;
         public int VerbrauchteFreieAktionen
         {
             get { return _verbrauchteFreieAktionen; }
             set { _verbrauchteFreieAktionen = value; OnChanged("VerbrauchteFreieAktionen"); }
+        }
+
+        [DependentProperty("VerbrauchteFreieAktionen"), DependentProperty("FreieAktionen")]
+        public int FreieAktionenÜbrig
+        {
+            get { return FreieAktionen - VerbrauchteFreieAktionen; }
         }
 
         public void AktionenBerechnen()

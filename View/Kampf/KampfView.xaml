@@ -168,25 +168,26 @@
                         <!--<TextBlock Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding KämpferInfo.Angriffsaktionen}" ToolTip="Angriffsaktionen"/>-->
                         <Slider VerticalAlignment="Center" Margin="6,0" Minimum="0" Maximum="{Binding KämpferInfo.Aktionen}" Value="{Binding KämpferInfo.Abwehraktionen}" IsSnapToTickEnabled="True" Width="60" ToolTip="Aktionen umwandeln" />
                         <!--<TextBlock VerticalAlignment="Center" Text="{Binding KämpferInfo.Abwehraktionen}" ToolTip="Abwehraktionen"/>-->
-                        <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png">
-                            <ViewGeneral:ImageDuplicator.ToolTip>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.ToolTip>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding KämpferInfo.Angriffsaktionen}" />
                                     <TextBlock Text="Angriffsaktion(en)" Margin="2,0" />
                                 </StackPanel>
-                            </ViewGeneral:ImageDuplicator.ToolTip>
-                        </ViewGeneral:ImageDuplicator>
-                        <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png">
-                            <ViewGeneral:ImageDuplicator.ToolTip>
+                            </StackPanel.ToolTip>
+                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.VerbrauchteAngriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
+                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.AngriffsaktionenÜbrig}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.ToolTip>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding KämpferInfo.Abwehraktionen}" />
                                     <TextBlock Text="Abwehraktion(en)" Margin="2,0" />
                                 </StackPanel>
-                            </ViewGeneral:ImageDuplicator.ToolTip>
-                        </ViewGeneral:ImageDuplicator>
-                        <TextBlock Text="{Binding KämpferInfo.VerbrauchteAbwehraktionen}" />
-                        <TextBlock Text="/" />
-                        <TextBlock Text="{Binding KämpferInfo.VerbrauchteAngriffsaktionen}" />
+                            </StackPanel.ToolTip>
+                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.VerbrauchteAbwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
+                            <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.AbwehraktionenÜbrig}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                        </StackPanel>                        
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

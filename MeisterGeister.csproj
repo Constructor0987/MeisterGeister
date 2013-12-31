@@ -1593,6 +1593,9 @@
     <Content Include="Daten\Bodenplan\toterMann.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\Icons\nahkampf_01_gestrichen.png" />
+    <Resource Include="Images\Icons\schild_gestrichen.png" />
+    <Resource Include="Images\Icons\nahkampf_03_gestrichen.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />
