@@ -1789,7 +1789,11 @@ namespace MeisterGeister.Model
             {
                 int gs = 8;
                 if (HatVorNachteil("Flink"))
+                {
                     gs++;
+                    if (HatVorNachteil("Flink II"))
+                        gs++;
+                }
                 if (HatVorNachteil("Zwergenwuchs"))
                     gs -= 2;
                 if (HatVorNachteil("Kleinwüchsig"))
@@ -1812,6 +1816,8 @@ namespace MeisterGeister.Model
                 int gs = GeschwindigkeitOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModGS).Select(m => (Mod.IModGS)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => gs = m.ApplyGSMod(gs));
+                if (HatVorNachteil("Zwergenwuchs")) // BE aus Last und Rüstung geht nur halb ein WdH 274
+                    return gs - Behinderung / 2;
                 return gs - Behinderung;
             }
         }
@@ -1934,6 +1940,16 @@ namespace MeisterGeister.Model
                     ausweichen += 3;
                 if (HatSonderfertigkeitUndVoraussetzungen("Ausweichen III"))
                     ausweichen += 3;
+                if (HatVorNachteil("Zwergenwuchs"))
+                    ausweichen += 1;
+                if (HatVorNachteil("Flink"))
+                {
+                    ausweichen += 1;
+                    if (HatVorNachteil("Flink II"))
+                        ausweichen += 1;
+                }
+                if (HatVorNachteil("Behäbig"))
+                    ausweichen -= 1;
                 ausweichen += (Math.Max(Talentwert("Akrobatik") - 9, 0) / 3);
                 return ausweichen;
             }
@@ -1948,7 +1964,15 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return AusweichenOhneMod - Behinderung;
+                int a = AusweichenOhneMod;
+                if (HatVorNachteil("Flink") && Behinderung >= 5)
+                {
+                    a -= 1;
+                    if (HatVorNachteil("Flink II") && Behinderung >= 7)
+                        a -= 1;
+                }
+                a -= Behinderung;
+                return a;
             }
         }
 
