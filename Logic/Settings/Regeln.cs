@@ -96,17 +96,5 @@ namespace MeisterGeister.Logic.Settings
                 SetRegelValue("AusdauerImKampf", value);
             }
         }
-
-        public static bool NurDreiZonenWunden
-        {
-            get
-            {
-                return GetRegelValue("NurDreiZonenWunden");
-            }
-            set
-            {
-                SetRegelValue("NurDreiZonenWunden", value);
-            }
-        }
     }
 }

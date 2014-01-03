@@ -175,6 +175,19 @@ namespace MeisterGeister.Logic.Settings
             }
         }
 
+        public static bool NurDreiZonenWunden
+        {
+            get
+            {
+                return GetEinstellung<bool>("NurDreiZonenWunden");
+            }
+            set
+            {
+                SetEinstellung<bool>("NurDreiZonenWunden", value);
+            }
+        }
+
+
         public static bool JingleAbstellen
         {
             get
@@ -183,7 +196,7 @@ namespace MeisterGeister.Logic.Settings
                     return GetEinstellung<bool>("JingleAbstellen");
                 try
                 {
-                    return Convert.ToBoolean(Daten.DatabaseUpdate.GetScalarFromDatabase("SELECT WertBool FROM Einstellungen WHERE Name = 'JingleAbstellen'", 
+                    return Convert.ToBoolean(Daten.DatabaseUpdate.GetScalarFromDatabase("SELECT Wert FROM Einstellung WHERE Name = 'JingleAbstellen'", 
                         MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString));
                 }
                 catch (Exception) { ; }

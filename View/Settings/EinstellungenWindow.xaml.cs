@@ -50,16 +50,6 @@ namespace MeisterGeister.View.Settings
             //tbStdPfad.Text = Einstellungen.GetEinstellung("AudioVerzeichnis", @"C:\");
         }
 
-        private void CheckBoxJingleAbstellen_Checked(object sender, RoutedEventArgs e)
-        {
-            Einstellungen.JingleAbstellen = (bool)_checkBoxJingleAbstellen.IsChecked;
-        }
-
-        private void CheckBoxJingleAbstellen_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Einstellungen.JingleAbstellen = (bool)_checkBoxJingleAbstellen.IsChecked;
-        }
-
         private void ButtonPlayJingle_Click(object sender, RoutedEventArgs e)
         {
             try
