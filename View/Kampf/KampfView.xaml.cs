@@ -69,7 +69,7 @@ namespace MeisterGeister.View.Kampf
 
         private void ShowBodenplanWindow(MeisterGeister.ViewModel.Kampf.KampfViewModel vm)
         {
-#if DEBUG
+
             if (battlegroundWindow == null)
             {
                 battlegroundWindow = new BattlegroundWindow();
@@ -82,7 +82,7 @@ namespace MeisterGeister.View.Kampf
             {
                 battlegroundWindow.Activate();
             }
-#else
+
             //// TODO ??: In Command verschieben
             //if (VM.BodenplanWindow != null)
             //{
@@ -97,7 +97,7 @@ namespace MeisterGeister.View.Kampf
             //    arenaWindow.Closed += ArenaWindow_Closed;
             //    arenaWindow.Show();
             //}
-#endif
+
         }
 
         /*
