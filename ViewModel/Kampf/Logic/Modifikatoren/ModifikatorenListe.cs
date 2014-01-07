@@ -72,7 +72,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
         {
             if (CollectionChanged != null)
             {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
+                try
+                {
+                    CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, element));
+                }
+                catch (ArgumentOutOfRangeException e) //Das in WPF gebundene ListView schmeisst hier manchmal einen Fehler dessen Ursache ich nicht finden konnte.
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                }
+                    
             }
         }
 

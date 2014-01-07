@@ -105,7 +105,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (value < 0)
                     value = 0;
-                if (value > 3 && MeisterGeister.Logic.Settings.Einstellungen.NurDreiZonenWunden || (zone == Trefferzone.Unlokalisiert || zone == Trefferzone.Gesamt)) //WdS 108
+                if (value > 3 && (MeisterGeister.Logic.Settings.Einstellungen.NurDreiZonenWunden || zone == Trefferzone.Unlokalisiert || zone == Trefferzone.Gesamt)) //WdS 108
                     value = 3;
                 if (value == this[zone])
                     return;
