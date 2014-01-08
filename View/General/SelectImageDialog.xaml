@@ -80,15 +80,15 @@
                                 <Image Grid.Column="1" Width="120" Margin="10,0,0,0" MouseDown="ImageHerokonOnline_MouseDown" Cursor="Hand" Source="/Images/Logos/HerokonOnline_Logo.png" ToolTip="http://www.herokon-online.com/" />
                                 <Image Grid.Column="2" Width="80" Margin="10,0,0,0" MouseDown="ImageHerokonOnline_MouseDown" Cursor="Hand" Source="/Images/Logos/SilverStyleStudios_Logo.png" ToolTip="http://www.herokon-online.com/" />
                             </Grid>
-                            <ListBox Grid.Row="1" Background="Transparent" BorderThickness="0" ItemsSource="{Binding RessourceImageList}" SelectedItem="{Binding SelectedRessource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" KeyDown="ListBox_KeyDown" MouseDoubleClick="ListBox_MouseDoubleClick">
+                            <ListBox Grid.Row="1" Background="Transparent" BorderThickness="0" ItemsSource="{Binding RessourceImageList}" SelectedItem="{Binding SelectedRessource}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" KeyDown="ListBox_KeyDown">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <WrapPanel IsItemsHost="True" />
+                                        <WrapPanel IsItemsHost="True" />
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="4">
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="4"  MouseDown="WrapPanel_MouseDown">
                                         <Image Width="100" Height="100" Source="{Binding Path, IsAsync=True}" />
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" ToolTip="{Binding Name}" Width="100" TextTrimming="CharacterEllipsis" />
                                     </StackPanel>

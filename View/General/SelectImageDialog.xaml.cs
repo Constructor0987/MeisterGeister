@@ -86,9 +86,10 @@ namespace MeisterGeister.View.General
             DialogResult = true;
         }
 
-        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void WrapPanel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DialogResult = true;
+            if (e.ClickCount == 2 && e.LeftButton == MouseButtonState.Pressed)
+                DialogResult = true;
         }
     }
 
