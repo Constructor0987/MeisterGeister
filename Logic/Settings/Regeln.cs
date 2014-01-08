@@ -11,6 +11,7 @@ namespace MeisterGeister.Logic.Settings
     {
         static Regeln()
         {
+            _eigenschaftenProbePatzerGlück = GetRegelValue("EigenschaftenProbePatzerGlück");
         }
 
         private static bool GetRegelValue(string name, bool defaultValue = true)
@@ -37,14 +38,17 @@ namespace MeisterGeister.Logic.Settings
             }
         }
 
+        // Nach einer Änderung über das Einstellungen-Fenster muss MG erst neu gestartet werden, damit diee Änderung wirkt.
+        private static bool _eigenschaftenProbePatzerGlück = false;
         public static bool EigenschaftenProbePatzerGlück
         {
             get
             {
-                return GetRegelValue("EigenschaftenProbePatzerGlück");
+                return _eigenschaftenProbePatzerGlück;
             }
             set
             {
+                _eigenschaftenProbePatzerGlück = value;
                 SetRegelValue("EigenschaftenProbePatzerGlück", value);
             }
         }
