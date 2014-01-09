@@ -92,7 +92,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     default:
                         break;
                 }
-                OnChanged(string.Empty);
+                OnChanged("[]");
             }
         }
 

@@ -221,7 +221,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _held.Wunden = value;
                         break;
                 }
-                OnChanged("");
+                OnChanged("[]");
             }
         }
 
