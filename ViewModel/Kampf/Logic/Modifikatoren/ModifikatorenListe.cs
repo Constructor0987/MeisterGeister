@@ -80,6 +80,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
                 {
                     System.Diagnostics.Debug.WriteLine(e.Message);
                     System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                    CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset, null));
                 }
                     
             }

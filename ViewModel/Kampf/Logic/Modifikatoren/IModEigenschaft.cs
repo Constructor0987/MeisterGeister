@@ -59,7 +59,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     #region Abgeleitete Eigenschaften
     public interface IModGS : IModEigenschaft
     {
-        int ApplyGSMod(int wert);
+        double ApplyGSMod(double wert);
     }
 
     public interface IModLE : IModEigenschaft

@@ -139,35 +139,71 @@ namespace MeisterGeister.Model
             get { throw new NotImplementedException(); }
         }
 
-        [DependentProperty("KO")]
+        [DependentProperty("Konstitution")]
         public int Körperkraft
         {
-            get { return KO; }
+            get 
+            { 
+                int e = Konstitution;
+                if (e == 0)
+                    return 0;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
+                return e;
+            }
         }
 
-        [DependentProperty("KO")]
+        [DependentProperty("Konstitution")]
         public int Gewandtheit
         {
-            get { return KO; }
+            get
+            {
+                int e = Konstitution;
+                if (e == 0)
+                    return 0;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModGE).Select(m => (Mod.IModGE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyGEMod(e));
+                return e;
+            }
         }
 
         [DependentProperty("KO")]
+        [DependsOnModifikator(typeof(Mod.IModKO))]
         public int Konstitution
         {
-            get { return KO; }
+            get
+            {
+                int e = KO;
+                if (e == 0)
+                    return e;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModKO).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
+                return e;
+            }
         }
 
         //return GS abhängig vom Modus (fliegend, am boden, galopp, etc.)
         [DependentProperty("GS")]
         public double Geschwindigkeit
         {
-            get { return GS; }
+            get
+            {
+                double gs = GS;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModGS).Select(m => (Mod.IModGS)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => gs = m.ApplyGSMod(gs));
+                return Math.Max(gs, 1.0);
+            }
         }
 
         [DependentProperty("LE")]
         public int LebensenergieMax
         {
-            get { return LE;  }
+            get {
+                int le = LE;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModLE).Select(m => (Mod.IModLE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => le = m.ApplyLEMod(le));
+                return le;
+            }
         }
 
         [DependentProperty("LEAktuell")]
@@ -195,7 +231,13 @@ namespace MeisterGeister.Model
         [DependentProperty("AU")]
         public int AusdauerMax
         {
-            get { return AU; }
+            get
+            {
+                int e = AU;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModAU).Select(m => (Mod.IModAU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAUMod(e));
+                return e;
+            }
         }
 
         [DependentProperty("AUAktuell")]
@@ -223,7 +265,15 @@ namespace MeisterGeister.Model
         [DependentProperty("AE")]
         public int AstralenergieMax
         {
-            get { return AE; }
+            get
+            {
+                int e = AE;
+                if (e == 0)
+                    return e;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModAE).Select(m => (Mod.IModAE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAEMod(e));
+                return e;
+            }
         }
 
         [DependentProperty("AEAktuell")]
@@ -241,7 +291,15 @@ namespace MeisterGeister.Model
 
         public int KarmaenergieMax
         {
-            get { return 0; }
+            get
+            {
+                int e = 0;
+                if (e == 0)
+                    return e;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModKE).Select(m => (Mod.IModKE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKEMod(e));
+                return e;
+            }
         }
 
         public int KarmaenergieAktuell
@@ -257,7 +315,14 @@ namespace MeisterGeister.Model
         {
             get {
                 //TODO JT: stattdessen selectedangriff verwenden
-                return AT;
+                int v = AT;
+                if (v == 0)
+                    return v;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModATBasis).Select(m => (Mod.IModATBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATBasisMod(v));
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModAT).Select(m => (Mod.IModAT)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATMod(v));
+                return v;
             }
         }
 
@@ -265,14 +330,24 @@ namespace MeisterGeister.Model
         {
             get {
                 // TODO JT stattdessen selectedangriff verwenden
-                return PA; 
+                int v = PA;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModPABasis).Select(m => (Mod.IModPABasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPABasisMod(v));
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModPA).Select(m => (Mod.IModPA)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPAMod(v));
+                return v;
             }
         }
 
         [DependentProperty("MRKörper")]
         public int MR
         {
-            get { return MRKörper ?? 0; }
+            get { 
+                int e = MRKörper ?? 0;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModMR).Select(m => (Mod.IModMR)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyMRMod(e));
+                return e;
+            }
         }
 
         private Rüstungsschutz _rs = null;

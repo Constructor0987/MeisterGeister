@@ -175,7 +175,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return ModifikatorenListe(typeof(Mod.IModGS), GeschwindigkeitOhneMod);
+                return ModifikatorenListe(typeof(Mod.IModGS), (double)GeschwindigkeitOhneMod);
             }
         }
 
@@ -1199,8 +1199,8 @@ namespace MeisterGeister.Model
             t.IsBehinderung = true;
             if (false) //automatisch würfeln
             {
-                t.Modifikator += t.BehinderungEff;
-                return t.Würfeln();
+                //t.Modifikator += t.BehinderungEff;
+                //return t.Würfeln();
             }
             else //per Dialog würfeln
             {
@@ -1813,12 +1813,12 @@ namespace MeisterGeister.Model
         public double Geschwindigkeit
         {
             get {
-                int gs = GeschwindigkeitOhneMod;
+                double gs = GeschwindigkeitOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModGS).Select(m => (Mod.IModGS)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => gs = m.ApplyGSMod(gs));
                 if (HatVorNachteil("Zwergenwuchs")) // BE aus Last und Rüstung geht nur halb ein WdH 274
                     return gs - Behinderung / 2;
-                return gs - Behinderung;
+                return Math.Max(gs - Behinderung, 1.0);
             }
         }
 

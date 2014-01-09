@@ -42,7 +42,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             return wert - 1;
         }
 
-        public int ApplyGSMod(int wert)
+        public double ApplyGSMod(double wert)
         {
             return Math.Max(1, wert - 1);
         }
@@ -103,7 +103,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "WdS 57"; }
         }
 
-        public int ApplyGSMod(int wert)
+        public double ApplyGSMod(double wert)
         {
             return 1;
         }
@@ -126,7 +126,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             get { return "WdS 83"; }
         }
 
-        public int ApplyGSMod(int wert)
+        public double ApplyGSMod(double wert)
         {
             return 1;
         }
