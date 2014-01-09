@@ -350,7 +350,7 @@
                             <TreeView.ContextMenu>
                                 <ContextMenu Opened="ContextMenu_Opened">
                                     <ContextMenu.Items>
-                                        <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28">
+                                        <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" ToolTip="Unter 'Advanced' -> 'A' kann die Transparenz eingestellt werden!">
                                             <MenuItem.Header>
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="Farbe: " />
