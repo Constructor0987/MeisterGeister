@@ -192,7 +192,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (k==null || k.LebensenergieMax == 0)
                     return string.Empty;
                 int leModCount = 0;
-                if (k.LebensenergieAktuell < k.Konstitution * -1)
+                int ko = MeisterGeister.Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? k.Konstitution : k.KonstitutionOhneWunden;
+                if (k.LebensenergieAktuell < ko * -1)
                     return "Tot";
                 else if (k.LebensenergieAktuell <= 0)
                     return "Bewusstlos";
@@ -211,13 +212,14 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (k == null || k.LebensenergieMax == 0)
                     return string.Empty;
                 string info = string.Empty; int leModCount = 0;
-                if (k.LebensenergieAktuell < k.Konstitution * -1)
+                int ko = MeisterGeister.Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? k.Konstitution : k.KonstitutionOhneWunden;
+                if (k.LebensenergieAktuell < ko * -1)
                     info = "Tot";
                 else if (k.LebensenergieAktuell <= 0)
                 {
                     info = "Bewusstlos";
                     info += Environment.NewLine + string.Format("tot in W6 x KO ({0}) Kampfrunden ({0} bis {1} KR = {2} bis {3} sec)",
-                        k.Konstitution, 6 * k.Konstitution, 3 * k.Konstitution, 18 * k.Konstitution);
+                        ko, 6 * ko, 3 * ko, 18 * ko);
                 }
                 else if (Modifikatoren.Where(m => m is Mod.LebensenergieKampfunfähigModifikator).Count() > 0)
                 {

@@ -23,6 +23,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         int Körperkraft { get; }
         int Gewandtheit { get; }
         int Konstitution { get; }
+        int KonstitutionOhneWunden { get; }
         double Geschwindigkeit { get; }
 
         //
