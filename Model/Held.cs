@@ -273,6 +273,19 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KO")]
+        [DependsOnModifikator(typeof(Mod.IModKO))]
+        public int KonstitutionOhneWunden
+        {
+            get
+            {
+                int e = KO ?? 8;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModKO && !(m is Mod.WundenModifikatorBase)).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
+                return e;
+            }
+        }
+
         [DependentProperty("KK")]
         [DependsOnModifikator(typeof(Mod.IModKK))]
         public int Körperkraft
@@ -760,7 +773,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                int ko = Konstitution;
+                int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = Convert.ToInt32(Math.Round(ko / 2.0, 0, MidpointRounding.AwayFromZero));
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
@@ -775,7 +788,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                int ko = Konstitution;
+                int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = ko;
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
@@ -790,7 +803,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                int ko = Konstitution;
+                int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = Convert.ToInt32(Math.Round(ko * 1.5, 0, MidpointRounding.AwayFromZero));
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;

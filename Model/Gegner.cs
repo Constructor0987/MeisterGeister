@@ -182,6 +182,21 @@ namespace MeisterGeister.Model
             }
         }
 
+        [DependentProperty("KO")]
+        [DependsOnModifikator(typeof(Mod.IModKO))]
+        public int KonstitutionOhneWunden
+        {
+            get
+            {
+                int e = KO;
+                if (e == 0)
+                    return e;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModKO && !(m is Mod.WundenModifikatorBase)).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
+                return e;
+            }
+        }
+
         //return GS abhängig vom Modus (fliegend, am boden, galopp, etc.)
         [DependentProperty("GS")]
         public double Geschwindigkeit
@@ -381,7 +396,10 @@ namespace MeisterGeister.Model
                 if (Konstitution == 0)
                     return (int)Math.Round(LebensenergieMax / 6.0, MidpointRounding.AwayFromZero); //ZBA 10, inoffizielle Errata Wiki Aventurica
                 else
-                    return (int)Math.Round(Konstitution / 2.0, MidpointRounding.AwayFromZero);
+                {
+                    int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                    return (int)Math.Round(ko / 2.0, MidpointRounding.AwayFromZero);
+                }
             }
         }
 
@@ -392,7 +410,10 @@ namespace MeisterGeister.Model
                 if (Konstitution == 0)
                     return (int)Math.Round(LebensenergieMax / 3.0, MidpointRounding.AwayFromZero);
                 else
-                    return Konstitution; 
+                {
+                    int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                    return ko; 
+                }
             }
         }
 
@@ -403,7 +424,10 @@ namespace MeisterGeister.Model
                 if (Konstitution == 0)
                     return (int)Math.Round(LebensenergieMax / 2.0, MidpointRounding.AwayFromZero);
                 else
-                    return (int)Math.Round(Konstitution * 1.5, MidpointRounding.AwayFromZero); 
+                {
+                    int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                    return (int)Math.Round(ko * 1.5, MidpointRounding.AwayFromZero);
+                }
             }
         }
 
