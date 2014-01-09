@@ -380,7 +380,9 @@ namespace MeisterGeister.Logic.Settings
         {
             get
             {
-                return GetEinstellung<string>("Standort");
+                string s = GetEinstellung<string>("Standort");
+                // TODO MT: Diese Syntax-Prüfung sollte in dem DG-Suche-PlugIn erfolgen, wenn eine Ortsmarke erstellt wird.
+                return string.IsNullOrEmpty(s) ? "Gareth#29.79180235685203#3.735098459067687" : s;
             }
             set
             {
