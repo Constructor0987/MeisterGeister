@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+             
              mc:Ignorable="d" 
              d:DesignHeight="306" d:DesignWidth="669"
              Background="{StaticResource Background1}">
     <UserControl.Resources>
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
+        <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
         <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Opacity" Value="1.0" />
@@ -69,7 +71,7 @@
                 </Image>
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" Style="{StaticResource KämpferListItemStyle}" Margin="0,2">
-                        <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung}" />
+                        <Rectangle Margin="4,0,4,-2" Width="10" VerticalAlignment="Stretch" Fill="{Binding KämpferInfo.Kämpfer.Farbmarkierung, Converter={StaticResource ColorToBrushConverter}}" />
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,2">
                                 <Grid Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -119,22 +121,26 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Angriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png">
-                                    <ViewGeneral:ImageDuplicator.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel.ToolTip>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding KämpferInfo.Angriffsaktionen}" />
                                             <TextBlock Text="Angriffsaktion(en)" Margin="2,0" />
                                         </StackPanel>
-                                    </ViewGeneral:ImageDuplicator.ToolTip>
-                                </ViewGeneral:ImageDuplicator>
-                                <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.Abwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png">
-                                    <ViewGeneral:ImageDuplicator.ToolTip>
+                                    </StackPanel.ToolTip>
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.VerbrauchteAngriffsaktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01_gestrichen.png" />
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.AngriffsaktionenÜbrig}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel.ToolTip>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding KämpferInfo.Abwehraktionen}" />
                                             <TextBlock Text="Abwehraktion(en)" Margin="2,0" />
                                         </StackPanel>
-                                    </ViewGeneral:ImageDuplicator.ToolTip>
-                                </ViewGeneral:ImageDuplicator>
+                                    </StackPanel.ToolTip>
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.VerbrauchteAbwehraktionen}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild_gestrichen.png" />
+                                    <ViewGeneral:ImageDuplicator VerticalAlignment="Center" Anzahl="{Binding KämpferInfo.AbwehraktionenÜbrig}" ImageSource="/DSA%20MeisterGeister;component/Images/Icons/schild.png" />
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
