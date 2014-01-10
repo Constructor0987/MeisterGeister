@@ -121,42 +121,42 @@ GO
 
 --Standort
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
-SELECT 'Allgemein','Versteckt','Standort','String', CASE WHEN WertText is NOT NULL THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='Standort'
+SELECT 'Allgemein','Versteckt','Standort','String', CASE WHEN WertText is NOT NULL and LEN(cast(WertText as nvarchar)) > 0 THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='Standort'
 GO
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
 SELECT 'Allgemein','Versteckt','Standort','String','Gareth#29.79180235685203#3.735098459067687',cast(NULL as ntext) WHERE not EXISTS (SELECT EinstellungGUID from Einstellung WHERE Name='Standort')
 GO
 --SelectedHeld
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
-SELECT 'Helden','Versteckt','SelectedHeld','String', CASE WHEN WertText is NOT NULL THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='SelectedHeld'
+SELECT 'Helden','Versteckt','SelectedHeld','String', CASE WHEN WertText is NOT NULL and LEN(cast(WertText as nvarchar)) > 0 THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='SelectedHeld'
 GO
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
 SELECT 'Helden','Versteckt','SelectedHeld','String',cast(NULL as ntext),cast(NULL as ntext) WHERE not EXISTS (SELECT EinstellungGUID from Einstellung WHERE Name='SelectedHeld')
 GO
 --ProbenFavoriten
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
-SELECT 'Proben','Versteckt','ProbenFavoriten','String', CASE WHEN WertText is NOT NULL THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='ProbenFavoriten'
+SELECT 'Proben','Versteckt','ProbenFavoriten','String', CASE WHEN WertText is NOT NULL and LEN(cast(WertText as nvarchar)) > 0 THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='ProbenFavoriten'
 GO
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
 SELECT 'Proben','Versteckt','ProbenFavoriten','String',cast(NULL as ntext),cast(NULL as ntext) WHERE not EXISTS (SELECT EinstellungGUID from Einstellung WHERE Name='ProbenFavoriten')
 GO
 --PdfReaderCommand
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
-SELECT 'Almanach',NULL,'PdfReaderCommand','String', CASE WHEN WertText is NOT NULL THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='PdfReaderCommand'
+SELECT 'Almanach',NULL,'PdfReaderCommand','String', CASE WHEN WertText is NOT NULL and LEN(cast(WertText as nvarchar)) > 0 THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='PdfReaderCommand'
 GO
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
 SELECT 'Almanach',NULL,'PdfReaderCommand','String',cast(NULL as ntext),cast(NULL as ntext) WHERE not EXISTS (SELECT EinstellungGUID from Einstellung WHERE Name='PdfReaderCommand')
 GO
 --PdfReaderArguments
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
-SELECT 'Almanach',NULL,'PdfReaderArguments','String', CASE WHEN WertText is NOT NULL THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='PdfReaderArguments'
+SELECT 'Almanach',NULL,'PdfReaderArguments','String', CASE WHEN WertText is NOT NULL and LEN(cast(WertText as nvarchar)) > 0 THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='PdfReaderArguments'
 GO
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
 SELECT 'Almanach',NULL,'PdfReaderArguments','String',cast(NULL as ntext),cast(NULL as ntext) WHERE not EXISTS (SELECT EinstellungGUID from Einstellung WHERE Name='PdfReaderArguments')
 GO
 --KampfRecentColors
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
-SELECT 'Kampf','Versteckt','KampfRecentColors','String', CASE WHEN WertText is NOT NULL THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='KampfRecentColors'
+SELECT 'Kampf','Versteckt','KampfRecentColors','String', CASE WHEN WertText is NOT NULL and LEN(cast(WertText as nvarchar)) > 0 THEN WertText ELSE cast(WertString as ntext) END,cast(NULL as ntext) FROM Einstellungen_old WHERE Name='KampfRecentColors'
 GO
 INSERT INTO [Einstellung] ([Kontext],[Kategorie],[Name],[Typ],[Wert],[Beschreibung]) 
 SELECT 'Kampf','Versteckt','KampfRecentColors','String',cast(NULL as ntext),cast(NULL as ntext) WHERE not EXISTS (SELECT EinstellungGUID from Einstellung WHERE Name='KampfRecentColors')
