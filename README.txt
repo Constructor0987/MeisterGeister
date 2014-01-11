@@ -4,11 +4,11 @@
 *                                        *
 *        DSA MeisterGeister              *
 *                                        *
-*         Version 2.3.0                  *
+*         Version 2.3.2                  *
 *                                        *
 ******************************************
 
-Copyright © MeisterGeister-Team 2010-2013
+Copyright © MeisterGeister-Team 2010-2014
 http://www.meistergeister.org/
 Kontakt: info@meistergeister.org
 

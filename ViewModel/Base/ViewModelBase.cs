@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Diagnostics;
 using MeisterGeister.Logic.General;
+using System.Windows.Threading;
 
 namespace MeisterGeister.ViewModel.Base {
     public abstract class ViewModelBase : INotifyPropertyChanged {
@@ -19,6 +20,8 @@ namespace MeisterGeister.ViewModel.Base {
         private Func<string, string, int> confirmYesNoCancel;
         private Func<string, string, bool, string[], string> chooseFile;
         private Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog;
+
+        public virtual Dispatcher Dispatcher { get; protected set; }
         #endregion
 
         #region Konstruktoren
@@ -33,6 +36,7 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="showProbeDialog">Zeigt einen Probe-Dialog an (Probe, Held).</param>
         protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
         {
+            this.Dispatcher = Dispatcher.CurrentDispatcher;
             this.popup = popup;
             this.confirm = confirm;
             this.confirmYesNoCancel = confirmYesNoCancel;
