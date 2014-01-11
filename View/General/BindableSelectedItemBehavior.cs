@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Interactivity;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace MeisterGeister.View.General
 {
@@ -73,7 +74,12 @@ namespace MeisterGeister.View.General
             if (treeViewItem.DataContext == selectedValue)
             {
                 treeViewItem.SetValue(TreeViewItem.IsSelectedProperty, true);
-                treeViewItem.Focus();
+
+                var parent = VisualTreeHelper.GetParent(treeViewItem);
+                while (parent != null && !(parent is Window))
+                    parent = VisualTreeHelper.GetParent(parent);
+                if(parent != null && parent is Window && (parent as Window).IsActive)
+                    treeViewItem.Focus();
                 return true;
             }
 
