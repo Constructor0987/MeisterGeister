@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="MeisterGeister.View.NscGenerator.NscGeneratorPersonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Border Margin="5" Padding="4" CornerRadius="5">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="1,0.5" Opacity="0.3" StartPoint="0,0.5">
+                <GradientStop Color="WhiteSmoke" Offset="0" />
+                <GradientStop Color="#FFFFFFC7" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontWeight="Bold" Text="{Binding Name}" />
+                <Image Height="20" Width="20" HorizontalAlignment="Center" Source="{Binding GeschlechtView}" Stretch="Fill" VerticalAlignment="Center" />
+            </StackPanel>
+            <TextBlock FontSize="9" Text="{Binding NameBedeutung}" Visibility="{Binding}" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Alter: " />
+                <TextBlock FontSize="11" Text="{Binding Alter}" />
+                <TextBlock FontSize="11" Text=" (" />
+                <TextBlock FontSize="11" Text="{Binding Altersklasse}" />
+                <TextBlock FontSize="11" Text=") " />
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Stand: " />
+                <TextBlock FontSize="11" Text="{Binding Stand}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Rasse: " />
+                <TextBlock FontSize="11" Text="{Binding Rasse.Variante}" />
+                <TextBlock FontSize="11" FontWeight="Bold" Text=" Kultur: " />
+                <TextBlock FontSize="11" Text="{Binding Kultur.Variante}" />
+                <TextBlock FontSize="11" FontWeight="Bold" Text=" Profession: " Visibility="Collapsed" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Größe: " />
+                <TextBlock FontSize="11" Text="{Binding Größe}" />
+                <TextBlock FontSize="11" Text=" (" />
+                <TextBlock FontSize="11" Text="{Binding GrößeFinger}" />
+                <TextBlock FontSize="11" Text=" Finger) " />
+                <TextBlock FontSize="11" FontWeight="Bold" Text="{Binding GrößeMod}" />
+                <TextBlock FontSize="11" FontWeight="Bold" Text=" Gewicht: " />
+                <TextBlock FontSize="11" Text="{Binding Gewicht}" />
+                <TextBlock FontSize="11" FontWeight="Bold" Text=" Haarfarbe: " />
+                <TextBlock FontSize="11" Text="{Binding Haarfarbe}" />
+                <TextBlock FontSize="11" FontWeight="Bold" Text=" Augenfarbe: " />
+                <TextBlock FontSize="11" Text="{Binding Augenfarbe}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Aussehen: " />
+                <TextBlock FontSize="11" Text="{Binding Aussehen}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Charakter: " />
+                <TextBlock FontSize="11" Text="{Binding Charakter}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Soziales: " />
+                <TextBlock FontSize="11" Text="{Binding Soziales}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Historie: " />
+                <TextBlock FontSize="11" Text="{Binding Historie}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Vorlieben: " />
+                <TextBlock FontSize="11" Text="{Binding Vorlieben}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Besonderes: " />
+                <TextBlock FontSize="11" Text="{Binding Besonderes}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsNurName}">
+                <TextBlock FontSize="11" FontWeight="Bold" Text="Verhalten und Darstellung: " />
+                <TextBlock FontSize="11" MaxWidth="600" Text="{Binding VerhaltenUndDarstellung}" TextWrapping="WrapWithOverflow" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                <TextBlock FontSize="11" Text="Kompetenz: " />
+                <TextBlock FontSize="11" Text="{Binding Kompetenz}" />
+                <TextBlock FontSize="11" Text=" Kampffähigkeit: " />
+                <TextBlock FontSize="11" Text="{Binding Kampffähigkeit}" />
+                <TextBlock FontSize="11" Text=" Offenheit: " />
+                <TextBlock FontSize="11" Text="{Binding Offenheit}" />
+                <TextBlock FontSize="11" Text=" Gewissenhaftigkeit: " />
+                <TextBlock FontSize="11" Text="{Binding Gewissenhaftigkeit}" />
+                <TextBlock FontSize="11" Text=" Extraversion: " />
+                <TextBlock FontSize="11" Text="{Binding Extraversion}" />
+                <TextBlock FontSize="11" Text=" Verträglichkeit: " />
+                <TextBlock FontSize="11" Text="{Binding Verträglichkeit}" />
+                <TextBlock FontSize="11" Text=" Neurotizismus: " />
+                <TextBlock FontSize="11" Text="{Binding Neurotizismus}" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

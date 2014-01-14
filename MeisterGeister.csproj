@@ -655,6 +655,9 @@
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
       <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\NscGenerator\NscGeneratorPersonControl.xaml.cs">
+      <DependentUpon>NscGeneratorPersonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Proben\ProbenSpielerInfoView.xaml.cs">
       <DependentUpon>ProbenSpielerInfoView.xaml</DependentUpon>
     </Compile>
@@ -1034,6 +1037,10 @@
     <Page Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\NscGenerator\NscGeneratorPersonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Proben\ProbenSpielerInfoView.xaml">
       <Generator>MSBuild:Compile</Generator>
