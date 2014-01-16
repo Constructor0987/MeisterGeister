@@ -89,6 +89,20 @@ namespace MeisterGeister.Daten
             }
         }
 
+        public static void RepairDatabase(string connectionString)
+        {
+            try
+            {
+                SqlCeEngine engine = new SqlCeEngine(connectionString);
+                engine.Repair(connectionString, RepairOption.DeleteCorruptedRows);
+            }
+            catch (Exception ex)
+            {
+                MsgWindow errWin = new MsgWindow("Datenbank reparieren", "Beim Reparieren der Datenbank ist ein Fehler aufgetreten!", ex);
+                errWin.ShowDialog();
+            }
+        }
+
         #endregion
     }
 }

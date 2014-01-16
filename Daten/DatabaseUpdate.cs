@@ -127,6 +127,9 @@ namespace MeisterGeister.Daten
                 // Backup erstellen
                 DatabaseTools.BackupDatabase("BACKUP_UPDATE_" + UserDatabaseVersion);
 
+                //Datenbank reparieren
+                DatabaseTools.RepairDatabase(connectionString);
+
                 // Updates durchführen
                 for (int i = ((int)UserDatabaseVersion + 1); i <= DatenbankVersionAktuell; i++)
                 {
