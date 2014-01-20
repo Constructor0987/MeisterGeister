@@ -28,6 +28,10 @@ namespace MeisterGeister.View.SpielerScreen
         public SpielerScreenControlView()
         {
             InitializeComponent();
+
+            // Letzten Bilderpfad laden
+            _textBlockFilePath.Text = Logic.Settings.Einstellungen.SpielerInfoBilderPfad;
+            LoadImagesFromDir(_textBlockFilePath.Text);
         }
 
         private void ButtonSpielerInfoControl_Click(object sender, RoutedEventArgs e)
@@ -63,42 +67,48 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        private string _openedDir = string.Empty;
-
         private void ButtonOpenDir_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.SelectedPath = _openedDir;
+            dlg.SelectedPath = Logic.Settings.Einstellungen.SpielerInfoBilderPfad;
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                _openedDir = dlg.SelectedPath;
-                _textBlockFilePath.Text = _openedDir;
+                Logic.Settings.Einstellungen.SpielerInfoBilderPfad = dlg.SelectedPath;
+                _textBlockFilePath.Text = Logic.Settings.Einstellungen.SpielerInfoBilderPfad;
 
-                string[] filesBmp = Directory.GetFiles(dlg.SelectedPath, "*.bmp");
-                string[] filesGif = Directory.GetFiles(dlg.SelectedPath, "*.gif");
-                string[] filesJpg = Directory.GetFiles(dlg.SelectedPath, "*.jpg");
-                string[] filesJpeg = Directory.GetFiles(dlg.SelectedPath, "*.jpeg");
-                string[] filesJpe = Directory.GetFiles(dlg.SelectedPath, "*.jpe");
-                string[] filesJfif = Directory.GetFiles(dlg.SelectedPath, "*.jfif");
-                string[] filesPng = Directory.GetFiles(dlg.SelectedPath, "*.png");
-                string[] filesTif = Directory.GetFiles(dlg.SelectedPath, "*.tif");
-                string[] filesTiff = Directory.GetFiles(dlg.SelectedPath, "*.tiff");
-
-                List<dynamic> fileList = new List<dynamic>();
-                AddImages(fileList, filesBmp);
-                AddImages(fileList, filesBmp);
-                AddImages(fileList, filesGif);
-                AddImages(fileList, filesJpg);
-                AddImages(fileList, filesJpeg);
-                AddImages(fileList, filesJpe);
-                AddImages(fileList, filesJfif);
-                AddImages(fileList, filesPng);
-                AddImages(fileList, filesTif);
-                AddImages(fileList, filesTiff);
-
-                _listBoxDirectory.ItemsSource = fileList.OrderBy(img => img.Name);
+                LoadImagesFromDir(dlg.SelectedPath);
             }
+        }
+
+        private void LoadImagesFromDir(string pfad)
+        {
+            if (string.IsNullOrWhiteSpace(pfad))
+                return;
+
+            string[] filesBmp = Directory.GetFiles(pfad, "*.bmp");
+            string[] filesGif = Directory.GetFiles(pfad, "*.gif");
+            string[] filesJpg = Directory.GetFiles(pfad, "*.jpg");
+            string[] filesJpeg = Directory.GetFiles(pfad, "*.jpeg");
+            string[] filesJpe = Directory.GetFiles(pfad, "*.jpe");
+            string[] filesJfif = Directory.GetFiles(pfad, "*.jfif");
+            string[] filesPng = Directory.GetFiles(pfad, "*.png");
+            string[] filesTif = Directory.GetFiles(pfad, "*.tif");
+            string[] filesTiff = Directory.GetFiles(pfad, "*.tiff");
+
+            List<dynamic> fileList = new List<dynamic>();
+            AddImages(fileList, filesBmp);
+            AddImages(fileList, filesBmp);
+            AddImages(fileList, filesGif);
+            AddImages(fileList, filesJpg);
+            AddImages(fileList, filesJpeg);
+            AddImages(fileList, filesJpe);
+            AddImages(fileList, filesJfif);
+            AddImages(fileList, filesPng);
+            AddImages(fileList, filesTif);
+            AddImages(fileList, filesTiff);
+
+            _listBoxDirectory.ItemsSource = fileList.OrderBy(img => img.Name);
         }
 
         private void AddImages(List<dynamic> fileList, string[] files)

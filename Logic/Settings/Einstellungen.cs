@@ -65,6 +65,7 @@ namespace MeisterGeister.Logic.Settings
                 new Model.Einstellung() { Name = "UmrechnerExpandedSections", Kontext = "Umrechner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "111111" },
                 new Model.Einstellung() { Name = "GegnerViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "11" },
                 new Model.Einstellung() { Name = "GegnerDetailViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "110" },
+                new Model.Einstellung() { Name = "SpielerInfoBilderPfad", Kontext = "SpielerInfo", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = string.Empty },
             };
         }
         private static Dictionary<string, Model.Einstellung> defaultValues = null;
@@ -447,6 +448,18 @@ namespace MeisterGeister.Logic.Settings
             set
             {
                 SetEinstellung<string>("PdfReaderArguments", value);
+            }
+        }
+
+        public static string SpielerInfoBilderPfad
+        {
+            get
+            {
+                return GetEinstellung<string>("SpielerInfoBilderPfad");
+            }
+            set
+            {
+                SetEinstellung<string>("SpielerInfoBilderPfad", value);
             }
         }
 
