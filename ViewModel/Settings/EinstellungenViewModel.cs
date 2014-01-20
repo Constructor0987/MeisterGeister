@@ -194,12 +194,6 @@ namespace MeisterGeister.ViewModel.Settings
             set { einstellung.Name = value; }
         }
 
-        public Guid EinstellungGUID
-        {
-            get { return einstellung.EinstellungGUID; }
-            set { einstellung.EinstellungGUID = value; }
-        }
-
         public String Beschreibung
         {
             get { return einstellung.Beschreibung; }

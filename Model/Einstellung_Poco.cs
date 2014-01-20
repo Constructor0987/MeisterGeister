@@ -36,19 +36,6 @@ namespace MeisterGeister.Model
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual System.Guid EinstellungGUID
-        {
-            get { return _einstellungGUID; }
-            set
-    		{ 
-    			_einstellungGUID = value;
-    			OnChanged("EinstellungGUID");
-    		}
-    
-        }
-        private System.Guid _einstellungGUID;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
         public virtual string Kontext
         {
             get { return _kontext; }
