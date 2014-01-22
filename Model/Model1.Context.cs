@@ -8,8 +8,8 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Data.Objects;
-using System.Data.EntityClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Core.EntityClient;
 
 namespace MeisterGeister.Model
 {

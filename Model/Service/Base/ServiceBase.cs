@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using System.Data.Objects;
+using System.Data.Entity.Core.Objects;
 
 using MeisterGeister.Model.Extensions;
 
@@ -105,25 +105,25 @@ namespace MeisterGeister.Model.Service {
             }
         }
 
-        public virtual System.Data.EntityState GetEntityState(object entity)
+        public virtual System.Data.Entity.EntityState GetEntityState(object entity)
         {
             return Context.ObjectStateManager.GetObjectStateEntry(entity).State;
         }
 
-        public virtual IEnumerable<ObjectStateEntry> GetObjectStateEntriesWithEntityState<T>(System.Data.EntityState state)
+        public virtual IEnumerable<ObjectStateEntry> GetObjectStateEntriesWithEntityState<T>(System.Data.Entity.EntityState state)
         {
             return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T);
         }
 
-        public virtual IEnumerable<T> GetObjectsWithEntityState<T>(System.Data.EntityState state)
+        public virtual IEnumerable<T> GetObjectsWithEntityState<T>(System.Data.Entity.EntityState state)
         {
             return Context.ObjectStateManager.GetObjectStateEntries(state).Where(os => os.Entity is T).Select(os => (T)os.Entity);
         }
 
-        protected virtual IDictionary<object, System.Data.EntityState> GetChangedEntities()
+        protected virtual IDictionary<object, System.Data.Entity.EntityState> GetChangedEntities()
         {
-            IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified);
-            IDictionary<object, System.Data.EntityState> ret = new Dictionary<object, System.Data.EntityState>();
+            IEnumerable<ObjectStateEntry> objectStates = Context.ObjectStateManager.GetObjectStateEntries(System.Data.Entity.EntityState.Added | System.Data.Entity.EntityState.Deleted | System.Data.Entity.EntityState.Modified);
+            IDictionary<object, System.Data.Entity.EntityState> ret = new Dictionary<object, System.Data.Entity.EntityState>();
             foreach (ObjectStateEntry os in objectStates)
                 ret.Add(os.Entity, os.State);
             return ret;

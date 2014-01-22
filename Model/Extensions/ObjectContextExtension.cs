@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Metadata.Edm;
-using System.Data.Objects;
-using System.Data.Objects.DataClasses;
+using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Core.Objects.DataClasses;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -184,7 +185,7 @@ namespace MeisterGeister.Model.Extensions
         {
             IDictionary<string, object> key = new Dictionary<string, object>();
             string entitysetname = context.GetEntitySetName(o.GetType());
-            foreach (System.Data.Metadata.Edm.EdmMember keyMember in context.GetEntitySet(o.GetType()).ElementType.KeyMembers)
+            foreach (System.Data.Entity.Core.Metadata.Edm.EdmMember keyMember in context.GetEntitySet(o.GetType()).ElementType.KeyMembers)
             {
                 //Impromptu ist schneller als Reflection
                 object keyValue = ImpromptuInterface.Impromptu.InvokeGet(o, keyMember.Name);
@@ -226,7 +227,7 @@ namespace MeisterGeister.Model.Extensions
         {
             Type entityType = ObjectContext.GetObjectType(entity.GetType());
             object clone = ImpromptuInterface.Impromptu.InvokeConstructor(entityType); // Activator.CreateInstance(entity.GetType());
-            foreach (System.Data.Metadata.Edm.EdmMember member in context.GetEntitySet(entityType).ElementType.Members.Where(m => m.TypeUsage.EdmType is PrimitiveType))
+            foreach (System.Data.Entity.Core.Metadata.Edm.EdmMember member in context.GetEntitySet(entityType).ElementType.Members.Where(m => m.TypeUsage.EdmType is PrimitiveType))
             {
                 ImpromptuInterface.Impromptu.InvokeSet(clone, member.Name, ImpromptuInterface.Impromptu.InvokeGet(entity, member.Name));
             }
@@ -386,7 +387,7 @@ namespace MeisterGeister.Model.Extensions
 
         public static IEnumerable<ObjectStateEntry> GetChangedObjects(this ObjectContext context)
         {
-            return context.ObjectStateManager.GetObjectStateEntries(System.Data.EntityState.Added | System.Data.EntityState.Deleted | System.Data.EntityState.Modified);
+            return context.ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Deleted | EntityState.Modified);
         }
 
         public static void DiscardChanges(this ObjectContext context)
@@ -398,7 +399,7 @@ namespace MeisterGeister.Model.Extensions
                 {
                     case EntityState.Deleted:
                         entry.ChangeState(EntityState.Unchanged);
-                        goto case System.Data.EntityState.Modified;
+                        goto case EntityState.Modified;
                     case EntityState.Modified:
                         System.Data.Common.DbDataRecord original = entry.OriginalValues;
                         foreach (string prop in entry.GetModifiedProperties())

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MeisterGeister</RootNamespace>
     <AssemblyName>DSA MeisterGeister</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -54,6 +55,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>
     </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -63,6 +65,7 @@
     <DefineConstants>TRACE;TEST</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Images\Logos\MG_Icon.ico</ApplicationIcon>
@@ -109,6 +112,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\DG-Suche.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EntityFramework.SqlServerCompact.6.0.2\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
     <Reference Include="ImpromptuInterface">
       <HintPath>.\ImpromptuInterface.dll</HintPath>
     </Reference>
@@ -123,9 +134,13 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -196,21 +211,25 @@
     <Compile Include="Model\Abenteuer_Verweis_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Alchimierezept.cs" />
     <Compile Include="Model\Alchimierezept_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Alchimierezept_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Audio_Playlist_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Audio_Playlist_Titel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Audio_Theme.cs" />
     <Compile Include="Model\Audio_Theme_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Audio_Titel.cs" />
     <Compile Include="Model\Audio_Titel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -221,18 +240,19 @@
     <Compile Include="Model\Ausrüstung_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Einstellung.cs" />
     <Compile Include="Model\Einstellung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Extensions\DependentPropertyAttribute.cs" />
-    <Compile Include="Model\Extensions\IInitializable.cs" />
     <Compile Include="Model\Farbe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Fernkampfwaffe.cs" />
     <Compile Include="Model\Fernkampfwaffe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Gegner.cs" />
+    <Compile Include="Model\GegnerBase.cs" />
     <Compile Include="Model\GegnerBase_Angriff.cs" />
     <Compile Include="Model\GegnerBase_Angriff_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -246,12 +266,14 @@
     <Compile Include="Model\Gegner_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Handelsgut.cs" />
     <Compile Include="Model\Handelsgut_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Handelsgut_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Held.cs" />
     <Compile Include="Model\Held_Ausrüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -281,25 +303,13 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Inventar.cs" />
-    <Compile Include="Model\Audio_Titel.cs" />
-    <Compile Include="Model\Audio_Playlist.cs" />
     <Compile Include="Model\Inventar_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Kampfregel.cs" />
-    <Compile Include="Model\GegnerBase.cs" />
-    <Compile Include="Model\Audio_Theme.cs" />
-    <Compile Include="Model\Audio_Theme_Playlist.cs" />
     <Compile Include="Model\Kampfregel_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Alchimierezept.cs" />
-    <Compile Include="Model\Einstellung.cs" />
-    <Compile Include="Model\Literatur.cs" />
-    <Compile Include="Model\Literatur_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Rasse.cs" />
     <Compile Include="Model\Kultur.cs" />
     <Compile Include="Model\Kultur_Name_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -307,21 +317,41 @@
     <Compile Include="Model\Kultur_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Literatur.cs" />
+    <Compile Include="Model\Literatur_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\MenuLink_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Extensions\DependentPropertyAttribute.cs" />
+    <Compile Include="Model\Extensions\IInitializable.cs" />
+    <Compile Include="Model\Audio_Theme_Playlist.cs" />
+    <Compile Include="Model\Munition.cs" />
     <Compile Include="Model\Munition_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Name_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Notizen.cs" />
     <Compile Include="Model\Notizen_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NscMerkmal_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Rasse.cs" />
     <Compile Include="Model\Rasse_Farbe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -331,21 +361,26 @@
     <Compile Include="Model\Rasse_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Rüstung.cs" />
     <Compile Include="Model\Rüstung_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Schild.cs" />
     <Compile Include="Model\Schild_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Setting.cs" />
     <Compile Include="Model\Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Sonderfertigkeit.cs" />
     <Compile Include="Model\Sonderfertigkeit_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Sonderfertigkeit_Setting_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Talent.cs" />
     <Compile Include="Model\Talentgruppe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -358,28 +393,24 @@
     <Compile Include="Model\Version_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\VorNachteil.cs" />
     <Compile Include="Model\VorNachteil_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Waffe_Poco.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Zauberzeichen.cs" />
-    <Compile Include="Model\Notizen.cs" />
+    <Compile Include="Model\Waffe.cs" />
     <Compile Include="Model\Service\AudioService.cs" />
     <Compile Include="Model\Service\KampfService.cs" />
     <Compile Include="Model\Service\NotizService.cs" />
     <Compile Include="Model\Service\VorNachteilService.cs" />
     <Compile Include="Model\Service\ZauberService.cs" />
-    <Compile Include="Model\Setting.cs" />
-    <Compile Include="Model\Talent.cs" />
-    <Compile Include="Model\Zauber.cs" />
-    <Compile Include="Model\Munition.cs" />
-    <Compile Include="Model\Rüstung.cs" />
-    <Compile Include="Model\Schild.cs" />
     <Compile Include="Model\Service\MenuLinkService.cs" />
     <Compile Include="Model\Extensions\SqlFunctionsExtension.cs" />
     <Compile Include="Model\Service\NamenService.cs" />
+    <Compile Include="Model\Waffe_Poco.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Zauber.cs" />
+    <Compile Include="Model\Zauberzeichen.cs" />
     <Compile Include="Model\Zauberzeichen_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -566,7 +597,6 @@
     <Compile Include="Logic\Umrechner\Währung.cs" />
     <Compile Include="Logic\Umrechner\Zeit.cs" />
     <Compile Include="ViewModel\Basar\Logic\IHandelsgut.cs" />
-    <Compile Include="Model\Fernkampfwaffe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Behinderung.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IWunden.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IRüstungsschutz.cs" />
@@ -582,11 +612,8 @@
     <Compile Include="Model\Extensions\ObjectQueryExtension.cs" />
     <Compile Include="Model\Extensions\TreeNode.cs" />
     <Compile Include="Model\Service\SerializationService.cs" />
-    <Compile Include="Model\Handelsgut.cs" />
     <Compile Include="Model\Service\InventarService.cs" />
     <Compile Include="Model\Service\VersionService.cs" />
-    <Compile Include="Model\VorNachteil.cs" />
-    <Compile Include="Model\Waffe.cs" />
     <Compile Include="ViewModel\Basar\BasarViewModel.cs" />
     <Compile Include="ViewModel\Kampf\Logic\TrefferzonenHelper.cs" />
     <Compile Include="ViewModel\Schmiede\Logic\Nahkampfwaffenverbesserung.cs" />
@@ -817,27 +844,10 @@
     <Compile Include="View\Globus\SelectLandmarkeWindow.xaml.cs">
       <DependentUpon>SelectLandmarkeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Held.cs" />
-    <Compile Include="Model\MeisterGeisterModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MeisterGeisterModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Service\HandelsgutService.cs" />
     <Compile Include="Model\Service\DataService.cs" />
     <Compile Include="Model\Service\Base\ServiceBase.cs" />
     <Compile Include="Model\Service\TalentService.cs" />
-    <Compile Include="Model\Sonderfertigkeit.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1236,10 +1246,15 @@
       <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <EntityDeploy Include="Model\MeisterGeisterModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MeisterGeisterModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <None Include="Model\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Model\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Model\MeisterGeisterModel.edmx" />
     <None Include="Daten\meistergeister.kmz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1249,14 +1264,7 @@
     <None Include="Logic\Literatur\Literatur.tpg" />
     <None Include="Logic\Voraussetzungen\Voraussetzungen.tpg" />
     <None Include="Logic\Würfel\Würfel.tpg" />
-    <None Include="Model\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Model\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\MeisterGeister.Model.DatabaseDSAEntities.datasource" />
     <None Include="Properties\Settings.settings">
@@ -1744,24 +1752,39 @@ mkdir "$(TargetDir)Daten\Bodenplan"
 mkdir "$(TargetDir)Daten\Helden\Demohelden"
 copy "$(ProjectDir)Daten\Helden\Demohelden\*.xml" "$(TargetDir)Daten\Helden\Demohelden\"
 
+if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"
+
 if not $(ConfigurationName) == Debug (
    rmdir /s /q "$(ProjectDir)publish\$(TargetName)"
    mkdir "$(ProjectDir)publish\$(TargetName)"
-   mkdir "$(ProjectDir)publish\$(TargetName)\Daten"
    mkdir "$(ProjectDir)publish\$(TargetName)\Daten\Helden"
    mkdir "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden"
    mkdir "$(ProjectDir)publish\$(TargetName)\Audio"
    mkdir "$(ProjectDir)publish\$(TargetName)\License"
    mkdir "$(ProjectDir)publish\$(TargetName)\de"
+   mkdir "$(ProjectDir)publish\$(TargetName)\x86"
+   mkdir "$(ProjectDir)publish\$(TargetName)\amd64"
+   xcopy /s /y "$(TargetDir)amd64\*.*" "$(ProjectDir)publish\$(TargetName)\amd64"
+   xcopy /s /y "$(TargetDir)x86\*.*" "$(ProjectDir)publish\$(TargetName)\x86"
    copy "$(TargetDir)$(TargetFileName)" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)$(TargetFileName).config" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)README.txt" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Daten\DatabaseDSA_Standard.sdf" "$(ProjectDir)publish\$(TargetName)\Daten"
-   copy  "$(TargetDir)Daten\Helden\Demohelden\*.xml" "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden\"
-   copy  "$(TargetDir)Daten\Bodenplan\*.*" "$(ProjectDir)publish\$(TargetName)\Daten\Bodenplan\"
+   copy "$(TargetDir)Daten\meistergeister.kmz" "$(ProjectDir)publish\$(TargetName)\Daten"
+   copy "$(TargetDir)Daten\Helden\Demohelden\*.xml" "$(ProjectDir)publish\$(TargetName)\Daten\Helden\Demohelden\"
+   copy "$(TargetDir)Daten\Bodenplan\*.*" "$(ProjectDir)publish\$(TargetName)\Daten\Bodenplan\"
    copy "$(TargetDir)DG-Suche.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Interactions.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Microsoft.Expression.Effects.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)System.Windows.Interactivity.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)EntityFramework.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)EntityFramework.xml" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)EntityFramework.SqlServerCompact.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)EntityFramework.SqlServerCompact.xml" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)System.Data.SqlServerCe.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)ImpromptuInterface.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)ArtefaktGenerator.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)Ares.MeisterGeisterPlugin.dll" "$(ProjectDir)publish\$(TargetName)"

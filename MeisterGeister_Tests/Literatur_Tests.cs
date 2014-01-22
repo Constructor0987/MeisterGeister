@@ -80,7 +80,7 @@ namespace MeisterGeister_Tests
                 foreach(var oarr in errors[t])
                 {
                     errString += "\n" +
-                        String.Join(", ", (oarr[0] as System.Data.EntityKey).EntityKeyValues.Select(ekv => Convert.ToString(ekv.Key) + ":\t" + Convert.ToString(ekv.Value)))
+                        String.Join(", ", (oarr[0] as System.Data.Entity.Core.EntityKey).EntityKeyValues.Select(ekv => Convert.ToString(ekv.Key) + ":\t" + Convert.ToString(ekv.Value)))
                         + "\n" + (string)oarr[1];
                 }
             }
