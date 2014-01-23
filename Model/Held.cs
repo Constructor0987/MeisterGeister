@@ -773,7 +773,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = Convert.ToInt32(Math.Round(ko / 2.0, 0, MidpointRounding.AwayFromZero));
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
@@ -788,7 +788,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = ko;
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
@@ -803,7 +803,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = Convert.ToInt32(Math.Round(ko * 1.5, 0, MidpointRounding.AwayFromZero));
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;

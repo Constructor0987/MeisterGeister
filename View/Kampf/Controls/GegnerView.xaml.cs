@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using MeisterGeister.Model;
 using VM = MeisterGeister.ViewModel.Kampf;
 using MeisterGeister.View.General;
-using Settings = MeisterGeister.Logic.Settings;
+using Settings = MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.View.Kampf.Controls
 {
@@ -123,7 +123,7 @@ namespace MeisterGeister.View.Kampf.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Expanded Sections
-            string sections = Logic.Settings.Einstellungen.GegnerViewExpandedSections;
+            string sections = Logic.Einstellung.Einstellungen.GegnerViewExpandedSections;
             if (sections.Length >= 1)
                 expanderFilter.IsExpanded = (sections[0] == '1');
             if (sections.Length >= 2)
@@ -138,7 +138,7 @@ namespace MeisterGeister.View.Kampf.Controls
                 string sections = string.Empty;
                 sections += (expanderFilter.IsExpanded ? "1" : "0");
                 sections += (expanderStichwortFilter.IsExpanded ? "1" : "0");
-                Logic.Settings.Einstellungen.GegnerViewExpandedSections = sections;
+                Logic.Einstellung.Einstellungen.GegnerViewExpandedSections = sections;
             }
         }
 	}

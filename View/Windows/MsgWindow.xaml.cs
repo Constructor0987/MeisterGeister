@@ -79,7 +79,7 @@ namespace MeisterGeister.View.Windows
             catch (Exception) { }
             try
             {
-                msg += "\nOffene Tools: " + Logic.Settings.Einstellungen.StartTabs;
+                msg += "\nOffene Tools: " + Logic.Einstellung.Einstellungen.StartTabs;
             }
             catch (Exception) {  }
 

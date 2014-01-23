@@ -92,7 +92,7 @@ namespace MeisterGeister.ViewModel.Helden
             set { _selectedRepräsentation = value; OnChanged("SelectedRepräsentation"); }
         }
 
-        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+        private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
             get { return _isReadOnly; }
@@ -107,7 +107,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
 
             onDeleteZauber = new Base.CommandBase(DeleteZauber, null);
             onAddZauber = new Base.CommandBase(AddZauber, null);
@@ -186,7 +186,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void IsReadOnlyChanged(object sender, EventArgs e)
         {
-            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+            _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 

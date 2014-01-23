@@ -159,7 +159,7 @@ namespace MeisterGeister.ViewModel.Helden
                 FilteredSonderfertigkeitMultiAddListe = SonderfertigkeitMultiAddListe.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.SF.Name).ToList();
         }
 
-        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+        private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
         public bool IsReadOnly
         {
             get { return _isReadOnly; }
@@ -184,7 +184,7 @@ namespace MeisterGeister.ViewModel.Helden
         {
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
 
             onDeleteSonderfertigkeit = new Base.CommandBase(DeleteSonderfertigkeit, null);
             onAddSonderfertigkeit = new Base.CommandBase(AddSonderfertigkeit, null);
@@ -274,7 +274,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         private void IsReadOnlyChanged(object sender, EventArgs e)
         {
-            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+            _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 

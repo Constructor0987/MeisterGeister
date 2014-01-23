@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 // Eigene Usings
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.View.General;
 using Cursors = System.Windows.Forms.Cursors;
 // Weitere Usings

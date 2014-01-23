@@ -47,17 +47,17 @@ namespace MeisterGeister.ViewModel.Helden
             get { return _selectedTabIndex; }
             set { 
                 _selectedTabIndex = value < -1 ? -1 : value;
-                MeisterGeister.Logic.Settings.Einstellungen.HeldenSelectedTab = _selectedTabIndex;
+                MeisterGeister.Logic.Einstellung.Einstellungen.HeldenSelectedTab = _selectedTabIndex;
                 OnChanged("SelectedTabIndex");
             }
         }
 
         public bool IsReadOnly
         {
-            get { return MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly; }
+            get { return MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly; }
             set 
-            { 
-                MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly = value;
+            {
+                MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly = value;
                 OnChanged("IsReadOnly");
             }
         }
@@ -68,7 +68,7 @@ namespace MeisterGeister.ViewModel.Helden
 
         public HeldenViewModel()
         {
-            SelectedTabIndex = MeisterGeister.Logic.Settings.Einstellungen.HeldenSelectedTab;
+            SelectedTabIndex = MeisterGeister.Logic.Einstellung.Einstellungen.HeldenSelectedTab;
 
             // EventHandler für SelectedHeld registrieren
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };

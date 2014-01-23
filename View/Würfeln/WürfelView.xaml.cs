@@ -29,11 +29,11 @@ namespace MeisterGeister.View.Würfeln
 
             _checkBoxSoundAbspielen.Checked -= CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked -= CheckBoxSoundAbspielen_Changed;
-            _checkBoxSoundAbspielen.IsChecked = Logic.Settings.Einstellungen.WuerfelSoundAbspielen;
+            _checkBoxSoundAbspielen.IsChecked = Logic.Einstellung.Einstellungen.WuerfelSoundAbspielen;
             _checkBoxSoundAbspielen.Checked += CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked += CheckBoxSoundAbspielen_Changed;
 
-            Logic.Settings.Einstellungen.WuerfelSoundAbspielenChanged += WürfelSoundAbspielen_Changed;
+            Logic.Einstellung.Einstellungen.WuerfelSoundAbspielenChanged += WürfelSoundAbspielen_Changed;
         }
 
         private void CheckBoxSoundAbspielen_Changed(object sender, RoutedEventArgs e)
@@ -41,7 +41,7 @@ namespace MeisterGeister.View.Würfeln
             if (IsInitialized)
             {
                 //Würfel.SoundAbspielenChanged -= WürfelSoundAbspielen_Changed;
-                MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen = (bool)_checkBoxSoundAbspielen.IsChecked;
+                MeisterGeister.Logic.Einstellung.Einstellungen.WuerfelSoundAbspielen = (bool)_checkBoxSoundAbspielen.IsChecked;
                 //Würfel.SoundAbspielenChanged += WürfelSoundAbspielen_Changed;
             }
         }
@@ -50,7 +50,7 @@ namespace MeisterGeister.View.Würfeln
         {
             _checkBoxSoundAbspielen.Checked -= CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked -= CheckBoxSoundAbspielen_Changed;
-            _checkBoxSoundAbspielen.IsChecked = MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen;
+            _checkBoxSoundAbspielen.IsChecked = MeisterGeister.Logic.Einstellung.Einstellungen.WuerfelSoundAbspielen;
             _checkBoxSoundAbspielen.Checked += CheckBoxSoundAbspielen_Changed;
             _checkBoxSoundAbspielen.Unchecked += CheckBoxSoundAbspielen_Changed;
         }
@@ -72,7 +72,7 @@ namespace MeisterGeister.View.Würfeln
             _textBlockErgebnisStaffel.Text = w.ErgebnisDetails.Staffel;
             _textBlockErgebnisSumme.Text = w.ErgebnisDetails.Summe.ToString();
 
-            if (MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
+            if (MeisterGeister.Logic.Einstellung.Einstellungen.WuerfelSoundAbspielen)
             {
                 try
                 {

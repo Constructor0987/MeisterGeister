@@ -6,7 +6,7 @@ using MeisterGeister.Daten;
 using System.Collections.Generic;
 // Eigene Usings
 using MeisterGeister.Logic.General;
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.View.Arena;
 using MeisterGeister.View.Bodenplan;
 using MeisterGeister.ViewModel.Bodenplan;

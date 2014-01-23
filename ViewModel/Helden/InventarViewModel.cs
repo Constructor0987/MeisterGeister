@@ -22,7 +22,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         const string TALENTFERNKAMPFWAFFEUNTERKATEGORIE = "Fernkampf";
         const string FILTERDEAKTIVIEREN = " Alle ";
         bool IsLoaded = false;
-        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+        private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
         private bool listenToChangeEvents = true;
 
         //UI
@@ -430,7 +430,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             onAddRuestung = new Base.CommandBase(AddRuestung, null);
 
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
-            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             SelectedFilterIndex = 0;
             
             if (IsLoaded == false) {
@@ -550,7 +550,7 @@ namespace MeisterGeister.ViewModel.Inventar {
 
         private void IsReadOnlyChanged(object sender, EventArgs e)
         {
-            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+            _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 
@@ -859,10 +859,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         #endregion
 
         #endregion
-
         
-
-
     }
 
     #region //SUBKLASSEN
@@ -906,7 +903,6 @@ namespace MeisterGeister.ViewModel.Inventar {
                 trageort = value;
                 OnChanged("Trageort");
                 //EntityHA.Trageort = new Model.Trageort() { ;                
-                Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
             }
         }
         public string Talente { get { return talente; } set { talente = value; OnChanged("Talente"); } }
@@ -1007,8 +1003,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             set {
                 trageort = value;
                 OnChanged("Trageort");
-                EntityHA.Trageort = value;
-                Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
+                EntityHA.Trageort = value;                
             }
         }
         public string WM { get { return wM; } set { wM = value; OnChanged("WM"); } }
@@ -1091,8 +1086,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             set {
                 trageort = value;
                 OnChanged("Trageort");
-                EntityHA.Trageort = value;
-                Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
+                EntityHA.Trageort = value;                
             }
         }
         public string Talente { get { return talente; } set { talente = value; OnChanged("Talente"); } }
@@ -1194,8 +1188,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             set {
                 trageort = value;
                 OnChanged("Trageort");
-                EntityHA.Trageort = value;
-                Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
+                EntityHA.Trageort = value;                
             }
         }
 

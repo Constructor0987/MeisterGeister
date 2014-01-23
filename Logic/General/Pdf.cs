@@ -14,7 +14,7 @@ namespace MeisterGeister.Logic.General
             get {
                 if (Pdf.openCommand == null)
                 {
-                    Pdf.openCommand = Settings.Einstellungen.PdfReaderCommand;
+                    Pdf.openCommand = Einstellung.Einstellungen.PdfReaderCommand;
                     if (String.IsNullOrWhiteSpace(Pdf.openCommand))
                         SetReader("Adobe Acrobat Reader");
                 }
@@ -30,7 +30,7 @@ namespace MeisterGeister.Logic.General
             {
                 if (Pdf.openArguments == null)
                 {
-                    Pdf.openArguments = Settings.Einstellungen.PdfReaderArguments;
+                    Pdf.openArguments = Einstellung.Einstellungen.PdfReaderArguments;
                     if (String.IsNullOrWhiteSpace(Pdf.openArguments))
                         SetReader("Adobe Acrobat Reader");
                 } 

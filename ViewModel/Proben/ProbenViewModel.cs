@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using MeisterGeister.Logic.General;
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
 

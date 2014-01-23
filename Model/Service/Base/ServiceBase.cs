@@ -64,6 +64,7 @@ namespace MeisterGeister.Model.Service {
 
         public virtual bool Update<T>(T aModelObject) where T : class {
             try {
+                
                 Context.ApplyCurrentValues(typeof(T).Name, aModelObject);
                 Save();
                 return true;

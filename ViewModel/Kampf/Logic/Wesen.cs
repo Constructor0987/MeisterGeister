@@ -192,7 +192,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (k==null || k.LebensenergieMax == 0)
                     return string.Empty;
                 int leModCount = 0;
-                int ko = MeisterGeister.Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? k.Konstitution : k.KonstitutionOhneWunden;
+                int ko = MeisterGeister.Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? k.Konstitution : k.KonstitutionOhneWunden;
                 if (k.LebensenergieAktuell < ko * -1)
                     return "Tot";
                 else if (k.LebensenergieAktuell <= 0)
@@ -212,7 +212,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 if (k == null || k.LebensenergieMax == 0)
                     return string.Empty;
                 string info = string.Empty; int leModCount = 0;
-                int ko = MeisterGeister.Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? k.Konstitution : k.KonstitutionOhneWunden;
+                int ko = MeisterGeister.Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? k.Konstitution : k.KonstitutionOhneWunden;
                 if (k.LebensenergieAktuell < ko * -1)
                     info = "Tot";
                 else if (k.LebensenergieAktuell <= 0)
@@ -324,7 +324,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             int change = 0;
 
             // nur anwenden, wenn Regel-Option aktiv und Wesen AU hat
-            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeAU && k.AusdauerMax != 0)
+            if (MeisterGeister.Logic.Einstellung.Regeln.NiedrigeAU && k.AusdauerMax != 0)
                 change = SetModifikatorCount<Mod.NiedrigeAusdauerModifikator>(targetModCount);
 
             if (targetModCount == 1 && change >= 1)
@@ -363,7 +363,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 targetModCount = 3;
 
             // nur anwenden, wenn Regel-Option aktiv und Wesen LE hat
-            if (MeisterGeister.Logic.Settings.Regeln.NiedrigeLE && k.LebensenergieMax != 0)
+            if (MeisterGeister.Logic.Einstellung.Regeln.NiedrigeLE && k.LebensenergieMax != 0)
                 SetModifikatorCount<Mod.NiedrigeLebensenergieModifikator>(targetModCount);
 
             if (k is Model.Held && !(k as Model.Held).HatVorNachteil("Eisern") && !(k as Model.Held).HatVorNachteil("Zäher Hund")

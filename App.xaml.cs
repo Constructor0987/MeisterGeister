@@ -12,7 +12,7 @@ using System.Xml;
 using System.Windows.Media.Imaging;
 using System.Threading;
 // Eigene Usings
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Logic.General;
 using MeisterGeister.View.Windows;
 using System.Globalization;

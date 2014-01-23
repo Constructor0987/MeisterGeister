@@ -100,7 +100,7 @@ namespace MeisterGeister.Model
 
         public static int TPKKBonus(Held held, KampfLogic.IWaffeMitTPKK waffe)
         {
-            if(waffe == null || held == null || !MeisterGeister.Logic.Settings.Regeln.TPKK)
+            if (waffe == null || held == null || !MeisterGeister.Logic.Einstellung.Regeln.TPKK)
                 return 0;
             if (waffe.TPKKSchwelle == null || waffe.TPKKSchritt == null || waffe.TPKKSchritt == 0)
                 return 0;

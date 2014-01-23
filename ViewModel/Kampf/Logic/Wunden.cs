@@ -46,7 +46,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         private int AusdauerSchaden(int alt, int neu)
         {
-            if (!MeisterGeister.Logic.Settings.Regeln.AusdauerImKampf)
+            if (!MeisterGeister.Logic.Einstellung.Regeln.AusdauerImKampf)
                 return 0;
             if (neu > alt)
             {
@@ -105,7 +105,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             {
                 if (value < 0)
                     value = 0;
-                if (value > 3 && MeisterGeister.Logic.Settings.Einstellungen.NurDreiZonenWunden && zone != Trefferzone.Unlokalisiert && zone != Trefferzone.Gesamt) //WdS 108
+                if (value > 3 && MeisterGeister.Logic.Einstellung.Einstellungen.NurDreiZonenWunden && zone != Trefferzone.Unlokalisiert && zone != Trefferzone.Gesamt) //WdS 108
                     value = 3;
                 if (value == this[zone])
                     return;

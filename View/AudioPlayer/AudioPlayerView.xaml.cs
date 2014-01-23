@@ -23,7 +23,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Collections.ObjectModel;
 // Eigene Usings
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Logic.General;
 using MeisterGeister.View.General;
 using MeisterGeister.View.Windows;
@@ -274,11 +274,11 @@ namespace MeisterGeister.View.AudioPlayer {
 
 			_BGPlayer.BG.Add(new Musik());
 			_BGPlayer.BG.Add(new Musik());
-			
-			_rbtnGleichSpielen.IsChecked = Logic.Settings.Einstellungen.AudioDirektAbspielen;
-			stdPfad = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
+
+            _rbtnGleichSpielen.IsChecked = Logic.Einstellung.Einstellungen.AudioDirektAbspielen;
+            stdPfad = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis;
 			_tbStdPfad.Text = stdPfad;
-			fadingTime = MeisterGeister.Logic.Settings.Einstellungen.Fading;
+            fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
 
 			DataContext = _zeile;
 
@@ -360,9 +360,9 @@ namespace MeisterGeister.View.AudioPlayer {
 		{
 			try
 			{
-				_tbStdPfad.Text = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
-				_rbtnGleichSpielen.IsChecked = MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen;
-				_sldFading.Value = MeisterGeister.Logic.Settings.Einstellungen.Fading;
+                _tbStdPfad.Text = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis;
+                _rbtnGleichSpielen.IsChecked = MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen;
+                _sldFading.Value = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
 				_sldFading.ToolTip = Math.Round(_sldFading.Value / 100, 1) + " Sekunden In-/Out-Fading";
 				tcAudioPlayer.Tag = -1;
 				tiEditor_GotFocus(sender, null);
@@ -948,7 +948,7 @@ namespace MeisterGeister.View.AudioPlayer {
 						try
 						{
 							if (MusikProgBarTimer != null &&
-								MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen)
+                                MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen)
 							{
 								MusikProgBarTimer.Stop();
 								btnBGAbspielen.Tag = true;
@@ -996,7 +996,7 @@ namespace MeisterGeister.View.AudioPlayer {
 									((MusikZeile)lbPListMusik.SelectedItem).pbarSong.Value = pbarBGSong.Value;
 									((MusikZeile)lbPListMusik.SelectedItem).pbarSong.Visibility = Visibility.Visible;
 
-									if (MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen)
+                                    if (MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen)
 									{
 										SpieleNeuenMusikTitel(Guid.Empty);
 										if (titel.Count == 0)
@@ -2180,7 +2180,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
 				ZeigeKlangSongsParallel(grpobj, false);
 
-				grpobj.wirdAbgespielt = (MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen);
+                grpobj.wirdAbgespielt = (MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen);
 			}
 			if (grpobj._listZeile.Count > 0)
 			{
@@ -2223,7 +2223,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
 				grpobj.tbTopKlangSongsParallel.Text = Convert.ToString(grpobj.aPlaylist != null?grpobj.aPlaylist.MaxSongsParallel: 1);
 				grpobj.tbtnKlangPause.Visibility = Visibility.Visible;
-				if (MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen && ((TabItem)tcEditor.SelectedItem).Name == "tiEditor")
+                if (MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen && ((TabItem)tcEditor.SelectedItem).Name == "tiEditor")
 				{
 					grpobj.sollBtnGedrueckt++;
 					if (grpobj.wirdAbgespielt)
@@ -2706,7 +2706,7 @@ namespace MeisterGeister.View.AudioPlayer {
 							klZeile.audioZeile.pbarTitel.Maximum = 100;
 							klZeile.audioZeile.pbarTitel.Value = 0;
 
-							if (MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen)
+                            if (MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen)
 								CheckPlayStandbySongs(grpObj); //GetPosObjGruppe(grpObj.objGruppe));
 						}
 						if (grpObj._listZeile.FindAll(t => t.istLaufend).Count > 0)
@@ -4669,7 +4669,7 @@ namespace MeisterGeister.View.AudioPlayer {
 					}
 
 					AktualisiereKlangPlaylist();
-					if (MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen && ((TabItem)tcEditor.SelectedItem).Name == "tiEditor")
+                    if (MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen && ((TabItem)tcEditor.SelectedItem).Name == "tiEditor")
 						CheckPlayStandbySongs(grpobj);
 				}
 				else
@@ -6706,7 +6706,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			try
 			{
 				if (IsInitialized)
-					MeisterGeister.Logic.Settings.Einstellungen.AudioDirektAbspielen = (bool)_rbtnGleichSpielen.IsChecked;
+                    MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen = (bool)_rbtnGleichSpielen.IsChecked;
 			}
 			catch (Exception) { }
 		}
@@ -7002,7 +7002,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				fadingTime = _sldFading.Value;
 				_sldFading.ToolTip = Math.Round(e.NewValue / 100, 1) + " Sekunden In-/Out-Fading";
 				if (IsInitialized)
-					MeisterGeister.Logic.Settings.Einstellungen.Fading = Convert.ToInt32(e.NewValue);
+                    MeisterGeister.Logic.Einstellung.Einstellungen.Fading = Convert.ToInt32(e.NewValue);
 			}
 			catch (Exception) { }
 		}
@@ -7272,7 +7272,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
 				var dialog = new System.Windows.Forms.FolderBrowserDialog();
 
-				dialog.SelectedPath = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
+                dialog.SelectedPath = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis;
 				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 				if (result == System.Windows.Forms.DialogResult.OK)
 					_tbStdPfad.Text = dialog.SelectedPath; 
@@ -7293,7 +7293,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				if (IsInitialized)
 				{
 					_btnStdPfad.Tag = _tbStdPfad.Text;
-					MeisterGeister.Logic.Settings.Einstellungen.SetEinstellung("AudioVerzeichnis", _tbStdPfad.Text);
+                    MeisterGeister.Logic.Einstellung.Einstellungen.SetEinstellung("AudioVerzeichnis", _tbStdPfad.Text);
 					stdPfad = _tbStdPfad.Text;
 				}
 			}
@@ -7407,10 +7407,10 @@ namespace MeisterGeister.View.AudioPlayer {
 
 				grpobj.Vol_PlaylistMod = Convert.ToUInt16(slPlaylistVolume.Value);
 
-				if ((!btnPListPListAbspielen.IsEnabled && Logic.Settings.Einstellungen.AudioDirektAbspielen) ||
+                if ((!btnPListPListAbspielen.IsEnabled && Logic.Einstellung.Einstellungen.AudioDirektAbspielen) ||
 					(Convert.ToBoolean(btnPListPListAbspielen.Tag) && 
-					 !grpobj.wirdAbgespielt && 
-					 (Logic.Settings.Einstellungen.AudioDirektAbspielen ||
+					 !grpobj.wirdAbgespielt &&
+                     (Logic.Einstellung.Einstellungen.AudioDirektAbspielen ||
 					 _GrpObjecte.FindAll(t => t.wirdAbgespielt).FindAll(t => t.tiEditor == null).Count != 0)))    //Abspielen
 				{
                     grpobj.wirdAbgespielt = true;
@@ -8080,10 +8080,10 @@ namespace MeisterGeister.View.AudioPlayer {
 			_BGPlayer.BG.Add(new Musik());
 			_BGPlayer.BG.Add(new Musik());
 
-			_rbtnGleichSpielen.IsChecked = Logic.Settings.Einstellungen.AudioDirektAbspielen;
-			stdPfad = MeisterGeister.Logic.Settings.Einstellungen.AudioVerzeichnis;
+            _rbtnGleichSpielen.IsChecked = Logic.Einstellung.Einstellungen.AudioDirektAbspielen;
+            stdPfad = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis;
 			_tbStdPfad.Text = stdPfad;
-			fadingTime = MeisterGeister.Logic.Settings.Einstellungen.Fading;
+            fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
 
 			DataContext = _zeile;
 		}

@@ -397,7 +397,7 @@ namespace MeisterGeister.Model
                     return (int)Math.Round(LebensenergieMax / 6.0, MidpointRounding.AwayFromZero); //ZBA 10, inoffizielle Errata Wiki Aventurica
                 else
                 {
-                    int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                    int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                     return (int)Math.Round(ko / 2.0, MidpointRounding.AwayFromZero);
                 }
             }
@@ -411,7 +411,7 @@ namespace MeisterGeister.Model
                     return (int)Math.Round(LebensenergieMax / 3.0, MidpointRounding.AwayFromZero);
                 else
                 {
-                    int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                    int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                     return ko; 
                 }
             }
@@ -425,7 +425,7 @@ namespace MeisterGeister.Model
                     return (int)Math.Round(LebensenergieMax / 2.0, MidpointRounding.AwayFromZero);
                 else
                 {
-                    int ko = Logic.Settings.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+                    int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                     return (int)Math.Round(ko * 1.5, MidpointRounding.AwayFromZero);
                 }
             }

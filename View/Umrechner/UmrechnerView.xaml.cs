@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 // Eigene Usings
 using MeisterGeister.View.General;
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Logic.Umrechner;
 
 namespace MeisterGeister.View.Umrechner

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xceed.Wpf.Toolkit;
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
 

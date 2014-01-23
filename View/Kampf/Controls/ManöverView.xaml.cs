@@ -15,7 +15,7 @@ using MeisterGeister.Model;
 using VM = MeisterGeister.ViewModel.Kampf.Logic;
 //using Logic = MeisterGeister.ViewModel.Kampf.Logic;
 using MeisterGeister.View.General;
-using Settings = MeisterGeister.Logic.Settings;
+using Settings = MeisterGeister.Logic.Einstellung;
 
 namespace MeisterGeister.View.Kampf.Controls
 {

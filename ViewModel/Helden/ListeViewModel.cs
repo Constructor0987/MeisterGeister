@@ -28,7 +28,7 @@ namespace MeisterGeister.ViewModel.Helden {
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError) {
             if (Global.SelectedHeld != null)
                 selectedHeld = Global.SelectedHeld;
-            MeisterGeister.Logic.Settings.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
             LoadDaten();
         }
 
@@ -41,13 +41,13 @@ namespace MeisterGeister.ViewModel.Helden {
             }
         }
 
-        private bool _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+        private bool _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
         public bool IsReadOnly {
             get { return _isReadOnly; }
         }
 
         private void IsReadOnlyChanged(object sender, EventArgs e) {
-            _isReadOnly = MeisterGeister.Logic.Settings.Einstellungen.IsReadOnly;
+            _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
 

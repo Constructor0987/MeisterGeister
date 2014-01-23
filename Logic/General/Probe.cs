@@ -268,7 +268,7 @@ namespace MeisterGeister.Logic.General
 
             _erwartungswert = wertEff - 10.5;
 
-            if (Settings.Regeln.EigenschaftenProbePatzerGlück)
+            if (Einstellung.Regeln.EigenschaftenProbePatzerGlück)
             {
                 if (wertEff <= 1)
                     return _erfolgsschance = 0.05; // Glückswurf

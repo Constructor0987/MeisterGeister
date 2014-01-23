@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using MeisterGeister.Logic.General;
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Model.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
@@ -322,7 +322,7 @@ namespace MeisterGeister.ViewModel.Proben
             OnChanged("ModListProben");
 
             // Sound abspielen
-            if (!LockSoundAbspielen && MeisterGeister.Logic.Settings.Einstellungen.WuerfelSoundAbspielen)
+            if (!LockSoundAbspielen && MeisterGeister.Logic.Einstellung.Einstellungen.WuerfelSoundAbspielen)
                 MeisterGeister.Logic.General.AudioPlayer.PlayWürfel();
 
             NotifyErgebnisChanged();

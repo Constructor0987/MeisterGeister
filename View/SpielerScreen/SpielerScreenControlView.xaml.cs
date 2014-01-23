@@ -30,7 +30,7 @@ namespace MeisterGeister.View.SpielerScreen
             InitializeComponent();
 
             // Letzten Bilderpfad laden
-            _textBlockFilePath.Text = Logic.Settings.Einstellungen.SpielerInfoBilderPfad;
+            _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
             LoadImagesFromDir(_textBlockFilePath.Text);
         }
 
@@ -70,12 +70,12 @@ namespace MeisterGeister.View.SpielerScreen
         private void ButtonOpenDir_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.SelectedPath = Logic.Settings.Einstellungen.SpielerInfoBilderPfad;
+            dlg.SelectedPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                Logic.Settings.Einstellungen.SpielerInfoBilderPfad = dlg.SelectedPath;
-                _textBlockFilePath.Text = Logic.Settings.Einstellungen.SpielerInfoBilderPfad;
+                Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad = dlg.SelectedPath;
+                _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
 
                 LoadImagesFromDir(dlg.SelectedPath);
             }

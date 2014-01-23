@@ -11,7 +11,7 @@ namespace MeisterGeister.Model
     {
         public Held_Sonderfertigkeit()
         {
-            Wert = String.Empty;
+            Wert = String.Empty;            
         }
     }
 }

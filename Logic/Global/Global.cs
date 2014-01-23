@@ -61,7 +61,7 @@ namespace MeisterGeister
         {
             get {
                 if (standort == null)
-                    standort = new DgSuche.Ortsmarke(Logic.Settings.Einstellungen.Standort, true);
+                    standort = new DgSuche.Ortsmarke(Logic.Einstellung.Einstellungen.Standort, true);
                 return standort; 
             }
             set { 
@@ -122,10 +122,10 @@ namespace MeisterGeister
                 if (_selectedHeld != null)
                 {
                     Global.ContextHeld.Update<Model.Held>(SelectedHeld);
-                    Logic.Settings.Einstellungen.SelectedHeld = value.HeldGUID.ToString();
+                    Logic.Einstellung.Einstellungen.SelectedHeld = value.HeldGUID.ToString();
                 }
                 else
-                    Logic.Settings.Einstellungen.SelectedHeld = null;
+                    Logic.Einstellung.Einstellungen.SelectedHeld = null;
 
                 // Event nach der Held-Änderung werfen
                 if (HeldSelectionChanged != null)
@@ -177,12 +177,12 @@ namespace MeisterGeister
 
             IsInitialized = true;
 
-            Logic.Settings.Einstellungen.UpdateEinstellungen();
+            Logic.Einstellung.Einstellungen.UpdateEinstellungen();
 
-            if (Logic.Settings.Einstellungen.SelectedHeld != null)
+            if (Logic.Einstellung.Einstellungen.SelectedHeld != null)
             {
                 Guid heldguid;
-                if (Guid.TryParse(Logic.Settings.Einstellungen.SelectedHeld, out heldguid))
+                if (Guid.TryParse(Logic.Einstellung.Einstellungen.SelectedHeld, out heldguid))
                     SelectedHeldGUID = heldguid;
             }
 
@@ -237,7 +237,7 @@ namespace MeisterGeister
 
         static void OnStandortChanged()
         {
-            Logic.Settings.Einstellungen.Standort = string.Format("{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
+            Logic.Einstellung.Einstellungen.Standort = string.Format("{0}#{1}#{2}", Standort.Name, Standort.Latitude, Standort.Longitude);
             Double.TryParse(Standort.Longitude.Replace(',','.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLon);
             Double.TryParse(Standort.Latitude.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out _heldenLat);
 

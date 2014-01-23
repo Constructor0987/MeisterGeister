@@ -409,6 +409,9 @@
     <Compile Include="Model\Waffe_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Zauber.cs" />
     <Compile Include="Model\Zauberzeichen.cs" />
     <Compile Include="Model\Zauberzeichen_Poco.cs">
@@ -446,7 +449,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\PathLine.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\Ressources.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\VisualTreeExtensions.cs" />
-    <Compile Include="ViewModel\Settings\EinstellungenViewModel.cs" />
+    <Compile Include="ViewModel\Einstellungen\EinstellungenViewModel.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
@@ -798,7 +801,7 @@
     <Compile Include="ViewModel\Basar\Logic\Preis.cs" />
     <Compile Include="Logic\Global\Global.cs" />
     <Compile Include="Logic\Kalender\Datum.cs" />
-    <Compile Include="Logic\Settings\Einstellungen.cs" />
+    <Compile Include="Logic\Einstellungen\Einstellungen.cs" />
     <Compile Include="Logic\HeldenImport\HeldenSoftwareImporter.cs" />
     <Compile Include="Logic\Kalender\DsaTool\DSADate.cs" />
     <Compile Include="Logic\Kalender\DsaTool\DSADateCalendar.cs" />
@@ -825,7 +828,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Waffenset.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Wesen.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Wunden.cs" />
-    <Compile Include="View\Settings\EinstellungenWindow.xaml.cs">
+    <Compile Include="View\Einstellungen\EinstellungenWindow.xaml.cs">
       <DependentUpon>EinstellungenWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MsgWindow.xaml.cs">
@@ -837,7 +840,7 @@
     <Compile Include="View\General\WürfelControl.xaml.cs">
       <DependentUpon>WürfelControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logic\Settings\Regeln.cs" />
+    <Compile Include="Logic\Einstellungen\Regeln.cs" />
     <Compile Include="View\Windows\InputWindow.xaml.cs">
       <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
@@ -883,6 +886,10 @@
     <Compile Include="View\ZooBot\Wuerfeleingabe.designer.cs">
       <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </Compile>
+    <Page Include="Model\Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1176,7 +1183,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Settings\EinstellungenWindow.xaml">
+    <Page Include="View\Einstellungen\EinstellungenWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1707,7 +1714,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 und x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

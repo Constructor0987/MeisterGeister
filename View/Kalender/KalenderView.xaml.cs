@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.Xml;
 // Eigene Usings
 using MeisterGeister.View.General;
-using MeisterGeister.Logic.Settings;
+using MeisterGeister.Logic.Einstellung;
 using MeisterGeister.Logic.Kalender;
 
 namespace MeisterGeister.View.Kalender
