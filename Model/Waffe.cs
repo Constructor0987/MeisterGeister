@@ -201,7 +201,7 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return String.Format("{0} TP{1} {2}/{3} TP/KK, DK {4}, WM {5}/{6}", TPString, (bool)AusdauerSchaden ? "(A)" : "", TPKKSchwelle, TPKKSchritt, DK, WMAT, WMPA);
+                return String.Format("{0} TP{1}, DK {2}, {3}/{4} TP/KK, WM {5}/{6}, INI {7}, BF {8}", TPString, (bool)AusdauerSchaden ? "(A)" : "", DK, TPKKSchwelle, TPKKSchritt, WMAT, WMPA, INI, BF);
             }
         }
 
