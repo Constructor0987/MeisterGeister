@@ -504,8 +504,8 @@
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
     <Compile Include="ViewModel\Generator\Factorys\NamenFactory.cs" />
     <Compile Include="ViewModel\Generator\Factorys\NamenFactoryHelper.cs" />
-    <Compile Include="ViewModel\Generator\Logic\PersonNurName.cs" />
-    <Compile Include="ViewModel\Generator\Logic\Person.cs" />
+    <Compile Include="ViewModel\Generator\Container\PersonNurName.cs" />
+    <Compile Include="ViewModel\Generator\Container\Person.cs" />
     <Compile Include="ViewModel\Generator\Person.cs">
       <SubType>Code</SubType>
     </Compile>
