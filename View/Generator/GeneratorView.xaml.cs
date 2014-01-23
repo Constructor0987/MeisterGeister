@@ -12,18 +12,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 //Eigene Usings
-using VM = MeisterGeister.ViewModel.NscGenerator;
+using VM = MeisterGeister.ViewModel.Generator;
 //Weitere Usings
 using System.Diagnostics;
 using System.IO;
 using MeisterGeister.View.Windows;
 using MeisterGeister.Logic.Kalender;
 
-namespace MeisterGeister.View.NscGenerator
+namespace MeisterGeister.View.Generator
 {
-    public partial class NscGeneratorView : UserControl
+    public partial class GeneratorView : UserControl
     {
-        public NscGeneratorView()
+        public GeneratorView()
         {
             InitializeComponent();
         }
@@ -32,25 +32,13 @@ namespace MeisterGeister.View.NscGenerator
         {
             try
             {
-                (this.DataContext as VM.NscGeneratorViewModel).LoadDaten();
+                (this.DataContext as VM.GeneratorViewModel).LoadDaten();
             }
             catch (Exception ex)
             {
                 View.Windows.MsgWindow errWin = new View.Windows.MsgWindow("Tool", "Beim Laden des Tools ist ein Fehler aufgetreten.", ex);
                 errWin.ShowDialog();
             }
-        }
-        
-        private void ButtonSave_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                (this.DataContext as VM.NscGeneratorViewModel).AddNscToNotiz(_listBoxNscs.SelectedItems);
-            }
-            catch (Exception)
-            {
-            }
-        }
-        
+        }        
     }
 }

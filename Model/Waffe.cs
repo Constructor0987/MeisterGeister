@@ -10,7 +10,7 @@ using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Waffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK, MeisterGeister.Logic.Literatur.ILiteratur
+    public partial class Waffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK, MeisterGeister.Logic.Literatur.ILiteratur, IFormattable
     {
         public Waffe()
         {
@@ -41,10 +41,41 @@ namespace MeisterGeister.Model
 
         public override string ToString()
         {
-            // Name TP, DK, TP/KK, WM, INI, BF            
-            string TPAusdauer = AusdauerSchaden ? "(A)" : string.Empty;
-            return string.Format("{0}: {1} TP{2}, DK {3}, TP/KK {4}/{5}, WM {6}/{7}, INI {8}, BF {9}",
-                Name, TPString, TPAusdauer, DK, TPKKSchwelle, TPKKSchritt, WMAT, WMPA, INI, BF);
+            return this.ToString("G", null);
+        }
+
+        /// <summary>
+        /// Gibt die Waffe als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name der Waffe
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format)
+        {
+            return this.ToString(format, null);
+        }
+
+        /// <summary>
+        /// Gibt die Waffe als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name der Waffe
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format, IFormatProvider provider)
+        {
+            if (String.IsNullOrEmpty(format)) format = "G";
+            if (provider != null)
+            {
+                ICustomFormatter formatter = provider.GetFormat(this.GetType()) as ICustomFormatter;
+                if (formatter != null) return formatter.Format(format, this, provider);
+            }
+            switch (format.ToLowerInvariant())
+            {
+                case "g": return Name;
+                case "l": return string.Format("{0}: {1} TP{2}, DK {3}, TP/KK {4}/{5}, WM {6}/{7}, INI {8}, BF {9}",
+                    Name, TPString, AusdauerSchaden ? "(A)" : string.Empty, DK, TPKKSchwelle, TPKKSchritt, WMAT, WMPA, INI, BF);
+                default: return Name;
+            }
         }
 
         #region Helper-Methoden

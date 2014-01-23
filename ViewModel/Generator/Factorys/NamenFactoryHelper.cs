@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MeisterGeister.ViewModel.NscGenerator.Logic;
+using MeisterGeister.ViewModel.Generator.Container;
 
-namespace MeisterGeister.ViewModel.NscGenerator.Factorys
+namespace MeisterGeister.ViewModel.Generator.Factorys
 {
     abstract class NamenFactoryHelper
     {
@@ -162,8 +162,8 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
                 
                 case ZYKLOPÄISCHENAMEN:
                 #endregion
-                
-                default: throw new NotImplementedException("Namenstyp " + namenstyp + " nicht verfügbar.");
+
+                default: return null;
             }
         }
 
@@ -173,7 +173,12 @@ namespace MeisterGeister.ViewModel.NscGenerator.Factorys
             if (!_namenFactorys.TryGetValue(namenstyp, out nFactory))
             {
                 nFactory = InstantiateFactory(namenstyp);
-                if (nFactory != null) _namenFactorys[namenstyp] = nFactory;
+                if (nFactory != null)
+                {
+                    _namenFactorys[namenstyp] = nFactory;
+                } else {
+                    throw new NotImplementedException("Namenstyp " + namenstyp + " nicht verfügbar.");
+                }
             }
             return nFactory;
         }

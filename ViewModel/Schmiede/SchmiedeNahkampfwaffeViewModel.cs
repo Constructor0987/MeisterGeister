@@ -69,7 +69,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (_selectedNahkampfwaffe != null && _erstellteNahkampfwaffe != null)
             {
                 string fromschmiede = "\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n";
-                fromschmiede += _erstellteNahkampfwaffe.ToString();
+                fromschmiede += _erstellteNahkampfwaffe.ToString("l");
                 Global.ContextNotizen.NotizAllgemein.AppendText(fromschmiede);
             }
         }

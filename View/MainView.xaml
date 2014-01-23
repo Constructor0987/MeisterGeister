@@ -92,7 +92,7 @@
                                     <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem x:Name="_menuItemNSCneu" Height="28" Click="ButtonTool_Click" Header="NSC-Tool (INTERN)" Tag="NSCs_neu" ToolTip="NSC-Tool"  >
+                            <MenuItem x:Name="_menuItemGenerator" Height="28" Click="ButtonTool_Click" Header="Generator-Tool (INTERN)" Tag="Generator" ToolTip="Generator-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
                                 </MenuItem.Icon>

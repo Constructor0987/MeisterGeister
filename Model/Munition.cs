@@ -17,6 +17,11 @@ namespace MeisterGeister.Model
             get { return !MunitionGUID.ToString().StartsWith("00000000-0000-0000-00"); }
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         /// <summary>
         /// Gibt zurück, ob Munition im aktuellen Setting als gehärtet vorkommt
         /// </summary>

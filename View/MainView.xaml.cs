@@ -98,7 +98,7 @@ namespace MeisterGeister.View
             _menuItemAbenteuer.Visibility = System.Windows.Visibility.Collapsed;
             _menuItemAlchimie.Visibility = System.Windows.Visibility.Collapsed;
             _menuItemBeschwörung.Visibility = System.Windows.Visibility.Collapsed;
-            _menuItemNSCneu.Visibility = System.Windows.Visibility.Collapsed;
+            _menuItemGenerator.Visibility = System.Windows.Visibility.Collapsed;
             _menuItemReise.Visibility = System.Windows.Visibility.Collapsed;
 #endif
 

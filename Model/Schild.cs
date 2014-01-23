@@ -8,7 +8,7 @@ using InventarLogic = MeisterGeister.ViewModel.Inventar.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Schild : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, MeisterGeister.Logic.Literatur.ILiteratur
+    public partial class Schild : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, MeisterGeister.Logic.Literatur.ILiteratur, IFormattable
     {
         public Schild()
         {
@@ -22,8 +22,41 @@ namespace MeisterGeister.Model
 
         public override string ToString()
         {
-            return string.Format("{0} ({1}, {2}): WM {3}/{4}, INI {5}, BF {6}",
+            return this.ToString("G", null);
+        }
+
+        /// <summary>
+        /// Gibt den Schild als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name des Schilds
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format)
+        {
+            return this.ToString(format, null);
+        }
+
+        /// <summary>
+        /// Gibt den Schild als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name des Schilds
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format, IFormatProvider provider)
+        {
+            if (String.IsNullOrEmpty(format)) format = "G";
+            if (provider != null)
+            {
+                ICustomFormatter formatter = provider.GetFormat(this.GetType()) as ICustomFormatter;
+                if (formatter != null) return formatter.Format(format, this, provider);
+            }
+            switch (format.ToLowerInvariant())
+            {
+                case "g": return Name;
+                case "l": return string.Format("{0} ({1}, {2}): WM {3}/{4}, INI {5}, BF {6}",
                 Name, Typ, Größe, WMAT, WMPA, INI, BF);
+                default: return Name;
+            }
         }
 
         #region //---- IAusrüstung ----

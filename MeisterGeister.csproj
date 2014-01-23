@@ -502,11 +502,11 @@
     <Compile Include="ViewModel\NscGeneratorAlt\NscGeneratorAltViewModel.cs" />
     <Compile Include="ViewModel\NscGeneratorAlt\Person.cs" />
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />
-    <Compile Include="ViewModel\NscGenerator\Factorys\NamenFactory.cs" />
-    <Compile Include="ViewModel\NscGenerator\Factorys\NamenFactoryHelper.cs" />
-    <Compile Include="ViewModel\NscGenerator\Logic\PersonNurName.cs" />
-    <Compile Include="ViewModel\NscGenerator\Logic\Person.cs" />
-    <Compile Include="ViewModel\NscGenerator\Person.cs">
+    <Compile Include="ViewModel\Generator\Factorys\NamenFactory.cs" />
+    <Compile Include="ViewModel\Generator\Factorys\NamenFactoryHelper.cs" />
+    <Compile Include="ViewModel\Generator\Logic\PersonNurName.cs" />
+    <Compile Include="ViewModel\Generator\Logic\Person.cs" />
+    <Compile Include="ViewModel\Generator\Person.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Proben\ProbeControlViewModel.cs" />
@@ -682,8 +682,8 @@
     <Compile Include="View\NscGeneratorAlt\NscGeneratorAltView.xaml.cs">
       <DependentUpon>NscGeneratorAltView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\NscGenerator\NscGeneratorPersonControl.xaml.cs">
-      <DependentUpon>NscGeneratorPersonControl.xaml</DependentUpon>
+    <Compile Include="View\Generator\GeneratorPersonControl.xaml.cs">
+      <DependentUpon>GeneratorPersonControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Proben\ProbenSpielerInfoView.xaml.cs">
       <DependentUpon>ProbenSpielerInfoView.xaml</DependentUpon>
@@ -854,15 +854,15 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Base\CommandBase.cs" />
-    <Compile Include="ViewModel\NscGenerator\NscGeneratorViewModel.cs" />
+    <Compile Include="ViewModel\Generator\GeneratorViewModel.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeViewModel.cs" />
     <Compile Include="ViewModel\Helden\InventarViewModel.cs" />
     <Compile Include="View\Schmiede\SchmiedeView.xaml.cs">
       <DependentUpon>SchmiedeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\NscGenerator\NscGeneratorView.xaml.cs">
-      <DependentUpon>NscGeneratorView.xaml</DependentUpon>
+    <Compile Include="View\Generator\GeneratorView.xaml.cs">
+      <DependentUpon>GeneratorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Helden\Controls\InventarView.xaml.cs">
       <DependentUpon>InventarView.xaml</DependentUpon>
@@ -1048,7 +1048,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\NscGenerator\NscGeneratorPersonControl.xaml">
+    <Page Include="View\Generator\GeneratorPersonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1216,7 +1216,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\NscGenerator\NscGeneratorView.xaml">
+    <Page Include="View\Generator\GeneratorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

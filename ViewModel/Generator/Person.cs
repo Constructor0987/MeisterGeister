@@ -5,7 +5,7 @@ using System.Text;
 using MeisterGeister.Logic.General;
 using System.Windows;
 
-namespace MeisterGeister.ViewModel.NscGenerator
+namespace MeisterGeister.ViewModel.Generator
 {
     class Person : Base.ViewModelBase
     {

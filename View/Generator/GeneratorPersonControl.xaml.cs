@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MeisterGeister.View.NscGenerator
+namespace MeisterGeister.View.Generator
 {
     /// <summary>
-    /// Interaktionslogik für NscGeneratorPersonControl.xaml
+    /// Interaktionslogik für GeneratorPersonControl.xaml
     /// </summary>
-    public partial class NscGeneratorPersonControl : UserControl
+    public partial class GeneratorPersonControl : UserControl
     {
-        public NscGeneratorPersonControl()
+        public GeneratorPersonControl()
         {
             InitializeComponent();
         }

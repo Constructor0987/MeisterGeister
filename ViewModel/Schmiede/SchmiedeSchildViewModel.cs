@@ -47,7 +47,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (_selectedSchild != null )
             {
                 string fromschmiede = "\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n";
-                fromschmiede += _selectedSchild.ToString();
+                fromschmiede += _selectedSchild.ToString("l");
                 Global.ContextNotizen.NotizAllgemein.AppendText(fromschmiede);
             }
         }

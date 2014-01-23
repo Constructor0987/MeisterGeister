@@ -91,10 +91,10 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (_selectedFernkampfwaffe != null && _erstellteFernkampfwaffe != null)
             {
                 string fromschmiede = "\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n";
-                fromschmiede += _erstellteFernkampfwaffe.ToString();
+                fromschmiede += _erstellteFernkampfwaffe.ToString("l");
                 if (_selectedNahkampfwaffe != null && _erstellteNahkampfwaffe != null)
                 {
-                    fromschmiede += "\n" + _erstellteNahkampfwaffe.ToString();
+                    fromschmiede += "\n" + _erstellteNahkampfwaffe.ToString("l");
                 }
                 Global.ContextNotizen.NotizAllgemein.AppendText(fromschmiede);
             }

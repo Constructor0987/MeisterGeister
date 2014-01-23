@@ -10,7 +10,7 @@ using MeisterGeister.Model.Extensions;
 
 namespace MeisterGeister.Model
 {
-    public partial class Rüstung : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IHasZonenRs, MeisterGeister.Logic.Literatur.ILiteratur
+    public partial class Rüstung : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IHasZonenRs, MeisterGeister.Logic.Literatur.ILiteratur, IFormattable
     {
 
         private static int _gRSDivisor = 20;
@@ -74,8 +74,49 @@ namespace MeisterGeister.Model
 
         public override string ToString()
         {
-            return string.Format("{0} ({1}): RS {3}, BE {4}, gRS {5}, gBE {6}, Kopf {7}, Brust {8}, Rücken {9}, Bauch {10}, LArm {11}, RArm {12}, LBein {13}, RBein {14}",
+            return this.ToString("G", null);
+        }
+
+        /// <summary>
+        /// Gibt die Rüstung als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name der Rüstung
+        /// "e": nur die (einfachen) RS/BE-Werte (keine Zonen/gRS/gBE-Werte)
+        /// "z": nur die Zonenrüstungswerte
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format)
+        {
+            return this.ToString(format, null);
+        }
+
+        /// <summary>
+        /// Gibt die Rüstung als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name der Rüstung
+        /// "e": nur die (einfachen) RS/BE-Werte (keine Zonen/gRS/gBE-Werte)
+        /// "z": nur die Zonenrüstungswerte
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format, IFormatProvider provider)
+        {
+            if (String.IsNullOrEmpty(format)) format = "G";
+            if (provider != null)
+            {
+                ICustomFormatter formatter = provider.GetFormat(this.GetType()) as ICustomFormatter;
+                if (formatter != null) return formatter.Format(format, this, provider);
+            }
+            switch(format.ToLowerInvariant())
+            {
+                case "g": return Name;
+                case "l": return string.Format("{0} ({1}): RS {3}, BE {4}, gRS {5}, gBE {6}, Kopf {7}, Brust {8}, Rücken {9}, Bauch {10}, LArm {11}, RArm {12}, LBein {13}, RBein {14}",
                 Name, Art, RS, RS, BE, gRS, gBE, Kopf, Brust, Rücken, Bauch, LArm, RArm, LBein, RBein);
+                case "e": return string.Format("{0} ({1}): RS {2}, BE {3}",
+                Name, Art, RS, BE);
+                case "z": return string.Format("{0} ({1}): gRS {5}, gBE {6}, Kopf {7}, Brust {8}, Rücken {9}, Bauch {10}, LArm {11}, RArm {12}, LBein {13}, RBein {14}",
+                Name, Art, RS, RS, BE, gRS, gBE, Kopf, Brust, Rücken, Bauch, LArm, RArm, LBein, RBein);
+                default: return Name;
+            }
         }
 
         /// <summary>

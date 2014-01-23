@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MeisterGeister.ViewModel.NscGenerator.Logic;
+using MeisterGeister.ViewModel.Generator.Container;
 using MeisterGeister.Logic.General;
 
-namespace MeisterGeister.ViewModel.NscGenerator.Factorys
+namespace MeisterGeister.ViewModel.Generator.Factorys
 {
     public abstract class NamenFactory
     {

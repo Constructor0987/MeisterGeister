@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MeisterGeister.View.NscGenerator.NscGeneratorView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:generalControls="clr-namespace:MeisterGeister.View.General" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" xmlns:vm="clr-namespace:MeisterGeister.ViewModel.NscGenerator" xmlns:v="clr-namespace:MeisterGeister.View.NscGenerator" Background="{DynamicResource Background1}" Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignHeight="571" d:DesignWidth="946">
+﻿<UserControl x:Class="MeisterGeister.View.Generator.GeneratorView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:generalControls="clr-namespace:MeisterGeister.View.General" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Generator" xmlns:v="clr-namespace:MeisterGeister.View.Generator" Background="{DynamicResource Background1}" Loaded="UserControl_Loaded" mc:Ignorable="d" d:DesignHeight="571" d:DesignWidth="946">
 
     <UserControl.DataContext>
-        <vm:NscGeneratorViewModel />
+        <vm:GeneratorViewModel />
     </UserControl.DataContext>
 
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type vm:Person}">
-            <v:NscGeneratorPersonControl />
+            <v:GeneratorPersonControl />
         </DataTemplate>
     </UserControl.Resources>
 
@@ -35,10 +35,10 @@
                                 <Image Source="/Images/Icons/mechanik.png" />
                             </Button>
                             <generalControls:IntBox Height="23" Width="73" MinValue="1" ShowButtons="True" ToolTip="Anzahl" Value="{Binding GenNumber}" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,5,5,2" HorizontalAlignment="Left"  />
-                            <CheckBox Height="23" Content="nur Namen" IsChecked="{Binding CBNamenIsChecked}" ToolTip="nur Namen, Rasse, Kultur berechnen" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Margin="5,2,5,5" HorizontalAlignment="Left" />
+                        <ComboBox Grid.Column="1" Grid.Row="1"  Height="23" Width="80" ItemsSource="{Binding StandListe}" SelectedItem="{Binding SelectedStand}" ToolTip="Was soll generiert werden?" Margin="5,5,5,2" VerticalAlignment="Top" HorizontalAlignment="Left" />
                         </Grid>
                 </GroupBox>
-                <GroupBox Header="Optionen">
+                <GroupBox Header="Namen: Optionen" Visibility="Visible" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -98,7 +98,7 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Button Height="24" Width="24" Click="ButtonSave_Click" Name="_buttonSave" Margin="5,5,5,2">
+                        <Button Height="24" Width="24" Command="{Binding OnAddSelectedNSC}" Margin="5,5,5,2">
                             <Button.Content>
                                 <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
                             </Button.Content>
@@ -106,7 +106,7 @@
                                 <TextBlock Height="Auto" Width="350" TextWrapping="Wrap">Markierte NSCs in Notiz 'Allgemein' speichern. Mit gedrückter STRG-Taste können auch mehrere NSCs ausgewählt werden.</TextBlock>
                             </Button.ToolTip>
                         </Button>
-                        <Button Grid.Column="1" Height="24" Command="{Binding OnAddAllNSC}" Name="_buttonSaveAll" ToolTip="Alle generierten NSCs in Notiz 'Allgemein' speichern." Margin="5,5,5,2">
+                        <Button Grid.Column="1" Height="24" Command="{Binding OnAddAllNSC}" ToolTip="Alle generierten NSCs in Notiz 'Allgemein' speichern." Margin="5,5,5,2">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/Icons/notiz.png" Stretch="Fill" />
@@ -114,15 +114,7 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <TextBlock Grid.Row="1" Height="23" Name="_textBlockSaveInfo" Text="{Binding InfoText}" VerticalAlignment="Center" Margin="5,0" Grid.ColumnSpan="2"  />
-                        <Button Grid.Row="2" Grid.Column="1" Margin="5,2,5,5" Height="24" ToolTip="Ortsnamen generieren." >
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="/Images/Icons/mechanik.png" Stretch="Fill" />
-                                    <TextBlock Margin="3,0" Text="Ortsnamen" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
+                        <TextBlock Grid.Row="1" Height="23" Text="{Binding InfoText}" VerticalAlignment="Center" Margin="5,0" Grid.ColumnSpan="2"  />
                         <generalControls:WikiLinkControl Width="30" Grid.Row="2" Tag="Aventurische_Namen" Margin="5,2,5,5" />
                     </Grid>
                 </GroupBox>
@@ -134,7 +126,10 @@
                 <TextBlock Text="NSCs" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
-                <ListBox Padding="4" Background="Transparent" FontSize="14" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ItemsSource="{Binding PersonenListe}" Name="_listBoxNscs" SelectionMode="Extended">
+                <ListBox Padding="4" Background="Transparent" FontSize="14" 
+                         ItemContainerStyle="{DynamicResource ListBoxItemStretch}" 
+                         ItemsSource="{Binding PersonenListe}" 
+                         SelectionMode="Extended">
                     <ListBox.BorderBrush>
                         <SolidColorBrush />
                     </ListBox.BorderBrush>

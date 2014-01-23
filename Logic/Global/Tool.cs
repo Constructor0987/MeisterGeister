@@ -171,7 +171,7 @@ namespace MeisterGeister
                 Name = "NSCs_neu",
                 Icon = "Icons/meisterperson.png",
                 MenuGruppe = "Wege des Meisters",
-                ViewType = typeof(View.NscGenerator.NscGeneratorView)
+                ViewType = typeof(View.Generator.GeneratorView)
             });
             ToolListe.Add("Reise", new Tool()
             {

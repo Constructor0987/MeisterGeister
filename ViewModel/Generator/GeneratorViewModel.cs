@@ -8,9 +8,9 @@ using System.IO;
 using MeisterGeister.View.Windows;
 using System.Windows;
 
-namespace MeisterGeister.ViewModel.NscGenerator
+namespace MeisterGeister.ViewModel.Generator
 {
-    class NscGeneratorViewModel : Base.ViewModelBase
+    class GeneratorViewModel : Base.ViewModelBase
     {
 
         #region //---- FELDER ----
@@ -307,7 +307,7 @@ namespace MeisterGeister.ViewModel.NscGenerator
 
         #region //---- KONSTRUKTOR ----
 
-        public NscGeneratorViewModel()
+        public GeneratorViewModel()
         {
             _onReset = new Base.CommandBase(Reset, null);
             _onGenerate = new Base.CommandBase(Generate, null);
@@ -351,10 +351,6 @@ namespace MeisterGeister.ViewModel.NscGenerator
             }
         }
 
-        #endregion
-
-        #region //---- METHODEN ----
- 
         #endregion
 
         #region //---- EVENTS ----

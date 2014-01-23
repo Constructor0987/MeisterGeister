@@ -9,7 +9,7 @@ using KampfLogic = MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.Model
 {
-    public partial class Fernkampfwaffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK, MeisterGeister.Logic.Literatur.ILiteratur
+    public partial class Fernkampfwaffe : BasarLogic.IHandelsgut, InventarLogic.IAusrüstung, KampfLogic.IWaffeMitTPKK, MeisterGeister.Logic.Literatur.ILiteratur, IFormattable
     {
         #region //---- EIGENSCHAFTEN FÜR HANDELSGUT INTERFACE ----
 
@@ -149,11 +149,41 @@ namespace MeisterGeister.Model
 
         public override string ToString()
         {
-            //Name TP, TP/KK, RW, TP/RW, Laden
-            string TPAusdauer = AusdauerSchaden ? "(A)" : string.Empty;
-            string TPVerwundend = Verwundend ? "*" : string.Empty;
-            return string.Format("{0}: {1}{2} TP{3}, TP/KK {4}/{5}, Reichweite {6}, {7}, Laden {8}",
-                Name, TPString, TPVerwundend, TPAusdauer, TPKKSchwelle, TPKKSchritt, Reichweiten, TPReichweiten, Laden);
+            return this.ToString("G", null);
+        }
+
+        /// <summary>
+        /// Gibt die Fernkampfwaffe als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name der Fernkampfwaffe
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format)
+        {
+            return this.ToString(format, null);
+        }
+
+        /// <summary>
+        /// Gibt die Fernkampfwaffe als String zurück
+        /// </summary>
+        /// <param name="format">Format-String zur Definition der Rückgabe:
+        /// "g": nur Name der Fernkampfwaffe
+        /// "l": alle verfügbaren Werte</param>
+        public string ToString(string format, IFormatProvider provider)
+        {
+            if (String.IsNullOrEmpty(format)) format = "G";
+            if (provider != null)
+            {
+                ICustomFormatter formatter = provider.GetFormat(this.GetType()) as ICustomFormatter;
+                if (formatter != null) return formatter.Format(format, this, provider);
+            }
+            switch (format.ToLowerInvariant())
+            {
+                case "g": return Name;
+                case "l": return string.Format("{0}: {1}{2} TP{3}, TP/KK {4}/{5}, Reichweite {6}, {7}, Laden {8}",
+                Name, TPString, Verwundend ? "*" : string.Empty, AusdauerSchaden ? "(A)" : string.Empty, TPKKSchwelle, TPKKSchritt, Reichweiten, TPReichweiten, Laden);
+                default: return Name;
+            }
         }
 
         #region IAusrüstung
