@@ -27,6 +27,8 @@ namespace MeisterGeister.View.General
         public TabItemControl()
         {
             InitializeComponent();
+
+            _contextMenu.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         public TabItemControl(Control con, string tabName, string bildName)
