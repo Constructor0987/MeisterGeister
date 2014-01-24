@@ -3,6 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" AllowDrop="True">
+    <TabItem.ContextMenu>
+        <ContextMenu>
+            <MenuItem Name="_checkBoxTitelAusblenden" Header="Tool Titel ausblenden" IsCheckable="True" Checked="_checkBoxTitelAusblenden_Checked" Unchecked="_checkBoxTitelAusblenden_Checked" />
+            <Separator />
+            <MenuItem Header="Tool schließen" Click="ButtonClose_Click" />
+        </ContextMenu>
+    </TabItem.ContextMenu>
     <TabItem.Header>
         <StackPanel Orientation="Horizontal"  MouseDown="TabItem_MouseDown">
             <Image Name="_image" Height="24" Width="24" Source="/Images/Icons/meistertools_02.png" />
@@ -12,4 +19,5 @@
             </Button>
         </StackPanel>
     </TabItem.Header>
+    
 </TabItem>

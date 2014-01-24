@@ -48,7 +48,7 @@
                                     <ListBox.Resources>
                                         <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                             <StackPanel Orientation="Horizontal" Margin="4">
-                                                <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                                <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                                 <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                             </StackPanel>
                                         </DataTemplate>
@@ -142,7 +142,7 @@
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal" Margin="4">
-                                            <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                            <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                             <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
@@ -177,7 +177,7 @@
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal" Margin="4">
-                                            <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                            <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                             <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
@@ -227,7 +227,7 @@
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal" Margin="4">
-                                            <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                            <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
                                             <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>

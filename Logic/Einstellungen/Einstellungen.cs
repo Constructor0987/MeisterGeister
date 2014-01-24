@@ -51,6 +51,8 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "03_UeberlastungBerechnung", Kontext = "Inventar", Kategorie = null, Typ = "Integer", Beschreibung = "Spielt die Gruppe mit Überlastung?", Wert = "0" },
                 new Model.Einstellung() { Name = "MitUeberlastung", Kontext = "Inventar", Kategorie = "Optional", Typ = "Boolean", Beschreibung = "(Optional) Mit Ueberlastung spielen?", Wert = "True" },
                 
+                new Model.Einstellung() { Name = "ToolTitelAusblenden", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Tool Name im Tab-Titel ausblenden", Wert = "False" },
+
                 //Versteckte
                 new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "Standort", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Gareth#29.79180235685203#3.735098459067687" },
@@ -462,6 +464,22 @@ namespace MeisterGeister.Logic.Einstellung
                 SetEinstellung<string>("SpielerInfoBilderPfad", value);
             }
         }
+
+        public static bool ToolTitelAusblenden
+        {
+            get
+            {
+                return GetEinstellung<bool>("ToolTitelAusblenden");
+            }
+            set
+            {
+                SetEinstellung<bool>("ToolTitelAusblenden", value);
+                if (ToolTitelAusblendenChanged != null)
+                    ToolTitelAusblendenChanged(null, new EventArgs());
+            }
+        }
+
+        public static EventHandler ToolTitelAusblendenChanged;
 
 
         /// <summary>

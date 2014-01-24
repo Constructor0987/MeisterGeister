@@ -116,5 +116,28 @@ namespace MeisterGeister.View.Settings
                 Einstellungen.Fading = (int)e.NewValue;
             }
         }
+
+        private void CheckBoxEinstellungItem_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            object tag = (sender as CheckBox).Tag;
+            if (tag != null)
+            {
+                // Notification Event feuern
+                // Bei Bedarf können hier weitere Events ausgelöst werden...
+                switch (tag.ToString())
+                {
+                    case "ToolTitelAusblenden":
+                        if (Einstellungen.ToolTitelAusblendenChanged != null)
+                            Einstellungen.ToolTitelAusblendenChanged(null, new EventArgs());
+                        break;
+                    case "WuerfelSoundAbspielen":
+                        if (Einstellungen.WuerfelSoundAbspielenChanged != null)
+                            Einstellungen.WuerfelSoundAbspielenChanged(null, new EventArgs());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }

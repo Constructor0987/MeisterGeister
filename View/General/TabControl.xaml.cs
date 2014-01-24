@@ -45,6 +45,10 @@ namespace MeisterGeister.View.General
             _image.Source = bi;
             // Titel
             _textBlockTitel.Text = tabName;
+            _image.ToolTip = tabName;
+            SetToolTitel();
+
+            Logic.Einstellung.Einstellungen.ToolTitelAusblendenChanged += ToolTitelAusblendenChanged;
 
             Content = con;
         }
@@ -69,6 +73,30 @@ namespace MeisterGeister.View.General
             {
                 CloseTool();
             }
+        }
+
+        private void _checkBoxTitelAusblenden_Checked(object sender, RoutedEventArgs e)
+        {
+            Logic.Einstellung.Einstellungen.ToolTitelAusblenden = _checkBoxTitelAusblenden.IsChecked;
+        }
+
+        private void SetToolTitel()
+        {
+            if (Logic.Einstellung.Einstellungen.ToolTitelAusblenden)
+            {
+                _textBlockTitel.Visibility = System.Windows.Visibility.Collapsed;
+                _checkBoxTitelAusblenden.IsChecked = true;
+            }
+            else
+            {
+                _textBlockTitel.Visibility = System.Windows.Visibility.Visible;
+                _checkBoxTitelAusblenden.IsChecked = false;
+            }
+        }
+
+        private void ToolTitelAusblendenChanged(object sender, EventArgs e)
+        {
+            SetToolTitel();
         }
 
     }
