@@ -147,6 +147,26 @@ namespace MeisterGeister.View.General
         }
 
         /// <summary>
+        /// Zeigt ein Würfel-Fenster an.
+        /// </summary>
+        /// <param name="würfel"></param>
+        /// <param name="infoText"></param>
+        public static void OpenWürfelDialog(string würfel, string infoText = "")
+        {
+            if (System.Threading.Thread.CurrentThread.GetApartmentState() == System.Threading.ApartmentState.STA)
+            {
+                if (String.IsNullOrWhiteSpace(würfel))
+                    würfel = ViewHelper.InputDialog("Gebe einen Würfel ein", "Welcher Würfel soll erstellt werden?", "W20");
+
+                View.Würfeln.WürfelDialog dlg = new View.Würfeln.WürfelDialog(würfel, würfel);
+                dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+                dlg.Show();
+            }
+            else
+                return;
+        }
+
+        /// <summary>
         /// Zeigt ein Würfel Dialog-Fenster an.
         /// </summary>
         /// <param name="würfel">Würfel-Text (z.B. 2W+3, W20).</param>

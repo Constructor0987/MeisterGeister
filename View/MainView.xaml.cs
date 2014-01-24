@@ -558,6 +558,11 @@ namespace MeisterGeister.View
             }
         }
 
+        private void ButtonWürfel_Click(object sender, RoutedEventArgs e)
+        {
+            View.General.ViewHelper.OpenWürfelDialog(string.Empty);
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             InitializeMenu();

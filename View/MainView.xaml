@@ -97,10 +97,18 @@
                                     <Image Source="/Images/Icons/meisterperson.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Height="28" Click="ButtonTool_Click" Header="Würfel-Tool" Tag="Würfel" ToolTip="Würfel-Tool"  >
+                            <MenuItem Height="28" Click="ButtonTool_Click" Tag="Würfel" ToolTip="Würfel-Tool"  >
                                 <MenuItem.Icon>
                                     <Image Source="/Images/Icons/wuerfelbecher.png" Margin="2" />
                                 </MenuItem.Icon>
+                                <MenuItem.Header>
+                                    <DockPanel>
+                                        <TextBlock Text="Würfel-Tool" />
+                                        <Button HorizontalAlignment="Right" ToolTip="Einzelner Würfel..." Click="ButtonWürfel_Click">
+                                            <Image Source="/Images/Icons/Wuerfel/w20.png" Margin="2" />
+                                        </Button>
+                                    </DockPanel>
+                                </MenuItem.Header>
                             </MenuItem>
                             <MenuItem Height="28" Click="MenuItemSpielerInfoControl_Click" Header="SpielerInfo-Tool" Tag="SpielerInfo" >
                                 <MenuItem.Icon>
