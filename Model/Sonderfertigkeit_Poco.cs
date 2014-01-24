@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _sonderfertigkeitGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("SonderfertigkeitGUID",_sonderfertigkeitGUID, value);
     			_sonderfertigkeitGUID = value;
     			OnChanged("SonderfertigkeitGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _hatWert; }
             set
     		{ 
+    			OnValidatePropertyChanging("HatWert",_hatWert, value);
     			_hatWert = value;
     			OnChanged("HatWert");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _typ; }
             set
     		{ 
+    			OnValidatePropertyChanging("Typ",_typ, value);
     			_typ = value;
     			OnChanged("Typ");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _literatur; }
             set
     		{ 
+    			OnValidatePropertyChanging("Literatur",_literatur, value);
     			_literatur = value;
     			OnChanged("Literatur");
     		}
@@ -106,6 +124,7 @@ namespace MeisterGeister.Model
             get { return _voraussetzungen; }
             set
     		{ 
+    			OnValidatePropertyChanging("Voraussetzungen",_voraussetzungen, value);
     			_voraussetzungen = value;
     			OnChanged("Voraussetzungen");
     		}

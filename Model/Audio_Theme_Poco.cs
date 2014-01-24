@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _audio_ThemeGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("Audio_ThemeGUID",_audio_ThemeGUID, value);
     			_audio_ThemeGUID = value;
     			OnChanged("Audio_ThemeGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _hintergrund_VolMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("Hintergrund_VolMod",_hintergrund_VolMod, value);
     			_hintergrund_VolMod = value;
     			OnChanged("Hintergrund_VolMod");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _klang_VolMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("Klang_VolMod",_klang_VolMod, value);
     			_klang_VolMod = value;
     			OnChanged("Klang_VolMod");
     		}

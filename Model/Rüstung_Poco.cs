@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -60,6 +73,7 @@ namespace MeisterGeister.Model
             get { return _gruppe; }
             set
     		{ 
+    			OnValidatePropertyChanging("Gruppe",_gruppe, value);
     			_gruppe = value;
     			OnChanged("Gruppe");
     		}
@@ -73,6 +87,7 @@ namespace MeisterGeister.Model
             get { return _verarbeitung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Verarbeitung",_verarbeitung, value);
     			_verarbeitung = value;
     			OnChanged("Verarbeitung");
     		}
@@ -86,6 +101,7 @@ namespace MeisterGeister.Model
             get { return _art; }
             set
     		{ 
+    			OnValidatePropertyChanging("Art",_art, value);
     			_art = value;
     			OnChanged("Art");
     		}
@@ -99,6 +115,7 @@ namespace MeisterGeister.Model
             get { return _kopf; }
             set
     		{ 
+    			OnValidatePropertyChanging("Kopf",_kopf, value);
     			_kopf = value;
     			OnChanged("Kopf");
     		}
@@ -112,6 +129,7 @@ namespace MeisterGeister.Model
             get { return _brust; }
             set
     		{ 
+    			OnValidatePropertyChanging("Brust",_brust, value);
     			_brust = value;
     			OnChanged("Brust");
     		}
@@ -125,6 +143,7 @@ namespace MeisterGeister.Model
             get { return _rücken; }
             set
     		{ 
+    			OnValidatePropertyChanging("Rücken",_rücken, value);
     			_rücken = value;
     			OnChanged("Rücken");
     		}
@@ -138,6 +157,7 @@ namespace MeisterGeister.Model
             get { return _bauch; }
             set
     		{ 
+    			OnValidatePropertyChanging("Bauch",_bauch, value);
     			_bauch = value;
     			OnChanged("Bauch");
     		}
@@ -151,6 +171,7 @@ namespace MeisterGeister.Model
             get { return _lArm; }
             set
     		{ 
+    			OnValidatePropertyChanging("LArm",_lArm, value);
     			_lArm = value;
     			OnChanged("LArm");
     		}
@@ -164,6 +185,7 @@ namespace MeisterGeister.Model
             get { return _rArm; }
             set
     		{ 
+    			OnValidatePropertyChanging("RArm",_rArm, value);
     			_rArm = value;
     			OnChanged("RArm");
     		}
@@ -177,6 +199,7 @@ namespace MeisterGeister.Model
             get { return _lBein; }
             set
     		{ 
+    			OnValidatePropertyChanging("LBein",_lBein, value);
     			_lBein = value;
     			OnChanged("LBein");
     		}
@@ -190,6 +213,7 @@ namespace MeisterGeister.Model
             get { return _rBein; }
             set
     		{ 
+    			OnValidatePropertyChanging("RBein",_rBein, value);
     			_rBein = value;
     			OnChanged("RBein");
     		}
@@ -203,6 +227,7 @@ namespace MeisterGeister.Model
             get { return _rS; }
             set
     		{ 
+    			OnValidatePropertyChanging("RS",_rS, value);
     			_rS = value;
     			OnChanged("RS");
     		}
@@ -216,6 +241,7 @@ namespace MeisterGeister.Model
             get { return _bE; }
             set
     		{ 
+    			OnValidatePropertyChanging("BE",_bE, value);
     			_bE = value;
     			OnChanged("BE");
     		}
@@ -229,6 +255,7 @@ namespace MeisterGeister.Model
             get { return _steif; }
             set
     		{ 
+    			OnValidatePropertyChanging("Steif",_steif, value);
     			_steif = value;
     			OnChanged("Steif");
     		}

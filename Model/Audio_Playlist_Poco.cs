@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _audio_PlaylistGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("Audio_PlaylistGUID",_audio_PlaylistGUID, value);
     			_audio_PlaylistGUID = value;
     			OnChanged("Audio_PlaylistGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _hintergrundmusik; }
             set
     		{ 
+    			OnValidatePropertyChanging("Hintergrundmusik",_hintergrundmusik, value);
     			_hintergrundmusik = value;
     			OnChanged("Hintergrundmusik");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _maxSongsParallel; }
             set
     		{ 
+    			OnValidatePropertyChanging("MaxSongsParallel",_maxSongsParallel, value);
     			_maxSongsParallel = value;
     			OnChanged("MaxSongsParallel");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _länge; }
             set
     		{ 
+    			OnValidatePropertyChanging("Länge",_länge, value);
     			_länge = value;
     			OnChanged("Länge");
     		}
@@ -106,6 +124,7 @@ namespace MeisterGeister.Model
             get { return _kategorie; }
             set
     		{ 
+    			OnValidatePropertyChanging("Kategorie",_kategorie, value);
     			_kategorie = value;
     			OnChanged("Kategorie");
     		}
@@ -119,6 +138,7 @@ namespace MeisterGeister.Model
             get { return _key; }
             set
     		{ 
+    			OnValidatePropertyChanging("Key",_key, value);
     			_key = value;
     			OnChanged("Key");
     		}
@@ -132,6 +152,7 @@ namespace MeisterGeister.Model
             get { return _modifiers; }
             set
     		{ 
+    			OnValidatePropertyChanging("Modifiers",_modifiers, value);
     			_modifiers = value;
     			OnChanged("Modifiers");
     		}

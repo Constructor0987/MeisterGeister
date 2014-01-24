@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _kontext; }
             set
     		{ 
+    			OnValidatePropertyChanging("Kontext",_kontext, value);
     			_kontext = value;
     			OnChanged("Kontext");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _kategorie; }
             set
     		{ 
+    			OnValidatePropertyChanging("Kategorie",_kategorie, value);
     			_kategorie = value;
     			OnChanged("Kategorie");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _typ; }
             set
     		{ 
+    			OnValidatePropertyChanging("Typ",_typ, value);
     			_typ = value;
     			OnChanged("Typ");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _wert; }
             set
     		{ 
+    			OnValidatePropertyChanging("Wert",_wert, value);
     			_wert = value;
     			OnChanged("Wert");
     		}
@@ -106,6 +124,7 @@ namespace MeisterGeister.Model
             get { return _beschreibung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Beschreibung",_beschreibung, value);
     			_beschreibung = value;
     			OnChanged("Beschreibung");
     		}

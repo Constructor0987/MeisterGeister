@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _notizID; }
             set
     		{ 
+    			OnValidatePropertyChanging("NotizID",_notizID, value);
     			_notizID = value;
     			OnChanged("NotizID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _text; }
             set
     		{ 
+    			OnValidatePropertyChanging("Text",_text, value);
     			_text = value;
     			OnChanged("Text");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _notToDelete; }
             set
     		{ 
+    			OnValidatePropertyChanging("NotToDelete",_notToDelete, value);
     			_notToDelete = value;
     			OnChanged("NotToDelete");
     		}

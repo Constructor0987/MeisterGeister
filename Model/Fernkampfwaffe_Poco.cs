@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -60,6 +73,7 @@ namespace MeisterGeister.Model
             get { return _munitionspreis; }
             set
     		{ 
+    			OnValidatePropertyChanging("Munitionspreis",_munitionspreis, value);
     			_munitionspreis = value;
     			OnChanged("Munitionspreis");
     		}
@@ -73,6 +87,7 @@ namespace MeisterGeister.Model
             get { return _munitionsgewicht; }
             set
     		{ 
+    			OnValidatePropertyChanging("Munitionsgewicht",_munitionsgewicht, value);
     			_munitionsgewicht = value;
     			OnChanged("Munitionsgewicht");
     		}
@@ -86,6 +101,7 @@ namespace MeisterGeister.Model
             get { return _munitionsart; }
             set
     		{ 
+    			OnValidatePropertyChanging("Munitionsart",_munitionsart, value);
     			_munitionsart = value;
     			OnChanged("Munitionsart");
     		}
@@ -99,6 +115,7 @@ namespace MeisterGeister.Model
             get { return _improvisiert; }
             set
     		{ 
+    			OnValidatePropertyChanging("Improvisiert",_improvisiert, value);
     			_improvisiert = value;
     			OnChanged("Improvisiert");
     		}
@@ -112,6 +129,7 @@ namespace MeisterGeister.Model
             get { return _tPWürfel; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPWürfel",_tPWürfel, value);
     			_tPWürfel = value;
     			OnChanged("TPWürfel");
     		}
@@ -125,6 +143,7 @@ namespace MeisterGeister.Model
             get { return _tPWürfelAnzahl; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPWürfelAnzahl",_tPWürfelAnzahl, value);
     			_tPWürfelAnzahl = value;
     			OnChanged("TPWürfelAnzahl");
     		}
@@ -138,6 +157,7 @@ namespace MeisterGeister.Model
             get { return _tPBonus; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPBonus",_tPBonus, value);
     			_tPBonus = value;
     			OnChanged("TPBonus");
     		}
@@ -151,6 +171,7 @@ namespace MeisterGeister.Model
             get { return _ausdauerSchaden; }
             set
     		{ 
+    			OnValidatePropertyChanging("AusdauerSchaden",_ausdauerSchaden, value);
     			_ausdauerSchaden = value;
     			OnChanged("AusdauerSchaden");
     		}
@@ -164,6 +185,7 @@ namespace MeisterGeister.Model
             get { return _tPKKSchwelle; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPKKSchwelle",_tPKKSchwelle, value);
     			_tPKKSchwelle = value;
     			OnChanged("TPKKSchwelle");
     		}
@@ -177,6 +199,7 @@ namespace MeisterGeister.Model
             get { return _tPKKSchritt; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPKKSchritt",_tPKKSchritt, value);
     			_tPKKSchritt = value;
     			OnChanged("TPKKSchritt");
     		}
@@ -190,6 +213,7 @@ namespace MeisterGeister.Model
             get { return _verwundend; }
             set
     		{ 
+    			OnValidatePropertyChanging("Verwundend",_verwundend, value);
     			_verwundend = value;
     			OnChanged("Verwundend");
     		}
@@ -203,6 +227,7 @@ namespace MeisterGeister.Model
             get { return _rWSehrNah; }
             set
     		{ 
+    			OnValidatePropertyChanging("RWSehrNah",_rWSehrNah, value);
     			_rWSehrNah = value;
     			OnChanged("RWSehrNah");
     		}
@@ -216,6 +241,7 @@ namespace MeisterGeister.Model
             get { return _rWNah; }
             set
     		{ 
+    			OnValidatePropertyChanging("RWNah",_rWNah, value);
     			_rWNah = value;
     			OnChanged("RWNah");
     		}
@@ -229,6 +255,7 @@ namespace MeisterGeister.Model
             get { return _rWMittel; }
             set
     		{ 
+    			OnValidatePropertyChanging("RWMittel",_rWMittel, value);
     			_rWMittel = value;
     			OnChanged("RWMittel");
     		}
@@ -242,6 +269,7 @@ namespace MeisterGeister.Model
             get { return _rWWeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("RWWeit",_rWWeit, value);
     			_rWWeit = value;
     			OnChanged("RWWeit");
     		}
@@ -255,6 +283,7 @@ namespace MeisterGeister.Model
             get { return _rWSehrWeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("RWSehrWeit",_rWSehrWeit, value);
     			_rWSehrWeit = value;
     			OnChanged("RWSehrWeit");
     		}
@@ -268,6 +297,7 @@ namespace MeisterGeister.Model
             get { return _tPSehrNah; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPSehrNah",_tPSehrNah, value);
     			_tPSehrNah = value;
     			OnChanged("TPSehrNah");
     		}
@@ -281,6 +311,7 @@ namespace MeisterGeister.Model
             get { return _tPNah; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPNah",_tPNah, value);
     			_tPNah = value;
     			OnChanged("TPNah");
     		}
@@ -294,6 +325,7 @@ namespace MeisterGeister.Model
             get { return _tPMittel; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPMittel",_tPMittel, value);
     			_tPMittel = value;
     			OnChanged("TPMittel");
     		}
@@ -307,6 +339,7 @@ namespace MeisterGeister.Model
             get { return _tPWeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPWeit",_tPWeit, value);
     			_tPWeit = value;
     			OnChanged("TPWeit");
     		}
@@ -320,6 +353,7 @@ namespace MeisterGeister.Model
             get { return _tPSehrWeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPSehrWeit",_tPSehrWeit, value);
     			_tPSehrWeit = value;
     			OnChanged("TPSehrWeit");
     		}
@@ -333,6 +367,7 @@ namespace MeisterGeister.Model
             get { return _laden; }
             set
     		{ 
+    			OnValidatePropertyChanging("Laden",_laden, value);
     			_laden = value;
     			OnChanged("Laden");
     		}

@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -60,6 +73,7 @@ namespace MeisterGeister.Model
             get { return _größe; }
             set
     		{ 
+    			OnValidatePropertyChanging("Größe",_größe, value);
     			_größe = value;
     			OnChanged("Größe");
     		}
@@ -73,6 +87,7 @@ namespace MeisterGeister.Model
             get { return _typ; }
             set
     		{ 
+    			OnValidatePropertyChanging("Typ",_typ, value);
     			_typ = value;
     			OnChanged("Typ");
     		}
@@ -86,6 +101,7 @@ namespace MeisterGeister.Model
             get { return _wMAT; }
             set
     		{ 
+    			OnValidatePropertyChanging("WMAT",_wMAT, value);
     			_wMAT = value;
     			OnChanged("WMAT");
     		}
@@ -99,6 +115,7 @@ namespace MeisterGeister.Model
             get { return _wMPA; }
             set
     		{ 
+    			OnValidatePropertyChanging("WMPA",_wMPA, value);
     			_wMPA = value;
     			OnChanged("WMPA");
     		}
@@ -112,6 +129,7 @@ namespace MeisterGeister.Model
             get { return _iNI; }
             set
     		{ 
+    			OnValidatePropertyChanging("INI",_iNI, value);
     			_iNI = value;
     			OnChanged("INI");
     		}
@@ -125,6 +143,7 @@ namespace MeisterGeister.Model
             get { return _bF; }
             set
     		{ 
+    			OnValidatePropertyChanging("BF",_bF, value);
     			_bF = value;
     			OnChanged("BF");
     		}

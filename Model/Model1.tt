@@ -55,6 +55,20 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
 <#
 		region.End();
 	}
+
+	region.Begin("ValidatePropertyChanging");
+#>
+	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+
+	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+	{
+		if(ValidatePropertyChanging != null)
+		{
+			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+		}
+	}
+<#
+	region.End();
 	
     region.Begin("Primitive Properties");
 
@@ -165,6 +179,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
         <#=code.SpaceAfter(Accessibility.ForGetter(edmProperty))#>get { return <#=code.FieldName(edmProperty)#>; }
         <#=code.SpaceAfter(Accessibility.ForSetter(edmProperty))#>set
 		{ 
+			OnValidatePropertyChanging("<#=code.Escape(edmProperty)#>",<#=code.FieldName(edmProperty)#>, value);
 			<#=code.FieldName(edmProperty)#> = value;
 			<#=implementINotifyPropertyChanged?"OnChanged(\"" + code.Escape(edmProperty) + "\");":String.Empty#>
 		}

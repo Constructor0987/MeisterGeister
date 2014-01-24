@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _kulturGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("KulturGUID",_kulturGUID, value);
     			_kulturGUID = value;
     			OnChanged("KulturGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _variante; }
             set
     		{ 
+    			OnValidatePropertyChanging("Variante",_variante, value);
     			_variante = value;
     			OnChanged("Variante");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _gP; }
             set
     		{ 
+    			OnValidatePropertyChanging("GP",_gP, value);
     			_gP = value;
     			OnChanged("GP");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _sOmin; }
             set
     		{ 
+    			OnValidatePropertyChanging("SOmin",_sOmin, value);
     			_sOmin = value;
     			OnChanged("SOmin");
     		}
@@ -106,6 +124,7 @@ namespace MeisterGeister.Model
             get { return _sOmax; }
             set
     		{ 
+    			OnValidatePropertyChanging("SOmax",_sOmax, value);
     			_sOmax = value;
     			OnChanged("SOmax");
     		}
@@ -119,6 +138,7 @@ namespace MeisterGeister.Model
             get { return _voraussetzungen; }
             set
     		{ 
+    			OnValidatePropertyChanging("Voraussetzungen",_voraussetzungen, value);
     			_voraussetzungen = value;
     			OnChanged("Voraussetzungen");
     		}
@@ -132,6 +152,7 @@ namespace MeisterGeister.Model
             get { return _mUMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("MUMod",_mUMod, value);
     			_mUMod = value;
     			OnChanged("MUMod");
     		}
@@ -145,6 +166,7 @@ namespace MeisterGeister.Model
             get { return _kLMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("KLMod",_kLMod, value);
     			_kLMod = value;
     			OnChanged("KLMod");
     		}
@@ -158,6 +180,7 @@ namespace MeisterGeister.Model
             get { return _iNMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("INMod",_iNMod, value);
     			_iNMod = value;
     			OnChanged("INMod");
     		}
@@ -171,6 +194,7 @@ namespace MeisterGeister.Model
             get { return _cHMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("CHMod",_cHMod, value);
     			_cHMod = value;
     			OnChanged("CHMod");
     		}
@@ -184,6 +208,7 @@ namespace MeisterGeister.Model
             get { return _fFMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("FFMod",_fFMod, value);
     			_fFMod = value;
     			OnChanged("FFMod");
     		}
@@ -197,6 +222,7 @@ namespace MeisterGeister.Model
             get { return _gEMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("GEMod",_gEMod, value);
     			_gEMod = value;
     			OnChanged("GEMod");
     		}
@@ -210,6 +236,7 @@ namespace MeisterGeister.Model
             get { return _kOMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("KOMod",_kOMod, value);
     			_kOMod = value;
     			OnChanged("KOMod");
     		}
@@ -223,6 +250,7 @@ namespace MeisterGeister.Model
             get { return _kKMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("KKMod",_kKMod, value);
     			_kKMod = value;
     			OnChanged("KKMod");
     		}
@@ -236,6 +264,7 @@ namespace MeisterGeister.Model
             get { return _lEMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("LEMod",_lEMod, value);
     			_lEMod = value;
     			OnChanged("LEMod");
     		}
@@ -249,6 +278,7 @@ namespace MeisterGeister.Model
             get { return _aUMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("AUMod",_aUMod, value);
     			_aUMod = value;
     			OnChanged("AUMod");
     		}
@@ -262,6 +292,7 @@ namespace MeisterGeister.Model
             get { return _mRMod; }
             set
     		{ 
+    			OnValidatePropertyChanging("MRMod",_mRMod, value);
     			_mRMod = value;
     			OnChanged("MRMod");
     		}
@@ -275,6 +306,7 @@ namespace MeisterGeister.Model
             get { return _literatur; }
             set
     		{ 
+    			OnValidatePropertyChanging("Literatur",_literatur, value);
     			_literatur = value;
     			OnChanged("Literatur");
     		}
@@ -288,6 +320,7 @@ namespace MeisterGeister.Model
             get { return _setting; }
             set
     		{ 
+    			OnValidatePropertyChanging("Setting",_setting, value);
     			_setting = value;
     			OnChanged("Setting");
     		}

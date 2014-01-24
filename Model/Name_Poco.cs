@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _nameID; }
             set
     		{ 
+    			OnValidatePropertyChanging("NameID",_nameID, value);
     			_nameID = value;
     			OnChanged("NameID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name1; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name1",_name1, value);
     			_name1 = value;
     			OnChanged("Name1");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _herkunft; }
             set
     		{ 
+    			OnValidatePropertyChanging("Herkunft",_herkunft, value);
     			_herkunft = value;
     			OnChanged("Herkunft");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _art; }
             set
     		{ 
+    			OnValidatePropertyChanging("Art",_art, value);
     			_art = value;
     			OnChanged("Art");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _bedeutung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Bedeutung",_bedeutung, value);
     			_bedeutung = value;
     			OnChanged("Bedeutung");
     		}
@@ -106,6 +124,7 @@ namespace MeisterGeister.Model
             get { return _geschlecht; }
             set
     		{ 
+    			OnValidatePropertyChanging("Geschlecht",_geschlecht, value);
     			_geschlecht = value;
     			OnChanged("Geschlecht");
     		}
@@ -119,6 +138,7 @@ namespace MeisterGeister.Model
             get { return _keineVorsilbe; }
             set
     		{ 
+    			OnValidatePropertyChanging("KeineVorsilbe",_keineVorsilbe, value);
     			_keineVorsilbe = value;
     			OnChanged("KeineVorsilbe");
     		}
@@ -132,6 +152,7 @@ namespace MeisterGeister.Model
             get { return _keineNachsilbe; }
             set
     		{ 
+    			OnValidatePropertyChanging("KeineNachsilbe",_keineNachsilbe, value);
     			_keineNachsilbe = value;
     			OnChanged("KeineNachsilbe");
     		}

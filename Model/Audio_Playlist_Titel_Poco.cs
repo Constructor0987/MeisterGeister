@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -79,6 +92,7 @@ namespace MeisterGeister.Model
             get { return _aktiv; }
             set
     		{ 
+    			OnValidatePropertyChanging("Aktiv",_aktiv, value);
     			_aktiv = value;
     			OnChanged("Aktiv");
     		}
@@ -92,6 +106,7 @@ namespace MeisterGeister.Model
             get { return _volume; }
             set
     		{ 
+    			OnValidatePropertyChanging("Volume",_volume, value);
     			_volume = value;
     			OnChanged("Volume");
     		}
@@ -105,6 +120,7 @@ namespace MeisterGeister.Model
             get { return _volumeChange; }
             set
     		{ 
+    			OnValidatePropertyChanging("VolumeChange",_volumeChange, value);
     			_volumeChange = value;
     			OnChanged("VolumeChange");
     		}
@@ -118,6 +134,7 @@ namespace MeisterGeister.Model
             get { return _volumeMin; }
             set
     		{ 
+    			OnValidatePropertyChanging("VolumeMin",_volumeMin, value);
     			_volumeMin = value;
     			OnChanged("VolumeMin");
     		}
@@ -131,6 +148,7 @@ namespace MeisterGeister.Model
             get { return _volumeMax; }
             set
     		{ 
+    			OnValidatePropertyChanging("VolumeMax",_volumeMax, value);
     			_volumeMax = value;
     			OnChanged("VolumeMax");
     		}
@@ -144,6 +162,7 @@ namespace MeisterGeister.Model
             get { return _pause; }
             set
     		{ 
+    			OnValidatePropertyChanging("Pause",_pause, value);
     			_pause = value;
     			OnChanged("Pause");
     		}
@@ -157,6 +176,7 @@ namespace MeisterGeister.Model
             get { return _pauseChange; }
             set
     		{ 
+    			OnValidatePropertyChanging("PauseChange",_pauseChange, value);
     			_pauseChange = value;
     			OnChanged("PauseChange");
     		}
@@ -170,6 +190,7 @@ namespace MeisterGeister.Model
             get { return _pauseMin; }
             set
     		{ 
+    			OnValidatePropertyChanging("PauseMin",_pauseMin, value);
     			_pauseMin = value;
     			OnChanged("PauseMin");
     		}
@@ -183,6 +204,7 @@ namespace MeisterGeister.Model
             get { return _pauseMax; }
             set
     		{ 
+    			OnValidatePropertyChanging("PauseMax",_pauseMax, value);
     			_pauseMax = value;
     			OnChanged("PauseMax");
     		}
@@ -196,6 +218,7 @@ namespace MeisterGeister.Model
             get { return _speed; }
             set
     		{ 
+    			OnValidatePropertyChanging("Speed",_speed, value);
     			_speed = value;
     			OnChanged("Speed");
     		}
@@ -209,6 +232,7 @@ namespace MeisterGeister.Model
             get { return _teilAbspielen; }
             set
     		{ 
+    			OnValidatePropertyChanging("TeilAbspielen",_teilAbspielen, value);
     			_teilAbspielen = value;
     			OnChanged("TeilAbspielen");
     		}
@@ -222,6 +246,7 @@ namespace MeisterGeister.Model
             get { return _teilStart; }
             set
     		{ 
+    			OnValidatePropertyChanging("TeilStart",_teilStart, value);
     			_teilStart = value;
     			OnChanged("TeilStart");
     		}
@@ -235,6 +260,7 @@ namespace MeisterGeister.Model
             get { return _teilEnde; }
             set
     		{ 
+    			OnValidatePropertyChanging("TeilEnde",_teilEnde, value);
     			_teilEnde = value;
     			OnChanged("TeilEnde");
     		}
@@ -248,6 +274,7 @@ namespace MeisterGeister.Model
             get { return _rating; }
             set
     		{ 
+    			OnValidatePropertyChanging("Rating",_rating, value);
     			_rating = value;
     			OnChanged("Rating");
     		}
@@ -261,6 +288,7 @@ namespace MeisterGeister.Model
             get { return _länge; }
             set
     		{ 
+    			OnValidatePropertyChanging("Länge",_länge, value);
     			_länge = value;
     			OnChanged("Länge");
     		}

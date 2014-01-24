@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _literaturGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("LiteraturGUID",_literaturGUID, value);
     			_literaturGUID = value;
     			OnChanged("LiteraturGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _abkürzung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Abkürzung",_abkürzung, value);
     			_abkürzung = value;
     			OnChanged("Abkürzung");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _pfad; }
             set
     		{ 
+    			OnValidatePropertyChanging("Pfad",_pfad, value);
     			_pfad = value;
     			OnChanged("Pfad");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _seitenoffset; }
             set
     		{ 
+    			OnValidatePropertyChanging("Seitenoffset",_seitenoffset, value);
     			_seitenoffset = value;
     			OnChanged("Seitenoffset");
     		}

@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _audio_TitelGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("Audio_TitelGUID",_audio_TitelGUID, value);
     			_audio_TitelGUID = value;
     			OnChanged("Audio_TitelGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _pfad; }
             set
     		{ 
+    			OnValidatePropertyChanging("Pfad",_pfad, value);
     			_pfad = value;
     			OnChanged("Pfad");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _länge; }
             set
     		{ 
+    			OnValidatePropertyChanging("Länge",_länge, value);
     			_länge = value;
     			OnChanged("Länge");
     		}

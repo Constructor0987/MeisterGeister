@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -60,6 +73,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -73,6 +87,7 @@ namespace MeisterGeister.Model
             get { return _tPWürfel; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPWürfel",_tPWürfel, value);
     			_tPWürfel = value;
     			OnChanged("TPWürfel");
     		}
@@ -86,6 +101,7 @@ namespace MeisterGeister.Model
             get { return _tPWürfelAnzahl; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPWürfelAnzahl",_tPWürfelAnzahl, value);
     			_tPWürfelAnzahl = value;
     			OnChanged("TPWürfelAnzahl");
     		}
@@ -99,6 +115,7 @@ namespace MeisterGeister.Model
             get { return _tPBonus; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPBonus",_tPBonus, value);
     			_tPBonus = value;
     			OnChanged("TPBonus");
     		}
@@ -112,6 +129,7 @@ namespace MeisterGeister.Model
             get { return _aT; }
             set
     		{ 
+    			OnValidatePropertyChanging("AT",_aT, value);
     			_aT = value;
     			OnChanged("AT");
     		}
@@ -125,6 +143,7 @@ namespace MeisterGeister.Model
             get { return _dK; }
             set
     		{ 
+    			OnValidatePropertyChanging("DK",_dK, value);
     			_dK = value;
     			OnChanged("DK");
     		}
@@ -138,6 +157,7 @@ namespace MeisterGeister.Model
             get { return _reichweite; }
             set
     		{ 
+    			OnValidatePropertyChanging("Reichweite",_reichweite, value);
     			_reichweite = value;
     			OnChanged("Reichweite");
     		}
@@ -151,6 +171,7 @@ namespace MeisterGeister.Model
             get { return _bemerkung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Bemerkung",_bemerkung, value);
     			_bemerkung = value;
     			OnChanged("Bemerkung");
     		}
@@ -164,6 +185,7 @@ namespace MeisterGeister.Model
             get { return _pA; }
             set
     		{ 
+    			OnValidatePropertyChanging("PA",_pA, value);
     			_pA = value;
     			OnChanged("PA");
     		}

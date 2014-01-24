@@ -12,6 +12,16 @@ namespace MeisterGeister.Model
         public Held_Sonderfertigkeit()
         {
             Wert = String.Empty;            
+            ValidatePropertyChanging += Held_Sonderfertigkeit_ValidatePropertyChanging;
+        }
+
+        void Held_Sonderfertigkeit_ValidatePropertyChanging(object sender, string propertyName, object currentValue, object newValue)
+        {
+            if (Held != null && propertyName == "Wert" && newValue != currentValue)
+            {
+                if (Held.Held_Sonderfertigkeit.Where(hs => hs.SonderfertigkeitGUID == SonderfertigkeitGUID && hs.Wert == (newValue as string)).Count() >= 1)
+                    throw new ArgumentException("Die Sonderfertigkeit ist mit diesem Wert bereits vorhanden.");
+            }
         }
     }
 }

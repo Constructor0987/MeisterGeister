@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _alchimierezeptGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("AlchimierezeptGUID",_alchimierezeptGUID, value);
     			_alchimierezeptGUID = value;
     			OnChanged("AlchimierezeptGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _gruppe; }
             set
     		{ 
+    			OnValidatePropertyChanging("Gruppe",_gruppe, value);
     			_gruppe = value;
     			OnChanged("Gruppe");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _kategorie; }
             set
     		{ 
+    			OnValidatePropertyChanging("Kategorie",_kategorie, value);
     			_kategorie = value;
     			OnChanged("Kategorie");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _merkmale; }
             set
     		{ 
+    			OnValidatePropertyChanging("Merkmale",_merkmale, value);
     			_merkmale = value;
     			OnChanged("Merkmale");
     		}
@@ -106,6 +124,7 @@ namespace MeisterGeister.Model
             get { return _brauschwierigkeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("Brauschwierigkeit",_brauschwierigkeit, value);
     			_brauschwierigkeit = value;
     			OnChanged("Brauschwierigkeit");
     		}
@@ -119,6 +138,7 @@ namespace MeisterGeister.Model
             get { return _analyseschwierigkeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("Analyseschwierigkeit",_analyseschwierigkeit, value);
     			_analyseschwierigkeit = value;
     			OnChanged("Analyseschwierigkeit");
     		}
@@ -132,6 +152,7 @@ namespace MeisterGeister.Model
             get { return _beschaffungsschwierigkeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("Beschaffungsschwierigkeit",_beschaffungsschwierigkeit, value);
     			_beschaffungsschwierigkeit = value;
     			OnChanged("Beschaffungsschwierigkeit");
     		}
@@ -145,6 +166,7 @@ namespace MeisterGeister.Model
             get { return _beschaffungskosten; }
             set
     		{ 
+    			OnValidatePropertyChanging("Beschaffungskosten",_beschaffungskosten, value);
     			_beschaffungskosten = value;
     			OnChanged("Beschaffungskosten");
     		}
@@ -158,6 +180,7 @@ namespace MeisterGeister.Model
             get { return _haltbarkeit; }
             set
     		{ 
+    			OnValidatePropertyChanging("Haltbarkeit",_haltbarkeit, value);
     			_haltbarkeit = value;
     			OnChanged("Haltbarkeit");
     		}
@@ -171,6 +194,7 @@ namespace MeisterGeister.Model
             get { return _haltbarkeitseinheit; }
             set
     		{ 
+    			OnValidatePropertyChanging("Haltbarkeitseinheit",_haltbarkeitseinheit, value);
     			_haltbarkeitseinheit = value;
     			OnChanged("Haltbarkeitseinheit");
     		}
@@ -184,6 +208,7 @@ namespace MeisterGeister.Model
             get { return _labor; }
             set
     		{ 
+    			OnValidatePropertyChanging("Labor",_labor, value);
     			_labor = value;
     			OnChanged("Labor");
     		}
@@ -197,6 +222,7 @@ namespace MeisterGeister.Model
             get { return _zutaten; }
             set
     		{ 
+    			OnValidatePropertyChanging("Zutaten",_zutaten, value);
     			_zutaten = value;
     			OnChanged("Zutaten");
     		}
@@ -210,6 +236,7 @@ namespace MeisterGeister.Model
             get { return _substitute; }
             set
     		{ 
+    			OnValidatePropertyChanging("Substitute",_substitute, value);
     			_substitute = value;
     			OnChanged("Substitute");
     		}
@@ -223,6 +250,7 @@ namespace MeisterGeister.Model
             get { return _bemerkung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Bemerkung",_bemerkung, value);
     			_bemerkung = value;
     			OnChanged("Bemerkung");
     		}
@@ -236,6 +264,7 @@ namespace MeisterGeister.Model
             get { return _literatur; }
             set
     		{ 
+    			OnValidatePropertyChanging("Literatur",_literatur, value);
     			_literatur = value;
     			OnChanged("Literatur");
     		}
@@ -249,6 +278,7 @@ namespace MeisterGeister.Model
             get { return _tags; }
             set
     		{ 
+    			OnValidatePropertyChanging("Tags",_tags, value);
     			_tags = value;
     			OnChanged("Tags");
     		}

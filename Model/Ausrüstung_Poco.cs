@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _ausrüstungGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("AusrüstungGUID",_ausrüstungGUID, value);
     			_ausrüstungGUID = value;
     			OnChanged("AusrüstungGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
+    			OnValidatePropertyChanging("Name",_name, value);
     			_name = value;
     			OnChanged("Name");
     		}
@@ -67,6 +82,7 @@ namespace MeisterGeister.Model
             get { return _gewicht; }
             set
     		{ 
+    			OnValidatePropertyChanging("Gewicht",_gewicht, value);
     			_gewicht = value;
     			OnChanged("Gewicht");
     		}
@@ -80,6 +96,7 @@ namespace MeisterGeister.Model
             get { return _literatur; }
             set
     		{ 
+    			OnValidatePropertyChanging("Literatur",_literatur, value);
     			_literatur = value;
     			OnChanged("Literatur");
     		}
@@ -93,6 +110,7 @@ namespace MeisterGeister.Model
             get { return _bemerkung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Bemerkung",_bemerkung, value);
     			_bemerkung = value;
     			OnChanged("Bemerkung");
     		}
@@ -106,6 +124,7 @@ namespace MeisterGeister.Model
             get { return _tags; }
             set
     		{ 
+    			OnValidatePropertyChanging("Tags",_tags, value);
     			_tags = value;
     			OnChanged("Tags");
     		}

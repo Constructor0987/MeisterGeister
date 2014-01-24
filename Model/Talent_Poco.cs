@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -41,6 +54,7 @@ namespace MeisterGeister.Model
             get { return _talentGUID; }
             set
     		{ 
+    			OnValidatePropertyChanging("TalentGUID",_talentGUID, value);
     			_talentGUID = value;
     			OnChanged("TalentGUID");
     		}
@@ -54,6 +68,7 @@ namespace MeisterGeister.Model
             get { return _talentname; }
             set
     		{ 
+    			OnValidatePropertyChanging("Talentname",_talentname, value);
     			_talentname = value;
     			OnChanged("Talentname");
     		}
@@ -94,6 +109,7 @@ namespace MeisterGeister.Model
             get { return _eigenschaft1; }
             set
     		{ 
+    			OnValidatePropertyChanging("Eigenschaft1",_eigenschaft1, value);
     			_eigenschaft1 = value;
     			OnChanged("Eigenschaft1");
     		}
@@ -107,6 +123,7 @@ namespace MeisterGeister.Model
             get { return _eigenschaft2; }
             set
     		{ 
+    			OnValidatePropertyChanging("Eigenschaft2",_eigenschaft2, value);
     			_eigenschaft2 = value;
     			OnChanged("Eigenschaft2");
     		}
@@ -120,6 +137,7 @@ namespace MeisterGeister.Model
             get { return _eigenschaft3; }
             set
     		{ 
+    			OnValidatePropertyChanging("Eigenschaft3",_eigenschaft3, value);
     			_eigenschaft3 = value;
     			OnChanged("Eigenschaft3");
     		}
@@ -133,6 +151,7 @@ namespace MeisterGeister.Model
             get { return _talenttyp; }
             set
     		{ 
+    			OnValidatePropertyChanging("Talenttyp",_talenttyp, value);
     			_talenttyp = value;
     			OnChanged("Talenttyp");
     		}
@@ -146,6 +165,7 @@ namespace MeisterGeister.Model
             get { return _eBE; }
             set
     		{ 
+    			OnValidatePropertyChanging("eBE",_eBE, value);
     			_eBE = value;
     			OnChanged("eBE");
     		}
@@ -159,6 +179,7 @@ namespace MeisterGeister.Model
             get { return _spezialisierungen; }
             set
     		{ 
+    			OnValidatePropertyChanging("Spezialisierungen",_spezialisierungen, value);
     			_spezialisierungen = value;
     			OnChanged("Spezialisierungen");
     		}
@@ -172,6 +193,7 @@ namespace MeisterGeister.Model
             get { return _voraussetzungen; }
             set
     		{ 
+    			OnValidatePropertyChanging("Voraussetzungen",_voraussetzungen, value);
     			_voraussetzungen = value;
     			OnChanged("Voraussetzungen");
     		}
@@ -185,6 +207,7 @@ namespace MeisterGeister.Model
             get { return _steigerung; }
             set
     		{ 
+    			OnValidatePropertyChanging("Steigerung",_steigerung, value);
     			_steigerung = value;
     			OnChanged("Steigerung");
     		}
@@ -198,6 +221,7 @@ namespace MeisterGeister.Model
             get { return _wikiLink; }
             set
     		{ 
+    			OnValidatePropertyChanging("WikiLink",_wikiLink, value);
     			_wikiLink = value;
     			OnChanged("WikiLink");
     		}
@@ -211,6 +235,7 @@ namespace MeisterGeister.Model
             get { return _untergruppe; }
             set
     		{ 
+    			OnValidatePropertyChanging("Untergruppe",_untergruppe, value);
     			_untergruppe = value;
     			OnChanged("Untergruppe");
     		}
@@ -224,6 +249,7 @@ namespace MeisterGeister.Model
             get { return _setting; }
             set
     		{ 
+    			OnValidatePropertyChanging("Setting",_setting, value);
     			_setting = value;
     			OnChanged("Setting");
     		}
@@ -237,6 +263,7 @@ namespace MeisterGeister.Model
             get { return _literatur; }
             set
     		{ 
+    			OnValidatePropertyChanging("Literatur",_literatur, value);
     			_literatur = value;
     			OnChanged("Literatur");
     		}

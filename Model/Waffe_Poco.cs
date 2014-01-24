@@ -33,6 +33,19 @@ namespace MeisterGeister.Model
 
         #endregion
 
+        #region ValidatePropertyChanging
+    	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
+    
+    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	{
+    		if(ValidatePropertyChanging != null)
+    		{
+    			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
+    		}
+    	}
+
+        #endregion
+
         #region Primitive Properties
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -60,6 +73,7 @@ namespace MeisterGeister.Model
             get { return _tPWürfel; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPWürfel",_tPWürfel, value);
     			_tPWürfel = value;
     			OnChanged("TPWürfel");
     		}
@@ -73,6 +87,7 @@ namespace MeisterGeister.Model
             get { return _tPWürfelAnzahl; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPWürfelAnzahl",_tPWürfelAnzahl, value);
     			_tPWürfelAnzahl = value;
     			OnChanged("TPWürfelAnzahl");
     		}
@@ -86,6 +101,7 @@ namespace MeisterGeister.Model
             get { return _tPBonus; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPBonus",_tPBonus, value);
     			_tPBonus = value;
     			OnChanged("TPBonus");
     		}
@@ -99,6 +115,7 @@ namespace MeisterGeister.Model
             get { return _ausdauerSchaden; }
             set
     		{ 
+    			OnValidatePropertyChanging("AusdauerSchaden",_ausdauerSchaden, value);
     			_ausdauerSchaden = value;
     			OnChanged("AusdauerSchaden");
     		}
@@ -112,6 +129,7 @@ namespace MeisterGeister.Model
             get { return _tPKKSchwelle; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPKKSchwelle",_tPKKSchwelle, value);
     			_tPKKSchwelle = value;
     			OnChanged("TPKKSchwelle");
     		}
@@ -125,6 +143,7 @@ namespace MeisterGeister.Model
             get { return _tPKKSchritt; }
             set
     		{ 
+    			OnValidatePropertyChanging("TPKKSchritt",_tPKKSchritt, value);
     			_tPKKSchritt = value;
     			OnChanged("TPKKSchritt");
     		}
@@ -138,6 +157,7 @@ namespace MeisterGeister.Model
             get { return _iNI; }
             set
     		{ 
+    			OnValidatePropertyChanging("INI",_iNI, value);
     			_iNI = value;
     			OnChanged("INI");
     		}
@@ -151,6 +171,7 @@ namespace MeisterGeister.Model
             get { return _wMAT; }
             set
     		{ 
+    			OnValidatePropertyChanging("WMAT",_wMAT, value);
     			_wMAT = value;
     			OnChanged("WMAT");
     		}
@@ -164,6 +185,7 @@ namespace MeisterGeister.Model
             get { return _wMPA; }
             set
     		{ 
+    			OnValidatePropertyChanging("WMPA",_wMPA, value);
     			_wMPA = value;
     			OnChanged("WMPA");
     		}
@@ -177,6 +199,7 @@ namespace MeisterGeister.Model
             get { return _bF; }
             set
     		{ 
+    			OnValidatePropertyChanging("BF",_bF, value);
     			_bF = value;
     			OnChanged("BF");
     		}
@@ -190,6 +213,7 @@ namespace MeisterGeister.Model
             get { return _länge; }
             set
     		{ 
+    			OnValidatePropertyChanging("Länge",_länge, value);
     			_länge = value;
     			OnChanged("Länge");
     		}
@@ -203,6 +227,7 @@ namespace MeisterGeister.Model
             get { return _dK; }
             set
     		{ 
+    			OnValidatePropertyChanging("DK",_dK, value);
     			_dK = value;
     			OnChanged("DK");
     		}
@@ -216,6 +241,7 @@ namespace MeisterGeister.Model
             get { return _improvisiert; }
             set
     		{ 
+    			OnValidatePropertyChanging("Improvisiert",_improvisiert, value);
     			_improvisiert = value;
     			OnChanged("Improvisiert");
     		}
