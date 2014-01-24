@@ -10,6 +10,7 @@ using System.Data.OleDb;
 //using MeisterGeister.Logic.General;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Helden.Logic;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.Logic.HeldenImport
 {
@@ -825,9 +826,17 @@ namespace MeisterGeister.Logic.HeldenImport
                     bool added = false;
 
                     if (!added && vorNachteilName == "Begabung für [Merkmal]")
-                        added = AddVorNachteil(string.Format("Begabung für Merkmal ({0})", wertString), null, _held); // Begabung für Merkmal
+                    {
+                        var m = Merkmale.GetMerkmal(wertString);
+                        if(m != null)
+                            added = AddVorNachteil(string.Format("Begabung für Merkmal ({0})", m.Name), null, _held); // Begabung für Merkmal
+                    }
                     else if (!added && vorNachteilName == "Unfähigkeit für [Merkmal]")
-                        added = AddVorNachteil(string.Format("Unfähigkeit für Merkmal ({0})", wertString), null, _held); // Unfähigkeit für Merkmal
+                    {
+                        var m = Merkmale.GetMerkmal(wertString);
+                        if (m != null)
+                            added = AddVorNachteil(string.Format("Unfähigkeit für Merkmal ({0})", m.Name), null, _held); // Unfähigkeit für Merkmal
+                    }
                     else if (!added && vorNachteilName == "Herausragende Eigenschaft" && wertString != null)
                     {
                         var m = wertString.Split(' ');
@@ -937,7 +946,7 @@ namespace MeisterGeister.Logic.HeldenImport
                         if (a == null) //nein, sie existiert noch nicht -> also basisausrüstung kopieren und neu anlegen
                         {
                             //eventuell haben wir die waffe bereits als nahkampfwaffe importiert und sie kann auch anders verwendet werden?
-                            a = _held.Held_Ausrüstung.Where(hha => hha.Ausrüstung.Name == name).Select(_hha => _hha.Ausrüstung).FirstOrDefault();
+                            a = _held.Held_Ausrüstung.Where(hha => hha.Ausrüstung != null && hha.Ausrüstung.Name == name).Select(_hha => _hha.Ausrüstung).FirstOrDefault();
                             
                             if (a == null) //sonst die basisausrüstung suchen
                                 a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();

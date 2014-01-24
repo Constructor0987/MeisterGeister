@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.Logic.Literatur;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -119,7 +120,7 @@ namespace MeisterGeister.Logic.General
         }
     }
 
-    public class Repräsentation
+    public class Repräsentation : ILiteratur
     {
         string name;
 

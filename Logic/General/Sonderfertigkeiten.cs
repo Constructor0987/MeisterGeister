@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace MeisterGeister.Logic.General
 {
-    public class Sonderfertigkeit
+    public class Sonderfertigkeiten
     {
         public const string Aufmerksamkeit = "Aufmerksamkeit";
         public const string Ausfall = "Ausfall";
