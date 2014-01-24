@@ -37,20 +37,42 @@
                             <TextBlock Text="Allgemeine Einstellungen" Style="{DynamicResource TextTitel}" />
                         </TabItem.Header>                        
                         <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding AllgemeinListe}">
-                                <ListBox.Resources>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                        <StackPanel Margin="4" Orientation="Horizontal">
-                                            <CheckBox x:Name="_checkBoxJingleAbstellen" Margin="2" VerticalAlignment="Center" IsChecked="{Binding Wert}" />
-                                            <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="Jingle beim Programmstart abstellen?" TextWrapping="WrapWithOverflow" />
-                                            <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
-                                                <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
-                                            </Button>
-                                            <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.Resources>
-                            </ListBox>
+                            <StackPanel>
+                                <StackPanel Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
+                                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
+                                    </Button>
+                                    <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
+                                </StackPanel>
+                                <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding AllgemeinListe}">
+                                    <ListBox.Resources>
+                                        <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                            <StackPanel Orientation="Horizontal" Margin="4">
+                                                <CheckBox Margin="2" IsChecked="{Binding Wert}" />
+                                                <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                            <StackPanel Orientation="Horizontal" Margin="4">
+                                                <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                                <TextBlock Text="{Binding Beschreibung}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                            <StackPanel Orientation="Horizontal" Margin="4">
+                                                <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                                <TextBlock Text="{Binding Beschreibung}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                            <StackPanel Orientation="Vertical" Margin="4">
+                                                <TextBlock Text="{Binding Beschreibung}" />
+                                                <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.Resources>
+                                </ListBox>
+                            </StackPanel>
                         </Border>
                     </TabItem>                    
                     <TabItem x:Name="tbiSetting">
