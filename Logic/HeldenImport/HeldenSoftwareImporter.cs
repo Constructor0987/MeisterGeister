@@ -9,6 +9,7 @@ using System.Xml;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Helden.Logic;
 using System.Text.RegularExpressions;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.Logic.HeldenImport
 {
@@ -135,6 +136,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _sonderfertigkeitMapping.Add("zauberzeichen: schutzsiegel", "zauberzeichen: zusatzzeichen schutzsiegel");
             _sonderfertigkeitMapping.Add("zauberzeichen: bannkreis gegen chimären", "zauberzeichen: bann- und schutzkreis gegen chimären");
             _sonderfertigkeitMapping.Add("zauberzeichen: bannkreis gegen traumgänger", "zauberzeichen: schutzkreis gegen traumgänger");
+            _sonderfertigkeitMapping.Add("zauberzeichen: bann- und schutzkreis gegen elemente", "zauberzeichen: glyphe der elementaren bannung");
             _sonderfertigkeitMapping.Add("schlangenszepters: bindung", "schlangenszepter: bindung");
             _sonderfertigkeitMapping.Add("schlangenszepters: ruf der fliegenden schlange", "schlangenszepter: ruf der fliegenden schlange");
             _sonderfertigkeitMapping.Add("ritual: brazoragh ghorkai", "schamanenritual: brazoragh ghorkai - brazoraghs hieb");
@@ -170,6 +172,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _vorNachteilMapping.Add("begabung für [talent]", "begabung für talent");
             _vorNachteilMapping.Add("begabung für [ritual]", "begabung für ritual");
             _vorNachteilMapping.Add("begabung für [zauber]", "begabung für zauber");
+            _vorNachteilMapping.Add("dschinngeboren (ohne vz)", "dschinngeboren");
             _vorNachteilMapping.Add("schnelle heilung 1", "schnelle heilung i");
             _vorNachteilMapping.Add("schnelle heilung 2", "schnelle heilung ii");
             _vorNachteilMapping.Add("schnelle heilung 3", "schnelle heilung iii");
@@ -196,6 +199,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _vorNachteilMapping.Add("eingeschränkter sinn sicht", "eingeschränkter sinn (kurzsichtig)");
             _vorNachteilMapping.Add("eingeschränkter sinn tastsinn", "eingeschränkter sinn (tastsinn)");
             _vorNachteilMapping.Add("tolpatsch", "tollpatsch");
+            _vorNachteilMapping.Add("weltfremd bzgl.", "weltfremd");
         }
 
         private static void SetZauberMapping()
@@ -716,10 +720,19 @@ namespace MeisterGeister.Logic.HeldenImport
             {
                 sfName = sonderfertigkeit.Attributes["name"].Value;
 
+                List<string> werte = new List<string>(2);
+
                 if (sonderfertigkeit.Attributes["value"] != null)
-                    wertString = sonderfertigkeit.Attributes["value"].Value;
-                else
-                    wertString = null;
+                    werte.Add(sonderfertigkeit.Attributes["value"].Value);
+                foreach (XmlNode child in sonderfertigkeit.ChildNodes)
+                {
+                    if (child.Name == "auswahl" && child.Attributes["value"] != null)
+                        werte.Add(child.Attributes["value"].Value);
+                }
+
+                if (werte.Count == 0)
+                    werte.Add(null);
+                wertString = werte[0];
 
                 bool added = false;
 
@@ -810,15 +823,39 @@ namespace MeisterGeister.Logic.HeldenImport
                 // Sonderfertigkeit wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
                 if (!added)
                     added = AddSonderfertigkeit(sfName + " " + wertString, null, _held);
+                //evtl mit römischer Zahl
+                if (!added)
+                {
+                    int iWert = 0;
+                    if ((Int32.TryParse(wertString, out iWert) || wertString == null || wertString == String.Empty) && iWert >= 0 && iWert < 4000)
+                    {
+                        if (iWert <= 0)
+                            iWert = 1;
+                        added = AddSonderfertigkeit(sfName + " " + iWert.ToRoman(), null, _held);
+                    }
+                }
                 // Vor-/Nachteil wurde immer noch nicht gefunden, evtl. Mapping mit Wert möglich
                 if (!added)
                 {
                     if (_sonderfertigkeitMapping.ContainsKey((sfName + " " + wertString).ToLowerInvariant()))
                         added = AddSonderfertigkeit(_sonderfertigkeitMapping[(sfName + " " + wertString).ToLowerInvariant()], null, _held);
                 }
+                //evtl mit römischer Zahl und mapping
+                if (!added)
+                {
+                    int iWert = 0;
+                    if ((Int32.TryParse(wertString, out iWert) || wertString == null || wertString == String.Empty) && iWert >= 0 && iWert < 4000)
+                    {
+                        if (iWert <= 0)
+                            iWert = 1;
+                        string sfNameNeu = (sfName + " " + iWert.ToRoman()).ToLowerInvariant();
+                        if (_sonderfertigkeitMapping.ContainsKey(sfNameNeu))
+                            added = AddSonderfertigkeit(_sonderfertigkeitMapping[sfNameNeu], null, _held);
+                    }
+                }
 
                 if (!added) // Import nicht mögliche
-                    AddImportLog(ImportTypen.Sonderfertigkeit, sfName, wertString, _importLog);
+                    AddImportLog(ImportTypen.Sonderfertigkeit, sfName, String.Join(";", werte), _importLog);
             }
         }
 
@@ -838,10 +875,19 @@ namespace MeisterGeister.Logic.HeldenImport
             {
                 vorNachteilName = vorNachteil.Attributes["name"].Value.Trim();
 
+                List<string> werte = new List<string>(2);
+
                 if (vorNachteil.Attributes["value"] != null)
-                    wertString = vorNachteil.Attributes["value"].Value;
-                else
-                    wertString = null;
+                    werte.Add(vorNachteil.Attributes["value"].Value);
+                foreach (XmlNode child in vorNachteil.ChildNodes)
+                {
+                    if(child.Name == "auswahl" && child.Attributes["value"] != null)
+                        werte.Add(child.Attributes["value"].Value);
+                }
+
+                if (werte.Count == 0)
+                    werte.Add(null);
+                wertString = werte[0];
 
                 bool added = false;
 
@@ -859,8 +905,12 @@ namespace MeisterGeister.Logic.HeldenImport
                     string angstVor = angstVorTeile[2] + string.Format(" ({0})", wertString);
                     added = AddVorNachteil("Angst vor", angstVor, _held);
                 }
+                else if(!added && vorNachteilName.StartsWith("Vorurteile gegen") && werte.Count==2)
+                    added = AddVorNachteil("Vorurteile", string.Format("{1} ({0})", werte[0], werte[1]), _held);
+                else if (!added && vorNachteilName.StartsWith("Vorurteile gegen (stark)") && werte.Count == 2)
+                    added = AddVorNachteil("Vorurteile", string.Format("{1} ({0})", werte[0], werte[1]), _held);
                 else if (!added && vorNachteilName == "Vorurteile (stark)") // Vorurteile (stark)...
-                    added = AddVorNachteil("Vorurteile", string.Format("stark ({0})", vorNachteil.Attributes["value"].Value), _held);
+                    added = AddVorNachteil("Vorurteile", string.Format("stark ({0})", wertString), _held);
                 else if (!added && vorNachteilName.StartsWith("Moralkodex")) // Moralkodex
                     added = AddVorNachteil("Moralkodex Kirche", vorNachteilName.Replace("Moralkodex [", null).TrimEnd(']'), _held);
                 else if (!added && (vorNachteilName.StartsWith("Herausragende Eigenschaft")
@@ -876,8 +926,28 @@ namespace MeisterGeister.Logic.HeldenImport
                             .Replace(eigenschaft, eigenschaftKürzel + ")"), wertString, _held);
                 }
 
+                if (!added && werte.Count == 2)
+                    added = AddVorNachteil(vorNachteilName, String.Format("{1} ({0})", werte[0], werte[1]), _held);
+                if (!added && werte.Count == 2)
+                {
+                    if (_vorNachteilMapping.ContainsKey(vorNachteilName.ToLowerInvariant()))
+                        added = AddVorNachteil(_vorNachteilMapping[vorNachteilName.ToLowerInvariant()], String.Format("{1} ({0})", werte[0], werte[1]), _held);
+                }
+
                 if (!added)
                     added = AddVorNachteil(vorNachteilName, wertString, _held);
+
+                //evtl mit römischer Zahl
+                if (!added)
+                {
+                    int iWert = 0;
+                    if ((Int32.TryParse(wertString, out iWert) || wertString == null || wertString == String.Empty) && iWert >= 0 && iWert < 4000)
+                    {
+                        if(iWert <= 0)
+                            iWert = 1;
+                        added = AddVorNachteil(vorNachteilName + " " + iWert.ToRoman(), null, _held);
+                    }
+                }
 
                 // Vor-/Nachteil wurde nicht gefunden, evtl. Mapping möglich
                 if (!added)
@@ -894,9 +964,22 @@ namespace MeisterGeister.Logic.HeldenImport
                     if (_vorNachteilMapping.ContainsKey((vorNachteilName + " " + wertString).ToLowerInvariant()))
                         added = AddVorNachteil(_vorNachteilMapping[(vorNachteilName + " " + wertString).ToLowerInvariant()], null, _held);
                 }
+                //evtl mit römischer Zahl und mapping
+                if (!added)
+                {
+                    int iWert = 0;
+                    if ((Int32.TryParse(wertString, out iWert) || wertString == null || wertString == String.Empty) && iWert >= 0 && iWert < 4000)
+                    {
+                        if (iWert <= 0)
+                            iWert = 1;
+                        string vtNameNeu = (vorNachteilName + " " + iWert.ToRoman()).ToLowerInvariant();
+                        if (_vorNachteilMapping.ContainsKey(vtNameNeu))
+                            added = AddVorNachteil(_vorNachteilMapping[vtNameNeu], null, _held);
+                    }
+                }
 
                 if (!added) // Import nicht möglich
-                    AddImportLog(ImportTypen.VorNachteil, vorNachteilName, wertString, _importLog);
+                    AddImportLog(ImportTypen.VorNachteil, vorNachteilName, String.Join(";", werte), _importLog);
             }
         }
 
@@ -905,7 +988,7 @@ namespace MeisterGeister.Logic.HeldenImport
             VorNachteil vn = Global.ContextHeld.LoadVorNachteilByName(vorNachteilName);
             if (vn != null)
             {
-                Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilGUID == vn.VorNachteilGUID).FirstOrDefault();
+                Held_VorNachteil hvn = _held.Held_VorNachteil.Where(hvn1 => hvn1.HeldGUID == _held.HeldGUID && hvn1.VorNachteilGUID == vn.VorNachteilGUID && hvn1.Wert == wertString).FirstOrDefault();
                 if (hvn == null)
                 {
                     hvn = new Held_VorNachteil();
@@ -913,14 +996,9 @@ namespace MeisterGeister.Logic.HeldenImport
                     hvn.VorNachteilGUID = vn.VorNachteilGUID;
                     hvn.Wert = wertString;
                     _held.Held_VorNachteil.Add(hvn);
+                    return true;
                 }
-                else // Vor-Nachteil bereits vorhanden
-                {
-                    if ((hvn.Wert + ", " + wertString).Length > 255)
-                        return false;
-                    hvn.Wert += ", " + wertString;
-                }
-                return true;
+                // Vor-Nachteil mit diesem Wert bereits vorhanden
             }
             return false;
         }
@@ -935,7 +1013,7 @@ namespace MeisterGeister.Logic.HeldenImport
             if (sf != null)
             {
                 Held_Sonderfertigkeit hs = null;
-                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID).FirstOrDefault();
+                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && hs1.Wert == wertString).FirstOrDefault();
                 if (hs == null)
                 {
                     hs = new Held_Sonderfertigkeit();
@@ -943,22 +1021,9 @@ namespace MeisterGeister.Logic.HeldenImport
                     hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
                     hs.Wert = wertString ?? "";
                     _held.Held_Sonderfertigkeit.Add(hs);
+                    return true;
                 }
-                else //Sonderfertigkeit bereits vorhanden
-                {
-                    if (wertString != null && wertString != string.Empty)
-                    {
-                        if (hs.Wert == null || hs.Wert == String.Empty)
-                            hs.Wert = wertString ?? "";
-                        else
-                        {
-                            if ((hs.Wert + ", " + wertString ?? "").Length > 1200)
-                                return false;
-                            hs.Wert += ", " + wertString ?? "";
-                        }
-                    }
-                }
-                return true;
+                //Sonderfertigkeit mit diesem Wert bereits vorhanden
             }
             return false;
         }
