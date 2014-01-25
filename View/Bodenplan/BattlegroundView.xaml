@@ -206,7 +206,11 @@
             <CheckBox Content="Z-Level Anzeigen" IsChecked="{Binding ShowZ}" Grid.Column="1" Grid.Row="2" Height="18" HorizontalAlignment="Left" Margin="25,65,0,0" Name="checkBox1" VerticalAlignment="Top" Width="113" />
             <CheckBox Content="Editor Modus" IsChecked="{Binding IsEditorModeEnabled}" Height="20" HorizontalAlignment="Left" Margin="25,14,0,0" Name="checkBox3" VerticalAlignment="Top" Width="113" FontSize="14" FontStyle="Normal" FontWeight="SemiBold" ToolTip="Wenn deaktiviert, können nur noch Helden und Monster bewegt werden" Checked="checkBox3_Checked" Grid.Column="1" />
         </Grid>
-        <wpfxc:ZoomControl x:Name="ArenaScrollViewer" Margin="220,131,12,12" Background="#FF367536">
+        <wpfxc:ZoomControl x:Name="ArenaScrollViewer" Margin="220,131,12,12" Background="#FF367536" 
+                           MaxZoom="3" MinZoom="0.08" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
+                           Mode="Original" TranslateX="0" TranslateY="0"
+                           LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
+                           ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt">
         <!--<local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12">-->
             <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Multiple">
                 <ListBox.Template>
@@ -237,11 +241,6 @@
                         <Canvas IsItemsHost="True" Background="Transparent"></Canvas>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-                <ListBox.LayoutTransform>
-                    <ScaleTransform x:Name="ArenaGridScaleTransform" ScaleX="{Binding ElementName=uiScaleSlider, Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider, Path=Value}"></ScaleTransform>
-                    <!-- CenterX="{Binding NewArenaTransformCenterX}" CenterY="{Binding NewArenaTransformCenterY}" -->
-                    <!-- CenterX="{Binding CurrentMousePositionX}" CenterY="{Binding CurrentMousePositionY}" -->
-                </ListBox.LayoutTransform>
             </ListBox>
         <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
         </local:DragScrollViewer> -->
