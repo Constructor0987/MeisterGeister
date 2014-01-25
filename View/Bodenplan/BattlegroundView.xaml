@@ -11,7 +11,7 @@
              xmlns:dbmodel="clr-namespace:MeisterGeister.Model"
              mc:Ignorable="d" 
              x:Name="view"
-             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp">   
+             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource BackgroundPergamentQuer}">   
     <Grid>
         <Grid.Resources>
             <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
@@ -158,7 +158,7 @@
         </DockPanel>
         <DockPanel Margin="12,131,0,12" Name="dockPanel2" HorizontalAlignment="Left" Width="200" Background="#12000000"></DockPanel>
         <DockPanel Margin="220,131,12,11" Name="ArenaGridContainer"></DockPanel>
-        
+
         <Grid Name="grid1" Width="200" ClipToBounds="True" IsManipulationEnabled="False" Margin="12,131,0,0" HorizontalAlignment="Left" Height="958" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*" />
@@ -204,7 +204,7 @@
             <CheckBox Content="Z-Level Anzeigen" IsChecked="{Binding ShowZ}" Grid.Column="1" Grid.Row="2" Height="18" HorizontalAlignment="Left" Margin="25,65,0,0" Name="checkBox1" VerticalAlignment="Top" Width="113" />
             <CheckBox Content="Editor Modus" IsChecked="{Binding IsEditorModeEnabled}" Height="20" HorizontalAlignment="Left" Margin="25,14,0,0" Name="checkBox3" VerticalAlignment="Top" Width="113" FontSize="14" FontStyle="Normal" FontWeight="SemiBold" ToolTip="Wenn deaktiviert, können nur noch Helden und Monster bewegt werden" Checked="checkBox3_Checked" Grid.Column="1" />
         </Grid>
-        <local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12">
+        <local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12" Background="#FF367536">
             <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" PreviewMouseWheel="ArenaGrid_PreviewMouseWheel" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Multiple">
                 <ListBox.Template>
                     <ControlTemplate>
@@ -220,7 +220,7 @@
                                     <VisualBrush TileMode="Tile" Viewport="0,0,200,200" ViewportUnits="Absolute">
                                         <VisualBrush.Visual>
                                             <!--<Rectangle Stroke="Darkgray" StrokeThickness="1" Height="50" Width="50" StrokeDashArray="5 3" />-->
-                                            <Path Stroke="DarkGray" StrokeThickness="3" StrokeDashArray="5 3" Data="{Binding TilePathData}" />
+                                            <Path Stroke="White" StrokeThickness="3" StrokeDashArray="5 3" Data="{Binding TilePathData}" />
                                         </VisualBrush.Visual>
                                     </VisualBrush>
                                 </Border.Background>
