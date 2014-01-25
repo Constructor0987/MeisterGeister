@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MeisterGeister.Model
 {
@@ -23,11 +24,18 @@ namespace MeisterGeister.Model
         #region INotifyPropertyChanged
     	public event PropertyChangedEventHandler PropertyChanged;
     	
-    	public void OnChanged(String info)
+    	/// <summary>
+        /// Notifies listeners that a property value has changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property used to notify listeners.  This
+        /// value is optional and can be provided automatically when invoked from compilers
+        /// that support <see cref="CallerMemberNameAttribute"/>.</param>
+        protected void OnChanged([CallerMemberName] string propertyName = null)
         {
-            if (PropertyChanged != null)
+            var eventHandler = this.PropertyChanged;
+            if (eventHandler != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
+                eventHandler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
@@ -36,13 +44,38 @@ namespace MeisterGeister.Model
         #region ValidatePropertyChanging
     	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
     
-    	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+    	protected void OnValidatePropertyChanging(object currentValue, object newValue, [CallerMemberName] string propertyName = null)
     	{
     		if(ValidatePropertyChanging != null)
     		{
     			ValidatePropertyChanging(this, propertyName, currentValue, newValue);
     		}
     	}
+
+        #endregion
+
+        #region Set
+    	/// <summary>
+        /// Checks if a property already matches a desired value.  Sets the property and
+        /// notifies listeners only when necessary.
+        /// </summary>
+        /// <typeparam name="T">Type of the property.</typeparam>
+        /// <param name="storage">Reference to a property with both getter and setter.</param>
+        /// <param name="value">Desired value for the property.</param>
+        /// <param name="propertyName">Name of the property used to notify listeners.  This
+        /// value is optional and can be provided automatically when invoked from compilers that
+        /// support CallerMemberName.</param>
+        /// <returns>True if the value was changed, false if the existing value matched the
+        /// desired value.</returns>
+        protected bool Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        {
+            if (object.Equals(storage, value)) return false;
+    
+    		OnValidatePropertyChanging(storage, value, propertyName);
+    		storage = value;
+    		OnChanged(propertyName);
+            return true;
+        }
 
         #endregion
 
@@ -54,9 +87,7 @@ namespace MeisterGeister.Model
             get { return _alchimierezeptGUID; }
             set
     		{ 
-    			OnValidatePropertyChanging("AlchimierezeptGUID",_alchimierezeptGUID, value);
-    			_alchimierezeptGUID = value;
-    			OnChanged("AlchimierezeptGUID");
+    			Set(ref _alchimierezeptGUID, value);
     		}
     
         }
@@ -68,9 +99,7 @@ namespace MeisterGeister.Model
             get { return _name; }
             set
     		{ 
-    			OnValidatePropertyChanging("Name",_name, value);
-    			_name = value;
-    			OnChanged("Name");
+    			Set(ref _name, value);
     		}
     
         }
@@ -82,9 +111,7 @@ namespace MeisterGeister.Model
             get { return _gruppe; }
             set
     		{ 
-    			OnValidatePropertyChanging("Gruppe",_gruppe, value);
-    			_gruppe = value;
-    			OnChanged("Gruppe");
+    			Set(ref _gruppe, value);
     		}
     
         }
@@ -96,9 +123,7 @@ namespace MeisterGeister.Model
             get { return _kategorie; }
             set
     		{ 
-    			OnValidatePropertyChanging("Kategorie",_kategorie, value);
-    			_kategorie = value;
-    			OnChanged("Kategorie");
+    			Set(ref _kategorie, value);
     		}
     
         }
@@ -110,9 +135,7 @@ namespace MeisterGeister.Model
             get { return _merkmale; }
             set
     		{ 
-    			OnValidatePropertyChanging("Merkmale",_merkmale, value);
-    			_merkmale = value;
-    			OnChanged("Merkmale");
+    			Set(ref _merkmale, value);
     		}
     
         }
@@ -124,9 +147,7 @@ namespace MeisterGeister.Model
             get { return _brauschwierigkeit; }
             set
     		{ 
-    			OnValidatePropertyChanging("Brauschwierigkeit",_brauschwierigkeit, value);
-    			_brauschwierigkeit = value;
-    			OnChanged("Brauschwierigkeit");
+    			Set(ref _brauschwierigkeit, value);
     		}
     
         }
@@ -138,9 +159,7 @@ namespace MeisterGeister.Model
             get { return _analyseschwierigkeit; }
             set
     		{ 
-    			OnValidatePropertyChanging("Analyseschwierigkeit",_analyseschwierigkeit, value);
-    			_analyseschwierigkeit = value;
-    			OnChanged("Analyseschwierigkeit");
+    			Set(ref _analyseschwierigkeit, value);
     		}
     
         }
@@ -152,9 +171,7 @@ namespace MeisterGeister.Model
             get { return _beschaffungsschwierigkeit; }
             set
     		{ 
-    			OnValidatePropertyChanging("Beschaffungsschwierigkeit",_beschaffungsschwierigkeit, value);
-    			_beschaffungsschwierigkeit = value;
-    			OnChanged("Beschaffungsschwierigkeit");
+    			Set(ref _beschaffungsschwierigkeit, value);
     		}
     
         }
@@ -166,9 +183,7 @@ namespace MeisterGeister.Model
             get { return _beschaffungskosten; }
             set
     		{ 
-    			OnValidatePropertyChanging("Beschaffungskosten",_beschaffungskosten, value);
-    			_beschaffungskosten = value;
-    			OnChanged("Beschaffungskosten");
+    			Set(ref _beschaffungskosten, value);
     		}
     
         }
@@ -180,9 +195,7 @@ namespace MeisterGeister.Model
             get { return _haltbarkeit; }
             set
     		{ 
-    			OnValidatePropertyChanging("Haltbarkeit",_haltbarkeit, value);
-    			_haltbarkeit = value;
-    			OnChanged("Haltbarkeit");
+    			Set(ref _haltbarkeit, value);
     		}
     
         }
@@ -194,9 +207,7 @@ namespace MeisterGeister.Model
             get { return _haltbarkeitseinheit; }
             set
     		{ 
-    			OnValidatePropertyChanging("Haltbarkeitseinheit",_haltbarkeitseinheit, value);
-    			_haltbarkeitseinheit = value;
-    			OnChanged("Haltbarkeitseinheit");
+    			Set(ref _haltbarkeitseinheit, value);
     		}
     
         }
@@ -208,9 +219,7 @@ namespace MeisterGeister.Model
             get { return _labor; }
             set
     		{ 
-    			OnValidatePropertyChanging("Labor",_labor, value);
-    			_labor = value;
-    			OnChanged("Labor");
+    			Set(ref _labor, value);
     		}
     
         }
@@ -222,9 +231,7 @@ namespace MeisterGeister.Model
             get { return _zutaten; }
             set
     		{ 
-    			OnValidatePropertyChanging("Zutaten",_zutaten, value);
-    			_zutaten = value;
-    			OnChanged("Zutaten");
+    			Set(ref _zutaten, value);
     		}
     
         }
@@ -236,9 +243,7 @@ namespace MeisterGeister.Model
             get { return _substitute; }
             set
     		{ 
-    			OnValidatePropertyChanging("Substitute",_substitute, value);
-    			_substitute = value;
-    			OnChanged("Substitute");
+    			Set(ref _substitute, value);
     		}
     
         }
@@ -250,9 +255,7 @@ namespace MeisterGeister.Model
             get { return _bemerkung; }
             set
     		{ 
-    			OnValidatePropertyChanging("Bemerkung",_bemerkung, value);
-    			_bemerkung = value;
-    			OnChanged("Bemerkung");
+    			Set(ref _bemerkung, value);
     		}
     
         }
@@ -264,9 +267,7 @@ namespace MeisterGeister.Model
             get { return _literatur; }
             set
     		{ 
-    			OnValidatePropertyChanging("Literatur",_literatur, value);
-    			_literatur = value;
-    			OnChanged("Literatur");
+    			Set(ref _literatur, value);
     		}
     
         }
@@ -278,9 +279,7 @@ namespace MeisterGeister.Model
             get { return _tags; }
             set
     		{ 
-    			OnValidatePropertyChanging("Tags",_tags, value);
-    			_tags = value;
-    			OnChanged("Tags");
+    			Set(ref _tags, value);
     		}
     
         }

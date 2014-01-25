@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows.Media;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
+using System;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -26,8 +28,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _objektName; }
             set
             {
-                _objektName = value;
-                OnChanged("ObjektName");
+                Set(ref _objektName, value);
             }
         }
 
@@ -37,8 +38,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _isVisible; }
             set
             {
-                _isVisible = value;
-                OnChanged("IsVisible");
+                Set(ref _isVisible, value);
             }
         }
 
@@ -48,8 +48,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _isHighlighted; }
             set
             {
-                _isHighlighted = value;
-                OnChanged("IsHighlighted");
+                Set(ref _isHighlighted, value);
             }
         }
 
@@ -59,8 +58,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _isNew; }
             set
             {
-                _isNew = value;
-                OnChanged("IsNew");
+                Set(ref _isNew, value);
             }
         }
 
@@ -69,8 +67,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _isMoving; }
             set
             {
-                _isMoving = value;
-                OnChanged("IsMoving");
+                Set(ref _isMoving, value);
             }
         }
 
@@ -80,8 +77,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _objectColor; }
             set
             {
-                _objectColor = value;
-                OnChanged("ObjectColor");
+                Set(ref _objectColor, value);
             }
         }
 
@@ -91,8 +87,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _fillColor; }
             set
             {
-                _fillColor = value;
-                OnChanged("FillColor");
+                Set(ref _fillColor, value);
             }
         }
 
@@ -102,8 +97,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _strokethickness; }
             set
             {
-                _strokethickness = value;
-                OnChanged("StrokeThickness");
+                Set(ref _strokethickness, value);
             }
         }
 
@@ -113,8 +107,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _opacity; }
             set
             {
-                _opacity = value;
-                OnChanged("Opacity");
+                Set(ref _opacity, value);
             }
         }
 
@@ -124,8 +117,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _zLevel; }
             set
             {
-                _zLevel = value;
-                OnChanged("ZLevel");
+                Set(ref _zLevel, value);
             }
         }
 
@@ -134,8 +126,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _zDisplayX; }
             set
             {
-                _zDisplayX = value;
-                OnChanged("ZDisplayX");
+                Set(ref _zDisplayX, value);
             }
         }
 
@@ -144,14 +135,26 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             get { return _zDisplayY; }
             set
             {
-                _zDisplayY = value;
-                OnChanged("ZDisplayY");
+                Set(ref _zDisplayY, value);
             }
         }
 
-        public virtual void OnChanged(string propertyName)
+        protected bool Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
         {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            if (object.Equals(storage, value)) return false;
+
+            storage = value;
+            this.OnChanged(propertyName);
+            return true;
+        }
+
+        protected void OnChanged([CallerMemberName] string propertyName = null)
+        {
+            var eventHandler = this.PropertyChanged;
+            if (eventHandler != null)
+            {
+                eventHandler(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

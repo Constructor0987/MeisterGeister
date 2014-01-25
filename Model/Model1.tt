@@ -45,11 +45,18 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
 #>
 	public event PropertyChangedEventHandler PropertyChanged;
 	
-	public void OnChanged(String info)
+	/// <summary>
+    /// Notifies listeners that a property value has changed.
+    /// </summary>
+    /// <param name="propertyName">Name of the property used to notify listeners.  This
+    /// value is optional and can be provided automatically when invoked from compilers
+    /// that support <see cref="CallerMemberNameAttribute"/>.</param>
+    protected void OnChanged([CallerMemberName] string propertyName = null)
     {
-        if (PropertyChanged != null)
+        var eventHandler = this.PropertyChanged;
+        if (eventHandler != null)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(info));
+            eventHandler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 <#
@@ -60,7 +67,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
 #>
 	protected event Extensions.ValidatePropertyChangingEventHandler ValidatePropertyChanging;
 
-	protected void OnValidatePropertyChanging(String propertyName, object currentValue, object newValue)
+	protected void OnValidatePropertyChanging(object currentValue, object newValue, [CallerMemberName] string propertyName = null)
 	{
 		if(ValidatePropertyChanging != null)
 		{
@@ -69,7 +76,33 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
 	}
 <#
 	region.End();
-	
+
+	region.Begin("Set");
+#>
+	/// <summary>
+    /// Checks if a property already matches a desired value.  Sets the property and
+    /// notifies listeners only when necessary.
+    /// </summary>
+    /// <typeparam name="T">Type of the property.</typeparam>
+    /// <param name="storage">Reference to a property with both getter and setter.</param>
+    /// <param name="value">Desired value for the property.</param>
+    /// <param name="propertyName">Name of the property used to notify listeners.  This
+    /// value is optional and can be provided automatically when invoked from compilers that
+    /// support CallerMemberName.</param>
+    /// <returns>True if the value was changed, false if the existing value matched the
+    /// desired value.</returns>
+    protected bool Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+    {
+        if (object.Equals(storage, value)) return false;
+
+		OnValidatePropertyChanging(storage, value, propertyName);
+		storage = value;
+		<#=implementINotifyPropertyChanged?"OnChanged(propertyName);":String.Empty#>
+        return true;
+    }
+<#	
+	region.End();
+
     region.Begin("Primitive Properties");
 
     foreach (EdmProperty edmProperty in entity.Properties.Where(p => p.TypeUsage.EdmType is PrimitiveType && p.DeclaringType == entity))
@@ -179,9 +212,7 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
         <#=code.SpaceAfter(Accessibility.ForGetter(edmProperty))#>get { return <#=code.FieldName(edmProperty)#>; }
         <#=code.SpaceAfter(Accessibility.ForSetter(edmProperty))#>set
 		{ 
-			OnValidatePropertyChanging("<#=code.Escape(edmProperty)#>",<#=code.FieldName(edmProperty)#>, value);
-			<#=code.FieldName(edmProperty)#> = value;
-			<#=implementINotifyPropertyChanged?"OnChanged(\"" + code.Escape(edmProperty) + "\");":String.Empty#>
+			Set(ref <#=code.FieldName(edmProperty)#>, value);
 		}
 <#
 			
@@ -769,6 +800,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 <#=String.Join(String.Empty, extraUsings.Select(u => "using " + u + ";" + Environment.NewLine).ToArray())#>
 <#+
     fileManager.EndBlock();

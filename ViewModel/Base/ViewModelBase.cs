@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using MeisterGeister.Logic.General;
 using System.Windows.Threading;
+using System.Runtime.CompilerServices;
 
 namespace MeisterGeister.ViewModel.Base {
     public abstract class ViewModelBase : INotifyPropertyChanged {
@@ -59,6 +60,27 @@ namespace MeisterGeister.ViewModel.Base {
         #endregion
 
         #region Methoden
+
+        /// <summary>
+        /// Checks if a property already matches a desired value.  Sets the property and
+        /// notifies listeners only when necessary.
+        /// </summary>
+        /// <typeparam name="T">Type of the property.</typeparam>
+        /// <param name="storage">Reference to a property with both getter and setter.</param>
+        /// <param name="value">Desired value for the property.</param>
+        /// <param name="propertyName">Name of the property used to notify listeners.  This
+        /// value is optional and can be provided automatically when invoked from compilers that
+        /// support CallerMemberName.</param>
+        /// <returns>True if the value was changed, false if the existing value matched the
+        /// desired value.</returns>
+        protected bool Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        {
+            if (object.Equals(storage, value)) return false;
+
+            storage = value;
+            this.OnChanged(propertyName);
+            return true;
+        }
 
         /// <summary>
         /// Um Informationen anzuzeigen.
@@ -178,15 +200,24 @@ namespace MeisterGeister.ViewModel.Base {
         #endregion
 
         #region //---- EVENTS ----
-        
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnChanged(string propertyName) {
+        /// <summary>
+        /// Notifies listeners that a property value has changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property used to notify listeners.  This
+        /// value is optional and can be provided automatically when invoked from compilers
+        /// that support <see cref="CallerMemberNameAttribute"/>.</param>
+        protected void OnChanged([CallerMemberName] string propertyName = null)
+        {
             this.VerifyPropertyName(propertyName);
-            if (this.PropertyChanged != null) {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            var eventHandler = this.PropertyChanged;
+            if (eventHandler != null)
+            {
+                eventHandler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
 
         virtual public void Destroy() { }
 
