@@ -16,7 +16,7 @@ namespace MeisterGeister.ViewModel.Generator.Container
         #endregion
 
         #region //---- KONSTRUKTOR ----
-        public PersonNurName (string namenstyp, string name, string namensbedeutung, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.unfrei)
+        public PersonNurName (string namenstyp, string name, string namensbedeutung, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.landfrei)
         {
 
         }

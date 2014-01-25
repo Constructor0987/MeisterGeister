@@ -190,6 +190,7 @@
     <Compile Include="Logic\General\Probe.cs" />
     <Compile Include="Logic\General\RandomNumberGenerator.cs" />
     <Compile Include="Logic\General\Merkmale.cs" />
+    <Compile Include="Logic\General\ReflectionHelper.cs" />
     <Compile Include="Logic\General\Repräsentationen.cs" />
     <Compile Include="Logic\General\Sonderfertigkeiten.cs" />
     <Compile Include="Logic\General\TalentTypen.cs" />
@@ -515,9 +516,6 @@
     <Compile Include="ViewModel\Generator\Factorys\NamenFactoryHelper.cs" />
     <Compile Include="ViewModel\Generator\Container\PersonNurName.cs" />
     <Compile Include="ViewModel\Generator\Container\Person.cs" />
-    <Compile Include="ViewModel\Generator\Person.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ViewModel\Proben\ProbeControlViewModel.cs" />
     <Compile Include="ViewModel\Proben\ProbeDialogViewModel.cs" />
     <Compile Include="ViewModel\Proben\ProbenViewModel.cs" />
@@ -648,6 +646,9 @@
     <Compile Include="View\General\ValueConverterGroup.cs" />
     <Compile Include="View\General\ViewHelper.cs" />
     <Compile Include="View\General\WürfelValidationRule.cs" />
+    <Compile Include="View\Generator\GeneratorPersonNurNameControl.xaml.cs">
+      <DependentUpon>GeneratorPersonNurNameControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">
       <DependentUpon>AllgemeinView.xaml</DependentUpon>
     </Compile>
@@ -1000,6 +1001,10 @@
     <Page Include="View\General\TextBoxModInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Generator\GeneratorPersonNurNameControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Helden\Controls\AllgemeinView.xaml">
       <Generator>MSBuild:Compile</Generator>

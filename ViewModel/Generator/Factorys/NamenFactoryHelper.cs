@@ -16,44 +16,44 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         // Bei Strukturänderungen das Model updaten
         #region //---- KONSTANTEN AVENTURISCHE NAMEN ----
         public const string ACHAZNAMEN = "Achaz Namen";
-        public const string ALBERNISCHENAMEN = "Albernische Namen";
-        public const string ALMADISCHENAMEN = "Almadanische Namen";
-        public const string ANDERGASTSCHENAMEN = "Andergastsche Namen";
-        public const string ARANISCHENAMEN = "Aranische Namen";
-        public const string BORNLÄNDISCHENAMEN = "Bornländische Namen";
-        public const string CYCLOPENINSELNNAMEN = "Cyclopeninseln";
-        public const string ELEMISCHENAMEN = "Elem Oberschicht";
-        public const string ELFISCHENAMEN = "Elfische Namen";
-        public const string FERKINANAMEN = "Ferkina Namen";
-        public const string FJARNINGSCHENAMEN = "Fjarningsche Namen";
-        public const string GARETHISCHENAMEN = "Garethische Namen";
-        public const string GJALSKERLÄNDISCHENAMEN = "Gjalskerländische Namen";
-        public const string GOBLINISCHENAMEN = "Goblinische Namen";
-        public const string GROLMISCHENAMEN = "Grolmische Namen";
+        //public const string ALBERNISCHENAMEN = "Albernische Namen";
+        //public const string ALMADISCHENAMEN = "Almadanische Namen";
+        //public const string ANDERGASTSCHENAMEN = "Andergastsche Namen";
+        //public const string ARANISCHENAMEN = "Aranische Namen";
+        //public const string BORNLÄNDISCHENAMEN = "Bornländische Namen";
+        //public const string CYCLOPENINSELNNAMEN = "Cyclopeninseln";
+        //public const string ELEMISCHENAMEN = "Elem Oberschicht";
+        //public const string ELFISCHENAMEN = "Elfische Namen";
+        //public const string FERKINANAMEN = "Ferkina Namen";
+        //public const string FJARNINGSCHENAMEN = "Fjarningsche Namen";
+        //public const string GARETHISCHENAMEN = "Garethische Namen";
+        //public const string GJALSKERLÄNDISCHENAMEN = "Gjalskerländische Namen";
+        //public const string GOBLINISCHENAMEN = "Goblinische Namen";
+        //public const string GROLMISCHENAMEN = "Grolmische Namen";
         public const string HOLBERKERNAMEN = "Holberker Namen";
-        public const string HORASIATCYCLOPENINSELNAMEN = "Horasiat/Cyclopeninseln";
-        public const string HORASISCHENAMEN = "Horasische Namen";
-        public const string HÜGELZWERGISCHENAMEN = "Hügelzwergische Namen";
-        public const string MARASKANISCHENAMEN = "Maraskanische Namen";
-        public const string NIVESISCHENAMEN = "Nivesische Namen";
-        public const string NORBADISCHENAMEN = "Norbardische Namen";
-        public const string NORBADISCHESIPPENNAMEN = "Norbardische Namen (Sippenname)";
-        public const string NORDPROVINZENNAMEN = "Nordprovinzen";
-        public const string NOSTRISCHENAMEN = "Nostrische Namen";
-        public const string ORKISCHENAMEN = "Orkische Namen";
-        public const string ORKISCHESVELLTALNAMEN = "Orkische Namen (Svelltal)";
-        public const string SÜDLÄNDISCHENAMEN = "Südländische Namen";
-        public const string THORWALSCHENAMEN = "Thorwalsche Namen";
-        public const string TOCAMUYACNAMEN = "Tocamuyac Namen";
+        //public const string HORASIATCYCLOPENINSELNAMEN = "Horasiat/Cyclopeninseln";
+        //public const string HORASISCHENAMEN = "Horasische Namen";
+        //public const string HÜGELZWERGISCHENAMEN = "Hügelzwergische Namen";
+        //public const string MARASKANISCHENAMEN = "Maraskanische Namen";
+        //public const string NIVESISCHENAMEN = "Nivesische Namen";
+        //public const string NORBADISCHENAMEN = "Norbardische Namen";
+        //public const string NORBADISCHESIPPENNAMEN = "Norbardische Namen (Sippenname)";
+        //public const string NORDPROVINZENNAMEN = "Nordprovinzen";
+        //public const string NOSTRISCHENAMEN = "Nostrische Namen";
+        //public const string ORKISCHENAMEN = "Orkische Namen";
+        //public const string ORKISCHESVELLTALNAMEN = "Orkische Namen (Svelltal)";
+        //public const string SÜDLÄNDISCHENAMEN = "Südländische Namen";
+        //public const string THORWALSCHENAMEN = "Thorwalsche Namen";
+        //public const string TOCAMUYACNAMEN = "Tocamuyac Namen";
         public const string TROLLISCHENAMEN = "Trollische Namen";
-        public const string TROLLZACKERNAMEN = "Trollzacker Namen";
-        public const string TULAMIDISCHENAMEN = "Tulamidische Namen";
+        //public const string TROLLZACKERNAMEN = "Trollzacker Namen";
+        //public const string TULAMIDISCHENAMEN = "Tulamidische Namen";
         public const string UTULUNAMEN = "Utulu Namen";
-        public const string WALDMENSCHENNAMEN = "Waldmenschen Namen";
-        public const string WEIDENERNAMEN = "Weidener Namen";
+        //public const string WALDMENSCHENNAMEN = "Waldmenschen Namen";
+        //public const string WEIDENERNAMEN = "Weidener Namen";
         public const string ZAHORINAMEN = "Zahori Namen";
-        public const string ZWERGISCHENAMEN = "Zwergische Namen";
-        public const string ZYKLOPÄISCHENAMEN = "Zyklopäische Namen";
+        //public const string ZWERGISCHENAMEN = "Zwergische Namen";
+        //public const string ZYKLOPÄISCHENAMEN = "Zyklopäische Namen";
         #endregion
 
         private static Dictionary<String, NamenFactory> _namenFactorys = _namenFactorys = new Dictionary<String, NamenFactory>();
@@ -71,66 +71,66 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  */
                 case ACHAZNAMEN: return new NamenFactoryVorname(ACHAZNAMEN, true);
                 
-                case ALBERNISCHENAMEN:
+                //case ALBERNISCHENAMEN:
+
+                //case ALMADISCHENAMEN:
+
+                //case ANDERGASTSCHENAMEN:
                 
-                case ALMADISCHENAMEN:
+                //case ARANISCHENAMEN:
                 
-                case ANDERGASTSCHENAMEN:
+                //case BORNLÄNDISCHENAMEN:
                 
-                case ARANISCHENAMEN:
+                //case CYCLOPENINSELNNAMEN:
                 
-                case BORNLÄNDISCHENAMEN:
+                //case ELEMISCHENAMEN:
                 
-                case CYCLOPENINSELNNAMEN:
+                //case ELFISCHENAMEN:
                 
-                case ELEMISCHENAMEN:
+                //case FERKINANAMEN:
                 
-                case ELFISCHENAMEN:
+                //case FJARNINGSCHENAMEN:
                 
-                case FERKINANAMEN:
+                //case GARETHISCHENAMEN:
                 
-                case FJARNINGSCHENAMEN:
+                //case GJALSKERLÄNDISCHENAMEN:
                 
-                case GARETHISCHENAMEN:
+                //case GOBLINISCHENAMEN:
                 
-                case GJALSKERLÄNDISCHENAMEN:
-                
-                case GOBLINISCHENAMEN:
-                
-                case GROLMISCHENAMEN:
+                //case GROLMISCHENAMEN:
                 
                 /* 
                  * Holberker Namen haben einen Vornamen und Nachnamen
                  */
                 case HOLBERKERNAMEN: return new NamenFactoryVornameNachname(HOLBERKERNAMEN);
                 
-                case HORASIATCYCLOPENINSELNAMEN:
+                //case HORASIATCYCLOPENINSELNAMEN:
                 
-                case HORASISCHENAMEN:
+                //case HORASISCHENAMEN:
                 
-                case HÜGELZWERGISCHENAMEN:
+                //case HÜGELZWERGISCHENAMEN:
                 
-                case MARASKANISCHENAMEN:
+                //case MARASKANISCHENAMEN:
                 
-                case NIVESISCHENAMEN:
+                //case NIVESISCHENAMEN:
                 
-                case NORBADISCHENAMEN:
+                //case NORBADISCHENAMEN:
                 
-                case NORBADISCHESIPPENNAMEN:
+                //case NORBADISCHESIPPENNAMEN:
                 
-                case NORDPROVINZENNAMEN:
+                //case NORDPROVINZENNAMEN:
                 
-                case NOSTRISCHENAMEN:
+                //case NOSTRISCHENAMEN:
                 
-                case ORKISCHENAMEN:
+                //case ORKISCHENAMEN:
                 
-                case ORKISCHESVELLTALNAMEN:
+                //case ORKISCHESVELLTALNAMEN:
                 
-                case SÜDLÄNDISCHENAMEN:
+                //case SÜDLÄNDISCHENAMEN:
                 
-                case THORWALSCHENAMEN:
+                //case THORWALSCHENAMEN:
                 
-                case TOCAMUYACNAMEN:
+                //case TOCAMUYACNAMEN:
                 
                 /*
                  * Trolle haben nur einen Vornamen
@@ -138,9 +138,9 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  */
                 case TROLLISCHENAMEN: return new TrollischeNamenFactory();
                 
-                case TROLLZACKERNAMEN:
+                //case TROLLZACKERNAMEN:
                 
-                case TULAMIDISCHENAMEN:
+                //case TULAMIDISCHENAMEN:
 
                 /* 
                  * Utulu Namen haben nur einen Vornamen
@@ -148,9 +148,9 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  */
                 case UTULUNAMEN: return new NamenFactoryVorname(UTULUNAMEN, true);
                 
-                case WALDMENSCHENNAMEN:
+                //case WALDMENSCHENNAMEN:
                 
-                case WEIDENERNAMEN:
+                //case WEIDENERNAMEN:
 
                 /* 
                  * Zahori Namen haben einen Vornamen und Nachnamen 
@@ -158,9 +158,9 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  */
                 case ZAHORINAMEN: return new NamenFactoryVornameNachname(ZAHORINAMEN);
                 
-                case ZWERGISCHENAMEN:
+                //case ZWERGISCHENAMEN:
                 
-                case ZYKLOPÄISCHENAMEN:
+                //case ZYKLOPÄISCHENAMEN:
                 #endregion
 
                 default: return null;

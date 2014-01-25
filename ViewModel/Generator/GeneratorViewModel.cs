@@ -7,57 +7,58 @@ using System.Windows.Documents;
 using System.IO;
 using MeisterGeister.View.Windows;
 using System.Windows;
+using MeisterGeister.ViewModel.Generator.Container;
+using MeisterGeister.ViewModel.Generator.Factorys;
+using MeisterGeister.Logic.General;
+using WPFExtensions.Collections.ObjectModel;
 
 namespace MeisterGeister.ViewModel.Generator
 {
-    class GeneratorViewModel : Base.ViewModelBase
+    public class GeneratorViewModel : Base.ViewModelBase
     {
-
         #region //---- FELDER ----
-
-        //Intern
-        bool IsLoaded = false;
+        //Intern: Zeichenketten und weiteres
+        const string NAMEN_RASSE_EGAL = "Beliebige Rasse";
+        const string NAMEN_KULTUR_EGAL = "Beliebige Kultur";
+        const string NAMEN_GENERATOR_EGAL = "irgendein Name";
+        const string NAMEN_STAND_EGAL = "irgendein Stand";
+        const string GENERATOR_NAMEN = "Namen";
+        const string GENERATOR_NSC = "NSC";
+        const string GENERATOR_SCHATZ = "Schatz";
+        const string GENERATOR_BIBLIOTHEK = "Bibliothek";
+        const string GENERATOR_ALCHEMIELABOR = "Alchemielabor";
+        readonly int STÄNDE_ANZAHL = Enum.GetNames(typeof(Stand)).Length;
 
         //UI
-        private Model.Rasse _selectedRasse;
-        private Model.Kultur _selectedKultur;
-        private string _selectedProfession;
-        private string _selectedAlter;
-        private string _selectedGeschlecht;
-        private bool _professionListeIsEnabled;
-        private bool _kulturListeIsEnabled;
-        private bool _rasseListeIsEnabled;
-        private bool _geschlechtListeIsEnabled;
-        private int _genNumber;
-        private bool _cBKulturenChecked = true;
-        private bool _cBNamenIsChecked;
+        private string _selectedRasse;
+        private string _selectedKultur;
+        private Stand _selectedStand;
+        private bool _selectedStandZufällig;
+        private string _selectedGenerator;
+        private string _selectedNamensgenerator;
+        private int _zuGenerierendeObjekte;
+        private int _geschlechtWeiblichProzent;
+        private bool _unüblicheKulturen = false;
+        private string _infoText = string.Empty;
 
         //Entitylisten
-        private List<Model.Rasse> _rasseListe = new List<Model.Rasse>();
-        private List<Model.Kultur> _kulturListe = new List<Model.Kultur>();
-        private List<string> _professionListe = new List<string>();
-        private List<string> _alterListe = new List<string>();
-        private List<string> _geschlechtListe = new List<string>();
-        private List<Person> _personenListe = new List<Person>();
+        private List<string> _rasseListe = new List<string>();
+        private List<string> _kulturListe = new List<string>();
+        private List<string> _standListe = new List<string>();
+        private List<Object> _generierteObjekteListe = new List<Object>();
+        private List<string> _generatorListe = new List<string>();
+        private List<string> _namensgeneratorListe = new List<string>();
         //Commands
-        private Base.CommandBase _onReset;
+        private Base.CommandBase _onResetNamenOptionen;
         private Base.CommandBase _onGenerate;
-        private Base.CommandBase _onAddAllNSC;
+        private Base.CommandBase _onClearGenerierteObjekteListe;
+        private Base.CommandBase _onAddSelectedObject;
+        private Base.CommandBase _onAddAllObjects;
+
 
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
-
-        //Felder        
-
-        //UI
-        public IList<Person> SelectedPersonen
-        {
-            get;
-            set;
-        }
-
-        private string _infoText = string.Empty;
 
         public string InfoText
         {
@@ -69,102 +70,87 @@ namespace MeisterGeister.ViewModel.Generator
             }
         }
 
-        public Model.Rasse SelectedRasse
+        public string SelectedRasse
         {
             get { return _selectedRasse; }
             set
             {
+                if (_selectedRasse == value) return;
                 _selectedRasse = value;
                 OnChanged("SelectedRasse");
-                if (value != null && value.Name != "keine Rasse" )
-                {
-                    KulturListe = Global.ContextNsc.getKulturenByRasseName(value, CBKulturenIsChecked);
-                    SelectedKultur = KulturListe[0];
-                    RasseListeIsEnabled = false;
-                    if(SelectedKultur.Name=="keine Kultur"){
-
-                    }
-                }
+                RefreshKulturenListe();
             }
         }
 
-        public Model.Kultur SelectedKultur
+        public string SelectedKultur
         {
             get { return _selectedKultur; }
             set
             {
+                if (SelectedKultur == value) return;
                 _selectedKultur = value;
                 OnChanged("SelectedKultur");
-                if ( value != null && value.Name != "keine Kultur" )
-                {
-                    if(RasseListeIsEnabled){
-                        RasseListe = Global.ContextNsc.getRasseByKulturName(value);
-                        SelectedRasse = RasseListe[0];
-                    }
-                    if (ProfessionListeIsEnabled)
-                    {
-                        ProfessionListe = Global.ContextNsc.getProfessionenNamenByKultur(value);
-                        SelectedProfession = "Keine Profession";
-                    }
-                    KulturListeIsEnabled = false;
-                }
+                RefreshRassenListe();
             }
         }
 
-        public string SelectedProfession
+        public string SelectedStand
         {
-            get { return _selectedProfession; }
+            get
+            {
+                if (_selectedStandZufällig) return NAMEN_STAND_EGAL;
+                return _selectedStand.ToString("f");
+            }
             set
             {
-                _selectedProfession = value;
-                OnChanged("SelectedProfession");
+                if (value == NAMEN_STAND_EGAL)
+                {
+                    _selectedStandZufällig = true;
+                }
+                else
+                {
+                    _selectedStand = (Stand)Enum.Parse(typeof(Stand), value);
+                }
+
+                OnChanged("SelectedStand");
             }
         }
 
-        public string SelectedAlter
+        public string SelectedGenerator
         {
-            get { return _selectedAlter; }
+            get { return _selectedGenerator; }
             set
             {
-                _selectedAlter = value;
-                OnChanged("SelectedAlter");
+                _selectedGenerator = value;
+                OnChanged("SelectedGenerator");
+            }
+        }
+        public string SelectedNamensgenerator
+        {
+            get { return _selectedNamensgenerator; }
+            set
+            {
+                _selectedNamensgenerator = value;
+                OnChanged("SelectedNamensgenerator");
+            }
+        }
+        public int GeschlechtWeiblichProzent
+        {
+            get { return _geschlechtWeiblichProzent; }
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                else if (value > 100)
+                    value = 100;
+                if (value == _geschlechtWeiblichProzent) return;
+                _geschlechtWeiblichProzent = value;
+                OnChanged("GeschlechtWeiblichProzent");
             }
         }
 
-        public string SelectedGeschlecht
-        {
-            get { return _selectedGeschlecht; }
-            set
-            {
-                _selectedGeschlecht = value;
-                OnChanged("SelectedGeschlecht");
-                //handle Gblins und Orks
-               /* if (value == "m")
-                {
-                    List<Model.Kultur> tmp=Global.ContextNsc.getKulturenDistinct();
-                    KulturListe = tmp.Where(k => !k.Variante.EndsWith("-Frau")).ToList();
-                    SelectedKultur = KulturListe[0];
-                }
-                else if (value == "w")
-                {
-                    List<Model.Kultur> tmp = Global.ContextNsc.getKulturenDistinct();
-                    KulturListe = tmp.Where(k => !k.Variante.EndsWith("-Mann")).ToList();
-                    SelectedKultur = KulturListe[0];
-                }
-                GeschlechtListeIsEnabled = false;*/
-            }
-        }
-        public bool GeschlechtListeIsEnabled
-        {
-            get { return _geschlechtListeIsEnabled; }
-            set
-            {
-                _geschlechtListeIsEnabled = value;
-                OnChanged("GeschlechtListeIsEnabled");
-            }
-        }
         //EntityListen
-        public List<Model.Rasse> RasseListe
+        public List<string> RasseListe
         {
             get { return _rasseListe; }
             set
@@ -173,17 +159,8 @@ namespace MeisterGeister.ViewModel.Generator
                 OnChanged("RasseListe");
             }
         }
-        public bool RasseListeIsEnabled
-        {
-            get { return _rasseListeIsEnabled; }
-            set
-            {
-                _rasseListeIsEnabled = value;
-                OnChanged("RasseListeIsEnabled");
-            }
-        }
 
-        public List<Model.Kultur> KulturListe
+        public List<string> KulturListe
         {
             get { return _kulturListe; }
             set
@@ -192,105 +169,80 @@ namespace MeisterGeister.ViewModel.Generator
                 OnChanged("KulturListe");
             }
         }
-        public bool KulturListeIsEnabled
+
+        public List<string> StandListe
         {
-            get { return _kulturListeIsEnabled; }
+            get { return _standListe; }
             set
             {
-                _kulturListeIsEnabled = value;
-                OnChanged("KulturListeIsEnabled");
+                _standListe = value;
+                OnChanged("StandListe");
             }
         }
 
-        public List<string> ProfessionListe
+        public List<string> GeneratorListe
         {
-            get { return _professionListe; }
+            get { return _generatorListe; }
             set
             {
-                _professionListe = value;
-                OnChanged("ProfessionListe");
+                _generatorListe = value;
+                OnChanged("GeneratorListe");
             }
         }
 
-        public bool ProfessionListeIsEnabled
+        public List<string> NamensgeneratorListe
         {
-            get { return _professionListeIsEnabled; }
+            get { return _namensgeneratorListe; }
             set
             {
-                _professionListeIsEnabled = value;
-                OnChanged("ProfessionListeIsEnabled");
+                _namensgeneratorListe = value;
+                OnChanged("NamensgeneratorListe");
             }
         }
 
-        public List<string> AlterListe
+        public List<Object> GenerierteObjekteListe
         {
-            get { return _alterListe; }
+            get { return _generierteObjekteListe; }
             set
             {
-                _alterListe = value;
-                OnChanged("AlterListe");
+                _generierteObjekteListe = value;
+                OnChanged("GenerierteObjekteListe");
             }
         }
 
-        public List<string> GeschlechtListe
+        public int ZuGenerierendeObjekte
         {
-            get { return _geschlechtListe; }
+            get { return _zuGenerierendeObjekte; }
             set
             {
-                _geschlechtListe = value;
-                OnChanged("GeschlechtListe");
+                if (value < 1)
+                    value = 1;
+                if (value == _zuGenerierendeObjekte) return;
+                _zuGenerierendeObjekte = value;
+                OnChanged("ZuGenerierendeObjekte");
             }
         }
 
-        public List<Person> PersonenListe
+        public bool UnüblicheKulturen
         {
-            get { return _personenListe; }
+            get { return _unüblicheKulturen; }
             set
             {
-                _personenListe = value;
-                OnChanged("PersonenListe");
+                _unüblicheKulturen = value;
+                OnChanged("UnüblicheKulturen");
+                RefreshKulturenListe();
             }
         }
-
-        public int GenNumber
-        {
-            get { return _genNumber; }
-            set
-            {
-                _genNumber = value;
-                OnChanged("GenNumber");
-            }
-        }
-
-        public bool CBKulturenIsChecked
-        {
-            get { return _cBKulturenChecked; }
-            set
-            {
-                _cBKulturenChecked = value;
-                OnChanged("CBKulturenIsChecked");
-                IsLoaded = false;
-                LoadDaten();
-            }
-        }
-
-        public bool CBNamenIsChecked
-        {
-            get { return _cBNamenIsChecked; }
-            set
-            {
-                _cBNamenIsChecked = value;
-                OnChanged("CBNamenIsChecked");
-            }
-        }
-        
-        //Zuordnung
-
 
         //Commands
-        public Base.CommandBase OnReset
+        public Base.CommandBase OnResetNamenOptionen
         {
-            get { return _onReset; }
+            get { return _onResetNamenOptionen; }
+        }
+
+        public Base.CommandBase OnClearGenerierteObjekteListe
+        {
+            get { return _onClearGenerierteObjekteListe; }
         }
 
         public Base.CommandBase OnGenerate
@@ -298,9 +250,14 @@ namespace MeisterGeister.ViewModel.Generator
             get { return _onGenerate; }
         }
 
-        public Base.CommandBase OnAddAllNSC
+        public Base.CommandBase OnAddAllObjects
         {
-            get { return _onAddAllNSC; }
+            get { return _onAddAllObjects; }
+        }
+
+        public Base.CommandBase OnAddSelectedObjects
+        {
+            get { return _onAddSelectedObject; }
         }
 
         #endregion
@@ -309,99 +266,160 @@ namespace MeisterGeister.ViewModel.Generator
 
         public GeneratorViewModel()
         {
-            _onReset = new Base.CommandBase(Reset, null);
             _onGenerate = new Base.CommandBase(Generate, null);
-            _onAddAllNSC = new Base.CommandBase(AddAllNSC, null);
+            _onResetNamenOptionen = new Base.CommandBase(ResetNamenOptionen, null);
+            _onClearGenerierteObjekteListe = new Base.CommandBase(ClearGenerierteObjekte, null);
+            _onAddSelectedObject = new Base.CommandBase(AddSelectedNSC, null);
+            _onAddAllObjects = new Base.CommandBase(AddAllNSC, null);
+            Init();
         }
 
         #endregion
 
         #region //---- INSTANZMETHODEN ----
-
-        public void LoadDaten()
+        public void Refresh()
         {
-            if (IsLoaded == false)
+            // derzeit nichts beim erneuten Anzeigen der Tabs erforderlich
+        }
+
+        private void Init()
+        {
+            RasseListe.Add(NAMEN_RASSE_EGAL);
+            RasseListe.AddRange(Global.ContextHeld.getRasseByKulturName(null, UnüblicheKulturen));
+            SelectedRasse = RasseListe[0];
+            OnChanged("RasseListe");
+
+            // Kulturen werden über SelectedRasse gesetzt
+
+            GeneratorListe.Add(GENERATOR_NAMEN);
+            GeneratorListe.Add(GENERATOR_NSC);
+            GeneratorListe.Add(GENERATOR_ALCHEMIELABOR);
+            GeneratorListe.Add(GENERATOR_BIBLIOTHEK);
+            GeneratorListe.Add(GENERATOR_SCHATZ);
+            SelectedGenerator = GENERATOR_NAMEN;
+            OnChanged("GeneratorListe");
+
+            NamensgeneratorListe.Add(NAMEN_GENERATOR_EGAL);
+            NamensgeneratorListe.AddRange(MeisterGeister.Logic.General.ReflectionHelper.GetConstantValueStringCollection(typeof(MeisterGeister.ViewModel.Generator.Factorys.NamenFactoryHelper), false, false).Cast<string>().ToList());
+            SelectedNamensgenerator = NAMEN_GENERATOR_EGAL;
+            OnChanged("NamensgeneratorListe");
+
+            StandListe.Add(NAMEN_STAND_EGAL);
+            StandListe.AddRange(Enum.GetNames(typeof(Stand)));
+            SelectedStand = NAMEN_STAND_EGAL;
+            OnChanged("StandListe");
+
+            UnüblicheKulturen = false;
+
+            GeschlechtWeiblichProzent = 50; ;
+
+            ZuGenerierendeObjekte = 1;
+        }
+
+        private void RefreshRassenListe()
+        {
+            List<string> neueRassenListe = new List<string>();
+            neueRassenListe.Add(NAMEN_RASSE_EGAL);
+            if (SelectedKultur == NAMEN_KULTUR_EGAL)
             {
-                                
-                RasseListe = Global.ContextNsc.getRassenNameDistinct();
-                SelectedRasse = RasseListe[0];
-                RasseListeIsEnabled = true;
-
-                KulturListe = Global.ContextNsc.getKulturenDistinct();
-                SelectedKultur = KulturListe[0];
-                KulturListeIsEnabled = true;
-
-                ProfessionListe = Global.ContextNsc.getProfessionenNamenDistinct();
-                //OnChanged("ProfessionListe");
-                SelectedProfession = "keine Profession";
-                ProfessionListeIsEnabled = true;
-
-                AlterListe = Global.ContextNsc.getAltersklassen();
-                //OnChanged("AlterListe");
-                SelectedAlter = "kein Alter";
-
-                GeschlechtListe = (new string[] { "m/w", "m", "w" }).ToList();
-                //OnChanged("GeschlechtListe");
-                SelectedGeschlecht = "m/w";
-                GeschlechtListeIsEnabled = true;
-
-                GenNumber = 1;
-
-                IsLoaded = true;
+                neueRassenListe.AddRange(Global.ContextHeld.getRasseByKulturName(null, UnüblicheKulturen));
             }
+            else
+            {
+                neueRassenListe.AddRange(Global.ContextHeld.getRasseByKulturName(SelectedKultur, UnüblicheKulturen));
+            }
+            RasseListe = neueRassenListe;
+            if (!RasseListe.Contains(SelectedRasse))
+                SelectedRasse = RasseListe[0];
+        }
+
+        private void RefreshKulturenListe()
+        {
+            List<string> neueKulturenListe = new List<string>();
+            neueKulturenListe.Add(NAMEN_KULTUR_EGAL);
+            if (SelectedRasse == NAMEN_RASSE_EGAL)
+            {
+                neueKulturenListe.AddRange(Global.ContextHeld.getKulturByRasseName(null, UnüblicheKulturen));
+            }
+            else
+            {
+                neueKulturenListe.AddRange(Global.ContextHeld.getKulturByRasseName(SelectedRasse, UnüblicheKulturen));
+            }
+            KulturListe = neueKulturenListe;
+            if (!KulturListe.Contains(SelectedKultur))
+                SelectedKultur = KulturListe[0];
+        }
+
+        private IEnumerable<PersonNurName> GeneriereNamen()
+        {
+            if (SelectedNamensgenerator == NAMEN_GENERATOR_EGAL)
+            {
+                return from x in Enumerable.Range(0, ZuGenerierendeObjekte)
+                       select GeneriereName(NamensgeneratorListe[RandomNumberGenerator.Generator.Next(NamensgeneratorListe.Count() - 1) + 1]);
+            }
+            else
+            {
+                return from x in Enumerable.Range(0, ZuGenerierendeObjekte)
+                       select GeneriereName(SelectedNamensgenerator);
+            }
+
+        }
+
+        private PersonNurName GeneriereName(string namenfactory)
+        {
+            return NamenFactoryHelper.GetFactory(namenfactory).GeneratePersonNurName(
+                RandomNumberGenerator.Generator.Next(100) + 1 > GeschlechtWeiblichProzent ? Geschlecht.männlich : Geschlecht.weiblich,
+                _selectedStandZufällig ? (Stand)RandomNumberGenerator.Generator.Next(STÄNDE_ANZAHL) : _selectedStand);
         }
 
         #endregion
 
         #region //---- EVENTS ----
 
-        void Reset(object sender)
+        void ClearGenerierteObjekte(object sender)
         {
-            IsLoaded = false;
-            LoadDaten();
+            GenerierteObjekteListe.Clear();
+            OnChanged("GenerierteObjekteListe");
+        }
+
+        void ResetNamenOptionen(object sender)
+        {
+            //TODO
         }
 
         void Generate(object sender)
         {
-            Global.SetIsBusy(true, "NSCs werden generiert...");
-
-            PersonenListe.Clear();
-            List<Person> personen = new List<Person>();
-            for (int i = 0; i < GenNumber; i++)
+            Global.SetIsBusy(true, "Objekte werden generiert...");
+            switch (SelectedGenerator)
             {
-                Person person = new Person(SelectedGeschlecht, SelectedAlter, SelectedRasse, SelectedKultur, SelectedProfession, CBKulturenIsChecked, CBNamenIsChecked) { IsNurName = (CBNamenIsChecked) ? Visibility.Collapsed : Visibility.Visible };
-                //handle Goblin & Orks
-                if (!(person.Name == null))
-                    personen.Add(person);
+                case (GENERATOR_NAMEN): GenerierteObjekteListe.AddRange(GeneriereNamen()); break;
+                case (GENERATOR_ALCHEMIELABOR):
+                case (GENERATOR_BIBLIOTHEK):
+                case (GENERATOR_NSC):
+                case (GENERATOR_SCHATZ): break;
             }
-            PersonenListe = personen;
-
+            OnChanged("GenerierteObjekteListe");
             Global.SetIsBusy(false);
         }
 
-        void AddAllNSC(object sender)
+        void AddSelectedNSC(object sender)
         {
-            AddNscToNotiz(PersonenListe);
+            //TODO
+            AddNscToNotiz(GenerierteObjekteListe);
         }
 
-        internal void AddNscToNotiz(System.Collections.IList personListe)
+
+        void AddAllNSC(object sender)
         {
-            int count = 0;
-            if (personListe != null && personListe.Count > 0)
-            {
-                count = personListe.Count;
-                string nsc = string.Empty;
-                foreach (Person person in personListe)
-                {
-                    nsc += "\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n";
-                    nsc += person.toString();
-                }
-                if (nsc != string.Empty)
-                {
-                    Global.ContextNotizen.NotizAllgemein.AppendText(nsc);
-                }
-            }
-            InfoText = string.Format("{0} NSC gespeichert.", count);
+            AddNscToNotiz(GenerierteObjekteListe);
+        }
+
+        private void AddNscToNotiz(List<Object> liste)
+        {
+            if (liste == null) return;
+            if (liste.Count() == 0) return;
+            liste.ForEach(o => Global.ContextNotizen.NotizAllgemein.AppendText("\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n" + o.ToString()));
+            InfoText = string.Format("{0} Objekte gespeichert.", liste.Count);
         }
 
         #endregion

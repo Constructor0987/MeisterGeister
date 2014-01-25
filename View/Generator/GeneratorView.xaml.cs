@@ -26,19 +26,24 @@ namespace MeisterGeister.View.Generator
         public GeneratorView()
         {
             InitializeComponent();
+            VM = new VM.GeneratorViewModel();
+        }
+
+        public VM.GeneratorViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.GeneratorViewModel))
+                    return null;
+                return DataContext as VM.GeneratorViewModel;
+            }
+            set { DataContext = value; }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                (this.DataContext as VM.GeneratorViewModel).LoadDaten();
-            }
-            catch (Exception ex)
-            {
-                View.Windows.MsgWindow errWin = new View.Windows.MsgWindow("Tool", "Beim Laden des Tools ist ein Fehler aufgetreten.", ex);
-                errWin.ShowDialog();
-            }
-        }        
+            if (VM != null)
+                VM.Refresh();
+        }     
     }
 }

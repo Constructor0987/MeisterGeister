@@ -6,8 +6,10 @@ using System.Text;
 using Model = MeisterGeister.Model;
 using System.Diagnostics;
 
-namespace MeisterGeister.Model.Service {
-    public class DataService : ServiceBase {
+namespace MeisterGeister.Model.Service
+{
+    public class DataService : ServiceBase
+    {
 
         #region //----- EIGENSCHAFTEN ----
 
@@ -20,7 +22,8 @@ namespace MeisterGeister.Model.Service {
 
         #region //----- KONSTRUKTOR ----
 
-        public DataService() {         
+        public DataService()
+        {
         }
 
         #endregion
@@ -36,7 +39,8 @@ namespace MeisterGeister.Model.Service {
             }
         }
 
-        public Held LoadHeldByName(string aName) {
+        public Held LoadHeldByName(string aName)
+        {
             var tmp = Context.Held.Where(held => held.Name == aName).FirstOrDefault();
             return tmp;
         }
@@ -62,7 +66,7 @@ namespace MeisterGeister.Model.Service {
         public Zauber LoadZauberByName(string aName)
         {
             var tmp = Context.Zauber.Where(s => s.Name.ToLower() == aName.ToLower()).FirstOrDefault();
-            if(tmp==null)
+            if (tmp == null)
                 tmp = Context.Zauber.Where(s => s.Name.ToLower().StartsWith(aName.ToLower())).FirstOrDefault();
             return tmp;
         }
@@ -140,9 +144,9 @@ namespace MeisterGeister.Model.Service {
 
             List<string> zauber = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Zauber, h => h.HeldGUID, hz => hz.HeldGUID, (h, hz) => hz)
                 .Join(Context.Zauber, hz => hz.ZauberGUID, z => z.ZauberGUID, (hz, z) => z).Where(z => z.Name == "Odem Arcanum" || z.Name == "Oculus Astralis").OrderBy(z => z.Name).Select(z => z.Name).ToList();
-            List<string> liturgien = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs =>hs.HeldGUID, (h,hs) => hs)
-                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs,s) =>s)
-                .Where(s=> s.Name == "Liturgie: Sicht auf Madas Welt"|| s.Name == "Keulenritual: Gespür der Keule").OrderBy(s=>s.Name).Select(s => s.Name).ToList();
+            List<string> liturgien = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
+                .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
+                .Where(s => s.Name == "Liturgie: Sicht auf Madas Welt" || s.Name == "Keulenritual: Gespür der Keule").OrderBy(s => s.Name).Select(s => s.Name).ToList();
             List<string> talente = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Talent, h => h.HeldGUID, ht => ht.HeldGUID, (h, ht) => ht)
                 .Join(Context.Talent, ht => ht.TalentGUID, t => t.TalentGUID, (ht, t) => t).Where(t => t.Talentname == "Pflanzenkunde" || t.Talentname == "Magiegespür").Select(t => t.Talentname).ToList();
 
@@ -165,7 +169,7 @@ namespace MeisterGeister.Model.Service {
             List<string> liturgien = Liste<Held>().Where(h => h.HeldGUID == held.HeldGUID).Join(Context.Held_Sonderfertigkeit, h => h.HeldGUID, hs => hs.HeldGUID, (h, hs) => hs)
                 .Join(Context.Sonderfertigkeit, hs => hs.SonderfertigkeitGUID, s => s.SonderfertigkeitGUID, (hs, s) => s)
                 .Where(s => s.Name == "Liturgie: Blick der Weberin" || s.Name == "Liturgie: Blick durch Tairachs Augen" || s.Name == "Schalenzauber: Allegorische Analyse").OrderBy(s => s.Name).Select(s => s.Name).ToList();
-            List<string> ret = new List<string>(); 
+            List<string> ret = new List<string>();
             ret.AddRange(zauber);
             ret.AddRange(talente);
             ret.AddRange(liturgien);
@@ -191,7 +195,7 @@ namespace MeisterGeister.Model.Service {
         #endregion
 
         #region Kampf und Gegner
-        
+
         public Gegner CreateGegnerInstance(GegnerBase gegnerBase)
         {
             Gegner g = new Gegner(gegnerBase);
@@ -204,7 +208,7 @@ namespace MeisterGeister.Model.Service {
         #region Literatur/Wege des Wissens
         public Literatur LoadLiteraturByAbkürzung(string abkürzung, bool isErrata = false)
         {
-            if(isErrata)
+            if (isErrata)
                 abkürzung = abkürzung + " Errata";
             return Context.Literatur.Where(l => l.Abkürzung == abkürzung).FirstOrDefault();
         }
@@ -215,6 +219,58 @@ namespace MeisterGeister.Model.Service {
         public List<Name> LoadNamenByNamenstyp(string namenstyp)
         {
             return Context.Name.Where(n => n.Herkunft == namenstyp).ToList();
+        }
+
+        public List<string> getRasseByKulturName(string kultur, bool unüblicheKulturen = false)
+        {
+            if (string.IsNullOrEmpty(kultur))
+            {
+                return Liste<Model.Rasse>()
+                    .Select(r => r.Name)
+                    .Distinct().OrderBy(n => n).ToList();
+            }
+            else
+            {
+                if (unüblicheKulturen)
+                    return Liste<Model.Kultur>()
+                        .Where(k => k.Name == kultur)
+                        .Join(Context.Rasse_Kultur, k => k.KulturGUID, rk => rk.KulturGUID, (k, rk) => rk)
+                        .Join(Context.Rasse, rk => rk.RasseGUID, r => r.RasseGUID, (rk, r) => r)
+                        .Select(r => r.Name).Distinct().OrderBy(n => n).ToList();
+                else
+                    return Liste<Model.Kultur>()
+                        .Where(k => k.Name == kultur)
+                        .Join(Context.Rasse_Kultur, k => k.KulturGUID, rk => rk.KulturGUID, (k, rk) => rk)
+                        .Where(rk => rk.Unüblich == false)
+                        .Join(Context.Rasse, rk => rk.RasseGUID, r => r.RasseGUID, (rk, r) => r)
+                        .Select(r => r.Name).Distinct().OrderBy(n => n).ToList();
+            }
+        }
+
+        public List<string> getKulturByRasseName(string rasse, bool unueblicheKulturen = false)
+        {
+            if (string.IsNullOrEmpty(rasse))
+            {
+                return Liste<Model.Kultur>()
+                    .Select(k => k.Name)
+                    .Distinct().OrderBy(n => n).ToList();
+            }
+            else
+            {
+                if (unueblicheKulturen)
+                    return Liste<Model.Rasse>()
+                        .Where(r => r.Name == rasse)
+                        .Join(Context.Rasse_Kultur,  r => r.RasseGUID, rk => rk.RasseGUID, (r, rk) => rk)
+                        .Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k)
+                        .Select(k => k.Name).Distinct().OrderBy(n => n).ToList();
+                else
+                    return Liste<Model.Rasse>()
+                        .Where(r => r.Name == rasse)
+                        .Join(Context.Rasse_Kultur, r => r.RasseGUID, rk => rk.RasseGUID, (k, rk) => rk)
+                        .Where(rk => rk.Unüblich == false)
+                        .Join(Context.Kultur, rk => rk.KulturGUID, k => k.KulturGUID, (rk, k) => k)
+                        .Select(k => k.Name).Distinct().OrderBy(n => n).ToList();
+            }
         }
         #endregion
 

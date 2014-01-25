@@ -166,9 +166,9 @@ namespace MeisterGeister
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Abenteuer.AbenteuerView)
             });
-            ToolListe.Add("NSCs_neu", new Tool()
+            ToolListe.Add("Generator", new Tool()
             {
-                Name = "NSCs_neu",
+                Name = "Generator",
                 Icon = "Icons/meisterperson.png",
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.Generator.GeneratorView)
