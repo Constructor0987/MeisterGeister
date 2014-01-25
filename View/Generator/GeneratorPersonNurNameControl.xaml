@@ -17,7 +17,7 @@
                 <TextBlock FontWeight="Bold" Text="{Binding Name}" />
                 <TextBlock FontSize="9" Text="{Binding Geschlecht}" />
             </StackPanel>
-            <TextBlock FontSize="9" Text="{Binding Namensbedeutung}" Visibility="{Binding}" />
+            <TextBlock FontSize="9" Text="{Binding Namensbedeutung}" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontSize="11" FontWeight="Bold" Text="Namenstyp: " />
                 <TextBlock FontSize="11" Text="{Binding Namenstyp}" />

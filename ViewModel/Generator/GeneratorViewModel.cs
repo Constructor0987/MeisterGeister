@@ -10,7 +10,7 @@ using System.Windows;
 using MeisterGeister.ViewModel.Generator.Container;
 using MeisterGeister.ViewModel.Generator.Factorys;
 using MeisterGeister.Logic.General;
-using WPFExtensions.Collections.ObjectModel;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.ViewModel.Generator
 {
@@ -20,7 +20,7 @@ namespace MeisterGeister.ViewModel.Generator
         //Intern: Zeichenketten und weiteres
         const string NAMEN_RASSE_EGAL = "Beliebige Rasse";
         const string NAMEN_KULTUR_EGAL = "Beliebige Kultur";
-        const string NAMEN_GENERATOR_EGAL = "irgendein Name";
+        const string NAMEN_NAMENSGENERATOR_EGAL = "irgendein Name";
         const string NAMEN_STAND_EGAL = "irgendein Stand";
         const string GENERATOR_NAMEN = "Namen";
         const string GENERATOR_NSC = "NSC";
@@ -45,7 +45,7 @@ namespace MeisterGeister.ViewModel.Generator
         private List<string> _rasseListe = new List<string>();
         private List<string> _kulturListe = new List<string>();
         private List<string> _standListe = new List<string>();
-        private List<Object> _generierteObjekteListe = new List<Object>();
+        private ExtendedObservableCollection<Object> _generierteObjekteListe = new ExtendedObservableCollection<Object>();
         private List<string> _generatorListe = new List<string>();
         private List<string> _namensgeneratorListe = new List<string>();
         //Commands
@@ -200,7 +200,7 @@ namespace MeisterGeister.ViewModel.Generator
             }
         }
 
-        public List<Object> GenerierteObjekteListe
+        public ExtendedObservableCollection<Object> GenerierteObjekteListe
         {
             get { return _generierteObjekteListe; }
             set
@@ -231,6 +231,7 @@ namespace MeisterGeister.ViewModel.Generator
                 _unüblicheKulturen = value;
                 OnChanged("UnüblicheKulturen");
                 RefreshKulturenListe();
+                RefreshRassenListe();
             }
         }
 
@@ -299,9 +300,9 @@ namespace MeisterGeister.ViewModel.Generator
             SelectedGenerator = GENERATOR_NAMEN;
             OnChanged("GeneratorListe");
 
-            NamensgeneratorListe.Add(NAMEN_GENERATOR_EGAL);
+            NamensgeneratorListe.Add(NAMEN_NAMENSGENERATOR_EGAL);
             NamensgeneratorListe.AddRange(MeisterGeister.Logic.General.ReflectionHelper.GetConstantValueStringCollection(typeof(MeisterGeister.ViewModel.Generator.Factorys.NamenFactoryHelper), false, false).Cast<string>().ToList());
-            SelectedNamensgenerator = NAMEN_GENERATOR_EGAL;
+            SelectedNamensgenerator = NAMEN_NAMENSGENERATOR_EGAL;
             OnChanged("NamensgeneratorListe");
 
             StandListe.Add(NAMEN_STAND_EGAL);
@@ -352,7 +353,7 @@ namespace MeisterGeister.ViewModel.Generator
 
         private IEnumerable<PersonNurName> GeneriereNamen()
         {
-            if (SelectedNamensgenerator == NAMEN_GENERATOR_EGAL)
+            if (SelectedNamensgenerator == NAMEN_NAMENSGENERATOR_EGAL)
             {
                 return from x in Enumerable.Range(0, ZuGenerierendeObjekte)
                        select GeneriereName(NamensgeneratorListe[RandomNumberGenerator.Generator.Next(NamensgeneratorListe.Count() - 1) + 1]);
@@ -368,7 +369,7 @@ namespace MeisterGeister.ViewModel.Generator
         private PersonNurName GeneriereName(string namenfactory)
         {
             return NamenFactoryHelper.GetFactory(namenfactory).GeneratePersonNurName(
-                RandomNumberGenerator.Generator.Next(100) + 1 > GeschlechtWeiblichProzent ? Geschlecht.männlich : Geschlecht.weiblich,
+                RandomNumberGenerator.Generator.Next(100) < GeschlechtWeiblichProzent ? Geschlecht.männlich : Geschlecht.weiblich,
                 _selectedStandZufällig ? (Stand)RandomNumberGenerator.Generator.Next(STÄNDE_ANZAHL) : _selectedStand);
         }
 
@@ -384,7 +385,12 @@ namespace MeisterGeister.ViewModel.Generator
 
         void ResetNamenOptionen(object sender)
         {
-            //TODO
+            SelectedRasse = NAMEN_RASSE_EGAL;
+            SelectedKultur = NAMEN_KULTUR_EGAL;
+            SelectedNamensgenerator = NAMEN_NAMENSGENERATOR_EGAL;
+            GeschlechtWeiblichProzent = 50;
+            SelectedStand = NAMEN_STAND_EGAL;
+            
         }
 
         void Generate(object sender)
@@ -398,7 +404,7 @@ namespace MeisterGeister.ViewModel.Generator
                 case (GENERATOR_NSC):
                 case (GENERATOR_SCHATZ): break;
             }
-            OnChanged("GenerierteObjekteListe");
+            GenerierteObjekteListe = GenerierteObjekteListe;
             Global.SetIsBusy(false);
         }
 
@@ -414,12 +420,13 @@ namespace MeisterGeister.ViewModel.Generator
             AddNscToNotiz(GenerierteObjekteListe);
         }
 
-        private void AddNscToNotiz(List<Object> liste)
+        private void AddNscToNotiz(IList<Object> liste)
         {
             if (liste == null) return;
             if (liste.Count() == 0) return;
-            liste.ForEach(o => Global.ContextNotizen.NotizAllgemein.AppendText("\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n" + o.ToString()));
-            InfoText = string.Format("{0} Objekte gespeichert.", liste.Count);
+            foreach (Object o in liste)
+                Global.ContextNotizen.NotizAllgemein.AppendText("\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n" + o.ToString());
+            InfoText = string.Format("{0} Objekte gespeichert.", liste.Count());
         }
 
         #endregion
