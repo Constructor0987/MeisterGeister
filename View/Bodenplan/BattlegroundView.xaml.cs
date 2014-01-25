@@ -196,8 +196,8 @@ namespace MeisterGeister.View.Bodenplan
             {
                 if (_zoomChanged)
                 {
-                    ArenaScrollViewer.ScrollToHorizontalOffset(vm.CurrentMousePositionX * ArenaScrollViewer.ScrollableWidth / 10000);
-                    ArenaScrollViewer.ScrollToVerticalOffset(vm.CurrentMousePositionY * ArenaScrollViewer.ScrollableHeight / 10000);
+                    //ArenaScrollViewer.ScrollToHorizontalOffset(vm.CurrentMousePositionX * ArenaScrollViewer.ScrollableWidth / 10000);
+                    //ArenaScrollViewer.ScrollToVerticalOffset(vm.CurrentMousePositionY * ArenaScrollViewer.ScrollableHeight / 10000);
                     _zoomChanged = false;
                     vm.CurrentMousePositionX = Mouse.GetPosition(ArenaGrid).X;
                     vm.CurrentMousePositionY = Mouse.GetPosition(ArenaGrid).Y;

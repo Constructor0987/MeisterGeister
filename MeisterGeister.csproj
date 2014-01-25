@@ -160,6 +160,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFExtensions, Version=1.0.5138.23836, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\WPFExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Xceed.Wpf.Toolkit.dll</HintPath>
@@ -1618,6 +1622,7 @@
     <Resource Include="Images\Icons\nahkampf_03_gestrichen.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
+    <Content Include="Libs\WPFExtensions.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.pdb" />
     <Content Include="License\Apache License.txt">

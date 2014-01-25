@@ -9,6 +9,8 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:localsolution="clr-namespace:MeisterGeister"
              xmlns:dbmodel="clr-namespace:MeisterGeister.Model"
+             xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+             xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
              mc:Ignorable="d" 
              x:Name="view"
              d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource BackgroundPergamentQuer}">   
@@ -146,7 +148,7 @@
         </Grid.Resources>
         <DockPanel Margin="12,12,12,0" Name="dockPanel1" Background="#0F000000" Height="113" VerticalAlignment="Top">
             <Grid Height="113" Name="grid2" Width="1256" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Slider x:Name="uiScaleSlider" Value="1" Minimum="0.1" Maximum="4" Height="34" Width="200" Margin="443,36,613,43" />
+                <!--<Slider x:Name="uiScaleSlider" Value="1" Minimum="0.1" Maximum="4" Height="34" Width="200" Margin="443,36,613,43" />-->
                 <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="6,7,0,0" Name="border1" VerticalAlignment="Top" Width="110">
                     <Grid Width="110">
                         <xctk:CheckListBox Height="73" HorizontalAlignment="Left" Margin="0,25,0,0" Name="checkListBox1" VerticalAlignment="Top" Width="110" SelectedValue="{Binding VisibleZLevels}" ItemsSource="{Binding PossibleZLevels}" ToolTip="Wähle aus welche Z Level sichtbar sein sollen." />
@@ -158,7 +160,7 @@
         </DockPanel>
         <DockPanel Margin="12,131,0,12" Name="dockPanel2" HorizontalAlignment="Left" Width="200" Background="#12000000"></DockPanel>
         <DockPanel Margin="220,131,12,11" Name="ArenaGridContainer"></DockPanel>
-
+        
         <Grid Name="grid1" Width="200" ClipToBounds="True" IsManipulationEnabled="False" Margin="12,131,0,0" HorizontalAlignment="Left" Height="958" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*" />
@@ -204,8 +206,9 @@
             <CheckBox Content="Z-Level Anzeigen" IsChecked="{Binding ShowZ}" Grid.Column="1" Grid.Row="2" Height="18" HorizontalAlignment="Left" Margin="25,65,0,0" Name="checkBox1" VerticalAlignment="Top" Width="113" />
             <CheckBox Content="Editor Modus" IsChecked="{Binding IsEditorModeEnabled}" Height="20" HorizontalAlignment="Left" Margin="25,14,0,0" Name="checkBox3" VerticalAlignment="Top" Width="113" FontSize="14" FontStyle="Normal" FontWeight="SemiBold" ToolTip="Wenn deaktiviert, können nur noch Helden und Monster bewegt werden" Checked="checkBox3_Checked" Grid.Column="1" />
         </Grid>
-        <local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12" Background="#FF367536">
-            <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" PreviewMouseWheel="ArenaGrid_PreviewMouseWheel" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Multiple">
+        <wpfxc:ZoomControl x:Name="ArenaScrollViewer" Margin="220,131,12,12" Background="#FF367536">
+        <!--<local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12">-->
+            <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Multiple">
                 <ListBox.Template>
                     <ControlTemplate>
                         <Border>
@@ -216,7 +219,7 @@
                                 </LinearGradientBrush>
                             </Border.Background>
                             <Border>
-                                <Border.Background>
+                                <Border.Background> <!-- Hexgrid -->
                                     <VisualBrush TileMode="Tile" Viewport="0,0,200,200" ViewportUnits="Absolute">
                                         <VisualBrush.Visual>
                                             <!--<Rectangle Stroke="Darkgray" StrokeThickness="1" Height="50" Width="50" StrokeDashArray="5 3" />-->
@@ -240,8 +243,9 @@
                     <!-- CenterX="{Binding CurrentMousePositionX}" CenterY="{Binding CurrentMousePositionY}" -->
                 </ListBox.LayoutTransform>
             </ListBox>
-            <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
-        </local:DragScrollViewer>
+        <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
+        </local:DragScrollViewer> -->
+        </wpfxc:ZoomControl>
     </Grid>
     <UserControl.InputBindings>
         <KeyBinding Key="Delete" Command="{Binding DeleteCommand}" />
