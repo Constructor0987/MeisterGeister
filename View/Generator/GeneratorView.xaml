@@ -22,15 +22,20 @@
         <DataTemplate DataType="{x:Type vmc:PersonNurName}">
             <v:GeneratorPersonNurNameControl />
         </DataTemplate>
+        <ResourceDictionary x:Key="Namensinfos" Source="GeneratorNamenInfos.xaml" />
     </UserControl.Resources>
-
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-        <Expander Grid.Row="0" Margin="2" IsExpanded="True">
+        <Expander Grid.Row="0" Grid.ColumnSpan="2" Margin="2" IsExpanded="True">
             <Expander.Header>
                 <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
@@ -151,6 +156,10 @@
                     </ListBox.BorderBrush>
                 </ListBox>
             </Border>
+        </Expander>
+
+        <Expander Grid.Column="1" Grid.Row="1" ExpandDirection="Right">
+            <RichTextBox />
         </Expander>
     </Grid>
 </UserControl>

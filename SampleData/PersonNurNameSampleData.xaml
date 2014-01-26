@@ -1,0 +1,5 @@
+﻿<MeisterGeister_ViewModel_Generator_Container:PersonNurName 
+xmlns:MeisterGeister_ViewModel_Generator_Container="clr-namespace:MeisterGeister.ViewModel.Generator.Container"
+Name="Alrik von Sturmfels" Geschlecht="männlich" Namensbedeutung="gaaanz großer Krieger" Namenstyp="Mitterlreich und sooo" Stand="adelig">
+
+</MeisterGeister_ViewModel_Generator_Container:PersonNurName>

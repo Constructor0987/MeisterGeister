@@ -11,6 +11,7 @@ using MeisterGeister.ViewModel.Generator.Container;
 using MeisterGeister.ViewModel.Generator.Factorys;
 using MeisterGeister.Logic.General;
 using MeisterGeister.Logic.Extensions;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.Generator
 {
@@ -23,6 +24,7 @@ namespace MeisterGeister.ViewModel.Generator
         const string NAMEN_NAMENSGENERATOR_EGAL = "irgendein Name";
         const string NAMEN_STAND_EGAL = "irgendein Stand";
         const string GENERATOR_NAMEN = "Namen";
+        const string GENERATOR_ORTSNAMEN = "Namen";
         const string GENERATOR_NSC = "NSC";
         const string GENERATOR_SCHATZ = "Schatz";
         const string GENERATOR_BIBLIOTHEK = "Bibliothek";
@@ -293,6 +295,7 @@ namespace MeisterGeister.ViewModel.Generator
             // Kulturen werden über SelectedRasse gesetzt
 
             GeneratorListe.Add(GENERATOR_NAMEN);
+            GeneratorListe.Add(GENERATOR_ORTSNAMEN);
             GeneratorListe.Add(GENERATOR_NSC);
             GeneratorListe.Add(GENERATOR_ALCHEMIELABOR);
             GeneratorListe.Add(GENERATOR_BIBLIOTHEK);
@@ -430,6 +433,28 @@ namespace MeisterGeister.ViewModel.Generator
         }
 
         #endregion
+    }
+
+    [ValueConversion(typeof(Geschlecht), typeof(string))]
+    public class GeschlechtToIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            switch ((Geschlecht)value)
+            {
+                case Geschlecht.männlich:
+                    return "/Images/Icons/geschlecht_m.png";
+                case Geschlecht.weiblich:
+                    return "/Images/Icons/geschlecht_w.png";
+                default:
+                    return null;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
     }
 }
 
