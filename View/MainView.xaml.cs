@@ -558,9 +558,19 @@ namespace MeisterGeister.View
             }
         }
 
-        private void ButtonWürfel_Click(object sender, RoutedEventArgs e)
+        private void ButtonWürfel_Wx_Click(object sender, RoutedEventArgs e)
         {
             View.General.ViewHelper.OpenWürfelDialog(string.Empty);
+        }
+
+        private void ButtonWürfel_W20_Click(object sender, RoutedEventArgs e)
+        {
+            View.General.ViewHelper.OpenWürfelDialog("1W20");
+        }
+
+        private void ButtonWürfel_W6_Click(object sender, RoutedEventArgs e)
+        {
+            View.General.ViewHelper.OpenWürfelDialog("1W6");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

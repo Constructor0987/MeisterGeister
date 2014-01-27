@@ -102,12 +102,25 @@
                                     <Image Source="/Images/Icons/wuerfelbecher.png" Margin="2" />
                                 </MenuItem.Icon>
                                 <MenuItem.Header>
-                                    <DockPanel>
-                                        <TextBlock Text="Würfel-Tool" />
-                                        <Button HorizontalAlignment="Right" ToolTip="Einzelner Würfel..." Click="ButtonWürfel_Click">
-                                            <Image Source="/Images/Icons/Wuerfel/w20.png" Margin="2" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="Würfel-Tool" />
+                                        <Button Grid.Column="2" ToolTip="Beliebiger Würfel..." Margin="2,0" Click="ButtonWürfel_Wx_Click">
+                                            <Image Source="/Images/Icons/Wuerfel/wuerfel.png"/>
                                         </Button>
-                                    </DockPanel>
+                                        <Button Grid.Column="3" ToolTip="1W6..." Margin="2,0" Click="ButtonWürfel_W6_Click">
+                                            <Image Source="/Images/Icons/Wuerfel/w6.png"/>
+                                        </Button>
+                                        <Button Grid.Column="4" ToolTip="1W20..." Margin="2,0" Click="ButtonWürfel_W20_Click">
+                                            <Image Source="/Images/Icons/Wuerfel/w20.png" />
+                                        </Button>
+                                    </Grid>
                                 </MenuItem.Header>
                             </MenuItem>
                             <MenuItem Height="28" Click="MenuItemSpielerInfoControl_Click" Header="SpielerInfo-Tool" Tag="SpielerInfo" >
