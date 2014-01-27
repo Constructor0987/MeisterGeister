@@ -23,18 +23,66 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        <TabControl Grid.Column="0" Background="Transparent">
+            <TabItem Header="Bild zeigen">
+                <Border Style="{DynamicResource ControlContentBorder}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Images/Icons/pinsel.png" />
+                                        <TextBlock Text="Bild öffnen" Margin="3,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/Images/Icons/General/oeffnen.png" />
+                                        <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Height="32" HorizontalAlignment="Left" Margin="229,2,0,0" VerticalAlignment="Top" ToolTip="Spieler das Bild zeigen." Click="ButtonBildZeigen_Click">
+                                    <Image Source="/Images/Icons/General/screen.png" />
+                                </Button>
+                                <Button Height="32" HorizontalAlignment="Left" Margin="265,2,0,0" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
+                                    <Grid>
+                                        <Image Source="/Images/Icons/General/screen.png" />
+                                        <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
+                                    </Grid>
+                                </Button>
+                                <CheckBox Grid.Column="0" Grid.Row="0" Margin="305,0,0,0" Name="_checkBoxMax" Content="Auf Bildschirmgröße anpassen" IsChecked="True" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
+                                    <CheckBox.ToolTip>
+                                        <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Bild auf maximale Größe vergrößern, andernfalls Origalgröße verwenden. Ist das Bild größer als der Bildschirm, wird es verkleinert." />
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="6" Name="_textBlockFilePath" Text="" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
+                                <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" Background="Transparent" SelectionChanged="ListBoxDirectory_SelectionChanged" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
+                                <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Margin="6" Name="_image1" Stretch="Uniform" MinWidth="226" ToolTip="Ein Links-Klick öffnet das Bild extern." HorizontalAlignment="Right" MaxWidth="400" MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
+                            </Grid>
+                        </Border>
+            </TabItem>
+            <TabItem Header="Text zeigen">
+                <Border Style="{DynamicResource ControlContentBorder}">
+                    <ViewGeneral:FormatTextBox x:Name="_RTBNotiz" Margin="6" />
+                </Border>
+            </TabItem>
+        </TabControl>
 
-        <StackPanel Grid.Row="0" Grid.Column="1">
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
             <Button Margin="0,12,12,0" Height="45" VerticalAlignment="Top" Click="ButtonSpielerInfoControl_Click" HorizontalAlignment="Right" Width="45">
                 <Button.ToolTip>
                     <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
@@ -50,64 +98,5 @@
                 </Grid>
             </Button>
         </StackPanel>
-
-        <Expander Margin="12" IsExpanded="True">
-            <Expander.Header>
-                <TextBlock Text="Bild zeigen" Style="{DynamicResource TextTitel}" />
-            </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/Images/Icons/pinsel.png" />
-                                <TextBlock Text="Bild öffnen" Margin="3,0" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Button>
-                        <Button Height="23" HorizontalAlignment="Left" Margin="96,0,0,0" VerticalAlignment="Center" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="/Images/Icons/General/oeffnen.png" />
-                                <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Button>
-                        <Button Height="32" HorizontalAlignment="Left" Margin="229,2,0,0" VerticalAlignment="Top" ToolTip="Spieler das Bild zeigen." Click="ButtonBildZeigen_Click">
-                            <Image Source="/Images/Icons/General/screen.png" />
-                        </Button>
-                    <Button Height="32" HorizontalAlignment="Left" Margin="265,2,0,0" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
-                        <Grid>
-                            <Image Source="/Images/Icons/General/screen.png" />
-                            <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
-                        </Grid>
-                    </Button>
-                    <CheckBox Grid.Column="0" Grid.Row="0" Margin="305,0,0,0" Name="_checkBoxMax" Content="Auf Bildschirmgröße anpassen" IsChecked="True" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
-                            <CheckBox.ToolTip>
-                                <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Bild auf maximale Größe vergrößern, andernfalls Origalgröße verwenden. Ist das Bild größer als der Bildschirm, wird es verkleinert." />
-                            </CheckBox.ToolTip>
-                        </CheckBox>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="6" Name="_textBlockFilePath" Text="" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
-                        <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" Background="Transparent" SelectionChanged="ListBoxDirectory_SelectionChanged" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
-                        <Image Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Margin="6" Name="_image1" Stretch="Uniform" MinWidth="226" ToolTip="Ein Links-Klick öffnet das Bild extern." HorizontalAlignment="Right" MaxWidth="400" MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
-                    </Grid>
-            </Border>
-        </Expander>
-
-        <Expander Grid.Row="1" Grid.Column="0" Margin="12,0,12,12" IsExpanded="True">
-            <Expander.Header>
-                <TextBlock Text="Text zeigen" Style="{DynamicResource TextTitel}" />
-            </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}">
-                <ViewGeneral:FormatTextBox x:Name="_RTBNotiz" Margin="6" />
-            </Border>
-        </Expander>
-
     </Grid>
 </UserControl>
