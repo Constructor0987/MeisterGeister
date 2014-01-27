@@ -32,12 +32,14 @@ namespace MeisterGeister.View.Würfeln
         /// </summary>
         /// <param name="würfel">Würfel-Text (z.B. 2W+3, W20).</param>
         /// <param name="infoText">Info-Text, der angezeigt wird und den Würfelwurf beschreibt.</param>
-        public WürfelDialog(string würfel, string infoText = "")
+        /// <param name="maxiModus">Soll das Würfel-Fenster in kompakter, minimalistischer Form angezeigt werden?</param>
+        public WürfelDialog(string würfel, string infoText = "", bool maxiModus = true)
         {
             InitializeComponent();
 
             VM = new VM.WürfelDialogViewModel(würfel);
             VM.InfoText = infoText;
+            VM.MaxiModus = maxiModus;
         }
 
         /// <summary>

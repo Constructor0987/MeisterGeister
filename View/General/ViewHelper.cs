@@ -158,7 +158,8 @@ namespace MeisterGeister.View.General
                 if (String.IsNullOrWhiteSpace(würfel))
                     würfel = ViewHelper.InputDialog("Gebe einen Würfel ein", "Welcher Würfel soll erstellt werden?", "W20");
 
-                View.Würfeln.WürfelDialog dlg = new View.Würfeln.WürfelDialog(würfel, würfel);
+                // Öffnet ein kompaktes Würfel-Fenster
+                View.Würfeln.WürfelDialog dlg = new View.Würfeln.WürfelDialog(würfel, würfel, false);
                 dlg.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
                 dlg.Show();
             }

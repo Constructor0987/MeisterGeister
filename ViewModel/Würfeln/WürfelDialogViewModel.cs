@@ -41,6 +41,17 @@ namespace MeisterGeister.ViewModel.Würfeln
             set { _infoText = value; OnChanged("InfoText"); }
         }
 
+        private bool _maxiModus = true;
+        /// <summary>
+        /// Im MaxiModus (Standard) werden alle Steuerelemente angezeigt.
+        /// Ist MaxiModus 'false' wird das Fenster auf eine minimale Darstellung beschränkt.
+        /// </summary>
+        public bool MaxiModus
+        {
+            get { return _maxiModus; }
+            set { _maxiModus = value; OnChanged("MiniModus"); }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -68,6 +79,6 @@ namespace MeisterGeister.ViewModel.Würfeln
 
 
         #endregion
-        
+
     }
 }
