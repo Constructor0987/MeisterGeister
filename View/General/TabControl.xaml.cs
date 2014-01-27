@@ -60,11 +60,42 @@ namespace MeisterGeister.View.General
             CloseTool();
         }
 
+        private void ButtonCloseAll_Click(object sender, RoutedEventArgs e)
+        {
+            CloseAllTools();
+        }
+
+        private void ButtonCloseOther_Click(object sender, RoutedEventArgs e)
+        {
+            CloseOtherTools();
+        }
+
         private void CloseTool()
         {
             if (Parent != null && Parent is TabControl)
             {
                 ((TabControl)Parent).Items.Remove(this);
+                App.SaveAll();
+            }
+        }
+
+        private void CloseAllTools()
+        {
+            if (Parent != null && Parent is TabControl)
+            {
+                ((TabControl)Parent).Items.Clear();
+                App.SaveAll();
+            }
+        }
+
+        private void CloseOtherTools()
+        {
+            if (Parent != null && Parent is TabControl)
+            {
+                TabControl tabControl = (TabControl)Parent;
+                ((TabControl)Parent).Items.Clear();
+                tabControl.Items.Add(this);
+                tabControl.SelectedItem = this;
                 App.SaveAll();
             }
         }

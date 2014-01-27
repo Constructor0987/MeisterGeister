@@ -7,9 +7,23 @@
         <StackPanel Orientation="Horizontal"  MouseDown="TabItem_MouseDown">
             <StackPanel.ContextMenu>
                 <ContextMenu Name="_contextMenu">
-                    <MenuItem Name="_checkBoxTitelAusblenden" Header="Tool Titel ausblenden" IsCheckable="True" Checked="_checkBoxTitelAusblenden_Checked" Unchecked="_checkBoxTitelAusblenden_Checked" />
+                    <MenuItem Height="28" Name="_checkBoxTitelAusblenden" Header="Tool Titel ausblenden" IsCheckable="True" Checked="_checkBoxTitelAusblenden_Checked" Unchecked="_checkBoxTitelAusblenden_Checked" />
                     <Separator />
-                    <MenuItem Header="Tool schließen" Click="ButtonClose_Click" />
+                    <MenuItem Height="28" Header="Tool schließen" Click="ButtonClose_Click">
+                        <MenuItem.Icon>
+                            <Image Margin="2" Source="/Images/Icons/General/entf_01.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Height="28" Header="Andere Tools schließen" Click="ButtonCloseOther_Click">
+                        <MenuItem.Icon>
+                            <Image Margin="2" Source="/Images/Icons/General/entf_02.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Height="28" Header="Alle Tools schließen" Click="ButtonCloseAll_Click">
+                        <MenuItem.Icon>
+                            <Image Margin="2" Source="/Images/Icons/General/entf_all.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>
             <Image Name="_image" Height="24" Width="24" Source="/Images/Icons/meistertools_02.png" />
