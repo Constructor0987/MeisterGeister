@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.Logic.Literatur;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     ///   mehrere Subklassen (Alle Eigenschaften (mit und ohne Auswirkungen auf die Kampfwerte), INI, AT, PA, GS)
     ///   Dauer (kann null sein. Ist für Stärkungszauber etc.)
     /// </summary>
-    public class Modifikator : IModifikator
+    public class Modifikator : IModifikator, ILiteratur
     {
         //TODO JT: Modifikator ins Model
         //Guid ModifikatorGUID;

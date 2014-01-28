@@ -90,9 +90,14 @@ namespace MeisterGeister.View.General
                     // Auf Basis der Literaturangabe muss das passende PDF mit Dateipfad gesucht werden.
                     // Ist kein PDF hinterlegt, sollte ein FileOpen-Dialog erscheinen oder ein Link zum Ulisses-PDF-Shop angezeigt werden.
                     // Sollten bei einer Literaturangabe mehrere Seiten angegeben sein, muss der User eine auswählen.
-
-                    Model.Literatur li = Model.Literatur.GetByAbkürzung(literaturangabe.Kürzel);
-                    Logic.General.Pdf.OpenReader(literaturangabe, literaturangabe.Seiten.FirstOrDefault());
+                    try
+                    {
+                        Logic.General.Pdf.OpenReader(literaturangabe, literaturangabe.Seiten.FirstOrDefault());
+                    }
+                    catch (Logic.Literatur.LiteraturPfadMissingException ex)
+                    {
+                        MessageBox.Show(ex.Message + "\nIn den Einstellungen können die Pfade zu den Dateien eingegeben werden.");
+                    }
                 }
             }
         }

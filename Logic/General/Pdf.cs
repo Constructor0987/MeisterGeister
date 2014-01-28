@@ -62,6 +62,13 @@ namespace MeisterGeister.Logic.General
             return false;
         }
 
+        public static Process OpenReader(Literatur.Literaturangabe literaturangabe)
+        {
+            if (literaturangabe == null)
+                throw new ArgumentNullException("Die Literaturangabe fehlt.");
+            return OpenReader(literaturangabe, literaturangabe.Seiten.FirstOrDefault());
+        }
+
         public static Process OpenReader(Literatur.Literaturangabe literaturangabe, Literatur.Seitenangabe seitenangabe)
         {
             if (literaturangabe == null)

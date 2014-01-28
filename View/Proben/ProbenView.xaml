@@ -205,7 +205,7 @@
                     </WrapPanel.Resources>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Literatur:" FontWeight="Bold" />
-                        <TextBlock VerticalAlignment="Center" Text="{Binding SelectedProbe.Literatur, FallbackValue=-}" />
+                        <ViewGeneral:LiteraturControl VerticalAlignment="Center" Height="20" Padding="2,0,2,0" Literaturangabe="{Binding SelectedProbe.Literatur}" LiteraturAnzeigeArt="TextKurz" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" ToolTip="Effektive Behinderung (eBE)" Visibility="{Binding SelectedProbeHat_eBE, Converter={StaticResource BooleanToVisibilityConverter1}}">
                         <Label Content="eBE:" FontWeight="Bold" />

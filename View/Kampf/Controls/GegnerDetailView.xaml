@@ -161,7 +161,14 @@
                                 </DockPanel>
                                 <ViewGeneral:IntBox Grid.Row="1" Grid.Column="3" MinWidth="80" HorizontalAlignment="Left" Value="{Binding SelectedGegnerBase.KE}" Margin="2" ShowButtons="True" />
                                 <Label   Grid.Row="0" Grid.Column="4" Content="Literatur:" />
-                                <TextBox Grid.Row="0" Grid.Column="5" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Literatur, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="300" />
+                                <Grid Grid.Row="0" Grid.Column="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" TextWrapping="Wrap" Text="{Binding SelectedGegnerBase.Literatur, UpdateSourceTrigger=PropertyChanged}" Margin="2" MaxLength="300" />
+                                    <ViewGeneral:LiteraturControl Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Height="30" Padding="2,0,2,0" Literaturangabe="{Binding SelectedGegnerBase.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                </Grid>
                             </Grid>
                             <Grid Margin="5,0,5,5" Grid.Row="2">
                                 <Grid.ColumnDefinitions>

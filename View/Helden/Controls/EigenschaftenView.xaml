@@ -218,8 +218,9 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel>
-                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" HorizontalAlignment="Left" />
-                                    <TextBlock DockPanel.Dock="Right" Text="{Binding Auswirkung}" HorizontalAlignment="Right" Margin="4,0,4,0" FontStyle="Italic" Foreground="#FF6C6C6C" />
+                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                    <ViewGeneral:LiteraturControl DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right" Height="20" Padding="2,0,2,0" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                    <TextBlock DockPanel.Dock="Right" Text="{Binding Auswirkung}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="4,0,4,0" FontStyle="Italic" Foreground="#FF6C6C6C" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

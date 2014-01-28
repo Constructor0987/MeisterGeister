@@ -38,7 +38,11 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
                                 <TextBlock Text="Zauberzeichen:" />
-                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding ZauberzeichenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedZauberzeichen}" ToolTip="Bei gewähltem Helden, werden nur die Zauberzeichen angezeigt, die der Held als Sonderfertigkeit besitzt." />
+                                <DockPanel>
+                                    <ViewGeneral:LiteraturControl DockPanel.Dock="Right" VerticalAlignment="Center" Height="23" Padding="2,0,2,0" Literaturangabe="{Binding SelectedZauberzeichen.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                    <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding ZauberzeichenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedZauberzeichen}" ToolTip="Bei gewähltem Helden, werden nur die Zauberzeichen angezeigt, die der Held als Sonderfertigkeit besitzt." />
+                                </DockPanel>
+                                
                                 <TextBlock Text="Größe Zeichenträger:" />
                                 <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding GrößenZeichenträgerListeZauberzeichen}"  SelectedItem="{Binding SelectedGrößeZeichenträgerZauberzeichen}" />
                                 <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenZauberzeichen}" IsEnabled="{Binding IsEnabledSpontanzeichenZauberzeichen}"/>
@@ -246,7 +250,10 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
                                 <TextBlock Text="Kreise:" />
-                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding KreiseListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedKreis}" ToolTip="Bei gewähltem Helden, werden nur die Kreise angezeigt, die der Held als Sonderfertigkeit besitzt." />
+                                <DockPanel>
+                                    <ViewGeneral:LiteraturControl DockPanel.Dock="Right" VerticalAlignment="Center" Height="23" Padding="2,0,2,0" Literaturangabe="{Binding SelectedKreis.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                    <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding KreiseListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedKreis}" ToolTip="Bei gewähltem Helden, werden nur die Kreise angezeigt, die der Held als Sonderfertigkeit besitzt." />
+                                </DockPanel>
                                 <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenKreise}" IsEnabled="{Binding IsEnabledSpontanzeichenKreise}"/>
                             </StackPanel>
                         </Border>
@@ -457,7 +464,10 @@
                         <Border Style="{DynamicResource ControlContentBorder}">
                             <StackPanel Margin="4" Orientation="Vertical" VerticalAlignment="Top" Width="250">
                                 <TextBlock Text="Runen:" />
-                                <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding RunenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRune}" ToolTip="Bei gewähltem Helden, werden nur die Runen angezeigt, die der Held als Sonderfertigkeit besitzt." />
+                                <DockPanel>
+                                    <ViewGeneral:LiteraturControl DockPanel.Dock="Right" VerticalAlignment="Center" Height="23" Padding="2,0,2,0" Literaturangabe="{Binding SelectedRune.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                    <ComboBox Margin="0,0,5,0" Height="23" ItemsSource="{Binding RunenListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRune}" ToolTip="Bei gewähltem Helden, werden nur die Runen angezeigt, die der Held als Sonderfertigkeit besitzt." />
+                                </DockPanel>
                                 <CheckBox Margin="0,0,5,0" Content="Spontanzeichen" IsChecked="{Binding CheckedSpontanzeichenRunen}" IsEnabled="{Binding IsEnabledSpontanzeichenRunen}"/>
                             </StackPanel>
                         </Border>
