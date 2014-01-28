@@ -1,0 +1,22 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MeisterGeister.View.General" x:Class="MeisterGeister.View.General.LiteraturControl" 
+             x:Name="LiteraturControl1"
+             mc:Ignorable="d" 
+             d:DesignHeight="48" d:DesignWidth="48" Cursor="Hand" MouseDown="LiteraturControl_MouseDown">
+    <UserControl.Resources>
+        <local:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter1"/>
+    </UserControl.Resources>
+    <UserControl.Visibility>
+        <Binding Converter="{StaticResource StringEmptyToVisibilityConverter1}" ElementName="LiteraturControl1" Path="Literaturangabe"/>
+    </UserControl.Visibility>
+    <UserControl.ContextMenu>
+        <ContextMenu Name="_contextMenu" />
+    </UserControl.ContextMenu>
+    <Grid>
+        <Image Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
+    </Grid>
+</UserControl>

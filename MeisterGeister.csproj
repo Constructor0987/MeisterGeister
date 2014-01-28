@@ -634,6 +634,9 @@
       <DependentUpon>ImageDuplicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\General\InverseBooleanConverter.cs" />
+    <Compile Include="View\General\LiteraturControl.xaml.cs">
+      <DependentUpon>LiteraturControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\General\SolidBrushToColorConverter.cs" />
     <Compile Include="View\General\LoadCachedImageConverter.cs" />
     <Compile Include="View\General\ModInfoBox.xaml.cs">
@@ -642,6 +645,7 @@
     <Compile Include="View\General\SelectImageDialog.xaml.cs">
       <DependentUpon>SelectImageDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\General\StringEmptyToVisibilityConverter.cs" />
     <Compile Include="View\General\TextBoxModInfo.xaml.cs">
       <DependentUpon>TextBoxModInfo.xaml</DependentUpon>
     </Compile>
@@ -993,6 +997,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\General\ImageDuplicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\General\LiteraturControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

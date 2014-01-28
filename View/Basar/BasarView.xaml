@@ -33,6 +33,7 @@
                         <TextBlock Margin="2,2,5,2" Width="Auto" FontWeight="Bold" MinWidth="80" Text="{Binding Path=Preis}" TextAlignment="Left" ToolTip="Preis in Silbertaler" VerticalAlignment="Center" />
                         <TextBlock Margin="2,2,5,2" Width="Auto" FontWeight="Bold" MinWidth="80" Text="{Binding Path=ME_Text}" TextAlignment="Left" ToolTip="Preis in Silbertaler" VerticalAlignment="Center" />
                         <TextBlock Margin="5,2,5,2" MinWidth="140" FontWeight="Bold" Text="{Binding Path=PreisGesamt, StringFormat=Gesamt: \{0\}, IsAsync=True}" TextAlignment="Left" ToolTip="Gesamtpreis in Silbertaler" VerticalAlignment="Center" />
+                        <!--ToDo: Button zum Einfügen ins Inventar -->
                         <Button Width="23" Height="23" ToolTip="Ins Inventar des Helden übertragen." Command="{Binding OnInventarAdd}" Visibility="Collapsed">
                             <Image Source="/Images/Icons/ueberanstrengung.png" />
                          </Button>
@@ -40,6 +41,7 @@
                     <StackPanel Margin="20,2,0,0" Orientation="Horizontal">
                         <TextBlock Margin="2,2,0,0" Width="Auto" FontSize="11" FontStyle="Italic" MinWidth="230" Text="{Binding Path=Gewicht, StringFormat='{}Gewicht: {0} Unzen'}" ToolTip="Gewicht" VerticalAlignment="Center" />
                         <TextBlock Margin="2,2,0,0" Width="250" FontSize="11" FontStyle="Italic" Text="{Binding Path=Tags, StringFormat='{}{0}'}" TextWrapping="WrapWithOverflow" ToolTip="Stichworte" VerticalAlignment="Center" />
+                        <ViewGeneral:LiteraturControl Height="32" Padding="2" Literaturangabe="{Binding Literatur}" />
                         <TextBlock Margin="2,2,0,0" Width="Auto" FontSize="11" FontStyle="Italic" MinWidth="330" Text="{Binding Path=LiteraturLang, StringFormat='{}{0}'}" ToolTip="Literatur" VerticalAlignment="Center" />
                     </StackPanel>
                     <Border Style="{StaticResource BemerkungStyle}" Height="Auto" Margin="20,2,0,0" Width="700" CornerRadius="3" HorizontalAlignment="Left" ToolTip="Bemerkung">
