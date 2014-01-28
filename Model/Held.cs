@@ -2015,7 +2015,16 @@ namespace MeisterGeister.Model
 
         public IList<IWaffe> Angriffswaffen
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                //TODO: Cache?
+                //alle Waffen
+                List<IWaffe> waffen = new List<IWaffe>();
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
+                //TODO: Raufen, Ringen
+                return waffen;
+            }
         }
 
         private System.Windows.Media.Color _farbmarkierung = System.Windows.Media.Color.FromArgb(0,0,0,0);

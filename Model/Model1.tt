@@ -77,7 +77,9 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
 <#
 	region.End();
 
-	region.Begin("Set");
+	if(!exceptionsForINotifyPropertyChanged.Contains(entity.Name))
+	{
+		region.Begin("Set");
 #>
 	/// <summary>
     /// Checks if a property already matches a desired value.  Sets the property and
@@ -101,7 +103,8 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(ItemCollection)
         return true;
     }
 <#	
-	region.End();
+		region.End();
+	}
 
     region.Begin("Primitive Properties");
 

@@ -488,6 +488,7 @@
     <Compile Include="ViewModel\Kampf\Logic\InitiativListe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\IHasWunden.cs" />
     <Compile Include="ViewModel\Kampf\Logic\KämpferInfo.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\KämpferWaffe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\ManöverInfo.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Attacke.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Manöver\Angriffsaktion.cs" />
