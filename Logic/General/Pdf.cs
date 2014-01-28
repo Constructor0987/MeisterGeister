@@ -96,7 +96,14 @@ namespace MeisterGeister.Logic.General
             ProcessStartInfo pi = new ProcessStartInfo(OpenCommand, String.Format(OpenArguments, fileName, page));
             p.StartInfo = pi;
             pi.UseShellExecute = true;
-            p.Start();
+            try
+            {
+                p.Start();
+            }
+            catch (System.ComponentModel.Win32Exception ex)
+            {
+                throw new System.ComponentModel.Win32Exception("Der PDF Reader konnte nicht gefunden werden.", ex);
+            }
             return p;
         }
 

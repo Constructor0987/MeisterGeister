@@ -168,6 +168,30 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
+        public List<string> PDFReaders
+        {
+            get 
+            { 
+                return Logic.General.Pdf.readers.Keys.ToList<string>(); 
+            }
+        }
+
+        private string _selectedPDFReader;
+        public string SelectedPDFReader
+        {
+            get
+            {
+                return _selectedPDFReader;
+            }
+            set
+            {
+                _selectedPDFReader = value;
+                Logic.Einstellung.Einstellungen.PdfReaderCommand = Logic.General.Pdf.readers[value][0];
+                Logic.Einstellung.Einstellungen.PdfReaderArguments = Logic.General.Pdf.readers[value][1];
+                Logic.General.Pdf.SetReader(value);
+            }
+        }
+
         private List<Model.Setting> settingListe;
         [DependentProperty("EinstellungListe")]
         public List<Model.Setting> SettingListe

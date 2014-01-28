@@ -285,6 +285,10 @@
                                     <TextBlock Text="Hier werden die PDF-Funktionen von MeisterGeister konfiguriert." Margin="4" FontStyle="Italic" />
                                     <Image Height="45" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
                                 </DockPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="PDF-Reader aus Liste auswählen oder unten selbst definieren." Margin="4" />
+                                    <ComboBox Width="150" Margin="10,0" ItemsSource="{Binding PDFReaders}" SelectedItem="{Binding SelectedPDFReader}" />
+                                </StackPanel>
                                 <ListBox Background="{x:Null}" ItemsSource="{Binding AlmanachListe}">
                                     <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">

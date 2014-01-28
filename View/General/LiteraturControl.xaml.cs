@@ -92,11 +92,29 @@ namespace MeisterGeister.View.General
                     // Sollten bei einer Literaturangabe mehrere Seiten angegeben sein, muss der User eine auswählen.
                     try
                     {
+                        Model.Literatur li = Model.Literatur.GetByAbkürzung(literaturangabe.Kürzel);
+                        if (string.IsNullOrEmpty(li.Pfad))
+                        {
+                            if (ViewHelper.ConfirmYesNoCancel("Kein PDF hinterlegt",
+                                string.Format("Zu '{0}' wurde noch kein PDF hinterlegt. Soll nun ein PDF ausgewählt werden, um die Literaturangabe aufrufen zu können?", li.Name)) == 2)
+                            {
+                                string file = ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", li.Name), string.Format("{0}.pdf", li.Name), false, "pdf");
+                                if (string.IsNullOrEmpty(file))
+                                    return;
+                                li.Pfad = file;
+                            }
+                            else
+                                return;
+                        }
                         Logic.General.Pdf.OpenReader(literaturangabe, literaturangabe.Seiten.FirstOrDefault());
                     }
                     catch (Logic.Literatur.LiteraturPfadMissingException ex)
                     {
                         MessageBox.Show(ex.Message + "\nIn den Einstellungen können die Pfade zu den Dateien eingegeben werden.");
+                    }
+                    catch (System.ComponentModel.Win32Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\nIn den Einstellungen kann ein anderer PDF Reader eingestellt werden.");
                     }
                 }
             }
