@@ -92,8 +92,7 @@ namespace MeisterGeister.View.General
                     // Sollten bei einer Literaturangabe mehrere Seiten angegeben sein, muss der User eine auswählen.
 
                     Model.Literatur li = Model.Literatur.GetByAbkürzung(literaturangabe.Kürzel);
-                    if (li != null && li.Pfad != null)
-                        Logic.General.Pdf.OpenFileInReader(li.Pfad, literaturangabe.Seiten.FirstOrDefault().Seite);
+                    Logic.General.Pdf.OpenReader(literaturangabe, literaturangabe.Seiten.FirstOrDefault());
                 }
             }
         }

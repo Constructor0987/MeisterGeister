@@ -65,9 +65,9 @@ namespace MeisterGeister.Logic.General
         public static Process OpenReader(Literatur.Literaturangabe literaturangabe, Literatur.Seitenangabe seitenangabe)
         {
             if (literaturangabe == null)
-                throw new ArgumentNullException("literaturangabe");
+                throw new ArgumentNullException("Die Literaturangabe fehlt.");
             if (seitenangabe == null)
-                throw new ArgumentNullException("seitenangabe");
+                throw new ArgumentNullException("Die Seitenangabe fehlt.");
             return OpenReader(literaturangabe.Kürzel, seitenangabe.Seite, seitenangabe.IsErrata);
         }
 
@@ -77,6 +77,7 @@ namespace MeisterGeister.Logic.General
             if (l == null || String.IsNullOrWhiteSpace(l.Pfad))
                 throw new Literatur.LiteraturPfadMissingException(literaturKürzel, l);
             string fileName = l.Pfad;
+            page += l.Seitenoffset;
             return OpenFileInReader(fileName, page);
         }
 
