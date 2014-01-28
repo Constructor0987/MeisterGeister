@@ -86,9 +86,8 @@ namespace MeisterGeister.View.General
                 {
                     Logic.Literatur.Literaturangabe literaturangabe = (Logic.Literatur.Literaturangabe)liObject;
 
-                    // TODO (markus): PDF öffnen
-                    // Auf Basis der Literaturangabe muss das passende PDF mit Dateipfad gesucht werden.
-                    // Ist kein PDF hinterlegt, sollte ein FileOpen-Dialog erscheinen oder ein Link zum Ulisses-PDF-Shop angezeigt werden.
+                    // TODO (markus): PDF öffnen - offene Punkte...
+                    // Ist kein PDF hinterlegt, sollte ein Link zum Ulisses-PDF-Shop angezeigt werden.
                     // Sollten bei einer Literaturangabe mehrere Seiten angegeben sein, muss der User eine auswählen.
                     try
                     {

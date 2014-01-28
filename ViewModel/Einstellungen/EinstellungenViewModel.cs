@@ -204,12 +204,10 @@ namespace MeisterGeister.ViewModel.Settings
             }
         }
 
-        public List<Model.Literatur> LiteraturListe
+        public List<LiteraturItem> LiteraturListe
         {
-            get
-            {
-                return Global.ContextHeld.Liste<Model.Literatur>().OrderBy(h => h.Name).ToList();
-            }
+            get;
+            set;
         }
         #endregion
 
@@ -227,10 +225,79 @@ namespace MeisterGeister.ViewModel.Settings
             {
                 EinstellungListe = Global.ContextHeld.Liste<Model.Einstellung>().Where(e => e.Kategorie != "Versteckt").OrderBy(h => h.Name).Select(e => EinstellungItem.GetTypedEinstellungItem(e)).ToList();
                 settingListe = Global.ContextHeld.Liste<Model.Setting>().ToList();
+                LiteraturListe = Global.ContextHeld.Liste<Model.Literatur>().OrderBy(h => h.Name).Select(e => new LiteraturItem(e)).ToList();
             }
         }
         #endregion
     }
+
+    #region LiteraturItem
+
+    public class LiteraturItem : INotifyPropertyChanged
+    {
+        protected Model.Literatur _literatur = null;
+        public LiteraturItem(Model.Literatur l)
+        {
+            _literatur = l;
+            _literatur.PropertyChanged += Literatur_PropertyChanged;
+
+            onOpenFileDialog = new Base.CommandBase(OpenFileDialog, null);
+        }
+
+        private void OpenFileDialog(object obj)
+        {
+            string file = View.General.ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", Name), string.Format("{0}.pdf", Name), false, "pdf");
+            if (string.IsNullOrEmpty(file))
+                return;
+            Pfad = file;
+        }
+
+        public String Abkürzung
+        {
+            get { return _literatur.Abkürzung; }
+            set { _literatur.Abkürzung = value; }
+        }
+
+        public String Name
+        {
+            get { return _literatur.Name; }
+            set { _literatur.Name = value; }
+        }
+
+        public String Pfad
+        {
+            get { return _literatur.Pfad; }
+            set { _literatur.Pfad = value; }
+        }
+
+        public int Seitenoffset
+        {
+            get { return _literatur.Seitenoffset; }
+            set { _literatur.Seitenoffset = value; }
+        }
+
+        private void Literatur_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnChanged(e.PropertyName);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private Base.CommandBase onOpenFileDialog;
+        public Base.CommandBase OnOpenFileDialog
+        {
+            get { return onOpenFileDialog; }
+        }
+    }
+
+    #endregion
 
     #region EinstellungItem
     //Falls typsensitive Hilfsklassen gebraucht werden.
