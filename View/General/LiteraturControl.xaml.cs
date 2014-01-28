@@ -79,7 +79,6 @@ namespace MeisterGeister.View.General
 
         void menuItem_Click(object sender, RoutedEventArgs e)
         {
-            // TODO (markus): PDF öffnen
             if (sender is MenuItem)
             {
                 object liObject = ((MenuItem)sender).Tag;
@@ -87,12 +86,14 @@ namespace MeisterGeister.View.General
                 {
                     Logic.Literatur.Literaturangabe literaturangabe = (Logic.Literatur.Literaturangabe)liObject;
 
+                    // TODO (markus): PDF öffnen
                     // Auf Basis der Literaturangabe muss das passende PDF mit Dateipfad gesucht werden.
                     // Ist kein PDF hinterlegt, sollte ein FileOpen-Dialog erscheinen oder ein Link zum Ulisses-PDF-Shop angezeigt werden.
                     // Sollten bei einer Literaturangabe mehrere Seiten angegeben sein, muss der User eine auswählen.
 
-                    MessageBox.Show("Jetzt müsste ein PDF geöffnet werden...");
-                    Logic.General.Pdf.OpenFileInReader("PFAD", literaturangabe.Seiten.FirstOrDefault().Seite);
+                    Model.Literatur li = Model.Literatur.GetByAbkürzung(literaturangabe.Kürzel);
+                    if (li != null && li.Pfad != null)
+                        Logic.General.Pdf.OpenFileInReader(li.Pfad, literaturangabe.Seiten.FirstOrDefault().Seite);
                 }
             }
         }

@@ -179,6 +179,14 @@ namespace MeisterGeister.ViewModel.Settings
                 return settingListe;
             }
         }
+
+        public List<Model.Literatur> LiteraturListe
+        {
+            get
+            {
+                return Global.ContextHeld.Liste<Model.Literatur>().OrderBy(h => h.Name).ToList();
+            }
+        }
         #endregion
 
         #region Constructor
