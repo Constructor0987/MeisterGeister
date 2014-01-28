@@ -15,6 +15,14 @@ using System.Windows.Shapes;
 
 namespace MeisterGeister.View.General
 {
+    public enum LiteraturAnzeigeArt
+    {
+        NurIcon,
+        TextLang,
+        TextKurz
+    }
+
+
     /// <summary>
     /// Interaktionslogik für LiteraturControl.xaml
     /// </summary>
@@ -32,6 +40,19 @@ namespace MeisterGeister.View.General
         }
         public static readonly DependencyProperty LiteraturangabeProperty = DependencyProperty.Register(
           "Literaturangabe", typeof(string), typeof(LiteraturControl));
+
+        public LiteraturAnzeigeArt LiteraturAnzeigeArt
+        {
+            get { return (LiteraturAnzeigeArt)GetValue(LiteraturAnzeigeArtProperty); }
+            set { SetValue(LiteraturAnzeigeArtProperty, value); }
+        }
+        public static readonly DependencyProperty LiteraturAnzeigeArtProperty = DependencyProperty.Register(
+          "LiteraturAnzeigeArt", typeof(LiteraturAnzeigeArt), typeof(LiteraturControl), new UIPropertyMetadata(LiteraturAnzeigeArt.TextKurz));
+
+        public string LiteraturangabeLang
+        {
+            get { return Model.Literatur.ReplaceAbkürzungen(Literaturangabe); }
+        }
 
         private void LiteraturControl_MouseDown(object sender, MouseButtonEventArgs e)
         {

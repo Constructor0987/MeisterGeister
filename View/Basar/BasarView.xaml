@@ -41,8 +41,7 @@
                     <StackPanel Margin="20,2,0,0" Orientation="Horizontal">
                         <TextBlock Margin="2,2,0,0" Width="Auto" FontSize="11" FontStyle="Italic" MinWidth="230" Text="{Binding Path=Gewicht, StringFormat='{}Gewicht: {0} Unzen'}" ToolTip="Gewicht" VerticalAlignment="Center" />
                         <TextBlock Margin="2,2,0,0" Width="250" FontSize="11" FontStyle="Italic" Text="{Binding Path=Tags, StringFormat='{}{0}'}" TextWrapping="WrapWithOverflow" ToolTip="Stichworte" VerticalAlignment="Center" />
-                        <ViewGeneral:LiteraturControl Height="32" Padding="2" Literaturangabe="{Binding Literatur}" />
-                        <TextBlock Margin="2,2,0,0" Width="Auto" FontSize="11" FontStyle="Italic" MinWidth="330" Text="{Binding Path=LiteraturLang, StringFormat='{}{0}'}" ToolTip="Literatur" VerticalAlignment="Center" />
+                        <ViewGeneral:LiteraturControl Height="32" Padding="2" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="TextLang" />
                     </StackPanel>
                     <Border Style="{StaticResource BemerkungStyle}" Height="Auto" Margin="20,2,0,0" Width="700" CornerRadius="3" HorizontalAlignment="Left" ToolTip="Bemerkung">
                         <Border.Background>

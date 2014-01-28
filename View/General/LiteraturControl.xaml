@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MeisterGeister.View.General" x:Class="MeisterGeister.View.General.LiteraturControl" 
              x:Name="LiteraturControl1"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" ToolTip="Literaturangaben"
              d:DesignHeight="48" d:DesignWidth="48" Cursor="Hand" MouseDown="LiteraturControl_MouseDown">
     <UserControl.Resources>
         <local:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter1"/>
@@ -16,7 +16,26 @@
     <UserControl.ContextMenu>
         <ContextMenu Name="_contextMenu" />
     </UserControl.ContextMenu>
-    <Grid>
+    <StackPanel Orientation="Horizontal">
         <Image Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
-    </Grid>
+        <TextBlock FontSize="11" FontStyle="Italic" VerticalAlignment="Center">
+            <TextBlock.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding LiteraturAnzeigeArt, ElementName=LiteraturControl1}" Value="NurIcon">
+                            <Setter Property="TextBlock.Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LiteraturAnzeigeArt, ElementName=LiteraturControl1}" Value="TextLang">
+                            <Setter Property="TextBlock.Visibility" Value="Visible" />
+                            <Setter Property="TextBlock.Text" Value="{Binding LiteraturangabeLang, ElementName=LiteraturControl1}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LiteraturAnzeigeArt, ElementName=LiteraturControl1}" Value="TextKurz">
+                            <Setter Property="TextBlock.Visibility" Value="Visible" />
+                            <Setter Property="TextBlock.Text" Value="{Binding Literaturangabe, ElementName=LiteraturControl1}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </StackPanel>
 </UserControl>
