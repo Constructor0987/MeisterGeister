@@ -58,25 +58,20 @@ namespace MeisterGeister.View.General
         {
             List<Logic.Literatur.Literaturangabe> literaurList = Model.Literatur.Parse(Literaturangabe);
 
-            _contextMenu.Items.Clear();
-
-            foreach (var item in literaurList)
-            {
-                MenuItem menuItem = new MenuItem();
-                menuItem.Tag = item;
-                menuItem.Header = new TextBlock() { Text = item.ToString(), VerticalAlignment = System.Windows.VerticalAlignment.Center };
-                menuItem.Click += menuItem_Click;
-                _contextMenu.Items.Add(menuItem);
-            }
+            _selectedSeitenangabe = null;
+            _selectedLiteraturangabe = null;
+            _contextMenu.ItemsSource = literaurList;
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 e.Handled = true;
 
-                // bei nur einer Literaturangabe diese sofort öffnen, ohne ContextMenu einzublenden
-                if (literaurList.Count == 1)
+                // bei nur einer eindeutigen Literaturangabe diese sofort öffnen, ohne ContextMenu einzublenden
+                if (literaurList.Count == 1 && literaurList[0].Seiten.Count == 1)
                 {
-                    OpenPdf(literaurList[0]);
+                    _selectedLiteraturangabe = literaurList[0];
+                    _selectedSeitenangabe = literaurList[0].Seiten.FirstOrDefault();
+                    OpenPdf();
                 }
                 else
                 {
@@ -86,14 +81,17 @@ namespace MeisterGeister.View.General
             }
         }
 
-        private void OpenPdf(Logic.Literatur.Literaturangabe literaturangabe)
+        private void OpenPdf()
         {
             // TODO (markus): PDF öffnen - offene Punkte...
             // Ist kein PDF hinterlegt, sollte ein Link zum Ulisses-PDF-Shop angezeigt werden.
-            // Sollten bei einer Literaturangabe mehrere Seiten angegeben sein, muss der User eine auswählen.
+            // Errata...
             try
             {
-                Model.Literatur li = Model.Literatur.GetByAbkürzung(literaturangabe.Kürzel);
+                if (_selectedLiteraturangabe == null)
+                    return;
+
+                Model.Literatur li = Model.Literatur.GetByAbkürzung(_selectedLiteraturangabe.Kürzel);
                 if (string.IsNullOrEmpty(li.Pfad))
                 {
                     if (ViewHelper.ConfirmYesNoCancel("Kein PDF hinterlegt",
@@ -107,7 +105,10 @@ namespace MeisterGeister.View.General
                     else
                         return;
                 }
-                Logic.General.Pdf.OpenReader(literaturangabe, literaturangabe.Seiten.FirstOrDefault());
+                if (_selectedSeitenangabe == null)
+                    Logic.General.Pdf.OpenReader(_selectedLiteraturangabe, _selectedLiteraturangabe.Seiten.FirstOrDefault());
+                else
+                    Logic.General.Pdf.OpenReader(_selectedLiteraturangabe, _selectedSeitenangabe);
             }
             catch (Logic.Literatur.LiteraturPfadMissingException ex)
             {
@@ -119,15 +120,39 @@ namespace MeisterGeister.View.General
             }
         }
 
-        void menuItem_Click(object sender, RoutedEventArgs e)
+        void MenuItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is MenuItem)
+            if (sender is StackPanel)
             {
-                object liObject = ((MenuItem)sender).Tag;
+                object liObject = ((StackPanel)sender).Tag;
                 if (liObject != null && liObject is Logic.Literatur.Literaturangabe)
                 {
                     Logic.Literatur.Literaturangabe literaturangabe = (Logic.Literatur.Literaturangabe)liObject;
-                    OpenPdf(literaturangabe);
+                    _selectedLiteraturangabe = literaturangabe;
+
+                    if (literaturangabe.Seiten.Count == 1)
+                    {
+                        OpenPdf();
+                        e.Handled = true;
+                    } // bei mehreren Seiten bubbelt das Event weiter zum Seiten-Button
+                }
+            }
+        }
+
+        private Logic.Literatur.Literaturangabe _selectedLiteraturangabe;
+        private Logic.Literatur.Seitenangabe _selectedSeitenangabe;
+
+        private void Button_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Button)
+            {
+                object liObject = ((Button)sender).Tag;
+                if (liObject != null && liObject is Logic.Literatur.Seitenangabe)
+                {
+                    Logic.Literatur.Seitenangabe seitenangabe = (Logic.Literatur.Seitenangabe)liObject;
+                    _selectedSeitenangabe = seitenangabe;
+
+                    OpenPdf();
                 }
             }
         }

@@ -14,7 +14,27 @@
         <Binding Converter="{StaticResource StringEmptyToVisibilityConverter1}" ElementName="LiteraturControl1" Path="Literaturangabe"/>
     </UserControl.Visibility>
     <UserControl.ContextMenu>
-        <ContextMenu Name="_contextMenu" />
+        <ContextMenu Name="_contextMenu">
+            <ContextMenu.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" PreviewMouseDown="MenuItem_PreviewMouseDown" Tag="{Binding}">
+                        <TextBlock Margin="4,0,0,0" Text="{Binding Kürzel}" VerticalAlignment="Center" />
+                        <ListBox Margin="10,0,0,0" VerticalAlignment="Center" ItemsSource="{Binding Seiten}" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Width="25" Height="14" Content="{Binding Seite}" PreviewMouseDown="Button_PreviewMouseDown"  Tag="{Binding}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </DataTemplate>
+            </ContextMenu.ItemTemplate>
+        </ContextMenu>
     </UserControl.ContextMenu>
     <StackPanel Orientation="Horizontal">
         <Image Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
