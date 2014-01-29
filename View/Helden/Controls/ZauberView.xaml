@@ -114,27 +114,39 @@
                              Name="_listBoxHeldZauber" PreviewMouseWheel="DataGrid_PreviewMouseWheel" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VirtualizingStackPanel.IsVirtualizing="True">
                             <ListBox.ContextMenu>
                                 <ContextMenu Opened="ContextMenuZauber_Opened">
-                                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemZauberWiki">
+                                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" x:Name="_menuItemZauberWiki">
                                         <MenuItem.Icon>
                                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                                         </MenuItem.Icon>
+                                        <MenuItem.Header>
+                                            <TextBlock VerticalAlignment="Center" Text="In Wiki-Aventurica anzeigen" />
+                                        </MenuItem.Header>
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem Height="28" Command="{Binding OnWürfelProbe}" Header="Probe würfeln" x:Name="_menuItemZauberProbe">
+                                    <MenuItem Height="28" Command="{Binding OnWürfelProbe}" x:Name="_menuItemZauberProbe">
                                         <MenuItem.Icon>
                                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                                         </MenuItem.Icon>
+                                        <MenuItem.Header>
+                                            <TextBlock VerticalAlignment="Center" Text="Probe würfeln" />
+                                        </MenuItem.Header>
                                     </MenuItem>
-                                    <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}" Header="Gruppenprobe würfeln" x:Name="_menuItemZauberGruppenProbe">
+                                    <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}" x:Name="_menuItemZauberGruppenProbe">
                                         <MenuItem.Icon>
                                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                                         </MenuItem.Icon>
+                                        <MenuItem.Header>
+                                            <TextBlock VerticalAlignment="Center" Text="Gruppenprobe würfeln" />
+                                        </MenuItem.Header>
                                     </MenuItem>
                                     <Separator />
-                                    <MenuItem Height="28" Command="{Binding OnDeleteZauber}" Header="Löschen" x:Name="_menuItemZauberLöschen"  IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                                    <MenuItem Height="28" Command="{Binding OnDeleteZauber}" x:Name="_menuItemZauberLöschen"  IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                                         <MenuItem.Icon>
                                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                                         </MenuItem.Icon>
+                                        <MenuItem.Header>
+                                            <TextBlock VerticalAlignment="Center" Text="Löschen" />
+                                        </MenuItem.Header>
                                     </MenuItem>
                                 </ContextMenu>
                             </ListBox.ContextMenu>

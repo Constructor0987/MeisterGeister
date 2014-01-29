@@ -344,27 +344,39 @@
                 <Grid>
                     <Grid.ContextMenu>
                         <ContextMenu Opened="ContextMenuTalent_Opened">
-                            <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen">
+                            <MenuItem Height="28" Command="{Binding OnOpenWiki}">
                                 <MenuItem.Icon>
                                     <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                                 </MenuItem.Icon>
+                                <MenuItem.Header>
+                                    <TextBlock VerticalAlignment="Center" Text="In Wiki-Aventurica anzeigen" />
+                                </MenuItem.Header>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Height="28" Command="{Binding OnWürfelProbe}" Header="Probe würfeln">
+                            <MenuItem Height="28" Command="{Binding OnWürfelProbe}">
                                 <MenuItem.Icon>
                                     <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                                 </MenuItem.Icon>
+                                <MenuItem.Header>
+                                    <TextBlock VerticalAlignment="Center" Text="Probe würfeln" />
+                                </MenuItem.Header>
                             </MenuItem>
-                            <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}" Header="Gruppenprobe würfeln">
+                            <MenuItem Height="28" Command="{Binding OnWürfelGruppenProbe}">
                                 <MenuItem.Icon>
                                     <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" Stretch="Fill" />
                                 </MenuItem.Icon>
+                                <MenuItem.Header>
+                                    <TextBlock VerticalAlignment="Center" Text="Gruppenprobe würfeln" />
+                                </MenuItem.Header>
                             </MenuItem>
                             <Separator />
-                            <MenuItem Height="28" Command="{Binding OnRemove}" Header="Löschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"> 
+                            <MenuItem Height="28" Command="{Binding OnRemove}" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"> 
                                 <MenuItem.Icon>
                                     <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                                 </MenuItem.Icon>
+                                <MenuItem.Header>
+                                    <TextBlock VerticalAlignment="Center" Text="Löschen" />
+                                </MenuItem.Header>
                             </MenuItem>
                         </ContextMenu>
                     </Grid.ContextMenu>

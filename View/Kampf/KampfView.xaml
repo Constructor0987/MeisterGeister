@@ -352,9 +352,9 @@
                                     <ContextMenu.Items>
                                         <MenuItem Name="_menuItemKämpferFarbmarkierung" Height="28" ToolTip="Unter 'Advanced' -> 'A' kann die Transparenz eingestellt werden!">
                                             <MenuItem.Header>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="Farbe: " />
-                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker">
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="Farbe: " VerticalAlignment="Center" />
+                                                    <xctk:ColorPicker SelectedColor="{Binding SelectedKämpferInfo.Kämpfer.Farbmarkierung}" ShowRecentColors="True" UsingAlphaChannel="True" ShowAvailableColors="False" DisplayColorAndName="True" StandardColorsHeader="" RecentColorsHeader="Letze Farben" RecentColors="{Binding RecentColors}" Name="colorPicker" VerticalAlignment="Center">
                                                         <i:Interaction.Triggers>
                                                             <ViewGeneral:HandlingEventTrigger EventName="Click" />
                                                             <!--Genügt leider nicht um den MouseUp-Event zuu fangen-->
@@ -366,44 +366,65 @@
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Name="_menuItemKämpferAktuell" Height="28" Header="Aktion ausführen" Command="{Binding OnAktionAusführen}">
+                                        <MenuItem Name="_menuItemKämpferAktuell" Height="28" Command="{Binding OnAktionAusführen}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Aktion ausführen" />
+                                            </MenuItem.Header>
                                         </MenuItem>
                                         <Separator />
-                                        <MenuItem Name="_menuItemKämpferInitiaveWürfeln" Height="28" Header="INI neu würfeln..." Command="{Binding OnInitiativeWürfeln}">
+                                        <MenuItem Name="_menuItemKämpferInitiaveWürfeln" Height="28" Command="{Binding OnInitiativeWürfeln}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="INI neu würfeln..." />
+                                            </MenuItem.Header>
                                         </MenuItem>
-                                        <MenuItem Name="_menuItemKämpferOrientieren" Height="28" Header="Orientieren..." Command="{Binding OnOrientieren}">
+                                        <MenuItem Name="_menuItemKämpferOrientieren" Height="28" Command="{Binding OnOrientieren}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w6.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Orientieren" />
+                                            </MenuItem.Header>
                                         </MenuItem>
                                         <Separator />
-                                        <MenuItem Name="_menuItemKämpferEntfernen" Height="28" Header="Kämpfer/Held entfernen" Command="{Binding OnDeleteKämpfer}">
+                                        <MenuItem Name="_menuItemKämpferEntfernen" Height="28" Command="{Binding OnDeleteKämpfer}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/kämpfer_entf.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Kämpfer/Held entfernen" />
+                                            </MenuItem.Header>
                                         </MenuItem>
                                         <Separator />
-                                        <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Header="Helden einfügen" Command="{Binding OnAddHelden}">
+                                        <MenuItem Name="_menuItemHeldenEinfügen" Height="28" Command="{Binding OnAddHelden}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/helden_add.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Helden einfügen" />
+                                            </MenuItem.Header>
                                         </MenuItem>
-                                        <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Header="Gegner einfügen..." Command="{Binding OnShowGegnerView}">
+                                        <MenuItem Name="_menuItemKämpferEinfügen" Height="28" Command="{Binding OnShowGegnerView}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Gegner einfügen..." />
+                                            </MenuItem.Header>
                                         </MenuItem>
                                         <Separator />
-                                        <MenuItem Name="_menuItemListeLeeren" Height="28" Header="Liste leeren" Command="{Binding OnDeleteAllKämpfer}">
+                                        <MenuItem Name="_menuItemListeLeeren" Height="28" Command="{Binding OnDeleteAllKämpfer}">
                                             <MenuItem.Icon>
                                                 <Image Source="/DSA MeisterGeister;component/Images/Icons/clear_kampf.png" Stretch="Fill" Margin="2" />
                                             </MenuItem.Icon>
+                                            <MenuItem.Header>
+                                                <TextBlock VerticalAlignment="Center" Text="Liste leeren" />
+                                            </MenuItem.Header>
                                         </MenuItem>
                                     </ContextMenu.Items>
                                 </ContextMenu>

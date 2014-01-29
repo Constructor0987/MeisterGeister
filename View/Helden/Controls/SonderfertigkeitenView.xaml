@@ -132,16 +132,22 @@
             </ListBox.GroupStyle>
             <ListBox.ContextMenu>
                 <ContextMenu Opened="ContextMenuSonderfertigkeiten_Opened">
-                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" Header="In Wiki-Aventurica anzeigen" x:Name="_menuItemSonderfertigkeitlWiki">
+                    <MenuItem Height="28" Command="{Binding OnOpenWiki}" x:Name="_menuItemSonderfertigkeitlWiki">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Fill" />
                         </MenuItem.Icon>
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center" Text="In Wiki-Aventurica anzeigen" />
+                        </MenuItem.Header>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Command="{Binding OnDeleteSonderfertigkeit}" Header="Löschen" x:Name="_menuItemSonderfertigkeitLöschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
+                    <MenuItem Height="28" Command="{Binding OnDeleteSonderfertigkeit}" x:Name="_menuItemSonderfertigkeitLöschen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">                        
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                         </MenuItem.Icon>
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center" Text="Löschen" />
+                        </MenuItem.Header>
                     </MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>

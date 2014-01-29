@@ -154,16 +154,22 @@
                                         </Button.ToolTip>
                                         <Button.ContextMenu>
                                             <ContextMenu>
-                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavorit, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}" Header="Löschen">
+                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavorit, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}">
                                                     <MenuItem.Icon>
                                                     <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
                                                     </MenuItem.Icon>
-                                                </MenuItem>
-                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavoritAll, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Header="Alle Löschen">
+                                                <MenuItem.Header>
+                                                    <TextBlock VerticalAlignment="Center" Text="Löschen" />
+                                                </MenuItem.Header>
+                                            </MenuItem>
+                                                <MenuItem Height="28" Command="{Binding PlacementTarget.Tag.OnDeleteFavoritAll, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                                                     <MenuItem.Icon>
                                                         <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
                                                     </MenuItem.Icon>
-                                                </MenuItem>
+                                                <MenuItem.Header>
+                                                    <TextBlock VerticalAlignment="Center" Text="Alle Löschen" />
+                                                </MenuItem.Header>
+                                            </MenuItem>
                                             </ContextMenu>
                                         </Button.ContextMenu>
                                         <TextBlock Text="{Binding Probenname}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" />

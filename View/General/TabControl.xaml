@@ -7,22 +7,35 @@
         <StackPanel Orientation="Horizontal"  MouseDown="TabItem_MouseDown">
             <StackPanel.ContextMenu>
                 <ContextMenu Name="_contextMenu">
-                    <MenuItem Height="28" Name="_checkBoxTitelAusblenden" Header="Tool Titel ausblenden" IsCheckable="True" Checked="_checkBoxTitelAusblenden_Checked" Unchecked="_checkBoxTitelAusblenden_Checked" />
+                    <MenuItem Height="28" Name="_checkBoxTitelAusblenden" IsCheckable="True" Checked="_checkBoxTitelAusblenden_Checked" Unchecked="_checkBoxTitelAusblenden_Checked">
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center" Text="Tool Titel ausblenden" />
+                        </MenuItem.Header>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Height="28" Header="Tool schließen" Click="ButtonClose_Click">
+                    <MenuItem Height="28" Click="ButtonClose_Click">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/Images/Icons/General/entf_01.png" />
                         </MenuItem.Icon>
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center" Text="Tool schließen" />
+                        </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Height="28" Header="Andere Tools schließen" Click="ButtonCloseOther_Click">
+                    <MenuItem Height="28" Click="ButtonCloseOther_Click">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/Images/Icons/General/entf_02.png" />
                         </MenuItem.Icon>
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center" Text="Andere Tools schließen" />
+                        </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Height="28" Header="Alle Tools schließen" Click="ButtonCloseAll_Click">
+                    <MenuItem Height="28" Click="ButtonCloseAll_Click">
                         <MenuItem.Icon>
                             <Image Margin="2" Source="/Images/Icons/General/entf_all.png" />
                         </MenuItem.Icon>
+                        <MenuItem.Header>
+                            <TextBlock VerticalAlignment="Center" Text="Alle Tools schließen" />
+                        </MenuItem.Header>
                     </MenuItem>
                 </ContextMenu>
             </StackPanel.ContextMenu>

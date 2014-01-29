@@ -76,47 +76,66 @@
                 </ListBox.InputBindings>
                 <ListBox.ContextMenu>
 					<ContextMenu Opened="ContextMenu_Opened">
-                        <MenuItem Height="28"  Command="{Binding OnNewHeld}" Header="Neu" x:Name="_menuItemHeldNeu" ToolTip="Einen neuen Helden eingeben.">
+                        <MenuItem Height="28"  Command="{Binding OnNewHeld}" x:Name="_menuItemHeldNeu" ToolTip="Einen neuen Helden eingeben.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
 							</MenuItem.Icon>
-						</MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Neu" />
+                            </MenuItem.Header>
+                        </MenuItem>
 						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" x:Name="_menuItemHeldImportDemo" ToolTip="Beipiel-Helden laden.">
+                        <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" x:Name="_menuItemHeldImportDemo" ToolTip="Beipiel-Helden laden.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
 							</MenuItem.Icon>
-						</MenuItem>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Beispiel-Helden laden" />
+                            </MenuItem.Header>
+                        </MenuItem>
                         <Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!" ><!-- IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" ToolTip="Alle Helden löschen!!!" ><!-- IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
                             <MenuItem.Icon>
                                 <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
                             </MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Alle löschen" />
+                            </MenuItem.Header>
                         </MenuItem>
 						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnCloneHeld}" Header="Kopieren" x:Name="_menuItemHeldKopie" ToolTip="Held kopieren.">
+                        <MenuItem Height="28" Command="{Binding OnCloneHeld}" x:Name="_menuItemHeldKopie" ToolTip="Held kopieren.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/helden_kopieren.png" Stretch="Fill" />
 							</MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Kopieren" />
+                            </MenuItem.Header>
 						</MenuItem>
-                        <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren" x:Name="_menuItemHeldImport">
+                        <MenuItem Height="28" Command="{Binding OnImportHeld}" x:Name="_menuItemHeldImport">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
 							</MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Importieren" />
+                            </MenuItem.Header>
 							<MenuItem.ToolTip>
 								<StackPanel Orientation="Vertical">
 									<TextBlock FontWeight="Bold" Text="Held aus Datei importiere" />
 									<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
 									<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
 									<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+                                    <TextBlock Text="- Import von heldenblatt.ch (ab 3.61)" />
                                     <TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
 								</StackPanel>
 							</MenuItem.ToolTip>
 						</MenuItem>
-                        <MenuItem Height="28" Command="{Binding OnExportHeld}" Header="Exportieren" x:Name="_menuItemHeldExport">
+                        <MenuItem Height="28" Command="{Binding OnExportHeld}" x:Name="_menuItemHeldExport">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
 							</MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Exportieren" />
+                            </MenuItem.Header>
 							<MenuItem.ToolTip>
 								<StackPanel Orientation="Vertical">
 									<TextBlock FontWeight="Bold" Text="Held als XML-Datei exportieren" />
@@ -126,10 +145,13 @@
 							</MenuItem.ToolTip>
 						</MenuItem>
 						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteHeld}" Header="Löschen" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen." ><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeld}" x:Name="_menuItemHeldLöschen" ToolTip="Held löschen." ><!--IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}"-->
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
 							</MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Löschen" />
+                            </MenuItem.Header>
 						</MenuItem>
                     </ContextMenu>
 				</ListBox.ContextMenu>				
@@ -137,15 +159,21 @@
 			<Button Grid.Row="2" Height="23" Margin="5,0,0,5" Width="25" Click="ButtonHeldNeu_Click" HorizontalAlignment="Left" x:Name="_buttonHeldNeu" ToolTip="Einen neuen Helden einfügen" VerticalAlignment="Bottom">
 				<Button.ContextMenu>
 					<ContextMenu>
-                        <MenuItem Height="28" Command="{Binding OnNewHeld}" Header="Neu" ToolTip="Einen neuen Helden eingeben.">
+                        <MenuItem Height="28" Command="{Binding OnNewHeld}" ToolTip="Einen neuen Helden eingeben.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/neu.png" Stretch="Fill" />
 							</MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Neu" />
+                            </MenuItem.Header>
 						</MenuItem>
-                        <MenuItem Height="28" Command="{Binding OnImportHeld}" Header="Importieren">
+                        <MenuItem Height="28" Command="{Binding OnImportHeld}">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Fill" />
 							</MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Importieren" />
+                            </MenuItem.Header>
 							<MenuItem.ToolTip>
 								<StackPanel Orientation="Vertical">
 									<TextBlock FontWeight="Bold" Text="Held aus Datei importieren" />
@@ -153,21 +181,28 @@
 									<TextBlock FontStyle="Italic" Text="Mögliche Import-Formate:" />
 									<TextBlock Text="- Import von MeisterGeister-XML (nur Versionen derselben Versionsnummer!)" />
 									<TextBlock Text="- Import von Helden-Software-XML (alle Versionsnummern!)" />
+                                    <TextBlock Text="- Import von heldenblatt.ch (ab 3.61)" />
 									<TextBlock FontStyle="Italic" Text="Dateien können auch per Drag&amp;Drop eingefügt werden (auch mehrere gleichzeitig)." Margin="0,5,0,0" />
 								</StackPanel>
 							</MenuItem.ToolTip>
 						</MenuItem>
 						<Separator />
-                        <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" Header="Beispiel-Helden laden" ToolTip="Beipiel-Helden laden.">
+                        <MenuItem Height="28" Command="{Binding OnImportDemoHelden}" ToolTip="Beipiel-Helden laden.">
 							<MenuItem.Icon>
 								<Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/meistertools_02.png" Stretch="Fill" />
 							</MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Beispiel-Helden laden" />
+                            </MenuItem.Header>
 						</MenuItem>
                         <Separator />
-                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" Header="Alle Löschen" ToolTip="Alle Helden löschen!!!">
+                        <MenuItem Height="28" Command="{Binding OnDeleteHeldAll}" ToolTip="Alle Helden löschen!!!">
                             <MenuItem.Icon>
                                 <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_all.png" Stretch="Fill" />
                             </MenuItem.Icon>
+                            <MenuItem.Header>
+                                <TextBlock VerticalAlignment="Center" Text="Alle Löschen" />
+                            </MenuItem.Header>
                         </MenuItem>
 					</ContextMenu>
 				</Button.ContextMenu>
