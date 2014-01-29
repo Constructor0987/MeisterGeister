@@ -50,6 +50,23 @@ namespace MeisterGeister
         #endregion
 
         #region //EIGENSCHAFTSMETHODEN
+
+        /// <summary>
+        /// Gibt an, ob der INTERN Modus aktiviert ist.
+        /// </summary>
+        public static bool INTERN
+        {
+            get { return Logic.Einstellung.Einstellungen.INTERN; }
+        }
+
+        /// <summary>
+        /// Gibt 'Visible' zurück, wenn interner Modus aktiv, sonst 'Collapsed'.
+        /// </summary>
+        public static System.Windows.Visibility INTERN_Visibility
+        {
+            get { return Global.INTERN ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; }
+        }
+
         public static bool IsInitialized
         {
             get;

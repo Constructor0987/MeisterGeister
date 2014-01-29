@@ -49,5 +49,18 @@ namespace MeisterGeister.View.Windows
         {
             System.Diagnostics.Process.Start("http://www.herokon-online.com/");
         }
+
+        private void ImageFanprojekt_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2 && e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                // toggle INTERN Modus
+                Logic.Einstellung.Einstellungen.INTERN = !Global.INTERN;
+                if (Global.INTERN)
+                    MessageBox.Show("INTERN Modus wurde aktiviert. Bitte neu starten.");
+                else
+                    MessageBox.Show("INTERN Modus wurde deaktiviert. Bitte neu starten.");
+            }
+        }
     }
 }

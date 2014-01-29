@@ -148,9 +148,10 @@ namespace MeisterGeister.View.Windows
         private string GetVersionString()
         {
             string intern = string.Empty;
-#if INTERN
-            intern = "INTERN";
-#endif
+            if (Global.INTERN)
+            {
+                intern = "INTERN";
+            }
 #if TEST
             intern = "TEST";
 #endif

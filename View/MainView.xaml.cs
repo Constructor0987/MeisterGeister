@@ -94,24 +94,17 @@ namespace MeisterGeister.View
             _labelVersion.Content = string.Format("V {0} / {1}", App.GetVersionString(App.GetVersionProgramm()),
                 DatabaseUpdate.DatenbankVersionAktuell);
 
-#if !(DEBUG || INTERN || TEST)
-            _menuItemAbenteuer.Visibility = System.Windows.Visibility.Collapsed;
-            _menuItemAlchimie.Visibility = System.Windows.Visibility.Collapsed;
-            _menuItemBeschwörung.Visibility = System.Windows.Visibility.Collapsed;
-            _menuItemGenerator.Visibility = System.Windows.Visibility.Collapsed;
-            _menuItemReise.Visibility = System.Windows.Visibility.Collapsed;
-#endif
-
 #if TEST
             _labelVersion.Foreground = Brushes.Red;
             _labelVersion.Background = Brushes.LightYellow;
             _labelVersion.Content += " Test";
 #endif
-#if INTERN
-            _labelVersion.Foreground = Brushes.Red;
-            _labelVersion.Background = Brushes.LightYellow;
-            _labelVersion.Content += " Intern";
-#endif
+            if (Global.INTERN)
+            {
+                _labelVersion.Foreground = Brushes.Red;
+                _labelVersion.Background = Brushes.LightYellow;
+                _labelVersion.Content += " Intern";
+            }
         }
 
         private static Dictionary<string, MenuItem> MenuPunkte = new Dictionary<string, MenuItem>(5);

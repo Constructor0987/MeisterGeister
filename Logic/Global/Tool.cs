@@ -144,43 +144,44 @@ namespace MeisterGeister
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.AresPlayer.AresPlayerView)
             });
-#if (DEBUG || INTERN || TEST) // im Release-Modus ausblenden
-            ToolListe.Add("Alchimie", new Tool()
+            if (Global.INTERN) // im Release-Modus ausblenden
             {
-                Name = "Alchimie",
-                Icon = "Icons/alchimie.png",
-                MenuGruppe = "Wege der Magie",
-                ViewType = typeof(View.Alchimie.AlchimieView)
-            });
-            ToolListe.Add("Beschwörung", new Tool()
-            {
-                Name = "Beschwörung",
-                Icon = "Icons/magie.png",
-                MenuGruppe = "Wege der Magie",
-                ViewType = typeof(View.Beschwörung.BeschwörungView)
-            });
-            ToolListe.Add("Abenteuer", new Tool()
-            {
-                Name = "Abenteuer",
-                Icon = "Icons/meistertools_02.png",
-                MenuGruppe = "Wege des Meisters",
-                ViewType = typeof(View.Abenteuer.AbenteuerView)
-            });
-            ToolListe.Add("Generator", new Tool()
-            {
-                Name = "Generator",
-                Icon = "Icons/meisterperson.png",
-                MenuGruppe = "Wege des Meisters",
-                ViewType = typeof(View.Generator.GeneratorView)
-            });
-            ToolListe.Add("Reise", new Tool()
-            {
-                Name = "Reise",
-                Icon = "Icons/kartenzeichnen.png",
-                MenuGruppe = "Wege des Wanderers",
-                ViewType = typeof(View.Reise.ReiseView)
-            });
-#endif
+                ToolListe.Add("Alchimie", new Tool()
+                {
+                    Name = "Alchimie",
+                    Icon = "Icons/alchimie.png",
+                    MenuGruppe = "Wege der Magie",
+                    ViewType = typeof(View.Alchimie.AlchimieView)
+                });
+                ToolListe.Add("Beschwörung", new Tool()
+                {
+                    Name = "Beschwörung",
+                    Icon = "Icons/magie.png",
+                    MenuGruppe = "Wege der Magie",
+                    ViewType = typeof(View.Beschwörung.BeschwörungView)
+                });
+                ToolListe.Add("Abenteuer", new Tool()
+                {
+                    Name = "Abenteuer",
+                    Icon = "Icons/meistertools_02.png",
+                    MenuGruppe = "Wege des Meisters",
+                    ViewType = typeof(View.Abenteuer.AbenteuerView)
+                });
+                ToolListe.Add("Generator", new Tool()
+                {
+                    Name = "Generator",
+                    Icon = "Icons/meisterperson.png",
+                    MenuGruppe = "Wege des Meisters",
+                    ViewType = typeof(View.Generator.GeneratorView)
+                });
+                ToolListe.Add("Reise", new Tool()
+                {
+                    Name = "Reise",
+                    Icon = "Icons/kartenzeichnen.png",
+                    MenuGruppe = "Wege des Wanderers",
+                    ViewType = typeof(View.Reise.ReiseView)
+                });
+            }
         }
 
         /// <summary>

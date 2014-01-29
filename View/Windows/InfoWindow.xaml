@@ -39,7 +39,7 @@
                         </TextBox.Background>
                     </TextBox>
                 </StackPanel>
-                <Image Grid.Column="2" Width="169" Source="/Images/Logos/DsaFanprojekt_Logo.png" HorizontalAlignment="Right" VerticalAlignment="Top" MouseDown="ImageMeisterGeister_MouseDown" Cursor="Hand" Height="96" Margin="0,0,5,0" ToolTip="http://www.meistergeister.org/" />
+                <Image Grid.Column="2" Width="169" Source="/Images/Logos/DsaFanprojekt_Logo.png" HorizontalAlignment="Right" VerticalAlignment="Top" MouseDown="ImageFanprojekt_MouseDown"  Height="96" Margin="0,0,5,0" ToolTip="http://www.meistergeister.org/" />
             </Grid>
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal">
