@@ -327,7 +327,7 @@
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:LiteraturItem}">
                                         <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" LastChildFill="False">
-                                            <Button Height="18" Cursor="Hand" Command="{Binding OnOpenUrlPdf}">
+                                            <Button Height="20" Cursor="Hand" Command="{Binding OnOpenUrlPdf}">
                                                 <Button.ToolTip>
                                                     <StackPanel>
                                                         <TextBlock Text="PDF online beziehen..." />
@@ -358,13 +358,13 @@
                                                 </Button.ToolTip>
                                                 <Button.Template>
                                                     <ControlTemplate>
-                                                        <Image Source="/DSA MeisterGeister;component/Images/Logos/Ulisses_Icon.png" />
+                                                        <Image Opacity="0.9" Source="/DSA MeisterGeister;component/Images/Logos/Ulisses_Icon.png" />
                                                     </ControlTemplate>
                                                 </Button.Template>
                                                 <Button.Style>
                                                     <Style>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding UrlPrintPdf}" Value="{x:Null}">
+                                                            <DataTrigger Binding="{Binding UrlPrint}" Value="{x:Null}">
                                                                 <Setter Property="Image.Visibility" Value="Hidden" />
                                                             </DataTrigger>
                                                         </Style.Triggers>

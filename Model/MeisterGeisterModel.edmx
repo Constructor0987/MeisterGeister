@@ -874,6 +874,10 @@
     <Property Name="Abkürzung" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="Pfad" Type="nvarchar" MaxLength="500" />
     <Property Name="Seitenoffset" Type="int" Nullable="false" />
+    <Property Name="Größe" Type="float" />
+    <Property Name="GrößeKomprimiert" Type="float" />
+    <Property Name="UrlPdf" Type="nvarchar" MaxLength="500" />
+    <Property Name="UrlPrint" Type="nvarchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="MenuLink">
     <Key>
@@ -905,8 +909,8 @@
       <PropertyRef Name="NameID" />
     </Key>
     <Property Name="NameID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
-    <Property Name="Herkunft" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Herkunft" Type="nvarchar" MaxLength="300" />
     <Property Name="Art" Type="nvarchar" MaxLength="150" />
     <Property Name="Bedeutung" Type="nvarchar" MaxLength="300" />
     <Property Name="Geschlecht" Type="nvarchar" MaxLength="3" />
@@ -2980,6 +2984,10 @@
     <Property Name="Abkürzung" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
     <Property Name="Pfad" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="Seitenoffset" Type="Int32" Nullable="false" />
+    <Property Name="Größe" Type="Double" />
+    <Property Name="GrößeKomprimiert" Type="Double" />
+    <Property Name="UrlPdf" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="UrlPrint" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
   </EntityType>
   <EntityType Name="MenuLink">
     <Key>
@@ -3012,8 +3020,8 @@
       <PropertyRef Name="NameID" />
     </Key>
     <Property Name="NameID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-    <Property Name="Name1" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="Herkunft" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
+    <Property Name="Name1" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Herkunft" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Art" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
     <Property Name="Bedeutung" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Geschlecht" Type="String" MaxLength="3" Unicode="true" FixedLength="false" />
@@ -4665,6 +4673,10 @@
           <ScalarProperty Name="Abkürzung" ColumnName="Abkürzung" />
           <ScalarProperty Name="Pfad" ColumnName="Pfad" />
           <ScalarProperty Name="Seitenoffset" ColumnName="Seitenoffset" />
+          <ScalarProperty Name="Größe" ColumnName="Größe" />
+          <ScalarProperty Name="GrößeKomprimiert" ColumnName="GrößeKomprimiert" />
+          <ScalarProperty Name="UrlPdf" ColumnName="UrlPdf" />
+          <ScalarProperty Name="UrlPrint" ColumnName="UrlPrint" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5040,7 +5052,7 @@
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
 <edmx:Diagrams >
-      <Diagram DiagramId="973c502786914180a29999413948ba87" Name="Diagram1">
+      <Diagram DiagramId="9abc939096334af698414af0dfa2592a" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="3.25" IsExpanded="true" />
@@ -5074,12 +5086,12 @@
         <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="19.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="5.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="8.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="10.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="2.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="0.75" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="10.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="8.75" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="16.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="16.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="8.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="8.75" PointY="17.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="5.75" PointY="34.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="8" PointY="36.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="8" PointY="1.875" IsExpanded="true" />

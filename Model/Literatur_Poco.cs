@@ -140,6 +140,54 @@ namespace MeisterGeister.Model
     
         }
         private int _seitenoffset;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> Größe
+        {
+            get { return _größe; }
+            set
+    		{ 
+    			Set(ref _größe, value);
+    		}
+    
+        }
+        private Nullable<double> _größe;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<double> GrößeKomprimiert
+        {
+            get { return _größeKomprimiert; }
+            set
+    		{ 
+    			Set(ref _größeKomprimiert, value);
+    		}
+    
+        }
+        private Nullable<double> _größeKomprimiert;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string UrlPdf
+        {
+            get { return _urlPdf; }
+            set
+    		{ 
+    			Set(ref _urlPdf, value);
+    		}
+    
+        }
+        private string _urlPdf;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string UrlPrint
+        {
+            get { return _urlPrint; }
+            set
+    		{ 
+    			Set(ref _urlPrint, value);
+    		}
+    
+        }
+        private string _urlPrint;
 
         #endregion
 

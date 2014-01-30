@@ -242,6 +242,8 @@ namespace MeisterGeister.ViewModel.Settings
             _literatur.PropertyChanged += Literatur_PropertyChanged;
 
             onOpenFileDialog = new Base.CommandBase(OpenFileDialog, null);
+            onOpenUrlPdf = new Base.CommandBase(OpenUrlPdf, null);
+            onOpenUrlPrint = new Base.CommandBase(OpenUrlPrint, null);
         }
 
         private void OpenFileDialog(object obj)
@@ -250,6 +252,38 @@ namespace MeisterGeister.ViewModel.Settings
             if (string.IsNullOrEmpty(file))
                 return;
             Pfad = file;
+        }
+
+        private void OpenUrlPdf(object obj)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(UrlPdf))
+                    System.Diagnostics.Process.Start(UrlPdf);
+            }
+            catch (Exception) { }
+        }
+
+        private void OpenUrlPrint(object obj)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(UrlPrint))
+                    System.Diagnostics.Process.Start(UrlPrint);
+            }
+            catch (Exception) { }
+        }
+
+        public String UrlPdf
+        {
+            get { return _literatur.UrlPdf; }
+            set { _literatur.UrlPdf = value; }
+        }
+
+        public String UrlPrint
+        {
+            get { return _literatur.UrlPrint; }
+            set { _literatur.UrlPrint = value; }
         }
 
         public String Abkürzung
@@ -294,6 +328,18 @@ namespace MeisterGeister.ViewModel.Settings
         public Base.CommandBase OnOpenFileDialog
         {
             get { return onOpenFileDialog; }
+        }
+
+        private Base.CommandBase onOpenUrlPdf;
+        public Base.CommandBase OnOpenUrlPdf
+        {
+            get { return onOpenUrlPdf; }
+        }
+
+        private Base.CommandBase onOpenUrlPrint;
+        public Base.CommandBase OnOpenUrlPrint
+        {
+            get { return onOpenUrlPrint; }
         }
     }
 
