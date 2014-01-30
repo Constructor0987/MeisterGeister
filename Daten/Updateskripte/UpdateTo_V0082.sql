@@ -1,6 +1,7 @@
 ﻿--TODO: Siehe unten!!!
 
 --Strukturerweiterung der Literatur-Tabelle
+ALTER TABLE [Literatur] ADD [Erratapfad] nvarchar(500) NULL;
 ALTER TABLE [Literatur] ADD [Größe] float NULL;
 ALTER TABLE [Literatur] ADD [GrößeKomprimiert] float NULL;
 ALTER TABLE [Literatur] ADD [UrlPdf] nvarchar(500) NULL;
