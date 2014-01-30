@@ -371,6 +371,26 @@
                                                     </Style>
                                                 </Button.Style>
                                             </Button>
+                                            <Image Height="18" ToolTip="Original PDF">
+                                                <Image.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsOriginal, Mode=OneWay}" Value="{x:Null}">
+                                                                <Setter Property="Image.Visibility" Value="Hidden" />
+                                                                <Setter Property="Image.Source" Value="/DSA MeisterGeister;component/Images/Icons/General/ok.png" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsOriginal, Mode=OneWay}" Value="false">
+                                                                <Setter Property="Image.Visibility" Value="Visible" />
+                                                                <Setter Property="Image.Source" Value="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsOriginal, Mode=OneWay}" Value="true">
+                                                                <Setter Property="Image.Visibility" Value="Visible" />
+                                                                <Setter Property="Image.Source" Value="/DSA MeisterGeister;component/Images/Icons/General/ok.png" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
                                             <TextBlock Margin="4,0,0,0" FontWeight="Bold" MaxWidth="350" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" />
                                             <TextBlock Margin="14,0,0,0" FontStyle="Italic" Text="{Binding Abkürzung, StringFormat=(\{0\})}" VerticalAlignment="Center" />
                                             <Button Content="..." Height="21" Width="20" Command="{Binding OnOpenFileDialog}" DockPanel.Dock="Right" ToolTip="PDF auswählen..." />

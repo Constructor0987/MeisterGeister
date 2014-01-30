@@ -87,5 +87,37 @@ namespace MeisterGeister.Model
         {
             return Name;
         }
+
+        /// <summary>
+        /// Zulässige Abweichung der Dateigröße zum Original.
+        /// </summary>
+        private const double ORIGINAL_TOLERANZ = 0.1; // 10%
+
+        public Nullable<bool> IsOriginal
+        {
+            get
+            {
+                if (Pfad == null || Größe == null)
+                    return null;
+
+                System.IO.FileInfo fi = new System.IO.FileInfo(Pfad);
+                if (!fi.Exists)
+                    return null;
+
+                if (Größe == null)
+                    return null;
+                double größeByte = Größe.Value * 1000000;
+                double tolerenz = größeByte * ORIGINAL_TOLERANZ; // in Byte
+                bool isOriginal = größeByte >= fi.Length - tolerenz && größeByte <= fi.Length + tolerenz;
+                if (isOriginal)
+                    return true;
+
+                if (GrößeKomprimiert == null)
+                    return isOriginal;
+                größeByte = Größe.Value * 1000000;
+                tolerenz = größeByte * ORIGINAL_TOLERANZ; // in Byte
+                return größeByte >= fi.Length - tolerenz && größeByte <= fi.Length + tolerenz;
+            }
+        }
     }
 }

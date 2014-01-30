@@ -310,6 +310,11 @@ namespace MeisterGeister.ViewModel.Settings
             set { _literatur.Seitenoffset = value; }
         }
 
+        public Nullable<bool> IsOriginal
+        {
+            get { return _literatur.IsOriginal; }
+        }
+
         private void Literatur_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnChanged(e.PropertyName);
