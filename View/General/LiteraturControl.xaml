@@ -9,12 +9,20 @@
              d:DesignHeight="48" d:DesignWidth="48" Cursor="Hand" MouseDown="LiteraturControl_MouseDown">
     <UserControl.Resources>
         <local:StringEmptyToVisibilityConverter x:Key="StringEmptyToVisibilityConverter1"/>
+        <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
+            <StackPanel Margin="-20,0,0,0" Background="White"/>
+        </ItemsPanelTemplate>
     </UserControl.Resources>
     <UserControl.Visibility>
         <Binding Converter="{StaticResource StringEmptyToVisibilityConverter1}" ElementName="LiteraturControl1" Path="Literaturangabe"/>
     </UserControl.Visibility>
     <UserControl.ContextMenu>
         <ContextMenu Name="_contextMenu">
+            <ContextMenu.Style>
+                <Style TargetType="{x:Type ContextMenu}">
+                    <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+                </Style>
+            </ContextMenu.Style>
             <ContextMenu.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" PreviewMouseDown="MenuItem_PreviewMouseDown" Tag="{Binding}">
@@ -27,7 +35,9 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button VerticalAlignment="Stretch" Width="Auto" MinWidth="16" MinHeight="16" Content="{Binding}" PreviewMouseDown="Button_PreviewMouseDown"  Tag="{Binding}" />
+                                    <Button VerticalAlignment="Stretch" Width="Auto" MinWidth="16" MinHeight="16" PreviewMouseDown="Button_PreviewMouseDown" Tag="{Binding}">
+                                        <TextBlock Padding="3" Text="{Binding}" />
+                                    </Button>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
