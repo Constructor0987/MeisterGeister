@@ -14,6 +14,15 @@ namespace MeisterGeister.ViewModel.Settings
 
         #region Property
 
+        public Boolean IsMitUeberlastung
+        {
+            get { return MeisterGeister.Logic.Einstellung.Einstellungen.IsMitUeberlastung; }
+            set
+            {
+                MeisterGeister.Logic.Einstellung.Einstellungen.IsMitUeberlastung = value;
+                OnChanged("IsMitUeberlastung");
+            }
+        }
 
         private List<EinstellungItem> einstellungListe;
         public List<EinstellungItem> EinstellungListe

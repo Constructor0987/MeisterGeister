@@ -72,6 +72,20 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "INTERN", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" }
             };
         }
+
+        public static bool IsMitUeberlastung
+        {
+            get
+            {
+                return GetEinstellung<bool>("MitUeberlastung");
+            }
+            set
+            {
+                SetEinstellung<bool>("MitUeberlastung", value);                
+            }
+        }
+         
+
         private static Dictionary<string, Model.Einstellung> defaultValues = null;
         private static Dictionary<string, Model.Einstellung> DefaultValues
         {
