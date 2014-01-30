@@ -25,7 +25,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     /// </summary>
     public interface IModTalentprobe : IModProbe
     {
-        string Talentname { get; }
+        ISet<string> Talentname { get; }
         int ApplyTalentprobeMod(int wert);
     }
     /// <summary>
@@ -33,7 +33,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     /// </summary>
     public interface IModZauberprobe : IModProbe
     {
-        string Zaubername { get; }
+        ISet<string> Zaubername { get; }
         int ApplyZauberprobeMod(int wert);
     }
 }

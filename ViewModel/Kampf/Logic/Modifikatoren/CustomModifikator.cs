@@ -48,8 +48,29 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
 
         public void SetModifikator(string methodName, string operatorString, int modWert)
         {
-            //TODO JT: Talentname und Zaubername oder andere Filter müsste man noch erkennen und mitanzeigen
-            auswirkungen[methodName] = methodName.Substring(5).Substring(0, methodName.Length - 8) + " " + operatorString + modWert;
+            //Talentname und Zaubername oder andere Filter erkennen und mitanzeigen
+            string propertyName = methodName.Substring(5).Substring(0, methodName.Length - 8); //Name des zu modifizierenden Wertes aus dem Typ ausgelesen.
+            if (propertyName == "Talentprobe" && types.Contains(typeof(IModTalentprobe)) || 
+                propertyName == "Talentwert" && types.Contains(typeof(IModTalentwert)) || 
+                propertyName == "Zauberprobe" && types.Contains(typeof(IModZauberprobe)) || 
+                propertyName == "Zauberwert" && types.Contains(typeof(IModZauberwert)))
+            {
+                ISet<string> filterSet = null;
+                string probe = propertyName.EndsWith("probe") ? "-Probe" : "";
+                string filterName = propertyName.Left(6) + "name"; //Talentname oder Zaubername
+                if (modifikatorObjAsDictionary.ContainsKey(filterName))
+                    filterSet = modifikatorObjAsDictionary[filterName] as ISet<string>;
+                if (filterSet != null)
+                {
+                    auswirkungen[methodName] = "";
+                    foreach(string talentOderZauberName in filterSet)
+                        auswirkungen[methodName] += ((auswirkungen[methodName].Length>0)?", ": "") + talentOderZauberName + probe + " " + operatorString + modWert;
+                }
+                else
+                    auswirkungen[methodName] = propertyName + " " + operatorString + modWert;
+            }
+            else
+                auswirkungen[methodName] = propertyName + " " + operatorString + modWert;
             modifikatorObjAsDictionary[methodName] = GetApplyExpression(operatorString, modWert);
         }
 

@@ -139,7 +139,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     /// </summary>
     public interface IModTalentwert : IModEigenschaft
     {
-        string Talentname { get; }
+        ISet<string> Talentname { get; }
         int ApplyTalentwertMod(int wert);
     }
     /// <summary>
@@ -147,7 +147,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     /// </summary>
     public interface IModZauberwert : IModEigenschaft
     {
-        string Zaubername { get; }
+        ISet<string> Zaubername { get; }
         int ApplyZauberwertMod(int wert);
     }
     #endregion

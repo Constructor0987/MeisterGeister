@@ -1084,7 +1084,7 @@ namespace MeisterGeister.Model
                 int _taw = ht.TaW ?? 0;
                 if (Modifikatoren != null)
                 {
-                    List<Mod.IModTalentwert> l = Modifikatoren.Where(m => m is Mod.IModTalentwert).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
+                    List<Mod.IModTalentwert> l = Modifikatoren.Where(m => m is Mod.IModTalentwert && (((Mod.IModTalentwert)m).Talentname == null || ((Mod.IModTalentwert)m).Talentname.Count == 0 || ((Mod.IModTalentwert)m).Talentname.Contains(ht.Talent.Talentname))).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
                     foreach (Mod.IModTalentwert m in l)
                     {
                         int tawneu = m.ApplyTalentwertMod(_taw);
@@ -1294,7 +1294,7 @@ namespace MeisterGeister.Model
             int zfw = hz.ZfW ?? 0;
             if (Modifikatoren != null)
             {
-                List<Mod.IModZauberwert> l = Modifikatoren.Where(m => m is Mod.IModZauberwert).Select(m => (Mod.IModZauberwert)m).OrderBy(m => m.Erstellt).ToList();
+                List<Mod.IModZauberwert> l = Modifikatoren.Where(m => m is Mod.IModZauberwert && (((Mod.IModZauberwert)m).Zaubername == null || ((Mod.IModZauberwert)m).Zaubername.Count == 0 || ((Mod.IModZauberwert)m).Zaubername.Contains(hz.Zauber.Name)) ).Select(m => (Mod.IModZauberwert)m).OrderBy(m => m.Erstellt).ToList();
                 foreach (Mod.IModZauberwert m in l)
                 {
                     int zfwneu = m.ApplyZauberwertMod(zfw);

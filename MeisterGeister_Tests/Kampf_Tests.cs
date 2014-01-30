@@ -133,7 +133,7 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
-        public void ManöverTests()
+        public void VerbrauchVonAktionenTest()
         {
             Gegner zant = Global.ContextKampf.Liste<Gegner>().Where(g => g.Name == "Zant").FirstOrDefault();
             Assert.IsNotNull(zant);
@@ -261,15 +261,36 @@ namespace MeisterGeister_Tests
             CustomModifikatorFactory cf = new CustomModifikatorFactory();
             cf.Name = "CMTest";
             string auswirkungen = "";
+
             Type t = typeof(IModTalentprobe);
-            cf.AddModifikator(t);
+            cf.AddModifikator(t); //neuen Modifikator von Typ t (IModTalentProbe)
             var d = cf[t];
             Assert.IsTrue(d.ContainsKey("ApplyTalentprobeMod"));
-            Assert.AreEqual(typeof(string), d["Talentname"].GetType());
+            Assert.IsTrue(d.ContainsKey("Talentname"));
             Assert.AreEqual(2, d.Count);
-            d["Talentname"] = "Reiten";
-            auswirkungen += "Talentprobe +5";
+            d["Talentname"] = new SortedSet<string>() {"Reiten", "Schleichen"};
+            auswirkungen += "Reiten-Probe +5, Schleichen-Probe +5";
             cf.SetModifikator("ApplyTalentprobeMod", "+", 5);
+            Assert.AreEqual(0, cf.Errors.Count);
+
+            t = typeof(IModTalentwert);
+            cf.AddModifikator(t);
+            d = cf[t];
+            Assert.IsTrue(d.ContainsKey("ApplyTalentwertMod"));
+            Assert.IsTrue(d.ContainsKey("Talentname"));
+            Assert.AreEqual(2, d.Count);
+            auswirkungen += ", Reiten +2, Schleichen +2";
+            cf.SetModifikator("ApplyTalentwertMod", "+", 2);
+            Assert.AreEqual(0, cf.Errors.Count);
+
+            t = typeof(IModZauberwert);
+            cf.AddModifikator(t);
+            d = cf[t];
+            Assert.IsTrue(d.ContainsKey("ApplyZauberwertMod"));
+            Assert.IsTrue(d.ContainsKey("Zaubername"));
+            Assert.AreEqual(2, d.Count);
+            auswirkungen += ", Zauberwert *3";
+            cf.SetModifikator("ApplyZauberwertMod", "*", 3);
             Assert.AreEqual(0, cf.Errors.Count);
 
             t = typeof(IModAE);
@@ -283,8 +304,19 @@ namespace MeisterGeister_Tests
 
             IModifikator result = cf.Finish();
             Assert.IsTrue(result is IModTalentprobe);
-            Assert.AreEqual("Reiten", (result as IModTalentprobe).Talentname);
+            Assert.IsTrue((result as IModTalentprobe).Talentname.Contains("Reiten"));
+            Assert.IsTrue((result as IModTalentprobe).Talentname.Contains("Schleichen"));
+            Assert.AreEqual(5, (result as IModTalentprobe).ApplyTalentprobeMod(0));
+
+            Assert.IsTrue(result is IModTalentwert);
+            Assert.AreEqual(2, (result as IModTalentwert).ApplyTalentwertMod(0));
+
+            Assert.IsTrue(result is IModZauberwert);
+            Assert.AreEqual(27, (result as IModZauberwert).ApplyZauberwertMod(9));
+
             Assert.IsTrue(result is IModAE);
+            Assert.AreEqual(8, (result as IModAE).ApplyAEMod(10));
+
             Assert.AreEqual(auswirkungen, result.Auswirkung);
         }
     }
