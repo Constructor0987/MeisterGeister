@@ -22,12 +22,12 @@
                         <ListBox Margin="10,0,0,0" VerticalAlignment="Center" ItemsSource="{Binding Seiten}" Background="{x:Null}" BorderBrush="{x:Null}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" />
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Width="25" Height="14" Content="{Binding Seite}" PreviewMouseDown="Button_PreviewMouseDown"  Tag="{Binding}" />
+                                    <Button VerticalAlignment="Stretch" Width="Auto" MinWidth="16" MinHeight="16" Content="{Binding}" PreviewMouseDown="Button_PreviewMouseDown"  Tag="{Binding}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

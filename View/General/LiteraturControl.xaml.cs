@@ -88,7 +88,7 @@ namespace MeisterGeister.View.General
         {
             // TODO (markus): PDF öffnen - offene Punkte...
             // Ist kein PDF hinterlegt, sollte ein Link zum Ulisses-PDF-Shop angezeigt werden.
-            // Errata...
+            // Errata müssen in Logic.General.Pdf.OpenReader() abgefragt werden.
             try
             {
                 if (_selectedLiteraturangabe == null)
