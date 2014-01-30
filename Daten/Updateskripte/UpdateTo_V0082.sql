@@ -1,7 +1,6 @@
 ﻿--TODO: Siehe unten!!!
 
 --Strukturerweiterung der Literatur-Tabelle
-ALTER TABLE [Literatur] ADD [Erratapfad] nvarchar(500) NULL;
 ALTER TABLE [Literatur] ADD [Größe] float NULL;
 ALTER TABLE [Literatur] ADD [GrößeKomprimiert] float NULL;
 ALTER TABLE [Literatur] ADD [UrlPdf] nvarchar(500) NULL;
@@ -25,22 +24,22 @@ INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [S
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
  VALUES ('00000000-0000-0000-0011-000000000041' ,N'Grüne Hölle 3: Der Gott der Xo''Artal' ,N'U3' ,NULL ,1, 'http://www.ulisses-ebooks.de/product/123550', 'http://www.f-shop.de/rollenspiele/das-schwarze-auge-aventurien/abenteuer/37510/gruene-hoelle-3-der-gott-der-xoartal-u3', 30.22, NULL);
  INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000042' ,N'Errata-Liste für Wege der Alchimie' ,N'WdA Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/396/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000042' ,N'Wege der Alchimie - Errata' ,N'WdA Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/396/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000043' ,N'Errata-Liste für Wege der Zauberei' ,N'WdZ Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/466/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000043' ,N'Wege der Zauberei - Errata' ,N'WdZ Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/466/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000044' ,N'Errata, Ergänzungen und Erläuterungen zum DSA-Regelband Wege der Götter' ,N'WdG Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/465/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000044' ,N'Wege der Götter - Errata' ,N'WdG Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/465/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000045' ,N'Errata, Ergänzungen und Erläuterungen zum DSA-Regelband Wege des Schwerts' ,N'WdS Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/469/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000045' ,N'Wege des Schwerts - Errata' ,N'WdS Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/469/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000046' ,N'Änderungsliste des Liber Cantiones Deluxe' ,N'LCD Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/464/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000046' ,N'Liber Cantiones Deluxe - Errata' ,N'LCD Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/464/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000047' ,N'Offizielle Errata zu Wege der Helden' ,N'WdH Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/467/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000047' ,N'Wege der Helden - Errata' ,N'WdH Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/467/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000048' ,N'Erklärungen, Änderungen und Errata zur Zoo-Botanica Aventurica' ,N'ZBA Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/487/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000048' ,N'Zoo-Botanica Aventurica - Errata' ,N'ZBA Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/487/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000049' ,N'Erklärungen, Änderungen und Errata zum Aventurischen Arsenal' ,N'AA Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/482/', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000049' ,N'Aventurisches Arsenal - Errata' ,N'AA Errata' ,NULL ,0, 'http://www.ulisses-spiele.de/download/482/', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000050' ,N'Errata für die Spielhilfe Myranisches Arsenal' ,N'MyAr Errata' ,NULL ,0, 'http://www.uhrwerk-verlag.de/downl/Myranor/MyArs_Errata_15102012.pdf', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000050' ,N'Myranisches Arsenal - Errata' ,N'MyAr Errata' ,NULL ,0, 'http://www.uhrwerk-verlag.de/downl/Myranor/MyArs_Errata_15102012.pdf', NULL, NULL, NULL);
 INSERT INTO [Literatur] (  [LiteraturGUID],  [Name],  [Abkürzung],  [Pfad],  [Seitenoffset], [UrlPdf], [UrlPrint], [Größe], [GrößeKomprimiert]) 
- VALUES ('00000000-0000-0000-0011-000000000051' ,N'Erratasammlung für die Spielhilfe Wege nach Myranor' ,N'WnM Errata' ,NULL ,0, 'http://www.uhrwerk-verlag.de/downl/Myranor/WnM%20Errata_15102012.pdf', NULL, NULL, NULL);
+ VALUES ('00000000-0000-0000-0011-000000000051' ,N'Wege nach Myranor - Errata' ,N'WnM Errata' ,NULL ,0, 'http://www.uhrwerk-verlag.de/downl/Myranor/WnM%20Errata_15102012.pdf', NULL, NULL, NULL);

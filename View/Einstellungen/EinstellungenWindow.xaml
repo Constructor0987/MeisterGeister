@@ -31,128 +31,24 @@
         </DataTemplate>
     </Window.Resources>    
     <Grid>
-        <ScrollViewer>
-            <Grid>
-                <TabControl Background="{x:Null}">
-                    <TabItem x:Name="tbiAllgemein">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
-                                <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Allgemein" Style="{DynamicResource TextTitel}" />
+        <Grid>
+            <TabControl Background="{x:Null}">
+                <TabItem x:Name="tbiAllgemein">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Allgemein" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </TabItem.Header>                        
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <StackPanel>
+                            <StackPanel Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
+                                    <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
+                                </Button>
+                                <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
                             </StackPanel>
-                        </TabItem.Header>                        
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <StackPanel Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Margin="10,0,0,0" Width="24" Height="24" Click="ButtonPlayJingle_Click">
-                                        <Image Source="/Images/Icons/General/audio.png" Stretch="Uniform" ToolTip="Jingle abspielen" Width="22" />
-                                    </Button>
-                                    <TextBlock Margin="15,0,5,0" VerticalAlignment="Center"><Hyperlink NavigateUri="http://www.meistergeister.org/2011/10/08/meistergeister-bekommt-einen-jingle/" x:Name="_hyperlinkWeb" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="Mehr Infos zum Jingle."/></Hyperlink></TextBlock>
-                                </StackPanel>
-                                <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding AllgemeinListe}">
-                                    <ListBox.Resources>
-                                        <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                            <StackPanel Orientation="Horizontal" Margin="4">
-                                                <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
-                                                <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                        <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
-                                            <StackPanel Orientation="Horizontal" Margin="4">
-                                                <ViewGeneral:IntBox Value="{Binding Wert}" />
-                                                <TextBlock Text="{Binding Beschreibung}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                        <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
-                                            <StackPanel Orientation="Horizontal" Margin="4">
-                                                <ViewGeneral:DoubleBox Value="{Binding Wert}" />
-                                                <TextBlock Text="{Binding Beschreibung}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                        <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                            <StackPanel Orientation="Vertical" Margin="4">
-                                                <TextBlock Text="{Binding Beschreibung}" />
-                                                <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.Resources>
-                                </ListBox>
-                            </StackPanel>
-                        </Border>
-                    </TabItem>                    
-                    <TabItem x:Name="tbiSetting">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/mechanik.png" />
-                                <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Settings" Style="{DynamicResource TextTitel}" />
-                            </StackPanel>
-                        </TabItem.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
-                                <ListBox x:Name="_listBoxSettings" BorderThickness="0" Background="Transparent" ItemsSource="{Binding SettingListe}" >
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Margin="4" Orientation="Horizontal">
-                                                <CheckBox Margin="2" IsChecked="{Binding Aktiv}" />
-                                                <TextBlock Margin="4,0,0,0" Text="{Binding Name}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </StackPanel>
-                        </Border>
-                    </TabItem>
-                    <TabItem x:Name="tbiInventar">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
-                                <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Inventar" Style="{DynamicResource TextTitel}" />
-                            </StackPanel>
-                        </TabItem.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListBox Background="{x:Null}">
-                                <StackPanel Margin="4" Grid.Row="0">
-                                    <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Rüstung eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
-                                    <StackPanel>
-                                        <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
-                                        <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Einfach}" Content="Keine Zonen, eingegeben (Ein Wert RS wird für den Helden verwendet)"/>
-                                        <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Zonen}" Content="Mit Zonen, eingegeben (Rüstung besteht aus einzelnen RS-Werten je Zone)"/>
-                                    </StackPanel>
-                                </StackPanel>
-                                <!-- BE -->
-                                <StackPanel Margin="4" Grid.Row="1">
-                                    <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Behinderung(BE) eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
-                                    <StackPanel>
-                                        <RadioButton Margin="2" GroupName="BehinderungSetting" IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
-                                        <RadioButton Margin="2" GroupName="BehinderungSetting" IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}" Content="Eingabe (Der Wert BE wird eingegeben)"/>                                        
-                                    </StackPanel>
-                                </StackPanel>
-                                <!-- Überlastung -->
-                                <StackPanel Grid.Row="2" Margin="4">
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox Margin="0,5,0,0"/>
-                                        <TextBlock Margin="4" FontWeight="Bold" Text="Spielt die Gruppe mit Überlastung?" TextWrapping="WrapWithOverflow" />
-                                    </StackPanel>
-                                    <Border Background="#33191919">
-                                        <StackPanel>
-                                            <RadioButton Margin="2" GroupName="UeberlastungSetting" IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
-                                            <RadioButton Margin="2" GroupName="UeberlastungSetting" IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}" Content="Eingabe (Der Wert wird eingegeben)"/>                                            
-                                        </StackPanel>
-                                    </Border>
-                                </StackPanel>                                
-                            </ListBox>
-                        </Border>
-                    </TabItem>
-                    <TabItem x:Name="tbiKampf">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
-                                <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Kampf" Style="{DynamicResource TextTitel}" />
-                            </StackPanel>
-                        </TabItem.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListBox Background="Transparent" ItemsSource="{Binding KampfListe}">
+                            <ListBox BorderThickness="0" Background="Transparent" ItemsSource="{Binding AllgemeinListe}">
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal" Margin="4">
@@ -169,7 +65,7 @@
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
                                         <StackPanel Orientation="Horizontal" Margin="4">
                                             <ViewGeneral:DoubleBox Value="{Binding Wert}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                            <TextBlock Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
@@ -180,118 +76,227 @@
                                     </DataTemplate>
                                 </ListBox.Resources>
                             </ListBox>
-                        </Border>
-                    </TabItem>
-                    <TabItem x:Name="tbiAudioplayer">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/audio.png" />
-                                <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="AudioPlayer" Style="{DynamicResource TextTitel}" />
-                            </StackPanel>
-                        </TabItem.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListBox Background="{x:Null}">
-                                <ListBox.Resources>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
-                                            <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
-                                            <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                        </StackPanel>
+                    </Border>
+                </TabItem>                    
+                <TabItem x:Name="tbiSetting">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/mechanik.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Settings" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <StackPanel>
+                            <TextBlock Text="Eventuell ist ein Neustart nötig, damit die Optionen wirksam werden." Margin="4" FontStyle="Italic" />
+                            <ListBox x:Name="_listBoxSettings" BorderThickness="0" Background="Transparent" ItemsSource="{Binding SettingListe}" >
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="4" Orientation="Horizontal">
+                                            <CheckBox Margin="2" IsChecked="{Binding Aktiv}" />
+                                            <TextBlock Margin="4,0,0,0" Text="{Binding Name}" />
                                         </StackPanel>
                                     </DataTemplate>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
-                                            <ViewGeneral:IntBox Value="{Binding Wert}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />                                            
-                                        </StackPanel>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
-                                            <ViewGeneral:DoubleBox Value="{Binding Wert}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />                                            
-                                        </StackPanel>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                        <StackPanel Orientation="Vertical" Margin="4">
-                                            <TextBlock Text="{Binding Beschreibung}" />
-                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.Resources>
-                                <StackPanel Margin="4" Orientation="Horizontal">
-                                    <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
-                                    <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
-                                </StackPanel>
-
-                                <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">
-                                    <Label x:Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
-                                    <TextBox Height="23" x:Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
-                                    <Button Content="..." Height="21" HorizontalAlignment="Left" x:Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
-                                    <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
-                                </StackPanel>
+                                </ListBox.ItemTemplate>
                             </ListBox>
-                        </Border>
-                    </TabItem>
-                    <TabItem x:Name="tbiProben">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
-                                <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Proben" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem x:Name="tbiInventar">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Inventar" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <ListBox Background="{x:Null}">
+                            <StackPanel Margin="4" Grid.Row="0">
+                                <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Rüstung eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
+                                <StackPanel>
+                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
+                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Einfach}" Content="Keine Zonen, eingegeben (Ein Wert RS wird für den Helden verwendet)"/>
+                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Zonen}" Content="Mit Zonen, eingegeben (Rüstung besteht aus einzelnen RS-Werten je Zone)"/>
+                                </StackPanel>
                             </StackPanel>
-                        </TabItem.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <ListBox Background="{x:Null}" ItemsSource="{Binding ProbenListe}">
-                                <ListBox.Resources>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
-                                            <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
-                                            <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
-                                            <ViewGeneral:IntBox Value="{Binding Wert}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />                                            
-                                        </StackPanel>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
-                                        <StackPanel Orientation="Horizontal" Margin="4">
-                                            <ViewGeneral:DoubleBox Value="{Binding Wert}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />                                            
-                                        </StackPanel>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
-                                        <StackPanel Orientation="Vertical" Margin="4">
-                                            <TextBlock Text="{Binding Beschreibung}" />
-                                            <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.Resources>
-                            </ListBox>
-                        </Border>
-                    </TabItem>
-                    <TabItem x:Name="tbiAlmanach">
-                        <TabItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
-                                <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Almanach (PDF)" Style="{DynamicResource TextTitel}" />
+                            <!-- BE -->
+                            <StackPanel Margin="4" Grid.Row="1">
+                                <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Behinderung(BE) eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
+                                <StackPanel>
+                                    <RadioButton Margin="2" GroupName="BehinderungSetting" IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
+                                    <RadioButton Margin="2" GroupName="BehinderungSetting" IsChecked="{Binding BerechnungBehinderung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}" Content="Eingabe (Der Wert BE wird eingegeben)"/>                                        
+                                </StackPanel>
                             </StackPanel>
-                        </TabItem.Header>
-                        <Border Style="{DynamicResource ControlContentBorder}">
-                            <StackPanel>
-                                <DockPanel>
-                                    <TextBlock Text="Hier werden die PDF-Funktionen von MeisterGeister konfiguriert." Margin="4" FontStyle="Italic" />
-                                    <Image Height="45" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
-                                </DockPanel>
+                            <!-- Überlastung -->
+                            <StackPanel Grid.Row="2" Margin="4">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="PDF-Reader aus Liste auswählen oder unten selbst definieren." Margin="4" />
-                                    <ComboBox Width="150" Margin="10,0" ItemsSource="{Binding PDFReaders}" SelectedItem="{Binding SelectedPDFReader}" />
+                                    <CheckBox Margin="0,5,0,0"/>
+                                    <TextBlock Margin="4" FontWeight="Bold" Text="Spielt die Gruppe mit Überlastung?" TextWrapping="WrapWithOverflow" />
                                 </StackPanel>
-                                <ListBox Background="{x:Null}" ItemsSource="{Binding AlmanachListe}">
-                                    <ListBox.Resources>
+                                <Border Background="#33191919">
+                                    <StackPanel>
+                                        <RadioButton Margin="2" GroupName="UeberlastungSetting" IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
+                                        <RadioButton Margin="2" GroupName="UeberlastungSetting" IsChecked="{Binding BerechnungUeberlastung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Eingabe}" Content="Eingabe (Der Wert wird eingegeben)"/>                                            
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>                                
+                        </ListBox>
+                    </Border>
+                </TabItem>
+                <TabItem x:Name="tbiKampf">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Kampf" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <ListBox Background="Transparent" ItemsSource="{Binding KampfListe}">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
+                                        <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                        <TextBlock Text="{Binding Beschreibung}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                        <TextBlock Text="{Binding Beschreibung}" />                                            
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                    <StackPanel Orientation="Vertical" Margin="4">
+                                        <TextBlock Text="{Binding Beschreibung}" />
+                                        <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                    </Border>
+                </TabItem>
+                <TabItem x:Name="tbiAudioplayer">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/General/audio.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="AudioPlayer" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <ListBox Background="{x:Null}">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
+                                        <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                        <TextBlock Text="{Binding Beschreibung}" />                                            
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                        <TextBlock Text="{Binding Beschreibung}" />                                            
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                    <StackPanel Orientation="Vertical" Margin="4">
+                                        <TextBlock Text="{Binding Beschreibung}" />
+                                        <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                            <StackPanel Margin="4" Orientation="Horizontal">
+                                <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
+                                <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">
+                                <Label x:Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
+                                <TextBox Height="23" x:Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
+                                <Button Content="..." Height="21" HorizontalAlignment="Left" x:Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
+                                <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                            </StackPanel>
+                        </ListBox>
+                    </Border>
+                </TabItem>
+                <TabItem x:Name="tbiProben">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/Wuerfel/w20.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Proben" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <ListBox Background="{x:Null}" ItemsSource="{Binding ProbenListe}">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <CheckBox Margin="2" Tag="{Binding Name}" IsChecked="{Binding Wert}" Checked="CheckBoxEinstellungItem_CheckedChanged" Unchecked="CheckBoxEinstellungItem_CheckedChanged" />
+                                        <TextBlock Margin="4,0,0,0" Text="{Binding Beschreibung}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <ViewGeneral:IntBox Value="{Binding Wert}" />
+                                        <TextBlock Text="{Binding Beschreibung}" />                                            
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <ViewGeneral:DoubleBox Value="{Binding Wert}" />
+                                        <TextBlock Text="{Binding Beschreibung}" />                                            
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
+                                    <StackPanel Orientation="Vertical" Margin="4">
+                                        <TextBlock Text="{Binding Beschreibung}" />
+                                        <TextBox Text="{Binding Wert}" MinWidth="300" Margin="20,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                    </Border>
+                </TabItem>
+                <TabItem x:Name="tbiAlmanach">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="18" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
+                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Almanach (PDF)" Style="{DynamicResource TextTitel}" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Border Style="{DynamicResource ControlContentBorder}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0">
+                                <TextBlock Text="Hier werden die PDF-Funktionen von MeisterGeister konfiguriert." Margin="4" FontStyle="Italic" />
+                                <Image Height="45" HorizontalAlignment="Right" Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
+                            </DockPanel>
+                            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                <TextBlock Text="PDF-Reader aus Liste auswählen oder unten selbst definieren." Margin="4" />
+                                <ComboBox Width="150" Margin="10,0" ItemsSource="{Binding PDFReaders}" SelectedItem="{Binding SelectedPDFReader}" />
+                            </StackPanel>
+                            <ListBox Grid.Row="2" Background="{x:Null}" ItemsSource="{Binding AlmanachListe}">
+                                <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemBoolean}">
                                         <StackPanel Orientation="Horizontal">
                                             <CheckBox Margin="2" IsChecked="{Binding Wert}" />
@@ -301,13 +306,13 @@
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemInteger}">
                                         <StackPanel Orientation="Horizontal">
                                             <ViewGeneral:IntBox Value="{Binding Wert}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                            <TextBlock Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemDouble}">
                                         <StackPanel Orientation="Horizontal">
                                             <ViewGeneral:DoubleBox Value="{Binding Wert}" />
-                                            <TextBlock Text="{Binding Beschreibung}" />                                            
+                                            <TextBlock Text="{Binding Beschreibung}" />
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type vm:EinstellungItemString}">
@@ -318,24 +323,23 @@
                                     </DataTemplate>
                                 </ListBox.Resources>
                             </ListBox>
-                                <ListBox Background="{x:Null}" Margin="0,20,0,0" ItemsSource="{Binding LiteraturListe}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
-                                    <ListBox.Resources>
-                                        <DataTemplate DataType="{x:Type vm:LiteraturItem}">
-                                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" LastChildFill="False">
-                                                <TextBlock Margin="4,0,0,0" FontWeight="Bold" Text="{Binding Name}" VerticalAlignment="Center" />
-                                                <TextBlock Margin="14,0,0,0" FontStyle="Italic" Text="{Binding Abkürzung, StringFormat=(\{0\})}" VerticalAlignment="Center" />
-                                                <Button Content="..." Height="21" Width="20" Command="{Binding OnOpenFileDialog}" DockPanel.Dock="Right" ToolTip="PDF auswählen..." />
-                                                <TextBox Height="23" Text="{Binding Pfad}" Width="360" ToolTip="Pfad zur PDF-Datei" DockPanel.Dock="Right"/>
-                                                <ViewGeneral:IntBox Margin="5,0" Value="{Binding Seitenoffset}" ToolTip="Seitenoffset" DockPanel.Dock="Right" Width="25" Visibility="{x:Static mg:Global.INTERN_Visibility}" />
-                                            </DockPanel>
-                                        </DataTemplate>
-                                    </ListBox.Resources>
-                                </ListBox>
-                            </StackPanel>
-                        </Border>
-                    </TabItem>
-                </TabControl>                
-            </Grid>
-        </ScrollViewer>
+                            <ListBox Grid.Row="3" Background="{x:Null}" Margin="0,20,0,0" ItemsSource="{Binding LiteraturListe}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}">
+                                <ListBox.Resources>
+                                    <DataTemplate DataType="{x:Type vm:LiteraturItem}">
+                                        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" LastChildFill="False">
+                                            <TextBlock Margin="4,0,0,0" FontWeight="Bold" MaxWidth="350" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" />
+                                            <TextBlock Margin="14,0,0,0" FontStyle="Italic" Text="{Binding Abkürzung, StringFormat=(\{0\})}" VerticalAlignment="Center" />
+                                            <Button Content="..." Height="21" Width="20" Command="{Binding OnOpenFileDialog}" DockPanel.Dock="Right" ToolTip="PDF auswählen..." />
+                                            <TextBox Height="23" Text="{Binding Pfad}" Width="360" ToolTip="Pfad zur PDF-Datei" DockPanel.Dock="Right"/>
+                                            <ViewGeneral:IntBox Margin="5,0" Value="{Binding Seitenoffset}" ToolTip="Seitenoffset" DockPanel.Dock="Right" Width="25" Visibility="{x:Static mg:Global.INTERN_Visibility}" />
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ListBox.Resources>
+                            </ListBox>
+                        </Grid>
+                    </Border>
+                </TabItem>
+            </TabControl>                
+        </Grid>
     </Grid>
 </Window>
