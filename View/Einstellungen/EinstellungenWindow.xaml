@@ -327,6 +327,50 @@
                                 <ListBox.Resources>
                                     <DataTemplate DataType="{x:Type vm:LiteraturItem}">
                                         <DockPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" LastChildFill="False">
+                                            <Button Height="18" Cursor="Hand" Command="{Binding OnOpenUrlPdf}">
+                                                <Button.ToolTip>
+                                                    <StackPanel>
+                                                        <TextBlock Text="PDF online beziehen..." />
+                                                        <TextBlock Text="{Binding UrlPdf}" />
+                                                    </StackPanel>
+                                                </Button.ToolTip>
+                                                <Button.Template>
+                                                    <ControlTemplate>
+                                                        <Image Source="/DSA MeisterGeister;component/Images/Icons/Extensions/pdf.png" />
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                                <Button.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding UrlPdf}" Value="{x:Null}">
+                                                                <Setter Property="Image.Visibility" Value="Hidden" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                            <Button Height="18" Cursor="Hand" Command="{Binding OnOpenUrlPrint}">
+                                                <Button.ToolTip>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Print-Ausgabe online beziehen..." />
+                                                        <TextBlock Text="{Binding UrlPrint}" />
+                                                    </StackPanel>
+                                                </Button.ToolTip>
+                                                <Button.Template>
+                                                    <ControlTemplate>
+                                                        <Image Source="/DSA MeisterGeister;component/Images/Logos/Ulisses_Icon.png" />
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                                <Button.Style>
+                                                    <Style>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding UrlPrintPdf}" Value="{x:Null}">
+                                                                <Setter Property="Image.Visibility" Value="Hidden" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
                                             <TextBlock Margin="4,0,0,0" FontWeight="Bold" MaxWidth="350" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" />
                                             <TextBlock Margin="14,0,0,0" FontStyle="Italic" Text="{Binding Abkürzung, StringFormat=(\{0\})}" VerticalAlignment="Center" />
                                             <Button Content="..." Height="21" Width="20" Command="{Binding OnOpenFileDialog}" DockPanel.Dock="Right" ToolTip="PDF auswählen..." />
