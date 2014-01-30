@@ -43,12 +43,14 @@ namespace MeisterGeister.Logic.General
 
         static Pdf()
         {
-            readers.Add("Adobe Acrobat Reader", new string[] { "AcroRd32.exe", "/A \"page={1}\" \"{0}\"" });
+            readers.Add("Adobe Reader", new string[] { "AcroRd32.exe", "/A \"page={1}\" \"{0}\"" });
             readers.Add("Adobe Acrobat", new string[] { "Acrobat.exe", "/A \"page={1}\" \"{0}\"" });
             readers.Add("Evince", new string[] { "evince.exe", "--page-label={1} \"{0}\"" });
             readers.Add("Xpdf", new string[] { "xpdf.exe", "\"{0}\" {1}" });
             readers.Add("Foxit Reader", new string[] { "Foxit Reader.exe", "/A \"page={1}\" \"{0}\"" });
             readers.Add("Sumatra PDF", new string[] { "SumatraPDF.exe", "-page {1} \"{0}\"" });
+
+            // weitere PDF-Reader: http://de.wikipedia.org/wiki/Liste_von_PDF-Software
         }
 
         public static bool SetReader(string readerName)
