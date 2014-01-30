@@ -62,6 +62,9 @@ namespace MeisterGeister.View.General
             _selectedLiteraturangabe = null;
             _contextMenu.ItemsSource = literaurList;
 
+            if (literaurList == null) //parserfehler
+                return;
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 e.Handled = true;
