@@ -904,11 +904,15 @@
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
-    <Page Include="SampleData\PersonNurNameSampleData.xaml">
+    <DesignData Include="SampleData\PersonNurNameSampleData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </DesignData>
+    <Page Include="SampleData\ProbeControlViewModelSampleData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SampleData\ProbeControlViewModelSampleData.xaml">
+    <Page Include="ViewModel\Generator\Zusatzinformationen\Zusatzinformationen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1016,7 +1020,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Generator\GeneratorNamenInfos.xaml">
+    <Page Include="ViewModel\Generator\Zusatzinformationen\ZusatzinformationenAventurischeNamen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

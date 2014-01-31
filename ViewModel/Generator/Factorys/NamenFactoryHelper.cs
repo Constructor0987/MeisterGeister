@@ -69,9 +69,13 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  * Achaz haben nur einen Vornamen
                  * Name ist nicht geschlechtsspezifisch
                  */
-                case ACHAZNAMEN: return new NamenFactoryVorname(ACHAZNAMEN, true);
-                
-                //case ALBERNISCHENAMEN:
+                case ACHAZNAMEN: return new NamenFactoryVorname(ACHAZNAMEN, true, true);
+
+                /* Albernische Namen haben einen Vornamen, annotiert mit Vorname
+                 * Vorname kann von bestimmten Garehtischen Vornamen abgeleitet sein
+                 * Nachname annotiert mit Nachname
+                 */
+                //case ALBERNISCHENAMEN: return new AlbernischeNamenFactory();
 
                 //case ALMADISCHENAMEN:
 
@@ -146,7 +150,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  * Utulu Namen haben nur einen Vornamen
                  * Name ist nicht geschlechtsspezifisch
                  */
-                case UTULUNAMEN: return new NamenFactoryVorname(UTULUNAMEN, true);
+                case UTULUNAMEN: return new NamenFactoryVorname(UTULUNAMEN, true, true);
                 
                 //case WALDMENSCHENNAMEN:
                 
@@ -156,7 +160,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  * Zahori Namen haben einen Vornamen und Nachnamen 
                  * TODO Es sind Namensinformationen verfügbar
                  */
-                case ZAHORINAMEN: return new NamenFactoryVornameNachname(ZAHORINAMEN);
+                case ZAHORINAMEN: return new NamenFactoryVornameNachname(ZAHORINAMEN, false, true);
                 
                 //case ZWERGISCHENAMEN:
                 

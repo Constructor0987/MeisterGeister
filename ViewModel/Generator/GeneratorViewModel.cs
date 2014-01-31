@@ -24,7 +24,7 @@ namespace MeisterGeister.ViewModel.Generator
         const string NAMEN_NAMENSGENERATOR_EGAL = "irgendein Name";
         const string NAMEN_STAND_EGAL = "irgendein Stand";
         const string GENERATOR_NAMEN = "Namen";
-        const string GENERATOR_ORTSNAMEN = "Namen";
+        const string GENERATOR_ORTSNAMEN = "Ortsnamen";
         const string GENERATOR_NSC = "NSC";
         const string GENERATOR_SCHATZ = "Schatz";
         const string GENERATOR_BIBLIOTHEK = "Bibliothek";
@@ -42,6 +42,11 @@ namespace MeisterGeister.ViewModel.Generator
         private int _geschlechtWeiblichProzent;
         private bool _unüblicheKulturen = false;
         private string _infoText = string.Empty;
+        private bool _zeigeZusatzinformationen;
+
+        //Resource Manager für die Zusatzinformationen
+        ResourceDictionary _zusatzinformationen;
+        private FlowDocument _zusatzinformation;
 
         //Entitylisten
         private List<string> _rasseListe = new List<string>();
@@ -69,6 +74,26 @@ namespace MeisterGeister.ViewModel.Generator
             {
                 _infoText = value;
                 OnChanged("InfoText");
+            }
+        }
+
+        public FlowDocument Zusatzinformation
+        {
+            get { return _zusatzinformation; }
+            set
+            {
+                _zusatzinformation = value;
+                OnChanged("Zusatzinformation");
+            }
+        }
+
+        public bool ZeigeZusatzinformationen
+        {
+            get { return _zeigeZusatzinformationen; }
+            set
+            {
+                _zeigeZusatzinformationen = value;
+                OnChanged("ZeigeZusatzinformationen");
             }
         }
 
@@ -134,6 +159,7 @@ namespace MeisterGeister.ViewModel.Generator
             {
                 _selectedNamensgenerator = value;
                 OnChanged("SelectedNamensgenerator");
+                UpdateZusatzinformationen(value);
             }
         }
         public int GeschlechtWeiblichProzent
@@ -269,6 +295,9 @@ namespace MeisterGeister.ViewModel.Generator
 
         public GeneratorViewModel()
         {
+            //_zusatzinformationenManager = new System.Resources.ResourceManager("MeisterGeister.View.Generator.GeneratorNamenInfos", this.GetType().Assembly);
+            Uri u = new Uri("ViewModel/Generator/Zusatzinformationen/Zusatzinformationen.xaml", UriKind.RelativeOrAbsolute);
+            _zusatzinformationen = Application.LoadComponent(u) as ResourceDictionary;
             _onGenerate = new Base.CommandBase(Generate, null);
             _onResetNamenOptionen = new Base.CommandBase(ResetNamenOptionen, null);
             _onClearGenerierteObjekteListe = new Base.CommandBase(ClearGenerierteObjekte, null);
@@ -376,6 +405,8 @@ namespace MeisterGeister.ViewModel.Generator
                 _selectedStandZufällig ? (Stand)RandomNumberGenerator.Generator.Next(STÄNDE_ANZAHL) : _selectedStand);
         }
 
+
+
         #endregion
 
         #region //---- EVENTS ----
@@ -430,6 +461,18 @@ namespace MeisterGeister.ViewModel.Generator
             foreach (Object o in liste)
                 Global.ContextNotizen.NotizAllgemein.AppendText("\n--------- " + MeisterGeister.Logic.Kalender.Datum.Aktuell.ToStringShort() + "---------\n" + o.ToString());
             InfoText = string.Format("{0} Objekte gespeichert.", liste.Count());
+        }
+
+        private void UpdateZusatzinformationen(string key)
+        {
+            if (key != NAMEN_NAMENSGENERATOR_EGAL && NamenFactoryHelper.GetFactory(key).InformationenNamenVerfügbar)
+            {
+                Zusatzinformation = _zusatzinformationen[key.Replace(" ", "_")] as FlowDocument;
+                ZeigeZusatzinformationen = true;
+            } else {
+                Zusatzinformation = _zusatzinformationen["keine_Infos"] as FlowDocument;
+                ZeigeZusatzinformationen = false;
+            }
         }
 
         #endregion

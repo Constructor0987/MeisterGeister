@@ -16,13 +16,14 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type vmc:Person}">
-            <v:GeneratorPersonControl />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vmc:PersonNurName}">
-            <v:GeneratorPersonNurNameControl />
-        </DataTemplate>
-        <ResourceDictionary x:Key="Namensinfos" Source="GeneratorNamenInfos.xaml" />
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type vmc:Person}">
+                <v:GeneratorPersonControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vmc:PersonNurName}">
+                <v:GeneratorPersonNurNameControl />
+            </DataTemplate>
+        </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid>
@@ -158,8 +159,8 @@
             </Border>
         </Expander>
 
-        <Expander Grid.Column="1" Grid.Row="1" ExpandDirection="Right">
-            <RichTextBox />
+        <Expander Grid.Column="1" Grid.Row="1" ExpandDirection="Right" IsExpanded="{Binding ZeigeZusatzinformationen}">
+            <FlowDocumentScrollViewer Document="{Binding Zusatzinformation}" />
         </Expander>
     </Grid>
 </UserControl>

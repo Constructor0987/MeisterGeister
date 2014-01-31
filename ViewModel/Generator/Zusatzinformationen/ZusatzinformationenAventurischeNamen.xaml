@@ -1,0 +1,100 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="Überschrift1">
+        <Setter Property="TextBlock.FontWeight" Value="Bold" />
+        <Setter Property="TextBlock.FontSize" Value="16" />
+        <Setter Property="TextBlock.Margin" Value="10" />
+    </Style>
+    <Style x:Key="Überschrift2">
+        <Setter Property="TextBlock.FontWeight" Value="Bold" />
+        <Setter Property="TextBlock.FontSize" Value="13" />
+        <Setter Property="TextBlock.Margin" Value="10" />
+    </Style>
+    <Style x:Key="Fließtext">
+        <Setter Property="TextBlock.FontSize" Value="11" />
+        <Setter Property="TextBlock.Margin" Value="10" />
+    </Style>
+    
+    <FlowDocument x:Key="Achaz_Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Achaz Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Echsische Namen sind nicht geschlechtsspezifisch. Ein vorangestelltes H' drückt Heiligkeit, Göttlichkeit oder sonstige große Macht und Würde aus.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Trollische_Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Trollische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Trolle und Trollinnen nennen sich nach dem Vater, also z.B. Rüpel, Sohn des Prüglaf; Fjelle, Tochter des Bagsh.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Utulu_Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Utulu Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Waldmenschen und Utulus tragen einen geheimen Tapam-Namen und einen Rufnamen, der eine auffällige
+            Eigenschaft, herausragende Tat oder ein Traumbild des Trägers bzw. der Trägerin ausdrückt. Der Rufname kann
+            jederzeit geändert werden. Die Namen sind an sich nicht geschlechtsspezifisch.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Zahori_Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Zahori Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die gebräuchlichen Namen der Zahori stammen aus dem Tulamidya, 
+            sind aber oft leicht garethisiert (Shafirio, Ghazalinde); hin 
+            und wieder kommen almadanische und Horathi-Vornamen vor.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Albernische_Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Zahori Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Wie die meisten garethisprachigen Leute tragen auch viele AlbernierInnen einen Vor- und einen Nachnamen. Wer
+            allerdings von einer berühmten Person abstammt, nennt sich gern nach dieser, und zwar Männer mit dem Partikel
+            “Ui” (gesprochen “O”), was Enkel oder Nachkomme des/der... bedeutet, und Frauen mit dem Partikel “Ni”
+            (Tochter/Nachfahrin des/der...). Beispiele: Cuanu Ui Bennain, Inbher Ni Bennain.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Ein paar Tips zur Aussprache:
+            “bh” und “mh” werden meist als “w” gesprochen; “dh” und “gh” werden meist ähnlich wie “ch” gesprochen; “sh”
+            und “th” werden meist als “h” gesprochen; “s” wird vor i und e meist als “sch” gesprochen; “ai”, “ui” und “oi”
+            werden oft als “i” gesprochen; “w” und “y” liegen in der Aussprache meist zwischen “w” und “u”.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Ortsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Albernische Ortsnamen setzt man am bequemsten aus den oben angegebenen Personennamen oder aus Namen von
+            Göttern oder Herrschern mit den folgenden geographischen Bezeichnungen zusammen: Aber (Flußmündung), Ach
+            (Feld), Ard (Höhe), Ault (Bach), Ben (Berg), Brae (Hang), Coill (Wald), Dal (Wiese), Dram (Bergrücken), Dun
+            (Burg), Glen (Gebirgstal), Knock (Hügel), Loch (See), Muir (Moor), Strath (Flußtal). Also z.B. Dun Bennain,
+            Conchobairdun, Uisge Muir oder Glen Sidhe. Ansonsten kann man auch garethische Ortsnamen verwenden.
+        </Paragraph>
+    </FlowDocument>
+</ResourceDictionary>

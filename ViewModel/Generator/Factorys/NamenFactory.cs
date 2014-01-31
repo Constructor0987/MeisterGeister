@@ -29,7 +29,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Konstruktor ----
-        public NamenFactory(string namenstyp, bool vornamenWeiblichFürAlle = false, bool generiertNamensbedeutungen = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false)
+        public NamenFactory(string namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertNamensbedeutungen = false, bool generiertOrtsnamen = false)
         {
             this.Namenstyp = namenstyp;
             this.VornamenWeiblichFürAlle = vornamenWeiblichFürAlle;
@@ -71,8 +71,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region /---- Konstruktor ----
-        public NamenFactoryVorname(string namenstyp, bool vornamenWeiblichFürAlle = false, bool generiertNamensbedeutungen = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
-            base(namenstyp, vornamenWeiblichFürAlle, generiertNamensbedeutungen, informationenNamenVerfügbar, generiertOrtsnamen)
+        public NamenFactoryVorname(string namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertNamensbedeutungen = false, bool generiertOrtsnamen = false) :
+            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertNamensbedeutungen, generiertOrtsnamen)
         {
             List<Model.Name> namensliste = Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp);
             if (VornamenWeiblichFürAlle)
@@ -112,8 +112,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Konstruktor ----
-        public NamenFactoryVornameNachname(string namenstyp, bool vornamenWeiblichFürAlle = false, bool generiertNamensbedeutungen = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
-            base(namenstyp, vornamenWeiblichFürAlle, generiertNamensbedeutungen, informationenNamenVerfügbar, generiertOrtsnamen)
+        public NamenFactoryVornameNachname(string namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertNamensbedeutungen = false, bool generiertOrtsnamen = false) :
+            base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertNamensbedeutungen, generiertOrtsnamen)
         {
             List<Model.Name> namensliste = Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp);
             _nachnamen.AddRange(namensliste.Where(n => n.Art == NAMENSARTNACHNAMEN).Select(n => n.Name1));
@@ -148,7 +148,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
 
         #region //---- Konstruktor ----
         public TrollischeNamenFactory() :
-            base(NamenFactoryHelper.TROLLISCHENAMEN)
+            base(NamenFactoryHelper.TROLLISCHENAMEN,false,true)
         {
 
         }
@@ -177,49 +177,33 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
     }
 
-    //public class AlbernischeNamenFactory : NamenFactoryVornameNachname
+    //public class albernischenamenfactory : namenfactoryvornamenachname
     //{
-    //    #region //---- Felder ----
-    //    protected List<string> _nachnamen = new List<String>();
-    //    #endregion
-
-    //    #region //---- Konstruktor ----
-    //    public AlbernischeNamenFactory(string namenstyp, bool vornamenWeiblichFürAlle = false, bool generiertNamensbedeutungen = false, bool informationenNamenVerfügbar = false, bool generiertOrtsnamen = false) :
-    //        base(namenstyp, vornamenWeiblichFürAlle, generiertNamensbedeutungen, informationenNamenVerfügbar, generiertOrtsnamen)
+    //    #region //---- konstruktor ----
+    //    public albernischenamenfactory() :
+    //        base(namenfactoryhelper.albernischenamen, false, true, false, true)
     //    {
-    //        //TODO Garethinamen umbauen
-    //        List<Model.Name> namensliste = Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp);
-    //        if (VornamenWeiblichFürAlle)
-    //        {
-    //            _vornamenWeiblich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN).Select(n => n.Name1));
-    //        }
-    //        else
-    //        {
-    //            _vornamenWeiblich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN && (n.Geschlecht == "w" || n.Geschlecht == null)).Select(n => n.Name1));
-    //            _vornamenMännlich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN && (n.Geschlecht == "m" || n.Geschlecht == null)).Select(n => n.Name1));
-    //        }
-    //        List<Model.Name> namensliste = Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp);
-    //        _nachnamen.AddRange(namensliste.Where(n => n.Art == NAMENSARTNACHNAMEN).Select(n => n.Name1));
+
     //    }
     //    #endregion
 
-    //    #region //---- Instanzmethoden ----
-    //    public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+    //    #region //---- instanzmethoden ----
+    //    public override void regeneratepersonnurname(ref personnurname person, geschlecht geschlecht = geschlecht.weiblich, stand stand = stand.stadtfrei)
     //    {
-    //        person.Namenstyp = this.Namenstyp;
-    //        person.Geschlecht = geschlecht;
-    //        person.Stand = stand;
-    //        if (VornamenWeiblichFürAlle || geschlecht == Geschlecht.weiblich)
+    //        person.namenstyp = this.namenstyp;
+    //        person.geschlecht = geschlecht;
+    //        person.stand = stand;
+    //        if (vornamenweiblichfüralle || geschlecht == geschlecht.weiblich)
     //        {
-    //            person.Name = string.Format("{0} {1}",
-    //                _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
-    //                _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+    //            person.name = string.format("{0} {1}",
+    //                _vornamenweiblich[randomnumbergenerator.generator.next(_vornamenweiblich.count())],
+    //                _nachnamen[randomnumbergenerator.generator.next(_nachnamen.count())]);
     //        }
-    //        else // Geschlecht kann nur männlich sein
+    //        else // geschlecht kann nur männlich sein
     //        {
-    //            person.Name = string.Format("{0} {1}",
-    //                _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
-    //                _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+    //            person.name = string.format("{0} {1}",
+    //                _vornamenmännlich[randomnumbergenerator.generator.next(_vornamenmännlich.count())],
+    //                _nachnamen[randomnumbergenerator.generator.next(_nachnamen.count())]);
     //        }
     //    }
     //    #endregion
