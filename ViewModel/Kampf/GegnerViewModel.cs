@@ -776,7 +776,7 @@ namespace MeisterGeister.ViewModel.Kampf
             GegnerBase importGegnerBase = null;
             if (!System.IO.File.Exists(pfad))
                 throw new System.IO.FileNotFoundException("Die Datei konnte nicht gefunden werden.", pfad);
-            if (Model.Service.SerializationService.IsMeistergeisterFile(pfad))
+            if (Model.Service.SerializationService.IsMeistergeisterFile(pfad, "GegnerBase"))
             {
                 GegnerBase h = Model.Service.SerializationService.DeserializeObjectFromFile<GegnerBase>(pfad);
                 hGuid = h.GegnerBaseGUID;

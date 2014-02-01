@@ -939,7 +939,7 @@ namespace MeisterGeister.Model.Service
                 if (line.Contains("MeisterGeister.Model"))
                 {
                     string typ = line.Substring(1, line.IndexOf(' '));
-                    return typ;
+                    return typ.Trim();
                 }
 
             }
@@ -962,7 +962,9 @@ namespace MeisterGeister.Model.Service
             var t = MeistergeisterFileType(xmlFile);
             if (t == null)
                 return false;
-            return t == typ;
+            if (typ == null)
+                return true;
+            return t.Equals(typ);
         }
 
     }
