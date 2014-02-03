@@ -248,6 +248,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _zauberMapping.Add("frigifaxius eisstrahl", "frigifaxius");
             _zauberMapping.Add("frigisphaero eisball", "frigosphaero");
             _zauberMapping.Add("gletscherwand", "wand aus eis (gletscherwand)");
+            _zauberMapping.Add("hilfreiche tatze-rettende schwinge", "hilfreiche Tatze, rettende schwinge");
             _zauberMapping.Add("humofaxius humusstrahl", "humofaxius");
             _zauberMapping.Add("karnifilio raserei", "karnifilo raserei");
             _zauberMapping.Add("orcanofaxius luftstrahl", "orcanofaxius");
@@ -654,7 +655,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 // Sonderfälle: Sprachen Kennen und Lesen/Schreiben
                 string dialekt = null;
                 if (talentName.StartsWith("L/S: "))
-                    talentName = string.Format("Lesen/Schreiben ({0})", talentName.Replace("L/S: ", string.Empty));
+                    talentName = string.Format("Lesen/Schreiben ({0})", talentName.Replace("L/S: ", string.Empty).Replace(" / ", "/"));
                 else if (talentName.StartsWith("Sprache kennen: "))
                 {
                     string sprache = talentName.Replace("Sprache kennen: ", string.Empty);
