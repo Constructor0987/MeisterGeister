@@ -11,6 +11,7 @@ using System.Data.OleDb;
 using MeisterGeister.Model;
 using MeisterGeister.ViewModel.Helden.Logic;
 using MeisterGeister.Logic.General;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.Logic.HeldenImport
 {
@@ -536,10 +537,10 @@ namespace MeisterGeister.Logic.HeldenImport
                 throw new Exception(String.Format("Die Spalte {0} konnte nicht in der Tabelle {1} gefunden werden.", column, row.Table.TableName));
             if (row.IsNull(column))
                 return default(T);
-            if(!typeof(T).IsAssignableFrom(row.Table.Columns[column].DataType))
-                return default(T);
-            T ret = (T)row[column];
-            return ret;
+            object ret = default(T);
+            if (typeof(T).TryConvert(row[column], out ret))
+                return (T)ret;
+            return default(T);
         }
 
         private static Regex reKlammern = new Regex("([^\\(]+)\\((.+)\\)");

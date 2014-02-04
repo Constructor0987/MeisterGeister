@@ -179,6 +179,7 @@
     <Compile Include="Daten\SqlCeUpgrade.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Logic\Extensions\ExtendedObservableCollection.cs" />
+    <Compile Include="Logic\Extensions\TypeExtensions.cs" />
     <Compile Include="Logic\Extensions\StringExtensions.cs" />
     <Compile Include="Logic\Extensions\IntExtenstions.cs" />
     <Compile Include="Logic\Extensions\ObservableDictionary.cs" />
