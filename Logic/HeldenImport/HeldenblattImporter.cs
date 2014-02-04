@@ -920,30 +920,40 @@ namespace MeisterGeister.Logic.HeldenImport
                 if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
                     ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
 
-                name = ausrüstung;
+                if(dt.Columns.Contains("Waffen_Name"))
+                    name = GetField<string>(tRow, "Waffen_Name");
 
-                //alles durchsuchen
-                Ausrüstung a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
+                Ausrüstung a = null;
+                if (!String.IsNullOrWhiteSpace(name))
+                {
+                    name = name.Trim();
+                    a = listeA.Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
+                }
+                else //standardausrüstung //alles durchsuchen
+                    a = listeA.Where(li => li.Name.ToLowerInvariant() == ausrüstung.ToLowerInvariant()).FirstOrDefault();
 
                 bool neuAberSchonAmHeld = false;
                 bool neueAusrüstung = false;
 
                 if (a == null) //nichts gefunden
                 {
-                    //Basisausrüstung aus den Klammern holen
-                    Match m = reKlammern.Match(ausrüstung);
-                    if (m != null && m.Groups.Count == 3)
+                    if(String.IsNullOrWhiteSpace(name))
+                    { 
+                        //Basisausrüstung aus den Klammern holen
+                        Match m = reKlammern.Match(ausrüstung);
+                        if (m != null && m.Groups.Count == 3)
+                        {
+                            ausrüstung = m.Groups[2].Value.Trim();
+                            name = m.Groups[1].Value.Trim();
+                            
+                            if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
+                                ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
+                        }
+                    }
+                    if(!String.IsNullOrWhiteSpace(name))
                     {
-                        ausrüstung = m.Groups[2].Value.Trim();
-                        name = m.Groups[1].Value.Trim();
-
-                        if (_gegenstandMapping.ContainsKey(ausrüstung.ToLowerInvariant()))
-                            ausrüstung = _gegenstandMapping[ausrüstung.ToLowerInvariant()];
-
-                        //mit namen suchen, eventuell wurde die ausrüstung schon importiert
+                        //nochmal mit namen suchen, eventuell wurde die ausrüstung schon importiert
                         a = listeA.Where(li => li.Name.ToLowerInvariant() == name.ToLowerInvariant()).FirstOrDefault();
-
-                        
 
                         if (a == null) //nein, sie existiert noch nicht -> also basisausrüstung kopieren und neu anlegen
                         {
@@ -1069,12 +1079,25 @@ namespace MeisterGeister.Logic.HeldenImport
                         Rüstung r = new Rüstung();
                         r.Name = ausrüstung;
                         neueAusrüstung = true;
-                        
+
+                        double? d = 0;
                         //einfaches Modell:
                         if (!tRow.IsNull("BE"))
-                            r.BE = (int?)GetField<double?>(tRow, "BE");
+                        {
+                            d = GetField<double?>(tRow, "BE");
+                            if (d.HasValue)
+                                r.BE = (int?)Math.Round(d ?? 0, MidpointRounding.AwayFromZero);
+                            else
+                                r.BE = null;
+                        }
                         if (!tRow.IsNull("RS"))
-                            r.RS = (int?)GetField<double?>(tRow, "RS");
+                        {
+                            d = GetField<double?>(tRow, "RS");
+                            if (d.HasValue)
+                                r.RS = (int?)Math.Round(d ?? 0, MidpointRounding.AwayFromZero);
+                            else
+                                r.RS = null;
+                        }
                         //zonenmodell
                         if (!tRow.IsNull("RS Kopf"))
                             r.Kopf = (int?)GetField<double?>(tRow, "RS Kopf");
@@ -1168,8 +1191,10 @@ namespace MeisterGeister.Logic.HeldenImport
             Sonderfertigkeit sf = Global.ContextHeld.LoadSonderfertigkeitByName(sfName);
             if (sf != null)
             {
+                if (wertString != null)
+                    wertString = wertString.Trim();
                 Held_Sonderfertigkeit hs = null;
-                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID).FirstOrDefault();
+                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && hs1.Wert == wertString).FirstOrDefault();
                 if (hs == null)
                 {
                     hs = new Held_Sonderfertigkeit();
@@ -1177,22 +1202,9 @@ namespace MeisterGeister.Logic.HeldenImport
                     hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
                     hs.Wert = wertString ?? "";
                     _held.Held_Sonderfertigkeit.Add(hs);
+                    return true;
                 }
-                else //Sonderfertigkeit bereits vorhanden
-                {
-                    if (wertString != null && wertString != string.Empty)
-                    {
-                        if (hs.Wert == null || hs.Wert == String.Empty)
-                            hs.Wert = wertString ?? "";
-                        else
-                        {
-                            if ((hs.Wert + ", " + wertString).Length > 1200)
-                                return false;
-                            hs.Wert += ", " + wertString;
-                        }
-                    }
-                }
-                return true;
+                //Sonderfertigkeit mit diesem Wert bereits vorhanden
             }
             return false;
         }
