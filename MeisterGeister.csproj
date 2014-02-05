@@ -1649,6 +1649,7 @@
     <Resource Include="Images\Icons\schild_gestrichen.png" />
     <Resource Include="Images\Icons\nahkampf_03_gestrichen.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0082.sql" />
+    <Content Include="Daten\Updateskripte\InsertGegner.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\WPFExtensions.dll" />

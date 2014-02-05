@@ -468,6 +468,9 @@ namespace MeisterGeister.Logic.HeldenImport
             if(showlog)
                 ShowLogWindow(_importPfad, _importLog);
 
+            System.Diagnostics.Debug.Assert(Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault() != null);
+            System.Diagnostics.Debug.Assert(Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault().Held_Talent.All(ht => ht.Talent != null));
+
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
 
@@ -683,24 +686,17 @@ namespace MeisterGeister.Logic.HeldenImport
                     if(paZuteilung != null)
                         ht.ZuteilungPA = paZuteilung - paBasis;
 
-                    if (talentSpez1 != null || talentSpez2 != null)
+                    if (!String.IsNullOrWhiteSpace(talentSpez1) || !String.IsNullOrWhiteSpace(talentSpez2))
                     {
                         //Talentspezialisierung
                         string spezTyp = "Talentspezialisierung"; //Typ anhand von der Talentgruppe
                         if(t.Talentgruppe.Gruppenname == "Kampftalent")
                             spezTyp = "Waffenspezialisierung";
                         Sonderfertigkeit spezSf = Global.ContextHeld.LoadSonderfertigkeitByName(spezTyp);
-                        //Prüfen ob vorhanden
-                        var hsf = _held.Held_Sonderfertigkeit.Where(_hsf => _hsf.SonderfertigkeitGUID  == ((spezSf == null)?Guid.Empty:spezSf.SonderfertigkeitGUID)).FirstOrDefault();
-                        if (hsf == null)
-                            AddSonderfertigkeit(spezTyp, t.Talentname, _held); //neu hinzufügen
-                        else
-                        {
-                            if(talentSpez1 != null)
-                                hsf.Wert = (hsf.Wert == null || hsf.Wert.Length == 0)? talentSpez1 : hsf.Wert + ", " + talentSpez1;
-                            if (talentSpez2 != null)
-                                hsf.Wert = (hsf.Wert == null || hsf.Wert.Length == 0) ? talentSpez2 : hsf.Wert + ", " + talentSpez2;
-                        }
+                        if(!String.IsNullOrWhiteSpace(talentSpez1))
+                            AddSonderfertigkeit(spezTyp, String.Format("{0} ({1})", t.Talentname, talentSpez1.GetAusdruckInKlammern()), _held);
+                        if(!String.IsNullOrWhiteSpace(talentSpez2))
+                            AddSonderfertigkeit(spezTyp, String.Format("{0} ({1})", t.Talentname, talentSpez2.GetAusdruckInKlammern()), _held);
                     }
 
                     if (_held.Held_Talent.Any(_ht => ht.TalentGUID == _ht.TalentGUID)) //bereits vorhanden
