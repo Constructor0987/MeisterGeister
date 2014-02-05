@@ -1,6 +1,25 @@
-﻿/* GegnerBase */
-/* alle nicht userdefined löschen */
-DELETE from [GegnerBase] WHERE UPPER([GegnerBaseGUID]) like '00000000-0000-0000-006E%-';
+﻿--Neue Gegnerdaten
+
+--Alte Gegner löschen
+Delete from GegnerBase where Literatur='ZBA 183f' and Name='Krähe';
+Delete from GegnerBase where Literatur='ZBA 144ff' and Name='Ork (unerfahren)';
+Delete from GegnerBase where Literatur='ZBA 144ff' and Name='Ork (erfahren)';
+Delete from GegnerBase where Literatur='ZBA 144ff' and Name='Ork (Veteran)';
+Delete from GegnerBase where Literatur='ZBA 189' and Name='Gebirgsbock';
+Delete from GegnerBase where Literatur='ZBA 108' and Name='Harpyie';
+Delete from GegnerBase where Literatur='ZBA 102f' and Name='Goblin (unerfahren)';
+Delete from GegnerBase where Literatur='ZBA 102f' and Name='Gobin (erfahren)';
+Delete from GegnerBase where Literatur='ZBA 102f' and Name='Goblin (Veteran)';
+Delete from GegnerBase where Literatur='ZBA 189' and Name='Ziege';
+Delete from GegnerBase where Literatur='ZBA 141' and Name='Hamster';
+Delete from GegnerBase where Literatur='ZBA 108f' and Name='Karnickel';
+Delete from GegnerBase where Literatur='ZBA 141f' and Name='Murmeltier';
+Delete from GegnerBase where Literatur='ZBA 64f' and Name='Bergadler';
+Delete from GegnerBase where Literatur='ZBA 97'and Name='Fledermaus';
+
+--Neue Gegner hinzufügen
+/* GegnerBase */
+--TODO: Werte reduzieren
 
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000001' ,N'Abilachter Fleckvieh' ,NULL ,N'' ,5 ,N'1W6' ,2 ,4 ,60 ,40 ,0 ,0 ,16 ,2 ,8 ,2 ,5 ,8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Paarhufer, Rind, Milch- und Fleischrind' ,N'Größe: bis zu 6,5 Spann Rückenhöhe Gewicht: bis zu 650 Stein
