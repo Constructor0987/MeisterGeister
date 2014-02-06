@@ -141,6 +141,11 @@
                                     <Image Source="/Images/Icons/General/audio.png" Margin="2" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem x:Name="_menuItemAlmanach" Height="28" Click="ButtonTool_Click" Header="Almanach-Tool (INTERN)" Tag="Almanach" ToolTip="Almanach-Tool" Visibility="{x:Static mg:Global.INTERN_Visibility}">
+                                <MenuItem.Icon>
+                                    <Image Source="/Images/Icons/hesinde.png" Margin="2" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <Separator />
                             <MenuItem Height="28" Click="ButtonTool_Click" Header="PlugIn: Ares-Controller" Tag="Ares"  >
                                 <MenuItem.Icon>

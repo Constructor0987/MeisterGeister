@@ -536,6 +536,9 @@
     <Compile Include="View\Alchimie\AlchimieView.xaml.cs">
       <DependentUpon>AlchimieView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Almanach\AlmanachView.xaml.cs">
+      <DependentUpon>AlmanachView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AresPlayer\AresPlayerView.xaml.cs">
       <DependentUpon>AresPlayerView.xaml</DependentUpon>
     </Compile>
@@ -924,6 +927,10 @@
     <Page Include="View\Alchimie\AlchimieView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Almanach\AlmanachView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AresPlayer\AresPlayerView.xaml">
       <SubType>Designer</SubType>

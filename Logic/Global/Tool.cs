@@ -181,6 +181,13 @@ namespace MeisterGeister
                     MenuGruppe = "Wege des Wanderers",
                     ViewType = typeof(View.Reise.ReiseView)
                 });
+                ToolListe.Add("Almanach", new Tool()
+                {
+                    Name = "Almanach",
+                    Icon = "Icons/hesinde.png",
+                    MenuGruppe = "Wege des Meisters",
+                    ViewType = typeof(View.Almanach.AlmanachView)
+                });
             }
         }
 
