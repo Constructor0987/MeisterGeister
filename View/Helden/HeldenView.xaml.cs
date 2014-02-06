@@ -46,9 +46,29 @@ namespace MeisterGeister.View.Helden
             set { DataContext = value; }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void tabControl1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            if (this.tabControl1.SelectedItem is TabItem)
+            {
+                TabItem tab = this.tabControl1.SelectedItem as TabItem;
+                if (tab.Content == null)
+                {
+                    if (tab == _tabItemAllgemein)
+                        tab.Content = new Helden.Controls.AllgemeinView();
+                    else if (tab == _tabItemEigenschaften)
+                        tab.Content = new Helden.Controls.EigenschaftenView();
+                    else if (tab == _tabItemSonderfertigkeiten)
+                        tab.Content = new Helden.Controls.SonderfertigkeitenView();
+                    else if (tab == _tabItemTalente)
+                        tab.Content = new Helden.Controls.TalentView();
+                    else if (tab == _tabItemVorNachteile)
+                        tab.Content = new Helden.Controls.VorNachteileView();
+                    else if (tab == _tabItemZauber)
+                        tab.Content = new Helden.Controls.ZauberView();
+                    else if (tab == _tabItemInventar)
+                        tab.Content = new Helden.Controls.InventarView();
+                }
+            }
         }
     }
 }

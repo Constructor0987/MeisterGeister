@@ -8,7 +8,6 @@
             xmlns:MeisterGeister="clr-namespace:MeisterGeister" 
             xmlns:Held="clr-namespace:MeisterGeister.View.Helden.Controls" 
 			x:Class="MeisterGeister.View.Helden.HeldenView" 
-            Loaded="UserControl_Loaded" 
             x:Name="_heldenControl1" 
             mc:Ignorable="d"
             d:DesignHeight="571"
@@ -51,32 +50,27 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="370*" />
             </Grid.ColumnDefinitions>
-            <TabControl Grid.Row="1" IsEnabled="{Binding SelectedHeldIsNotNull}" Margin="5,5,5,5" Background="{StaticResource Background1}" x:Name="tabControl1" SelectedItem="{Binding SelectedTabItem}" SelectedIndex="{Binding SelectedTabIndex}">
+            <TabControl Grid.Row="1" IsEnabled="{Binding SelectedHeldIsNotNull}" Margin="5,5,5,5" Background="{StaticResource Background1}" x:Name="tabControl1" SelectedItem="{Binding SelectedTabItem}" SelectedIndex="{Binding SelectedTabIndex}" SelectionChanged="tabControl1_SelectionChanged">
                 <TabItem Header="Allgemein" x:Name="_tabItemAllgemein">
-                    <Held:AllgemeinView />
+                    <!--<Held:AllgemeinView />-->
                 </TabItem>
                 <TabItem Header="Eigenschaften" x:Name="_tabItemEigenschaften">
-                    <Held:EigenschaftenView />
+                    <!--<Held:EigenschaftenView />-->
                 </TabItem>
                 <TabItem Header="Talente" x:Name="_tabItemTalente">
-                    <Held:TalentView/>
+                    <!--<Held:TalentView/>-->
                 </TabItem>
                 <TabItem Header="Zauber" x:Name="_tabItemZauber" Visibility="{Binding SelectedHeld.Magiebegabt, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}">
-                    <Held:ZauberView/>
+                    <!--<Held:ZauberView/>-->
                 </TabItem>
                 <TabItem Header="Vor- &amp; Nachteile" x:Name="_tabItemVorNachteile">
-                    <Held:VorNachteileView/>
+                    <!--<Held:VorNachteileView/>-->
                 </TabItem>
                 <TabItem Header="Sonderfertigkeiten" x:Name="_tabItemSonderfertigkeiten">
-                    <Held:SonderfertigkeitenView />
+                    <!--<Held:SonderfertigkeitenView />-->
                 </TabItem>
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Inventar / Rüstung" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Held:InventarView x:Name="_inventarControl" />
+                <TabItem Header="Inventar / Rüstung" x:Name="_tabItemInventar">
+                    <!--<Held:InventarView x:Name="_inventarControl" />-->
                 </TabItem>
             </TabControl>
         </Grid>
