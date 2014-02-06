@@ -289,7 +289,7 @@ namespace MeisterGeister.Daten
         {
             if (skript == null)
                 return skript;
-            //Entfernt alle Kommentare, auss sie beginnen mit --# solche kommentare sind laufzeitanweisungen für das Update.
+            //Entfernt alle Kommentare, außer sie beginnen mit --# solche kommentare sind laufzeitanweisungen für das Update.
             var r = new System.Text.RegularExpressions.Regex(@"(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|(--(?!#).*)");
             skript = r.Replace(skript, string.Empty);
             return skript;

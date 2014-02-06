@@ -2126,8 +2126,7 @@ INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBas
 MU 10–20 FF 8–14 KL 12–20 GE 5–12
 IN 9–14 KO 17–25 CH 8–14 KK 20–30
 Modifikatoren: LeP bis +20, AuP bis +40, AsP bis +30, Mr bis zu +5 / +0
-Vor-/Nachteile: Natürlicher Rüstungsschutz;
-Ätzende Haut**, Kälteempfindlich
+Vor-/Nachteile: Natürlicher Rüstungsschutz, Ätzende Haut**, Kälteempfindlich
 Besondere Kampfregeln: Finte, Gezielter Stich, Wuchtschlag, Niederwerfen (7, Schwanzangriff gegen Beine), sehr großer Gegner, Überrennen*
 Magie: vorwiegend Zauber mit den Merkmalen Eigenschaften und Hellsicht (meisterlich bis brillant), zudem entweder Herrschaft oder Illusion (kompetent bis meisterlich). Weitere einzelne Zauber je nach Meisterentscheid. Repräsentation: Leviatanisch (bei Analyse Ähnlichkeiten mit Kristallomantie).
 GS Kriechen / Schwimmen / Springen
