@@ -86,14 +86,16 @@ namespace MeisterGeister.View.General
 
         private void OpenPdf()
         {
-            // TODO (markus): PDF öffnen - offene Punkte...
-            // Errata müssen in Logic.General.Pdf.OpenReader() abgefragt werden.
             try
             {
                 if (_selectedLiteraturangabe == null)
                     return;
 
-                Model.Literatur li = Model.Literatur.GetByAbkürzung(_selectedLiteraturangabe.Kürzel);
+                string kürzel = _selectedLiteraturangabe.Kürzel;
+                if (_selectedSeitenangabe != null && _selectedSeitenangabe.IsErrata)
+                    kürzel += " Errata";
+
+                Model.Literatur li = Model.Literatur.GetByAbkürzung(kürzel);
                 if (string.IsNullOrEmpty(li.Pfad))
                 {
                     if (ViewHelper.ConfirmYesNoCancel("Kein PDF hinterlegt",

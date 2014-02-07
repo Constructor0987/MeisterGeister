@@ -12,11 +12,11 @@ namespace MeisterGeister.Logic.General
         public static string OpenCommand
         {
             get {
-                if (Pdf.openCommand == null)
+                if (string.IsNullOrEmpty(Pdf.openCommand))
                 {
                     Pdf.openCommand = Einstellung.Einstellungen.PdfReaderCommand;
                     if (String.IsNullOrWhiteSpace(Pdf.openCommand))
-                        SetReader("Adobe Acrobat Reader");
+                        SetReader("Adobe Reader");
                 }
                 return Pdf.openCommand; 
             }
@@ -28,11 +28,11 @@ namespace MeisterGeister.Logic.General
         {
             get
             {
-                if (Pdf.openArguments == null)
+                if (string.IsNullOrEmpty(Pdf.openArguments))
                 {
                     Pdf.openArguments = Einstellung.Einstellungen.PdfReaderArguments;
                     if (String.IsNullOrWhiteSpace(Pdf.openArguments))
-                        SetReader("Adobe Acrobat Reader");
+                        SetReader("Adobe Reader");
                 } 
                 return Pdf.openArguments;
             }
