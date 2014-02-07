@@ -1,0 +1,1467 @@
+﻿<Inventar:InventarViewModel xmlns:Inventar="clr-namespace:MeisterGeister.ViewModel.Inventar" 
+xmlns:Model="clr-namespace:MeisterGeister.Model" 
+xmlns:System="clr-namespace:System;assembly=mscorlib" 
+xmlns:General="clr-namespace:MeisterGeister.Logic.General" 
+xmlns:Markup="clr-namespace:System.Windows.Markup;assembly=System.Xaml" 
+AktuellesGewichtProzentResultierendeBE="773.89" 
+AktuelleTragkraft="997.23" 
+AktuellesGewicht="774.91" 
+AktuellesGewichtInProzentZuTragkraft="485.04" 
+HasValidationErrors="False" 
+IsNahkampfWaffeSelected="True" 
+IsRuestungSelected="True" IsSchildSelected="True" 
+IsNahkampfwaffevorhanden="Visible" 
+IsFernkampfwaffevorhanden="Visible" 
+IsRuestungVorhanden="Visible" 
+IsAllSelected="True" 
+IsSchildVorhanden="Visible"
+IsFernkampfwaffeSelected="True" 
+ListenToChangeEvents="True" 
+SelectedFilterIndex="89"
+IsRuestungBerechnungZonen="Visible"
+>
+	<Inventar:InventarViewModel.FernkampfwaffeListe>
+		<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Consequat diam lorem" Gewicht="37" Improvisiert="True" Literatur="Dictumst vestibulum arcu turpis fusce" Munitionsart="Eleifend eget morbi vestibulum" Name="Hac amet donec conubia curabitur" Preis="217.81" Reichweiten="Blandit commodo" TPReichweiten="Aliquet est tortor vulputate curae" Verbreitung="Etiam phasellus ante parturient" Verwundend="True">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Faucibus egestas proin euismod" Gewicht="71" Literatur="Facilisi mus elementum dapibus nulla" Name="Varius elit aenean cubilia adipiscing" Preis="561.63" Tags="Feugiat enim facilisis" Verbreitung="Leo convallis dignissim">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Iaculis eros interdum" Gewicht="57" Improvisiert="False" Literatur="Per aptent" Munitionsart="Vestibulum dolor fames felis lobortis" Name="Parturient erat" Preis="391.34" Reichweiten="Adipiscing nullam habitant inceptos" TPReichweiten="Parturient mauris vestibulum vestibulum" Verbreitung="Nec non augue gravida" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Imperdiet justo malesuada natoque sed" Bemerkung="Fringilla habitasse congue pulvinar hendrerit" Gewicht="79" Gruppe="Himenaeos vestibulum laoreet nam" Literatur="Auctor vel lacinia" Name="Sed nascetur sem pharetra" Preis="539.22" RSBauch="26" RSKopf="84" RSBrust="14" RSBeinL="72" RSArmL="26" RSRücken="10" RSBeinR="76" RSArmR="13" Steif="True" Verbreitung="Ipsum fermentum placerat nibh sit"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Massa adipiscing dictum dis" BF="13" Gewicht="20" Größe="Lectus tristique" INI="94" Literatur="Sagittis nisi lorem tincidunt magna" Name="Penatibus cursus" Preis="276.62" Typ="Est ultricies potenti" Verbreitung="Porttitor lacus posuere" WMAT="97" WMPA="69"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Nunc odio" DK="Hac orci" Gewicht="10" Improvisiert="True" Literatur="Vulputate pretium morbi litora neque" Name="Libero senectus sociosqu venenatis parturient" Preis="273.15" TPBonus="28" TPWürfelAnzahl="28" TPWürfel="11" Verbreitung="Nisl ligula metus"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Quam quis mattis" Gewicht="87" Improvisiert="False" Literatur="Vestibulum nec pede phasellus sodales" Munitionsart="Non torquent adipiscing urna" Name="Leo mus porta" Preis="122.91" Reichweiten="Vestibulum nulla luctus rhoncus" TPReichweiten="Netus suscipit" Verbreitung="Curabitur magnis" Verwundend="False">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Aliquam class convallis cras vestibulum" Gewicht="51" Literatur="Velit vestibulum vitae" Name="Parturient sed consequat" Preis="314.02" Tags="Sem vehicula" Verbreitung="Per purus risus ultrices viverra">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Quisque montes vivamus dignissim sed" Gewicht="60" Improvisiert="True" Literatur="Accumsan nam" Munitionsart="Dis vestibulum aliquam" Name="Integer adipiscing" Preis="576.57" Reichweiten="Sit mauris praesent mollis" TPReichweiten="Volutpat maecenas curae" Verbreitung="Vel parturient" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Eleifend amet mus nec vestibulum" Bemerkung="Adipiscing nunc ornare etiam parturient" Gewicht="67" Gruppe="Fusce facilisis leo vestibulum" Literatur="Nostra dictumst" Name="Duis donec est hac" Preis="620.93" RSBauch="72" RSKopf="43" RSBrust="65" RSBeinL="32" RSArmL="68" RSRücken="86" RSBeinR="94" RSArmR="98" Steif="False" Verbreitung="Vestibulum elementum bibendum"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Vestibulum primis adipiscing" BF="51" Gewicht="48" Größe="Habitasse per elit sed hendrerit" INI="91" Literatur="Arcu diam platea lorem eget" Name="Fermentum facilisi adipiscing faucibus non" Preis="696.98" Typ="Morbi habitant aliquet enim inceptos" Verbreitung="Fringilla parturient ante vestibulum" WMAT="48" WMPA="96"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Imperdiet augue eros nibh" DK="Conubia parturient cubilia nam" Gewicht="69" Improvisiert="False" Literatur="Sit vel commodo lobortis nascetur" Name="Himenaeos sem rutrum interdum blandit" Preis="798.5" TPBonus="37" TPWürfelAnzahl="47" TPWürfel="17" Verbreitung="Erat nulla proin sapien"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Parturient vestibulum egestas tempor porttitor" Gewicht="19" Improvisiert="True" Literatur="Dis taciti tellus placerat dolor" Munitionsart="Odio tempus" Name="Vestibulum sociis nisi nisl" Preis="665.36" Reichweiten="Semper vestibulum malesuada penatibus" TPReichweiten="Dapibus pharetra" Verbreitung="Adipiscing sed nunc" Verwundend="True">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Tincidunt gravida pulvinar" Gewicht="93" Literatur="Hac felis orci" Name="Est feugiat" Preis="915.5" Tags="Ipsum iaculis turpis lacinia varius" Verbreitung="Tortor fames euismod">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Aptent lacus potenti nec" Gewicht="40" Improvisiert="False" Literatur="Nullam justo posuere" Munitionsart="Suscipit parturient auctor pretium torquent" Name="Venenatis aenean pede adipiscing sociosqu" Preis="651.77" Reichweiten="Natoque senectus ultricies" TPReichweiten="Leo tristique vestibulum sagittis laoreet" Verbreitung="Mauris mus vulputate quam" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Massa dictum phasellus per" Bemerkung="Lorem urna curabitur" Gewicht="60" Gruppe="Magna cursus" Literatur="Adipiscing parturient integer ultrices" Name="Quis non vestibulum congue rhoncus" Preis="671.17" RSBauch="88" RSKopf="63" RSBrust="53" RSBeinL="78" RSArmL="87" RSRücken="42" RSBeinR="95" RSArmR="62" Steif="True" Verbreitung="Sodales viverra vestibulum aliquam"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Nunc quisque morbi" BF="22" Gewicht="54" Größe="Neque lectus" INI="96" Literatur="Volutpat cras duis" Name="Sed sem sit vestibulum vehicula" Preis="267.44" Typ="Amet convallis vivamus" Verbreitung="Metus consequat vel" WMAT="49" WMPA="30"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Dis elementum est hac facilisis" DK="Luctus aliquet parturient" Gewicht="51" Improvisiert="True" Literatur="Netus nulla litora sed" Name="Vestibulum maecenas aliquam" Preis="595.81" TPBonus="57" TPWürfelAnzahl="23" TPWürfel="48" Verbreitung="Libero adipiscing dignissim nam ligula"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Dictumst habitasse conubia" Gewicht="15" Improvisiert="False" Literatur="Mollis commodo bibendum mus arcu" Munitionsart="Eleifend diam nec" Name="Fermentum mattis fringilla risus" Preis="236.12" Reichweiten="Ante praesent purus magnis accumsan" TPReichweiten="Porta leo blandit" Verbreitung="Mauris vestibulum vestibulum" Verwundend="False">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Class faucibus habitant curae donec" Gewicht="54" Literatur="Facilisi adipiscing eget parturient elit" Name="Vitae cubilia per" Preis="492.71" Tags="Dapibus hendrerit" Verbreitung="Non velit montes">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Euismod himenaeos sem interdum nibh" Gewicht="50" Improvisiert="True" Literatur="Eros platea" Munitionsart="Sit nisi" Name="Inceptos ornare sed" Preis="920.99" Reichweiten="Egestas erat vestibulum" TPReichweiten="Nostra enim" Verbreitung="Etiam fusce" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Sociis parturient taciti malesuada" Bemerkung="Sapien adipiscing semper lorem nascetur" Gewicht="82" Gruppe="Morbi sed" Literatur="Nisl nunc nam" Name="Primis vestibulum imperdiet feugiat" Preis="852.31" RSBauch="41" RSKopf="71" RSBrust="59" RSBeinL="93" RSArmL="12" RSRücken="73" RSBeinR="81" RSArmR="61" Steif="False" Verbreitung="Rutrum lobortis vel"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Vestibulum tempor" BF="16" Gewicht="91" Größe="Odio dis" INI="30" Literatur="Tellus augue" Name="Vestibulum gravida pharetra nulla penatibus" Preis="174.13" Typ="Orci adipiscing placerat iaculis est" Verbreitung="Porttitor proin" WMAT="78" WMPA="57"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Turpis hac" DK="Quam fames pulvinar varius" Gewicht="79" Improvisiert="False" Literatur="Tristique pede vestibulum" Name="Lacinia tincidunt tempus" Preis="698.27" TPBonus="80" TPWürfelAnzahl="54" TPWürfel="21" Verbreitung="Dolor parturient vestibulum tortor"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Posuere lorem potenti pretium consequat" Gewicht="46" Improvisiert="True" Literatur="Justo lacus" Munitionsart="Parturient vestibulum rhoncus nullam vestibulum" Name="Mus adipiscing curabitur ipsum nec" Preis="547.28" Reichweiten="Ultricies senectus venenatis vulputate" TPReichweiten="Laoreet aenean leo felis sagittis" Verbreitung="Phasellus natoque mauris" Verwundend="True">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Cursus elementum adipiscing" Gewicht="83" Literatur="Dignissim quis suscipit" Name="Viverra auctor sociosqu massa congue" Preis="621.99" Tags="Torquent dictum" Verbreitung="Magna convallis non aptent sodales">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Integer amet vestibulum" Gewicht="53" Improvisiert="False" Literatur="Nunc metus habitasse" Munitionsart="Morbi hendrerit quisque neque adipiscing" Name="Parturient vestibulum duis" Preis="822.44" Reichweiten="Sed sem cras" TPReichweiten="Per urna facilisis aliquam fermentum" Verbreitung="Lectus fringilla" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Nulla blandit commodo" Bemerkung="Netus vel vehicula nam" Gewicht="98" Gruppe="Vestibulum litora" Literatur="Himenaeos arcu ligula aliquet" Name="Sit parturient vivamus libero aliquam" Preis="204.17" RSBauch="28" RSKopf="93" RSBrust="98" RSBeinL="69" RSArmL="95" RSRücken="75" RSBeinR="33" RSArmR="39" Steif="True" Verbreitung="Ante ultrices"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Magnis volutpat egestas porttitor parturient" BF="77" Gewicht="79" Größe="Mattis tincidunt euismod" INI="89" Literatur="Penatibus dapibus adipiscing" Name="Luctus vestibulum conubia" Preis="131.76" Typ="Feugiat gravida tristique" Verbreitung="Cubilia imperdiet malesuada" WMAT="14" WMPA="48"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Venenatis mauris" DK="Dis praesent mollis" Gewicht="92" Improvisiert="True" Literatur="Ultricies vestibulum elit vestibulum" Name="Diam porta eget purus" Preis="578.12" TPBonus="84" TPWürfelAnzahl="69" TPWürfel="94" Verbreitung="Maecenas sed"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Dictumst platea nibh convallis nisi" Gewicht="10" Improvisiert="False" Literatur="Velit ornare phasellus consequat" Munitionsart="Dignissim elementum" Name="Parturient curabitur bibendum" Preis="462.89" Reichweiten="Adipiscing accumsan vulputate risus est" TPReichweiten="Enim montes" Verbreitung="Hac nostra erat eros" Verwundend="False">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Vestibulum facilisis" Gewicht="56" Literatur="Nisl sapien class semper lacinia" Name="Mus iaculis vitae rutrum" Preis="488.95" Tags="Sociis nec taciti curae" Verbreitung="Leo vestibulum primis">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Fusce tempus pretium" Gewicht="84" Improvisiert="True" Literatur="Inceptos tempor potenti fringilla" Munitionsart="Lorem interdum parturient vestibulum" Name="Donec nunc etiam tellus odio" Preis="258.85" Reichweiten="Faucibus fermentum posuere non habitant" TPReichweiten="Eleifend facilisi laoreet natoque" Verbreitung="Orci adipiscing" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Augue varius per sed" Bemerkung="Proin nascetur sodales viverra aliquam" Gewicht="24" Gruppe="Quis adipiscing urna himenaeos" Literatur="Rhoncus pede quam turpis" Name="Habitasse hendrerit" Preis="317.84" RSBauch="71" RSKopf="63" RSBrust="71" RSBeinL="36" RSArmL="75" RSRücken="72" RSBeinR="69" RSArmR="15" Steif="False" Verbreitung="Vestibulum morbi nulla lobortis tortor"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Parturient placerat nunc pulvinar vel" BF="83" Gewicht="76" Größe="Vestibulum vivamus vestibulum aliquam" INI="97" Literatur="Duis dolor imperdiet pharetra" Name="Sem integer quisque" Preis="550.77" Typ="Adipiscing sagittis fames nam parturient" Verbreitung="Sit cras" WMAT="69" WMPA="70"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Vestibulum amet porttitor dis mauris" DK="Nullam est tincidunt blandit" Gewicht="77" Improvisiert="False" Literatur="Aliquet sed sociosqu aenean penatibus" Name="Felis senectus malesuada" Preis="487.34" TPBonus="16" TPWürfelAnzahl="97" TPWürfel="60" Verbreitung="Ipsum justo"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Parturient dapibus" Gewicht="32" Improvisiert="True" Literatur="Torquent cubilia lorem ultricies" Munitionsart="Magna massa aptent venenatis" Name="Ante hac" Preis="645.16" Reichweiten="Tristique lacus vestibulum" TPReichweiten="Commodo suscipit" Verbreitung="Conubia adipiscing" Verwundend="True">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Euismod diam vestibulum adipiscing" Gewicht="23" Literatur="Vulputate curabitur leo egestas" Name="Morbi arcu neque" Preis="381.39" Tags="Vehicula feugiat netus auctor congue" Verbreitung="Vestibulum metus ultrices">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Consequat velit parturient cursus iaculis" Gewicht="34" Improvisiert="False" Literatur="Adipiscing risus" Munitionsart="Vestibulum non dictum vestibulum" Name="Vestibulum gravida" Preis="869.2" Reichweiten="Mus elit vestibulum" TPReichweiten="Parturient eget nulla" Verbreitung="Nec porta purus phasellus enim" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Elementum bibendum magnis eros laoreet" Bemerkung="Curae litora donec etiam dignissim" Gewicht="57" Gruppe="Accumsan luctus" Literatur="Adipiscing ligula maecenas praesent" Name="Per vitae lacinia volutpat" Preis="879.52" RSBauch="87" RSKopf="21" RSBrust="73" RSBeinL="27" RSArmL="40" RSRücken="19" RSBeinR="85" RSArmR="39" Steif="True" Verbreitung="Lectus erat libero class convallis"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Sit parturient" BF="84" Gewicht="95" Größe="Vestibulum vestibulum vel nibh montes" INI="68" Literatur="Mauris sem habitasse mollis lorem" Name="Sed fusce natoque facilisis" Preis="473.75" Typ="Eleifend nisi adipiscing nostra" Verbreitung="Fermentum mattis fringilla dictumst" WMAT="45" WMPA="36"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Ornare est" DK="Augue hendrerit" Gewicht="40" Improvisiert="True" Literatur="Proin parturient" Name="Nam morbi nisl nulla" Preis="181.44" TPBonus="30" TPWürfelAnzahl="13" TPWürfel="37" Verbreitung="Sed dis"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Vestibulum malesuada fames" Gewicht="34" Improvisiert="False" Literatur="Potenti parturient inceptos odio interdum" Munitionsart="Orci lobortis pretium" Name="Vestibulum nunc dolor faucibus" Preis="723.36" Reichweiten="Vestibulum posuere facilisi" TPReichweiten="Himenaeos platea" Verbreitung="Adipiscing hac habitant imperdiet" Verwundend="False">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Leo placerat" Gewicht="57" Literatur="Quam sodales" Name="Vestibulum adipiscing ipsum penatibus pede" Preis="290.55" Tags="Porttitor pulvinar parturient sagittis" Verbreitung="Felis rhoncus nascetur primis pharetra">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Justo cras duis" Gewicht="42" Improvisiert="True" Literatur="Semper sociosqu suscipit" Munitionsart="Nunc ultricies quisque venenatis vestibulum" Name="Tristique senectus" Preis="547.64" Reichweiten="Rutrum viverra aliquam mus integer" TPReichweiten="Tincidunt quis urna" Verbreitung="Nec sapien" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Vivamus magna phasellus parturient" Bemerkung="Amet adipiscing" Gewicht="64" Gruppe="Vehicula lorem" Literatur="Taciti curabitur" Name="Vulputate vestibulum torquent" Preis="417.97" RSBauch="24" RSKopf="12" RSBrust="45" RSBeinL="43" RSArmL="92" RSRücken="77" RSBeinR="71" RSArmR="94" Steif="False" Verbreitung="Lacus sociis ultrices"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Tellus praesent tempor enim erat" BF="66" Gewicht="77" Größe="Non eros" INI="60" Literatur="Volutpat aliquam consequat maecenas" Name="Ante massa arcu diam" Preis="740.84" Typ="Tempus tortor convallis nibh accumsan" Verbreitung="Eget elit metus" WMAT="78" WMPA="43"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Turpis nisi sed varius aenean" DK="Bibendum dictumst blandit eleifend" Gewicht="51" Improvisiert="False" Literatur="Aliquet elementum neque per adipiscing" Name="Vestibulum morbi" Preis="597.62" TPBonus="44" TPWürfelAnzahl="63" TPWürfel="97" Verbreitung="Vestibulum dignissim"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Nulla porta" Gewicht="75" Improvisiert="True" Literatur="Cubilia odio fermentum" Munitionsart="Habitant parturient orci" Name="Conubia netus mauris adipiscing" Preis="332.52" Reichweiten="Vestibulum vestibulum nisl facilisi faucibus" TPReichweiten="Parturient facilisis commodo" Verbreitung="Nullam nunc sem" Verwundend="True">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Hendrerit himenaeos vestibulum purus" Gewicht="83" Literatur="Congue cursus" Name="Auctor habitasse interdum" Preis="595.03" Tags="Vel nam" Verbreitung="Inceptos fringilla sit aptent">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Dapibus adipiscing leo parturient" Gewicht="19" Improvisiert="False" Literatur="Velit vestibulum vestibulum" Munitionsart="Pharetra vitae penatibus porttitor vestibulum" Name="Adipiscing hac parturient" Preis="343.95" Reichweiten="Pede dis nascetur est" TPReichweiten="Risus lobortis sed vestibulum" Verbreitung="Imperdiet quam malesuada dictum" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Non tristique" Bemerkung="Class tincidunt" Gewicht="84" Gruppe="Sagittis cras" Literatur="Lectus urna egestas euismod" Name="Mus nec" Preis="977.27" RSBauch="47" RSKopf="80" RSBrust="33" RSBeinL="33" RSArmL="38" RSRücken="44" RSBeinR="94" RSArmR="99" Steif="True" Verbreitung="Placerat quis pulvinar"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Vestibulum vulputate sed" BF="93" Gewicht="86" Größe="Magnis nunc iaculis adipiscing curae" INI="91" Literatur="Parturient venenatis duis vestibulum luctus" Name="Per libero ligula vestibulum" Preis="713.75" Typ="Curabitur donec mattis" Verbreitung="Litora feugiat adipiscing gravida ultricies" WMAT="97" WMPA="66"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Consequat morbi convallis vestibulum nulla" DK="Proin sit lacinia dignissim" Gewicht="18" Improvisiert="True" Literatur="Fusce vestibulum lorem" Name="Sem etiam phasellus parturient" Preis="571.17" TPBonus="48" TPWürfelAnzahl="41" TPWürfel="37" Verbreitung="Amet ante"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Fames enim posuere" Gewicht="45" Improvisiert="False" Literatur="Laoreet elit natoque montes" Munitionsart="Suscipit torquent nostra erat" Name="Dolor vel" Preis="664.5" Reichweiten="Senectus mauris sociosqu" TPReichweiten="Arcu adipiscing augue diam eget" Verbreitung="Mollis parturient elementum" Verwundend="False">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Ornare volutpat ipsum nam fermentum" Gewicht="73" Literatur="Facilisis pretium felis" Name="Eros nibh" Preis="365.49" Tags="Sed nisi rhoncus" Verbreitung="Ultrices potenti vehicula vestibulum">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Sapien semper nunc odio" Gewicht="83" Improvisiert="True" Literatur="Aliquam dis integer quisque vestibulum" Munitionsart="Himenaeos vivamus lorem" Name="Viverra lacus habitasse parturient hendrerit" Preis="487.5" Reichweiten="Adipiscing fringilla" TPReichweiten="Platea vestibulum justo sodales primis" Verbreitung="Vestibulum nisl rutrum" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Massa metus" Bemerkung="Aliquet penatibus taciti" Gewicht="23" Gruppe="Parturient magna vestibulum praesent" Literatur="Leo maecenas quam" Name="Adipiscing imperdiet sociis aliquam orci" Preis="693.07" RSBauch="88" RSKopf="28" RSBrust="67" RSBeinL="39" RSArmL="18" RSRücken="93" RSBeinR="49" RSArmR="28" Steif="False" Verbreitung="Est hac pede malesuada"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Accumsan vestibulum bibendum adipiscing" BF="80" Gewicht="85" Größe="Dictumst parturient cras eleifend tristique" INI="32" Literatur="Non tincidunt per" Name="Quis porttitor mus morbi" Preis="991.94" Typ="Vestibulum vestibulum facilisi tellus tempor" Verbreitung="Blandit urna nec" WMAT="58" WMPA="73"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Tortor netus habitant parturient" DK="Vestibulum amet vestibulum nam adipiscing" Gewicht="32" Improvisiert="False" Literatur="Nunc sit faucibus vel" Name="Tempus adipiscing duis" Preis="654.63" TPBonus="64" TPWürfelAnzahl="43" TPWürfel="22" Verbreitung="Sed commodo ultricies neque sem"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+	</Inventar:InventarViewModel.FernkampfwaffeListe>
+	<Inventar:InventarViewModel.FernkampWaffeTalentListe>
+		<Model:Talent Eigenschaft1="Vestibulum adipiscing parturient ligula" Eigenschaft2="Vestibulum dapibus sit vestibulum" Eigenschaft3="Amet ante" Fertigkeitswert="33" IsBehinderung="True" Literatur="Imperdiet bibendum" Modifikator="27" Probenname="Parturient nunc sem" Spezialisierungen="Parturient hendrerit" Steigerung="Magnis himenaeos" Setting="Mauris vitae" Talentname="Vestibulum conubia cubilia" Talenttyp="Adipiscing purus litora" Untergruppe="Mattis accumsan velit" Voraussetzungen="Risus diam vehicula vestibulum eget" WikiLink="Volutpat maecenas praesent vel" eBE="Egestas ultrices arcu luctus">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="MISSLUNGEN" General:ProbenErgebnis.Qualität="11" General:ProbenErgebnis.Übrig="72">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Elit vestibulum nam" Kurzname="Euismod feugiat gravida dictumst iaculis" TalentgruppeID="25"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Penatibus facilisi eros" Eigenschaft2="Nibh class curae" Eigenschaft3="Donec sed faucibus" Fertigkeitswert="65" IsBehinderung="False" Literatur="Natoque ultricies venenatis morbi nulla" Modifikator="36" Probenname="Eleifend enim" Spezialisierungen="Tincidunt fusce" Steigerung="Lorem parturient montes nunc" Setting="Interdum laoreet" Talentname="Erat malesuada" Talenttyp="Dis nisi porttitor mollis" Untergruppe="Tristique inceptos hac odio lacinia" Voraussetzungen="Adipiscing est" WikiLink="Vestibulum habitant" eBE="Etiam nisl">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GELUNGEN" General:ProbenErgebnis.Qualität="21" General:ProbenErgebnis.Übrig="51">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Nostra leo mus vestibulum lobortis" Kurzname="Adipiscing orci nascetur" TalentgruppeID="83"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Augue vulputate quam vestibulum vestibulum" Eigenschaft2="Dolor platea quis posuere" Eigenschaft3="Primis pharetra urna adipiscing" Fertigkeitswert="49" IsBehinderung="True" Literatur="Dignissim senectus sociis" Modifikator="65" Probenname="Proin nec" Spezialisierungen="Phasellus consequat non ipsum duis" Steigerung="Pulvinar rutrum sagittis" Setting="Semper convallis sed" Talentname="Pede ornare parturient" Talenttyp="Cras fames placerat felis" Untergruppe="Parturient sapien viverra vestibulum" Voraussetzungen="Sodales per nunc justo" WikiLink="Lacus lorem" eBE="Potenti pretium curabitur rhoncus">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GELUNGEN" General:ProbenErgebnis.Qualität="16" General:ProbenErgebnis.Übrig="93">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Sociosqu elementum facilisis fermentum sem" Kurzname="Sit taciti suscipit aliquam" TalentgruppeID="56"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Tempus vel" Eigenschaft2="Magna habitasse" Eigenschaft3="Ante quisque vivamus" Fertigkeitswert="36" IsBehinderung="False" Literatur="Aenean hac aliquam imperdiet" Modifikator="34" Probenname="Tellus tempor vestibulum amet integer" Spezialisierungen="Vehicula nam adipiscing turpis sed" Steigerung="Varius praesent diam eget" Setting="Est erat accumsan" Talentname="Torquent fringilla" Talenttyp="Hendrerit tortor" Untergruppe="Parturient vestibulum dis morbi" Voraussetzungen="Arcu volutpat maecenas" WikiLink="Metus elit himenaeos enim" eBE="Massa ultrices">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GELUNGEN" General:ProbenErgebnis.Qualität="12" General:ProbenErgebnis.Übrig="19">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Eros nibh" Kurzname="Neque vestibulum" TalentgruppeID="57"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Aliquet adipiscing aptent" Eigenschaft2="Dictumst auctor parturient netus leo" Eigenschaft3="Nisi porttitor" Fertigkeitswert="93" IsBehinderung="True" Literatur="Cubilia velit odio" Modifikator="42" Probenname="Mauris malesuada nullam" Spezialisierungen="Mus commodo cursus dictum" Steigerung="Litora luctus nec facilisi" Setting="Ultricies nunc parturient" Talentname="Penatibus bibendum" Talenttyp="Vestibulum blandit congue nulla eleifend" Untergruppe="Nisl conubia adipiscing mauris risus" Voraussetzungen="Lectus libero ligula purus" WikiLink="Tincidunt magnis tristique mattis" eBE="Vestibulum porta">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GLÜCKLICH" General:ProbenErgebnis.Qualität="48" General:ProbenErgebnis.Übrig="66">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Dapibus vitae faucibus vestibulum" Kurzname="Egestas non per venenatis" TalentgruppeID="54"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Pede class" Eigenschaft2="Curae platea vel nam donec" Eigenschaft3="Curabitur habitant primis sed" Fertigkeitswert="46" IsBehinderung="False" Literatur="Est parturient" Modifikator="51" Probenname="Vulputate mollis orci sed montes" Spezialisierungen="Feugiat gravida inceptos convallis interdum" Steigerung="Vestibulum rutrum iaculis sapien vestibulum" Setting="Adipiscing pharetra lacinia lorem semper" Talentname="Sem nostra sit ornare" Talenttyp="Quam etiam euismod vestibulum" Untergruppe="Nascetur urna" Voraussetzungen="Dis parturient" WikiLink="Lobortis dignissim" eBE="Quis fusce phasellus adipiscing consequat">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="PATZER" General:ProbenErgebnis.Qualität="20" General:ProbenErgebnis.Übrig="12">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Laoreet vestibulum natoque" Kurzname="Posuere vestibulum" TalentgruppeID="33"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Sociis nulla parturient" Eigenschaft2="Placerat pulvinar potenti" Eigenschaft3="Elementum leo mus taciti tellus" Fertigkeitswert="93" IsBehinderung="True" Literatur="Ante vestibulum" Modifikator="51" Probenname="Morbi adipiscing" Spezialisierungen="Facilisis fermentum proin sagittis augue" Steigerung="Fringilla per tortor" Setting="Mauris fames hendrerit nullam" Talentname="Hac cras" Talenttyp="Nec non" Untergruppe="Amet varius aenean habitasse vestibulum" Voraussetzungen="Senectus dolor tempus rhoncus nunc" WikiLink="Sed sodales viverra turpis" eBE="Duis tempor pretium">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GELUNGEN" General:ProbenErgebnis.Qualität="37" General:ProbenErgebnis.Übrig="93">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Sociosqu himenaeos aptent" Kurzname="Imperdiet sem adipiscing sit aliquam" TalentgruppeID="91"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Quisque vel penatibus porttitor vehicula" Eigenschaft2="Vestibulum tincidunt nam volutpat tristique" Eigenschaft3="Felis adipiscing ultricies venenatis" Fertigkeitswert="40" IsBehinderung="False" Literatur="Vestibulum non" Modifikator="83" Probenname="Suscipit auctor parturient torquent vestibulum" Spezialisierungen="Sed dis cursus parturient" Steigerung="Diam bibendum aliquam justo" Setting="Eget phasellus elit blandit" Talentname="Integer arcu congue malesuada ultrices" Talenttyp="Vivamus ipsum" Untergruppe="Curabitur nec" Voraussetzungen="Est vestibulum hac" WikiLink="Vulputate leo aliquet mus" eBE="Maecenas praesent accumsan">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="FATALER_PATZER" General:ProbenErgebnis.Qualität="42" General:ProbenErgebnis.Übrig="86">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Lacus lorem magna dictumst commodo" Kurzname="Enim erat conubia consequat" TalentgruppeID="56"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Convallis adipiscing cubilia habitant sed" Eigenschaft2="Lectus libero" Eigenschaft3="Sem nibh" Fertigkeitswert="75" IsBehinderung="True" Literatur="Mattis nascetur" Modifikator="37" Probenname="Dictum eleifend" Spezialisierungen="Nisl vel nam nunc" Steigerung="Odio luctus sed" Setting="Metus vestibulum" Talentname="Facilisi faucibus eros per" Talenttyp="Massa inceptos sit" Untergruppe="Egestas magnis" Voraussetzungen="Interdum lobortis" WikiLink="Dapibus vestibulum" eBE="Ligula nisi parturient litora">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="PATZER" General:ProbenErgebnis.Qualität="53" General:ProbenErgebnis.Übrig="83">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Dis morbi dignissim" Kurzname="Pharetra adipiscing parturient euismod elementum" TalentgruppeID="89"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Mollis fermentum" Eigenschaft2="Vestibulum feugiat pulvinar gravida vestibulum" Eigenschaft3="Neque leo fringilla" Fertigkeitswert="60" IsBehinderung="False" Literatur="Porttitor porta" Modifikator="85" Probenname="Orci est mauris facilisis" Spezialisierungen="Montes pede netus nostra habitasse" Steigerung="Ornare platea primis sagittis" Setting="Nulla penatibus sociosqu" Talentname="Hac placerat" Talenttyp="Mus iaculis lacinia laoreet" Untergruppe="Senectus rutrum malesuada" Voraussetzungen="Nec hendrerit quam quis" WikiLink="Himenaeos posuere vestibulum imperdiet potenti" eBE="Adipiscing natoque parturient">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="FATALER_PATZER" General:ProbenErgebnis.Qualität="33" General:ProbenErgebnis.Übrig="30">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Non pretium" Kurzname="Purus risus per vestibulum suscipit" TalentgruppeID="86"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+	</Inventar:InventarViewModel.FernkampWaffeTalentListe>
+	<Inventar:InventarViewModel.NahkampfWaffeTalentListe>
+		<Model:Talent Eigenschaft1="Massa vestibulum nostra metus" Eigenschaft2="Dignissim bibendum commodo conubia" Eigenschaft3="Ornare cubilia" Fertigkeitswert="20" IsBehinderung="True" Literatur="Feugiat purus" Modifikator="54" Probenname="Aliquet vestibulum blandit" Spezialisierungen="Sapien facilisi semper" Steigerung="Nunc taciti faucibus" Setting="Inceptos euismod dis est" Talentname="Montes justo lacus lorem magna" Talenttyp="Platea dictumst eleifend primis nam" Untergruppe="Porta orci tellus tempor pede" Voraussetzungen="Sed sociis" WikiLink="Habitant egestas odio nulla" eBE="Morbi neque dapibus netus rutrum">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="MEISTERHAFT" General:ProbenErgebnis.Qualität="13" General:ProbenErgebnis.Übrig="18">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Elementum quam hac" Kurzname="Leo quis facilisis urna mus" TalentgruppeID="22"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Iaculis tempus" Eigenschaft2="Hendrerit lacinia risus himenaeos" Eigenschaft3="Imperdiet malesuada velit" Fertigkeitswert="25" IsBehinderung="False" Literatur="Venenatis fusce vulputate rhoncus" Modifikator="75" Probenname="Fermentum adipiscing fringilla" Spezialisierungen="Interdum vestibulum nunc class" Steigerung="Amet ante" Setting="Tincidunt adipiscing tristique ultricies parturient" Talentname="Habitasse gravida" Talenttyp="Cras vitae tortor" Untergruppe="Etiam pretium varius" Voraussetzungen="Penatibus curae natoque vestibulum donec" WikiLink="Porttitor posuere potenti turpis" eBE="Parturient laoreet duis">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="KEIN_ERGEBNIS" General:ProbenErgebnis.Qualität="33" General:ProbenErgebnis.Übrig="44">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Aenean vestibulum" Kurzname="Curabitur sodales" TalentgruppeID="13"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Lorem vestibulum aptent viverra" Eigenschaft2="Auctor per adipiscing" Eigenschaft3="Morbi nulla parturient vestibulum nascetur" Fertigkeitswert="95" IsBehinderung="True" Literatur="Senectus ligula aliquam dolor aliquet" Modifikator="38" Probenname="Arcu diam nec mauris" Spezialisierungen="Sit adipiscing" Steigerung="Parturient aliquam integer nam" Setting="Vestibulum proin augue libero" Talentname="Phasellus lobortis nullam non" Talenttyp="Sed eget pharetra congue vestibulum" Untergruppe="Sagittis quisque dis lectus vivamus" Voraussetzungen="Placerat vel" WikiLink="Pulvinar dictum sed" eBE="Sem cursus">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="MEISTERHAFT" General:ProbenErgebnis.Qualität="14" General:ProbenErgebnis.Übrig="35">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Est hac litora" Kurzname="Leo blandit sociosqu luctus consequat" TalentgruppeID="81"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Nec felis convallis elit" Eigenschaft2="Enim ipsum" Eigenschaft3="Cubilia suscipit dapibus dignissim non" Fertigkeitswert="79" IsBehinderung="False" Literatur="Nostra fringilla gravida" Modifikator="89" Probenname="Fames magnis mus commodo vestibulum" Spezialisierungen="Vestibulum sed" Steigerung="Justo vehicula" Setting="Erat praesent eros" Talentname="Conubia adipiscing parturient" Talenttyp="Torquent egestas elementum euismod mattis" Untergruppe="Feugiat maecenas" Voraussetzungen="Fermentum ultrices vestibulum" WikiLink="Lacus adipiscing parturient volutpat lorem" eBE="Mauris mollis facilisis montes per">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GELUNGEN" General:ProbenErgebnis.Qualität="78" General:ProbenErgebnis.Übrig="19">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Habitasse ornare hendrerit" Kurzname="Iaculis himenaeos nibh" TalentgruppeID="50"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Rutrum malesuada" Eigenschaft2="Sem nisl sit laoreet magna" Eigenschaft3="Vel vestibulum massa" Fertigkeitswert="64" IsBehinderung="True" Literatur="Taciti quam tellus tempor" Modifikator="86" Probenname="Platea vestibulum lacinia" Spezialisierungen="Dis parturient neque posuere" Steigerung="Tristique dictumst ultricies semper vestibulum" Setting="Potenti sociis vulputate parturient pede" Talentname="Nisi primis imperdiet" Talenttyp="Natoque penatibus metus morbi adipiscing" Untergruppe="Adipiscing facilisi faucibus orci habitant" Voraussetzungen="Netus odio porttitor bibendum tincidunt" WikiLink="Vestibulum venenatis eleifend" eBE="Nam sapien accumsan nunc sed">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="FATALER_PATZER" General:ProbenErgebnis.Qualität="30" General:ProbenErgebnis.Übrig="54">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Vestibulum vestibulum tempus curabitur pretium" Kurzname="Tortor rhoncus adipiscing phasellus inceptos" TalentgruppeID="63"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Quis aenean mauris parturient" Eigenschaft2="Aliquam vestibulum purus" Eigenschaft3="Risus vestibulum" Fertigkeitswert="91" IsBehinderung="False" Literatur="Dictum cras" Modifikator="72" Probenname="Sodales nulla est viverra" Spezialisierungen="Vitae class convallis dignissim hac" Steigerung="Parturient nec integer auctor" Setting="Sem sit vestibulum cursus quisque" Talentname="Consequat porta turpis varius" Talenttyp="Interdum velit" Untergruppe="Non lobortis facilisis per sed" Voraussetzungen="Urna curae donec leo mus" WikiLink="Congue elementum" eBE="Adipiscing nullam aptent">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GLÜCKLICH" General:ProbenErgebnis.Qualität="46" General:ProbenErgebnis.Übrig="12">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Vivamus vestibulum aliquam fermentum" Kurzname="Etiam duis adipiscing fringilla" TalentgruppeID="80"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Lectus nam libero" Eigenschaft2="Ligula vestibulum" Eigenschaft3="Hendrerit sed nascetur pharetra nunc" Fertigkeitswert="72" IsBehinderung="True" Literatur="Dolor cubilia" Modifikator="43" Probenname="Habitasse parturient" Spezialisierungen="Placerat amet" Steigerung="Imperdiet augue aliquet sagittis adipiscing" Setting="Vestibulum vestibulum arcu conubia" Talentname="Fusce lorem vel vestibulum morbi" Talenttyp="Litora luctus nulla" Untergruppe="Blandit parturient hac senectus commodo" Voraussetzungen="Pulvinar ante mauris dis" WikiLink="Est mollis" eBE="Proin himenaeos magnis mattis">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="MEISTERHAFT" General:ProbenErgebnis.Qualität="10" General:ProbenErgebnis.Übrig="50">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Diam adipiscing dapibus" Kurzname="Parturient sociosqu egestas montes leo" TalentgruppeID="47"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Adipiscing suscipit nec" Eigenschaft2="Felis eget non gravida" Eigenschaft3="Elit torquent nostra ornare iaculis" Fertigkeitswert="57" IsBehinderung="False" Literatur="Nibh nisi" Modifikator="18" Probenname="Euismod malesuada" Spezialisierungen="Parturient erat vestibulum" Steigerung="Porttitor vehicula vestibulum" Setting="Tincidunt volutpat maecenas sed" Talentname="Feugiat vestibulum fames mus vestibulum" Talenttyp="Ultrices penatibus" Untergruppe="Natoque posuere parturient per" Voraussetzungen="Lacinia laoreet" WikiLink="Eros adipiscing" eBE="Platea ipsum enim">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="GELUNGEN" General:ProbenErgebnis.Qualität="97" General:ProbenErgebnis.Übrig="98">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Nisl sem primis praesent" Kurzname="Accumsan vestibulum rutrum justo vestibulum" TalentgruppeID="87"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Nam semper sociis ultricies taciti" Eigenschaft2="Lacus sed odio dis bibendum" Eigenschaft3="Dictumst tellus" Fertigkeitswert="26" IsBehinderung="True" Literatur="Habitant vestibulum nec" Modifikator="69" Probenname="Tristique nunc" Spezialisierungen="Vulputate eleifend" Steigerung="Rhoncus tempor magna" Setting="Faucibus viverra massa aliquam metus" Talentname="Sit potenti sapien adipiscing vel" Talenttyp="Pretium parturient est venenatis orci" Untergruppe="Sodales mus" Voraussetzungen="Lorem curabitur" WikiLink="Hac tempus facilisi tortor leo" eBE="Pede vestibulum">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="PATZER" General:ProbenErgebnis.Qualität="85" General:ProbenErgebnis.Übrig="88">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Morbi integer" Kurzname="Non quam per inceptos adipiscing" TalentgruppeID="75"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+				
+			</Model:Talent.Werte>
+		</Model:Talent>
+		<Model:Talent Eigenschaft1="Aenean consequat interdum convallis" Eigenschaft2="Mauris sed" Eigenschaft3="Neque vivamus nullam lobortis aliquam" Fertigkeitswert="85" IsBehinderung="False" Literatur="Senectus vestibulum sociosqu suscipit blandit" Modifikator="24" Probenname="Phasellus turpis parturient" Spezialisierungen="Auctor vestibulum" Steigerung="Cursus dictum" Setting="Porta fermentum sagittis" Talentname="Varius quisque quis" Talenttyp="Urna netus" Untergruppe="Pulvinar adipiscing parturient" Voraussetzungen="Nascetur congue facilisis pharetra" WikiLink="Aliquet duis placerat nulla lectus" eBE="Vestibulum aptent dignissim cras elementum">
+			<Model:Talent.Ergebnis>
+				<General:ProbenErgebnis General:ProbenErgebnis.Ergebnis="PATZER" General:ProbenErgebnis.Qualität="37" General:ProbenErgebnis.Übrig="49">
+					<General:ProbenErgebnis.Würfe>
+						
+					</General:ProbenErgebnis.Würfe>
+				</General:ProbenErgebnis>
+			</Model:Talent.Ergebnis>
+			<Model:Talent.TalentGUID>
+				<System:Guid/>
+			</Model:Talent.TalentGUID>
+			<Model:Talent.Talentgruppe>
+				<Model:Talentgruppe Gruppenname="Fringilla vestibulum commodo" Kurzname="Adipiscing torquent habitasse libero" TalentgruppeID="36"/>
+			</Model:Talent.Talentgruppe>
+			<Model:Talent.Werte>
+			
+			</Model:Talent.Werte>
+		</Model:Talent>
+	</Inventar:InventarViewModel.NahkampfWaffeTalentListe>
+	<Inventar:InventarViewModel.NahkampfwaffeListe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Cras viverra" DK="Tristique semper sit" Gewicht="71" Improvisiert="False" Literatur="Tincidunt urna vitae sapien" Name="Sed sem rhoncus torquent" Preis="499.45" TPBonus="77" TPWürfelAnzahl="54" TPWürfel="81" Verbreitung="Velit sodales">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Vivamus parturient class" Gewicht="64" Literatur="Ante taciti integer quisque" Name="Ultrices adipiscing duis nunc amet" Preis="214.72" Tags="Vestibulum ultricies" Verbreitung="Sociis aliquam">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Vestibulum adipiscing" Gewicht="25" Improvisiert="True" Literatur="Tortor phasellus vehicula diam" Munitionsart="Sed dis" Name="Curae tempus" Preis="138.68" Reichweiten="Vulputate vel" TPReichweiten="Tellus tempor venenatis aliquam" Verbreitung="Nam curabitur arcu" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Donec aenean" Bemerkung="Vestibulum varius" Gewicht="34" Gruppe="Praesent accumsan enim adipiscing elementum" Literatur="Maecenas vestibulum dignissim" Name="Consequat aliquet est volutpat turpis" Preis="853.27" RSBauch="87" RSKopf="23" RSBrust="34" RSBeinL="52" RSArmL="33" RSRücken="12" RSBeinR="47" RSArmR="86" Steif="False" Verbreitung="Parturient convallis eget elit"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Facilisi vestibulum erat leo" BF="98" Gewicht="59" Größe="Eros morbi faucibus" INI="65" Literatur="Bibendum lorem dictumst nullam eleifend" Name="Etiam fusce parturient" Preis="801.96" Typ="Aptent blandit vestibulum" Verbreitung="Mauris hac" WMAT="81" WMPA="60"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Nisi non" DK="Per parturient sed" Gewicht="43" Improvisiert="False" Literatur="Nulla nec" Name="Facilisis nibh" Preis="270.07" TPBonus="97" TPWürfelAnzahl="51" TPWürfel="41" Verbreitung="Habitant mus adipiscing"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Sem felis vestibulum" DK="Lobortis ipsum congue" Gewicht="73" Improvisiert="False" Literatur="Conubia cubilia interdum" Name="Inceptos commodo auctor" Preis="447.25" TPBonus="87" TPWürfelAnzahl="94" TPWürfel="53" Verbreitung="Proin nisl augue dolor fames">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Ligula fringilla pharetra orci" Gewicht="49" Literatur="Odio dapibus fermentum" Name="Nunc libero nascetur" Preis="234.24" Tags="Placerat justo pulvinar" Verbreitung="Cursus dictum lectus">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Torquent ultrices feugiat vestibulum magna" Gewicht="74" Improvisiert="True" Literatur="Hendrerit nam euismod himenaeos suscipit" Munitionsart="Imperdiet massa" Name="Sit lacus vel lorem litora" Preis="202.99" Reichweiten="Sagittis senectus habitasse" TPReichweiten="Egestas pede" Verbreitung="Quam luctus sociosqu" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Lacinia accumsan vestibulum hac netus" Bemerkung="Sed praesent iaculis neque" Gewicht="67" Gruppe="Dis mauris penatibus est" Literatur="Morbi mattis volutpat maecenas" Name="Malesuada magnis adipiscing gravida" Preis="204.82" RSBauch="52" RSKopf="11" RSBrust="65" RSBeinL="35" RSArmL="22" RSRücken="11" RSBeinR="25" RSArmR="38" Steif="False" Verbreitung="Vehicula metus parturient"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Eleifend mollis natoque facilisi" BF="26" Gewicht="61" Größe="Nec urna non" INI="64" Literatur="Porttitor tincidunt porta mus" Name="Nulla vestibulum" Preis="508.72" Typ="Cras per purus" Verbreitung="Laoreet leo bibendum quis dictumst" WMAT="63" WMPA="52"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Tristique class" DK="Pretium curae ultricies venenatis adipiscing" Gewicht="28" Improvisiert="False" Literatur="Vel velit vitae potenti" Name="Montes sed" Preis="111.38" TPBonus="17" TPWürfelAnzahl="97" TPWürfel="99" Verbreitung="Sem risus posuere sit"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Interdum vestibulum adipiscing curabitur phasellus" DK="Nostra lobortis duis" Gewicht="86" Improvisiert="False" Literatur="Parturient sed vestibulum lorem inceptos" Name="Faucibus donec nam vulputate etiam" Preis="511.99" TPBonus="71" TPWürfelAnzahl="77" TPWürfel="71" Verbreitung="Fusce rhoncus sodales habitant">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Vestibulum nulla proin" Gewicht="70" Literatur="Nunc morbi parturient amet" Name="Ornare nascetur" Preis="566.09" Tags="Platea vestibulum est integer hac" Verbreitung="Dis viverra aliquam">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Semper diam sociis fames" Gewicht="20" Improvisiert="True" Literatur="Sapien vestibulum augue dolor" Munitionsart="Adipiscing pulvinar felis eget sagittis" Name="Vestibulum arcu" Preis="556.91" Reichweiten="Adipiscing ante parturient primis leo" TPReichweiten="Pharetra quisque placerat" Verbreitung="Rutrum vivamus" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Suscipit per" Bemerkung="Ipsum elementum aliquet nec" Gewicht="17" Gruppe="Tellus facilisis non vestibulum justo" Literatur="Mus dignissim vestibulum" Name="Senectus elit aliquam parturient enim" Preis="935.83" RSBauch="31" RSKopf="40" RSBrust="40" RSBeinL="46" RSArmL="14" RSRücken="56" RSBeinR="73" RSArmR="21" Steif="False" Verbreitung="Sociosqu consequat taciti convallis"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Nibh commodo fermentum fringilla" BF="85" Gewicht="60" Größe="Sit vehicula tempor conubia vel" INI="30" Literatur="Erat eros sem lacus blandit" Name="Adipiscing sed" Preis="921.25" Typ="Volutpat vestibulum" Verbreitung="Parturient torquent ultrices" WMAT="44" WMPA="31"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Nam nunc" DK="Maecenas vestibulum metus adipiscing odio" Gewicht="40" Improvisiert="False" Literatur="Hendrerit magna massa turpis" Name="Tempus lorem nisi" Preis="468.7" TPBonus="56" TPWürfelAnzahl="16" TPWürfel="18" Verbreitung="Tortor habitasse nisl cubilia"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Pede euismod nulla" DK="Quam vestibulum" Gewicht="44" Improvisiert="False" Literatur="Sed morbi himenaeos neque netus" Name="Orci dapibus parturient" Preis="584.1" TPBonus="91" TPWürfelAnzahl="45" TPWürfel="14" Verbreitung="Egestas varius">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Quis penatibus mauris" Gewicht="76" Literatur="Malesuada vestibulum accumsan purus adipiscing" Name="Praesent imperdiet porta" Preis="600.75" Tags="Bibendum urna cras nullam aptent" Verbreitung="Dis aenean">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Feugiat facilisi auctor arcu" Gewicht="35" Improvisiert="True" Literatur="Nunc nec non amet ante" Munitionsart="Vestibulum faucibus" Name="Leo mus adipiscing duis" Preis="607.68" Reichweiten="Vestibulum hac" TPReichweiten="Risus porttitor est parturient vestibulum" Verbreitung="Dictumst eleifend parturient" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Congue interdum class enim" Bemerkung="Venenatis habitant elit" Gewicht="79" Gruppe="Inceptos nam" Literatur="Vitae ultricies eget iaculis" Name="Gravida diam velit tincidunt per" Preis="988.06" RSBauch="96" RSKopf="73" RSBrust="55" RSBeinL="96" RSArmL="11" RSRücken="86" RSBeinR="41" RSArmR="78" Steif="False" Verbreitung="Sed sem tristique sit vel"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Etiam pharetra phasellus fusce" BF="96" Gewicht="55" Größe="Dis consequat est" INI="98" Literatur="Nascetur erat donec" Name="Lacinia curae lobortis vestibulum" Preis="641.64" Typ="Convallis placerat parturient dignissim" Verbreitung="Sed vulputate curabitur adipiscing" WMAT="93" WMPA="82"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Sagittis potenti proin nibh" DK="Mus vestibulum" Gewicht="31" Improvisiert="False" Literatur="Posuere hac nulla leo" Name="Lorem elementum laoreet morbi vestibulum" Preis="288.8" TPBonus="27" TPWürfelAnzahl="39" TPWürfel="13" Verbreitung="Natoque pulvinar eros"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Dolor fermentum pretium fames" DK="Fringilla non habitasse felis" Gewicht="78" Improvisiert="False" Literatur="Facilisis parturient suscipit nunc" Name="Nisi nec senectus sociosqu" Preis="889.38" TPBonus="97" TPWürfelAnzahl="81" TPWürfel="13" Verbreitung="Adipiscing augue nisl">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Sed adipiscing dictum" Gewicht="78" Literatur="Per hendrerit volutpat maecenas" Name="Cursus ultrices odio vestibulum vehicula" Preis="316.46" Tags="Parturient sem rhoncus" Verbreitung="Torquent vestibulum ipsum justo">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Vestibulum malesuada lorem" Gewicht="22" Improvisiert="True" Literatur="Lectus viverra imperdiet libero parturient" Munitionsart="Nam accumsan magna" Name="Vel pede quam" Preis="152.26" Reichweiten="Sit sodales vestibulum" TPReichweiten="Vestibulum lacus orci" Verbreitung="Himenaeos praesent adipiscing" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Urna parturient cras netus" Bemerkung="Litora adipiscing bibendum morbi" Gewicht="77" Gruppe="Neque luctus hac" Literatur="Tincidunt integer vestibulum est" Name="Aliquam penatibus quis sed ligula" Preis="885.61" RSBauch="75" RSKopf="77" RSBrust="65" RSBeinL="26" RSArmL="36" RSRücken="31" RSBeinR="63" RSArmR="65" Steif="False" Verbreitung="Massa porttitor dis metus"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Ante magnis tristique" BF="45" Gewicht="14" Größe="Aliquet adipiscing" INI="66" Literatur="Aliquam amet leo eleifend" Name="Duis vestibulum quisque" Preis="842.9" Typ="Nulla facilisi mattis" Verbreitung="Vestibulum vivamus nunc dictumst" WMAT="76" WMPA="40"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Inceptos non commodo" DK="Conubia ultricies vestibulum" Gewicht="44" Improvisiert="False" Literatur="Mauris nec habitant" Name="Arcu parturient blandit" Preis="663.76" TPBonus="48" TPWürfelAnzahl="63" TPWürfel="95" Verbreitung="Faucibus vestibulum mus diam"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Vulputate lobortis porta" DK="Egestas nascetur" Gewicht="89" Improvisiert="False" Literatur="Venenatis sem" Name="Cubilia interdum adipiscing dapibus" Preis="928.2" TPBonus="58" TPWürfelAnzahl="91" TPWürfel="75" Verbreitung="Eget per sed">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Pulvinar sagittis vestibulum lacinia" Gewicht="20" Literatur="Elit placerat parturient purus" Name="Gravida sit mollis iaculis" Preis="335.57" Tags="Vestibulum vel" Verbreitung="Euismod pharetra feugiat">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Adipiscing convallis" Gewicht="20" Improvisiert="True" Literatur="Sociosqu dis risus" Munitionsart="Velit est parturient natoque" Name="Erat eros" Preis="988.46" Reichweiten="Nam enim montes" TPReichweiten="Senectus laoreet curabitur" Verbreitung="Sed phasellus consequat" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Torquent ultrices potenti donec nunc" Bemerkung="Ornare curae nisi nisl" Gewicht="35" Gruppe="Mus suscipit nec" Literatur="Vestibulum nibh" Name="Hac posuere vitae class" Preis="297.97" RSBauch="54" RSKopf="41" RSBrust="75" RSBeinL="81" RSArmL="22" RSRücken="27" RSBeinR="94" RSArmR="72" Steif="False" Verbreitung="Nostra leo"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Rhoncus sodales" BF="75" Gewicht="42" Größe="Rutrum adipiscing fusce elementum viverra" INI="23" Literatur="Dignissim primis" Name="Etiam platea" Preis="989.51" Typ="Lorem non" Verbreitung="Vestibulum pretium" WMAT="18" WMPA="34"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Morbi nulla pede quam bibendum" DK="Dictumst eleifend quis facilisi faucibus" Gewicht="70" Improvisiert="False" Literatur="Volutpat maecenas praesent aliquam accumsan" Name="Per odio" Preis="935.97" TPBonus="77" TPWürfelAnzahl="79" TPWürfel="76" Verbreitung="Sapien vehicula orci semper parturient"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Interdum sem taciti urna vestibulum" DK="Cras fringilla tellus lobortis" Gewicht="28" Improvisiert="False" Literatur="Augue habitant inceptos" Name="Facilisis integer vestibulum sociis" Preis="338.84" TPBonus="90" TPWürfelAnzahl="29" TPWürfel="94" Verbreitung="Proin fermentum quisque sed">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Tempus tortor parturient pharetra placerat" Gewicht="47" Literatur="Nascetur sit himenaeos ante tempor" Name="Habitasse amet dolor fames hendrerit" Preis="222.74" Tags="Arcu diam vel" Verbreitung="Duis adipiscing nunc">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Enim vestibulum" Gewicht="93" Improvisiert="True" Literatur="Turpis penatibus ipsum elit" Munitionsart="Aliquam porttitor justo lacus" Name="Eget senectus adipiscing" Preis="803.34" Reichweiten="Vestibulum vestibulum sagittis" TPReichweiten="Pulvinar felis" Verbreitung="Imperdiet vivamus parturient malesuada vestibulum" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Ultricies venenatis aenean vulputate" Bemerkung="Suscipit commodo conubia metus tristique" Gewicht="82" Gruppe="Cubilia sed dapibus" Literatur="Varius blandit massa" Name="Tincidunt aliquet lorem sociosqu nam" Preis="668.59" RSBauch="31" RSKopf="83" RSBrust="50" RSBeinL="29" RSArmL="17" RSRücken="42" RSBeinR="67" RSArmR="13" Steif="False" Verbreitung="Magna erat"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Morbi dis" BF="57" Gewicht="54" Größe="Est nullam aptent lacinia ultrices" INI="90" Literatur="Iaculis nibh" Name="Mauris egestas adipiscing euismod torquent" Preis="948.97" Typ="Vehicula laoreet hac auctor" Verbreitung="Feugiat gravida eros" WMAT="96" WMPA="95"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Natoque consequat vestibulum nisl" DK="Maecenas praesent dictum" Gewicht="14" Improvisiert="False" Literatur="Phasellus parturient vestibulum" Name="Congue nisi curabitur neque" Preis="936.5" TPBonus="95" TPWürfelAnzahl="60" TPWürfel="90" Verbreitung="Leo cursus volutpat"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Nulla magnis vestibulum porta pede" DK="Purus eleifend nec convallis risus" Gewicht="45" Improvisiert="False" Literatur="Mus luctus parturient orci netus" Name="Accumsan bibendum adipiscing lectus dictumst" Preis="820.62" TPBonus="20" TPWürfelAnzahl="37" TPWürfel="33" Verbreitung="Libero nunc ligula odio litora">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Habitant facilisis inceptos fermentum" Gewicht="82" Literatur="Velit adipiscing elementum duis parturient" Name="Cras faucibus vestibulum" Preis="145.82" Tags="Fringilla vestibulum interdum" Verbreitung="Facilisi quam dignissim quis urna">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Sit eget" Gewicht="88" Improvisiert="True" Literatur="Montes class" Munitionsart="Curae pretium lobortis" Name="Per potenti arcu sed" Preis="152.67" Reichweiten="Mattis amet mauris mollis ante" TPReichweiten="Vitae non habitasse nunc posuere" Verbreitung="Sem diam" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Vel nisi semper nisl adipiscing" Bemerkung="Rhoncus sapien" Gewicht="78" Gruppe="Nascetur pharetra placerat" Literatur="Eros nibh vestibulum" Name="Elit nostra enim ornare erat" Preis="496.67" RSBauch="90" RSKopf="23" RSBrust="95" RSBeinL="44" RSArmL="39" RSRücken="24" RSBeinR="93" RSArmR="26" Steif="False" Verbreitung="Platea primis rutrum hendrerit"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Imperdiet sociis" BF="21" Gewicht="81" Größe="Viverra sociosqu fusce nam vestibulum" INI="32" Literatur="Himenaeos senectus etiam" Name="Nunc parturient vestibulum" Preis="395.47" Typ="Sed dis suscipit" Verbreitung="Pulvinar sagittis donec sodales" WMAT="45" WMPA="38"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Quam morbi quis integer" DK="Quisque malesuada" Gewicht="74" Improvisiert="False" Literatur="Lorem orci pede leo aliquam" Name="Odio taciti est" Preis="299.94" TPBonus="89" TPWürfelAnzahl="21" TPWürfel="91" Verbreitung="Hac tellus torquent ultrices vehicula"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Nulla volutpat nec duis tempus" DK="Tortor tristique" Gewicht="67" Improvisiert="False" Literatur="Cras tincidunt parturient" Name="Urna penatibus" Preis="811.48" TPBonus="74" TPWürfelAnzahl="78" TPWürfel="68" Verbreitung="Adipiscing tempor porttitor mus">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Vulputate parturient aenean mauris" Gewicht="85" Literatur="Vivamus adipiscing turpis varius amet" Name="Nunc vestibulum" Preis="244.62" Tags="Non nullam" Verbreitung="Ultricies vestibulum venenatis">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Eget praesent fames" Gewicht="32" Improvisiert="True" Literatur="Aliquam per auctor congue" Munitionsart="Vestibulum accumsan" Name="Adipiscing consequat dolor maecenas" Preis="216.48" Reichweiten="Vestibulum arcu vestibulum augue" TPReichweiten="Aptent proin curabitur phasellus ante" Verbreitung="Diam parturient" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Elementum parturient vestibulum facilisi faucibus" Bemerkung="Dictumst adipiscing eleifend" Gewicht="72" Gruppe="Commodo conubia convallis dignissim" Literatur="Justo elit" Name="Vestibulum aliquet sed bibendum" Preis="406.2" RSBauch="66" RSKopf="37" RSBrust="43" RSBeinL="71" RSArmL="54" RSRücken="34" RSBeinR="11" RSArmR="23" Steif="False" Verbreitung="Felis ipsum cursus blandit"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Sem magna erat parturient" BF="17" Gewicht="61" Größe="Habitant vestibulum cubilia" INI="17" Literatur="Adipiscing fringilla habitasse" Name="Facilisis lacus enim" Preis="513.12" Typ="Inceptos vestibulum dictum massa" Verbreitung="Lorem fermentum vestibulum" WMAT="64" WMPA="94"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Hendrerit ligula" DK="Vestibulum vestibulum metus" Gewicht="89" Improvisiert="False" Literatur="Interdum libero" Name="Sit lectus dapibus" Preis="884.29" TPBonus="61" TPWürfelAnzahl="64" TPWürfel="51" Verbreitung="Vel adipiscing egestas parturient"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Lacinia mattis laoreet" DK="Adipiscing parturient eros nibh sed" Gewicht="11" Improvisiert="False" Literatur="Gravida luctus magnis iaculis" Name="Lobortis himenaeos" Preis="266.2" TPBonus="75" TPWürfelAnzahl="22" TPWürfel="19" Verbreitung="Litora nam euismod feugiat">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Dis neque montes vestibulum" Gewicht="67" Literatur="Mollis nisl" Name="Morbi nascetur nisi" Preis="511.39" Tags="Potenti nostra nunc pretium vestibulum" Verbreitung="Natoque mauris posuere">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Sociosqu sapien mus porta suscipit" Gewicht="48" Improvisiert="True" Literatur="Rutrum nulla rhoncus" Munitionsart="Purus semper" Name="Platea primis vestibulum leo sagittis" Preis="573.08" Reichweiten="Adipiscing placerat pulvinar hac parturient" TPReichweiten="Odio est pharetra ornare" Verbreitung="Netus senectus" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Vehicula vestibulum pede sed integer" Bemerkung="Per sodales viverra aliquam" Gewicht="31" Gruppe="Torquent vestibulum orci ultrices" Literatur="Velit adipiscing parturient imperdiet" Name="Risus vestibulum" Preis="849.88" RSBauch="20" RSKopf="53" RSBrust="22" RSBeinL="13" RSArmL="53" RSRücken="47" RSBeinR="37" RSArmR="23" Steif="False" Verbreitung="Sociis nec non"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Nam taciti tellus maecenas vivamus" BF="65" Gewicht="73" Größe="Vestibulum tempor quis vestibulum" INI="82" Literatur="Quisque vel malesuada parturient" Name="Sem vitae" Preis="963.89" Typ="Sed penatibus urna" Verbreitung="Quam sit volutpat adipiscing" WMAT="51" WMPA="12"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Bibendum ultricies nunc" DK="Venenatis adipiscing" Gewicht="89" Improvisiert="False" Literatur="Class aliquam accumsan duis tempus" Name="Dis porttitor tincidunt" Preis="585.49" TPBonus="73" TPWürfelAnzahl="24" TPWürfel="79" Verbreitung="Tristique praesent cras"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+	</Inventar:InventarViewModel.NahkampfwaffeListe>
+	<Inventar:InventarViewModel.RuestungListe>
+		<Model:Rüstung Art="Vivamus risus aliquam velit" Bemerkung="Est hac nisl vestibulum leo" Gewicht="13" Gruppe="Nunc malesuada interdum" Literatur="Nisi turpis parturient quisque purus" Name="Sed imperdiet adipiscing" Preis="532.82" RSBauch="86" RSKopf="80" RSBrust="18" RSBeinL="82" RSArmL="28" RSRücken="52" RSBeinR="42" RSArmR="79" Steif="True" Verbreitung="Aliquam dis porta integer">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Nullam class porttitor" Gewicht="37" Literatur="Mauris aliquet vitae" Name="Varius penatibus aenean mus" Preis="951.96" Tags="Blandit tincidunt curae donec" Verbreitung="Lobortis nascetur odio">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Vulputate fusce dapibus adipiscing" Gewicht="50" Improvisiert="False" Literatur="Etiam vestibulum" Munitionsart="Lorem pede nec aptent" Name="Vestibulum conubia" Preis="794.18" Reichweiten="Vestibulum ultricies adipiscing pharetra parturient" TPReichweiten="Commodo tristique" Verbreitung="Orci cubilia venenatis" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Consequat per urna iaculis cras" Bemerkung="Egestas morbi euismod" Gewicht="33" Gruppe="Auctor non congue feugiat gravida" Literatur="Placerat vestibulum quis" Name="Parturient vestibulum quam" Preis="279.44" RSBauch="25" RSKopf="35" RSBrust="98" RSBeinL="87" RSArmL="72" RSRücken="96" RSBeinR="35" RSArmR="88" Steif="True" Verbreitung="Curabitur phasellus"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Amet sem convallis" BF="19" Gewicht="48" Größe="Sit natoque" INI="73" Literatur="Adipiscing nunc sagittis laoreet sed" Name="Nulla cursus lacinia" Preis="264.59" Typ="Vel parturient ante vestibulum dictum" Verbreitung="Duis proin pulvinar" WMAT="45" WMPA="12"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Arcu suscipit lectus torquent ultrices" DK="Libero vestibulum" Gewicht="85" Improvisiert="True" Literatur="Felis parturient posuere" Name="Senectus augue dolor vestibulum" Preis="173.91" TPBonus="95" TPWürfelAnzahl="70" TPWürfel="54" Verbreitung="Adipiscing fames sociosqu nam sed"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Lacus litora luctus lorem elit" Bemerkung="Diam vestibulum maecenas elementum" Gewicht="78" Gruppe="Praesent eget justo" Literatur="Vehicula potenti est volutpat" Name="Dis vestibulum adipiscing dignissim ligula" Preis="596.58" RSBauch="71" RSKopf="27" RSBrust="18" RSBeinL="14" RSArmL="14" RSRücken="77" RSBeinR="84" RSArmR="22" Steif="False" Verbreitung="Ipsum parturient">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Accumsan mauris" Gewicht="21" Literatur="Viverra magna parturient mattis" Name="Vestibulum hac sodales adipiscing magnis" Preis="512.04" Tags="Facilisis bibendum vestibulum" Verbreitung="Pretium enim erat rhoncus">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Vestibulum vivamus vestibulum non porta" Gewicht="60" Improvisiert="True" Literatur="Fermentum mollis quisque nulla eleifend" Munitionsart="Facilisi faucibus habitant montes" Name="Morbi neque netus parturient" Preis="827.79" Reichweiten="Vestibulum adipiscing metus nec" TPReichweiten="Aliquam eros leo massa mus" Verbreitung="Integer dictumst" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Risus himenaeos conubia" Bemerkung="Aliquam sed purus aliquet" Gewicht="75" Gruppe="Sem blandit hendrerit odio commodo" Literatur="Nunc interdum" Name="Adipiscing fringilla nostra inceptos ornare" Preis="563.94" RSBauch="56" RSKopf="55" RSBrust="57" RSBeinL="31" RSArmL="50" RSRücken="37" RSBeinR="43" RSArmR="75" Steif="False" Verbreitung="Habitasse nibh per nisi nisl"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Lobortis dapibus nascetur urna" BF="90" Gewicht="26" Größe="Sapien cras vestibulum" INI="82" Literatur="Quis primis vestibulum cubilia rutrum" Name="Parturient vestibulum vestibulum orci adipiscing" Preis="940.35" Typ="Semper egestas pharetra euismod" Verbreitung="Sit platea pede quam parturient" WMAT="39" WMPA="61"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Vestibulum nam" DK="Nunc sed pulvinar" Gewicht="39" Improvisiert="False" Literatur="Placerat sociis" Name="Duis vel adipiscing feugiat" Preis="504.04" TPBonus="44" TPWürfelAnzahl="78" TPWürfel="68" Verbreitung="Imperdiet gravida parturient vestibulum"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Tempus tortor velit porttitor" Bemerkung="Tellus tempor" Gewicht="42" Gruppe="Hac lacinia" Literatur="Amet dis sociosqu penatibus est" Name="Adipiscing taciti sagittis parturient malesuada" Preis="851.05" RSBauch="19" RSKopf="43" RSBrust="35" RSBeinL="42" RSArmL="87" RSRücken="26" RSBeinR="56" RSArmR="63" Steif="True" Verbreitung="Senectus iaculis">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Ante tincidunt" Gewicht="31" Literatur="Vestibulum adipiscing torquent varius posuere" Name="Laoreet natoque vestibulum" Preis="911.01" Tags="Arcu aenean ultrices vehicula" Verbreitung="Turpis vitae suscipit leo">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Eget praesent" Gewicht="86" Improvisiert="False" Literatur="Vestibulum aptent pretium curabitur diam" Munitionsart="Phasellus rhoncus auctor elit" Name="Mauris nullam" Preis="450.97" Reichweiten="Volutpat ultricies venenatis vulputate vestibulum" TPReichweiten="Tristique parturient" Verbreitung="Potenti maecenas" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Cursus convallis mus nec" Bemerkung="Parturient consequat aliquam" Gewicht="34" Gruppe="Congue nibh integer" Literatur="Bibendum eros viverra" Name="Accumsan sodales enim class erat" Preis="587.84" RSBauch="93" RSKopf="68" RSBrust="14" RSBeinL="88" RSArmL="36" RSRücken="13" RSBeinR="74" RSArmR="59" Steif="True" Verbreitung="Curae adipiscing"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Quisque vivamus eleifend sed" BF="37" Gewicht="33" Größe="Donec aliquam etiam sem aliquet" INI="32" Literatur="Dictumst vestibulum" Name="Non dictum nisi per" Preis="191.93" Typ="Lectus facilisi faucibus" Verbreitung="Nisl vestibulum" WMAT="44" WMPA="39"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Ligula lorem" DK="Orci pede" Gewicht="78" Improvisiert="True" Literatur="Sit inceptos odio vel" Name="Blandit dignissim fusce nunc" Preis="803.56" TPBonus="35" TPWürfelAnzahl="66" TPWürfel="49" Verbreitung="Adipiscing habitant parturient libero"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Cras leo mus" Bemerkung="Vestibulum adipiscing urna litora" Gewicht="87" Gruppe="Cubilia proin" Literatur="Conubia dis est hac" Name="Morbi quam nam nulla commodo" Preis="967.71" RSBauch="78" RSKopf="74" RSBrust="54" RSBeinL="35" RSArmL="70" RSRücken="93" RSBeinR="59" RSArmR="51" Steif="False" Verbreitung="Sed quis interdum vestibulum elementum">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Lobortis vestibulum luctus" Gewicht="68" Literatur="Dolor egestas" Name="Facilisis fermentum" Preis="876.26" Tags="Nec nascetur magnis mattis" Verbreitung="Dapibus parturient augue">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Habitasse hendrerit" Gewicht="93" Improvisiert="True" Literatur="Ipsum fringilla per" Munitionsart="Sed ante" Name="Duis nunc" Preis="234.95" Reichweiten="Mauris euismod feugiat" TPReichweiten="Fames non" Verbreitung="Amet vestibulum felis adipiscing pharetra" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Natoque himenaeos nostra" Bemerkung="Eget iaculis lacinia sem" Gewicht="28" Gruppe="Magna laoreet" Literatur="Diam lacus montes lorem" Name="Arcu gravida" Preis="418.05" RSBauch="58" RSKopf="17" RSBrust="29" RSBeinL="35" RSArmL="45" RSRücken="35" RSBeinR="57" RSArmR="18" Steif="False" Verbreitung="Mollis justo"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Malesuada pulvinar elit sagittis" BF="14" Gewicht="55" Größe="Sed potenti metus" INI="79" Literatur="Vestibulum vel vestibulum nam adipiscing" Name="Sit placerat" Preis="235.47" Typ="Penatibus parturient senectus" Verbreitung="Posuere parturient imperdiet massa" WMAT="41" WMPA="46"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Rhoncus porttitor" DK="Est platea netus" Gewicht="21" Improvisiert="False" Literatur="Sociosqu eros suscipit vestibulum" Name="Morbi enim erat vestibulum dis" Preis="828.38" TPBonus="12" TPWürfelAnzahl="14" TPWürfel="98" Verbreitung="Pretium ornare neque"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Integer maecenas nisi vestibulum nisl" Bemerkung="Torquent parturient ultrices vehicula aliquam" Gewicht="89" Gruppe="Semper vestibulum ultricies volutpat" Literatur="Sapien tincidunt adipiscing tristique nibh" Name="Nulla porta primis purus risus" Preis="148.74" RSBauch="56" RSKopf="18" RSBrust="24" RSBeinL="42" RSArmL="16" RSRücken="53" RSBeinR="41" RSArmR="68" Steif="True" Verbreitung="Velit rutrum sodales viverra">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Vivamus sociis taciti mus adipiscing" Gewicht="97" Literatur="Quisque nunc leo" Name="Vitae praesent" Preis="495.9" Tags="Accumsan tellus" Verbreitung="Venenatis hac">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Turpis sed pede curae" Gewicht="62" Improvisiert="False" Literatur="Per tortor orci bibendum" Munitionsart="Dictumst quam quis cubilia" Name="Vestibulum curabitur nec blandit non" Preis="509.65" Reichweiten="Vulputate parturient vestibulum" TPReichweiten="Aliquam odio aliquet class" Verbreitung="Tempor tempus commodo adipiscing conubia" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Faucibus euismod vestibulum aptent" Bemerkung="Vestibulum urna phasellus cras fusce" Gewicht="35" Gruppe="Duis nullam" Literatur="Aenean mauris" Name="Donec eleifend dapibus facilisi varius" Preis="526.82" RSBauch="25" RSKopf="11" RSBrust="99" RSBeinL="25" RSArmL="94" RSRücken="35" RSBeinR="13" RSArmR="56" Steif="True" Verbreitung="Etiam egestas parturient"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Gravida dictum vestibulum lectus" BF="19" Gewicht="87" Größe="Vestibulum vel nam sed amet" INI="23" Literatur="Parturient nunc convallis dignissim cursus" Name="Consequat adipiscing feugiat auctor" Preis="541.09" Typ="Inceptos libero dis" Verbreitung="Habitant sem sit congue" WMAT="28" WMPA="29"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Hac lacinia interdum vestibulum diam" DK="Facilisis lorem" Gewicht="80" Improvisiert="True" Literatur="Vestibulum iaculis arcu" Name="Adipiscing ante" Preis="402.93" TPBonus="74" TPWürfelAnzahl="38" TPWürfel="56" Verbreitung="Elementum est parturient"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Posuere nulla erat" Bemerkung="Enim leo fringilla" Gewicht="89" Gruppe="Luctus adipiscing magnis" Literatur="Lobortis fermentum" Name="Laoreet natoque ligula eget elit" Preis="507.91" RSBauch="59" RSKopf="59" RSBrust="53" RSBeinL="78" RSArmL="32" RSRücken="74" RSBeinR="75" RSArmR="70" Steif="False" Verbreitung="Litora morbi">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Nisi nisl imperdiet pretium mauris" Gewicht="11" Literatur="Dolor nec himenaeos non" Name="Proin mus augue nibh potenti" Preis="253.67" Tags="Malesuada mollis fames rhoncus sodales" Verbreitung="Mattis habitasse hendrerit eros">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Vestibulum sit pharetra vel nam" Gewicht="60" Improvisiert="True" Literatur="Justo adipiscing parturient" Munitionsart="Vestibulum placerat pulvinar ornare" Name="Vestibulum montes porttitor" Preis="960.62" Reichweiten="Sed sem felis nascetur" TPReichweiten="Viverra per parturient penatibus" Verbreitung="Tincidunt vestibulum nostra ipsum nunc" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Massa urna metus" Bemerkung="Quam sed lorem sagittis" Gewicht="79" Gruppe="Dis magna quis" Literatur="Platea lacus" Name="Adipiscing tristique ultricies venenatis parturient" Preis="360.08" RSBauch="53" RSKopf="13" RSBrust="77" RSBeinL="41" RSArmL="73" RSRücken="60" RSBeinR="21" RSArmR="31" Steif="False" Verbreitung="Odio orci pede"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Rutrum sapien" BF="10" Gewicht="84" Größe="Curabitur sociosqu" INI="83" Literatur="Vestibulum vestibulum vulputate adipiscing" Name="Cras morbi" Preis="806.79" Typ="Est vivamus hac parturient" Verbreitung="Aliquam integer primis senectus quisque" WMAT="57" WMPA="95"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Dignissim blandit semper netus nulla" DK="Ultrices amet" Gewicht="25" Improvisiert="False" Literatur="Aliquam neque aliquet torquent" Name="Phasellus duis nunc consequat" Preis="826.36" TPBonus="10" TPWürfelAnzahl="89" TPWürfel="70" Verbreitung="Vestibulum suscipit convallis"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Diam mus tempor" Bemerkung="Volutpat maecenas conubia leo" Gewicht="43" Gruppe="Vestibulum elementum arcu taciti tellus" Literatur="Commodo velit" Name="Porta sociis ante" Preis="599.12" RSBauch="48" RSKopf="35" RSBrust="22" RSBeinL="18" RSArmL="67" RSRücken="28" RSBeinR="61" RSArmR="52" Steif="True" Verbreitung="Vehicula purus risus">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Parturient enim tortor vestibulum" Gewicht="78" Literatur="Vitae elit adipiscing tempus" Name="Dapibus nec eget" Preis="953.44" Tags="Vestibulum class egestas praesent non" Verbreitung="Cubilia facilisis">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Sem sit nibh nisi" Gewicht="39" Improvisiert="False" Literatur="Feugiat parturient accumsan" Munitionsart="Nisl gravida turpis vestibulum" Name="Per eros" Preis="903.49" Reichweiten="Erat euismod" TPReichweiten="Fermentum adipiscing" Verbreitung="Sed curae" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Adipiscing himenaeos lorem" Bemerkung="Natoque habitasse donec etiam orci" Gewicht="75" Gruppe="Pede est hendrerit fusce hac" Literatur="Odio dis laoreet" Name="Nunc varius vel nam" Preis="495.1" RSBauch="83" RSKopf="25" RSBrust="80" RSBeinL="51" RSArmL="64" RSRücken="23" RSBeinR="68" RSArmR="34" Steif="True" Verbreitung="Iaculis vestibulum fringilla lacinia sed"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Porttitor potenti facilisi quam faucibus" BF="26" Gewicht="50" Größe="Leo quis" INI="25" Literatur="Dictumst posuere eleifend penatibus" Name="Morbi nulla imperdiet" Preis="861.31" Typ="Aenean mauris mus" Verbreitung="Parturient proin bibendum augue malesuada" WMAT="87" WMPA="37"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Cras inceptos" DK="Fames sodales adipiscing" Gewicht="89" Improvisiert="True" Literatur="Pretium habitant rhoncus urna nullam" Name="Dolor tincidunt vestibulum" Preis="838.62" TPBonus="70" TPWürfelAnzahl="63" TPWürfel="41" Verbreitung="Nec vestibulum"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Sed duis" Bemerkung="Congue aliquam pharetra vestibulum venenatis" Gewicht="73" Gruppe="Justo vestibulum lacus non per" Literatur="Ipsum nascetur" Name="Viverra tristique aptent ultricies interdum" Preis="629.35" RSBauch="75" RSKopf="16" RSBrust="10" RSBeinL="47" RSArmL="78" RSRücken="69" RSBeinR="60" RSArmR="41" Steif="False" Verbreitung="Parturient felis lobortis auctor">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Sit magna" Gewicht="45" Literatur="Arcu lorem sem diam" Name="Nunc amet cursus ante integer" Preis="988.26" Tags="Sagittis senectus sociosqu vel" Verbreitung="Placerat pulvinar">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Phasellus dis libero ultrices" Gewicht="35" Improvisiert="True" Literatur="Lectus vivamus" Munitionsart="Consequat ligula convallis erat metus" Name="Enim torquent adipiscing curabitur parturient" Preis="884.59" Reichweiten="Suscipit massa elit sed vulputate" TPReichweiten="Nam eget dictum" Verbreitung="Quisque vestibulum" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Conubia purus" Bemerkung="Blandit nisl luctus nunc" Gewicht="22" Gruppe="Commodo maecenas nulla porta" Literatur="Aliquet litora netus" Name="Morbi neque vehicula volutpat eros" Preis="732.49" RSBauch="69" RSKopf="64" RSBrust="70" RSBeinL="76" RSArmL="11" RSRücken="74" RSBeinR="82" RSArmR="45" Steif="False" Verbreitung="Aliquam nibh nisi est dignissim"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Leo euismod mattis" BF="30" Gewicht="28" Größe="Velit feugiat fermentum" INI="29" Literatur="Hac facilisis bibendum" Name="Cubilia elementum vestibulum praesent risus" Preis="752.87" Typ="Mauris mus adipiscing" Verbreitung="Magnis odio accumsan dapibus egestas" WMAT="76" WMPA="41"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Habitasse non per vestibulum" DK="Pede adipiscing parturient" Gewicht="59" Improvisiert="False" Literatur="Fringilla vestibulum" Name="Nec mollis montes vitae class" Preis="631.42" TPBonus="97" TPWürfelAnzahl="98" TPWürfel="56" Verbreitung="Dictumst parturient orci"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Parturient urna" Bemerkung="Etiam himenaeos iaculis sem" Gewicht="11" Gruppe="Fusce faucibus habitant lacinia quis" Literatur="Gravida donec facilisi sed" Name="Hendrerit vestibulum quam vestibulum" Preis="511.65" RSBauch="72" RSKopf="78" RSBrust="20" RSBeinL="39" RSArmL="48" RSRücken="85" RSBeinR="16" RSArmR="87" Steif="True" Verbreitung="Adipiscing curae eleifend">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Vestibulum interdum lorem platea" Gewicht="47" Literatur="Sit vel laoreet" Name="Ornare inceptos" Preis="285.63" Tags="Natoque nam posuere" Verbreitung="Nostra imperdiet">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Sapien morbi" Gewicht="49" Improvisiert="False" Literatur="Nascetur pharetra est potenti" Munitionsart="Pretium amet ante rhoncus vestibulum" Name="Vestibulum dis primis lobortis tincidunt" Preis="133.94" Reichweiten="Malesuada penatibus parturient sed porttitor" TPReichweiten="Vestibulum adipiscing cras duis" Verbreitung="Rutrum nunc" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Taciti diam dolor tellus leo" Bemerkung="Proin ultricies" Gewicht="47" Gruppe="Sociis augue" Literatur="Semper sodales" Name="Nulla hac tristique" Preis="343.53" RSBauch="86" RSKopf="27" RSBrust="73" RSBeinL="27" RSArmL="26" RSRücken="48" RSBeinR="62" RSArmR="56" Steif="True" Verbreitung="Adipiscing arcu"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Tortor mus vivamus" BF="80" Gewicht="23" Größe="Fames nec parturient" INI="64" Literatur="Tempus integer sagittis quisque" Name="Viverra placerat" Preis="777.79" Typ="Eget vulputate" Verbreitung="Pulvinar tempor venenatis aliquam" WMAT="81" WMPA="30"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Phasellus felis ipsum consequat" DK="Justo vestibulum lacus per" Gewicht="51" Improvisiert="True" Literatur="Non turpis aliquet" Name="Aliquam vestibulum vestibulum" Preis="888.01" TPBonus="80" TPWürfelAnzahl="74" TPWürfel="97" Verbreitung="Adipiscing curabitur parturient"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+		<Model:Rüstung Art="Mauris sem cubilia" Bemerkung="Vestibulum conubia dignissim varius aenean" Gewicht="49" Gruppe="Magna erat massa suscipit" Literatur="Lorem enim sociosqu" Name="Blandit commodo elit sed" Preis="637.47" RSBauch="67" RSKopf="28" RSBrust="85" RSBeinL="24" RSArmL="49" RSRücken="77" RSBeinR="36" RSArmR="59" Steif="False" Verbreitung="Convallis senectus">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Nibh sit neque" Gewicht="25" Literatur="Eros morbi facilisis" Name="Nullam adipiscing dapibus" Preis="214.77" Tags="Netus aptent" Verbreitung="Elementum torquent metus">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Odio dictum volutpat" Gewicht="82" Improvisiert="True" Literatur="Vestibulum nunc cursus euismod feugiat" Munitionsart="Habitasse hendrerit maecenas himenaeos nam" Name="Nisi parturient" Preis="816.49" Reichweiten="Ultrices nulla vehicula fringilla" TPReichweiten="Auctor vel fermentum" Verbreitung="Congue egestas nisl porta" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Tincidunt tristique ultricies risus" Bemerkung="Iaculis dis est" Gewicht="12" Gruppe="Purus porttitor lacinia praesent" Literatur="Orci vestibulum adipiscing pede" Name="Sed imperdiet malesuada penatibus" Preis="965.8" RSBauch="11" RSKopf="72" RSBrust="39" RSBeinL="13" RSArmL="37" RSRücken="31" RSBeinR="93" RSArmR="44" Steif="False" Verbreitung="Lectus gravida"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Leo parturient vitae accumsan vestibulum" BF="46" Gewicht="13" Größe="Class cras" INI="38" Literatur="Venenatis vulputate posuere urna" Name="Quam quis" Preis="230.7" Typ="Vestibulum mus adipiscing" Verbreitung="Velit laoreet natoque hac" WMAT="74" WMPA="73"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Non duis" DK="Per adipiscing sed" Gewicht="84" Improvisiert="False" Literatur="Libero vestibulum bibendum" Name="Curae nec" Preis="768.68" TPBonus="56" TPWürfelAnzahl="57" TPWürfel="30" Verbreitung="Parturient vestibulum potenti"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+	</Inventar:InventarViewModel.RuestungListe>
+	<Inventar:InventarViewModel.SelectedHeld>
+		<Model:Held AusdauerMod="75" APGuthaben="27" AusdauerAktuell="69" AstralenergieAktuell="48" AstralenergieMod="31" Bemerkung="Adipiscing class parturient maecenas vestibulum" Behinderung="63" Bild="Est hac eleifend vestibulum" CreatureHeight="911.67" CreatureX="897.27" CreatureY="974.01" CreatureNameX="896.97" CreatureNameY="422.77" CreatureWidth="678.43" CreaturePictureUrl="Amet leo" Farbmarkierung="#FFFAADEF" FillColor="#FFDAE016" HinweisText="Cras vestibulum" IsVisible="True" IsHighlighted="False" InitiativeModGen="25" IsNew="True" IsMoving="False" KarmaenergieAktuell="76" Kultur="Sed etiam parturient aliquam" Kampfwerte="Duis vestibulum accumsan" KarmaenergieMod="76" LebensenergieMod="94" LebensenergieAktuell="69" MagieresistenzMod="37" Notizen="Integer nullam convallis dictumst lorem" Name="Curabitur praesent curae nam phasellus" Opacity="750.2" ObjectColor="#FF5DD5B0" ObjectSize="313.36" ObjektName="Mus nec" Profession="Consequat fusce dis vestibulum nunc" PortraitFileName="Dignissim elementum ante congue arcu" RSBauch="39" RSKopf="44" RSBrust="34" Rasse="Bibendum donec aenean adipiscing mauris" RSBeinL="10" RSArmL="32" RSRücken="97" RSBeinR="77" RSArmR="13" StrokeThickness="792.29" Stufe="80" Spieler="Aptent facilisi auctor" WundenBeinL="31" WundenBeinR="93" WundenArmL="57" WundenBrust="71" WundenArmR="54" WundenBauch="58" WundenKopf="52" ZLevel="397.44" ZDisplayX="123.93" ZDisplayY="818.29">
+			<Model:Held.HeldGUID>
+				<System:Guid/>
+			</Model:Held.HeldGUID>
+		</Model:Held>
+	</Inventar:InventarViewModel.SelectedHeld>
+	<Inventar:InventarViewModel.SelectedFernkampfwaffe>
+		<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Ligula est" Gewicht="48" Improvisiert="True" Literatur="Class nunc" Munitionsart="Facilisi faucibus hac" Name="Sed risus vulputate duis parturient" Preis="971.86" Reichweiten="Euismod vestibulum cras adipiscing feugiat" TPReichweiten="Venenatis libero egestas nam" Verbreitung="Velit eleifend curabitur dis vitae" Verwundend="True">
+			<Model:Fernkampfwaffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Arcu litora" Gewicht="83" Literatur="Dignissim leo vestibulum mus ante" Name="Consequat convallis" Preis="488.97" Tags="Elementum diam" Verbreitung="Gravida phasellus amet">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Magnis habitasse mattis iaculis" Gewicht="23" Improvisiert="False" Literatur="Elit adipiscing etiam" Munitionsart="Mauris fusce interdum lobortis enim" Name="Habitant nec fermentum non fringilla" Preis="150.7" Reichweiten="Facilisis curae donec" TPReichweiten="Vestibulum luctus eget" Verbreitung="Per inceptos" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Sit vel pharetra" Bemerkung="Nisi nisl ornare lorem" Gewicht="99" Gruppe="Platea laoreet sem" Literatur="Nostra himenaeos" Name="Mollis nascetur erat hendrerit eros" Preis="377.53" RSBauch="26" RSKopf="96" RSBrust="26" RSBeinL="58" RSArmL="10" RSRücken="15" RSBeinR="57" RSArmR="71" Steif="True" Verbreitung="Lacinia montes nibh sed"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Sed nulla" BF="22" Gewicht="92" Größe="Penatibus natoque placerat posuere" INI="17" Literatur="Malesuada morbi" Name="Nunc parturient" Preis="976.02" Typ="Potenti porttitor pulvinar primis" Verbreitung="Nam imperdiet" WMAT="35" WMPA="32"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Tristique augue rhoncus senectus sodales" DK="Dolor sociosqu urna est" Gewicht="93" Improvisiert="True" Literatur="Pede sapien quam quis" Name="Odio sagittis rutrum proin" Preis="605.3" TPBonus="17" TPWürfelAnzahl="71" TPWürfel="95" Verbreitung="Vestibulum pretium tincidunt dis orci"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Fernkampfwaffe.Ausrüstung>
+			<Model:Fernkampfwaffe.FernkampfwaffeGUID>
+				<System:Guid/>
+			</Model:Fernkampfwaffe.FernkampfwaffeGUID>
+		</Model:Fernkampfwaffe>
+	</Inventar:InventarViewModel.SelectedFernkampfwaffe>
+	<Inventar:InventarViewModel.SelectedSchild>
+		<Model:Schild Bemerkung="Aliquam adipiscing" BF="59" Gewicht="72" Größe="Ipsum justo ultrices" INI="76" Literatur="Nunc suscipit viverra torquent" Name="Fames cras felis ultricies" Preis="838.67" Typ="Vehicula venenatis integer amet parturient" Verbreitung="Duis vestibulum" WMAT="55" WMPA="13">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Nec arcu diam" Gewicht="68" Literatur="Leo curabitur mus semper" Name="Vestibulum ante" Preis="396.22" Tags="Lacus lorem adipiscing non" Verbreitung="Quisque vivamus vestibulum vulputate hac">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="True" Bemerkung="Tempor volutpat magna" Gewicht="60" Improvisiert="False" Literatur="Convallis blandit elit" Munitionsart="Commodo maecenas" Name="Eget tellus" Preis="170.75" Reichweiten="Phasellus aliquet" TPReichweiten="Sociis parturient vestibulum taciti aliquam" Verbreitung="Vestibulum adipiscing parturient consequat" Verwundend="False"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Nisl sem sit morbi vestibulum" Bemerkung="Per massa accumsan bibendum" Gewicht="74" Gruppe="Nisi metus sed" Literatur="Cubilia elementum nibh" Name="Enim praesent" Preis="923.61" RSBauch="11" RSKopf="19" RSBrust="95" RSBeinL="93" RSArmL="48" RSRücken="15" RSBeinR="88" RSArmR="65" Steif="True" Verbreitung="Erat dignissim conubia eros"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Adipiscing tortor netus odio" BF="10" Gewicht="77" Größe="Orci fermentum" INI="58" Literatur="Eleifend egestas" Name="Dapibus nunc vel facilisis neque" Preis="250.65" Typ="Facilisi nam faucibus" Verbreitung="Dictumst tempus vestibulum" WMAT="80" WMPA="87"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="False" Bemerkung="Inceptos urna cras" DK="Fringilla interdum varius est" Gewicht="77" Improvisiert="True" Literatur="Euismod quam quis porta" Name="Sed turpis pede" Preis="561.4" TPBonus="58" TPWürfelAnzahl="87" TPWürfel="54" Verbreitung="Parturient habitant nulla dis"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+	</Inventar:InventarViewModel.SelectedSchild>
+	<Inventar:InventarViewModel.SelectedRuestung>
+		<Model:Rüstung Art="Congue gravida donec" Bemerkung="Velit nullam vestibulum aptent" Gewicht="47" Gruppe="Vitae auctor class curae" Literatur="Nunc risus leo mus" Name="Vestibulum duis aenean" Preis="508.05" RSBauch="23" RSKopf="23" RSBrust="49" RSBeinL="98" RSArmL="10" RSRücken="71" RSBeinR="75" RSArmR="77" Steif="False" Verbreitung="Hac habitasse feugiat mauris purus">
+			<Model:Rüstung.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Malesuada arcu adipiscing lacinia" Gewicht="76" Literatur="Iaculis cursus lobortis nascetur pharetra" Name="Fusce himenaeos imperdiet ante" Preis="807.46" Tags="Placerat dictum lorem" Verbreitung="Amet etiam hendrerit">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Tincidunt per eget natoque" Gewicht="38" Improvisiert="True" Literatur="Vestibulum proin" Munitionsart="Posuere adipiscing tristique" Name="Porttitor vestibulum morbi nulla diam" Preis="766.03" Reichweiten="Penatibus sagittis" TPReichweiten="Nec pulvinar laoreet non parturient" Verbreitung="Senectus lectus" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Litora eros parturient" Bemerkung="Venenatis sociosqu vulputate sed ligula" Gewicht="20" Gruppe="Rhoncus sodales erat curabitur" Literatur="Enim augue" Name="Potenti libero pretium" Preis="368.39" RSBauch="62" RSKopf="32" RSBrust="47" RSBeinL="31" RSArmL="54" RSRücken="58" RSBeinR="53" RSArmR="35" Steif="False" Verbreitung="Ultricies elit"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Viverra magnis consequat suscipit nisi" BF="28" Gewicht="18" Größe="Convallis adipiscing" INI="38" Literatur="Vestibulum sit" Name="Dolor nibh" Preis="180.46" Typ="Torquent felis" Verbreitung="Sem luctus vestibulum fames phasellus" WMAT="37" WMPA="33"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Nisl maecenas mollis" DK="Aliquam praesent accumsan" Gewicht="44" Improvisiert="False" Literatur="Vivamus parturient ipsum vehicula volutpat" Name="Vel aliquam integer quisque mattis" Preis="137.73" TPBonus="23" TPWürfelAnzahl="17" TPWürfel="22" Verbreitung="Ultrices mauris"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Rüstung.Ausrüstung>
+			<Model:Rüstung.RüstungGUID>
+				<System:Guid/>
+			</Model:Rüstung.RüstungGUID>
+		</Model:Rüstung>
+	</Inventar:InventarViewModel.SelectedRuestung>
+	
+	
+	<Inventar:InventarViewModel.SelectedNahkampfwaffe>
+		<Model:Waffe AusdauerSchaden="True" Bemerkung="Ultricies sociosqu" DK="Lorem hac" Gewicht="23" Improvisiert="False" Literatur="Ante est" Name="Nunc amet" Preis="254.01" TPBonus="50" TPWürfelAnzahl="48" TPWürfel="18" Verbreitung="Sodales rutrum sapien">
+			<Model:Waffe.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Semper magna sociis consequat" Gewicht="77" Literatur="Curabitur elit phasellus" Name="Diam eget" Preis="923.36" Tags="Suscipit viverra enim parturient" Verbreitung="Venenatis arcu vulputate">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Tempus elementum ultrices nisi" Gewicht="12" Improvisiert="True" Literatur="Quisque dignissim nibh vivamus" Munitionsart="Nec vehicula volutpat maecenas tortor" Name="Morbi eros mus" Preis="701.5" Reichweiten="Vestibulum torquent leo metus convallis" TPReichweiten="Vestibulum massa erat taciti aliquam" Verbreitung="Integer tellus neque tempor" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Per habitasse vestibulum hendrerit odio" Bemerkung="Fringilla vestibulum" Gewicht="77" Gruppe="Aenean blandit" Literatur="Turpis fermentum aliquet parturient varius" Name="Adipiscing facilisis nisl nunc" Preis="703.11" RSBauch="71" RSKopf="76" RSBrust="14" RSBeinL="46" RSArmL="10" RSRücken="63" RSBeinR="15" RSArmR="48" Steif="False" Verbreitung="Non aliquam"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Malesuada commodo parturient" BF="22" Gewicht="39" Größe="Vestibulum cursus penatibus porttitor conubia" INI="79" Literatur="Congue pede adipiscing porta imperdiet" Name="Netus orci himenaeos sed mauris" Preis="332.8" Typ="Vestibulum tincidunt" Verbreitung="Nullam aptent auctor nulla" WMAT="48" WMPA="71"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Urna bibendum" DK="Dictumst sit vestibulum lectus vel" Gewicht="70" Improvisiert="False" Literatur="Quis ultricies parturient" Name="Praesent accumsan cubilia dictum quam" Preis="473.51" TPBonus="82" TPWürfelAnzahl="70" TPWürfel="18" Verbreitung="Sem purus tristique adipiscing dapibus"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Waffe.Ausrüstung>
+			<Model:Waffe.WaffeGUID>
+				<System:Guid/>
+			</Model:Waffe.WaffeGUID>
+		</Model:Waffe>
+	</Inventar:InventarViewModel.SelectedNahkampfwaffe>
+	<Inventar:InventarViewModel.SchildListe>
+		<Model:Schild Bemerkung="Interdum venenatis cubilia dis parturient" BF="91" Gewicht="94" Größe="Varius vestibulum vulputate lobortis nascetur" INI="77" Literatur="Turpis porta conubia purus" Name="Nulla parturient vestibulum inceptos" Preis="450.7" Typ="Dapibus arcu pharetra aenean" Verbreitung="Vestibulum sed ante adipiscing" WMAT="77" WMPA="20">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Mus eget consequat" Gewicht="80" Literatur="Leo diam aptent egestas phasellus" Name="Placerat mauris nullam hac" Preis="918.74" Tags="Pulvinar elit convallis dignissim auctor" Verbreitung="Vestibulum est adipiscing parturient curabitur">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Fermentum adipiscing nibh fringilla dictum" Gewicht="77" Improvisiert="True" Literatur="Eros vestibulum cursus feugiat" Munitionsart="Habitasse gravida hendrerit nisi senectus" Name="Nec risus velit euismod vitae" Preis="282.25" Reichweiten="Vestibulum facilisis" TPReichweiten="Enim elementum" Verbreitung="Sagittis non congue erat" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Torquent adipiscing odio class orci" Bemerkung="Nunc ligula malesuada litora" Gewicht="68" Gruppe="Luctus sit" Literatur="Sed vestibulum sem suscipit nisl" Name="Lectus parturient vestibulum per himenaeos" Preis="998.45" RSBauch="40" RSKopf="72" RSBrust="43" RSBeinL="20" RSArmL="32" RSRücken="69" RSBeinR="36" RSArmR="96" Steif="False" Verbreitung="Sociosqu libero imperdiet"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Iaculis porttitor maecenas" BF="29" Gewicht="70" Größe="Mattis praesent pede" INI="50" Literatur="Volutpat vestibulum magnis vestibulum penatibus" Name="Curae parturient" Preis="258.04" Typ="Tincidunt tristique donec adipiscing" Verbreitung="Ultrices vehicula" WMAT="62" WMPA="66"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Bibendum montes venenatis urna laoreet" DK="Dictumst eleifend vestibulum vel facilisi" Gewicht="80" Improvisiert="False" Literatur="Accumsan mollis quis" Name="Mauris lacinia quam ultricies" Preis="308.02" TPBonus="54" TPWürfelAnzahl="94" TPWürfel="59" Verbreitung="Parturient etiam"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Curabitur duis morbi vestibulum potenti" BF="22" Gewicht="11" Größe="Nulla adipiscing" INI="69" Literatur="Posuere fusce faucibus lorem" Name="Cras nam natoque" Preis="639.64" Typ="Habitant nunc amet" Verbreitung="Sed vulputate" WMAT="49" WMPA="92">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Nascetur dis eget consequat" Gewicht="86" Literatur="Arcu lobortis vestibulum diam" Name="Ante ornare phasellus interdum" Preis="447.52" Tags="Vestibulum platea" Verbreitung="Inceptos nostra parturient pretium proin">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Fames erat sapien eros dignissim" Gewicht="25" Improvisiert="True" Literatur="Integer convallis dolor" Munitionsart="Semper placerat pulvinar quisque" Name="Rutrum aliquam enim" Preis="464.72" Reichweiten="Sodales primis viverra adipiscing" TPReichweiten="Augue elit rhoncus" Verbreitung="Parturient pharetra est" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Hendrerit aliquet senectus blandit" Bemerkung="Fermentum adipiscing hac fringilla" Gewicht="97" Gruppe="Aliquam leo felis habitasse" Literatur="Vestibulum nibh" Name="Sagittis elementum" Preis="264.43" RSBauch="36" RSKopf="84" RSBrust="50" RSBeinL="87" RSArmL="72" RSRücken="95" RSBeinR="25" RSArmR="45" Steif="False" Verbreitung="Vestibulum vivamus facilisis sociis taciti"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Mus torquent" BF="27" Gewicht="49" Größe="Imperdiet adipiscing" INI="69" Literatur="Commodo vestibulum conubia vestibulum" Name="Sociosqu tellus tempor tempus" Preis="126.01" Typ="Malesuada ultrices penatibus turpis vehicula" Verbreitung="Himenaeos parturient tortor suscipit" WMAT="55" WMPA="55"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Adipiscing non" DK="Per ipsum egestas" Gewicht="88" Improvisiert="False" Literatur="Dapibus nec" Name="Porttitor volutpat parturient nisi cubilia" Preis="886.04" TPBonus="96" TPWürfelAnzahl="63" TPWürfel="27" Verbreitung="Maecenas varius vestibulum vestibulum"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Odio tincidunt tristique orci" BF="44" Gewicht="19" Größe="Mauris sit" INI="93" Literatur="Parturient justo" Name="Nisl sed aenean" Preis="726.61" Typ="Vel ultricies" Verbreitung="Sem nunc praesent" WMAT="69" WMPA="56">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Lorem nullam" Gewicht="24" Literatur="Vestibulum phasellus feugiat" Name="Quam lacus quis" Preis="356.6" Tags="Vestibulum adipiscing accumsan aptent auctor" Verbreitung="Pede venenatis vulputate curabitur euismod">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Duis lectus vestibulum" Gewicht="28" Improvisiert="True" Literatur="Parturient dictum massa facilisi metus" Munitionsart="Vestibulum convallis" Name="Nam eleifend" Preis="118.96" Reichweiten="Congue cursus urna dictumst iaculis" TPReichweiten="Bibendum gravida magna" Verbreitung="Consequat cras lacinia" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Posuere porta" Bemerkung="Elementum nulla habitant dis" Gewicht="25" Gruppe="Est ante" Literatur="Faucibus parturient netus natoque ligula" Name="Morbi nunc libero sed laoreet" Preis="839.54" RSBauch="60" RSKopf="33" RSBrust="89" RSBeinL="56" RSArmL="84" RSRücken="41" RSBeinR="54" RSArmR="99" Steif="False" Verbreitung="Adipiscing neque dignissim amet"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Hac risus leo mus" BF="63" Gewicht="35" Größe="Nec pretium fringilla vestibulum nascetur" INI="24" Literatur="Vestibulum luctus lobortis fermentum" Name="Inceptos purus potenti facilisis" Preis="228.95" Typ="Rhoncus sodales viverra adipiscing habitasse" Verbreitung="Arcu diam interdum litora" WMAT="22" WMPA="90"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Eget mauris" DK="Himenaeos imperdiet" Gewicht="35" Improvisiert="False" Literatur="Velit adipiscing mattis" Name="Parturient vestibulum aliquam" Preis="883.57" TPBonus="35" TPWürfelAnzahl="78" TPWürfel="35" Verbreitung="Magnis vestibulum hendrerit"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Aliquam aliquet" BF="37" Gewicht="80" Größe="Enim penatibus per porttitor" INI="35" Literatur="Vitae vivamus parturient montes nostra" Name="Non elit pharetra placerat integer" Preis="250.63" Typ="Class curae sagittis" Verbreitung="Pulvinar malesuada mollis quisque" WMAT="35" WMPA="13">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Tristique senectus donec ultricies sociosqu" Gewicht="22" Literatur="Platea sed tincidunt" Name="Ornare vestibulum" Preis="229.3" Tags="Venenatis sem vulputate" Verbreitung="Vestibulum blandit">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Eros vel phasellus" Gewicht="31" Improvisiert="True" Literatur="Ultrices sociis curabitur" Munitionsart="Nulla proin" Name="Rutrum commodo fusce torquent lorem" Preis="881.15" Reichweiten="Suscipit sit" TPReichweiten="Adipiscing parturient erat primis etiam" Verbreitung="Morbi sapien semper vestibulum conubia" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Euismod praesent" Bemerkung="Maecenas elementum" Gewicht="38" Gruppe="Vestibulum adipiscing facilisis nibh parturient" Literatur="Egestas tellus dignissim nam" Name="Vehicula taciti consequat cubilia" Preis="324.82" RSBauch="49" RSKopf="72" RSBrust="12" RSBeinL="36" RSArmL="69" RSRücken="27" RSBeinR="77" RSArmR="14" Steif="False" Verbreitung="Dapibus volutpat convallis"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Fringilla nisi vestibulum nisl" BF="40" Gewicht="57" Größe="Iaculis ipsum nunc habitasse" INI="56" Literatur="Fames felis gravida" Name="Fermentum feugiat tempor" Preis="871.65" Typ="Vestibulum accumsan hendrerit himenaeos adipiscing" Verbreitung="Augue tempus dolor sed" WMAT="22" WMPA="46"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Posuere quam" DK="Lorem eleifend potenti" Gewicht="50" Improvisiert="False" Literatur="Orci laoreet natoque pede vestibulum" Name="Lacinia justo lacus bibendum" Preis="536.73" TPBonus="25" TPWürfelAnzahl="98" TPWürfel="95" Verbreitung="Dictumst tortor parturient vestibulum odio"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Pretium turpis" BF="42" Gewicht="91" Größe="Vestibulum vestibulum adipiscing" INI="48" Literatur="Magna habitant" Name="Quis imperdiet" Preis="334.17" Typ="Parturient rhoncus malesuada vestibulum" Verbreitung="Adipiscing parturient facilisi faucibus" WMAT="76" WMPA="37">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Aenean mauris integer" Gewicht="84" Literatur="Vestibulum metus aliquam" Name="Penatibus varius inceptos viverra" Preis="485.61" Tags="Interdum quisque adipiscing morbi vivamus" Verbreitung="Urna sodales massa">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Tincidunt est" Gewicht="43" Improvisiert="True" Literatur="Placerat vestibulum pulvinar purus sagittis" Munitionsart="Risus hac aptent leo vestibulum" Name="Netus aliquet nulla porta nascetur" Preis="775.2" Reichweiten="Aliquam parturient nullam porttitor" TPReichweiten="Cras lobortis neque" Verbreitung="Blandit pharetra dis" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Donec vestibulum ultrices adipiscing egestas" Bemerkung="Cubilia parturient nec non per" Gewicht="77" Gruppe="Curae suscipit dapibus vestibulum torquent" Literatur="Auctor duis conubia sociosqu" Name="Velit mus senectus vitae" Preis="687.68" RSBauch="95" RSKopf="68" RSBrust="64" RSBeinL="77" RSArmL="24" RSRücken="89" RSBeinR="19" RSArmR="90" Steif="False" Verbreitung="Adipiscing commodo class"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Congue feugiat lorem ultricies" BF="84" Gewicht="56" Größe="Vestibulum morbi sem nulla" INI="38" Literatur="Fusce nunc parturient" Name="Euismod tristique" Preis="653.33" Typ="Proin venenatis sit" Verbreitung="Sed etiam" WMAT="36" WMPA="57"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Amet adipiscing dis est" DK="Dictum lectus hac gravida" Gewicht="31" Improvisiert="False" Literatur="Curabitur sed" Name="Augue vel cursus" Preis="285.28" TPBonus="47" TPWürfelAnzahl="64" TPWürfel="72" Verbreitung="Vehicula vulputate nam vestibulum dolor"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Magnis mattis maecenas" BF="94" Gewicht="16" Größe="Mauris mollis vestibulum ipsum consequat" INI="32" Literatur="Ante luctus" Name="Fames parturient felis libero volutpat" Preis="999.83" Typ="Arcu vestibulum" Verbreitung="Ligula litora phasellus" WMAT="22" WMPA="88">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Elementum vestibulum adipiscing" Gewicht="39" Literatur="Lorem dignissim montes vestibulum mus" Name="Lacus convallis diam iaculis" Preis="952.09" Tags="Praesent facilisis magna" Verbreitung="Leo adipiscing justo parturient">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Platea enim" Gewicht="39" Improvisiert="True" Literatur="Ornare metus posuere" Munitionsart="Adipiscing morbi" Name="Fringilla laoreet" Preis="389.45" Reichweiten="Lacinia vestibulum massa nostra" TPReichweiten="Parturient eget vestibulum fermentum" Verbreitung="Nec habitasse natoque elit non" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Vestibulum sed" Bemerkung="Tellus eros accumsan per" Gewicht="14" Gruppe="Nibh himenaeos" Literatur="Sociis erat taciti" Name="Parturient primis rutrum vestibulum" Preis="314.56" RSBauch="39" RSKopf="20" RSBrust="45" RSBeinL="28" RSArmL="94" RSRücken="46" RSBeinR="83" RSArmR="89" Steif="False" Verbreitung="Sapien semper hendrerit potenti"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Tortor netus" BF="63" Gewicht="92" Größe="Dictumst turpis eleifend nulla rhoncus" INI="46" Literatur="Imperdiet bibendum sem neque pretium" Name="Tempor tempus adipiscing" Preis="528.81" Typ="Varius sodales viverra vestibulum aliquam" Verbreitung="Nisi parturient" WMAT="46" WMPA="85"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Mauris odio" DK="Facilisi nullam nam aptent" Gewicht="66" Improvisiert="False" Literatur="Vel aenean" Name="Nisl sit" Preis="555.01" TPBonus="46" TPWürfelAnzahl="69" TPWürfel="27" Verbreitung="Malesuada porta nunc"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Adipiscing parturient faucibus vestibulum quisque" BF="40" Gewicht="84" Größe="Cursus vivamus" INI="69" Literatur="Porttitor congue integer sed" Name="Penatibus vestibulum purus" Preis="899.19" Typ="Habitant risus" Verbreitung="Auctor orci" WMAT="23" WMPA="48">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Class tristique ultricies blandit parturient" Gewicht="70" Literatur="Interdum aliquet adipiscing" Name="Velit vestibulum vitae aliquam inceptos" Preis="724.9" Tags="Venenatis curae pede" Verbreitung="Dictum dis tincidunt">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Vulputate lectus cras curabitur" Gewicht="13" Improvisiert="True" Literatur="Dapibus mus vestibulum" Munitionsart="Egestas placerat duis" Name="Urna conubia adipiscing parturient" Preis="132.51" Reichweiten="Quam quis vestibulum nascetur" TPReichweiten="Vestibulum donec lobortis commodo est" Verbreitung="Cubilia etiam hac leo pharetra" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Suscipit sed consequat libero torquent" Bemerkung="Phasellus per" Gewicht="72" Gruppe="Sociosqu lorem parturient feugiat amet" Literatur="Senectus euismod" Name="Nec nunc vestibulum pulvinar non" Preis="339.61" RSBauch="73" RSKopf="11" RSBrust="36" RSBeinL="34" RSArmL="54" RSRücken="72" RSBeinR="59" RSArmR="54" Steif="False" Verbreitung="Fusce sagittis adipiscing"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Litora vestibulum dignissim lacinia" BF="25" Gewicht="19" Größe="Diam elementum facilisis laoreet fermentum" INI="40" Literatur="Iaculis convallis ligula" Name="Gravida morbi ante nulla" Preis="778.32" Typ="Proin luctus magnis" Verbreitung="Arcu sem vestibulum" WMAT="79" WMPA="59"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Parturient vehicula dolor" DK="Potenti volutpat mattis" Gewicht="66" Improvisiert="False" Literatur="Sit vel posuere" Name="Adipiscing natoque" Preis="393.31" TPBonus="55" TPWürfelAnzahl="39" TPWürfel="96" Verbreitung="Augue ultrices fringilla habitasse"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Mollis montes nostra" BF="83" Gewicht="91" Größe="Fames malesuada ornare" INI="27" Literatur="Mauris rhoncus imperdiet" Name="Hendrerit nam pretium" Preis="232.89" Typ="Est eget" Verbreitung="Sed dis himenaeos" WMAT="85" WMPA="87">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Justo integer vestibulum primis lacus" Gewicht="49" Literatur="Praesent penatibus aliquam" Name="Vestibulum sodales ipsum enim viverra" Preis="168.09" Tags="Hac rutrum erat" Verbreitung="Felis elit platea maecenas">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Tincidunt tristique aliquet metus ultricies" Gewicht="95" Improvisiert="True" Literatur="Leo sociis nisi" Munitionsart="Taciti mus" Name="Eros semper magna bibendum massa" Preis="569.01" Reichweiten="Accumsan quisque adipiscing vivamus" TPReichweiten="Lorem sapien" Verbreitung="Nibh porttitor aliquam" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Consequat vestibulum tortor" Bemerkung="Conubia vestibulum" Gewicht="29" Gruppe="Curabitur tempor tempus phasellus" Literatur="Venenatis vulputate parturient" Name="Blandit parturient tellus vestibulum commodo" Preis="457.9" RSBauch="79" RSKopf="86" RSBrust="19" RSBeinL="75" RSArmL="91" RSRücken="25" RSBeinR="43" RSArmR="45" Steif="False" Verbreitung="Vestibulum nec dictumst adipiscing"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Vestibulum vestibulum" BF="39" Gewicht="31" Größe="Non odio" INI="55" Literatur="Convallis varius parturient egestas" Name="Eleifend facilisi faucibus turpis" Preis="350.66" Typ="Dignissim morbi habitant euismod orci" Verbreitung="Cubilia nisl dapibus nunc adipiscing" WMAT="87" WMPA="13"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Feugiat interdum" DK="Vestibulum quam elementum" Gewicht="48" Improvisiert="False" Literatur="Mauris sem" Name="Per inceptos pede adipiscing neque" Preis="457.14" TPBonus="87" TPWürfelAnzahl="60" TPWürfel="72" Verbreitung="Parturient aenean sed"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Netus adipiscing nam" BF="31" Gewicht="53" Größe="Parturient fermentum" INI="39" Literatur="Sit vel" Name="Gravida vestibulum" Preis="552.21" Typ="Nulla quis vestibulum" Verbreitung="Facilisis iaculis lacinia" WMAT="86" WMPA="67">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Vestibulum laoreet" Gewicht="28" Literatur="Urna nascetur" Name="Aptent lobortis sed" Preis="824.95" Tags="Habitasse hendrerit purus" Verbreitung="Nullam porta fringilla">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Class nunc amet" Gewicht="27" Improvisiert="True" Literatur="Vitae imperdiet" Munitionsart="Vestibulum posuere potenti ante" Name="Cras dis duis" Preis="236.54" Reichweiten="Risus placerat parturient natoque" TPReichweiten="Auctor congue himenaeos adipiscing pharetra" Verbreitung="Est velit" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Eget tristique elit senectus sociosqu" Bemerkung="Sagittis adipiscing cursus diam hac" Gewicht="18" Gruppe="Leo parturient sodales mus tincidunt" Literatur="Vestibulum pulvinar arcu" Name="Malesuada pretium rhoncus penatibus curae" Preis="603.92" RSBauch="27" RSKopf="24" RSBrust="49" RSBeinL="87" RSArmL="25" RSRücken="85" RSBeinR="76" RSArmR="55" Steif="False" Verbreitung="Donec porttitor"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Aliquam fusce integer curabitur eros" BF="68" Gewicht="35" Größe="Lorem nec morbi lectus" INI="18" Literatur="Enim adipiscing dictum erat" Name="Vestibulum ultricies viverra etiam" Preis="542.44" Typ="Phasellus torquent" Verbreitung="Suscipit vestibulum venenatis vulputate" WMAT="67" WMPA="64"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Nisi quisque sem nisl" DK="Convallis sit nunc" Gewicht="74" Improvisiert="False" Literatur="Sed dolor ligula" Name="Nulla non nibh proin libero" Preis="862.63" TPBonus="96" TPWürfelAnzahl="84" TPWürfel="10" Verbreitung="Ultrices per parturient augue consequat"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+		<Model:Schild Bemerkung="Felis ipsum aliquet blandit" BF="26" Gewicht="93" Größe="Magnis sed" INI="83" Literatur="Pede fames quam quis urna" Name="Odio vivamus vestibulum litora orci" Preis="773.47" Typ="Cras vestibulum duis justo mattis" Verbreitung="Aliquam vel nam luctus" WMAT="78" WMPA="93">
+			<Model:Schild.Ausrüstung>
+				<Model:Ausrüstung Bemerkung="Hac vehicula leo" Gewicht="52" Literatur="Dapibus mauris elementum" Name="Lacus dignissim cubilia lorem" Preis="225.88" Tags="Adipiscing volutpat" Verbreitung="Dis est commodo conubia">
+					<Model:Ausrüstung.AusrüstungGUID>
+						<System:Guid/>
+					</Model:Ausrüstung.AusrüstungGUID>
+					<Model:Ausrüstung.Fernkampfwaffe>
+						<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Arcu platea facilisis parturient iaculis" Gewicht="22" Improvisiert="True" Literatur="Ante nostra gravida ornare" Munitionsart="Praesent primis diam" Name="Euismod feugiat montes vestibulum non" Preis="147.09" Reichweiten="Nunc magna vestibulum massa" TPReichweiten="Mus mollis nec egestas parturient" Verbreitung="Amet metus maecenas adipiscing" Verwundend="True"/>
+					</Model:Ausrüstung.Fernkampfwaffe>
+					<Model:Ausrüstung.Rüstung>
+						<Model:Rüstung Art="Sed neque potenti enim semper" Bemerkung="Vestibulum bibendum posuere" Gewicht="36" Gruppe="Morbi dictumst elit" Literatur="Accumsan natoque" Name="Fermentum lacinia laoreet rutrum eget" Preis="745.51" RSBauch="65" RSKopf="40" RSBrust="40" RSBeinL="90" RSArmL="38" RSRücken="62" RSBeinR="98" RSArmR="89" Steif="False" Verbreitung="Sapien per"/>
+					</Model:Ausrüstung.Rüstung>
+					<Model:Ausrüstung.Schild>
+						<Model:Schild Bemerkung="Tellus sit hendrerit vel parturient" BF="28" Gewicht="82" Größe="Sodales himenaeos" INI="89" Literatur="Habitasse adipiscing rhoncus facilisi" Name="Sociis fringilla vestibulum taciti" Preis="764.28" Typ="Faucibus erat" Verbreitung="Sem pretium netus eleifend" WMAT="30" WMPA="40"/>
+					</Model:Ausrüstung.Schild>
+					<Model:Ausrüstung.Waffe>
+						<Model:Waffe AusdauerSchaden="True" Bemerkung="Inceptos viverra" DK="Nam tortor" Gewicht="76" Improvisiert="False" Literatur="Tempus nibh" Name="Vestibulum tempor nulla" Preis="772.42" TPBonus="78" TPWürfelAnzahl="25" TPWürfel="69" Verbreitung="Habitant vestibulum eros"/>
+					</Model:Ausrüstung.Waffe>
+				</Model:Ausrüstung>
+			</Model:Schild.Ausrüstung>
+			<Model:Schild.SchildGUID>
+				<System:Guid/>
+			</Model:Schild.SchildGUID>
+		</Model:Schild>
+	</Inventar:InventarViewModel.SchildListe>
+</Inventar:InventarViewModel>
