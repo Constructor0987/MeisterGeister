@@ -168,7 +168,10 @@
                                                 <ColumnDefinition Width="120*" />
                                                 <ColumnDefinition Width="100*" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="{Binding Zauber.Name}" Grid.Column="0" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" ToolTip="{Binding Zauber.Name}" />
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Zauber.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                <TextBlock Text="{Binding Zauber.Name}" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" ToolTip="{Binding Zauber.Name}" />
+                                            </StackPanel>
                                             <TextBlock Text="{Binding Zauber.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" />
                                             <TextBlock Text="{Binding Zauber.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" />
                                             <TextBlock Text="{Binding Zauber.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" />

@@ -478,7 +478,10 @@
                                                                 <ColumnDefinition Width="100*" />
                                                             </Grid.ColumnDefinitions>
                                                             <DockPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                                                                <TextBlock Text="{Binding Talent.Talentname}" DockPanel.Dock="Left" />
+                                                                <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center" Orientation="Horizontal">
+                                                                    <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                                    <TextBlock Text="{Binding Talent.Talentname}" />
+                                                                </StackPanel>
                                                                 <Image Width="14" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" DockPanel.Dock="Right" HorizontalAlignment="Right">
                                                                     <Image.ToolTip>
                                                                         <Border Background="#FFEC7D7D" Padding="10">
@@ -616,7 +619,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -699,7 +705,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -782,7 +791,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -865,7 +877,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -948,7 +963,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -1031,7 +1049,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -1114,7 +1135,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -1197,7 +1221,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -1280,7 +1307,10 @@
                                                             <ColumnDefinition Width="20" />
                                                             <ColumnDefinition Width="100*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="{Binding Talent.Talentname}" Grid.Column="0" VerticalAlignment="Center" />
+                                                        <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                                                            <ViewGeneral:LiteraturControl Height="18" Literaturangabe="{Binding Talent.Literatur}" LiteraturAnzeigeArt="NurIcon" />
+                                                            <TextBlock Text="{Binding Talent.Talentname}" />
+                                                        </StackPanel>
                                                         <TextBlock Text="{Binding Talent.Eigenschaft1, TargetNullValue=var}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft2, TargetNullValue=var}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                         <TextBlock Text="{Binding Talent.Eigenschaft3, TargetNullValue=var}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
