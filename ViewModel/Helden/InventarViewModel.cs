@@ -904,7 +904,7 @@ namespace MeisterGeister.ViewModel.Inventar
                         item.EntityHA.Anzahl++;
                         OnChanged("HeldRuestungImInventar");
                         AktuellesGewicht += SelectedRuestung.Gewicht / 2;
-                        break;
+                        return;
                     }
                 }
                 RuestungItem tmp = HeldRuestungImInventar.Where(s => s.EntityHA.Ausrüstung.Rüstung == SelectedRuestung && s.EntityHA.HeldGUID == SelectedHeld.HeldGUID).FirstOrDefault();

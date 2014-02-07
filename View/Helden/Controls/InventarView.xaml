@@ -375,7 +375,7 @@
     </UserControl.Triggers>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
         <Grid HorizontalAlignment="Stretch">
-            <Grid x:Name="Uebersicht" RenderTransformOrigin="0.5,0.5" d:IsLocked="True" d:IsHidden="True">
+            <Grid x:Name="Uebersicht" RenderTransformOrigin="0.5,0.5">
                 <Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -1096,7 +1096,7 @@
                     </Grid>
                 </Expander>
             </Grid>
-            <Grid x:Name="Ruestung" RenderTransformOrigin="0.5,0.5">
+            <Grid x:Name="Ruestung" RenderTransformOrigin="0.5,0.5" d:IsLocked="True" d:IsHidden="True">
                 <Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
