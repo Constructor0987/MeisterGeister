@@ -87,7 +87,6 @@ namespace MeisterGeister.View.General
         private void OpenPdf()
         {
             // TODO (markus): PDF öffnen - offene Punkte...
-            // Ist kein PDF hinterlegt, sollte ein Link zum Ulisses-PDF-Shop angezeigt werden.
             // Errata müssen in Logic.General.Pdf.OpenReader() abgefragt werden.
             try
             {
@@ -106,7 +105,15 @@ namespace MeisterGeister.View.General
                         li.Pfad = file;
                     }
                     else
-                        return;
+                    {
+                        if (!string.IsNullOrEmpty(li.UrlPdf))
+                        {
+                            if (ViewHelper.ConfirmYesNoCancel("Kein PDF hinterlegt",
+                                    string.Format("Zu '{0}' wurde noch kein PDF hinterlegt. Es kann aber unter folgendem Link online bezogen werden:\n{1}\n\nWebseite anzeigen (JA)", li.Name, li.UrlPdf)) == 2)
+                                System.Diagnostics.Process.Start(li.UrlPdf);
+                        }
+                         return;
+                    }
                 }
                 if (_selectedSeitenangabe == null)
                     Logic.General.Pdf.OpenReader(_selectedLiteraturangabe, _selectedLiteraturangabe.Seiten.FirstOrDefault());
