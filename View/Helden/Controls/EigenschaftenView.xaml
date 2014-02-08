@@ -6,7 +6,7 @@
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="660"
+             d:DesignHeight="500" d:DesignWidth="660" DataContext="{x:Null}"
              Loaded="EigenschaftenLoaded" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
     	<ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" True="Visible" False="Collapsed" />

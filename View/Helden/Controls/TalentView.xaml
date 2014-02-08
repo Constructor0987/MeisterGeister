@@ -8,7 +8,7 @@
     Loaded="TalentLoaded" 
 	Unloaded="UserControl_Unloaded"
     x:Name="userControl"
-	mc:Ignorable="d"	
+	mc:Ignorable="d" DataContext="{x:Null}"
 	d:DesignWidth="810"
     d:DesignHeight="700">
     <UserControl.Resources>

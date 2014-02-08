@@ -6,7 +6,7 @@
 	mc:Ignorable="d"
 	x:Class="MeisterGeister.View.Helden.Controls.ListeView"
     xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Helden"
-	x:Name="UserControl"
+	x:Name="UserControl" DataContext="{x:Null}"
 	d:DesignWidth="190" d:DesignHeight="561" Loaded="HeldelLiseLoaded">
 	<UserControl.Resources>
 

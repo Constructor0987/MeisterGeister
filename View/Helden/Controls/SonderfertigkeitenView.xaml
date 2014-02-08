@@ -6,7 +6,7 @@
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              x:Name="userControl"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"  DataContext="{x:Null}"
              Loaded="SonderfertigkeitLoaded" Unloaded="UserControl_Unloaded"
              d:DesignHeight="299" d:DesignWidth="677">
     <UserControl.Resources>

@@ -12,7 +12,7 @@
     d:DesignWidth="790" 
     Loaded="InventarLoaded" 
     Unloaded="UserControl_Unloaded"
-    Background="Transparent" 
+    Background="Transparent" DataContext="{x:Null}"
 	d:DataContext="{d:DesignData /SampleData/InventarViewModelSampleData1.xaml}">
     <UserControl.Resources>
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />

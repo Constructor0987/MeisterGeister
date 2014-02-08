@@ -9,7 +9,7 @@
 	xmlns:General="clr-namespace:MeisterGeister.View.General"  	
     mc:Ignorable="d"
 	d:DesignWidth="807" 
-    d:DesignHeight="529.04"
+    d:DesignHeight="529.04" DataContext="{x:Null}"
     Loaded="AllgemeinLoaded" Unloaded="UserControl_Unloaded">    
 	<UserControl.Resources>        
 		<General:InverseBooleanConverter x:Key="InverseBooleanConverter" />
