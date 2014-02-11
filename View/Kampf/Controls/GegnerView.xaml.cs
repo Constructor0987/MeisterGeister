@@ -124,6 +124,8 @@ namespace MeisterGeister.View.Kampf.Controls
         {
             // Expanded Sections
             string sections = Logic.Einstellung.Einstellungen.GegnerViewExpandedSections;
+            if (string.IsNullOrEmpty(sections))
+                return;
             if (sections.Length >= 1)
                 expanderFilter.IsExpanded = (sections[0] == '1');
             if (sections.Length >= 2)
