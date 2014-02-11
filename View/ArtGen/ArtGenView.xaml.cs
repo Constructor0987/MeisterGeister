@@ -87,6 +87,7 @@ namespace MeisterGeister.View.ArtGen
             bool sfSemipermII = h.HatSonderfertigkeit("Semipermanenz II");
             bool sfRingkunde = false;
             bool sfAuxiliator = h.HatSonderfertigkeit("Auxiliator");
+            bool sfKraftspeicher = h.HatSonderfertigkeit("Kraftspeicher");
 
             uint tawArcanovi = Convert.ToUInt32(h.Zauberfertigkeitswert("Arcanovi Artefakt (Spruchspeicher)"));
             uint tawArcanoviMatrix = Convert.ToUInt32(h.Zauberfertigkeitswert("Arcanovi Artefakt (Matrixgeber)"));
@@ -97,8 +98,8 @@ namespace MeisterGeister.View.ArtGen
             uint tawMagiekunde = Convert.ToUInt32(h.Talentwert("Magiekunde"));
             
             // Übergabe an ArtefaktGenerator
-            PlugInControl.controller.plugInHero(h.Name, representation, sfKraftkontrolle, sfVielfacheLadung, sfStapeleffekt, sfHypervehemenz, sfMatrixgeber, sfSemipermI, 
-                sfSemipermII, sfRingkunde, sfAuxiliator, tawArcanovi, tawArcanoviMatrix, tawArcanoviSemi, tawOdem, tawAnalys, tawDestructibo, tawMagiekunde);
+            PlugInControl.controller.plugInHero(h.Name, representation, sfKraftkontrolle, sfVielfacheLadung, sfStapeleffekt, sfHypervehemenz, sfMatrixgeber, sfSemipermI,
+                sfSemipermII, sfRingkunde, sfKraftspeicher, sfAuxiliator, tawArcanovi, tawArcanoviMatrix, tawArcanoviSemi, tawOdem, tawAnalys, tawDestructibo, tawMagiekunde);
         }
 
         

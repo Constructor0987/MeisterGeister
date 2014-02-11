@@ -44,7 +44,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -1660,6 +1660,7 @@
     <Content Include="Daten\Updateskripte\InsertGegner.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0083.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
+    <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
     <Content Include="Libs\WPFExtensions.dll" />
     <Content Include="Libs\Xceed.Wpf.Toolkit.dll" />
@@ -1689,7 +1690,6 @@
     <Resource Include="Images\Icons\General\web.png" />
     <Resource Include="Images\Logos\DsaFanprojekt_Logo.png" />
     <Content Include="Libs\Microsoft.Expression.Interactions.dll" />
-    <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Daten\DatabaseDSA.sdf" />
     <Resource Include="Images\Icons\General\question.png" />
     <Resource Include="Images\Texturen\papier.jpg" />
