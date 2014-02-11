@@ -65,7 +65,10 @@ namespace MeisterGeister.View.General
             {
                 try
                 {
+                    string curDir = Environment.CurrentDirectory;
+                    Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(ProgrammPfad);
                     System.Diagnostics.Process.Start(ProgrammPfad);
+                    Environment.CurrentDirectory = curDir;
                 }
                 catch (Exception ex)
                 {
