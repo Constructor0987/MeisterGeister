@@ -101,7 +101,7 @@ namespace MeisterGeister.View.General
                     if (ViewHelper.ConfirmYesNoCancel("Kein PDF hinterlegt",
                         string.Format("Zu '{0}' wurde noch kein PDF hinterlegt. Soll nun ein PDF ausgewählt werden, um die Literaturangabe aufrufen zu können?", li.Name)) == 2)
                     {
-                        string file = ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", li.Name), string.Format("{0}.pdf", li.Name), false, "pdf");
+                        string file = ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", li.Name), string.Format("{0}.pdf", li.Name), false, true, "pdf");
                         if (string.IsNullOrEmpty(file))
                             return;
                         li.Pfad = file;

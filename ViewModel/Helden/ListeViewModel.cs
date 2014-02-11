@@ -27,7 +27,7 @@ namespace MeisterGeister.ViewModel.Helden
         ///// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
         ///// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
         ///// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterungen ...)</param>
-        public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) :
+        public ListeViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) :
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
             if (Global.SelectedHeld != null)
@@ -219,7 +219,7 @@ namespace MeisterGeister.ViewModel.Helden
             Held h = SelectedHeld;
             if (h != null)
             {
-                string pfad = ChooseFile("Held exportieren", h.Name, true, "xml");
+                string pfad = ChooseFile("Held exportieren", h.Name, true, false, "xml");
                 if (pfad != null)
                 {
                     try
@@ -301,7 +301,7 @@ namespace MeisterGeister.ViewModel.Helden
         }
         public void ImportHeldCommand(object sender)
         {
-            string pfad = ChooseFile("Held importieren", "", false, "xml", "xls", "xlsx", "xlsb");
+            string pfad = ChooseFile("Held importieren", "", false, false, "xml", "xls", "xlsx", "xlsb");
             if (pfad != null)
             {
                 Global.SetIsBusy(true, string.Format("{0} wird importiert...", pfad));

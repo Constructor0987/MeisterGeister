@@ -36,6 +36,15 @@ namespace MeisterGeister.View.General
             return (System.Windows.MessageBox.Show(msg, caption, MessageBoxButton.YesNo) == MessageBoxResult.Yes);
         }
 
+        /// <summary>
+        /// Zeigt ein Dialog-Fenster mit Ja/Nein/Abbruch an.
+        /// </summary>
+        /// <param name="caption"></param>
+        /// <param name="msg"></param>
+        /// <returns>2 = Ja
+        /// 1 = Nein
+        /// 0 = Abbruch
+        /// </returns>
         public static int ConfirmYesNoCancel(string caption, string msg)
         {
             MessageBoxResult res = System.Windows.MessageBox.Show(msg, caption, MessageBoxButton.YesNoCancel);
@@ -72,7 +81,7 @@ namespace MeisterGeister.View.General
             return invalidChars.Replace(path, "_");
         }
 
-        public static string ChooseFile(string title, string filename, bool saveFile, params string[] extensions)
+        public static string ChooseFile(string title, string filename, bool saveFile, bool askRelativePath, params string[] extensions)
         {
             filename = GetValidFilename(filename);
             FileDialog objDialog;
@@ -132,8 +141,13 @@ namespace MeisterGeister.View.General
             objDialog.InitialDirectory = Environment.CurrentDirectory;
             if (objDialog.ShowDialog() == DialogResult.OK)
             {
-                //_workingPath =  ?.Replace(objDialog.FileName, null);
-                return objDialog.FileName;
+                
+                if (askRelativePath && ViewHelper.ConfirmYesNoCancel("Pfadangabe", "Absolute Pfadangabe (Ja) oder relative Pfadangabe (Nein)?") == 1)
+                {
+                    return Logic.Extensions.StringExtenstions.ConvertAbsoluteToRelativePath(objDialog.FileName);
+                }
+                else
+                    return objDialog.FileName;
             }
             return null;
         }

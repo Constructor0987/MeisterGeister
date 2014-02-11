@@ -39,5 +39,19 @@ namespace MeisterGeister.Logic.Extensions
             return null;
         }
 
+        /// <summary>
+        /// Wandelt 'path' in eine relative Pfadangabe in Relation zum MeisterGeister-Verzeichnis um.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string ConvertAbsoluteToRelativePath(string path)
+        {
+            // TODO: Funktioniert nicht, wenn der Pfad auf einem anderen Laufwerk liegt.
+            Uri file = new Uri(path);
+            Uri homePath = new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\");
+            Uri relativePath = homePath.MakeRelativeUri(file);
+            return relativePath.ToString().Replace("/", "\\").Insert(0, "\\");
+        }
+
     }
 }

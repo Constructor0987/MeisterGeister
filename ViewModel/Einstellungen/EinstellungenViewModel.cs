@@ -257,7 +257,7 @@ namespace MeisterGeister.ViewModel.Settings
 
         private void OpenFileDialog(object obj)
         {
-            string file = View.General.ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", Name), string.Format("{0}.pdf", Name), false, "pdf");
+            string file = View.General.ViewHelper.ChooseFile(string.Format("Zu '{0}' ein PDF auswählen", Name), string.Format("{0}.pdf", Name), false, true, "pdf");
             if (string.IsNullOrEmpty(file))
                 return;
             Pfad = file;

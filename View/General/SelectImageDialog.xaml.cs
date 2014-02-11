@@ -98,7 +98,7 @@ namespace MeisterGeister.View.General
     /// </summary>
     public class SelectImageDialogViewModel : ViewModel.Base.ViewModelBase
     {
-        public SelectImageDialogViewModel(Func<string, string, string, string> chooseWebLink, Func<string, string, bool, string[], string> chooseFile)
+        public SelectImageDialogViewModel(Func<string, string, string, string> chooseWebLink, Func<string, string, bool, bool, string[], string> chooseFile)
             : base(null, null, null, chooseFile, null)
         {
             this.chooseWebLink = chooseWebLink;
@@ -327,7 +327,7 @@ namespace MeisterGeister.View.General
 
         private void ChoosePathFromFile(object obj)
         {
-            string pfad = ChooseFile("Bild aus Datei", "", false, "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff");
+            string pfad = ChooseFile("Bild aus Datei", "", false, true, "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff");
             if (pfad != null)
                 SelectedPathDatei = pfad;
         }

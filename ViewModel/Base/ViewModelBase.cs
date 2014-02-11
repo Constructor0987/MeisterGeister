@@ -19,7 +19,7 @@ namespace MeisterGeister.ViewModel.Base {
         private Action<string, Exception> showError;
         private Func<string, string, bool> confirm;
         private Func<string, string, int> confirmYesNoCancel;
-        private Func<string, string, bool, string[], string> chooseFile;
+        private Func<string, string, bool, bool, string[], string> chooseFile;
         private Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog;
 
         public virtual Dispatcher Dispatcher { get; protected set; }
@@ -35,7 +35,7 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
         /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterung ...)</param>
         /// <param name="showProbeDialog">Zeigt einen Probe-Dialog an (Probe, Held).</param>
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
         {
             this.Dispatcher = Dispatcher.CurrentDispatcher;
             this.popup = popup;
@@ -46,7 +46,7 @@ namespace MeisterGeister.ViewModel.Base {
             this.showProbeDialog = showProbeDialog;
         }
 
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, null, showError) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, null, showError) { }
         protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, showProbeDialog, showError) { }
         protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, showError) {}
         protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, null, null, showProbeDialog, showError) { }
@@ -140,10 +140,10 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="save">true für einen SaveDialog, false für einen OpenDialog</param>
         /// <param name="extensions">Dateierweiterungen</param>
         /// <returns>Den ausgewählten Dateipfad oder null</returns>
-        public string ChooseFile(string header, string filename, bool save, params string[] extensions)
+        public string ChooseFile(string header, string filename, bool save, bool askRelativePath, params string[] extensions)
         {
             if (chooseFile != null)
-                return chooseFile(header, filename, save, extensions);
+                return chooseFile(header, filename, save, askRelativePath, extensions);
             return null;
         }
 

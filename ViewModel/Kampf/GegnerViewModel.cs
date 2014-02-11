@@ -11,7 +11,7 @@ namespace MeisterGeister.ViewModel.Kampf
 {
     public class GegnerViewModel : Base.ViewModelBase
     {
-        public GegnerViewModel(Func<string, string, string, string> input, Func<string> selectImage, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
+        public GegnerViewModel(Func<string, string, string, string> input, Func<string> selectImage, Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : 
             base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
         {
             this.selectImage = selectImage;
@@ -721,7 +721,7 @@ namespace MeisterGeister.ViewModel.Kampf
             GegnerBase h = SelectedGegnerBase;
             if (h != null)
             {
-                string pfad = ChooseFile("Gegner exportieren", h.Name, true, "xml");
+                string pfad = ChooseFile("Gegner exportieren", h.Name, true, false, "xml");
                 if (pfad != null)
                 {
                     try
@@ -751,7 +751,7 @@ namespace MeisterGeister.ViewModel.Kampf
         }
         public void ImportGegnerBaseCommand(object args)
         {
-            string pfad = ChooseFile("Gegner importieren", "", false, "xml");
+            string pfad = ChooseFile("Gegner importieren", "", false, false, "xml");
             if (pfad != null)
             {
 #if !DEBUG
