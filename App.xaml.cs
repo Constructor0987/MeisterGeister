@@ -31,6 +31,7 @@ namespace MeisterGeister {
         public static object SqlCompactVersion = "-";
 
         public App() {
+
 #if !DEBUG
             this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 #endif

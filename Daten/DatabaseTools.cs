@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.SqlServerCe;
 using System.IO;
 using MeisterGeister.View.Windows;
+using System.Reflection;
 
 namespace MeisterGeister.Daten
 {
@@ -12,8 +13,9 @@ namespace MeisterGeister.Daten
     {
         #region //---- FELDER ----
 
-        public static readonly string DATABASE_FOLDER = @"Daten\";
-        public static readonly string BACKUP_FOLDER = @"Daten\Backup\";
+        public static readonly string MG_FOLDER = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        public static readonly string DATABASE_FOLDER = MG_FOLDER + @"\Daten\";
+        public static readonly string BACKUP_FOLDER = MG_FOLDER + @"\Daten\Backup\";
         public static readonly string MAIN_DATABASE = "DatabaseDSA.sdf";
         public static readonly string MAIN_DATABASE_PATH = DATABASE_FOLDER + MAIN_DATABASE;
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Media;
 using MeisterGeister.View.Windows;
+using System.Reflection;
+using System.IO;
 
 namespace MeisterGeister.Logic.General
 {
@@ -70,12 +72,12 @@ namespace MeisterGeister.Logic.General
 
         public static void PlayJingle()
         {
-            PlayFile(Environment.CurrentDirectory + @"\Audio\meistergeister.wav");
+            PlayFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Audio\meistergeister.wav");
         }
 
         public static void PlayWürfel()
         {
-            PlayFile(Environment.CurrentDirectory + @"\Audio\WuerfelnSound0000.wav");
+            PlayFile(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Audio\WuerfelnSound0000.wav");
         }
 
     }

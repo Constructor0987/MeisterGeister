@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace MeisterGeister.Logic.General
 {
@@ -18,7 +19,7 @@ namespace MeisterGeister.Logic.General
         public static void LogMsg(String message)
         {
             DateTime datet = DateTime.Now;
-            String filePath = "Log" + datet.ToString("yyyy_MM_dd") + ".log";
+            String filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + "Log" + datet.ToString("yyyy_MM_dd") + ".log";
             if (!File.Exists(filePath))
             {
                 FileStream files = File.Create(filePath);
