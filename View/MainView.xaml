@@ -355,7 +355,7 @@
                                 </MenuItem>
                             </MenuItem>
                             <MenuItem Height="28" Header="MeisterGeister in Archiven..."  >
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="Download bei Orkenspalter" Tag="http://www.downloads.orkenspalter.de/archives/4395"  >
+                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="Download bei Orkenspalter" Tag="​http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/"  >
                                     <MenuItem.Icon>
                                         <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
                                     </MenuItem.Icon>
