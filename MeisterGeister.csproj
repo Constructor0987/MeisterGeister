@@ -58,7 +58,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -1396,7 +1396,6 @@
     <Resource Include="Images\Logos\Ulisses_Logo.png" />
     <Resource Include="Images\Logos\HerokonOnline_Logo.png" />
     <Resource Include="Images\Logos\SilverStyleStudios_Logo.png" />
-    <Resource Include="Images\Logos\2w6plus6_Icon.png" />
     <Resource Include="Images\Logos\Tanelorn_Favicon.png" />
     <Resource Include="Images\Logos\HerokonOnline_Icon.png" />
     <Resource Include="Images\Icons\helden_kopieren.png" />
@@ -1659,6 +1658,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0082.sql" />
     <Content Include="Daten\Updateskripte\InsertGegner.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0083.sql" />
+    <Resource Include="Images\Logos\Uhrwerk_Icon.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

@@ -328,14 +328,9 @@
                                         <Image Margin="2" Source="/Images/Logos/Dsa4_Favicon.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Ulisses-Forum" Tag="http://www.ulisses-forum.de/showthread.php?p=763113"  >
+                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Ulisses-Forum" Tag="http://www.ulisses-spiele.de/forum/viewtopic.php?f=144&amp;t=612"  >
                                     <MenuItem.Icon>
                                         <Image Margin="2" Source="/Images/Logos/Ulisses_Icon.png" Stretch="Fill" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Vinsalt-Forum" Tag="http://vinsalt.regioconnect.net/wbb2/thread.php?postid=299664"  >
-                                    <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/Vinsalt_Favicon.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Orkenspalter-Forum" Tag="http://www.orkenspalter.de/viewtopic.php?f=1&amp;t=10204"  >
@@ -343,14 +338,19 @@
                                         <Image Margin="2" Source="/Images/Logos/Orkenspalter_Favicon.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Vinsalt-Forum" Tag="http://vinsalt.regioconnect.net/wbb2/thread.php?postid=299664"  >
+                                    <MenuItem.Icon>
+                                        <Image Margin="2" Source="/Images/Logos/Vinsalt_Favicon.png" Stretch="Fill" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Tanelorn-Forum" Tag="http://tanelorn.net/index.php/topic,67418.0.html"  >
                                     <MenuItem.Icon>
                                         <Image Margin="2" Source="/Images/Logos/Tanelorn_Favicon.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im 2W6+6-Forum" Tag="http://www.2w6plus6.de/f4-das-schwarze-auge/1035-tool-das-schwarze-auge-meistergeister.html"  >
+                                <MenuItem Height="28" Click="MenuItemWeb_Click" Header="MeisterGeister im Uhrwerk (Myranor)-Forum" Tag="http://community.uhrwerk-verlag.de/index.php?topic=470.0"  >
                                     <MenuItem.Icon>
-                                        <Image Margin="2" Source="/Images/Logos/2w6plus6_Icon.png" Stretch="Fill" />
+                                        <Image Margin="2" Source="/Images/Logos/Uhrwerk_Icon.png" Stretch="Fill" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </MenuItem>
