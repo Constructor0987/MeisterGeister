@@ -4,7 +4,7 @@
 *                                        *
 *        DSA MeisterGeister              *
 *                                        *
-*         Version 2.3.3                  *
+*         Version 2.4.0                  *
 *                                        *
 ******************************************
 
@@ -62,8 +62,8 @@ Die Datei 'ImpromptuInterface.dll' unterliegt der Apache License (siehe 'License
 Voraussetzungen
 ******************************************
 
-Microsoft .NET Framework 4.0
-http://www.microsoft.com/downloads/details.aspx?displaylang=de&FamilyID=0a391abd-25c1-4fc0-919f-b21f31ab88b7&displayLang=de
+Microsoft .NET Framework 4.5.1
+http://www.microsoft.com/de-de/download/details.aspx?id=40779
 
 Microsoft SQL Server Compact 4.0 SP1
 http://www.microsoft.com/de-de/download/details.aspx?id=30709
@@ -73,7 +73,7 @@ Windows Media Player ab Version 10 (für Audio-Funktionen).
 Microsoft Access Database Engine 2010 (für Import von Heldenblatt.ch-Dateien)
 http://www.microsoft.com/de-de/download/details.aspx?id=13255
 
-Das .NET Framework 4.0 ist eine Plattform für Microsoft Windows Betriebssysteme. Unter Linux funktioniert DSA MeisterGeister leider auf absehbare Zeit nicht, da die Linux-Portierung Mono einige zentrale Komponenten nicht unterstützt.
+Das .NET Framework ist eine Plattform für Microsoft Windows Betriebssysteme. Unter Linux funktioniert DSA MeisterGeister leider auf absehbare Zeit nicht, da die Linux-Portierung Mono einige zentrale Komponenten nicht unterstützt.
 
 
 ******************************************
