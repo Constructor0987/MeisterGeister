@@ -155,8 +155,10 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 string pwd = View.General.ViewHelper.InputDialog("Passwort", "Passwort für INTERN Modus eingeben.", string.Empty);
-                if (pwd == "m3ist3rg3ist3r")
+                if (Global.Intern_CheckPwd(pwd))
                     SetEinstellung<bool>("INTERN", value);
+                else
+                    SetEinstellung<bool>("INTERN", false);
             }
         }
 

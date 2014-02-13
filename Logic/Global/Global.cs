@@ -67,6 +67,13 @@ namespace MeisterGeister
             get { return Global.INTERN ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed; }
         }
 
+        private const string INTERN_PWD = "%m3ist3rg3ist3r%Intern";
+
+        public static bool Intern_CheckPwd(string pwd)
+        {
+            return INTERN_PWD == pwd;
+        }
+
         public static bool IsInitialized
         {
             get;
