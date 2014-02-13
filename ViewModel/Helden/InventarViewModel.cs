@@ -31,14 +31,17 @@ namespace MeisterGeister.ViewModel.Inventar
         private Visibility isNahkampfwaffevorhanden = Visibility.Hidden;
         private Visibility isFernkampfwaffevorhanden = Visibility.Hidden;
         private Visibility isSchildVorhanden = Visibility.Hidden;
-        private Visibility isRuestungVorhanden = Visibility.Hidden;
-        private Visibility isRuestungBerechnungZonen = Visibility.Hidden;
+        private Visibility isRuestungVorhanden = Visibility.Hidden;        
 
         private bool isAllSelected;
         private bool isNahkampfWaffeSelected;
         private bool isFernkampfwaffeSelected;
         private bool isSchildSelected;
         private bool isRuestungSelected;
+        private bool isRuestungBerechnungZonen = false;
+        private bool isRuestungBerechnungEinfach = false;
+        private bool isRuestungBerechnungAutomatisch = false;        
+
         private int selectedFilterIndex = 0;
 
         private Model.Held selectedHeld;
@@ -124,16 +127,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 isRuestungVorhanden = value;
                 OnChanged("IsRuestungVorhanden");
             }
-        }
-        public Visibility IsRuestungBerechnungZonen
-        {
-            get { return isRuestungBerechnungZonen; }
-            set
-            {
-                isRuestungBerechnungZonen = value;
-                OnChanged("IsRuestungBerechnungZonen");
-            }
-        }
+        }        
 
         public int SelectedFilterIndex
         {
@@ -249,6 +243,33 @@ namespace MeisterGeister.ViewModel.Inventar
                 OnChanged("IsRuestungSelected");
             }
         }
+        public bool IsRuestungBerechnungAutomatisch
+        {
+            get { return isRuestungBerechnungAutomatisch; }
+            set
+            {
+                isRuestungBerechnungAutomatisch = value;
+                OnChanged("IsRuestungBerechnungAutomatisch");
+            }
+        }
+        public bool IsRuestungBerechnungEinfach
+        {
+            get { return isRuestungBerechnungEinfach; }
+            set
+            {
+                isRuestungBerechnungEinfach = value;
+                OnChanged("IsRuestungBerechnungEinfach");
+            }
+        }
+        public bool IsRuestungBerechnungZonen
+        {
+            get { return isRuestungBerechnungZonen; }
+            set
+            {
+                isRuestungBerechnungZonen = value;
+                OnChanged("IsRuestungBerechnungZonen");
+            }
+        }                        
 
         public Model.Held SelectedHeld
         {
@@ -533,10 +554,27 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //KONSTRUKTOR
         public InventarViewModel()
         {
-            if (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung == 2)
+            switch (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung)
             {
-                IsRuestungBerechnungZonen = Visibility.Visible;
-            }
+                case 0:
+                    
+                    IsRuestungBerechnungAutomatisch = true;
+                    IsRuestungBerechnungEinfach = false;
+                    IsRuestungBerechnungZonen = false;
+                    break;
+                case 1:
+                    IsRuestungBerechnungAutomatisch = false;
+                    IsRuestungBerechnungEinfach = true;
+                    IsRuestungBerechnungZonen = false;
+                    break;
+                case 2:
+                    IsRuestungBerechnungAutomatisch = false;
+                    IsRuestungBerechnungEinfach = false;
+                    IsRuestungBerechnungZonen = true;
+                    break;
+                default:
+                    break;
+            }                           
 
             onAddNahkampfwaffe = new Base.CommandBase(AddNahkampfwaffe, null);
             onAddFernkampfwaffe = new Base.CommandBase(AddFernkampfwaffe, null);

@@ -4,7 +4,7 @@ xmlns:System="clr-namespace:System;assembly=mscorlib"
 xmlns:General="clr-namespace:MeisterGeister.Logic.General" 
 xmlns:Markup="clr-namespace:System.Windows.Markup;assembly=System.Xaml" 
 AktuellesGewichtProzentResultierendeBE="773.89" 
-AktuelleTragkraft="997.23" 
+AktuelleTragkraft="50" 
 AktuellesGewicht="774.91" 
 AktuellesGewichtInProzentZuTragkraft="485.04" 
 HasValidationErrors="False" 
@@ -18,8 +18,10 @@ IsSchildVorhanden="Visible"
 IsFernkampfwaffeSelected="True" 
 ListenToChangeEvents="True" 
 SelectedFilterIndex="89"
-IsRuestungBerechnungZonen="Visible"
->
+IsRuestungBerechnungZonen="true"
+IsRuestungBerechnungAutomatisch="true"
+IsRuestungBerechnungEinfach="true"
+>	
 	<Inventar:InventarViewModel.FernkampfwaffeListe>
 		<Model:Fernkampfwaffe AusdauerSchaden="False" Bemerkung="Consequat diam lorem" Gewicht="37" Improvisiert="True" Literatur="Dictumst vestibulum arcu turpis fusce" Munitionsart="Eleifend eget morbi vestibulum" Name="Hac amet donec conubia curabitur" Preis="217.81" Reichweiten="Blandit commodo" TPReichweiten="Aliquet est tortor vulputate curae" Verbreitung="Etiam phasellus ante parturient" Verwundend="True">
 			<Model:Fernkampfwaffe.Ausrüstung>

@@ -42,10 +42,7 @@ namespace MeisterGeister.View.Helden.Controls {
         /// Konstruktor
         /// </summary>
         public InventarView() {
-            InitializeComponent();
-
-            Ruestung.Visibility = Visibility.Hidden;
-            Uebersicht.Visibility = Visibility.Visible;
+            InitializeComponent();            
         }
 
         #endregion
@@ -98,48 +95,6 @@ namespace MeisterGeister.View.Helden.Controls {
             }
 
             VM.LoadDaten();           
-        }
-
-        /// <summary>
-        /// BtnKlick: StartAnimation Open Ruestung
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OpenRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            Storyboard uebersicht = (Storyboard)TryFindResource("CloseUebersicht");
-            if (uebersicht != null) {
-
-
-                uebersicht.Completed += (obj, args) => {
-                    Uebersicht.Visibility = Visibility.Hidden;
-                    Ruestung.Visibility = Visibility.Visible;
-
-                    Storyboard ruestung = (Storyboard)TryFindResource("OpenRuestung");
-                    if (ruestung != null)
-                        ruestung.Begin(this);
-                };
-                uebersicht.Begin(this);
-            }
-        }
-
-        /// <summary>
-        /// BtnKlick: StartAnimation Open Uebersicht
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CloseRuestung(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            Storyboard uebersicht = (Storyboard)TryFindResource("CloseRuestung");
-            if (uebersicht != null) {
-                uebersicht.Completed += (obj, args) => {
-                    Ruestung.Visibility = Visibility.Hidden;
-                    Uebersicht.Visibility = Visibility.Visible;
-
-                    Storyboard ruestung = (Storyboard)TryFindResource("OpenUebersicht");
-                    if (ruestung != null)
-                        ruestung.Begin(this);
-                };
-                uebersicht.Begin(this);
-            }
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e) {
