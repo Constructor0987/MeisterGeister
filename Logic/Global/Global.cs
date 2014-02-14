@@ -187,6 +187,8 @@ namespace MeisterGeister
         /// </summary>
         public static void Init()
         {
+            LogInfo log = Logger.PerformanceLogStart("Daten aus Datenbank laden");
+
             ContextAudio = new Service.AudioService();
             ContextHeld = new Service.DataService();
             ContextInventar = new Service.InventarService();
@@ -209,6 +211,8 @@ namespace MeisterGeister
                 if (Guid.TryParse(Logic.Einstellung.Einstellungen.SelectedHeld, out heldguid))
                     SelectedHeldGUID = heldguid;
             }
+
+            Logger.PerformanceLogEnd(log);
 
             //webserver
             Net.Web.RequestProcessor.Start();

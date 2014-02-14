@@ -88,7 +88,7 @@ namespace MeisterGeister.View.Windows
             _textBoxMsg.Text = msg;
 
             // Fehler in Log-Datei schreiben
-            Logic.General.Logger.LogMsg(msg);
+            Logic.General.Logger.LogMsgToFile(msg);
         }
 
         private static string GetExceptionDetails(Exception ex)
@@ -196,9 +196,10 @@ namespace MeisterGeister.View.Windows
                 + " (" + SystemParameters.FullPrimaryScreenWidth.ToString() + "x" + SystemParameters.FullPrimaryScreenHeight.ToString() + ")";
             
             return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nSQL-CE-Version: {4}\nArbeitsverzeichnis: {5}\nMeisterGeister-Verzeichnis: {6}"
-                + "\nLaufwerk: {7}\nProzessoranzahl: {8}\nWorkingSet: {9}\nRenderingebene: {10}\nAuflösung: {11}\nBildschirme: {12}",
+                + "\nLaufwerk: {7}\nProzessoranzahl: {8}\nWorkingSet: {9}\nRenderingebene: {10}\nAuflösung: {11}\nBildschirme: {12}\n\nPerformance:{13}",
                 Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), App.SqlCompactVersion == null ? "-" : App.SqlCompactVersion.ToString(), Environment.CurrentDirectory,
-                System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), driveInfoText, Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length);
+                System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), driveInfoText, Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length,
+                Logic.General.Logger.PerformanceLog);
         }
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)

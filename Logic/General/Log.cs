@@ -16,7 +16,7 @@ namespace MeisterGeister.Logic.General
         /// Für jedes Datum wird eine eigene Datei erzeugt: "Log_yyyy_MM_dd.log".
         /// </summary>
         /// <param name="message"></param>
-        public static void LogMsg(String message)
+        public static void LogMsgToFile(String message)
         {
             DateTime datet = DateTime.Now;
             String filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + "Log" + datet.ToString("yyyy_MM_dd") + ".log";
@@ -36,6 +36,58 @@ namespace MeisterGeister.Logic.General
             {
                 Console.WriteLine(e.Message.ToString());
             }
+        }
+
+        public static string PerformanceLog { get; set; }
+
+        public static void SetPerformanceLog(string logMsg)
+        {
+            PerformanceLog = String.Join(Environment.NewLine, PerformanceLog, logMsg);
+        }
+
+        
+        /// <summary>
+        /// Startet eine Zeit-Performance Messung.
+        /// </summary>
+        /// <param name="msg">Angabe was gemessen wird.</param>
+        public static LogInfo PerformanceLogStart(string msg)
+        {
+            return new LogInfo(msg);
+        }
+
+        public static LogInfo PerformanceLogEnd(LogInfo log)
+        {
+            log.EndTimeStamp = DateTime.Now;
+            SetPerformanceLog(log.ToString());
+            return log;
+        }
+    }
+
+    public class LogInfo
+    {
+        public DateTime StartTimeStamp { get; set; }
+        public DateTime EndTimeStamp { get; set; }
+        public string Message { get; set; }
+
+        public TimeSpan TimeSpan
+        {
+            get { return EndTimeStamp - StartTimeStamp; }
+        }
+
+        public LogInfo()
+        {
+            StartTimeStamp = DateTime.Now;
+            EndTimeStamp = DateTime.Now;
+        }
+
+        public LogInfo(string msg) : this()
+        {
+            Message = msg;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}: {1}", TimeSpan, Message);
         }
     }
 }

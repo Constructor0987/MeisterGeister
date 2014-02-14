@@ -26,10 +26,14 @@ namespace MeisterGeister.View.Helden
     {
         public HeldenView()
         {
+            LogInfo log = Logger.PerformanceLogStart("Init HeldenView");
+
             InitializeComponent();
 
             //VM an View Registrieren
-            VM = new VM.HeldenViewModel(); 
+            VM = new VM.HeldenViewModel();
+
+            Logger.PerformanceLogEnd(log);
         }
 
         /// <summary>

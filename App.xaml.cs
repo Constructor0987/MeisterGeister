@@ -32,6 +32,8 @@ namespace MeisterGeister {
 
         public App() {
 
+            LogInfo log = Logger.PerformanceLogStart("Programmstart");
+
 #if !DEBUG
             this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 #endif
@@ -166,6 +168,8 @@ namespace MeisterGeister {
                 errWin.Close();
                 Application.Current.MainWindow.Opacity = 1;
             }
+
+            Logger.PerformanceLogEnd(log);
 
             // Restliche Daten aus Datenbank laden
             LoadDataFromDatabase();
