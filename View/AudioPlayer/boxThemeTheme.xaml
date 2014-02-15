@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="76*" />
                 <ColumnDefinition Width="27" />
             </Grid.ColumnDefinitions>
-            <Image Source="/Images/Icons/General/copy.png" Margin="3"/>
+            <Image Name="imgIcon" Source="/Images/Icons/General/copy.png" Margin="3"/>
             <TextBlock Name="txblkName" VerticalAlignment="Center" Grid.Column="1" Margin="3" />            
             <Button Name="btnClose" ToolTip="Entfernen des untergeordneten Themes" Margin="5,5,2,5" Grid.Column="2" >
                 <Image Source="/Images/Icons/General/entf_01.png" />

@@ -218,39 +218,8 @@
             <ColumnDefinition Width="420" />
         </Grid.ColumnDefinitions>
         
-        <Expander IsExpanded="False" Name="exEinstellungen" Grid.Column="1" Grid.RowSpan="2" >
-            <Expander.Header>
-                <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
-            </Expander.Header>
-            <Border Name="brdMusikOption" Style="{DynamicResource ControlContentBorder}" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top">
-                <StackPanel>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130" />
-                            <ColumnDefinition Width="78" />
-                            <ColumnDefinition Width="200*" MaxWidth="190" />
-                            <ColumnDefinition Width="30"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Label Name="lblStdPfad" Content="Standard-Verzeichnis" />
-                            <TextBox Height="23" Name="_tbStdPfad" Background="{x:Null}" Text="C:\" Tag="C:\" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,1" TextChanged="_tbStdPfad_TextChanged" IsReadOnly="True" ToolTip="Wählen Sie den Auswahl-Button um den Standard-Pfad zu ändern" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
-                        <Button Content="..." Height="21" HorizontalAlignment="Left" Name="_btnStdPfad" Width="30" Grid.Column="3" Click="_btnStdPfad_Click" />
-                                    
-                        <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Margin="10,0,0,0" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Click="_rbtnGleichSpielen_Click" />
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
-                            <Label Content="Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </Border>
-        </Expander>
         <TabControl Margin="12,0,3,0" Name="tcAudioPlayer"  Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+
             <TabItem Header="Editor" Name="tiEditor" GotFocus="tiEditor_GotFocus" >
                 <Grid Background="{StaticResource Background1}">
                     <Grid.ColumnDefinitions>
@@ -263,21 +232,21 @@
                         <RowDefinition Height="40" />
                         <RowDefinition Height="421*" />
                     </Grid.RowDefinitions>
-                    
+
                     <GroupBox IsEnabled="True" Margin="0,1,0,0">
                         <StackPanel Margin="10,2,0,-2">
-                            <RadioButton Content="Einzelne Playlist editieren" Height="16" Name="rbEditorEditPList" GroupName="KlangEdit" Unchecked="rbEditorEditTheme_UnChecked" Checked="rbEditorEditTheme_Checked" />
-                            <RadioButton Content="Komplettes Theme" Height="18" Name="rbEditorEditTheme" GroupName="KlangEdit" Unchecked="rbEditorEditTheme_UnChecked" Checked="rbEditorEditTheme_Checked" />
+                            <RadioButton Content="Einzelne Playlist editieren" Height="16" Name="rbEditorEditPList" GroupName="KlangEdit" Checked="rbEditorEditPlaylist_Checked"  />
+                            <RadioButton Content="Komplettes Theme" Height="18" Name="rbEditorEditTheme" GroupName="KlangEdit" Checked="rbEditorEditTheme_Checked" />
                         </StackPanel>
-                    </GroupBox>                             
+                    </GroupBox>
                     <Border Grid.Row="1" Margin="0,0,0,10" MinWidth="100">
-                        <Grid>
+                        <Grid Name="grdEditorList">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="297*" />
+                                <RowDefinition Height="330*" />
                             </Grid.RowDefinitions>
-                                
-                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Margin="0,-1,7,10" VerticalAlignment="Top" VerticalContentAlignment="Top" Name="exKlangTheme">
+
+                            <Expander Name="exEditorTheme" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Margin="0,-1,7,10" VerticalAlignment="Top" VerticalContentAlignment="Top" Visibility="Collapsed" >
                                 <Expander.Header>
                                     <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
@@ -290,7 +259,7 @@
                                         </Grid.RowDefinitions>
                                         <Border>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button Name="btnKlangNeuTheme" ToolTip="Neues Theme" Click="btnKlangNeuTheme_Click" Height="28" Width="28" Grid.Column="1"  >
+                                                <Button Name="btnKlangNeuTheme" ToolTip="Neues Theme" Click="btnKlangNeuTheme_Click" Height="28" Width="28" >
                                                     <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
                                                 </Button>
                                                 <Button  Name="btnKlangThemeImport" ToolTip="Theme importieren" Click="btnKlangThemeImport_Click" Height="28" Width="28" Margin="5,0,0,0" >
@@ -310,10 +279,10 @@
                                                 <TextBox Margin="2,1" Name="tbEditorThemeFilter" Grid.Column="1" TextChanged="tbEditorThemeFilter_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                                 <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
-                                                </Button>                                                
+                                                </Button>
                                             </Grid>
                                         </Border>
-                                            
+
                                         <Border Grid.Row="2" HorizontalAlignment="Stretch" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Stretch">
                                             <ListBox Background="Transparent" Name="lbEditorTheme" SelectionChanged="lbEditorTheme_SelectionChanged" />
                                         </Border>
@@ -321,7 +290,7 @@
                                 </Border>
                             </Expander>
 
-                            <GridSplitter Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" />
+                            <GridSplitter Name="grdsplitEditorList" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Visibility="Collapsed" />
 
                             <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" Name="exKlangPList">
                                 <Expander.Header>
@@ -365,38 +334,30 @@
                                                 <TextBox Margin="2,1" Name="tbEditorPlaylistFilter" Grid.Column="1" TextChanged="tbEditorPlaylistFilter_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                                 <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
                                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
-                                                </Button>                                                
+                                                </Button>
                                             </Grid>
                                         </Border>
 
-                                        <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}"> 
-                                            <ListBox Background="Transparent" Name="lbEditor" VerticalAlignment="Stretch" SelectionChanged="lbEditor_SelectionChanged" />                                                
+                                        <Border Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,2" Style="{DynamicResource ControlContentBorder}">
+                                            <ListBox Background="Transparent" Name="lbEditor" VerticalAlignment="Stretch" SelectionChanged="lbEditor_SelectionChanged" />
                                         </Border>
                                     </Grid>
                                 </Border>
                             </Expander>
-                        </Grid>                    
+                        </Grid>
                     </Border>
                     <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" />
-                    
 
-                    <Border Height="40" HorizontalAlignment="Stretch" Name="brdKlang" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
+
+                    <Border Name="brdKlang" Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" Visibility="Collapsed" >
                         <Grid Name="grdEditorPlaylistInfo">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="220" />
-                                <ColumnDefinition Width="5" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="240" />
                             </Grid.ColumnDefinitions>
-                            <Label Content="Themename" VerticalContentAlignment="Center" Margin="10,0,0,0" />
-                            <TextBox HorizontalAlignment="Stretch" Name="tboxKlangThemeName" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um den Theme umzubenennen" Height="25" Grid.Column="1" Background="{x:Null}" LostFocus="tboxKlangTheme_LostFocus" ForceCursor="True" KeyUp="tboxKlangTheme_KeyUp" GotFocus="tbGotFocus" />
-                            
-                            <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" Click="btnTopThemeAddTheme_Click" ToolTip="Untergeordnetes Theme hinzufügen" Width="30" HorizontalAlignment="Left">
-                                <Grid Width="35" Height="25">
-                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" />
-                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/add.png" Width="20" Height="20" Margin="-20,-3,0,0" />
-                                </Grid>
-                            </Button>                            
+
+                            <Label Name="lblEditorListName" Content="Playlist-Name" VerticalContentAlignment="Center" />
+                            <TextBox HorizontalAlignment="Stretch" Name="tboxEditorName" Text="NeuePlaylist" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um den Theme umzubenennen" Height="25" Grid.Column="1" Background="{x:Null}" LostFocus="tboxEditorName_LostFocus" ForceCursor="True" KeyUp="tboxEditorName_KeyUp" GotFocus="tbGotFocus" />
                         </Grid>
                     </Border>
                     <Border Style="{DynamicResource ControlContentBorder}" Margin="3,0,0,-10" HorizontalAlignment="Left" Grid.Column="3" >
@@ -423,21 +384,56 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="410*" />
                         </Grid.RowDefinitions>
-                        <Border Margin="0,10,0,0" >
-                            <Expander Name="expEditorTopThemeTheme" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Visibility="Collapsed" >
-                                <Expander.Header>
-                                    <TextBlock Text="Untergeordnete Themes    " Style="{DynamicResource TextTitel}" />
-                                </Expander.Header>
-                                <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                    <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
-                                        <WrapPanel Name="wpnlEditorTopThemesThemes" ItemHeight="50" ItemWidth="150" AllowDrop="True" ToolTip="Von untergeordeten Themes werden nur die noch nicht ausgewählten Geräusch-Playlists wiedergegeben" />
-                                    </ScrollViewer>
-                                </Border>
-                            </Expander>
+                        <Border Margin="0,10,0,0" Drop="brdEditorTheme_Drop" DragEnter="brdEditorTheme_DragEnter" >
+
+                            <StackPanel Orientation="Vertical">
+                                <Expander Name="expEditorThemesMusik" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Visibility="Collapsed" >
+                                    <Expander.Header>
+                                        <TextBlock Text="Musik Playliste        " Style="{DynamicResource TextTitel}" />
+                                    </Expander.Header>
+                                    <Border Name="brdEditorThemesMusik" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
+                                        <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
+                                            <WrapPanel Name="wpnlEditorThemeMusik" ItemHeight="60" ItemWidth="200" MinHeight="60" MinWidth="200" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Expander>
+
+                                <Expander Name="expEditorThemesGeräusch" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Visibility="Collapsed" >
+                                    <Expander.Header>
+                                        <TextBlock Text="Geräusche Playliste(n)      " Style="{DynamicResource TextTitel}" />
+                                    </Expander.Header>
+                                    <Border Name="brdEditorThemesGeräusch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
+                                        <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
+                                            <WrapPanel Name="wpnlEditorThemeGeräusch" ItemHeight="60" ItemWidth="200" MinHeight="60" MinWidth="200" />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Expander>
+
+                                <Expander Name="expEditorTopThemeTheme" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Visibility="Collapsed" >
+                                    <Expander.Header>
+                                        <TextBlock Text="Untergeordnete Themes    " Style="{DynamicResource TextTitel}" />
+                                    </Expander.Header>
+                                    <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Grid Name="grdEditorThemeWPnlUTheme">
+                                                <Button Name="btnTopThemeAddTheme" Grid.Column="3" Margin="5" Click="btnTopThemeAddTheme_Click" ToolTip="Untergeordnetes Theme hinzufügen" Width="30" HorizontalAlignment="Left">
+                                                    <Grid Width="35" Height="25">
+                                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/copy.png" />
+                                                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/add.png" Width="20" Height="20" Margin="-20,-3,0,0" />
+                                                    </Grid>
+                                                </Button>
+                                            </Grid>
+                                            <ScrollViewer Margin="0,0,0,6" VerticalScrollBarVisibility="Auto">
+                                                <WrapPanel Name="wpnlEditorTopThemesThemes" ItemHeight="50" ItemWidth="150" AllowDrop="True" ToolTip="Von untergeordeten Themes werden nur die noch nicht ausgewählten Geräusch-Playlists wiedergegeben" />
+                                            </ScrollViewer>
+                                        </StackPanel>
+                                    </Border>
+                                </Expander>
+                            </StackPanel>
                         </Border>
 
                         <TabControl Background="{StaticResource Background1}" Name="tcEditor" Margin="3,8,6,9" SelectionChanged="tcEditor_SelectionChanged" PreviewMouseMove="TabItem_PreviewMouseMove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2">
-                            <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" ToolTip="Hinzufügen einer Playlist in das Theme">
+                            <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" ToolTip="Hinzufügen einer Playlist in das Theme" Visibility="Collapsed">
                                 <TabItem.Header>
                                     <StackPanel>
                                         <Image Name="_image" Height="12" Width="12" Source="/Images/Icons/General/add.png" />
@@ -607,7 +603,7 @@
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" />
                                             </Button>
 
-                                            <Button Name="btnKlangUpdateFilesX" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="7" HorizontalAlignment="Right" Margin="0,0,10,0" ToolTipService.ShowDuration="10000" Visibility="Hidden" >
+                                            <Button Name="btnKlangUpdateFilesX" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="8" HorizontalAlignment="Left" Margin="0,0,10,0" ToolTipService.ShowDuration="10000" Visibility="Hidden" >
                                                 <Grid>
                                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
                                                     <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/refresh.png" Width="20" />
@@ -622,11 +618,12 @@
                                     </Grid>
                                 </Grid>
                             </TabItem>
+
                         </TabControl>
                     </Grid>
-                </Grid> 
+                </Grid>
             </TabItem>
-                        
+
             <TabItem Header="Musik - Player" Name="tiMusik" Loaded="tiMusik_Loaded" GotFocus="tiMusik_GotFocus" >
                 <Grid Background="{StaticResource Background1}">
                     <Grid.RowDefinitions>
@@ -937,6 +934,40 @@
                 </Grid>
             </TabItem>   
         </TabControl>
+        <Expander IsExpanded="False" Name="exEinstellungen" Grid.Column="1" Expanded="exEinstellungen_Expanded" Collapsed="exEinstellungen_Collapsed" Margin="0,0,0,200" Grid.RowSpan="2" VerticalAlignment="Top" Background="{DynamicResource Background1}"  >
+            <Expander.Header>
+                <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Name="brdMusikOption" Style="{DynamicResource ControlContentBorder}" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top">
+                <StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="78" />
+                            <ColumnDefinition Width="200*" MaxWidth="190" />
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Name="lblStdPfad" Content="Standard-Verzeichnis" />
+                        <TextBox Height="23" Name="_tbStdPfad" Background="{x:Null}" Text="C:\" Tag="C:\" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,1" TextChanged="_tbStdPfad_TextChanged" IsReadOnly="True" ToolTip="Wählen Sie den Auswahl-Button um den Standard-Pfad zu ändern" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                        <Button Content="..." Height="21" HorizontalAlignment="Left" Name="_btnStdPfad" Width="30" Grid.Column="3" Click="_btnStdPfad_Click" />
+
+                        <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Margin="10,0,0,0" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Click="_rbtnGleichSpielen_Click" />
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
+                            <Label Content="Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                        </StackPanel>
+
+                        <CheckBox Content="Gesamtspieldauer beim Abspielen berechnen" Name="_rbtnSpieldauerBerechnen" Margin="10,40,0,10" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="3" IsChecked="True" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Expander>
 
         <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3" Visibility="Collapsed" >
             <StackPanel Orientation="Horizontal">

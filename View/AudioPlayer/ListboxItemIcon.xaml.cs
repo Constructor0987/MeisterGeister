@@ -20,6 +20,8 @@ namespace MeisterGeister.View.AudioPlayer
     /// </summary>
     public partial class ListboxItemIcon : ListBoxItem
     {
+        public bool _animateOnMouseEvent = true;
+
         public ListboxItemIcon()
         {
             InitializeComponent();
@@ -50,7 +52,8 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void spnllbiIcon_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (this.Parent.GetType() == typeof(ListBox))
+            if (_animateOnMouseEvent &&
+                this.Parent.GetType() == typeof(ListBox))
             {
                 double d = ((Border)((ListBox)this.Parent).Parent).ActualWidth - grd.ColumnDefinitions[0].ActualWidth - 10;
 

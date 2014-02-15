@@ -1,0 +1,25 @@
+﻿<ListBoxItem x:Name="lbi" x:Class="MeisterGeister.View.AudioPlayer.ListboxItemBtn"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             d:DesignHeight="27" MouseLeave="lbi_MouseLeave" MouseEnter="lbi_MouseEnter" >
+
+    <StackPanel Name="spnllbiIcon" Orientation="Horizontal" Margin="1" >
+        <Grid Name="grd" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="130"  />
+                <ColumnDefinition Width="22" />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="22" />
+            </Grid.RowDefinitions>
+
+            <Label Name="lblStdPfad" Padding="5,2" BorderBrush="Black" Background="White" Focusable="True" TextOptions.TextFormattingMode="Display" />
+            <Image Name="imgIcon" Source="/Images/Icons/General/entf_01.png" Grid.Column="1" Margin="1" Stretch="Fill" ToolTip="Standard-Pfad entfernen" Tag="0" Visibility="Hidden" />
+            <Button Content="..." Height="21" HorizontalAlignment="Right" Name="btnStdPfad" Width="29" Grid.Column="2" ToolTip="Standard-Pfad hinzufügen/ändern" Click="btnStdPfad_Click" />
+        </Grid>
+    </StackPanel>
+</ListBoxItem>
