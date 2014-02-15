@@ -141,7 +141,7 @@ namespace MeisterGeister.View.General
             objDialog.InitialDirectory = Environment.CurrentDirectory;
             if (objDialog.ShowDialog() == DialogResult.OK)
             {
-                
+                Environment.CurrentDirectory = Path.GetDirectoryName(objDialog.FileName);
                 if (askRelativePath && ViewHelper.ConfirmYesNoCancel("Pfadangabe", "Absolute Pfadangabe (Ja) oder relative Pfadangabe (Nein)?") == 1)
                 {
                     return Logic.Extensions.StringExtenstions.ConvertAbsoluteToRelativePath(objDialog.FileName);
