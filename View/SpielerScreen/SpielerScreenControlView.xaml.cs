@@ -120,6 +120,7 @@ namespace MeisterGeister.View.SpielerScreen
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
             MainView.ShowSpielerInfoBild(_textBlockFilePath.Text, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
+            SetPreview();
         }
 
         private void LoadImage(string path, Image img)
@@ -179,6 +180,21 @@ namespace MeisterGeister.View.SpielerScreen
             {
                 MsgWindow errWin = new MsgWindow("Fehler beim Starten eines externen Programms", "Beim Starten eines externen Programms ist ein Fehler aufgetreten!", ex);
                 errWin.ShowDialog();
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetPreview();
+        }
+
+        private void SetPreview()
+        {
+            if (MainView.WindowSpieler != null)
+            {
+                System.Windows.Media.VisualBrush vb = new VisualBrush(MainView.WindowSpieler);
+                _spielerWindowVorschau.Fill = vb;
+                _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 300, Fill = vb };
             }
         }
 
