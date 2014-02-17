@@ -21,13 +21,46 @@ namespace MeisterGeister.View.SpielerScreen
         public SpielerWindow()
         {
             InitializeComponent();
+
+            int xPoint = 0, yPoint = 0;
+            foreach (System.Windows.Forms.Screen objActualScreen in ScreenList)
+            {
+                if (!objActualScreen.Primary)
+                {
+                    xPoint = objActualScreen.Bounds.Location.X + 20;
+                    yPoint = objActualScreen.Bounds.Location.Y + 20;
+                }
+            }
+            WindowStartupLocation = WindowStartupLocation.Manual;
+            Left = Convert.ToDouble(xPoint);
+            Top = Convert.ToDouble(yPoint);
         }
+
+        List<System.Windows.Forms.Screen> ScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
 
         public bool IsKampfInfoModus { get; set; }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            WindowState = System.Windows.WindowState.Maximized;            
+            if (ScreenList.Count > 1)
+            {
+                WindowState = System.Windows.WindowState.Maximized;
+                WindowStyle = System.Windows.WindowStyle.None;
+            }
+            else
+            { // bei nur einem Screen nicht im Vollbildmodus starten
+                WindowState = System.Windows.WindowState.Normal;
+                WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            { // Vollbildmodus verlassen
+                WindowState = System.Windows.WindowState.Normal;
+                WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+            }
         }
     }
 }

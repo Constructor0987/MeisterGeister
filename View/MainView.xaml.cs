@@ -411,23 +411,23 @@ namespace MeisterGeister.View
 
         public static void StarteSpielerFenster()
         {
-            List<System.Windows.Forms.Screen> objScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
+            //List<System.Windows.Forms.Screen> objScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
 
-            int xPoint = 0, yPoint = 0;
-            foreach (System.Windows.Forms.Screen objActualScreen in objScreenList)
-            {
-                if (!objActualScreen.Primary)
-                {
-                    xPoint = objActualScreen.Bounds.Location.X + 20;
-                    yPoint = objActualScreen.Bounds.Location.Y + 20;
-                }
-            }
+            //int xPoint = 0, yPoint = 0;
+            //foreach (System.Windows.Forms.Screen objActualScreen in objScreenList)
+            //{
+            //    if (!objActualScreen.Primary)
+            //    {
+            //        xPoint = objActualScreen.Bounds.Location.X + 20;
+            //        yPoint = objActualScreen.Bounds.Location.Y + 20;
+            //    }
+            //}
             if (WindowSpieler != null)
                 WindowSpieler.Close();
             WindowSpieler = new SpielerWindow();
-            WindowSpieler.WindowStartupLocation = WindowStartupLocation.Manual;
-            WindowSpieler.Left = Convert.ToDouble(xPoint);
-            WindowSpieler.Top = Convert.ToDouble(yPoint);
+            //WindowSpieler.WindowStartupLocation = WindowStartupLocation.Manual;
+            //WindowSpieler.Left = Convert.ToDouble(xPoint);
+            //WindowSpieler.Top = Convert.ToDouble(yPoint);
             WindowSpieler.Closed += new EventHandler(WindowSpieler_Closed);
 
             WindowSpieler.Show();
