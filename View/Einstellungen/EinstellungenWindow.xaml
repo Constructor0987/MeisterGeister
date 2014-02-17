@@ -481,10 +481,18 @@
                                                     </Style>
                                                 </Image.Style>
                                             </Image>
-                                            <TextBlock Margin="4,0,0,0" FontWeight="Bold" MaxWidth="350" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" />
-                                            <TextBlock Margin="14,0,0,0" FontStyle="Italic" Text="{Binding Abkürzung, StringFormat=(\{0\})}" VerticalAlignment="Center" />
+                                            <TextBlock Margin="4,0,0,0" FontWeight="Bold" MaxWidth="350" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Center" ToolTip="Doppelklick öffnet das PDF">
+                                                <TextBlock.InputBindings>
+                                                    <MouseBinding Command="{Binding OnOpenPdf}" MouseAction="LeftDoubleClick" />
+                                                </TextBlock.InputBindings>
+                                            </TextBlock>
+                                            <TextBlock Margin="14,0,0,0" FontStyle="Italic" Text="{Binding Abkürzung, StringFormat=(\{0\})}" VerticalAlignment="Center" ToolTip="Doppelklick öffnet das PDF">
+                                                <TextBlock.InputBindings>
+                                                    <MouseBinding Command="{Binding OnOpenPdf}" MouseAction="LeftDoubleClick" />
+                                                </TextBlock.InputBindings>
+                                            </TextBlock>
                                             <Button Content="..." Height="21" Width="20" Command="{Binding OnOpenFileDialog}" DockPanel.Dock="Right" ToolTip="PDF auswählen..." />
-                                            <TextBox Height="23" Text="{Binding Pfad}" Width="360" ToolTip="Pfad zur PDF-Datei" DockPanel.Dock="Right"/>
+                                            <TextBox Height="23" Text="{Binding Pfad}" Width="360" ToolTip="Pfad zur PDF-Datei" DockPanel.Dock="Right" />
                                             <ViewGeneral:IntBox Margin="5,0" Value="{Binding Seitenoffset}" ToolTip="Seitenoffset" DockPanel.Dock="Right" Width="25" Visibility="{x:Static mg:Global.INTERN_Visibility}" />
                                         </DockPanel>
                                     </DataTemplate>

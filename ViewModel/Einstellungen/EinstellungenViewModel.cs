@@ -256,6 +256,17 @@ namespace MeisterGeister.ViewModel.Settings
             onOpenFileDialog = new Base.CommandBase(OpenFileDialog, null);
             onOpenUrlPdf = new Base.CommandBase(OpenUrlPdf, null);
             onOpenUrlPrint = new Base.CommandBase(OpenUrlPrint, null);
+            onOpenPdf = new Base.CommandBase(OpenPdf, null);
+        }
+
+        private void OpenPdf(object obj)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Pfad))
+                    System.Diagnostics.Process.Start(Pfad);
+            }
+            catch (Exception) { }
         }
 
         private void OpenFileDialog(object obj)
@@ -341,6 +352,12 @@ namespace MeisterGeister.ViewModel.Settings
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private Base.CommandBase onOpenPdf;
+        public Base.CommandBase OnOpenPdf
+        {
+            get { return onOpenPdf; }
         }
 
         private Base.CommandBase onOpenFileDialog;
