@@ -18,7 +18,7 @@
         Closed="Window_Closed"
         TextOptions.TextFormattingMode="Display" 
         WindowStartupLocation="CenterOwner"
-     >
+        d:DataContext="{d:DesignData /SampleData/EinstellungenSampleData.xaml}">
     <Window.Resources>
         <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
         <DataTemplate x:Key="RegelnListTemplate">

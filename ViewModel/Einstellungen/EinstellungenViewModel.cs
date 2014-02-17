@@ -244,11 +244,14 @@ namespace MeisterGeister.ViewModel.Settings
 
     public class LiteraturItem : INotifyPropertyChanged
     {
-        protected Model.Literatur _literatur = null;
+        public Model.Literatur Literatur { get; set; }
+
+        public LiteraturItem() : this(new Model.Literatur()) { }
+
         public LiteraturItem(Model.Literatur l)
         {
-            _literatur = l;
-            _literatur.PropertyChanged += Literatur_PropertyChanged;
+            Literatur = l;
+            Literatur.PropertyChanged += Literatur_PropertyChanged;
 
             onOpenFileDialog = new Base.CommandBase(OpenFileDialog, null);
             onOpenUrlPdf = new Base.CommandBase(OpenUrlPdf, null);
@@ -287,43 +290,43 @@ namespace MeisterGeister.ViewModel.Settings
 
         public String UrlPdf
         {
-            get { return _literatur.UrlPdf; }
-            set { _literatur.UrlPdf = value; }
+            get { return Literatur.UrlPdf; }
+            set { Literatur.UrlPdf = value; }
         }
 
         public String UrlPrint
         {
-            get { return _literatur.UrlPrint; }
-            set { _literatur.UrlPrint = value; }
+            get { return Literatur.UrlPrint; }
+            set { Literatur.UrlPrint = value; }
         }
 
         public String Abkürzung
         {
-            get { return _literatur.Abkürzung; }
-            set { _literatur.Abkürzung = value; }
+            get { return Literatur.Abkürzung; }
+            set { Literatur.Abkürzung = value; }
         }
 
         public String Name
         {
-            get { return _literatur.Name; }
-            set { _literatur.Name = value; }
+            get { return Literatur.Name; }
+            set { Literatur.Name = value; }
         }
 
         public String Pfad
         {
-            get { return _literatur.Pfad; }
-            set { _literatur.Pfad = value; }
+            get { return Literatur.Pfad; }
+            set { Literatur.Pfad = value; }
         }
 
         public int Seitenoffset
         {
-            get { return _literatur.Seitenoffset; }
-            set { _literatur.Seitenoffset = value; }
+            get { return Literatur.Seitenoffset; }
+            set { Literatur.Seitenoffset = value; }
         }
 
         public Nullable<bool> IsOriginal
         {
-            get { return _literatur.IsOriginal; }
+            get { return Literatur.IsOriginal; }
         }
 
         private void Literatur_PropertyChanged(object sender, PropertyChangedEventArgs e)

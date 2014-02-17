@@ -1,0 +1,16 @@
+﻿<vm:EinstellungenViewModel 
+    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.Settings"
+    xmlns:m="clr-namespace:MeisterGeister.Model">
+    <vm:EinstellungenViewModel.LiteraturListe>
+        <vm:LiteraturItem>
+            <vm:LiteraturItem.Literatur>
+                <m:Literatur Abkürzung="WdS" Größe="12.3" Name="Wege des Schwerts" Pfad="D:\WdS.pdf" UrlPdf="http:\\www.ulisses.de" />
+            </vm:LiteraturItem.Literatur>
+        </vm:LiteraturItem>
+        <vm:LiteraturItem>
+            <vm:LiteraturItem.Literatur>
+                <m:Literatur Abkürzung="WdZ" Größe="12.3" Name="Wege der Zauberei" Pfad="D:\WdZ.pdf" UrlPdf="http:\\www.ulisses.de" />
+            </vm:LiteraturItem.Literatur>
+        </vm:LiteraturItem>
+    </vm:EinstellungenViewModel.LiteraturListe>
+</vm:EinstellungenViewModel>
