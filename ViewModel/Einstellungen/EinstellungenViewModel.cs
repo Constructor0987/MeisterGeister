@@ -261,6 +261,8 @@ namespace MeisterGeister.ViewModel.Settings
             if (string.IsNullOrEmpty(file))
                 return;
             Pfad = file;
+
+            OnChanged("IsOriginal");
         }
 
         private void OpenUrlPdf(object obj)

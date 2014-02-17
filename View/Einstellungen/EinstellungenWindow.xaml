@@ -459,7 +459,7 @@
                                                     </Style>
                                                 </Button.Style>
                                             </Button>
-                                            <Image Height="18" ToolTip="Original PDF">
+                                            <Image Height="18">
                                                 <Image.Style>
                                                     <Style>
                                                         <Style.Triggers>
@@ -470,10 +470,12 @@
                                                             <DataTrigger Binding="{Binding IsOriginal, Mode=OneWay}" Value="false">
                                                                 <Setter Property="Image.Visibility" Value="Visible" />
                                                                 <Setter Property="Image.Source" Value="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" />
+                                                                <Setter Property="Image.ToolTip" Value="Kein Original" />
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding IsOriginal, Mode=OneWay}" Value="true">
                                                                 <Setter Property="Image.Visibility" Value="Visible" />
                                                                 <Setter Property="Image.Source" Value="/DSA MeisterGeister;component/Images/Icons/General/ok.png" />
+                                                                <Setter Property="Image.ToolTip" Value="Original" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
