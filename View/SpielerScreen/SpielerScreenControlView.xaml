@@ -57,7 +57,10 @@
                                 </StackPanel>
                             </Button>
                             <Button Height="32" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" ToolTip="Spieler das Bild zeigen." Click="ButtonBildZeigen_Click">
-                                <Image Source="/Images/Icons/General/screen.png" />
+                                <Grid>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Margin="2,4,2,10" />
+                                </Grid>
                             </Button>
                             <Button Height="32" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
                                 <Grid>
@@ -86,8 +89,18 @@
             </TabItem>
         </TabControl>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
-            <Button Margin="0,12,12,0" Height="45" VerticalAlignment="Top" Click="ButtonSpielerInfoControl_Click" Width="45" HorizontalAlignment="Right">
+        <Grid Grid.Row="0" Grid.Column="1" Height="Auto" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Grid.Row="0" Margin="2" Height="45" Click="ButtonSpielerInfo_Click" Width="45">
                 <Button.ToolTip>
                     <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
             		    Ein leeres Fenster starten, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können.
@@ -95,13 +108,31 @@
                 </Button.ToolTip>
                 <Image Source="/Images/Icons/General/screen.png" />
             </Button>
-            <Button Margin="0,5,12,0" Height="45" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click" Width="45" HorizontalAlignment="Right">
+            <Button Grid.Column="1" Grid.Row="0" Margin="2" Height="45" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click" Width="45">
                 <Grid>
                     <Image Source="/Images/Icons/General/screen.png" />
                     <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
                 </Grid>
             </Button>
-            <Rectangle Margin="5" Name="_spielerWindowVorschau" Width="80" Height="60" />
-        </StackPanel>
+            <Button Grid.Column="0" Grid.Row="1" Margin="2" Height="45" Click="ButtonKampf_Click" Width="45" ToolTip="Den Spielern die INI-Liste des aktuellen Kampfes zeigen.">
+                <Grid>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="4,6,4,14" />
+                </Grid>
+            </Button>
+            <Button Grid.Column="2" Grid.Row="1" Margin="2" Height="45" Click="ButtonBodenplan_Click" Width="45" ToolTip="Den Spielern den Kampf-Bodenplan zeigen.">
+                <Grid>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Margin="4,6,4,14" />
+                </Grid>
+            </Button>
+            <Button Grid.Column="0" Grid.Row="2" Margin="2" Height="45" Click="ButtonBildZeigen_Click" Width="45" ToolTip="Den Spielern das ausgewählte Bild zeigen.">
+                <Grid>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Margin="4,6,4,14" />
+                </Grid>
+            </Button>
+            <Rectangle Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Width="90" Name="_spielerWindowVorschau" />
+        </Grid>
     </Grid>
 </UserControl>

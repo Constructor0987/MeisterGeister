@@ -37,11 +37,6 @@ namespace MeisterGeister.View.SpielerScreen
             SpielerWindow.SpielerWindowClosed += SpielerWindow_SpielerWindowClosed;
         }
 
-        private void ButtonSpielerInfoControl_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.Show();
-        }
-
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
             SpielerWindow.Hide();
@@ -199,6 +194,21 @@ namespace MeisterGeister.View.SpielerScreen
         {
             _spielerWindowVorschau.Fill = null;
             _spielerWindowVorschau.ToolTip = null;
+        }
+
+        private void ButtonKampf_Click(object sender, RoutedEventArgs e)
+        {
+            SpielerWindow.SetKampfInfoView();
+        }
+
+        private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)
+        {
+            SpielerWindow.ReOpen();
+        }
+
+        private void ButtonBodenplan_Click(object sender, RoutedEventArgs e)
+        {
+            SpielerWindow.SetBodenplanView();
         }
 
     }

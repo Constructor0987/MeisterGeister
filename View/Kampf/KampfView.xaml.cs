@@ -42,7 +42,11 @@ namespace MeisterGeister.View.Kampf
                     return null;
                 return DataContext as VM.KampfViewModel;
             }
-            set { DataContext = value; }
+            set 
+            { 
+                DataContext = value;
+                Global.CurrentKampf = value;
+            }
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
@@ -76,6 +80,7 @@ namespace MeisterGeister.View.Kampf
                 battlegroundWindow.Closed += Bodenplan_Closed;
 
                 battlegroundWindow.VM.KampfVM = vm;
+                vm.BodenplanWindow = battlegroundWindow;
                 battlegroundWindow.Show();
             }
             else
@@ -137,6 +142,7 @@ namespace MeisterGeister.View.Kampf
         void Bodenplan_Closed(object sender, EventArgs e)
         {
             battlegroundWindow = null;
+            VM.BodenplanWindow = null;
         }
          
 
@@ -153,8 +159,7 @@ namespace MeisterGeister.View.Kampf
 
         private void ShowSpielerInfo()
         {
-            KampfInfoView infoView = new KampfInfoView(VM);
-            SpielerScreen.SpielerWindow.SetContent(infoView);
+            SpielerScreen.SpielerWindow.SetKampfInfoView();
         }
 
         private void InitiativeListe_TreeViewItemSelected(object sender, RoutedEventArgs e)

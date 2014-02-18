@@ -169,6 +169,11 @@ namespace MeisterGeister
             }
         }
 
+        /// <summary>
+        /// Der aktuell geöffnete Kampf.
+        /// </summary>
+        public static ViewModel.Kampf.KampfViewModel CurrentKampf { get; set; }
+
         #endregion
 
         #region //KONSTRUKTOR
@@ -276,7 +281,6 @@ namespace MeisterGeister
         public static event GruppenProbeWürfelnEventHandler GruppenProbeWürfeln;
 
         #endregion
-
     }
 
     public delegate void GruppenProbeWürfelnEventHandler(Probe probe, EventArgs e);

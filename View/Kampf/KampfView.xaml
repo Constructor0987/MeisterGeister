@@ -882,7 +882,10 @@
             		Den Spielern die INI-Liste in einem separaten Fenster zeigen.
                                     </TextBlock>
                                 </Button.ToolTip>
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
+                                <Grid>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="2,3,2,8" />
+                                </Grid>
                             </Button>
                             <Button Grid.Column="1" Grid.Row="1" Height="28" Width="28" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
                                 <Grid>

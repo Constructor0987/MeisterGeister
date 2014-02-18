@@ -81,6 +81,12 @@ namespace MeisterGeister.View.SpielerScreen
 
         public static event EventHandler SpielerWindowClosed;
 
+        internal static void ReOpen()
+        {
+            Close();
+            Show();
+        }
+
         public static void ClearContent()
         {
             Instance.Content = null;
@@ -128,6 +134,27 @@ namespace MeisterGeister.View.SpielerScreen
                 SetContent(img);
             }
             catch { }
+        }
+
+        public static void SetKampfInfoView()
+        {
+            if (Global.CurrentKampf != null)
+            {
+                Kampf.KampfInfoView infoView = new Kampf.KampfInfoView(Global.CurrentKampf);
+                SetContent(infoView);
+            }
+        }
+
+        public static void SetBodenplanView()
+        {
+            if (Global.CurrentKampf != null && Global.CurrentKampf.BodenplanWindow != null)
+            {
+                System.Windows.Media.VisualBrush vb = new VisualBrush(Global.CurrentKampf.BodenplanWindow);
+                Rectangle rect = new Rectangle();
+                rect.Fill = vb;
+
+                SetContent(rect);
+            }
         }
 
         List<System.Windows.Forms.Screen> ScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
