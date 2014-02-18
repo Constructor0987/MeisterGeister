@@ -1,0 +1,14 @@
+﻿<Window x:Class="MeisterGeister.View.SpielerScreen.SpielerInfoPreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Name="_spielerInfoPreviewWindow"
+        Title="SpielerInfo Vorschau" Height="320" Width="400" WindowStyle="ToolWindow" Topmost="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <CheckBox Grid.Row="0" Margin="5" Content="Fenster immer im Vordergrund" IsChecked="{Binding Topmost, ElementName=_spielerInfoPreviewWindow}" />
+        <Rectangle Grid.Row="1" Name="_rectangle" />
+    </Grid>
+</Window>

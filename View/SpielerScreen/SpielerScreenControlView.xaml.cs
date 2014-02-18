@@ -188,12 +188,17 @@ namespace MeisterGeister.View.SpielerScreen
             _spielerWindowVorschau.Height = _spielerWindowVorschau.Width / width * height;
             _spielerWindowVorschau.Fill = vb;
             _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0 / width * height, Fill = vb };
+
+            if (_previewWin != null)
+                _previewWin.Brush = vb;
         }
 
         void SpielerWindow_SpielerWindowClosed(object sender, EventArgs e)
         {
             _spielerWindowVorschau.Fill = null;
             _spielerWindowVorschau.ToolTip = null;
+            if (_previewWin != null)
+                _previewWin.Brush = null;
         }
 
         private void ButtonKampf_Click(object sender, RoutedEventArgs e)
@@ -209,6 +214,27 @@ namespace MeisterGeister.View.SpielerScreen
         private void ButtonBodenplan_Click(object sender, RoutedEventArgs e)
         {
             SpielerWindow.SetBodenplanView();
+        }
+
+        private SpielerInfoPreviewWindow _previewWin = null;
+
+        private void ButtonVorschau_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Media.VisualBrush vb = new VisualBrush(SpielerWindow.Instance);
+
+            if (_previewWin == null)
+            {
+                _previewWin = new SpielerInfoPreviewWindow(vb);
+                _previewWin.Closing += PreviewWin_Closing;
+                _previewWin.Show();
+            }
+            else
+                _previewWin.Activate();
+        }
+
+        void PreviewWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _previewWin = null;
         }
 
     }
