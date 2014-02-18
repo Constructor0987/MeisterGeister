@@ -33,7 +33,8 @@ namespace MeisterGeister.View.SpielerScreen
             _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
             LoadImagesFromDir(_textBlockFilePath.Text);
 
-            SetPreview();
+            SpielerWindow.SpielerWindowInstantiated += SpielerWindow_SpielerWindowInstantiated;
+            SpielerWindow.SpielerWindowClosed += SpielerWindow_SpielerWindowClosed;
         }
 
         private void ButtonSpielerInfoControl_Click(object sender, RoutedEventArgs e)
@@ -184,14 +185,20 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        private void SetPreview()
+        void SpielerWindow_SpielerWindowInstantiated(object sender, EventArgs e)
         {
             System.Windows.Media.VisualBrush vb = new VisualBrush(SpielerWindow.Instance);
             double width = SpielerWindow.Instance.Width;
             double height = SpielerWindow.Instance.Height;
             _spielerWindowVorschau.Height = _spielerWindowVorschau.Width / width * height;
             _spielerWindowVorschau.Fill = vb;
-            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0/width * height, Fill = vb };
+            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0 / width * height, Fill = vb };
+        }
+
+        void SpielerWindow_SpielerWindowClosed(object sender, EventArgs e)
+        {
+            _spielerWindowVorschau.Fill = null;
+            _spielerWindowVorschau.ToolTip = null;
         }
 
     }

@@ -43,10 +43,16 @@ namespace MeisterGeister.View.SpielerScreen
             get
             {
                 if (_instance == null)
+                {
                     _instance = new SpielerWindow();
+                    if (SpielerWindowInstantiated != null)
+                        SpielerWindowInstantiated(_instance, new EventArgs());
+                }
                 return _instance;
             }
         }
+
+        public static event EventHandler SpielerWindowInstantiated;
 
         new public static void Show()
         {
@@ -68,8 +74,12 @@ namespace MeisterGeister.View.SpielerScreen
             {
                 ((Window)Instance).Close();
                 _instance = null;
+                if (SpielerWindowClosed != null)
+                    SpielerWindowClosed(null, new EventArgs());
             }
         }
+
+        public static event EventHandler SpielerWindowClosed;
 
         public static void ClearContent()
         {
@@ -145,6 +155,13 @@ namespace MeisterGeister.View.SpielerScreen
                 WindowState = System.Windows.WindowState.Normal;
                 WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _instance = null;
+            if (SpielerWindowClosed != null)
+                SpielerWindowClosed(null, new EventArgs());
         }
     }
 }

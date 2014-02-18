@@ -73,9 +73,9 @@
                         </StackPanel>
                         <TextBlock Grid.Column="0" Grid.Row="1" Margin="6" Name="_textBlockFilePath" Text="" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
                         <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" Background="Transparent" SelectionChanged="ListBoxDirectory_SelectionChanged" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
-                        <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="6" MinWidth="226" HorizontalAlignment="Right" MaxWidth="400">
-                            <Image Name="_image1" Stretch="Uniform" ToolTip="Ein Links-Klick öffnet das Bild extern." MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
-                        </Border>
+                        <Viewbox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="6" MinWidth="226" HorizontalAlignment="Right" MaxWidth="400">
+                            <Image Name="_image1" ToolTip="Ein Links-Klick öffnet das Bild extern." MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
+                        </Viewbox>
                     </Grid>
                 </Border>
             </TabItem>
