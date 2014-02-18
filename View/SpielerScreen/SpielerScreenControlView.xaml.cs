@@ -32,16 +32,18 @@ namespace MeisterGeister.View.SpielerScreen
             // Letzten Bilderpfad laden
             _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
             LoadImagesFromDir(_textBlockFilePath.Text);
+
+            SetPreview();
         }
 
         private void ButtonSpielerInfoControl_Click(object sender, RoutedEventArgs e)
         {
-            MainView.ShowSpielerFenster();
+            SpielerWindow.Show();
         }
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
-            MainView.CloseSpielerFenster();
+            SpielerWindow.Hide();
         }
 
         private void ButtonOpenImg_Click(object sender, RoutedEventArgs e)
@@ -119,8 +121,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
-            MainView.ShowSpielerInfoBild(_textBlockFilePath.Text, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
-            SetPreview();
+            SpielerWindow.SetImage(_textBlockFilePath.Text, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
         }
 
         private void LoadImage(string path, Image img)
@@ -185,17 +186,14 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            SetPreview();
+            
         }
 
         private void SetPreview()
         {
-            if (MainView.WindowSpieler != null)
-            {
-                System.Windows.Media.VisualBrush vb = new VisualBrush(MainView.WindowSpieler);
-                _spielerWindowVorschau.Fill = vb;
-                _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 300, Fill = vb };
-            }
+            System.Windows.Media.VisualBrush vb = new VisualBrush(SpielerWindow.Instance);
+            _spielerWindowVorschau.Fill = vb;
+            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 300, Fill = vb };
         }
 
     }

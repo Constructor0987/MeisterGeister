@@ -136,12 +136,12 @@ namespace MeisterGeister.View.General
                 RTBNotiz.SelectAll();
 
             RTBNotiz.Copy();
-            MainView.ShowSpielerInfoText();
+            SpielerScreen.SpielerWindow.SetTextFromClipboard();
         }
 
         private void btnSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
-            MainView.CloseSpielerFenster();
+            SpielerScreen.SpielerWindow.Hide();
         }
 
         public void ParseTextToFlowDoument(string text)

@@ -129,7 +129,7 @@ namespace MeisterGeister.ViewModel.Proben
             // TODO MT: MVVM konform umbauen
             View.Proben.ProbenSpielerInfoView infoView = new View.Proben.ProbenSpielerInfoView();
             infoView.VM = this;
-            View.MainView.ShowSpielerInfo(infoView);
+            View.SpielerScreen.SpielerWindow.SetContent(infoView);
         }
 
         private Base.CommandBase _onCloseSpielerInfo = null;
@@ -145,7 +145,7 @@ namespace MeisterGeister.ViewModel.Proben
         private void CloseSpielerInfo(object sender)
         {
             // TODO MT: MVVM konform umbauen
-            View.MainView.CloseSpielerFenster();
+            View.SpielerScreen.SpielerWindow.Close();
         }
 
         #endregion

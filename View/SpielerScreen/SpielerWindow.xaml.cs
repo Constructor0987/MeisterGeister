@@ -18,7 +18,9 @@ namespace MeisterGeister.View.SpielerScreen
     /// </summary>
     public partial class SpielerWindow : Window
     {
-        public SpielerWindow()
+        private static SpielerWindow _instance;
+
+        private SpielerWindow()
         {
             InitializeComponent();
 
@@ -34,6 +36,80 @@ namespace MeisterGeister.View.SpielerScreen
             WindowStartupLocation = WindowStartupLocation.Manual;
             Left = Convert.ToDouble(xPoint);
             Top = Convert.ToDouble(yPoint);
+        }
+
+        public static SpielerWindow Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new SpielerWindow();
+                return _instance;
+            }
+        }
+
+        new public static void Show()
+        {
+            ((Window)Instance).Show();
+        }
+
+        new public static void Hide()
+        {
+            if (_instance != null)
+                ((Window)Instance).Hide();
+        }
+
+        new public static void Close()
+        {
+            if (_instance != null)
+            {
+                ((Window)Instance).Close();
+                _instance = null;
+            }
+        }
+
+        public static void SetContent(object info)
+        {
+            Instance.Content = info;
+            Instance.IsKampfInfoModus = (info is Kampf.KampfInfoView);
+
+            Show();
+        }
+
+        public static void SetTextFromClipboard()
+        {
+            RichTextBox txtBlock = new RichTextBox();
+            FlowDocument flowDoc = new FlowDocument();
+
+            txtBlock.Document = flowDoc;
+            txtBlock.Background = (ImageBrush)App.Current.FindResource("BackgroundPergamentQuer");
+            txtBlock.BorderBrush = Brushes.Transparent;
+            txtBlock.Margin = new Thickness(40);
+            txtBlock.Padding = new Thickness(20);
+
+            txtBlock.Paste();
+
+            SetContent(txtBlock);
+        }
+
+        public static void SetImage(string pfad, Stretch stretch = Stretch.Uniform)
+        {
+            try
+            {
+                Image img = new Image();
+                img.Stretch = stretch;
+
+                BitmapImage bmi = new BitmapImage();
+                bmi.BeginInit();
+                bmi.UriSource = new Uri(pfad, UriKind.Relative);
+                bmi.EndInit();
+
+                bmi.Freeze();		// freeze image source, used to move it across the thread
+                img.Source = bmi;
+
+                SetContent(img);
+            }
+            catch { }
         }
 
         List<System.Windows.Forms.Screen> ScreenList = System.Windows.Forms.Screen.AllScreens.ToList();

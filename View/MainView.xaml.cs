@@ -146,8 +146,6 @@ namespace MeisterGeister.View
             }
         }
 
-        public static SpielerWindow WindowSpieler { get; set; }
-
         public void StarteTab(string tabName, int position = -1)
         {
             // falls Tool-Name nicht vorhanden, Tab-Erzeugung abbrechen
@@ -280,8 +278,7 @@ namespace MeisterGeister.View
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Schließe Spieler-Fenster
-            if (WindowSpieler != null)
-                WindowSpieler.Close();
+            SpielerWindow.Close();
 
             // Tab-Einstellungen speichern
             Einstellungen.StartTabs = OpenedTabs();
@@ -332,96 +329,7 @@ namespace MeisterGeister.View
             else
                 _tabControlMain.SelectedItem = tab;
 
-            if (WindowSpieler == null)
-                StarteSpielerFenster();
-        }
-
-        public static void ShowHideToggleSpielerFenster()
-        {
-            if (WindowSpieler != null)
-                CloseSpielerFenster();
-            else
-                StarteSpielerFenster();
-        }
-
-        public static void ShowSpielerFenster()
-        {
-            if (WindowSpieler != null)
-                WindowSpieler.Show();
-            else
-                StarteSpielerFenster();
-        }
-
-        public static void CloseSpielerFenster()
-        {
-            if (WindowSpieler != null)
-            {
-                WindowSpieler.Close();
-                WindowSpieler = null;
-            }
-        }
-
-        public static void ShowSpielerInfo(object info)
-        {
-            // Falls kein Fenster gestartet wurde, eines starten
-            if (WindowSpieler == null)
-            {
-                StarteSpielerFenster();
-            }
-
-            WindowSpieler.Content = info;
-            WindowSpieler.IsKampfInfoModus = (info is Kampf.KampfInfoView);
-        }
-
-        public static void ShowSpielerInfoText()
-        {
-            RichTextBox txtBlock = new RichTextBox();
-            FlowDocument flowDoc = new FlowDocument();
-
-            txtBlock.Document = flowDoc;
-            txtBlock.Background = (ImageBrush)App.Current.FindResource("BackgroundPergamentQuer");
-            txtBlock.BorderBrush = Brushes.Transparent;
-            txtBlock.Margin = new Thickness(40);
-            txtBlock.Padding = new Thickness(20);
-
-            txtBlock.Paste();
-
-            ShowSpielerInfo(txtBlock);
-        }
-
-        public static void ShowSpielerInfoBild(string pfad, Stretch stretch = Stretch.Uniform)
-        {
-            try
-            {
-                Image img = new Image();
-                img.Stretch = stretch;
-
-                BitmapImage bmi = new BitmapImage();
-                bmi.BeginInit();
-                bmi.UriSource = new Uri(pfad, UriKind.Relative);
-                bmi.EndInit();
-
-                bmi.Freeze();		// freeze image source, used to move it across the thread
-                img.Source = bmi;
-
-                ShowSpielerInfo(img);
-            }
-            catch { }
-        }
-
-        public static void StarteSpielerFenster()
-        {
-            if (WindowSpieler != null)
-                WindowSpieler.Close();
-            WindowSpieler = new SpielerWindow();
-            WindowSpieler.Closed += new EventHandler(WindowSpieler_Closed);
-
-            WindowSpieler.Show();
-        }
-
-        static void WindowSpieler_Closed(object sender, EventArgs e)
-        {
-            WindowSpieler = null;
+            SpielerWindow.Show();
         }
 
         private void MenuItemUpdateCheck_Click(object sender, RoutedEventArgs e)

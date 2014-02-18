@@ -148,13 +148,13 @@ namespace MeisterGeister.View.Kampf
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
-            MainView.CloseSpielerFenster();
+            SpielerScreen.SpielerWindow.Close();
         }
 
         private void ShowSpielerInfo()
         {
             KampfInfoView infoView = new KampfInfoView(VM);
-            MainView.ShowSpielerInfo(infoView);
+            SpielerScreen.SpielerWindow.SetContent(infoView);
         }
 
         private void InitiativeListe_TreeViewItemSelected(object sender, RoutedEventArgs e)
