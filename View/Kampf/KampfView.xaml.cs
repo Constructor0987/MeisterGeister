@@ -148,7 +148,7 @@ namespace MeisterGeister.View.Kampf
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
-            SpielerScreen.SpielerWindow.Close();
+            SpielerScreen.SpielerWindow.Hide();
         }
 
         private void ShowSpielerInfo()

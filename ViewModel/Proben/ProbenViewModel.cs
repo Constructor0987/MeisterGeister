@@ -145,7 +145,7 @@ namespace MeisterGeister.ViewModel.Proben
         private void CloseSpielerInfo(object sender)
         {
             // TODO MT: MVVM konform umbauen
-            View.SpielerScreen.SpielerWindow.Close();
+            View.SpielerScreen.SpielerWindow.Hide();
         }
 
         #endregion
