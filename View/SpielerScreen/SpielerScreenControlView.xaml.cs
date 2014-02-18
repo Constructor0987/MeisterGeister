@@ -184,16 +184,14 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void SetPreview()
         {
             System.Windows.Media.VisualBrush vb = new VisualBrush(SpielerWindow.Instance);
+            double width = SpielerWindow.Instance.Width;
+            double height = SpielerWindow.Instance.Height;
+            _spielerWindowVorschau.Height = _spielerWindowVorschau.Width / width * height;
             _spielerWindowVorschau.Fill = vb;
-            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 300, Fill = vb };
+            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0/width * height, Fill = vb };
         }
 
     }

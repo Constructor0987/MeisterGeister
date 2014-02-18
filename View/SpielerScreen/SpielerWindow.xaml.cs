@@ -56,7 +56,10 @@ namespace MeisterGeister.View.SpielerScreen
         new public static void Hide()
         {
             if (_instance != null)
+            {
                 ((Window)Instance).Hide();
+                ClearContent();
+            }
         }
 
         new public static void Close()
@@ -66,6 +69,11 @@ namespace MeisterGeister.View.SpielerScreen
                 ((Window)Instance).Close();
                 _instance = null;
             }
+        }
+
+        public static void ClearContent()
+        {
+            Instance.Content = null;
         }
 
         public static void SetContent(object info)

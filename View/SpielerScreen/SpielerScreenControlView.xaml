@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" 
-             d:DesignHeight="498" d:DesignWidth="767" Background="{StaticResource Background1}" Loaded="UserControl_Loaded">
+             d:DesignHeight="498" d:DesignWidth="767" Background="{StaticResource Background1}">
     
     <UserControl.Resources>
         <ViewGeneral:LoadCachedImageConverter x:Key="LoadCachedImageConverter" />
