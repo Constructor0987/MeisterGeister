@@ -358,14 +358,14 @@
         						<StackPanel Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left">
         							<Label  Content="Tragkraft:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
         							<Label  Content="Gewicht:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-        							<Label Height="27" Content="Belastung:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
+                                    <Label Height="27" Content="Behinderung:" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
         							<Label Content="Überlastung:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
         						</StackPanel>
 
         						<StackPanel Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left">
         							<Label Content="{Binding AktuelleTragkraft}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"  />
         							<Label Content="{Binding AktuellesGewicht}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
-        							<ViewGeneral:IntBox Margin="0,1.3" ShowButtons="True" ToolTip="Belastung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
+        							<ViewGeneral:IntBox Margin="0,1.3" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
         							<StackPanel Orientation="Horizontal">
         								<Label Content="{Binding AktuellesGewichtProzentResultierendeBE}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
         								<Label Content="/" Height="25"/>
