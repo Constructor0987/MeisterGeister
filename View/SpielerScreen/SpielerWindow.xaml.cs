@@ -45,10 +45,30 @@ namespace MeisterGeister.View.SpielerScreen
                 if (_instance == null)
                 {
                     _instance = new SpielerWindow();
+                    _visualBrush = new VisualBrush(_instance);
                     if (SpielerWindowInstantiated != null)
                         SpielerWindowInstantiated(_instance, new EventArgs());
                 }
                 return _instance;
+            }
+        }
+
+        public static bool IsInstantiated
+        {
+            get
+            {
+                return _instance != null;
+            }
+        }
+
+        private static VisualBrush _visualBrush = null;
+        public static VisualBrush VisualBrush
+        {
+            get
+            {
+                if (_visualBrush == null && _instance != null)
+                    _visualBrush = new VisualBrush(SpielerWindow.Instance);
+                return _visualBrush;
             }
         }
 
@@ -74,6 +94,7 @@ namespace MeisterGeister.View.SpielerScreen
             {
                 ((Window)Instance).Close();
                 _instance = null;
+                _visualBrush = null;
                 if (SpielerWindowClosed != null)
                     SpielerWindowClosed(null, new EventArgs());
             }
@@ -187,8 +208,10 @@ namespace MeisterGeister.View.SpielerScreen
         private void Window_Closed(object sender, EventArgs e)
         {
             _instance = null;
+            _visualBrush = null;
             if (SpielerWindowClosed != null)
                 SpielerWindowClosed(null, new EventArgs());
         }
+
     }
 }

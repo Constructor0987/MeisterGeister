@@ -279,6 +279,7 @@ namespace MeisterGeister.View
         {
             // Schließe Spieler-Fenster
             SpielerWindow.Close();
+            SpielerInfoPreviewWindow.Close();
 
             // Tab-Einstellungen speichern
             Einstellungen.StartTabs = OpenedTabs();

@@ -34,7 +34,10 @@ namespace MeisterGeister.View.SpielerScreen
             LoadImagesFromDir(_textBlockFilePath.Text);
 
             SpielerWindow.SpielerWindowInstantiated += SpielerWindow_SpielerWindowInstantiated;
-            SpielerWindow.SpielerWindowClosed += SpielerWindow_SpielerWindowClosed;
+            SpielerWindow.SpielerWindowClosed += SpielerWindow_Closed;
+
+            if (SpielerWindow.IsInstantiated)
+                SetPreviews();
         }
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
@@ -182,23 +185,27 @@ namespace MeisterGeister.View.SpielerScreen
 
         void SpielerWindow_SpielerWindowInstantiated(object sender, EventArgs e)
         {
-            System.Windows.Media.VisualBrush vb = new VisualBrush(SpielerWindow.Instance);
+            SetPreviews();
+        }
+
+        private void SetPreviews()
+        {
             double width = SpielerWindow.Instance.Width;
             double height = SpielerWindow.Instance.Height;
             _spielerWindowVorschau.Height = _spielerWindowVorschau.Width / width * height;
-            _spielerWindowVorschau.Fill = vb;
-            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0 / width * height, Fill = vb };
+            _spielerWindowVorschau.Fill = SpielerWindow.VisualBrush;
+            _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0 / width * height, Fill = SpielerWindow.VisualBrush };
 
-            if (_previewWin != null)
-                _previewWin.Brush = vb;
+            if (SpielerInfoPreviewWindow.IsInstantiated)
+                SpielerInfoPreviewWindow.Instance.SetVisualBrush();
         }
 
-        void SpielerWindow_SpielerWindowClosed(object sender, EventArgs e)
+        void SpielerWindow_Closed(object sender, EventArgs e)
         {
             _spielerWindowVorschau.Fill = null;
             _spielerWindowVorschau.ToolTip = null;
-            if (_previewWin != null)
-                _previewWin.Brush = null;
+            if (SpielerInfoPreviewWindow.IsInstantiated)
+                SpielerInfoPreviewWindow.Instance.SetVisualBrush();
         }
 
         private void ButtonKampf_Click(object sender, RoutedEventArgs e)
@@ -216,25 +223,9 @@ namespace MeisterGeister.View.SpielerScreen
             SpielerWindow.SetBodenplanView();
         }
 
-        private SpielerInfoPreviewWindow _previewWin = null;
-
         private void ButtonVorschau_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Media.VisualBrush vb = new VisualBrush(SpielerWindow.Instance);
-
-            if (_previewWin == null)
-            {
-                _previewWin = new SpielerInfoPreviewWindow(vb);
-                _previewWin.Closing += PreviewWin_Closing;
-                _previewWin.Show();
-            }
-            else
-                _previewWin.Activate();
-        }
-
-        void PreviewWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            _previewWin = null;
+            SpielerInfoPreviewWindow.Show();
         }
 
     }

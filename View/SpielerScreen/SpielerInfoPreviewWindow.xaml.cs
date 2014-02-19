@@ -19,31 +19,78 @@ namespace MeisterGeister.View.SpielerScreen
     /// </summary>
     public partial class SpielerInfoPreviewWindow : Window
     {
-        private VisualBrush _brush;
-        public VisualBrush Brush 
-        {
-            get { return _brush; }
-            set
-            {
-                _brush = value;
 
-                double width = SpielerWindow.Instance.Width;
-                double height = SpielerWindow.Instance.Height;
-                Height = Width / width * height + 25;
-                _rectangle.Fill = value;
+        private static SpielerInfoPreviewWindow _instance;
+
+        private SpielerInfoPreviewWindow()
+        {
+            InitializeComponent();
+
+            SetVisualBrush();
+        }
+
+        public static SpielerInfoPreviewWindow Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new SpielerInfoPreviewWindow();
+                }
+                return _instance;
             }
         }
 
-        public SpielerInfoPreviewWindow()
+        public static bool IsInstantiated
         {
-            InitializeComponent();
+            get
+            {
+                return _instance != null;
+            }
         }
 
-        public SpielerInfoPreviewWindow(VisualBrush vb)
+        public void SetVisualBrush()
         {
-            InitializeComponent();
+            double width = SpielerWindow.Instance.Width;
+            double height = SpielerWindow.Instance.Height;
+            Height = Width / width * height + 25;
+            _rectangle.Fill = SpielerWindow.VisualBrush;
+        }
 
-            Brush = vb;
+        new public static void Show()
+        {
+            if (!Instance.IsVisible)
+                ((Window)Instance).Show();
+            else
+                ((Window)Instance).Activate();
+        }
+
+        new public static void Hide()
+        {
+            if (_instance != null)
+            {
+                ((Window)Instance).Hide();
+            }
+        }
+
+        new public static void Close()
+        {
+            if (_instance != null)
+            {
+                ((Window)Instance).Close();
+                _instance = null;
+                if (SpielerInfoPreviewWindowClosed != null)
+                    SpielerInfoPreviewWindowClosed(null, new EventArgs());
+            }
+        }
+
+        public static event EventHandler SpielerInfoPreviewWindowClosed;
+
+        private void SpielerInfoPreviewWindow_Closed(object sender, EventArgs e)
+        {
+            _instance = null;
+            if (SpielerInfoPreviewWindowClosed != null)
+                SpielerInfoPreviewWindowClosed(null, new EventArgs());
         }
     }
 }
