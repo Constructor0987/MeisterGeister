@@ -48,6 +48,11 @@ namespace MeisterGeister.View.General
             }
         }
 
+        public bool IsWebUrl
+        {
+            get { return ProgrammPfad.StartsWith("http"); }
+        }
+
         public void SetBild(string bildName)
         {
             BitmapImage bi = new BitmapImage();
@@ -66,7 +71,8 @@ namespace MeisterGeister.View.General
                 try
                 {
                     string curDir = Environment.CurrentDirectory;
-                    Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(ProgrammPfad);
+                    if (!IsWebUrl)
+                        Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(ProgrammPfad);
                     System.Diagnostics.Process.Start(ProgrammPfad);
                     Environment.CurrentDirectory = curDir;
                 }
