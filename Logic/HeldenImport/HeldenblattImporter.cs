@@ -396,22 +396,35 @@ namespace MeisterGeister.Logic.HeldenImport
             }
         }
 
+        public static string GetAccessProvider()
+        {
+            using (OleDbDataReader reader = OleDbEnumerator.GetRootEnumerator())
+            {
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                var rows = dt.Select("SOURCES_NAME like 'Microsoft.ACE.OLEDB.1%'", "SOURCES_NAME DESC");
+                if (rows == null || rows.Length == 0)
+                    return null;
+                return (string)rows.First()["SOURCES_NAME"];
+            }
+        }
+
         private static OleDbConnection GetConnection(string _importPfad)
         {
-            if (!ProviderIsInstalled("Microsoft.ACE.OLEDB.12.0"))
-            {
-                throw new Exception("Der OLEDB-Provider Microsoft.ACE.OLEDB.12.0 ist nicht installiert.\nDie Access Database Engine 2010 kann bei Microsft heruntergeladen werden: http://www.microsoft.com/de-de/download/details.aspx?id=13255");
-            }
-            string xlsxConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
-            string xlsConnString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
-            //TODO Provider Prüfen, evtl. Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255
+            string[] providers = new string[] { "Microsoft.ACE.OLEDB.15.0", "Microsoft.ACE.OLEDB.14.0", "Microsoft.ACE.OLEDB.12.0" };
+            string xlsxConnString = "Provider={1};Data Source={0};Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\"";
+            string xlsConnString = "Provider={1};Data Source={0};Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=1\"";
+            //Provider Prüfen, evtl. Fehlermeldung ausgeben und Link anbieten: http://www.microsoft.com/de-de/download/details.aspx?id=13255>
+            string provider = GetAccessProvider();
+            if(provider == null)
+                throw new Exception("Der OLEDB-Provider Microsoft.ACE.OLEDB ist nicht in keiner Version installiert.\nDie Access Database Engine 2010 kann bei Microsft heruntergeladen werden: http://www.microsoft.com/de-de/download/details.aspx?id=13255");
             OleDbConnection conn;
             if (_importPfad.ToLowerInvariant().EndsWith(".xlsx") || _importPfad.ToLowerInvariant().EndsWith(".xlsb"))
             {
-                conn = new OleDbConnection(String.Format(xlsxConnString, _importPfad));
+                conn = new OleDbConnection(String.Format(xlsxConnString, _importPfad, provider));
             }
             else if (_importPfad.ToLowerInvariant().EndsWith(".xls"))
-                conn = new OleDbConnection(String.Format(xlsConnString, _importPfad));
+                conn = new OleDbConnection(String.Format(xlsConnString, _importPfad, provider));
             else
                 return null; // falsche Datei
             return conn;
@@ -1190,7 +1203,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 if (wertString != null)
                     wertString = wertString.Trim();
                 Held_Sonderfertigkeit hs = null;
-                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && hs1.Wert == wertString).FirstOrDefault();
+                hs = _held.Held_Sonderfertigkeit.Where(hs1 => hs1.HeldGUID == _held.HeldGUID && hs1.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && (hs1.Wert ?? "") == (wertString ?? "")).FirstOrDefault();
                 if (hs == null)
                 {
                     hs = new Held_Sonderfertigkeit();

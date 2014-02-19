@@ -60,7 +60,7 @@ namespace MeisterGeister.Logic.General
         public static Repräsentation GetRepräsentation(string rep)
         {
             Repräsentation ret = null;
-            ret = repräsentationenListe.Where(r => r.Name == rep || r.Kürzel == rep).FirstOrDefault();
+            ret = RepräsentationenListe.Where(r => r.Name == rep || r.Kürzel == rep).FirstOrDefault();
             if (ret == null)
             {
                 switch (rep)
@@ -96,7 +96,7 @@ namespace MeisterGeister.Logic.General
                         rep = "Gildenmagisch"; // sollte evtl. null oder Magiedilletant sein
                         break;
                 }
-                ret = repräsentationenListe.Where(r => r.Name == rep || r.Kürzel == rep).FirstOrDefault();
+                ret = RepräsentationenListe.Where(r => r.Name == rep || r.Kürzel == rep).FirstOrDefault();
             }
             return ret;
         }
