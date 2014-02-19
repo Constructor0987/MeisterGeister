@@ -38,6 +38,9 @@ namespace MeisterGeister {
             this.DispatcherUnhandledException += Application_DispatcherUnhandledException;
 #endif
 
+            // ShutdownMode
+            ShutdownMode = System.Windows.ShutdownMode.OnMainWindowClose;
+
             // Prüfen, ob MG von einem Netzlaufwerk gestartet wird
             if (CheckNetzlaufwerk())
                 return;
