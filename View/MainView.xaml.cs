@@ -18,6 +18,7 @@ using MeisterGeister.View.SpielerScreen;
 using MeisterGeister.Daten;
 using System.Windows.Media.Animation;
 using MeisterGeister.View.Settings;
+using MeisterGeister.Logic.General;
 
 namespace MeisterGeister.View
 {
@@ -159,6 +160,8 @@ namespace MeisterGeister.View
                 return;
             }
 
+            LogInfo log = Logger.PerformanceLogStart(string.Format("Init Tab {0}", tabName));
+
             Global.SetIsBusy(true, string.Format("{0} Tab wird geladen...", tabName));
 
             Tool t = Tool.ToolListe[tabName];
@@ -192,6 +195,8 @@ namespace MeisterGeister.View
                 }
             }
             Global.SetIsBusy(false);
+
+            Logger.PerformanceLogEnd(log);
         }
 
         private void TabItemControl_RefreshDatumAktuell(object sender, EventArgs e)
