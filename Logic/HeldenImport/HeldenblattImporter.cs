@@ -525,7 +525,8 @@ namespace MeisterGeister.Logic.HeldenImport
             _held.AE_Mod = (int?)GetField<double?>(row, "AE_Mod");
             _held.KE_Mod = (int?)GetField<double?>(row, "KE_Mod");
             _held.MR_Mod = (int?)GetField<double?>(row, "MR_Mod");
-            _held.INI_Mod = (int?)GetField<double?>(row, "INI_Mod");
+            //_held.INI_Mod = (int?)GetField<double?>(row, "INI_Mod"); //Nur Goblins bekommen einen INI-Bonus
+            _held.INI_Mod = (_held.Rasse ?? "").StartsWith("Goblin") ? 1 : 0;
             _held.LE_Aktuell = (int?)GetField<double?>(row, "LE_Aktuell");
             _held.AU_Aktuell = (int?)GetField<double?>(row, "AU_Aktuell");
             _held.AE_Aktuell = (int?)GetField<double?>(row, "AE_Aktuell");
