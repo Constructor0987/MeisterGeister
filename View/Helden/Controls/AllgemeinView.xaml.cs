@@ -16,6 +16,7 @@ using MeisterGeister.View.Windows;
 //Eigene Usings
 using VM = MeisterGeister.ViewModel.Helden;
 using MeisterGeister.Logic.General;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.View.Helden.Controls
 {
@@ -57,39 +58,6 @@ namespace MeisterGeister.View.Helden.Controls
 
         }
 
-        private void ButtonBildLinkSetzenDatei_Click(object sender, RoutedEventArgs e)
-        {
-            if (VM.SelectedHeld != null && VM.SelectedHeld != null)
-            {
-                OpenFileDialog dlg = new OpenFileDialog();
-                dlg.Filter = "Bild (*.BMP;*.GIF;*.JPG;*.JPEG;*.JPE;*.JFIF;*.PNG;*.TIF;*.TIFF)|*.BMP;*.GIF;*.JPG;*.JPEG;*.JPE;*.JFIF;*.PNG;*.TIF;*.TIFF";
-
-                if (dlg.ShowDialog() == DialogResult.OK)
-                    VM.SelectedHeld.Bild = dlg.FileName;
-
-            }
-        }
-        private void ButtonBildLinkDelete_Click(object sender, RoutedEventArgs e)
-        {
-            if (VM.SelectedHeld != null)
-                VM.SelectedHeld.Bild = null;
-        }
-        private void Bild_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (VM.SelectedHeld != null
-                && !string.IsNullOrWhiteSpace(VM.SelectedHeld.Bild))
-            {
-                try
-                {
-                    System.Diagnostics.Process.Start(VM.SelectedHeld.Bild);
-                }
-                catch (Exception)
-                {
-                    System.Windows.MessageBox.Show(string.Format("Das Bild '{0}' konnte nicht geöffnet werden.", (this.DataContext as VM.AllgemeinViewModel).SelectedHeld.Bild), "Bild");
-                }
-
-            }
-        }
         private void RefreshNotizentool(bool refreshRepräsentationen = true)
         {
             if (VM.SelectedHeld == null || String.IsNullOrEmpty(VM.SelectedHeld.Notizen))
@@ -118,7 +86,7 @@ namespace MeisterGeister.View.Helden.Controls
 		//LoadedEvent: Init VM hier um zur DesignTime die UI laden zu können
         private void AllgemeinLoaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            VM = new VM.AllgemeinViewModel();
+            VM = new VM.AllgemeinViewModel(ViewHelper.SelectImage);
             VM.RefreshNotiz += (s, ev) => { RefreshNotizentool(); };
 			
 			            if (VM != null)

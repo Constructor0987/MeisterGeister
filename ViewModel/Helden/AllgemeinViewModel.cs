@@ -33,7 +33,15 @@ namespace MeisterGeister.ViewModel.Helden {
 
         #region //KONSTRUKTOR
 
-        public AllgemeinViewModel() {
+        public AllgemeinViewModel()
+        {
+            AttachEvents();
+        }
+
+        public AllgemeinViewModel(Func<string> selectImage)
+        {
+            this.selectImage = selectImage;
+
             AttachEvents();
         }
 
@@ -60,6 +68,33 @@ namespace MeisterGeister.ViewModel.Helden {
             Global.HeldSelectionChanged -= SelectedHeldChanged;
             Global.HeldSelectionChanging -= SelectedHeldChanging;
             MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged -= IsReadOnlyChanged;
+        }
+
+        #endregion
+
+        #region Select Image
+
+        private Func<string> selectImage;
+
+        private Base.CommandBase onSelectImage = null;
+        public Base.CommandBase OnSelectImage
+        {
+            get
+            {
+                if (onSelectImage == null)
+                    onSelectImage = new Base.CommandBase(SelectImage, null);
+                return onSelectImage;
+            }
+        }
+
+        private void SelectImage(object args)
+        {
+            if (SelectedHeld != null && selectImage != null)
+            {
+                string path = selectImage();
+                if (path != null)
+                    SelectedHeld.Bild = path;
+            }
         }
 
         #endregion

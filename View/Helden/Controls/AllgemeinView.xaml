@@ -104,55 +104,34 @@
                     <Expander.Header>
                         <TextBlock Text="Bild" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
-                    <Border Style="{DynamicResource ControlContentBorder}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Button Grid.Column="0" Grid.Row="0" Height="23" Margin="2" Click="ButtonBildLinkSetzenDatei_Click" x:Name="_buttonBildLinkSetzenDatei">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
-                                    <TextBlock Margin="4,0" Text="Datei" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Button>
-                            <Button Grid.Column="1" Grid.Row="0" Height="23" Margin="2" Click="ButtonBildLinkSetzenWeb_Click" x:Name="_buttonBildLinkSetzenWeb">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/web.png" />
-                                    <TextBlock Margin="4,0" Text="Web" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </Button>
-                            <Button Grid.Column="2" Grid.Row="0" Height="23" Click="ButtonBildLinkDelete_Click" x:Name="_buttonBildLinkDelete" ToolTip="Bild-Link entfernen" IsEnabled="{Binding IsReadOnly, Converter={StaticResource InverseBooleanConverter}}" Style="{DynamicResource ReadOnlyButtonStyle}"> 
-                                <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" Stretch="Fill" />
-                            </Button>
-                            <Grid Grid.Column="0" Grid.Row="1" Margin="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" MouseDown="Bild_MouseDown">
-                                    <TextBlock FontSize="10" HorizontalAlignment="Center" MaxWidth="150" Opacity="0" Text="{Binding SelectedHeld.Bild}" TextWrapping="Wrap" VerticalAlignment="Center" />
-                                    <Image HorizontalAlignment="Center" x:Name="_imageHeldBild" ToolTip="{Binding SelectedHeld.Bild, FallbackValue='Bild einfügen über Buttons...', TargetNullValue='Bild einfügen über Buttons...'}" VerticalAlignment="Center">
-                                        <Image.Source>
-                                            <Binding Path="SelectedHeld.Bild" IsAsync="True" Mode="OneWay">
-                                                <Binding.FallbackValue>
-                                                    <ImageSource>
-                                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
-                                                </ImageSource>
-                                                </Binding.FallbackValue>
-                                                <Binding.TargetNullValue>
-                                                    <ImageSource>
-                                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
-                                                </ImageSource>
-                                                </Binding.TargetNullValue>
-                                            </Binding>
-                                        </Image.Source>
-                                    </Image>
-                                </Grid>
-                        </Grid>
+                    <Border Margin="5" Cursor="Hand">
+                        <Border.ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="{Binding SelectedHeld.Bild}" />
+                                <TextBlock Text="Klicken um ein Bild einzufügen..." />
+                            </StackPanel>
+                        </Border.ToolTip>
+                        <Border.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding OnSelectImage}" />
+                        </Border.InputBindings>
+                        <Image>
+                            <Image.Source>
+                                <Binding Path="SelectedHeld.Bild" IsAsync="True" Mode="OneWay">
+                                    <Binding.FallbackValue>
+                                        <ImageSource>
+                                            /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                        </ImageSource>
+                                    </Binding.FallbackValue>
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
                     </Border>
                 </Expander>
-                
             </Grid>
 		</Grid>
 	</Grid>
