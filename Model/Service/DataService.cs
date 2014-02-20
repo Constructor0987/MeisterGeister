@@ -34,8 +34,7 @@ namespace MeisterGeister.Model.Service
         {
             get
             {
-                return Liste<Sonderfertigkeit>()
-                    .Where(s => s.Sonderfertigkeit_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList();
+                return Context.Setting.Where(s => s.Aktiv == true).SelectMany(s => s.Sonderfertigkeit_Setting.Select(s_s => s_s.Sonderfertigkeit)).ToList().Distinct().ToList();
             }
         }
 
