@@ -19,7 +19,6 @@ IsFernkampfwaffeSelected="True"
 ListenToChangeEvents="True" 
 SelectedFilterIndex="89"
 IsRuestungBerechnungZonen="true"
-IsRuestungBerechnungAutomatisch="true"
 IsRuestungBerechnungEinfach="true"
 >	
 	<Inventar:InventarViewModel.FernkampfwaffeListe>

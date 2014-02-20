@@ -202,9 +202,10 @@
                             <StackPanel Margin="4" Grid.Row="0">
                                 <TextBlock Margin="4" FontWeight="Bold" Text="Wie wird die Rüstung eines Helden ermittelt?" TextWrapping="WrapWithOverflow" />
                                 <StackPanel>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Automatisch}" Content="Automatisch (Werte werden vom Programm ermittelt)"/>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Einfach}" Content="Keine Zonen, eingegeben (Ein Wert RS wird für den Helden verwendet)"/>
-                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Zonen}" Content="Mit Zonen, eingegeben (Rüstung besteht aus einzelnen RS-Werten je Zone)"/>
+                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=AutomatischZonen}" Content="Automatische Zonenrüstung (Werte werden vom Programm für Zonen ermittelt)"/>
+                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=AutomatischEinfach}" Content="Automatische Gesamtrüstung (Werte werden vom Programm für Gesamt-RS ermittelt)"/>
+                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Zonen}" Content="Eingegebene Zonenrüstung (Rüstung besteht aus einzelnen RS-Werten je Zone)"/>
+                                    <RadioButton Margin="2" GroupName="RuestungSetting" IsChecked="{Binding BerechnungRuestung, Mode=TwoWay, Converter={StaticResource EnumMatchToBooleanConverter}, ConverterParameter=Einfach}" Content="Eingegebene Gesamtrüstung ohne Zonen, (Ein Wert RS-Gesamt wird für den Helden eingegeben)"/>                                    
                                 </StackPanel>
                             </StackPanel>
                             <!-- BE -->

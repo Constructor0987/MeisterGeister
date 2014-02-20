@@ -39,16 +39,19 @@ namespace MeisterGeister.ViewModel.Settings
         {
             get { return (ermittleRuestung)MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung; }
             set
-            {
+            {        
                 switch (value)
                 {
-                    case ermittleRuestung.Automatisch:
+                    case ermittleRuestung.AutomatischZonen:
                         MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
                         break;
                     case ermittleRuestung.Einfach:
                         MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
                         break;
                     case ermittleRuestung.Zonen:
+                        MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
+                        break;
+                    case ermittleRuestung.AutomatischEinfach:
                         MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung = (int)value;
                         break;
                     default:
@@ -494,10 +497,11 @@ namespace MeisterGeister.ViewModel.Settings
     #endregion
 
     public enum ermittleRuestung
-    {
-        Automatisch,
+    {        
+        AutomatischZonen,
         Einfach,
-        Zonen
+        Zonen,
+        AutomatischEinfach
     }
     public enum ermittleBehinderung
     {

@@ -243,15 +243,6 @@ namespace MeisterGeister.ViewModel.Inventar
                 OnChanged("IsRuestungSelected");
             }
         }
-        public bool IsRuestungBerechnungAutomatisch
-        {
-            get { return isRuestungBerechnungAutomatisch; }
-            set
-            {
-                isRuestungBerechnungAutomatisch = value;
-                OnChanged("IsRuestungBerechnungAutomatisch");
-            }
-        }
         public bool IsRuestungBerechnungEinfach
         {
             get { return isRuestungBerechnungEinfach; }
@@ -555,23 +546,16 @@ namespace MeisterGeister.ViewModel.Inventar
         public InventarViewModel()
         {
             switch (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung)
-            {
-                case 0:
-                    
-                    IsRuestungBerechnungAutomatisch = true;
-                    IsRuestungBerechnungEinfach = false;
-                    IsRuestungBerechnungZonen = false;
-                    break;
-                case 1:
-                    IsRuestungBerechnungAutomatisch = false;
+            {        
+                //Automatisch Zonen / Automatisch Einfach = 0,3                  
+                case 1: //Einfach                    
                     IsRuestungBerechnungEinfach = true;
                     IsRuestungBerechnungZonen = false;
                     break;
-                case 2:
-                    IsRuestungBerechnungAutomatisch = false;
+                case 2: //Zonen                    
                     IsRuestungBerechnungEinfach = false;
                     IsRuestungBerechnungZonen = true;
-                    break;
+                    break;                
                 default:
                     break;
             }                           
