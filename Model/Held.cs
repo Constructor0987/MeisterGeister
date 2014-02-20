@@ -2180,5 +2180,32 @@ namespace MeisterGeister.Model
             return g;
         }
         #endregion
+
+        #region Rüstung
+        /// <summary>
+        /// Berechnet die Rüstungswerte (Held.RS) des Helden anhand der angelegten Ausrüstung neu.
+        /// </summary>
+        public void BerechneRüstungswerte()
+        {
+            bool zonenRüstung = Logic.Einstellung.Einstellungen.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.AutomatischZonen || Logic.Einstellung.Einstellungen.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.Zonen;
+            IRüstungsschutz rs = new RüstungsWerte();
+            int einfacherRs = 0;
+            foreach (Held_Ausrüstung ha in Held_Ausrüstung.Where(h_a => h_a.Ausrüstung.Rüstung != null))
+            {
+                if (ha.Angelegt)
+                {
+                    //Hier könnte man noch Rüstungskombinationen beachten (wenn man zu viel Zeit hat)
+                    if (zonenRüstung)
+                        rs = ha.Ausrüstung.Rüstung + rs;
+                    else
+                        einfacherRs += ha.Ausrüstung.Rüstung.RS ?? 0;
+                }
+            }
+            if(zonenRüstung)
+                RS.SetValues(rs);
+            else
+                RS[Trefferzone.Gesamt] = einfacherRs;
+        }
+        #endregion
     }
 }

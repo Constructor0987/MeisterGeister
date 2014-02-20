@@ -55,7 +55,11 @@
         </ContextMenu>
     </UserControl.ContextMenu>
     <StackPanel Orientation="Horizontal">
-        <Image Source="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
+        <Image>
+            <Image.Source>
+                <BitmapImage DecodePixelHeight="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LiteraturControl}}}" UriSource="/DSA MeisterGeister;component/Images/Icons/hesinde.png" />
+            </Image.Source>
+        </Image> 
         <TextBlock FontSize="11" FontStyle="Italic" VerticalAlignment="Center">
             <TextBlock.Style>
                 <Style>

@@ -16,7 +16,7 @@ using MeisterGeister.Logic.Extensions;
 namespace MeisterGeister.Logic.HeldenImport
 {
     /// <summary>
-    /// Klasse zum Konvertieren von Helden der Helden-Software.
+    /// Klasse zum Konvertieren von Helden aus dem Excel-Heldenblatt von heldenblatt.ch.
     /// </summary>
     public class HeldenblattImporter
     {
