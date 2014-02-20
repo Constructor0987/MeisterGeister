@@ -178,6 +178,7 @@
     <Compile Include="Daten\DatabaseUpdate.cs" />
     <Compile Include="Daten\SqlCeUpgrade.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Logic\Einstellung\EinstellungChangedEventHandler.cs" />
     <Compile Include="Logic\Extensions\ExtendedObservableCollection.cs" />
     <Compile Include="Logic\Extensions\TypeExtensions.cs" />
     <Compile Include="Logic\Extensions\StringExtensions.cs" />
@@ -459,6 +460,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\Ressources.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\VisualTreeExtensions.cs" />
     <Compile Include="ViewModel\Einstellungen\EinstellungenViewModel.cs" />
+    <Compile Include="ViewModel\Helden\AusrüstungViewModel.cs" />
     <Compile Include="ViewModel\Helden\HeldenViewModel.cs" />
     <Compile Include="ViewModel\Helden\EigenschaftenViewModel.cs" />
     <Compile Include="ViewModel\Helden\Logic\Eigenschaft.cs" />
@@ -662,6 +664,9 @@
     <Compile Include="View\Helden\Controls\AllgemeinView.xaml.cs">
       <DependentUpon>AllgemeinView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Helden\Controls\AusrüstungView.xaml.cs">
+      <DependentUpon>AusrüstungView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Helden\Controls\EigenschaftenView.xaml.cs">
       <DependentUpon>EigenschaftenView.xaml</DependentUpon>
     </Compile>
@@ -821,7 +826,7 @@
     <Compile Include="ViewModel\Basar\Logic\Preis.cs" />
     <Compile Include="Logic\Global\Global.cs" />
     <Compile Include="Logic\Kalender\Datum.cs" />
-    <Compile Include="Logic\Einstellungen\Einstellungen.cs" />
+    <Compile Include="Logic\Einstellung\Einstellungen.cs" />
     <Compile Include="Logic\HeldenImport\HeldenSoftwareImporter.cs" />
     <Compile Include="Logic\Kalender\DsaTool\DSADate.cs" />
     <Compile Include="Logic\Kalender\DsaTool\DSADateCalendar.cs" />
@@ -860,7 +865,7 @@
     <Compile Include="View\General\WürfelControl.xaml.cs">
       <DependentUpon>WürfelControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Logic\Einstellungen\Regeln.cs" />
+    <Compile Include="Logic\Einstellung\Regeln.cs" />
     <Compile Include="View\Windows\InputWindow.xaml.cs">
       <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
@@ -1046,6 +1051,10 @@
     <Page Include="View\Helden\Controls\AllgemeinView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Helden\Controls\AusrüstungView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Helden\Controls\EigenschaftenView.xaml">
       <SubType>Designer</SubType>

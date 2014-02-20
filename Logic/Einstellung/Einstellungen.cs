@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace MeisterGeister.Logic.Einstellung
@@ -73,6 +74,15 @@ namespace MeisterGeister.Logic.Einstellung
             };
         }
 
+        public static event EinstellungChangedHandler EinstellungChanged;
+        private static void OnEinstellungChanged(string propertyName, string einstellungName)
+        {
+            if (EinstellungChanged != null)
+                EinstellungChanged(new EinstellungChangedEventArgs(propertyName, einstellungName));
+        }
+
+
+
         public static bool IsMitUeberlastung
         {
             get
@@ -132,7 +142,7 @@ namespace MeisterGeister.Logic.Einstellung
                 target.Wert = source.Wert;
         }
 
-        public static Model.Einstellung SetEinstellung<T>(string name, T value)
+        public static Model.Einstellung SetEinstellung<T>(string name, T value, [CallerMemberName] String propertyName = null)
         {
             if (Global.IsInitialized)
             {
@@ -141,6 +151,7 @@ namespace MeisterGeister.Logic.Einstellung
                     e = CreateEinstellung<T>(name);
                 e.Set<T>(value);
                 Global.ContextHeld.Update<Model.Einstellung>(e);
+                OnEinstellungChanged(null, name);
                 return e;
             }
             return null;
