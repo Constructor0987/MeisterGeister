@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.Logic.General;
 using Mod = MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -221,7 +222,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         _held.Wunden = value;
                         break;
                 }
-                OnChanged("[]");
+                OnChanged(Binding.IndexerName);
             }
         }
 

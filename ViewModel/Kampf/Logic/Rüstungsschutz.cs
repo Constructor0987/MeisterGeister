@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using MeisterGeister.Model;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.Kampf.Logic
 {
@@ -92,7 +93,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     default:
                         break;
                 }
-                OnChanged("[]");
+                OnChanged(Binding.IndexerName);
             }
         }
 
