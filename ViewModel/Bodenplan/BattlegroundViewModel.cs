@@ -16,7 +16,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
     public class BattlegroundViewModel:INotifyPropertyChanged
     {
 //  *Hintergrundfarbe
-//  *Namen anzeigen
 //  *ZLevel bei initialisierung fix
 //  *Bilder Fixen!
 //  *Größe Kreaturen
@@ -110,25 +109,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 default:
                     return;
             }
-            //Console.WriteLine("Kämpferliste Changed!");
-            //foreach (var creature in KampfVM.KämpferListe.Kämpfer)
-            //{
-            //    if (creature is Model.Held)
-            //    {
-            //        //var test = BattlegroundObjects.Select(x=>x is BattlegroundHero).Where(x=>x); 
-            //        if (!BattlegroundObjects.Any(x => x is BattlegroundHero && x.ObjektName.Equals(creature.Name)))
-            //        {
-            //            AddHero((Held)creature);
-            //        }
-            //    }
-            //    else if (creature is Model.Gegner) 
-            //    {
-            //        if (!BattlegroundObjects.Any(x => x is BattlegroundEnemy && x.ObjektName.Equals(creature.Name)))
-            //        {
-            //            AddEnemy((Gegner)creature);
-            //        }
-            //    }
-            //}
         }
 
         public void AddCreature(IKämpfer kämpfer)
@@ -400,6 +380,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _pathLine = value;
                 if(_pathLine) CreateFilledLine = false;
                 OnPropertyChanged("CreateLine");
+                IsEditorModeEnabled = !value;
             }
         }
 
@@ -412,6 +393,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _filledPathLine = value;
                 if (_filledPathLine) CreateLine = false;
                 OnPropertyChanged("CreateFilledLine");
+                IsEditorModeEnabled = !value;
             }
         }
 
@@ -569,6 +551,22 @@ namespace MeisterGeister.ViewModel.Bodenplan
                         return;
                     }
                 }
+        }
+
+        //keeps heroes and monsters always on top
+        public void UpdateCreatureZLevelToTop()
+        {
+            for (int i = 0; i < BattlegroundObjects.Count; i++)
+            {
+                if (BattlegroundObjects[i] is BattlegroundCreature)
+                {
+                    BattlegroundBaseObject b = BattlegroundObjects[i];
+                    
+                        BattlegroundObjects.Remove(BattlegroundObjects[i]);
+                        BattlegroundObjects.Insert(BattlegroundObjects.Count-1, b);
+                }
+            }
+            SelectedObject = null;
         }
 
         public void SelectionChangedUpdateSliders()

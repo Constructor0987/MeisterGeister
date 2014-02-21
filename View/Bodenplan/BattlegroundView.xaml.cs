@@ -68,6 +68,7 @@ namespace MeisterGeister.View.Bodenplan
                             int strlength = b.Name.Length-1;
                             int buttonNr = Convert.ToInt32(b.Name.Substring(_buttonPrefix.Length, b.Name.Length - _buttonPrefix.Length));
                             var newpic = vm.CreateImageObject(Ressources.Decoder(Ressources.GetFullApplicationPath() +"\\"+ Ressources.GetPictureUrls()[buttonNr]), new Point(_xMovingOld,_yMovingOld));
+                            vm.UpdateCreatureZLevelToTop();
                         }
                     };
 
@@ -125,7 +126,7 @@ namespace MeisterGeister.View.Bodenplan
                     vm.CreatingNewLine = true;
                     var line = vm.CreateNewPathLine(_x1, _y1);
                     line.IsNew = true;
-                    e.Handled = true;
+                    e.Handled = true;   
                 }
                 else if (vm.CreateFilledLine)
                 {
@@ -151,6 +152,7 @@ namespace MeisterGeister.View.Bodenplan
                     e.Handled = true;
                     vm.CreatingNewLine = false;
                     vm.CreatingNewFilledLine = false;
+                    vm.UpdateCreatureZLevelToTop();
                 }
                 else if (vm.SelectedObject != null)
                 {
@@ -196,8 +198,6 @@ namespace MeisterGeister.View.Bodenplan
             {
                 if (_zoomChanged)
                 {
-                    //ArenaScrollViewer.ScrollToHorizontalOffset(vm.CurrentMousePositionX * ArenaScrollViewer.ScrollableWidth / 10000);
-                    //ArenaScrollViewer.ScrollToVerticalOffset(vm.CurrentMousePositionY * ArenaScrollViewer.ScrollableHeight / 10000);
                     _zoomChanged = false;
                     vm.CurrentMousePositionX = Mouse.GetPosition(ArenaGrid).X;
                     vm.CurrentMousePositionY = Mouse.GetPosition(ArenaGrid).Y;
@@ -264,8 +264,9 @@ namespace MeisterGeister.View.Bodenplan
                 if (vm.SelectedObject != null) vm.SelectedObject = null;
                 else
                 {
-                    PathLineButton.IsChecked = false;
-                    FilledPathLineButton.IsChecked = false;
+                    vm.CreateLine = false;
+                    vm.CreateFilledLine = false;
+  
                 }
             } 
         }
