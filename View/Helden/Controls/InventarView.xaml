@@ -415,7 +415,7 @@
                                     <Label Content="{Binding SelectedHeld.IN}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                     <Grid>
                                         <Label Content="{Binding SelectedHeld.RS[Gesamt]}" />
-                                        <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="60" ShowButtons="{Binding IsRuestungBerechnungEinfach}" ToolTip="Behinderung" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
+                                        <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="60" ShowButtons="{Binding IsRuestungBerechnungEinfach}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
                                     </Grid>
                                 </StackPanel>
                                 <StackPanel Grid.Column="4" Margin="0,0,0,0" HorizontalAlignment="Left">
