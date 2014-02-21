@@ -710,6 +710,8 @@ namespace MeisterGeister.ViewModel.Inventar
                     default:
                         IsRuestungBerechnungEinfach = false;
                         IsRuestungBerechnungZonen = false;
+                        if (SelectedHeld != null)
+                            SelectedHeld.BerechneRüstungswerte();
                         break;
                 }
             }
