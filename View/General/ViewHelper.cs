@@ -81,6 +81,15 @@ namespace MeisterGeister.View.General
             return invalidChars.Replace(path, "_");
         }
 
+        /// <summary>
+        /// Zur Auswahl einer Datei.
+        /// </summary>
+        /// <param name="title">Fenstertitel</param>
+        /// <param name="filename">vorbesetzter Dateiname</param>
+        /// <param name="saveFile">true für einen SaveDialog, false für einen OpenDialog</param>
+        /// <param name="askRelativePath">true, falls der User gefragt werden soll, ob der Pfad relativ oder absolut angegeben werden soll</param>
+        /// <param name="extensions">erlaubte Dateierweiterungen</param>
+        /// <returns>Den ausgewählten Dateipfad oder null</returns>
         public static string ChooseFile(string title, string filename, bool saveFile, bool askRelativePath, params string[] extensions)
         {
             filename = GetValidFilename(filename);
@@ -142,14 +151,29 @@ namespace MeisterGeister.View.General
             if (objDialog.ShowDialog() == DialogResult.OK)
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName(objDialog.FileName);
-                if (askRelativePath && ViewHelper.ConfirmYesNoCancel("Pfadangabe", "Absolute Pfadangabe (Ja) oder relative Pfadangabe (Nein)?") == 1)
+                string fileAbsolute = objDialog.FileName;
+                if (askRelativePath && IsSameRootPath(fileAbsolute))
                 {
-                    return Logic.Extensions.StringExtenstions.ConvertAbsoluteToRelativePath(objDialog.FileName);
+                    string fileRelative = Logic.Extensions.StringExtenstions.ConvertAbsoluteToRelativePath(objDialog.FileName);
+
+                    if (ViewHelper.ConfirmYesNoCancel("Pfadangabe", string.Format("Absolute Pfadangabe (Ja)?\n{0}\n\nOder relative Pfadangabe (Nein)?\n{1}", fileAbsolute, fileRelative)) == 1)
+                        return fileRelative;
+                    else
+                        return fileAbsolute;
                 }
-                else
-                    return objDialog.FileName;
+                return fileAbsolute;
             }
             return null;
+        }
+
+        /// <summary>
+        /// Prüft ob 'path' im selben RootPath wie die MeisterGeister.exe liegt.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static bool IsSameRootPath(string path)
+        {
+            return System.IO.Path.GetPathRoot(System.Reflection.Assembly.GetEntryAssembly().Location) == System.IO.Path.GetPathRoot(path);
         }
 
         public static ProbenErgebnis ShowProbeDialog(Probe probe, Model.Held held)

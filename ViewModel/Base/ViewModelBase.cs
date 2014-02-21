@@ -138,8 +138,8 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="header">Fenstertitel</param>
         /// <param name="filename">vorbesetzter Dateiname</param>
         /// <param name="save">true für einen SaveDialog, false für einen OpenDialog</param>
-        /// <param name="extensions">Dateierweiterungen</param>
-        /// <returns>Den ausgewählten Dateipfad oder null</returns>
+        /// <param name="askRelativePath">true, falls der User gefragt werden soll, ob der Pfad relativ oder absolut angegeben werden soll</param>
+        /// <param name="extensions">erlaubte Dateierweiterungen</param>
         public string ChooseFile(string header, string filename, bool save, bool askRelativePath, params string[] extensions)
         {
             if (chooseFile != null)
