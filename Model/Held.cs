@@ -2192,14 +2192,15 @@ namespace MeisterGeister.Model
             int einfacherRs = 0;
             foreach (Held_Ausrüstung ha in Held_Ausrüstung.Where(h_a => h_a.Ausrüstung.Rüstung != null))
             {
-                if (ha.Angelegt)
-                {
+                //TODO DW: Angelegt wieder aktivieren wenn die UI dies anbietet
+                //if (ha.Angelegt)
+                //{
                     //Hier könnte man noch Rüstungskombinationen beachten (wenn man zu viel Zeit hat)
                     if (zonenRüstung)
                         rs = ha.Ausrüstung.Rüstung + rs;
                     else
                         einfacherRs += ha.Ausrüstung.Rüstung.RS ?? 0;
-                }
+                //}
             }
             if(zonenRüstung)
                 RS.SetValues(rs);

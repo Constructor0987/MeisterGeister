@@ -104,6 +104,17 @@ namespace MeisterGeister.View.Helden.Controls {
 
         #endregion
 
+        private void btnZonenOverlay_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO DW: CodeBehind entfernen
+            _rsZonenRsControl.Visibility = Visibility.Visible;
+        }
+
         #endregion
+
+        private void btnOverlayBack_Click(object sender, RoutedEventArgs e)
+        {
+            _rsZonenRsControl.Visibility = Visibility.Hidden;
+        }
     }
 }

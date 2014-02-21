@@ -151,7 +151,7 @@ namespace MeisterGeister.Logic.Einstellung
                     e = CreateEinstellung<T>(name);
                 e.Set<T>(value);
                 Global.ContextHeld.Update<Model.Einstellung>(e);
-                OnEinstellungChanged(null, name);
+                OnEinstellungChanged(propertyName, name);
                 return e;
             }
             return null;

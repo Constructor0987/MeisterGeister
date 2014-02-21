@@ -10,6 +10,7 @@ using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Logik = MeisterGeister.ViewModel.Inventar.Logic;
 using Service = MeisterGeister.Model.Service;
+using E = MeisterGeister.Logic.Einstellung.Einstellungen;
 
 namespace MeisterGeister.ViewModel.Inventar
 {
@@ -31,7 +32,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private Visibility isNahkampfwaffevorhanden = Visibility.Hidden;
         private Visibility isFernkampfwaffevorhanden = Visibility.Hidden;
         private Visibility isSchildVorhanden = Visibility.Hidden;
-        private Visibility isRuestungVorhanden = Visibility.Hidden;        
+        private Visibility isRuestungVorhanden = Visibility.Hidden;
 
         private bool isAllSelected;
         private bool isNahkampfWaffeSelected;
@@ -40,7 +41,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private bool isRuestungSelected;
         private bool isRuestungBerechnungZonen = false;
         private bool isRuestungBerechnungEinfach = false;
-        private bool isRuestungBerechnungAutomatisch = false;        
+        private bool isRuestungBerechnungAutomatisch = false;
 
         private int selectedFilterIndex = 0;
 
@@ -127,7 +128,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 isRuestungVorhanden = value;
                 OnChanged("IsRuestungVorhanden");
             }
-        }        
+        }
 
         public int SelectedFilterIndex
         {
@@ -245,7 +246,7 @@ namespace MeisterGeister.ViewModel.Inventar
         }
         public bool IsRuestungBerechnungEinfach
         {
-            get { return isRuestungBerechnungEinfach; }
+            get { return isRuestungBerechnungEinfach || E.IsReadOnly; }
             set
             {
                 isRuestungBerechnungEinfach = value;
@@ -260,7 +261,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 isRuestungBerechnungZonen = value;
                 OnChanged("IsRuestungBerechnungZonen");
             }
-        }                        
+        }
 
         public Model.Held SelectedHeld
         {
@@ -545,28 +546,18 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //KONSTRUKTOR
         public InventarViewModel()
         {
-            switch (MeisterGeister.Logic.Einstellung.Einstellungen.RSBerechnung)
-            {        
-                //Automatisch Zonen / Automatisch Einfach = 0,3                  
-                case 1: //Einfach                    
-                    IsRuestungBerechnungEinfach = true;
-                    IsRuestungBerechnungZonen = false;
-                    break;
-                case 2: //Zonen                    
-                    IsRuestungBerechnungEinfach = false;
-                    IsRuestungBerechnungZonen = true;
-                    break;                
-                default:
-                    break;
-            }                           
+            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("RSBerechnung", ""));
 
             onAddNahkampfwaffe = new Base.CommandBase(AddNahkampfwaffe, null);
             onAddFernkampfwaffe = new Base.CommandBase(AddFernkampfwaffe, null);
             onAddSchild = new Base.CommandBase(AddSchild, null);
             onAddRuestung = new Base.CommandBase(AddRuestung, null);
 
+            //EventListener
             Global.HeldSelectionChanged += (s, ev) => { SelectedHeldChanged(); };
             MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnlyChanged += IsReadOnlyChanged;
+            E.EinstellungChanged += EinstellungenChangedHandler;
+
             SelectedFilterIndex = 0;
 
             if (IsLoaded == false)
@@ -701,6 +692,29 @@ namespace MeisterGeister.ViewModel.Inventar
             _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
+        void EinstellungenChangedHandler(MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs e)
+        {            
+            if (e.PropertyName == "RSBerechnung")
+            {
+                switch (E.RSBerechnung)
+                {
+                    //Automatisch Zonen / Automatisch Einfach = 0,3                  
+                    case 1: //Einfach                    
+                        IsRuestungBerechnungEinfach = true;
+                        IsRuestungBerechnungZonen = false;
+                        break;
+                    case 2: //Zonen                    
+                        IsRuestungBerechnungEinfach = false;
+                        IsRuestungBerechnungZonen = true;
+                        break;
+                    default:
+                        IsRuestungBerechnungEinfach = false;
+                        IsRuestungBerechnungZonen = false;
+                        break;
+                }
+            }
+        }
+
 
         void SelectedHeldChanged()
         {
@@ -924,6 +938,13 @@ namespace MeisterGeister.ViewModel.Inventar
                     if (item.EntityR.RüstungGUID == SelectedRuestung.RüstungGUID)
                     {
                         item.EntityHA.Anzahl++;
+
+                        if (E.RSBerechnung == 0 ||
+                            E.RSBerechnung == 3)
+                        {
+                            SelectedHeld.BerechneRüstungswerte();
+                        }
+
                         OnChanged("HeldRuestungImInventar");
                         AktuellesGewicht += SelectedRuestung.Gewicht / 2;
                         return;
@@ -932,7 +953,14 @@ namespace MeisterGeister.ViewModel.Inventar
                 RuestungItem tmp = HeldRuestungImInventar.Where(s => s.EntityHA.Ausrüstung.Rüstung == SelectedRuestung && s.EntityHA.HeldGUID == SelectedHeld.HeldGUID).FirstOrDefault();
                 RuestungItem newItem = CreateItemVonRuestung(SelectedRuestung);
                 HeldRuestungImInventar.Add(newItem);
-                //Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
+
+                if (E.RSBerechnung == 0 ||
+                    E.RSBerechnung == 3)
+                {
+                    SelectedHeld.BerechneRüstungswerte();
+                }
+
+                //TODO DW: Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
                 //SelectedHeld.BE += newItem.EntityR.BE;
                 OnChanged("HeldRuestungImInventar");
                 IsRuestungVorhanden = Visibility.Visible;
@@ -1050,12 +1078,22 @@ namespace MeisterGeister.ViewModel.Inventar
                                 if (item.EntityHA.Anzahl <= 1)
                                     break;
                                 item.EntityHA.Anzahl--;
+                                if (E.RSBerechnung == 0 ||
+                                    E.RSBerechnung == 3)
+                                {
+                                    SelectedHeld.BerechneRüstungswerte();
+                                }
                                 OnChanged("HeldRuestungImInventar");
                                 AktuellesGewicht -= item.EntityR.Gewicht / 2;
                                 return;
                             }
                         }
                         HeldRuestungImInventar.Remove(item);
+                        if (E.RSBerechnung == 0 ||
+                            E.RSBerechnung == 3)
+                        {
+                            SelectedHeld.BerechneRüstungswerte();
+                        }
                         OnChanged("HeldRuestungImInventar");
                         AktuellesGewicht -= item.EntityR.Gewicht / 2;
                         //Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
