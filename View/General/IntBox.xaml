@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              mc:Ignorable="d" MouseWheel="UserControl_MouseWheel"
              Name="_intBox" Height="23">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter2" False="Hidden" />
         <Style x:Key="TextBoxIntStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="Background" Value="White" />
@@ -32,7 +34,17 @@
         <TextBox Grid.Column="0" Name="_textBoxInt" Text="0" ContextMenu="{x:Null}" TextAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="_textBoxInt_KeyDown" 
                  Style="{StaticResource TextBoxIntStyle}" BorderBrush="Transparent" LostFocus="_textBoxInt_LostFocus" GotFocus="_textBoxInt_GotFocus" PreviewKeyDown="_textBoxInt_PreviewKeyDown" 
                  IsReadOnly="{Binding ElementName=_intBox, Path=IsReadOnly}" />
-        <StackPanel Grid.Column="1" Name="_stackPanelButtons" Orientation="Horizontal" Visibility="{Binding ElementName=_intBox, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}">
+        <StackPanel Grid.Column="1" Name="_stackPanelButtons" Orientation="Horizontal">
+            <StackPanel.Style>
+                <Style>
+                    <Setter Property="StackPanel.Visibility" Value="{Binding ElementName=_intBox, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=_intBox, Path=ButtonHiddenMode}" Value="Hidden">
+                            <Setter Property="StackPanel.Visibility" Value="{Binding ElementName=_intBox, Path=ShowButtons, Converter={StaticResource BooleanToVisibilityConverter2}}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
             <Button Name="_buttonMinus" Width="18" Click="ButtonMinus_Click">
                 <Image Source="/DSA MeisterGeister;component/Images/Icons/General/entf_02.png" />
             </Button>

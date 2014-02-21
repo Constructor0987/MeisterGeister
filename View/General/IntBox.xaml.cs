@@ -26,7 +26,7 @@ namespace MeisterGeister.View.General
         public IntBox()
         {
             InitializeComponent();
-
+            
             MinValue = int.MinValue;
             MaxValue = int.MaxValue;
         }
@@ -42,6 +42,14 @@ namespace MeisterGeister.View.General
             get;
             set;
         }
+
+        public Visibility ButtonHiddenMode
+        {
+            get { return (Visibility)GetValue(ButtonHiddenModeProperty); }
+            set { SetValue(ButtonHiddenModeProperty, value); }
+        }
+        public static DependencyProperty ButtonHiddenModeProperty = DependencyProperty.Register("ButtonHiddenMode", typeof(Visibility), typeof(IntBox),
+                new PropertyMetadata(Visibility.Collapsed));
 
         public bool IsReadOnly
         {
