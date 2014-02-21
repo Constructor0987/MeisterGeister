@@ -298,6 +298,18 @@ namespace MeisterGeister.Model
     
         }
         private double _länge;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int Reihenfolge
+        {
+            get { return _reihenfolge; }
+            set
+    		{ 
+    			Set(ref _reihenfolge, value);
+    		}
+    
+        }
+        private int _reihenfolge;
 
         #endregion
 

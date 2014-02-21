@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 82;
+        public const int DatenbankVersionAktuell = 83;
 
         private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
@@ -153,6 +153,38 @@ namespace MeisterGeister.Daten
             if (keyName == null)
                 throw new InvalidDataException(String.Format("Für die Tabelle {0} konnte kein Primärschlüssel gefunden werden.", tableName));
             return String.Format("ALTER TABLE {0} DROP CONSTRAINT {1}", tableName, keyName);
+        }
+
+        public static void InterneGegnerDatenEinfügen(string connectionString = null)
+        {
+            if (String.IsNullOrWhiteSpace(connectionString))
+                connectionString = MeisterGeister.Properties.Settings.Default.DatabaseDSAConnectionString;
+            // Gegnerskript ausführen
+            SqlCeConnection connection = new SqlCeConnection(connectionString);
+            SqlCeTransaction transaction = null;
+            try
+            {
+                connection.Open();
+                transaction = connection.BeginTransaction();
+
+                // lies die Insert-Befehle aus der Resourcen-Datei
+                StreamReader reader = new StreamReader(App.GetResourceStream(new Uri("/DSA MeisterGeister;component/Daten/Updateskripte/InsertGegner.sql", UriKind.Relative)).Stream, Encoding.UTF8);
+                string inserts = reader.ReadToEnd();
+                ExecuteSqlCommands(inserts, "InsertGegner", connection, transaction, false);
+                if (transaction != null)
+                    transaction.Commit();
+            }
+            catch (Exception)
+            {
+                if (transaction != null)
+                    transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
         }
 
         static void HandelsgüterEinfügen(string connectionString)

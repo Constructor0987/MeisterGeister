@@ -128,6 +128,18 @@ namespace MeisterGeister.Model
     
         }
         private Nullable<double> _länge;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Datei
+        {
+            get { return _datei; }
+            set
+    		{ 
+    			Set(ref _datei, value);
+    		}
+    
+        }
+        private string _datei;
 
         #endregion
 

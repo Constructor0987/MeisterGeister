@@ -9,6 +9,7 @@
     xmlns:Gegner="clr-namespace:MeisterGeister.View.Kampf.Controls" 
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
     xmlns:KampfLogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
+    xmlns:mg="clr-namespace:MeisterGeister"
 	x:Name="UserControl" Background="{DynamicResource Background1}"
 	d:DesignWidth="739.291" d:DesignHeight="543.038"
     Loaded="UserControl_Loaded">
@@ -188,6 +189,11 @@
                         </Button>
                         <Label Content="{Binding FilteredGegnerBaseListe.Count, FallbackValue=0}"/>
                         <Label Content="Gegner" />
+                        <Button Height="23" Width="25" Visibility="{x:Static mg:Global.INTERN_Visibility}" Command="{Binding OnLadeInterneGegnerDaten}" ToolTip="Interne Gegner laden">
+                            <Border Background="DimGray">
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/gegner_add.png" Stretch="Fill" />
+                            </Border>
+                        </Button>
                     </StackPanel>
                 </Grid>
             </Border>

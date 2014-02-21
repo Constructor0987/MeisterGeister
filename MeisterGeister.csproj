@@ -1675,7 +1675,7 @@
     <Resource Include="Images\Icons\schild_gestrichen.png" />
     <Resource Include="Images\Icons\nahkampf_03_gestrichen.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0082.sql" />
-    <Content Include="Daten\Updateskripte\InsertGegner.sql" />
+    <Resource Include="Daten\Updateskripte\InsertGegner.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0083.sql" />
     <Resource Include="Images\Logos\Uhrwerk_Icon.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />

@@ -655,6 +655,25 @@ namespace MeisterGeister.ViewModel.Kampf
 
         #endregion
 
+        #region Interne Gegnerdaten
+        private Base.CommandBase onLadeInterneGegnerDaten = null;
+        public Base.CommandBase OnLadeInterneGegnerDaten
+        {
+            get
+            {
+                if (onLadeInterneGegnerDaten == null)
+                    onLadeInterneGegnerDaten = new Base.CommandBase(LadeInterneGegnerDaten, null);
+                return onLadeInterneGegnerDaten;
+            }
+        }
+
+        private void LadeInterneGegnerDaten(object args)
+        {
+            if(Confirm("Interne Gegnerdaten laden", "Sollen alle vom Team ausgelieferten Gegner gelöscht und durch die internen Gegnerdaten ersetzt werden?\nManuell angelegte Gegner bleiben davon unberührt.\nAnschließend muss MeisterGeister neu gestartet werden."))
+                MeisterGeister.Daten.DatabaseUpdate.InterneGegnerDatenEinfügen();
+        }
+        #endregion
+
         #region Gegner Import/Export/New/Delete
 
         private Base.CommandBase onNewGegnerBase = null;

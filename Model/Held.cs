@@ -15,7 +15,7 @@ using MeisterGeister.ViewModel.Helden.Logic;
 namespace MeisterGeister.Model
 {
     // Man kann Superklassen hinzufügen. Es sollten jedoch nicht die gleichen Eigenschaften, wie in der Datenbankklasse existieren.
-    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable, KampfLogic.IHasZonenRs, IHasWunden
+    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable, KampfLogic.IHasZonenRs, IHasWunden, IDisposable
     {
         public Held() : base()
         {
@@ -2208,5 +2208,13 @@ namespace MeisterGeister.Model
                 RS[Trefferzone.Gesamt] = einfacherRs;
         }
         #endregion
+
+        #region IDisposable
+        public void Dispose()
+        {
+            PropertyChanged -= DependentProperty.PropagateINotifyProperyChanged;
+        }
+        #endregion
+
     }
 }
