@@ -71,9 +71,21 @@ namespace MeisterGeister.View.General
                 try
                 {
                     string curDir = Environment.CurrentDirectory;
+
+                    string fileName = ProgrammPfad;
+
                     if (!IsWebUrl)
-                        Environment.CurrentDirectory = System.IO.Path.GetDirectoryName(ProgrammPfad);
-                    System.Diagnostics.Process.Start(ProgrammPfad);
+                    {
+                        if (fileName.StartsWith("\\")) // bei relativem Pfad das HomeDir hinzufügen
+                        {
+                            fileName = fileName.Remove(0, 1).Insert(0, Logic.Extensions.FileExtensions.GetHomeDirectory());
+                            Logic.Extensions.FileExtensions.SetCurrentDir(fileName);
+                        }
+                        else
+                            Logic.Extensions.FileExtensions.SetCurrentDir();
+                    }
+
+                    System.Diagnostics.Process.Start(fileName);
                     Environment.CurrentDirectory = curDir;
                 }
                 catch (Exception ex)

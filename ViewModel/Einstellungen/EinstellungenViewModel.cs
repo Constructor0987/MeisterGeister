@@ -267,9 +267,12 @@ namespace MeisterGeister.ViewModel.Settings
             try
             {
                 if (!string.IsNullOrEmpty(Pfad))
-                    System.Diagnostics.Process.Start(Pfad);
+                    Logic.General.Pdf.OpenFileInReader(Pfad);
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                View.General.ViewHelper.ShowError("Das PDF konnte nicht geöffnet werden.", ex);
+            }
         }
 
         private void OpenFileDialog(object obj)

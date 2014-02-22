@@ -154,7 +154,7 @@ namespace MeisterGeister.View.General
                 string fileAbsolute = objDialog.FileName;
                 if (askRelativePath && IsSameRootPath(fileAbsolute))
                 {
-                    string fileRelative = Logic.Extensions.StringExtenstions.ConvertAbsoluteToRelativePath(objDialog.FileName);
+                    string fileRelative = Logic.Extensions.FileExtensions.ConvertAbsoluteToRelativePath(objDialog.FileName);
 
                     if (ViewHelper.ConfirmYesNoCancel("Pfadangabe", string.Format("Absolute Pfadangabe (Ja)?\n{0}\n\nOder relative Pfadangabe (Nein)?\n{1}", fileAbsolute, fileRelative)) == 1)
                         return fileRelative;
