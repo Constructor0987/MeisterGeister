@@ -1,10 +1,4 @@
-﻿--Neue Gegnerdaten und relative Pfade für Audio
-
---Audiopfade
-Alter TABLE Audio_Titel ADD Datei nvarchar(500) NULL;
-Alter TABLE Audio_Playlist_Titel ADD Reihenfolge int NOT NULL DEFAULT 0;
-
---Alte Gegner löschen
+﻿--Alte Gegner löschen
 Delete from GegnerBase where Literatur='ZBA 183f' and Name='Krähe';
 Delete from GegnerBase where Literatur='ZBA 144ff' and Name='Ork (unerfahren)';
 Delete from GegnerBase where Literatur='ZBA 144ff' and Name='Ork (erfahren)';
