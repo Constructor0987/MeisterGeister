@@ -53,14 +53,8 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="HINWEIS: Das MeisterGeister-Team arbeitet derzeit an einer umfangreichen Gegner-Datenbank." FontStyle="Italic" TextAlignment="Center" FontSize="14" Foreground="Red">
-                    <TextBlock.Effect>
-                        <DropShadowEffect ShadowDepth="0" Color="White"/>
-                    </TextBlock.Effect>
-                </TextBlock>
-                <Expander IsExpanded="True" Grid.Row="1" Name="expanderBasisinformationen" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Expander IsExpanded="True" Grid.Row="0" Name="expanderBasisinformationen" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Basisinformationen" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -272,7 +266,7 @@
                         </Grid>
                     </Border>
                 </Expander>
-                <Expander IsExpanded="True" Grid.Row="2" Name="expanderAngriffe" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Expander IsExpanded="True" Grid.Row="1" Name="expanderAngriffe" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Angriffe" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -391,7 +385,7 @@
 
                     </Border>
                 </Expander>
-                <Expander IsExpanded="False" Grid.Row="3" Name="expanderJagd" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
+                <Expander IsExpanded="False" Grid.Row="2" Name="expanderJagd" Expanded="Expander_ExpandedCollapsed" Collapsed="Expander_ExpandedCollapsed">
                     <Expander.Header>
                         <TextBlock Text="Werte für Beschwörung und Jagd" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
@@ -431,7 +425,7 @@
                     </Border>
                 </Expander>
 
-                <Expander IsExpanded="False" Grid.Row="4" Visibility="Collapsed">
+                <Expander IsExpanded="False" Grid.Row="3" Visibility="Collapsed">
                     <Expander.Header>
                         <TextBlock Text="Besondere Kampfregeln" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
