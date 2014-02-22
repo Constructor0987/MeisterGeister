@@ -27,7 +27,6 @@ namespace MeisterGeister.View.Bodenplan
         private double _x1, _y1, _x2, _y2;
         private double _xMovingOld, _yMovingOld;
         private bool _zoomChanged = false;
-        private bool _leftShiftPressed = false;
 
         public BattlegroundView()
         {
@@ -68,7 +67,7 @@ namespace MeisterGeister.View.Bodenplan
                             int strlength = b.Name.Length-1;
                             int buttonNr = Convert.ToInt32(b.Name.Substring(_buttonPrefix.Length, b.Name.Length - _buttonPrefix.Length));
                             var newpic = vm.CreateImageObject(Ressources.Decoder(Ressources.GetFullApplicationPath() +"\\"+ Ressources.GetPictureUrls()[buttonNr]), new Point(_xMovingOld,_yMovingOld));
-                            vm.UpdateCreatureZLevelToTop();
+                            vm.UpdateCreatureLevelToTop();
                         }
                     };
 
@@ -152,7 +151,7 @@ namespace MeisterGeister.View.Bodenplan
                     e.Handled = true;
                     vm.CreatingNewLine = false;
                     vm.CreatingNewFilledLine = false;
-                    vm.UpdateCreatureZLevelToTop();
+                    vm.UpdateCreatureLevelToTop();
                 }
                 else if (vm.SelectedObject != null)
                 {
@@ -178,7 +177,7 @@ namespace MeisterGeister.View.Bodenplan
                     {
                         _x2 = e.GetPosition(ArenaGrid).X;
                         _y2 = e.GetPosition(ArenaGrid).Y;
-                        vm.MoveWhileDrawing(_x2, _y2, _leftShiftPressed);
+                        vm.MoveWhileDrawing(_x2, _y2, vm.LeftShiftPressed);
                     }
                     else if (e.LeftButton == MouseButtonState.Pressed && vm.SelectedObject != null && vm.IsMoving)
                     {
@@ -232,16 +231,17 @@ namespace MeisterGeister.View.Bodenplan
 
         private void UserControl_KeyDown(object sender, KeyEventArgs e)
         {
-            _leftShiftPressed = (e.Key == Key.LeftShift);
+            
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
+                vm.LeftShiftPressed = (e.Key == Key.LeftShift);
                 if (e.Key == Key.Delete && vm.SelectedObject != null) vm.Delete(); 
-                if (_leftShiftPressed && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
+                if (vm.LeftShiftPressed && (vm.CreatingNewLine || vm.CreatingNewFilledLine))
                 {
                     _x2 = _xMovingOld;
                     _y2 = _yMovingOld;
-                    vm.MoveWhileDrawing(_x2, _y2, _leftShiftPressed);
+                    vm.MoveWhileDrawing(_x2, _y2, vm.LeftShiftPressed);
                 }
             }
             if (e.Key == Key.Escape) UnselectObjects();
@@ -252,7 +252,11 @@ namespace MeisterGeister.View.Bodenplan
 
         private void UserControl_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.LeftShift) _leftShiftPressed = !_leftShiftPressed;
+             var vm = DataContext as BattlegroundViewModel;
+             if (vm != null)
+             {
+                 if (e.Key == Key.LeftShift) vm.LeftShiftPressed = !vm.LeftShiftPressed;
+             }
         }
 
         //Set SelectedObject = null 
@@ -302,6 +306,18 @@ namespace MeisterGeister.View.Bodenplan
         private void checkBox3_Checked(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void ButtonEbeneHigherMax_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null) vm.MoveSelectedObjectToTop(true);
+        }
+
+        private void ButtonEbeneLowerMin_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null) vm.MoveSelectedObjectToTop(false);
         }
     }
 }

@@ -138,7 +138,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
             BattlegroundObjects.Remove((Wesen)creature);
         }
-        
 
         public void RemoveCreatureAll()
         {
@@ -149,6 +148,17 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     Console.WriteLine("Remove All Creatures");
                 }
             
+        }
+
+        private bool _leftShiftPressed=false;
+        public bool LeftShiftPressed
+        {
+            get { return _leftShiftPressed; }
+            set
+            {
+                _leftShiftPressed = value;
+                OnPropertyChanged("LeftShiftPressed");
+            }
         }
 
         //get / set ZLevel
@@ -301,10 +311,24 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             get { return _selectedFillColor; }
             set
-            {
+            {               
                 _selectedFillColor = value;
+                Console.WriteLine(_selectedFillColor.ScA);
                 if (SelectedObject != null) SelectedObject.FillColor = value;
                 OnPropertyChanged("SelectedFillColor");
+            }
+        }
+
+        public float SelectedFillColorAlpha
+        {
+            get { return SelectedFillColor.ScA; }
+            set
+            {
+                Color c = SelectedFillColor;
+                c.ScA = value;
+                SelectedFillColor = c;
+                Console.WriteLine("Alpha: " + value + " || " + SelectedFillColor.ScA.ToString());
+                OnPropertyChanged("SelectedFillColorAlpha");
             }
         }
 
@@ -450,9 +474,12 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void FinishCurrentPathLine()
         {
-            SelectedObject.IsNew = false;
-            SelectedObject = null;
-            RemoveNewObjects();
+            if (SelectedObject != null)
+            {
+                SelectedObject.IsNew = false;
+                SelectedObject = null;
+                RemoveNewObjects();
+            }
         }
 
         public ImageObject CreateImageObject(string picurl, Point p)
@@ -554,20 +581,36 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         //keeps heroes and monsters always on top
-        public void UpdateCreatureZLevelToTop()
+        public void UpdateCreatureLevelToTop()
         {
-            for (int i = 0; i < BattlegroundObjects.Count; i++)
+            for (int i = BattlegroundObjects.Count-1; i >= 0 ; i--)
             {
                 if (BattlegroundObjects[i] is BattlegroundCreature)
                 {
                     BattlegroundBaseObject b = BattlegroundObjects[i];
-                    
-                        BattlegroundObjects.Remove(BattlegroundObjects[i]);
-                        BattlegroundObjects.Insert(BattlegroundObjects.Count-1, b);
+                    BattlegroundObjects.Remove(BattlegroundObjects[i]);
+                    BattlegroundObjects.Insert(BattlegroundObjects.Count, b);
                 }
             }
             SelectedObject = null;
         }
+
+        //brings selected Object to Top and calls UpdateCreatureLevelToTop
+        public void MoveSelectedObjectToTop(bool toTop)
+        {
+            if (SelectedObject == null) return;
+            for (int i = BattlegroundObjects.Count - 1; i >= 0; i--)
+            {
+                if (BattlegroundObjects[i].Equals(SelectedObject))
+                {
+                    BattlegroundBaseObject b = BattlegroundObjects[i];
+                    BattlegroundObjects.Remove(BattlegroundObjects[i]);
+                    int position = toTop ? BattlegroundObjects.Count-1 : 0;
+                    BattlegroundObjects.Insert(position, b);
+                    UpdateCreatureLevelToTop();
+                }
+            }
+        } 
 
         public void SelectionChangedUpdateSliders()
         {

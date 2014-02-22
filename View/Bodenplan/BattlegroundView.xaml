@@ -13,7 +13,7 @@
              xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
              mc:Ignorable="d" 
              x:Name="view"
-             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource BackgroundPergamentQuer}">   
+             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource BackgroundPergamentQuer}">
     <Grid>
         <Grid.Resources>
             <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
@@ -28,7 +28,7 @@
                             <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Rectangle RadiusX="12" RadiusY="12" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" ToolTip="{Binding Name}">
                                     <Rectangle.Fill>
-                                        <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Opacity="{Binding Opacity}" Stretch="Fill"/>                                        
+                                        <ImageBrush ImageSource="{Binding DataContext.CreaturePictureUrl, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Opacity="{Binding Opacity}" Stretch="Fill"/>
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <!--<Image Source="{Binding CreaturePictureUrl}" Opacity="{Binding Opacity}" Name="ImageObject1" Canvas.Top="{Binding CreatureY}" Canvas.Left="{Binding CreatureX}" Width="{Binding CreatureWidth}" Height="{Binding CreatureHeight}" Stretch="Fill" VerticalAlignment="Top" />-->
@@ -65,7 +65,7 @@
                         <ControlTemplate TargetType="Thumb">
                             <Canvas Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}" IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
                                 <Path Stroke="{Binding ObjectColor}" StrokeThickness="{Binding StrokeThickness}" Data="{Binding PathGeometryData}" x:Name="PathLine" Opacity="{Binding Opacity}" >
-                                    
+
                                 </Path>
                                 <TextBlock Canvas.Top="{Binding ZDisplayY}" Canvas.Left="{Binding ZDisplayX}" Width="60" TextAlignment="Center" Text="{Binding ZLevel}" FontWeight="Bold" FontSize="10" 
                                            IsHitTestVisible="False" 
@@ -116,7 +116,7 @@
                     </Thumb.Template>
                 </Thumb>
             </DataTemplate>
-            
+
             <!-- Datatemplate IMAGEOBJECT -->
             <DataTemplate DataType="{x:Type model:ImageObject}">
                 <Thumb DragDelta="Thumb_Drag" 
@@ -156,34 +156,35 @@
                     </Grid>
                 </Border>
                 <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,13,0,0" Name="checkBox4" VerticalAlignment="Top" />
+                <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="133,34,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
             </Grid>
         </DockPanel>
         <DockPanel Margin="12,131,0,12" Name="dockPanel2" HorizontalAlignment="Left" Width="200" Background="#12000000"></DockPanel>
         <DockPanel Margin="220,131,12,11" Name="ArenaGridContainer"></DockPanel>
-        
+
         <Grid Name="grid1" Width="200" ClipToBounds="True" IsManipulationEnabled="False" Margin="12,131,0,0" HorizontalAlignment="Left" Height="958" VerticalAlignment="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*" />
-                <RowDefinition Height="302" />
+                <RowDefinition Height="316" />
                 <RowDefinition Height="87" />
-                <RowDefinition Height="68*" />
-                <RowDefinition Height="451*" />
+                <RowDefinition Height="88*" />
+                <RowDefinition Height="417*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="24*" />
                 <ColumnDefinition Width="160" />
                 <ColumnDefinition Width="24*" />
             </Grid.ColumnDefinitions>
-            <xctk:ColorPicker Grid.Column="1" Grid.Row="1" SelectedColor="{Binding SelectedColor}" HorizontalAlignment="Right" Margin="0,7,0,0" Name="colorPicker1" VerticalAlignment="Top" Width="88" />
-            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_StrokeThickness" SliderValue="{Binding StrokeThickness, Mode=TwoWay}" TickFrequencyValue="1" SliderLabelTextValue="Linien Stärke" SliderMinValue="1" SliderMaxValue="30" SliderMinTextValue="1" SliderMaxTextValue="30" Margin="0,64,0,0" Width="160" Height="58" VerticalAlignment="Top" />
-            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,128,0,0" x:Name="sliderWithDisplayTextBox_Opacity" SliderValue="{Binding Opacity, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0.1" SliderMaxValue="1" TickFrequencyValue="0.1" SliderLabelTextValue="Transparenz" SliderMinTextValue="10%" SliderMaxTextValue="100%" Width="160" />
-            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,192,0,0" x:Name="sliderWithDisplayTextBox_ObjectSize" SliderValue="{Binding ObjectSize, Mode=TwoWay}" Height="57" VerticalAlignment="Top" SliderMinValue="0.3" SliderMaxValue="3" SliderLabelTextValue="Objektgröße" SliderMinTextValue="0.3x" SliderMaxTextValue="3x" TickFrequencyValue="0.1" Width="160" />
-            <xctk:ColorPicker HorizontalAlignment="Left" Margin="72,35,0,0" Name="colorPicker2" SelectedColor="{Binding SelectedFillColor}" VerticalAlignment="Top" Width="88" Grid.Column="1" Grid.Row="1" />
+            <xctk:ColorPicker Grid.Column="1" Grid.Row="1" SelectedColor="{Binding SelectedColor}" HorizontalAlignment="Right" Margin="0,7,0,0" Name="colorPicker1" VerticalAlignment="Top" Width="88" Height="22" />
+            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_StrokeThickness" SliderValue="{Binding StrokeThickness, Mode=TwoWay}" TickFrequencyValue="1" SliderLabelTextValue="Linien Stärke" SliderMinValue="1" SliderMaxValue="30" SliderMinTextValue="1" SliderMaxTextValue="30" Margin="0,121,0,0" Width="160" Height="58" VerticalAlignment="Top" />
+            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,185,0,0" x:Name="sliderWithDisplayTextBox_Opacity" SliderValue="{Binding Opacity, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0.1" SliderMaxValue="1" TickFrequencyValue="0.1" SliderLabelTextValue="Transparenz" SliderMinTextValue="10%" SliderMaxTextValue="100%" Width="160" Height="58" />
+            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,249,0,0" x:Name="sliderWithDisplayTextBox_ObjectSize" SliderValue="{Binding ObjectSize, Mode=TwoWay}" Height="57" VerticalAlignment="Top" SliderMinValue="0.3" SliderMaxValue="3" SliderLabelTextValue="Objektgröße" SliderMinTextValue="0.3x" SliderMaxTextValue="3x" TickFrequencyValue="0.1" Width="160" />
+            <xctk:ColorPicker HorizontalAlignment="Left" Margin="72,35,0,0" Name="colorPicker2" SelectedColor="{Binding SelectedFillColor}" VerticalAlignment="Top" Width="88" Grid.Column="1" Grid.Row="1" Height="22" />
             <Label Content="Line Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label1" Width="56" FontSize="10" Margin="10,7,0,273" />
             <Label Content="Fill Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label2" Width="56" FontSize="10" Margin="10,29,0,0" Height="28" VerticalAlignment="Top" />
             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateLine, Mode=TwoWay}" Content="[1] Line" Name="PathLineButton" Height="25" HorizontalAlignment="Left" Width="77" VerticalAlignment="Top" />
             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateFilledLine, Mode=TwoWay}" Content="[2] Fläche" Name="FilledPathLineButton" Height="25" HorizontalAlignment="Right" Width="77" VerticalAlignment="Top" />
-            <Grid Grid.Row="4" Name="PictureButtonGrid" Grid.Column="1" Height="439" VerticalAlignment="Top">
+            <Grid Grid.Row="4" Name="PictureButtonGrid" Grid.Column="1" Height="439" VerticalAlignment="Top" Margin="0,0,0,-22">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="50" />
@@ -202,16 +203,19 @@
             </Grid>
             <Button Content="Ebene +" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="0,31,0,0" Name="ButtonEbeneHigher" VerticalAlignment="Top" Width="77" Click="ButtonEbeneHigher_Click" />
             <Button Content="Ebene -" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="83,31,0,0" Name="ButtonEbeneLower" VerticalAlignment="Top" Width="77" Click="ButtonEbeneLower_Click" />
-            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,1,0,0" x:Name="sliderWithDisplayTextBox_ZLevel" SliderValue="{Binding ZLevel, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0" SliderMaxValue="20" SliderLabelTextValue="Z-Level" SliderMinTextValue="0" SliderMaxTextValue="20" TickFrequencyValue="1" Width="160" />
+            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,1,0,0" x:Name="sliderWithDisplayTextBox_ZLevel" SliderValue="{Binding ZLevel, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0" SliderMaxValue="20" SliderLabelTextValue="Z-Level" SliderMinTextValue="0" SliderMaxTextValue="20" TickFrequencyValue="1" Width="160" Height="58" />
             <CheckBox Content="Z-Level Anzeigen" IsChecked="{Binding ShowZ}" Grid.Column="1" Grid.Row="2" Height="18" HorizontalAlignment="Left" Margin="25,65,0,0" Name="checkBox1" VerticalAlignment="Top" Width="113" />
             <CheckBox Content="Editor Modus" IsChecked="{Binding IsEditorModeEnabled}" Height="20" HorizontalAlignment="Left" Margin="25,14,0,0" Name="checkBox3" VerticalAlignment="Top" Width="113" FontSize="14" FontStyle="Normal" FontWeight="SemiBold" ToolTip="Wenn deaktiviert, können nur noch Helden und Monster bewegt werden" Checked="checkBox3_Checked" Grid.Column="1" />
+            <Button Content="Ebene max" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="0,59,0,0" x:Name="ButtonEbeneHigherMax" VerticalAlignment="Top" Width="77" Click="ButtonEbeneHigherMax_Click" />
+            <Button Content="Ebene min" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="82,59,0,0" x:Name="ButtonEbeneLowerMin" VerticalAlignment="Top" Width="77" Click="ButtonEbeneLowerMin_Click" />
+            <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" x:Name="sliderWithDisplayTextBox_AlphaChannel" SliderValue="{Binding SelectedFillColorAlpha, Mode=TwoWay}" TickFrequencyValue="0.1" SliderLabelTextValue="Alpha Kanal" SliderMinValue="0" SliderMaxValue="1" SliderMinTextValue="0" SliderMaxTextValue="1" Margin="0,63,0,0" Width="160" Height="58" VerticalAlignment="Top" />
         </Grid>
         <wpfxc:ZoomControl x:Name="ArenaScrollViewer" Margin="220,131,12,12" Background="#FF367536" 
                            MaxZoom="3" MinZoom="0.08" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
                            Mode="Original" TranslateX="0" TranslateY="0"
                            LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
                            ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt">
-        <!--<local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12">-->
+            <!--<local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12">-->
             <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Multiple">
                 <ListBox.Template>
                     <ControlTemplate>
@@ -223,7 +227,8 @@
                                 </LinearGradientBrush>
                             </Border.Background>
                             <Border>
-                                <Border.Background> <!-- Hexgrid -->
+                                <Border.Background>
+                                    <!-- Hexgrid -->
                                     <VisualBrush TileMode="Tile" Viewport="0,0,200,200" ViewportUnits="Absolute">
                                         <VisualBrush.Visual>
                                             <!--<Rectangle Stroke="Darkgray" StrokeThickness="1" Height="50" Width="50" StrokeDashArray="5 3" />-->
@@ -242,7 +247,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-        <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
+            <!--    <local:DragScrollViewer.InputBindings></local:DragScrollViewer.InputBindings>
         </local:DragScrollViewer> -->
         </wpfxc:ZoomControl>
     </Grid>
