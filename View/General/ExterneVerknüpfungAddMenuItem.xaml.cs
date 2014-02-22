@@ -53,10 +53,9 @@ namespace MeisterGeister.View.General
                 {
                     if (((MenuItem)sender).Header.ToString() == "Programm oder Datei")
                     {
-                        System.Windows.Forms.OpenFileDialog dlg = new System.Windows.Forms.OpenFileDialog();
-                        if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        pfad = ViewHelper.ChooseFile("Programm oder Datei auswählen", "", false, true);
+                        if (!String.IsNullOrEmpty(pfad))
                         {
-                            pfad = dlg.FileName;
                             InputWindow inBox = new InputWindow();
                             inBox.Title = "Name eingeben";
                             inBox.Beschreibung = "Bitte einen Namen für den Menü-Eintrag eingeben.";

@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using MeisterGeister.View;
 using System.IO;
 using MeisterGeister.View.Windows;
+using MeisterGeister.View.General;
 
 namespace MeisterGeister.View.SpielerScreen
 {
@@ -47,11 +48,9 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonOpenImg_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Bild (*.BMP;*.GIF;*.JPG;*.JPEG;*.JPE;*.JFIF;*.PNG;*.TIF;*.TIFF)|*.BMP;*.GIF;*.JPG;*.JPEG;*.JPE;*.JFIF;*.PNG;*.TIF;*.TIFF";
-
-            if (dlg.ShowDialog() == DialogResult.OK)
-                LoadImage(dlg.FileName);
+            string pfad = ViewHelper.ChooseFile("Bild auswähllen", "", false, false, "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff");
+            if (!String.IsNullOrEmpty(pfad))
+                LoadImage(pfad);
         }
 
         private void LoadImage(string file)

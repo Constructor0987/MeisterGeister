@@ -46,11 +46,10 @@ namespace MeisterGeister.Logic.Extensions
         /// <returns></returns>
         public static string ConvertAbsoluteToRelativePath(string path)
         {
-            // TODO: Funktioniert nicht, wenn der Pfad auf einem anderen Laufwerk liegt.
             Uri file = new Uri(path);
             Uri homePath = new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\");
             Uri relativePath = homePath.MakeRelativeUri(file);
-            return relativePath.ToString().Replace("/", "\\").Insert(0, "\\");
+            return Uri.UnescapeDataString(relativePath.ToString()).Replace("/", "\\").Insert(0, "\\");
         }
 
     }
