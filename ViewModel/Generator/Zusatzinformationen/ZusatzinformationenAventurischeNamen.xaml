@@ -97,4 +97,48 @@
             Conchobairdun, Uisge Muir oder Glen Sidhe. Ansonsten kann man auch garethische Ortsnamen verwenden.
         </Paragraph>
     </FlowDocument>
+
+    <FlowDocument x:Key="Horasische_Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Zahori Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Wie bei den meisten garethisprachigen Leute sind Nachnamen auf dem Land wenig verbreitet. Muss eine Person genauer
+            benannt werden, wird der Beruf oder der Wohnort angegeben (Alrizio, der Schmied oder Alrizio aus Bomed). Verglichen
+            mit garethischen Namen ist die Aussprache gemeinhin etwas weicher, und man liebt es, Männernamen mit o enden zu
+            lassen, so daß z.B. aus “Alrik” “Alrigo” oder “Alrizio” wird. Neuerdings übersetzen manche Leute ihre Nachnamen
+            ins Bosparano oder gar ins Altgüldenländische, weil das vornehmer klingt (“Agricola” klingt eben nicht so bäuerlich
+            wie “Bauer”). Außerdem gibt es berufsbezogene Nachnamen, die außerhalb des Horasreichs kaum vorkommen. Im
+            Hinterland von Neetha und Drôl werden gelegentlich auch zyklopäische, tulamidische und Brabaci-Namen
+            verwendet. Die Nachnamen mit "ter" sind typisch für Grangor.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Adelsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            wichtige Adelsgeschlechter im Horasreich sind:
+            Aleistos, Aralzin, ash Manek, di Balligur (Drôl), Berlinghân (Methumis), Cosseïra, Firdayon (kaiserlich, Horasia,
+            Chababien), Galahan, Garlischgrötz (Grangor), Malagreïa, Marvinko (Sikram), du Metuant, Oikaldiki, Sirensteen, ter
+            Bredero, Thaliyin (Zyklopäa), Thirindar, ya Torese, di Yaladan
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Normalerweise erbt das älteste Kind, egal ob Sohn oder Tochter, alle Lehen und alle Titel, die mit den Lehen
+            verbunden sind. Die jüngeren Kinder können ein geringeres Lehen erhalten, wenn eines frei ist; in diesem Fall
+            erhalten sie auch den mit diesem Lehen verbundenen Titel. MagierInnen und Geweihte müssen etwaige Lehen durch
+            VögtInnen verwalten lassen.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Daneben kennt das Horasreich eine Fülle von Adelstiteln, die nicht mit Lehen verknüpft sind (Titularadel). Diese
+            Titel sind in der Regel nicht erblich, jedoch versuchen Adlige meist, denjenigen ihrer Kinder, die kein Lehen erben,
+            wenigstens einen hohen Titel zuzuschanzen. Grundsätzlich kann jede/r Adlige, die/der ein Lehen innehat, alle Titel
+            vergeben, die mehr als zwei Ränge unter ihrem/seinem eigenen Rang liegen. Dem mittelreichischen Junker- und
+            Edlentitel entspricht im Horasreich der erbliche bzw. nichterbliche Esquirio/a-Titel. Im Unterschied zum Mittelreich
+            kann im Horasreich ein gewöhnlicher Ritter (Cavalliere) nicht selbst den Ritterschlag erteilen, dazu braucht man
+            einen Grafen (oder hohe Ordensränge oder Hochgeweihte der Rondra). Anstelle von "von" verwendet man gern
+            bosparanisierend "da", "de", "di", "du" oder "della". Titularadel ist eine reine Auszeichnung wie ein Orden.
+        </Paragraph>
+    </FlowDocument>
 </ResourceDictionary>

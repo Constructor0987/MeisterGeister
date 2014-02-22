@@ -161,16 +161,104 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
             person.Geschlecht = geschlecht;
             person.Stand = stand;
 
-            if (VornamenWeiblichFürAlle || geschlecht == Geschlecht.weiblich)
+            if (geschlecht == Geschlecht.weiblich)
             {
                 person.Name = string.Format("{0} Tochter des {1}",
                     _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
                     _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
             }
-            else // Geschlecht kann nur männlich sein
+            else
             {
                 person.Name = string.Format("{0} Sohn des {1}",
                     _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
+                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+            }
+        }
+        #endregion
+    }
+
+    public class HorasischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        protected List<string> _adelskürzel = new List<String>(new string[] { "ya", "de", "di", "du", "della" });
+        #endregion
+
+
+        #region //---- Konstruktor ----
+        public HorasischeNamenFactory() :
+            base(NamenFactoryHelper.HORASISCHENAMEN, false, true, false, false)
+        {
+
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        {
+            person.Namenstyp = this.Namenstyp;
+            person.Geschlecht = geschlecht;
+            person.Stand = stand;
+
+            switch (stand) {
+                // Unfrei gibt es nicht; Landfreie haben nur einen Vornamen
+                case Stand.stadtfrei:
+                    setzeStadtfreienname(ref person);
+                    break;
+                case Stand.adelig:
+                    setzeAdelsname(ref person);
+                    break;
+                case Stand.unfrei:
+                case Stand.landfrei:
+                default:
+                    setzeLandfreienname(ref person);
+                    break;
+            }
+        }
+
+        private void setzeAdelsname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1} {2}",
+                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
+                    _adelskürzel[RandomNumberGenerator.Generator.Next(_adelskürzel.Count())],
+                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1} {2}",
+                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
+                    _adelskürzel[RandomNumberGenerator.Generator.Next(_adelskürzel.Count())],
+                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+            }
+        }
+
+        private void setzeStadtfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
+                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
+                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+            }
+        }
+
+        private void setzeLandfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0}",
+                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())]);
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0}",
                     _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
             }
         }

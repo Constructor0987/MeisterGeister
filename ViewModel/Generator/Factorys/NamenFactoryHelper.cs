@@ -32,7 +32,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         //public const string GROLMISCHENAMEN = "Grolmische Namen";
         public const string HOLBERKERNAMEN = "Holberker Namen";
         //public const string HORASIATCYCLOPENINSELNAMEN = "Horasiat/Cyclopeninseln";
-        //public const string HORASISCHENAMEN = "Horasische Namen";
+        public const string HORASISCHENAMEN = "Horasische Namen";
         //public const string HÜGELZWERGISCHENAMEN = "Hügelzwergische Namen";
         //public const string MARASKANISCHENAMEN = "Maraskanische Namen";
         //public const string NIVESISCHENAMEN = "Nivesische Namen";
@@ -109,8 +109,13 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 case HOLBERKERNAMEN: return new NamenFactoryVornameNachname(HOLBERKERNAMEN);
                 
                 //case HORASIATCYCLOPENINSELNAMEN:
-                
-                //case HORASISCHENAMEN:
+
+                /*
+                 * Horasische Namen haben einen Vornamen und einen Nachnamen
+                 * bei Adel je nach Rang "ya","de","di","du","della"
+                 * Nachname bei Stadtfreien wie aufgeführt
+                 */
+                case HORASISCHENAMEN: return new HorasischeNamenFactory();
                 
                 //case HÜGELZWERGISCHENAMEN:
                 

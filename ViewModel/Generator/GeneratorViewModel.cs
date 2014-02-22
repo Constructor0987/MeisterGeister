@@ -136,6 +136,7 @@ namespace MeisterGeister.ViewModel.Generator
                 }
                 else
                 {
+                    _selectedStandZufällig = false;
                     _selectedStand = (Stand)Enum.Parse(typeof(Stand), value);
                 }
 
