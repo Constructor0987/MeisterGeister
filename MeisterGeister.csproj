@@ -553,6 +553,9 @@
     <Compile Include="View\AudioPlayer\HotKeyZeile.xaml.cs">
       <DependentUpon>HotKeyZeile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\ListboxItemBtn.xaml.cs">
+      <DependentUpon>ListboxItemBtn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AudioPlayer\ListboxItemIcon.xaml.cs">
       <DependentUpon>ListboxItemIcon.xaml</DependentUpon>
     </Compile>
@@ -957,6 +960,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioPlayer\HotKeyZeile.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\ListboxItemBtn.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1678,6 +1685,7 @@
     <Resource Include="Daten\Updateskripte\InsertGegner.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0083.sql" />
     <Resource Include="Images\Logos\Uhrwerk_Icon.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0084.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

@@ -32,6 +32,7 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
                 new Model.Einstellung() { Name = "AudioVerzeichnis", Kontext = "Audioplayer", Kategorie = null, Typ = "String", Beschreibung = null, Wert = "C:\\" },
+                new Model.Einstellung() { Name = "AudioSpieldauerBerechnen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = null, Wert = "1" },
 
                 new Model.Einstellung() { Name = "PdfReaderCommand", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "Befehl zum starten des PDF-Readers", Wert = null },
                 new Model.Einstellung() { Name = "PdfReaderArguments", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "Parameter für den Aufruf des PDF-Readers", Wert = null },
@@ -306,6 +307,18 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<string>("AudioVerzeichnis", value);
+            }
+        }
+
+        public static bool AudioSpieldauerBerechnen
+        {
+            get
+            {
+                return GetEinstellung<bool>("AudioSpieldauerBerechnen");
+            }
+            set
+            {
+                SetEinstellung<bool>("AudioSpieldauerBerechnen", value);
             }
         }
 

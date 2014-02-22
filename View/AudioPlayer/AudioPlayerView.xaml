@@ -491,6 +491,20 @@
                                                 </StackPanel>
                                             </GroupBox>
 
+                                            <GroupBox Visibility="Collapsed" Name="gboxTopMusikSortX" Header="Musik sortieren" Grid.Column="2" Grid.RowSpan="3" Height="50" HorizontalAlignment="Right" Margin="0,0,-40,0" VerticalAlignment="Top" Width="100">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <ToggleButton Name="btnTopMusikAbisZX" Width="25" Height="25" IsTabStop="False" Margin="1" >
+                                                        <ToggleButton.BindingGroup>
+                                                            <BindingGroup/>
+                                                        </ToggleButton.BindingGroup>
+                                                        <Image Source="/Images/Icons/General/sort.png" />
+                                                    </ToggleButton>
+                                                    <ToggleButton Name="btnTopMusik1bis9X" Width="25" Height="25" IsTabStop="False" Margin="1" >
+                                                        <Image Source="/Images/Icons/General/sort1.png" />
+                                                    </ToggleButton>
+                                                </StackPanel>
+                                            </GroupBox>
+
                                             <StackPanel Name="spnlTopHotkeyX" Orientation="Horizontal" Grid.Column="4" Grid.ColumnSpan="4" Margin="0,1,100,1" Visibility="Collapsed" >
                                                 <Label Content="Hotkey" />
                                                 <Button Content="nicht definiert" Width="80" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySetX" />
@@ -942,7 +956,7 @@
                 <StackPanel>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*" MaxHeight="180"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -952,9 +966,10 @@
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Name="lblStdPfad" Content="Standard-Verzeichnis" />
-                        <TextBox Height="23" Name="_tbStdPfad" Background="{x:Null}" Text="C:\" Tag="C:\" HorizontalContentAlignment="Stretch" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,1" TextChanged="_tbStdPfad_TextChanged" IsReadOnly="True" ToolTip="Wählen Sie den Auswahl-Button um den Standard-Pfad zu ändern" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
-                        <Button Content="..." Height="21" HorizontalAlignment="Left" Name="_btnStdPfad" Width="30" Grid.Column="3" Click="_btnStdPfad_Click" />
+                        <Label Content="Standard-Verzeichnis" />
+                        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" MaxWidth="270" >
+                            <ListBox Name="lbStandardPfade" Margin="0,1" Background="Transparent" />
+                        </ScrollViewer>
 
                         <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Margin="10,0,0,0" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Click="_rbtnGleichSpielen_Click" />
 
@@ -963,7 +978,7 @@
                             <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
                         </StackPanel>
 
-                        <CheckBox Content="Gesamtspieldauer beim Abspielen berechnen" Name="_rbtnSpieldauerBerechnen" Margin="10,40,0,10" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="3" IsChecked="True" />
+                        <CheckBox Content="Gesamtspieldauer beim Abspielen berechnen" Name="_rbtnSpieldauerBerechnen" Click="_rbtnSpieldauerBerechnen_Click" Margin="10,40,0,10" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="3" IsChecked="True" />
                     </Grid>
                 </StackPanel>
             </Border>
