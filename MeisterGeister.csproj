@@ -455,6 +455,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCreature.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundUtilities.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundXMLLoadSave.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\FilledPathLine.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\ImageObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\PathLine.cs" />
