@@ -327,7 +327,7 @@ namespace MeisterGeister.View.General
 
         private void ChoosePathFromFile(object obj)
         {
-            string pfad = ChooseFile("Bild aus Datei", "", false, true, "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff");
+            string pfad = ChooseFile("Bild aus Datei", "", false, true, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
             if (pfad != null)
                 SelectedPathDatei = pfad;
         }

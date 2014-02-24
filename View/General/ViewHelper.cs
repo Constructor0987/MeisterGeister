@@ -87,10 +87,38 @@ namespace MeisterGeister.View.General
         /// <param name="title">Fenstertitel</param>
         /// <param name="filename">vorbesetzter Dateiname</param>
         /// <param name="saveFile">true für einen SaveDialog, false für einen OpenDialog</param>
+        /// <param name="extensions">erlaubte Dateierweiterungen</param>
+        /// <returns>Den ausgewählten Dateipfad oder null</returns>
+        public static string ChooseFile(string title, string filename, bool saveFile, params string[] extensions)
+        {
+            return ChooseFile(title, filename, saveFile, false, false, extensions);
+        }
+
+        /// <summary>
+        /// Zur Auswahl einer Datei.
+        /// </summary>
+        /// <param name="title">Fenstertitel</param>
+        /// <param name="filename">vorbesetzter Dateiname</param>
+        /// <param name="saveFile">true für einen SaveDialog, false für einen OpenDialog</param>
         /// <param name="askRelativePath">true, falls der User gefragt werden soll, ob der Pfad relativ oder absolut angegeben werden soll</param>
         /// <param name="extensions">erlaubte Dateierweiterungen</param>
         /// <returns>Den ausgewählten Dateipfad oder null</returns>
         public static string ChooseFile(string title, string filename, bool saveFile, bool askRelativePath, params string[] extensions)
+        {
+            return ChooseFile(title, filename, saveFile, false, askRelativePath, extensions);
+        }
+
+        /// <summary>
+        /// Zur Auswahl einer Datei.
+        /// </summary>
+        /// <param name="title">Fenstertitel</param>
+        /// <param name="filename">vorbesetzter Dateiname</param>
+        /// <param name="saveFile">true für einen SaveDialog, false für einen OpenDialog</param>
+        /// <param name="checkFileExists">Soll eine Warnung angezeigt werden, wenn der Benutzer eine Datei auswählt, die nicht existiert?</param>
+        /// <param name="askRelativePath">true, falls der User gefragt werden soll, ob der Pfad relativ oder absolut angegeben werden soll</param>
+        /// <param name="extensions">erlaubte Dateierweiterungen</param>
+        /// <returns>Den ausgewählten Dateipfad oder null</returns>
+        public static string ChooseFile(string title, string filename, bool saveFile, bool checkFileExists, bool askRelativePath, params string[] extensions)
         {
             filename = GetValidFilename(filename);
             FileDialog objDialog;
@@ -100,7 +128,61 @@ namespace MeisterGeister.View.General
                 objDialog = new OpenFileDialog();
             objDialog.Title = title;
             objDialog.DefaultExt = String.Empty;
-            objDialog.Filter = String.Empty;
+            objDialog.CheckFileExists = checkFileExists;
+            objDialog.Filter = GetExtensionsFilter(extensions);
+            
+            objDialog.AddExtension = true;
+            objDialog.FileName = filename;
+            objDialog.InitialDirectory = Environment.CurrentDirectory;
+            if (objDialog.ShowDialog() == DialogResult.OK)
+            {
+                Environment.CurrentDirectory = Path.GetDirectoryName(objDialog.FileName);
+                string fileAbsolute = objDialog.FileName;
+                if (askRelativePath && IsSameRootPath(fileAbsolute))
+                {
+                    string fileRelative = Logic.Extensions.FileExtensions.ConvertAbsoluteToRelativePath(objDialog.FileName);
+
+                    if (ViewHelper.ConfirmYesNoCancel("Pfadangabe", string.Format("Absolute Pfadangabe (Ja)?\n{0}\n\nOder relative Pfadangabe (Nein)?\n{1}", fileAbsolute, fileRelative)) == 1)
+                        return fileRelative;
+                    else
+                        return fileAbsolute;
+                }
+                return fileAbsolute;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Zur Auswahl mehrerer Dateien.
+        /// </summary>
+        /// <param name="title">Fenstertitel</param>
+        /// <param name="filename">vorbesetzter Dateiname</param>
+        /// <param name="saveFile">true für einen SaveDialog, false für einen OpenDialog</param>
+        /// <param name="checkFileExists">Soll eine Warnung angezeigt werden, wenn der Benutzer eine Datei auswählt, die nicht existiert?</param>
+        /// <param name="extensions">erlaubte Dateierweiterungen</param>
+        /// <returns>Den ausgewählten Dateipfad oder null</returns>
+        public static List<string> ChooseFiles(string title, string filename, bool checkFileExists, params string[] extensions)
+        {
+            filename = GetValidFilename(filename);
+            FileDialog objDialog = new OpenFileDialog();
+            objDialog.Title = title;
+            objDialog.DefaultExt = String.Empty;
+            objDialog.CheckFileExists = checkFileExists;
+            objDialog.Filter = GetExtensionsFilter(extensions);
+
+            objDialog.AddExtension = true;
+            objDialog.FileName = filename;
+            objDialog.InitialDirectory = Environment.CurrentDirectory;
+            if (objDialog.ShowDialog() == DialogResult.OK)
+            {
+                Environment.CurrentDirectory = Path.GetDirectoryName(objDialog.FileName);
+                return new List<string>(objDialog.FileNames);
+            }
+            return null;
+        }
+
+        private static string GetExtensionsFilter(string[] extensions)
+        {
             //TODO: mehr extension-Typen?
             Dictionary<string, string> dFilter = new Dictionary<string, string>();
             foreach (string extension in extensions)
@@ -109,6 +191,23 @@ namespace MeisterGeister.View.General
                 string sext = String.Format("*.{0}", extension);
                 switch (extension)
                 {
+                    case "mp3":
+                    case "wav":
+                    case "ogg":
+                    case "wma":
+                        sname = "Audio-Dateien";
+                        break;
+                    case "bmp":
+                    case "gif":
+                    case "jpg":
+                    case "jpeg":
+                    case "jpe":
+                    case "jtif":
+                    case "png":
+                    case "tif":
+                    case "tiff":
+                        sname = "Bild-Dateien";
+                        break;
                     case "xml":
                         sname = "XML-Dateien";
                         break;
@@ -121,7 +220,7 @@ namespace MeisterGeister.View.General
                     case "*.*":
                         sname = "Alle Dateien";
                         break;
-                   default:
+                    default:
                         sname = String.Format("{0}-Dateien", extension);
                         break;
                 }
@@ -143,27 +242,7 @@ namespace MeisterGeister.View.General
                 filter = "Alle Dateien|*.*";
             else
                 filter = "Alle erlaubten Dateien|" + allValid + "|" + filter;
-            objDialog.Filter = filter;
-            
-            objDialog.AddExtension = true;
-            objDialog.FileName = filename;
-            objDialog.InitialDirectory = Environment.CurrentDirectory;
-            if (objDialog.ShowDialog() == DialogResult.OK)
-            {
-                Environment.CurrentDirectory = Path.GetDirectoryName(objDialog.FileName);
-                string fileAbsolute = objDialog.FileName;
-                if (askRelativePath && IsSameRootPath(fileAbsolute))
-                {
-                    string fileRelative = Logic.Extensions.FileExtensions.ConvertAbsoluteToRelativePath(objDialog.FileName);
-
-                    if (ViewHelper.ConfirmYesNoCancel("Pfadangabe", string.Format("Absolute Pfadangabe (Ja)?\n{0}\n\nOder relative Pfadangabe (Nein)?\n{1}", fileAbsolute, fileRelative)) == 1)
-                        return fileRelative;
-                    else
-                        return fileAbsolute;
-                }
-                return fileAbsolute;
-            }
-            return null;
+            return filter;
         }
 
         /// <summary>

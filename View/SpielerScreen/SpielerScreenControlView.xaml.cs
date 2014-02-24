@@ -48,7 +48,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonOpenImg_Click(object sender, RoutedEventArgs e)
         {
-            string pfad = ViewHelper.ChooseFile("Bild auswähllen", "", false, false, "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff");
+            string pfad = ViewHelper.ChooseFile("Bild auswähllen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
             if (!String.IsNullOrEmpty(pfad))
                 LoadImage(pfad);
         }

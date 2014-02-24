@@ -447,7 +447,7 @@
     <Compile Include="ViewModel\Alchimie\Logic\Substitution.cs" />
     <Compile Include="ViewModel\Alchimie\Logic\Zutat.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
-    <Compile Include="ViewModel\AudioPlayer\AudioPlayerViewModel.cs" />
+    <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
@@ -455,6 +455,7 @@
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCommand.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundCreature.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundUtilities.cs" />
+    <Compile Include="ViewModel\Bodenplan\Logic\BattlegroundXMLLoadSave.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\FilledPathLine.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\ImageObject.cs" />
     <Compile Include="ViewModel\Bodenplan\Logic\PathLine.cs" />
