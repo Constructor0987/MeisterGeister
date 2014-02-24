@@ -306,19 +306,38 @@
                                 </DataTemplate>
                             </ListBox.Resources>
                             <StackPanel Margin="4" Orientation="Horizontal">
-                                <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" Checked="_checkboxGleichSpielen_Checked" Unchecked="_checkboxGleichSpielen_Unchecked"/>
+                                <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" IsChecked="{Binding IsAudioDirektAbspielen, Mode=TwoWay}" />
                                 <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
                             </StackPanel>
 
-                            <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">
-                                <Label x:Name="lblStdPfad" Content="Audio-Player Standard-Verzeichnis" />
-                                <TextBox Height="23" x:Name="tbStdPfad" IsReadOnly="True" Background="{x:Null}" Text="C:\" Width="200" Tag="C:\" />
-                                <Button Content="..." Height="21" HorizontalAlignment="Left" x:Name="btnStdPfad" Width="20" Click="btnStdPfad_Click" />
+                            <StackPanel Margin="4" Orientation="Horizontal">
+                                <CheckBox x:Name="_checkboxSpieldauerBerechnen" Margin="2" IsChecked="{Binding IsAudioSpieldauerBerechnen, Mode=TwoWay}" />
+                                <TextBlock Margin="4,0,0,0" Text="Audio-Player: Gesamtspieldauer beim Abspielen berechnen" Width="398" TextWrapping="WrapWithOverflow" />
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
                                 <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1000" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" Focusable="False" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                                <Slider Height="23" HorizontalAlignment="Center" x:Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="spStdPfad" Orientation="Horizontal">                                
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" MaxHeight="200" MinHeight="60"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130" />
+                                        <ColumnDefinition Width="280" />
+                                        <ColumnDefinition Width="200*" />
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Content="Standard-Verzeichnis" />
+                                    <ScrollViewer Grid.Column="1" Grid.ColumnSpan="2" >
+                                        <ListBox Name="lbStandardPfade" Margin="0,1" Background="Transparent" />
+                                    </ScrollViewer>
+                                </Grid>
                             </StackPanel>
                         </ListBox>
                     </Border>

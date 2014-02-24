@@ -13,6 +13,26 @@ namespace MeisterGeister.ViewModel.Settings
     {
 
         #region Property
+                
+        public Boolean IsAudioDirektAbspielen
+        {
+            get { return MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen; }
+            set
+            {
+                MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen = value;
+                OnChanged("IsAudioDirektAbspielen");
+            }
+        }
+
+        public Boolean IsAudioSpieldauerBerechnen
+        {
+            get { return MeisterGeister.Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen; }
+            set
+            {
+                MeisterGeister.Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen = value;
+                OnChanged("IsAudioSpieldauerBerechnen");
+            }
+        }
 
         public Boolean IsMitUeberlastung
         {

@@ -8,6 +8,8 @@ using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.AudioPlayer
 {
+
+
     class ZeileVM : INotifyPropertyChanged
     {
         // property changed event
@@ -31,12 +33,10 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
     }
-
-
-
-
+    
     public class AudioPlayer : Base.ViewModelBase
-    {
+    {       
+
         public AudioPlayer()
         {
 

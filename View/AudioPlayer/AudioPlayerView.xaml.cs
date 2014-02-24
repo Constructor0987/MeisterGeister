@@ -242,7 +242,7 @@ namespace MeisterGeister.View.AudioPlayer {
 	   
 		private List<hotkey> hotkeys = new List<hotkey>();
 
-		private List<Audio_Playlist_Titel> plyTitelToSave = new List<Audio_Playlist_Titel>();
+		//private List<Audio_Playlist_Titel> plyTitelToSave = new List<Audio_Playlist_Titel>();
 
 		private MusikView _BGPlayer = new MusikView();
 		private List<GruppenObjekt> _GrpObjecte = new List<GruppenObjekt>();
@@ -254,7 +254,7 @@ namespace MeisterGeister.View.AudioPlayer {
 		
 		System.Timers.Timer BGSongTimer = new System.Timers.Timer();
 		DispatcherTimer KlangPlayEndetimer;
-		DispatcherTimer plyTitelToSaveTimer = new DispatcherTimer();
+		//DispatcherTimer plyTitelToSaveTimer = new DispatcherTimer();
 		
 
 		DispatcherTimer KlangProgBarTimer = new DispatcherTimer();
@@ -268,13 +268,36 @@ namespace MeisterGeister.View.AudioPlayer {
 		{
 			InitializeComponent();
 
-            setStdPfad();
 			_BGPlayer.BG.Add(new Musik());
 			_BGPlayer.BG.Add(new Musik());
 
             _rbtnGleichSpielen.IsChecked = Logic.Einstellung.Einstellungen.AudioDirektAbspielen;
             _rbtnSpieldauerBerechnen.IsChecked = Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen;
-            
+
+            setStdPfad();
+            CreateStandardPfadItems();
+
+            //stdPfad = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis;
+			//_tbStdPfad.Text = stdPfad;
+            fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
+
+			DataContext = _zeile;
+
+			AktualisiereHotKeys();
+			//plyTitelToSaveTimer.Tick += new EventHandler(plyTitelToSaveTimer_Tick);
+			//plyTitelToSaveTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+
+			KlangProgBarTimer.Tick += new EventHandler(KlangProgBarTimer_Tick);
+			KlangProgBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+			KlangProgBarTimer.Tag = 0;
+
+			MusikProgBarTimer.Tick += new EventHandler(MusikProgBarTimer_Tick);
+			MusikProgBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+		}
+
+        private void CreateStandardPfadItems()
+        {
+            lbStandardPfade.Items.Clear();
             for (int i = 0; i < stdPfad.Count; i++)
             {
                 ListboxItemBtn lbItemBtn = new ListboxItemBtn();
@@ -288,23 +311,7 @@ namespace MeisterGeister.View.AudioPlayer {
             lbItemBtnLeer.btnStdPfad.Click += btnStdPfad_Click;
             lbItemBtnLeer.imgIcon.MouseUp += imgStdIconDelete_MouseUp;
             lbStandardPfade.Items.Add(lbItemBtnLeer);
-            //stdPfad = MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis;
-			//_tbStdPfad.Text = stdPfad;
-            fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
-
-			DataContext = _zeile;
-
-			AktualisiereHotKeys();
-			plyTitelToSaveTimer.Tick += new EventHandler(plyTitelToSaveTimer_Tick);
-			plyTitelToSaveTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-
-			KlangProgBarTimer.Tick += new EventHandler(KlangProgBarTimer_Tick);
-			KlangProgBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-			KlangProgBarTimer.Tag = 0;
-
-			MusikProgBarTimer.Tick += new EventHandler(MusikProgBarTimer_Tick);
-			MusikProgBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-		}
+        }
 
         private void btnStdPfad_Click(object sender, RoutedEventArgs e)
         {
@@ -464,7 +471,7 @@ namespace MeisterGeister.View.AudioPlayer {
 						AlleKlangSongsAus(_GrpObjecte[i], true, false);
 
 					KlangProgBarTimer.Stop();
-					plyTitelToSaveTimer.Stop();
+					//plyTitelToSaveTimer.Stop();
 					MusikProgBarTimer.Stop();
 				}
 			}
@@ -476,26 +483,28 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 		}
 
-		private void plyTitelToSaveTimer_Tick(object sender, EventArgs e)
+	/*	private void plyTitelToSaveTimer_Tick(object sender, EventArgs e)
 		{
 			try
 			{
-				plyTitelToSave.ForEach(delegate(Audio_Playlist_Titel plyTitel)
+                List<Audio_Playlist_Titel> temp = new List<Audio_Playlist_Titel>();
+                temp = plyTitelToSave;
+                temp.ForEach(delegate(Audio_Playlist_Titel plyTitel)
 				{
 					Global.ContextAudio.Update<Audio_Playlist_Titel>(plyTitel);
-					plyTitelToSave.Remove(plyTitel);
+                    plyTitelToSave.Remove(plyTitel);
 				});
 				if (plyTitelToSave.Count == 0)
-					plyTitelToSaveTimer.Stop();
+					//plyTitelToSaveTimer.Stop();
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Zyklischen Sichern der Playtitel ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
 			}
-		}
+		}*/
 
 
 		private void CloseTab(object source, RoutedEventArgs args)
@@ -574,7 +583,7 @@ namespace MeisterGeister.View.AudioPlayer {
 						_player.Volume = (!notMusikPlayer || _GrpObjecte[posObjGruppe].visuell) ? vol / 100 :
 							(_GrpObjecte[posObjGruppe].force_Volume != null) ? _GrpObjecte[posObjGruppe].force_Volume.Value :             //Playlist-ForceVolume
 							(vol / 100  * _GrpObjecte[posObjGruppe].Vol_PlaylistMod / 50);
-
+                        
 						MyTimer.stop_timer(Convert.ToString(_player.Volume)); //MUSS vorerst drinnnen bleiben, damit das Volume richtig wiedergegben wird (Zeit)?!? 
 						_player.Play();
 					}
@@ -824,7 +833,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswerten des Musikfehlers ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -964,7 +973,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswetrten des Klang-Playerfehlers ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -987,7 +996,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Ändern der Hintergrund Lautstärke ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1146,7 +1155,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Visualisieren der Musik-Infos ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1282,7 +1291,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Klicken des Lautsprecher-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1348,7 +1357,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswählen des Play-/Pause-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1391,7 +1400,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswählen des Stop-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1406,7 +1415,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Doppelklicken des Maus-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1434,7 +1443,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswählen des Next-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1461,7 +1470,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswählen des Zurück-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1787,7 +1796,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Wechseln der Listbox im Theme-Mode ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -1814,6 +1823,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private Audio_Titel setTitelStdPfad(Audio_Titel aTitel)
         {
+            char[] charsToTrim = { '\\' };
             //Check Titel -> Pfad vorhanden ansonsten Standard-Pfad hinzufügen
             if (File.Exists(aTitel.Pfad + "\\" + aTitel.Datei))
             {
@@ -1823,12 +1833,10 @@ namespace MeisterGeister.View.AudioPlayer {
                         return aTitel;
 
                     if (aTitel.Pfad != null && (aTitel.Pfad + "\\" + aTitel.Datei).Contains(pfad))
-                    {
-                        char[] charsToTrim = {'\\'};
-                                              
+                    {                                                                      
                         aTitel.Datei = (aTitel.Pfad.EndsWith("\\") ? aTitel.Pfad + aTitel.Datei : aTitel.Pfad + "\\" + aTitel.Datei).
                             Substring(pfad.EndsWith("\\") ? pfad.Length : pfad.Length + 1);
-                        aTitel.Pfad = pfad.EndsWith("\\")? pfad.TrimEnd(charsToTrim): pfad;
+                        aTitel.Pfad = pfad.TrimEnd(charsToTrim); //.EndsWith("\\") ? pfad.TrimEnd(charsToTrim) : pfad;
                         return aTitel;
                     }
                 }
@@ -1876,7 +1884,7 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             if (aTitel.Pfad == null)
             {
-                aTitel.Pfad = stdPfad[0].EndsWith("\\") ? stdPfad[0].Substring(0, stdPfad[0].Length - 1) : stdPfad[0];
+                aTitel.Pfad = stdPfad[0].TrimEnd(charsToTrim);
                 return aTitel;
             }
 
@@ -1886,7 +1894,9 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 if (Directory.Exists(pfad))
                 {
-                     string pfad_datei = Directory.GetFiles(pfad, gesuchteDatei, SearchOption.AllDirectories).FirstOrDefault();
+                    // Im Hauptpfad von C: nicht überall suchen da Admin-Rechte gebraucht werden um System-Dirs zu durchsuchen
+                    string pfad_datei =pfad == "C:\\"? Directory.GetFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.TopDirectoryOnly).FirstOrDefault():
+                        Directory.GetFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.AllDirectories).FirstOrDefault();
                     if (pfad_datei != null)
                     {
                         aTitel.Pfad = System.IO.Path.GetDirectoryName(pfad_datei);
@@ -2948,12 +2958,9 @@ namespace MeisterGeister.View.AudioPlayer {
 						
 					}
 				}
-				if (grpobj.visuell && grpobj.wirdAbgespielt || !grpobj.visuell)
+				if ((grpobj.visuell && grpobj.wirdAbgespielt || !grpobj.visuell) ||
+                    (grpobj.visuell && !grpobj.wirdAbgespielt))
                     abspielProzess(grpobj, (sender as CheckBox).IsChecked.Value, grpobj.wirdAbgespielt, grpobj._listZeile[zeile], e);
-                else
-                    if (grpobj.visuell && !grpobj.wirdAbgespielt)
-                        abspielProzess(grpobj, (sender as CheckBox).IsChecked.Value, grpobj.wirdAbgespielt, grpobj._listZeile[zeile], e);
-
                 
 				if (grpobj.aPlaylist != null)
 				{
@@ -2967,8 +2974,8 @@ namespace MeisterGeister.View.AudioPlayer {
 						playlisttitel.Aktiv = (sender as CheckBox).IsChecked.Value;
 						if (tcAudioPlayer.SelectedItem == tiEditor)         // Nur Speichern wenn im Tab-Editor
 						{
-							plyTitelToSave.Add(playlisttitel);
-							if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+							//plyTitelToSave.Add(playlisttitel);
+							//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 						}
 					}
 					//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
@@ -2977,7 +2984,7 @@ namespace MeisterGeister.View.AudioPlayer {
 				if (grpobj.visuell)
 				{
 					CheckAlleAngehakt(grpobj);
-					CheckPlayStandbySongs(grpobj);
+					if (grpobj.wirdAbgespielt) CheckPlayStandbySongs(grpobj);
 				}
 			}
 			catch (Exception ex)
@@ -3162,7 +3169,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Drag-Mode über den Editor ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3343,7 +3350,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Verlassen des Kategorie-Feldes ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3427,7 +3434,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Setzen des Hotkey-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3496,7 +3503,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Öffnen der Dropdown-Liste ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3564,7 +3571,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			catch (Exception ex)
 			{
 				notPlayHotkey = false;
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Wechseln der Hotkey-Taste ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3613,7 +3620,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Entfernen des Hotkey-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3646,7 +3653,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswählen des Hotkey-Buttons ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3662,7 +3669,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Stoppen und Schließen des Media-Player nach einem Fehler ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3898,7 +3905,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Auswählen des Themes ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3933,7 +3940,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Abwählen des Themes ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -3990,7 +3997,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Erstellen einer neuen Playlist ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -4006,7 +4013,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Wechseln auf das TabItem ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -4557,7 +4564,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception ex)
 			{
-				plyTitelToSaveTimer.Stop();
+				//plyTitelToSaveTimer.Stop();
 				var errWin = new MsgWindow("Allgemeiner Fehler", "Beim Zyklischen Check der Hintergrundmusik ist ein Fehler aufgetreten.", ex);
 				errWin.ShowDialog();
 				errWin.Close();
@@ -4591,7 +4598,7 @@ namespace MeisterGeister.View.AudioPlayer {
 					grpobj.chkbxTopVolChange.IsChecked = false;
 
 				grpobj._listZeile[zeile].audiotitel.VolumeChange = ((CheckBox)sender).IsChecked.Value;
-				AlleKlangzeilenSpeichern(GetPosObjGruppe(grpobj.objGruppe));
+				//AlleKlangzeilenSpeichern(GetPosObjGruppe(grpobj.objGruppe));
 
 				CheckAlleAngehakt(grpobj);
 			}
@@ -4622,8 +4629,8 @@ namespace MeisterGeister.View.AudioPlayer {
                     grpobj._listZeile.FindAll(t => t.audioZeile != null).FirstOrDefault(t => t.audioZeile.sldKlangPause == (Control)sender));
 
 				grpobj._listZeile[zeile].audiotitel.Pause = Convert.ToInt32(Math.Round(((Slider)sender).Value));
-				plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -4659,8 +4666,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
 				grpobj._listZeile[zeile].audiotitel.PauseChange = ((CheckBox)sender).IsChecked.Value;
 
-				plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -4681,8 +4688,8 @@ namespace MeisterGeister.View.AudioPlayer {
 			{
 				_BGPlayer.AktPlaylistTitel.TeilStart = rsldTeilSong.LowerValue;
 				_BGPlayer.AktPlaylistTitel.TeilEnde = rsldTeilSong.UpperValue;
-				plyTitelToSave.Add(_BGPlayer.AktPlaylistTitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(_BGPlayer.AktPlaylistTitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 			}
 			catch (Exception) { }
 		}
@@ -5662,8 +5669,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					if (Convert.ToInt16(grpobj._listZeile[zeile].audioZeile.tboxVolMax.Text) < grpobj._listZeile[zeile].audiotitel.VolumeMin)
 						grpobj._listZeile[zeile].audioZeile.tboxVolMax.Text = Convert.ToString(grpobj._listZeile[zeile].audiotitel.VolumeMin);
 
-					plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
-					if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+					//plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
+					//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 					//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 					if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5693,8 +5700,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					if (Convert.ToInt16(grpobj._listZeile[zeile].audioZeile.tboxVolMin.Text) > grpobj._listZeile[zeile].audiotitel.VolumeMax)
 						grpobj._listZeile[zeile].audioZeile.tboxVolMin.Text = Convert.ToString(grpobj._listZeile[zeile].audiotitel.VolumeMax);
 
-					plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
-					if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+					//plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
+					//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 					//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 					if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5725,8 +5732,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					if (Convert.ToInt16(grpobj._listZeile[zeile].audioZeile.tboxPauseMin.Text) > grpobj._listZeile[zeile].audiotitel.PauseMax)
 						grpobj._listZeile[zeile].audioZeile.tboxPauseMin.Text = Convert.ToString(grpobj._listZeile[zeile].audiotitel.PauseMax);
 
-					plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
-					if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+					//plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
+					//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 					//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 					if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5757,8 +5764,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					if (Convert.ToInt16(grpobj._listZeile[zeile].audioZeile.tboxPauseMax.Text) < grpobj._listZeile[zeile].audiotitel.PauseMin)
 						grpobj._listZeile[zeile].audioZeile.tboxPauseMax.Text = Convert.ToString(grpobj._listZeile[zeile].audiotitel.PauseMin);
 
-					plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
-					if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+					//plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
+					//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 					//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 					if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5790,8 +5797,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				klZeile.Vol_jump = (klZeile.Vol_jump < 1 || klZeile.Vol_jump > 3) ? 1 :
 					(klZeile.volMax_wert - klZeile.volMin_wert) / SliderTeile;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5829,8 +5836,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				klZeile.Vol_jump = (klZeile.Vol_jump < 1 || klZeile.Vol_jump > 3) ? 1 :
 					(klZeile.volMax_wert - klZeile.volMin_wert) / SliderTeile;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5866,8 +5873,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				klZeile.Vol_jump = (klZeile.Vol_jump < 1 || klZeile.Vol_jump > 3) ? 1 :
 					(klZeile.volMax_wert - klZeile.volMin_wert) / SliderTeile;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5896,8 +5903,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				klZeile.Vol_jump = (klZeile.Vol_jump < 1 || klZeile.Vol_jump > 3) ? 1 :
 					(klZeile.volMax_wert - klZeile.volMin_wert) / SliderTeile;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5926,8 +5933,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				klZeile.audioZeile.tboxPauseMin.Text = Convert.ToString(klZeile.pauseMin_wert);
 				klZeile.audiotitel.PauseMin = klZeile.pauseMin_wert;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5962,8 +5969,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				}
 				klZeile.audiotitel.PauseMax = klZeile.pauseMax_wert;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -5997,8 +6004,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				}
 				klZeile.audiotitel.PauseMin = klZeile.pauseMin_wert;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -6024,8 +6031,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				klZeile.audioZeile.tboxPauseMax.Text = Convert.ToString(klZeile.pauseMax_wert);
 				klZeile.audiotitel.PauseMax = klZeile.pauseMax_wert;
 
-				plyTitelToSave.Add(klZeile.audiotitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(klZeile.audiotitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 				if (e.Source != null) SetzeChangeBit(grpobj.aPlaylist);
@@ -6279,11 +6286,11 @@ namespace MeisterGeister.View.AudioPlayer {
                     if (_GrpObjecte[seite - 1].visuell && klZeile._mplayer != null)
                         klZeile._mplayer.Volume = e.NewValue / 100;
 
-					if (tcAudioPlayer.SelectedItem == tcEditor)         // Nur Speichern wenn im Tab-Editor
+				/*	if (tcAudioPlayer.SelectedItem == tcEditor)         // Nur Speichern wenn im Tab-Editor
 					{
 						plyTitelToSave.Add(klZeile.audiotitel);
 						if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
-					}
+					}*/
 					//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 					if (e.Source != null) SetzeChangeBit(_GrpObjecte[seite-1].aPlaylist);
 				}
@@ -6315,8 +6322,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
 						if (tcAudioPlayer.SelectedItem == tcEditor)         // Nur Speichern wenn im Tab-Editor
 						{
-							plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
-							if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+							//plyTitelToSave.Add(grpobj._listZeile[zeile].audiotitel);
+							//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 						}
 
 						string geschw = "Abspielgeschwindigkeit: ";
@@ -6363,8 +6370,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
 					if (tcAudioPlayer.SelectedItem == tcEditor)         // Nur Speichern wenn im Tab-Editor
 					{
-						plyTitelToSave.Add(klZeile.audiotitel);
-						if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+						//plyTitelToSave.Add(klZeile.audiotitel);
+						//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 					}
 					//wenn von Hand geändert, change-Bit auf alle versteckten Playlists mit dem selben GUID setzen                        
 					if (e.Source != null) SetzeChangeBit(_GrpObjecte[seite].aPlaylist);
@@ -6901,10 +6908,10 @@ namespace MeisterGeister.View.AudioPlayer {
 					klZeile.audiotitel.Aktiv = soll;
 					klZeile.audioZeile.chkTitel.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 										
-					plyTitelToSave.Add(klZeile.audiotitel);
+					//plyTitelToSave.Add(klZeile.audiotitel);
 				});
 
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
                 if (_GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.audioZeile != null).FindAll(t => t.audioZeile.chkTitel.IsChecked.Value).Count == _GrpObjecte[posObjGruppe]._listZeile.Count &&
 					((CheckBox)(e.Source)).IsChecked == true)
@@ -6941,9 +6948,9 @@ namespace MeisterGeister.View.AudioPlayer {
 				{
 					klZeile.audioZeile.chkVolMove.IsChecked = changeto;
 					klZeile.audiotitel.VolumeChange = changeto;
-					plyTitelToSave.Add(klZeile.audiotitel);
+					//plyTitelToSave.Add(klZeile.audiotitel);
 				});
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				_GrpObjecte[posObjGruppe].anzVolChange = Convert.ToUInt16(
                     _GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.audioZeile != null).FindAll(t => t.audioZeile.chkVolMove.IsChecked == true).Count);
@@ -6966,9 +6973,9 @@ namespace MeisterGeister.View.AudioPlayer {
 				{
 					klZeile.audioZeile.chkKlangPauseMove.IsChecked = changeto;
 					klZeile.audiotitel.PauseChange = changeto;               
-					plyTitelToSave.Add(klZeile.audiotitel);
+					//plyTitelToSave.Add(klZeile.audiotitel);
 				});                
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 
 				_GrpObjecte[posObjGruppe].anzPauseChange = Convert.ToUInt16(
                     _GrpObjecte[posObjGruppe]._listZeile.FindAll(t => t.audioZeile != null).FindAll(t => t.audioZeile.chkKlangPauseMove.IsChecked == true).Count);
@@ -6998,8 +7005,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					_BGPlayer.AktPlaylistTitel.TeilStart = rsldTeilSong.LowerValue;
 					_BGPlayer.AktPlaylistTitel.TeilEnde = rsldTeilSong.UpperValue;
 				}
-				plyTitelToSave.Add(_BGPlayer.AktPlaylistTitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(_BGPlayer.AktPlaylistTitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 			}
 			catch (Exception) { }
 		}
@@ -7015,13 +7022,13 @@ namespace MeisterGeister.View.AudioPlayer {
 			catch (Exception) { }
 		}
 		
-		private void AlleKlangzeilenSpeichern(int posObjGruppe)
+	/*	private void AlleKlangzeilenSpeichern(int posObjGruppe)
 		{
 			for (int i = 0; i < _GrpObjecte[posObjGruppe]._listZeile.Count; i++)
 					plyTitelToSave.Add(_GrpObjecte[posObjGruppe]._listZeile[i].audiotitel);
 			
 			if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
-		}
+		}*/
 
 		public void _rbtnGleichSpielen_Click(object sender, RoutedEventArgs e)
 		{
@@ -7265,8 +7272,8 @@ namespace MeisterGeister.View.AudioPlayer {
 				else
 					_BGPlayer.AktPlaylistTitel.Rating = Convert.ToInt16(((Image)sender).Tag);
 
-				plyTitelToSave.Add(_BGPlayer.AktPlaylistTitel);
-				if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
+				//plyTitelToSave.Add(_BGPlayer.AktPlaylistTitel);
+				//if (!plyTitelToSaveTimer.IsEnabled) plyTitelToSaveTimer.Start();
 				starsUpdate();
 			}
 			catch (Exception) { }
@@ -8358,7 +8365,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			stopFadingIn = false;
 
 			hotkeys = new List<hotkey>();
-			plyTitelToSave = new List<Audio_Playlist_Titel>();
+			//plyTitelToSave = new List<Audio_Playlist_Titel>();
 			_BGPlayer = new MusikView();
 			_GrpObjecte = new List<GruppenObjekt>();
 			tcEditor_vorher = 0;
@@ -8369,7 +8376,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			BGSongTimer.Close();
 			if (KlangPlayEndetimer != null)
 				KlangPlayEndetimer.Stop();
-			plyTitelToSaveTimer.Stop();
+			//plyTitelToSaveTimer.Stop();
 			KlangProgBarTimer.Stop();
 			MusikProgBarTimer.Stop();
 			lbBackground.Items.Clear();
@@ -9042,6 +9049,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void exEinstellungen_Expanded(object sender, RoutedEventArgs e)
         {
+            setStdPfad();
+            CreateStandardPfadItems();
             ((Expander)sender).Margin = new Thickness(0, 0, 0, 0);
         }
 

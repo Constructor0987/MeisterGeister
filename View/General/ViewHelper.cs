@@ -109,23 +109,6 @@ namespace MeisterGeister.View.General
                 string sext = String.Format("*.{0}", extension);
                 switch (extension)
                 {
-                    case "mp3":
-                    case "wav":
-                    case "ogg":
-                    case "wma":
-                        sname = "Audio-Dateien";
-                        break;
-                    case "bmp":
-                    case "gif":
-                    case "jpg":
-                    case "jpeg":
-                    case "jpe":
-                    case "jtif":
-                    case "png":
-                    case "tif":
-                    case "tiff":
-                        sname = "Bild-Dateien";
-                        break;
                     case "xml":
                         sname = "XML-Dateien";
                         break;

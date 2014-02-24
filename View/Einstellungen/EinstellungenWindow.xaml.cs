@@ -25,6 +25,8 @@ namespace MeisterGeister.View.Settings
     /// </summary>
     public partial class EinstellungenWindow : Window
     {
+        public List<string> stdPfad = new List<string>();
+
         public EinstellungenWindow()
         {
             InitializeComponent();
@@ -33,6 +35,13 @@ namespace MeisterGeister.View.Settings
             VM = new EinstellungenViewModel();
 
             _listBoxSettings.ItemsSource = Global.ContextHeld.Liste<Model.Setting>();
+
+            // AudioPlayer Standard-Pfade auflisten
+            setStdPfad();
+            CreateStandardPfadItems();
+            // CheckBox & Slider aktualisieren
+            _checkboxSpieldauerBerechnen.IsChecked = Einstellungen.AudioSpieldauerBerechnen;
+            _sldFading.Value = Einstellungen.Fading;
         }
 
         public EinstellungenViewModel VM
@@ -75,37 +84,78 @@ namespace MeisterGeister.View.Settings
         {
             Global.ContextHeld.Save();
         }
-
-        private void _checkboxGleichSpielen_Checked(object sender, RoutedEventArgs e)
+        
+        private void setStdPfad()
         {
-            Einstellungen.AudioDirektAbspielen = (bool)_checkboxGleichSpielen.IsChecked;
+            if (stdPfad.Count > 0) stdPfad.RemoveRange(0, stdPfad.Count);
+            stdPfad.AddRange(MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }));
         }
-
-        private void _checkboxGleichSpielen_Unchecked(object sender, RoutedEventArgs e)
+        
+        private void CreateStandardPfadItems()
         {
-            Einstellungen.AudioDirektAbspielen = (bool)_checkboxGleichSpielen.IsChecked;
-        }
-
-        public void btnStdPfad_Click(object sender, RoutedEventArgs e)
-        {
-            try
+            lbStandardPfade.Items.Clear();
+            for (int i = 0; i < stdPfad.Count; i++)
             {
-                var dialog = new System.Windows.Forms.FolderBrowserDialog();
-                dialog.SelectedPath = Einstellungen.AudioVerzeichnis; // btnStdPfad.Tag.ToString(); 
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
+                ListboxItemBtn lbItemBtn = new ListboxItemBtn();
+                lbItemBtn.lblStdPfad.Content = stdPfad[i];
+                lbItemBtn.btnStdPfad.Click += btnStdPfad_Click;
+                lbItemBtn.imgIcon.MouseUp += imgStdIconDelete_MouseUp;
+                lbStandardPfade.Items.Add(lbItemBtn);
+            }
+            ListboxItemBtn lbItemBtnLeer = new ListboxItemBtn();
+            lbItemBtnLeer.lblStdPfad.Content = "";
+            lbItemBtnLeer.btnStdPfad.Click += btnStdPfad_Click;
+            lbItemBtnLeer.imgIcon.MouseUp += imgStdIconDelete_MouseUp;
+            lbStandardPfade.Items.Add(lbItemBtnLeer);
+        }
+
+        private void btnStdPfad_Click(object sender, RoutedEventArgs e)
+        {
+            ListboxItemBtn lbiBtn = (ListboxItemBtn)((StackPanel)((Grid)((Button)sender).Parent).Parent).Parent;
+            if (((Button)sender).Tag != null)
+            {
+                string s = "";
+                if (lbiBtn.lblStdPfad.Content == "")
+                    stdPfad.Add("");
+                for (int i = 0; i < stdPfad.Count; i++)
                 {
-                    MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis = dialog.SelectedPath;
-                    btnStdPfad.Tag = dialog.SelectedPath;                    
-                    tbStdPfad.Text = btnStdPfad.Tag.ToString();
+                    if (lbiBtn.lblStdPfad.Content != stdPfad[i])
+                        s += stdPfad[i] + "|";
+                    else
+                        s += lbiBtn.btnStdPfad.Tag.ToString() + "|";
                 }
+
+                if (s.Length > 0)
+                    s = s.Substring(0, s.Length - 1);
+                else
+                    s = "C:";
+
+                lbiBtn.lblStdPfad.Content = ((Button)sender).Tag.ToString();
+
+                Logic.Einstellung.Einstellungen.AudioVerzeichnis = s;
+                Logic.Einstellung.Einstellungen.UpdateEinstellungen();
+                ((Button)sender).Tag = null;
+                setStdPfad();
             }
-            catch (Exception ex)
-            {
-                var errWin = new MsgWindow("Eingabefehler", "Das Auswählen des Standard-Verzeichnisses hat eine Exeption ausgelöst.", ex);
-                errWin.ShowDialog();
-                errWin.Close();
-            }
+        }
+
+        private void imgStdIconDelete_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ListboxItemBtn lbiBtn = (ListboxItemBtn)((StackPanel)((Grid)((Image)sender).Parent).Parent).Parent;
+            string s = "";
+            for (int i = 0; i < stdPfad.Count; i++)
+                if (stdPfad[i] != lbiBtn.lblStdPfad.Content.ToString())
+                    s += stdPfad[i] + "|";
+            if (s.Length > 0)
+                s = s.Substring(0, s.Length - 1);
+            else
+                s = "C:";
+
+            Logic.Einstellung.Einstellungen.AudioVerzeichnis = s;
+            Logic.Einstellung.Einstellungen.UpdateEinstellungen();
+
+            ((ListBox)lbiBtn.Parent).Items.Remove(lbiBtn);
+            setStdPfad();
         }
 
         public void _sldFading_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -138,6 +188,11 @@ namespace MeisterGeister.View.Settings
                         break;
                 }
             }
+        }
+
+        private void _rbtnSpieldauerBerechnen_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

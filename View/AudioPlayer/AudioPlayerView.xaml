@@ -788,7 +788,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="366*" />
                     </Grid.RowDefinitions>
-
+                    
                     <Border Name="brdPlyListPlyThemeTop" Style="{DynamicResource ControlContentBorder}" Margin="10,0" Grid.ColumnSpan="2">          
                         <Border HorizontalAlignment="Center" ToolTip="Kategorie-Filter aller Playlists" VerticalAlignment="Center" Margin="-100,0,0,0">
                             <Grid>
@@ -936,7 +936,7 @@
                     <Border Grid.Column="1" Grid.Row="3" >
                         <Expander Name="exPListPlaylists" Margin="30,5,30,10" IsExpanded="True" MinWidth="200" ForceCursor="False" >
                             <Expander.Header>
-                                <TextBlock Text="Geräusche-Playlists" Style="{DynamicResource TextTitel}" />
+                                <TextBlock Name="tbTest" Text="Geräusche-Playlists" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
                                 <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
@@ -972,12 +972,13 @@
                         </ScrollViewer>
 
                         <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Margin="10,0,0,0" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Click="_rbtnGleichSpielen_Click" />
+                        
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
                             <Label Content="Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
                         </StackPanel>
-
+                        
                         <CheckBox Content="Gesamtspieldauer beim Abspielen berechnen" Name="_rbtnSpieldauerBerechnen" Click="_rbtnSpieldauerBerechnen_Click" Margin="10,40,0,10" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="3" IsChecked="True" />
                     </Grid>
                 </StackPanel>

@@ -769,13 +769,13 @@ namespace MeisterGeister.Model.Service
 
             var typ = MeistergeisterFileType(pfad);
             // Falsche Datei ausgewählt Var1
-            if (typ == "Audio_Playlist " && soll == "")
+            if (typ == "Audio_Playlist" && soll == "")
             {     
                 MessageBox.Show(msgBoxText_ErrorAudioDaten, "Inkompatibler Inhalt der Datei", MessageBoxButton.OK, MessageBoxImage.Error);
                 return Guid.Empty;
             }
             else
-            if (typ == "Audio_Playlist ")
+            if (typ == "Audio_Playlist")
             {
                 if (typ != soll)
                 {
@@ -795,7 +795,7 @@ namespace MeisterGeister.Model.Service
                 }
             }
             else 
-            if (typ == "Audio_Theme ")
+            if (typ == "Audio_Theme")
             {
                 var at = DeserializeObjectFromFile<Audio_Theme>(pfad);
 
