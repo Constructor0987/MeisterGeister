@@ -8,6 +8,9 @@ namespace MeisterGeister.Logic.Extensions
 {
     public static class FileExtensions
     {
+        public static string[] EXTENSIONS_IMAGES = new string[] { "bmp", "gif", "jpg", "jpeg", "jpe", "jfif", "png", "tif", "tiff" };
+        public static string[] EXTENSIONS_AUDIO = new string[] { "mp3", "wav", "ogg", "wma" };
+
         /// <summary>
         /// Wandelt 'path' in eine relative Pfadangabe in Relation zum MeisterGeister-Verzeichnis um.
         /// </summary>
