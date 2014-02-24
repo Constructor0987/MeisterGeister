@@ -1894,9 +1894,7 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 if (Directory.Exists(pfad))
                 {
-                    // Im Hauptpfad von C: nicht überall suchen da Admin-Rechte gebraucht werden um System-Dirs zu durchsuchen
-                    string pfad_datei =pfad == "C:\\"? Directory.GetFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.TopDirectoryOnly).FirstOrDefault():
-                        Directory.GetFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.AllDirectories).FirstOrDefault();
+                    string pfad_datei = Directory.GetFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.AllDirectories).FirstOrDefault();
                     if (pfad_datei != null)
                     {
                         aTitel.Pfad = System.IO.Path.GetDirectoryName(pfad_datei);
