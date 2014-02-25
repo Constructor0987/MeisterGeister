@@ -9,11 +9,41 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
 {
     public class ZauberProbe : Probe
     {
-        public Model.Zauber Zauber;
+        private Model.Zauber zauber = null;
+        public Model.Zauber Zauber
+        {
+            get
+            {
+                return zauber;
+            }
+            set
+            {
+                zauber = value;
+            }
+        }
         Held held;
         public int Zauberdauer;
         public int Wirkungsdauer;
-        public int Kosten;
+        public int Kosten
+        {
+            get 
+            {
+                if (Zauber == null)
+                    return 0;
+                //TODO Zauberkosten string -> int. besser gleich in der DB anders ablegen.
+                return (int)Math.Round(Int32.Parse(Zauber.Kosten) * WirkungsdauerModKosten, MidpointRounding.AwayFromZero);
+            }
+        }
+        public int LEKosten
+        {
+            get
+            {
+                if (Zauber == null)
+                    return 0;
+                //TODO Zauberkosten string -> int.
+                return (int)Math.Round(Int32.Parse(Zauber.Kosten) * WirkungsdauerModKosten, MidpointRounding.AwayFromZero);
+            }
+        }
 
         Repräsentation repräsentation;
         public Repräsentation Repräsentation
@@ -30,14 +60,13 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
             get { return Fertigkeitswert; }
             set { Fertigkeitswert = value; }
         }
-        public bool Flächenzauber = false;
         /// <summary>
         /// Die Wirkungsdauer ist abhängig von ZfW oder ZfP*
         /// </summary>
         public bool WirkungsdauerAbhängigVomZfW = false;
         public bool Aufrechterhalten = false;
         object Zieltyp; //Objekt, mehrere Objekte, Zone, Wesen, Person, mehrere Wesen, mehrere Personen
-        bool ZielIstFreiwillig;
+
         int MaximaleModifikationen
         {
             get
@@ -286,30 +315,128 @@ namespace MeisterGeister.ViewModel.Zauber.Logic
 
         int reichweiteMod = 0;
         /// <summary>
-        /// 
+        /// Modifikation der Reichweite (WdZ 22)
+        /// 5 ZfP / Kategorie+
+        /// 3 ZfP / Kategorie-
+        /// Kategorien: Selbst - Berührung - 1 Schritt (oder ZfW Spann) - 3 Schritt (oder ZfW/2 Schritt) - 7 Schritt (oder ZfW Schritt) - 21 Schritt (oder ZfW x 3 Schritt) - 49 Schritt (oder ZfW x 7 Schritt) - Horizont - Außer Sicht
+        /// Zauberdauer + 1 / Kategorie
         /// </summary>
         public int ReichweiteMod
         {
             get { return reichweiteMod; }
-            set { reichweiteMod = value; }
+            set { reichweiteMod = value; } //TODO Maxwerte, Schelm maximal 49 schritt
         }
 
-        
-        /*
-         * Modifikation des Zielobjektes (WdZ 21)
-         *  Zauberdauer + 1
-         *  freiwillig -> unfreiwillig: 5 ZfP + MR
-         *  unfreiwillig -> freiwillig: 2 ZfP + MR/2 (Ziel muss eine Aktion aufwenden, sonst volle MR)
-         *  ein Ziel (freiwillig) -> mehrere Ziele: 3 + Anzahl ZfP 
-         *  ein Ziel (unfreiwillig) -> mehrere Ziele: Anzahl + Max(MR) Erschwernis (keine ZfP abziehen, keine Auswirkung durch boni auf SpoMos)
-         * Modifikation der Reichweite und des Wirkungsradius (WdZ 22)
-         *  Kategorien: Selbst - Berührung - 1 Schritt (oder ZfW Spann) - 3 Schritt (oder ZfW/2 Schritt) - 7 Schritt (oder ZfW Schritt) - 21 Schritt (oder ZfW x 3 Schritt) - 49 Schritt (oder ZfW x 7 Schritt) - Horizont - Außer Sicht
-         *  5 ZfP / Kategorie+
-         *  Zonenzauber größerer Wirkungsradius: Kosten * 4 / Kategorie (jeweils für Basiskosten und laufende Kosten)
-         *  3 ZfP / Kategorie-
-         *  Zauberdauer + 1 / Kategorie
-         */
+        public int ReichweiteModZfP
+        {
+            get
+            {
+                if (ReichweiteMod > 0)
+                {
+                    if(Repräsentation != null && Repräsentation.Kürzel == "Bor")
+                        return ReichweiteMod * 7;
+                    return ReichweiteMod * 5;
+                }
+                else
+                    return ReichweiteMod * 3;
+            }
+        }
 
+        public int ReichweiteModDauer
+        {
+            get
+            {
+                return ReichweiteMod;
+            }
+        }
+
+        int wirkungsradiusMod = 0;
+        /// <summary>
+        /// Modifikation des Wirkungsradius (WdZ 22)
+        /// 5 ZfP / Kategorie+
+        /// 3 ZfP / Kategorie-
+        /// Kategorien: Selbst - Berührung - 1 Schritt (oder ZfW Spann) - 3 Schritt (oder ZfW/2 Schritt) - 7 Schritt (oder ZfW Schritt) - 21 Schritt (oder ZfW x 3 Schritt) - 49 Schritt (oder ZfW x 7 Schritt) - Horizont - Außer Sicht
+        /// Zauberdauer + 1 / Kategorie
+        /// </summary>
+        public int WirkungsradiusMod
+        {
+            get { return wirkungsradiusMod; }
+            set { wirkungsradiusMod = value; } //TODO Maxwerte
+        }
+
+        public int WirkungsradiusModZfP
+        {
+            get
+            {
+                if (WirkungsradiusMod > 0)
+                    return WirkungsradiusMod * 5;
+                else
+                    return WirkungsradiusMod * 3;
+            }
+        }
+
+        public int WirkungsradiusModDauer
+        {
+            get
+            {
+                return ReichweiteMod;
+            }
+        }
+
+        /// <summary>
+        /// Modifikation des Wirkungsradius bei Zonenzaubern ergibt einen Faktor auf die Kosten des Spruchs.
+        /// Zonenzauber größerer Wirkungsradius: Kosten * 4 / Kategorie (jeweils für Basiskosten und laufende Kosten)
+        /// </summary>
+        public int WirkungsradiusModKosten
+        {
+            get
+            {
+                if (Zauber == null || !Zauber.Zonenzauber || WirkungsradiusMod <= 0)
+                    return 1;
+                return WirkungsradiusMod * 4;
+            }
+        }
+
+        bool zielIstFreiwillig = false; //TODO
+        /// <summary>
+        /// Modifikation des Zielobjektes (WdZ 21)
+        ///  Zauberdauer + 1
+        ///  freiwillig -> unfreiwillig: 5 ZfP + MR
+        ///  unfreiwillig -> freiwillig: 2 ZfP + MR/2 (Ziel muss eine Aktion aufwenden, sonst volle MR)
+        ///  </summary>
+        public bool ZielIstFreiwillig
+        {
+            get { return zielIstFreiwillig; }
+            set { zielIstFreiwillig = value; }
+        }
+
+        private int zielAnzahl = 1;
+        /// <summary>
+        ///  ein Ziel (freiwillig) -> mehrere Ziele: 3 + Anzahl ZfP 
+        ///  ein Ziel (unfreiwillig) -> mehrere Ziele: Anzahl + Max(MR) Erschwernis (keine ZfP abziehen, keine Auswirkung durch Boni auf SpoMos)
+        /// </summary>
+        public int ZielAnzahl
+        {
+            get { return zielAnzahl; }
+            set { zielAnzahl = value; }
+        }
+
+        public int ZielModZfp
+        {
+            get { return 0; }
+        }
+
+        public int ZielModErschwernis
+        {
+            get { return 0; }
+        }
+
+        public int ZielModDauer
+        {
+            get { return 0; }
+        }
+        //END TODO
+        
         //wirkende vorteile/sonderfertigkeiten/Ritualgegenstände
         /*
          * Matrixverständnis
