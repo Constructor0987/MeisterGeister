@@ -319,6 +319,44 @@ namespace MeisterGeister.View.Bodenplan
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null) vm.MoveSelectedObjectToTop(false);
         }
+
+        private void Button_SaveXML_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Battleground_"+System.DateTime.Now.ToShortDateString(); // Default file name
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "XML Files (.xml)|*.xml";
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                var vm = DataContext as BattlegroundViewModel;
+                if (vm != null) vm.SaveBattlegroundToXML(dlg.FileName);
+            }
+            
+        }
+
+        private void Button_LoadXML_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".xml";
+            dlg.Filter = "XML Files (.xml)|*.xml"; 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                var vm = DataContext as BattlegroundViewModel;
+                if (vm != null) vm.LoadBattlegroundFromXML(dlg.FileName);
+            }
+            AddPictureButtons(); //reload new pictures
+            
+        }
+
+        private void Button_Reset_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null) vm.ClearBattleground();
+        }
     }
 }
 

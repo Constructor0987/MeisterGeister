@@ -3,10 +3,12 @@ using System.Windows.Media;
 using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
 using System;
+using System.Xml.Serialization;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     [DataContract(IsReference = true)]
+    [Serializable]
     public abstract class BattlegroundBaseObject:INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -14,7 +16,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private bool _isHighlighted = false;
         private bool _isMoving = false;
         private double _strokethickness = 6;
-        private SolidColorBrush _objectColor;
+        [NonSerialized] private SolidColorBrush _objectColor;
+        private Color _objectXMLColor; //needed for xml serialization
         private Color _fillColor;
         private double _opacity = 1;
         private double _zLevel = 10;
@@ -72,12 +75,25 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         }
 
         //color
+        [XmlIgnore]
         public SolidColorBrush ObjectColor
         {
-            get { return _objectColor; }
+            get { //return _objectColor; 
+                return new SolidColorBrush(ObjectXMLColor);
+            }
             set
             {
-                Set(ref _objectColor, value);
+                ObjectXMLColor = ((SolidColorBrush)value).Color;
+            }
+        }
+
+        //same as color just no solidcolorbrush
+        public Color ObjectXMLColor
+        {
+            get { return _objectXMLColor; }
+            set
+            {
+                _objectXMLColor = value;
             }
         }
 
@@ -156,5 +172,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 eventHandler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public abstract void RunBeforeXMLSerialization();
+        public abstract void RunAfterXMLDeserialization();
     }
 }

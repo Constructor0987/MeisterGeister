@@ -144,32 +144,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureNameY = CreatureY - 25;
         }
 
-        //public Image LoadImage(Uri uri)
-        //{
-        //    Image portrait = new Image();
-        //    //portrait.Width = Width - 2 * frameWidth;
-        //    //portrait.Height = Height - 2 * frameWidth;
-
-        //    BitmapImage myBitmapImage = new BitmapImage();
-
-        //    try
-        //    {
-
-        //        myBitmapImage.BeginInit();
-        //        //myBitmapImage.UriSource = new Uri(@ArenaWindow.PORTRAIT_DIR + filename, UriKind.Relative);
-        //        myBitmapImage.UriSource = uri;
-        //        myBitmapImage.DecodePixelWidth = 256;// (int)portrait.Width;
-        //        myBitmapImage.DecodePixelHeight = 256;// (int)portrait.Height;
-        //        myBitmapImage.EndInit();
-        //        portrait.Source = myBitmapImage;
-
-        //    }
-        //    catch
-        //    {
-        //        portrait = null;
-        //    }
-
-        //    return portrait;
-        //}
+        public override void RunBeforeXMLSerialization()
+        {
+            //nothing special to take care of...
+        }
+        public override void RunAfterXMLDeserialization()
+        {
+            //nothing special to take care of...
+        }
     }
 }

@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
-    public class FilledPathLine : BattlegroundBaseObject
+    [Serializable]
+    [XmlInclude(typeof(PathGeometry)), XmlInclude(typeof(PathFigureCollection)), XmlInclude(typeof(PathFigure)), XmlInclude(typeof(PathSegmentCollection))]
+    public class FilledPathLine : BattlegroundBaseObject 
     {
+        [NonSerialized]
         private PathGeometry _pathGeometryData = new PathGeometry();
+        [NonSerialized]
         private PathFigureCollection _pathFigureCollection = new PathFigureCollection();
+        [NonSerialized]
         private PathFigure _pathFigure = new PathFigure();
+        [NonSerialized]
         private PathSegmentCollection _pathSegmentCollection = new PathSegmentCollection();
 
         public FilledPathLine(Point p)
@@ -21,6 +29,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         #region PathGeometry
 
+        [XmlIgnore]
         public PathGeometry FilledPathGeometryData
         {
             get { return _pathGeometryData; }
@@ -77,12 +86,52 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             Point newStartPoint = new Point(_pathFigure.StartPoint.X + deltaX, _pathFigure.StartPoint.Y+deltaY);
             ChangeFirstPoint(newStartPoint);
         }
-
+        //{"Der Typ System.Windows.Media.MatrixTransform wurde nicht erwartet. Verwenden Sie das XmlInclude- oder das SoapInclude-Attribut, um Typen anzugeben, die nicht statisch sind."}
         #endregion
 
+                #region XmlSaveAndRestoreStuff
 
-  
+        public List<Point> _pointList = new List<Point>();
 
+        public FilledPathLine()
+        {
+            RestoreThisElementUsingXMLSource();
+        }
 
+        //save point data before serialization
+        public void StorePathGeometryForXMLSerialization()
+        {
+            _pointList = new List<Point>();
+            foreach (var s in _pathSegmentCollection)
+            {
+                _pointList.Add(new Point(System.Convert.ToInt32(((LineSegment)s).Point.X), System.Convert.ToInt32(((LineSegment)s).Point.Y)));
+            }
+        }
+
+        //Create empty Pathline and fill it with data from xml deserialization
+        public void RestoreThisElementUsingXMLSource()
+        {
+            bool first = true;
+            foreach (var p in _pointList)
+            {
+                if (first)
+                {
+                    first = false;
+                    CreateNewPath(p);
+                }
+                else AddNewPointToSeries(p);
+            }
+        }
+
+        public override void RunBeforeXMLSerialization()
+        {
+            StorePathGeometryForXMLSerialization();
+        }
+        public override void RunAfterXMLDeserialization()
+        {
+            RestoreThisElementUsingXMLSource();
+        }
+
+        #endregion
     }
 }

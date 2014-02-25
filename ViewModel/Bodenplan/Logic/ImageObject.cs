@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -107,6 +110,51 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             ImageHeight = _imageOriginalHeigth * factor;
             ImageWidth = _imageOriginalWidth * factor;
+        }
+
+        public override void RunBeforeXMLSerialization()
+        {
+            //nothing special to take care of...
+        }
+
+        public override void RunAfterXMLDeserialization()
+        {
+            var picname = PictureUrl.Split('\\');
+            PictureUrl = Ressources.GetFullApplicationPathForPictures() + picname[picname.Length - 1];
+        }
+
+        public String ImageToBase64()
+        {
+            Image image = Image.FromFile(PictureUrl);
+            ImageFormat imgformat;
+            if (PictureUrl.EndsWith(".png")) imgformat = ImageFormat.Png;
+            else if (PictureUrl.EndsWith(".jpg") || PictureUrl.EndsWith(".jpeg")) imgformat = ImageFormat.Jpeg;
+            else if (PictureUrl.EndsWith(".bmp")) imgformat = ImageFormat.Bmp;
+            else return ""; //return empty string if not a known pictureformat is found...
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // Convert Image to byte[]
+                image.Save(ms, imgformat);
+                byte[] imageBytes = ms.ToArray();
+
+                // Convert byte[] to Base64 String
+                return Convert.ToBase64String(imageBytes);
+            }
+        }
+
+        public Image Base64ToImage(String base64String)
+        {
+            var picname = PictureUrl.Split('/');
+            // Convert Base64 String to byte[]
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            MemoryStream ms = new MemoryStream(imageBytes, 0,
+              imageBytes.Length);
+
+            // Convert byte[] to Image
+            ms.Write(imageBytes, 0, imageBytes.Length);
+            Image image = Image.FromStream(ms, true);
+            return image;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public ObservableCollection<BattlegroundBaseObject> BattlegroundObjects
         {
             get { return _battlegroundObjects ?? (_battlegroundObjects = new ObservableCollection<BattlegroundBaseObject>()); }
+            set { _battlegroundObjects = value; }
         }
 
         private Kampf.KampfViewModel _kampfVM;
@@ -302,7 +303,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set
             {
                 _selectedColor = value;
-                if (SelectedObject != null) SelectedObject.ObjectColor = new SolidColorBrush(value);
+                if (SelectedObject != null) SelectedObject.ObjectColor = new SolidColorBrush(value); 
                 OnPropertyChanged("SelectedColor");
             }
         }
@@ -612,12 +613,36 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         } 
 
+        public void SaveBattlegroundToXML(String filename) 
+        {
+            BattlegroundXMLLoadSave bg = new BattlegroundXMLLoadSave();
+            bg.SaveMapToXML(BattlegroundObjects, filename);
+        }
+
+        public void LoadBattlegroundFromXML(String filename) 
+        {
+            ClearBattleground();
+
+            BattlegroundXMLLoadSave bg = new BattlegroundXMLLoadSave();
+            var ocloaded= bg.LoadMapFromXML(filename);
+
+            foreach (var element in ocloaded)
+            {
+                BattlegroundObjects.Add(element);
+            }
+        }
+
         public void SelectionChangedUpdateSliders()
         {
             OnPropertyChanged("StrokeThickness");
             OnPropertyChanged("ObjectSize");
             OnPropertyChanged("Opacity");
             OnPropertyChanged("ZLevel");
+        }
+
+        public void ClearBattleground()
+        {
+            BattlegroundObjects.Where(x => !(x is BattlegroundCreature)).ToList().ForEach(x => BattlegroundObjects.Remove(x));
         }
 
         #region INotifyPropertyChanged

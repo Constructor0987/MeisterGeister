@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -40,8 +41,12 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
         public static string GetFullApplicationPath()
         {
-            //return System.Reflection.Assembly.GetExecutingAssembly().Location;
             return Environment.CurrentDirectory;
+        }
+
+        public static string GetFullApplicationPathForPictures()
+        {
+            return GetFullApplicationPath() + "\\Daten\\Bodenplan\\";
         }
 
         public static List<int> GetZLevelsFromInputString(String input)

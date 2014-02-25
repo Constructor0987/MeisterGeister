@@ -157,7 +157,11 @@
                 </Border>
                 <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,13,0,0" Name="checkBox4" VerticalAlignment="Top" />
                 <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="133,34,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
+                <Button Content="Save" Width="75" Margin="282,0,898,78" Height="25" VerticalAlignment="Bottom" Click="Button_SaveXML_Click"/>
+                <Button Content="Load" Width="75" Margin="282,0,898,48" Height="25" VerticalAlignment="Bottom" Click="Button_LoadXML_Click"/>
+                <Button Content="Reset" Width="75" Margin="362,0,818,76" Height="25" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
             </Grid>
+
         </DockPanel>
         <DockPanel Margin="12,131,0,12" Name="dockPanel2" HorizontalAlignment="Left" Width="200" Background="#12000000"></DockPanel>
         <DockPanel Margin="220,131,12,11" Name="ArenaGridContainer"></DockPanel>
