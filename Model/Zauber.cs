@@ -83,5 +83,16 @@ namespace MeisterGeister.Model
                 OnChanged("Repräsentationen");
             }
         }
+
+        public bool Zonenzauber = false; //TODO aus Zielobjekt ablesen
+        public bool Freiwillig = false; //TODO aus Zielobjekt ablesen
+        public bool MehrereZiele = false; //TODO aus Zielobjekt ablesen
+
+
+        //TODO in DB ablegen (Skript 85):
+        /// <summary>
+        /// Muss gegen die Magieresistenz gewirkt werden.
+        /// </summary>
+        public bool Magieresistenz = false;
     }
 }

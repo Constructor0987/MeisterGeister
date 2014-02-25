@@ -239,8 +239,13 @@ namespace MeisterGeister.Model
                     return AttackeOhneBE - BerechneEffBehinderung();
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
                     return Fernkampfwert;
-                return AttackeOhneBE - (int)Math.Floor(BerechneEffBehinderung() / 2.0);
+                return AttackeOhneBE - AttackeBehinderung;
             }
+        }
+
+        private int AttackeBehinderung
+        {
+            get { return (int)Math.Floor(BerechneEffBehinderung() / 2.0); }
         }
 
         [DependentProperty("ZuteilungPA")]
@@ -281,8 +286,13 @@ namespace MeisterGeister.Model
         {
             get
             {
-                return ParadeOhneBE - (int)Math.Ceiling(BerechneEffBehinderung() / 2.0);
+                return ParadeOhneBE - ParadeBehinderung;
             }
+        }
+
+        private int ParadeBehinderung
+        {
+            get { return (int)Math.Ceiling(BerechneEffBehinderung() / 2.0); }
         }
 
         [DependentProperty("TaW")]
@@ -306,7 +316,7 @@ namespace MeisterGeister.Model
                 if (Held == null)
                     return 0;
                 if (Talent.Untergruppe == Talent.UNTERGRUPPE_FERNKAMPF)
-                    return Held.FernkampfBasis + TaW.GetValueOrDefault();
+                    return Held.Fernkampf + TaW.GetValueOrDefault();
                 return 0;
             }
         }
@@ -337,7 +347,15 @@ namespace MeisterGeister.Model
                 if (Held == null)
                     return new List<dynamic>();
                 List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
-                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? AttackeBasisOhneMod : list.LastOrDefault().Wert));
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? AttackeOhneMod : list.LastOrDefault().Wert));
+                if (AttackeBehinderung != 0)
+                    list.AddRange(
+                        Held.ModifikatorenListe(
+                            typeof(Mod.IModBE),
+                            list.Count() == 0 ? AttackeOhneMod : list.LastOrDefault().Wert,
+                            new List<Mod.IModifikator>() { new Mod.BehinderungModifikator(AttackeBehinderung) }
+                        )
+                    );
                 return list;
             }
         }
@@ -350,7 +368,15 @@ namespace MeisterGeister.Model
                 if (Held == null)
                     return new List<dynamic>();
                 List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
-                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? ParadeBasisOhneMod : list.LastOrDefault().Wert));
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? ParadeOhneMod : list.LastOrDefault().Wert));
+                if (ParadeBehinderung != 0)
+                    list.AddRange(
+                        Held.ModifikatorenListe(
+                            typeof(Mod.IModBE),
+                            list.Count() == 0 ? AttackeOhneMod : list.LastOrDefault().Wert,
+                            new List<Mod.IModifikator>() { new Mod.BehinderungModifikator(ParadeBehinderung) }
+                        )
+                    );
                 return list;
             }
         }
@@ -363,7 +389,15 @@ namespace MeisterGeister.Model
                 if (Held == null)
                     return new List<dynamic>();
                 List<dynamic> list = Held.ModifikatorenListe(typeof(Mod.IModFKBasis), FernkampfwertBasisOhneMod);
-                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModFK), list.Count() == 0 ? FernkampfwertBasisOhneMod : list.LastOrDefault().Wert));
+                list.AddRange(Held.ModifikatorenListe(typeof(Mod.IModFK), list.Count() == 0 ? FernkampfwertOhneMod : list.LastOrDefault().Wert));
+                if (BerechneEffBehinderung() != 0)
+                    list.AddRange(
+                        Held.ModifikatorenListe(
+                            typeof(Mod.IModBE),
+                            list.Count() == 0 ? AttackeOhneMod : list.LastOrDefault().Wert,
+                            new List<Mod.IModifikator>() { new Mod.BehinderungModifikator(BerechneEffBehinderung()) }
+                        )
+                    );
                 return list;
             }
         }

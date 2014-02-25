@@ -121,7 +121,7 @@
                                                         StartWert="{Binding SelectedHeld.GeschwindigkeitOhneMod}" Wert="{Binding SelectedHeld.Geschwindigkeit}" />
                     <Label Grid.Column="7" Grid.Row="5" Margin="3,3,0,3" Content="Ausweichen:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="5" HorizontalAlignment="Center" Text="{Binding SelectedHeld.AusweichenOhneMod}" TextAlignment="Center" ToolTip="Ausweichen" VerticalAlignment="Center" />
-                    <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="5" WertName="Ausweichen" 
+                    <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="5" ModListe="{Binding SelectedHeld.ModifikatorenListeAusweichen}" WertName="Ausweichen" 
                                                         StartWert="{Binding SelectedHeld.AusweichenOhneMod}" Wert="{Binding SelectedHeld.Ausweichen}" />
 
                     <Label Grid.Column="0" Grid.Row="7" Content="WS:" HorizontalAlignment="Left" ToolTip="Wundschwelle" VerticalAlignment="Center" FontWeight="Bold" />

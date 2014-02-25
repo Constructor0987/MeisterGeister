@@ -130,6 +130,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     {
         int ApplyFKMod(int wert);
     }
+
+    public interface IModAusweichen : IModEigenschaft
+    {
+        int ApplyAusweichenMod(int wert);
+    }
     #endregion
 
     #region Talente und Zauber
@@ -149,6 +154,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
     {
         ISet<string> Zaubername { get; }
         int ApplyZauberwertMod(int wert);
+    }
+    #endregion
+
+    #region Behinderung
+    /// <summary>
+    /// Der BE Mod wird nirgendwo angewandt. Er dient nur zur Darstellung in der ModifikatorListe.
+    /// Siehe die Klasse BehinderungModifikator zur Verwendung.
+    /// </summary>
+    public interface IModBE : IModifikator
+    {
+        int ApplyBEMod(int wert);
     }
     #endregion
 }

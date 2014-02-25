@@ -512,6 +512,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\IModProbe.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\CustomModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\ModifikatorenListe.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\BehinderungModifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\PABonusDurchHoheIni.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
@@ -1688,6 +1689,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0083.sql" />
     <Resource Include="Images\Logos\Uhrwerk_Icon.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0084.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0085.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

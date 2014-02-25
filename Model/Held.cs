@@ -171,11 +171,27 @@ namespace MeisterGeister.Model
             }
         }
         [DependsOnModifikator(typeof(Mod.IModGS))]
+        [DependentProperty("Behinderung")]
         public List<dynamic> ModifikatorenListeGS
         {
             get
             {
-                return ModifikatorenListe(typeof(Mod.IModGS), (double)GeschwindigkeitOhneMod);
+                List<dynamic> li = ModifikatorenListe(typeof(Mod.IModGS), (double)GeschwindigkeitOhneMod);
+                if (Behinderung > 0)
+                    li.AddRange(ModifikatorenListe(typeof(Mod.IModBE), li.Count == 0 ? GeschwindigkeitOhneMod : (int)li.LastOrDefault().Wert, new List<Mod.IModifikator>() { new Mod.BehinderungModifikator(Behinderung) }));
+                return li;
+            }
+        }
+        [DependsOnModifikator(typeof(Mod.IModAusweichen))]
+        [DependentProperty("Behinderung")]
+        public List<dynamic> ModifikatorenListeAusweichen
+        {
+            get
+            {
+                List<dynamic> li = ModifikatorenListe(typeof(Mod.IModAusweichen), AusweichenOhneMod);
+                if (Behinderung > 0)
+                    li.AddRange(ModifikatorenListe(typeof(Mod.IModBE), li.Count == 0 ? AusweichenOhneMod : (int)li.LastOrDefault().Wert, new List<Mod.IModifikator>() { new Mod.BehinderungModifikator(Behinderung) }));
+                return li;
             }
         }
 
@@ -987,6 +1003,21 @@ namespace MeisterGeister.Model
             }
         }
 
+        /// <summary>
+        /// Grund-FK-Wert inkl. Abzüge.
+        /// </summary>
+        [DependentProperty("FernkampfBasis")]
+        [DependsOnModifikator(typeof(Mod.IModFK))]
+        public int Fernkampf
+        {
+            get
+            {
+                int v = FernkampfBasis;
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModFK).Select(m => (Mod.IModFK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyFKMod(v));
+                return v;
+            }
+        }
         #endregion
 
         #region Talente
@@ -1870,13 +1901,19 @@ namespace MeisterGeister.Model
             }
             else
                 _initiativeWurf = RandomNumberGenerator.Wurf(InitiativeZufall);
-            return InitiativeBasis - Behinderung + InitiativeWurf;
+            int be = Behinderung;
+            if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III")) //WdS 76
+                be = (int)Math.Round(be / 2.0, MidpointRounding.AwayFromZero);
+            return InitiativeBasis - be + InitiativeWurf;
         }
 
         public int InitiativeMax()
         {
             _initiativeWurf = (int)InitiativeZufall;
-            return InitiativeBasis - Behinderung + InitiativeWurf;
+            int be = Behinderung;
+            if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III")) //WdS 76
+                be = (int)Math.Round(be / 2.0, MidpointRounding.AwayFromZero);
+            return InitiativeBasis - be + InitiativeWurf;
         }
 
         // WdS 55
@@ -1972,7 +2009,7 @@ namespace MeisterGeister.Model
         /// Ausweichen-Wert inklusive Akrobatik, Sonderfertigkeiten und Behinderung.
         /// </summary>
         [DependentProperty("AusweichenOhneMod"), DependentProperty("Behinderung")]
-        //[DependsOnModifikator(typeof(Mod.IModAusweichen))] //gibt noch keinen Mod für das Ausweichen
+        [DependsOnModifikator(typeof(Mod.IModAusweichen))]
         public int? Ausweichen
         {
             get
@@ -1984,6 +2021,8 @@ namespace MeisterGeister.Model
                     if (HatVorNachteil("Flink II") && Behinderung >= 7)
                         a -= 1;
                 }
+                if (Modifikatoren != null)
+                    Modifikatoren.Where(m => m is Mod.IModAusweichen).Select(m => (Mod.IModAusweichen)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => a = m.ApplyAusweichenMod(a));
                 a -= Behinderung;
                 return a;
             }
