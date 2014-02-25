@@ -89,7 +89,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         //{"Der Typ System.Windows.Media.MatrixTransform wurde nicht erwartet. Verwenden Sie das XmlInclude- oder das SoapInclude-Attribut, um Typen anzugeben, die nicht statisch sind."}
         #endregion
 
-                #region XmlSaveAndRestoreStuff
+        #region XmlSaveAndRestoreStuff
 
         public List<Point> _pointList = new List<Point>();
 
@@ -102,6 +102,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public void StorePathGeometryForXMLSerialization()
         {
             _pointList = new List<Point>();
+            _pointList.Add(_pathFigure.StartPoint);
             foreach (var s in _pathSegmentCollection)
             {
                 _pointList.Add(new Point(System.Convert.ToInt32(((LineSegment)s).Point.X), System.Convert.ToInt32(((LineSegment)s).Point.Y)));
