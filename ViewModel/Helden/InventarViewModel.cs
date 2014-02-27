@@ -33,6 +33,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private Visibility isFernkampfwaffevorhanden = Visibility.Hidden;
         private Visibility isSchildVorhanden = Visibility.Hidden;
         private Visibility isRuestungVorhanden = Visibility.Hidden;
+        private Visibility isRuestungEinfachEingeben = Visibility.Hidden;
 
         private bool isAllSelected;
         private bool isNahkampfWaffeSelected;
@@ -40,8 +41,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private bool isSchildSelected;
         private bool isRuestungSelected;
         private bool isRuestungBerechnungZonen = false;
-        private bool isRuestungBerechnungEinfach = false;
-        private bool isRuestungBerechnungAutomatisch = false;
+        private bool isRuestungBerechnungEinfach = false;        
 
         private int selectedFilterIndex = 0;
 
@@ -127,6 +127,15 @@ namespace MeisterGeister.ViewModel.Inventar
             {
                 isRuestungVorhanden = value;
                 OnChanged("IsRuestungVorhanden");
+            }
+        }
+        public Visibility IsRuestungEinfachEingeben
+        {
+            get { return isRuestungEinfachEingeben; }
+            set
+            {
+                isRuestungEinfachEingeben = value;
+                OnChanged("IsRuestungEinfachEingeben");
             }
         }
 
@@ -246,7 +255,7 @@ namespace MeisterGeister.ViewModel.Inventar
         }
         public bool IsRuestungBerechnungEinfach
         {
-            get { return isRuestungBerechnungEinfach || E.IsReadOnly; }
+            get { return !(isRuestungBerechnungEinfach || E.IsReadOnly); }
             set
             {
                 isRuestungBerechnungEinfach = value;
@@ -692,6 +701,7 @@ namespace MeisterGeister.ViewModel.Inventar
             _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
+        
         void EinstellungenChangedHandler(MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs e)
         {            
             if (e.PropertyName == "RSBerechnung")
@@ -702,21 +712,24 @@ namespace MeisterGeister.ViewModel.Inventar
                     case 1: //Einfach                    
                         IsRuestungBerechnungEinfach = true;
                         IsRuestungBerechnungZonen = false;
+                        IsRuestungEinfachEingeben = Visibility.Visible;
                         break;
                     case 2: //Zonen                    
                         IsRuestungBerechnungEinfach = false;
                         IsRuestungBerechnungZonen = true;
+                        IsRuestungEinfachEingeben = Visibility.Hidden;
                         break;
                     default:
                         IsRuestungBerechnungEinfach = false;
                         IsRuestungBerechnungZonen = false;
-                        if (SelectedHeld != null)
+                        IsRuestungEinfachEingeben = Visibility.Hidden;
+                        if (SelectedHeld != null) { 
                             SelectedHeld.BerechneRüstungswerte();
+                        }
                         break;
                 }
             }
         }
-
 
         void SelectedHeldChanged()
         {

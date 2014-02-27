@@ -353,7 +353,7 @@
                                     <ColumnDefinition />                                    
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="btnZonenOverlay" Grid.Column="8" Click="btnZonenOverlay_Click" >
+                                <Button x:Name="btnZonenOverlay" Grid.Column="8" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" >
                                     <!-- Click="ButtonZonenRsControl_Click"-->
                                     <Grid>
                                         <StackPanel>
@@ -395,7 +395,7 @@
                                 <StackPanel Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left">
                                     <Label Content="{Binding AktuelleTragkraft}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"  />
                                     <Label Content="{Binding AktuellesGewicht}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                    <ViewGeneral:IntBox Margin="0,1.3" MinValue="0" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
+                                    <ViewGeneral:IntBox Margin="0,1.3" MinValue="0" MinWidth="20" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
                                     <StackPanel Orientation="Horizontal">
                                         <Label Content="{Binding AktuellesGewichtProzentResultierendeBE}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
                                         <Label Content="/" Height="25" Margin="0"/>
@@ -415,7 +415,7 @@
                                     <Label Content="{Binding SelectedHeld.IN}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                     <Grid>
                                         <Label Content="{Binding SelectedHeld.RS[Gesamt]}" />
-                                        <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="60" ShowButtons="{Binding IsRuestungBerechnungEinfach}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
+                                        <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}" Height="25" />
                                     </Grid>
                                 </StackPanel>
                                 <StackPanel Grid.Column="4" Margin="0,0,0,0" HorizontalAlignment="Left">
@@ -1101,7 +1101,7 @@
                                             <Border x:Name="borderRuestung" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Rüstungen" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
                                                 <Image x:Name="image3" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" Margin="-1,1,1,-1"/>
                                             </Border>
-                                            <Border x:Name="borderSonstiges" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" MouseLeftButtonDown="brdKlicked" Background="#FF463F34">
+                                            <Border x:Name="borderSonstiges" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" MouseLeftButtonDown="brdKlicked" Background="#CC000000" Visibility="Hidden">
                                                 <Image x:Name="image4" Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
                                             </Border>
                                         </StackPanel>
