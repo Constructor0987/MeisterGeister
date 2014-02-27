@@ -481,15 +481,6 @@ namespace MeisterGeister.View
                       + "\nSie ist nicht mit dem normalen Release-Zweig kompatibel und dient nur internen Testzwecken!", "Test-Version",
                       MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
-            // TODO: Windows XP entfernen sobald Umstieg auf .NET 4.5 erfolgt ist
-            if (App.GetOSName() == "Windows XP")
-            {
-                MsgWindow sysInfoview = new MsgWindow("Support Ende für Windows XP",
-                    "ACHTUNG!!!\n\nDiese MeisterGeister Version ist voraussichtlich die letzte Version mit Windows XP Support!\n\nDie Hintergründe zum Support-Ende sind hier nachzulesen:\nhttp://meistergeister.orkenspalter.de/showthread.php?tid=170");
-                sysInfoview.Owner = this;
-                sysInfoview.ShowDialog();
-            }
-
             // ChangeLog Meldung
             if (Einstellungen.ShowChangeLog)
             {
