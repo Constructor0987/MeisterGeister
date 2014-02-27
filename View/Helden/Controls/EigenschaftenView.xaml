@@ -114,7 +114,7 @@
                     <Label Grid.Column="7" Grid.Row="4" Margin="3,3,0,3" Content="FK-Basis:" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="9" Grid.Row="4" HorizontalAlignment="Center" Text="{Binding SelectedHeld.FernkampfBasisOhneMod}" TextAlignment="Center" ToolTip="Fernkampf-Basiswert" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="10" Grid.Row="4" ModListe="{Binding SelectedHeld.ModifikatorenListeFKbasis}" WertName="FK-Basiswert" 
-                                                        StartWert="{Binding SelectedHeld.FernkampfBasisOhneMod}" Wert="{Binding SelectedHeld.FernkampfBasis}" />
+                                                        StartWert="{Binding SelectedHeld.FernkampfBasisOhneMod}" Wert="{Binding SelectedHeld.Fernkampf}" />
                     <Label Grid.Column="0" Grid.Row="5" Content="GS:" ToolTip="Geschwindigkeit" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
                     <TextBlock Grid.Column="1" Grid.Row="5" HorizontalAlignment="Center" Text="{Binding SelectedHeld.GeschwindigkeitOhneMod}" TextAlignment="Center" ToolTip="Geschwindigkeit" VerticalAlignment="Center" />
                     <ViewGeneral:TextBoxModInfo Grid.Column="2" Grid.Row="5" ModListe="{Binding SelectedHeld.ModifikatorenListeGS}" WertName="GS" 
