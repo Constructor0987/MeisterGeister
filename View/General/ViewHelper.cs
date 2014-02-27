@@ -398,5 +398,15 @@ namespace MeisterGeister.View.General
             return imgCon;
         }
 
+        public static void ShowBrowser(string url, string title = "")
+        {
+            if (System.Threading.Thread.CurrentThread.GetApartmentState() == System.Threading.ApartmentState.STA)
+            {
+                Web.WebBrowserWindow win = new Web.WebBrowserWindow(url, title);
+                win.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
+                win.Show();
+            }
+        }
+
     }
 }

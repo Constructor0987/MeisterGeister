@@ -28,6 +28,7 @@ namespace MeisterGeister.Logic.Einstellung
             return new List<Model.Einstellung>()
             {
                 new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Jingle beim Start deaktivieren", Wert = "False" },
+                new Model.Einstellung() { Name = "ShowChangeLog", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "ChangeLog beim Start anzeigen", Wert = "True" },
 
                 new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
@@ -566,6 +567,18 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<string>("KampfRecentColors", value);
+            }
+        }
+
+        public static bool ShowChangeLog
+        {
+            get
+            {
+                return GetEinstellung<bool>("ShowChangeLog");
+            }
+            set
+            {
+                SetEinstellung<bool>("ShowChangeLog", value);
             }
         }
     }

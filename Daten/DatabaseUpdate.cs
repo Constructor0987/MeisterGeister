@@ -139,6 +139,9 @@ namespace MeisterGeister.Daten
                     UpdateDatabase(i, connectionString);
                 }
 
+                // ChangeLog Anzeige beim Start zurück setzen
+                GetScalarFromDatabase("UPDATE Einstellung SET Wert = 'True' WHERE Name = 'ShowChangeLog'", connectionString);
+
                 // Datenbank optimieren
                 DatabaseTools.CompactDatabase(connectionString);
 

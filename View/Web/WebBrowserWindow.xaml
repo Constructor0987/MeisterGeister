@@ -1,0 +1,14 @@
+﻿<Window x:Class="MeisterGeister.View.Web.WebBrowserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MeisterGeister Web-Browser" Height="527" Width="788">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="1" Name="_textUrl" IsReadOnly="True" />
+        <WebBrowser Grid.Row="2" Name="_webBrowser" Navigating="_webBrowser_Navigating" />
+    </Grid>
+</Window>
