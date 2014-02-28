@@ -398,14 +398,30 @@ namespace MeisterGeister.View.General
             return imgCon;
         }
 
-        public static void ShowBrowser(string url, string title = "")
+        public static Window ShowBrowser(string url, string title = "")
         {
             if (System.Threading.Thread.CurrentThread.GetApartmentState() == System.Threading.ApartmentState.STA)
             {
                 Web.WebBrowserWindow win = new Web.WebBrowserWindow(url, title);
                 win.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
                 win.Show();
+                return win;
             }
+            return null;
+        }
+
+        public static Window ShowBrowserChangeLog(bool startUp = false)
+        {
+            string version = App.GetVersionString(App.GetVersionProgramm());
+            Window win = ShowBrowser(string.Format("http://moonvega.pmhost.de/trac/query?group=status&milestone={0}", version), string.Format("ChangeLog dieser Version ({0})", version));
+            if (startUp && win != null)
+            {
+                win.Closed += delegate(System.Object o, System.EventArgs e)
+                {
+                    Logic.Einstellung.Einstellungen.ShowChangeLog = ViewHelper.Confirm("ChangeLog anzeigen", "Soll beim nächsten Programmstart der ChangeLog wieder angezeigt werden?");
+                };
+            }
+            return win;
         }
 
     }

@@ -483,11 +483,7 @@ namespace MeisterGeister.View
 #endif
             // ChangeLog Meldung
             if (Einstellungen.ShowChangeLog)
-            {
-                string version = App.GetVersionString(App.GetVersionProgramm());
-                ViewHelper.ShowBrowser(string.Format("http://moonvega.pmhost.de/trac/query?group=status&milestone={0}", version), string.Format("ChangeLog dieser Version ({0})", version));
-                Einstellungen.ShowChangeLog = ViewHelper.Confirm("ChangeLog anzeigen", "Soll beim nächsten Programmstart der ChangeLog wieder angezeigt werden?");
-            }
+                ViewHelper.ShowBrowserChangeLog(true);
         }
 
         private void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)
