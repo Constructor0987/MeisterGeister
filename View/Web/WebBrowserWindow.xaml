@@ -5,10 +5,18 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="1" Name="_textUrl" IsReadOnly="True" />
-        <WebBrowser Grid.Row="2" Name="_webBrowser" Navigating="_webBrowser_Navigating" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Name="_textUrl" IsReadOnly="True" Margin="2" Grid.Column="0" />
+            <Button Grid.Column="1" Height="24" Margin="5" ToolTip="Webseite im Standard-Browser öffenen..." Click="ButtonOpenBrowser_Click">
+                <Image Source="/Images/Icons/General/web.png" Stretch="Uniform" />
+            </Button>
+        </Grid>
+        <WebBrowser Grid.Row="1" Name="_webBrowser" Navigating="_webBrowser_Navigating" />
     </Grid>
 </Window>

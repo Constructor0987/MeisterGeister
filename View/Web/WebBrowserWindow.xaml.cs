@@ -35,5 +35,17 @@ namespace MeisterGeister.View.Web
         {
             _textUrl.Text = e.Uri.AbsoluteUri;
         }
+
+        private void ButtonOpenBrowser_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(_webBrowser.Source.AbsoluteUri);
+            }
+            catch (Exception ex)
+            {
+                View.General.ViewHelper.ShowError("Fehler beim Starten des Browsers", ex);
+            }
+        }
     }
 }
