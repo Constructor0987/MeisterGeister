@@ -8454,8 +8454,7 @@ namespace MeisterGeister.View.AudioPlayer {
 						catch (Exception ex)
 						{
 							Global.SetIsBusy(false);
-							MessageBox.Show("Beim Import ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang." + 
-								Environment.NewLine + ex, "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                            ViewHelper.ShowError("Beim Import ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", ex);
 						}
 					}
 					Global.SetIsBusy(false);

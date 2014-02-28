@@ -63,7 +63,9 @@ namespace MeisterGeister.View.Windows
             
             msg += GetExceptionDetails(ex);
 
-            msg += "\nStackTrace: " + ex.StackTrace;
+            msg += "\n\nInnerException: " + (ex.InnerException != null ? ex.InnerException.ToString() : "-");
+
+            msg += "\n\nStackTrace: " + ex.StackTrace;
             if (ex.Data.Count > 0)
             {
                 msg += "\n\nData: ";
