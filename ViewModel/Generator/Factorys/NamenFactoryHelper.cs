@@ -42,9 +42,9 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         //public const string NOSTRISCHENAMEN = "Nostrische Namen";
         //public const string ORKISCHENAMEN = "Orkische Namen";
         //public const string ORKISCHESVELLTALNAMEN = "Orkische Namen (Svelltal)";
-        //public const string SÜDLÄNDISCHENAMEN = "Südländische Namen";
+        public const string SÜDLÄNDISCHENAMEN = "Südländische Namen";
         //public const string THORWALSCHENAMEN = "Thorwalsche Namen";
-        //public const string TOCAMUYACNAMEN = "Tocamuyac Namen";
+        public const string TOCAMUYACNAMEN = "Tocamuyac Namen";
         public const string TROLLISCHENAMEN = "Trollische Namen";
         //public const string TROLLZACKERNAMEN = "Trollzacker Namen";
         //public const string TULAMIDISCHENAMEN = "Tulamidische Namen";
@@ -134,12 +134,20 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 //case ORKISCHENAMEN:
                 
                 //case ORKISCHESVELLTALNAMEN:
-                
-                //case SÜDLÄNDISCHENAMEN:
+
+                /* 
+                 * Südländische Namen haben einen Vornamen und einen Nachnamebn
+                 * Koseformen werden mit "ito","elo"(m) oder "ita","ela"
+                 * bei Adel wird mit der Partikel "A'" vor den Wohnort gesetzt und angehängt und hängen mit "dyll"(m) oder "dylli"(w) zusaätzlich den Abstammungsort an
+                 */
+                case SÜDLÄNDISCHENAMEN: return new SüdländischeNamenFactory();
                 
                 //case THORWALSCHENAMEN:
-                
-                //case TOCAMUYACNAMEN:
+
+                /* 
+                 * Tocamuyac Namen haben nur einen Vornamen
+                 */
+                case TOCAMUYACNAMEN: return new NamenFactoryVorname(TOCAMUYACNAMEN, true, true);
                 
                 /*
                  * Trolle haben nur einen Vornamen

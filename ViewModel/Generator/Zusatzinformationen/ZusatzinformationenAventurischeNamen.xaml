@@ -49,7 +49,7 @@
             allgemeine Namensinformationen
         </Paragraph>
         <Paragraph Style="{StaticResource Fließtext}">
-            Waldmenschen und Utulus tragen einen geheimen Tapam-Namen und einen Rufnamen, der eine auffällige
+            Utulus tragen einen geheimen Tapam-Namen und einen Rufnamen, der eine auffällige
             Eigenschaft, herausragende Tat oder ein Traumbild des Trägers bzw. der Trägerin ausdrückt. Der Rufname kann
             jederzeit geändert werden. Die Namen sind an sich nicht geschlechtsspezifisch.
         </Paragraph>
@@ -64,8 +64,115 @@
         </Paragraph>
         <Paragraph Style="{StaticResource Fließtext}">
             Die gebräuchlichen Namen der Zahori stammen aus dem Tulamidya, 
-            sind aber oft leicht garethisiert (Shafirio, Ghazalinde); hin 
-            und wieder kommen almadanische und Horathi-Vornamen vor.
+            sind aber oft leicht garethisiert (Shafirio, Ghazalinde) 
+            oder entstammen sehr selten einmal dem Bornländischen oder Garethischen.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Tocamuyac Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Moha-Namen 
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            seefahrende Stämme (Haipu, Miniwatus, Tocamuyac)
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Waldmenschen tragen einen geheimen Tapam-Namen und einen Rufnamen, der eine auffällige
+            Eigenschaft, herausragende Tat oder ein Traumbild des Trägers bzw. der Trägerin ausdrückt. Der Rufname kann
+            jederzeit geändert werden. Die Namen sind an sich nicht geschlechtsspezifisch; man kann aber, wenn man unbedingt
+            will, durch Anhängen der Silbe -ca eine weibliche oder mit der Silbe -ha eine männliche Form bilden.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Horasische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Horasische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Wie bei den meisten garethisprachigen Leute sind Nachnamen auf dem Land wenig verbreitet. Muss eine Person genauer
+            benannt werden, wird der Beruf oder der Wohnort angegeben (Alrizio, der Schmied oder Alrizio aus Bomed). Verglichen
+            mit garethischen Namen ist die Aussprache gemeinhin etwas weicher, und man liebt es, Männernamen mit o enden zu
+            lassen, so daß z.B. aus “Alrik” “Alrigo” oder “Alrizio” wird. Neuerdings übersetzen manche Leute ihre Nachnamen
+            ins Bosparano oder gar ins Altgüldenländische, weil das vornehmer klingt (“Agricola” klingt eben nicht so bäuerlich
+            wie “Bauer”). Außerdem gibt es berufsbezogene Nachnamen, die außerhalb des Horasreichs kaum vorkommen. Im
+            Hinterland von Neetha und Drôl werden gelegentlich auch zyklopäische, tulamidische und Brabaci-Namen
+            verwendet. Die Nachnamen mit "ter" sind typisch für Grangor.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Adelsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Wie im Mittelreich wird bei Adeligen üblicherweise der Vorname und der Familienname mit einem "von" getrennt.
+            Ein Lehen wird mit einem "auf" oder "zu" nachgestellt. Anstelle von "von" verwendet man gern bosparanisierend
+            "da", "de", "di", "du" oder "della". Beispiel: "Midoro della Barroco zu Yaquirblick"
+            <LineBreak />
+            Normalerweise erbt das älteste Kind, egal ob Sohn oder Tochter, alle Lehen und alle Titel, die mit den Lehen
+            verbunden sind. Die jüngeren Kinder können ein geringeres Lehen erhalten, wenn eines frei ist; in diesem Fall
+            erhalten sie auch den mit diesem Lehen verbundenen Titel. MagierInnen und Geweihte müssen etwaige Lehen durch
+            VögtInnen verwalten lassen.
+            <LineBreak />
+            <LineBreak />
+            wichtige Adelsgeschlechter im Horasreich sind:
+            Aleistos, Aralzin, ash Manek, di Balligur (Drôl), Berlinghân (Methumis), Cosseïra, Firdayon (kaiserlich, Horasia,
+            Chababien), Galahan, Garlischgrötz (Grangor), Malagreïa, Marvinko (Sikram), du Metuant, Oikaldiki, Sirensteen, ter
+            Bredero, Thaliyin (Zyklopäa), Thirindar, ya Torese, di Yaladan
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Südländische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Südländische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            (für Al'Anfa und die anderen Stadtstaaten südlich von Drôl und Selem)
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Neben diesen kommen in Südaventurien durch Einwanderung, Kolonialismus und Sklavenhandel auch Namen aus
+            anderen Kulturen vor, insbesondere mohische, tulamidische, horasische und bornische. Koseformen lassen sich
+            durch ein angefügtes -elo/-ela oder -ito/-ita bilden. Vornehme Leute lassen weibliche Namen auf -e oder -is (statt -a)
+            und männliche auf -o enden.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+        Aussprache: "J" wie in "Journal", "z" als "s", "ch" in der Regel wie "tsch".
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            wichtige Familien
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            <Italic>Grandenfamilien Al'Anfa:</Italic> Bonareth, Florios, Karinor, Kugres, Paligan, Ulfhart, Wilmaan, Zornbrecht
+            <LineBreak />
+            <Italic>weitere Familien Al'Anfas:</Italic> Honak, Khestofer, Perval, Tiljak
+            <LineBreak />
+            <Italic>weitere Familien Mirhams:</Italic> Shoy'Rina (kgl.)
+            <LineBreak />
+            <Italic>weitere Familien Mengbillas:</Italic> Ankbesi (Großemir), Gerbelstein
+            <LineBreak />
+            <Italic>weitere Familien Brabaks:</Italic> Bocadilio, du Berillis, Charazzar (H'Rabaal), Geraucis, Hammerfaust, de Sylphur (kgl), Zeforika
+            <LineBreak />
+            <Italic>weitere Familien Syllas:</Italic> Alschera
+            <LineBreak />
+            <Italic>weitere Familien Chorhops:</Italic>Arupanaq, Zeforika
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Ortsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            In dem Sprachengewirr des Südens können garethische Ortsnamen genauso vorkommen wie tulamidische (siehe
+            dort) oder sogar echsische, und auch mohische Tier- und Pflanzennamen (siehe ZooBot) können als Bezeichnungen
+            von Dörfern auftreten. Für Orte an der Küste bildet
+            man am einfachsten Namen aus den o.a. Vor- oder Nachnamen, aus Götter- oder Heiligennamen oder den Namen
+            mächtiger Händlerfamillien und dem Wort "Port" oder "Porto" (Hafen), also z.B. Port Zornbrecht, Porto Ladrón. Für
+            Dörfer und Plantagen im Binnenland kann man auch Namen aus den Artikeln la/el/las/los und Tier- oder
+            Pflanzennamen in den Sprachen des Südens bilden; also z.B. "Los Avocados" oder "Las Bananas".
         </Paragraph>
     </FlowDocument>
 
@@ -97,50 +204,6 @@
             (Feld), Ard (Höhe), Ault (Bach), Ben (Berg), Brae (Hang), Coill (Wald), Dal (Wiese), Dram (Bergrücken), Dun
             (Burg), Glen (Gebirgstal), Knock (Hügel), Loch (See), Muir (Moor), Strath (Flußtal). Also z.B. Dun Bennain,
             Conchobairdun, Uisge Muir oder Glen Sidhe. Ansonsten kann man auch garethische Ortsnamen verwenden.
-        </Paragraph>
-    </FlowDocument>
-
-    <FlowDocument x:Key="Horasische Namen">
-        <Paragraph Style="{StaticResource Überschrift1}">
-            Zahori Namen
-        </Paragraph>
-        <Paragraph Style="{StaticResource Überschrift2}">
-            allgemeine Namensinformationen
-        </Paragraph>
-        <Paragraph Style="{StaticResource Fließtext}">
-            Wie bei den meisten garethisprachigen Leute sind Nachnamen auf dem Land wenig verbreitet. Muss eine Person genauer
-            benannt werden, wird der Beruf oder der Wohnort angegeben (Alrizio, der Schmied oder Alrizio aus Bomed). Verglichen
-            mit garethischen Namen ist die Aussprache gemeinhin etwas weicher, und man liebt es, Männernamen mit o enden zu
-            lassen, so daß z.B. aus “Alrik” “Alrigo” oder “Alrizio” wird. Neuerdings übersetzen manche Leute ihre Nachnamen
-            ins Bosparano oder gar ins Altgüldenländische, weil das vornehmer klingt (“Agricola” klingt eben nicht so bäuerlich
-            wie “Bauer”). Außerdem gibt es berufsbezogene Nachnamen, die außerhalb des Horasreichs kaum vorkommen. Im
-            Hinterland von Neetha und Drôl werden gelegentlich auch zyklopäische, tulamidische und Brabaci-Namen
-            verwendet. Die Nachnamen mit "ter" sind typisch für Grangor.
-        </Paragraph>
-        <Paragraph Style="{StaticResource Überschrift2}">
-            Adelsnamen
-        </Paragraph>
-        <Paragraph Style="{StaticResource Fließtext}">
-            wichtige Adelsgeschlechter im Horasreich sind:
-            Aleistos, Aralzin, ash Manek, di Balligur (Drôl), Berlinghân (Methumis), Cosseïra, Firdayon (kaiserlich, Horasia,
-            Chababien), Galahan, Garlischgrötz (Grangor), Malagreïa, Marvinko (Sikram), du Metuant, Oikaldiki, Sirensteen, ter
-            Bredero, Thaliyin (Zyklopäa), Thirindar, ya Torese, di Yaladan
-        </Paragraph>
-        <Paragraph Style="{StaticResource Fließtext}">
-            Normalerweise erbt das älteste Kind, egal ob Sohn oder Tochter, alle Lehen und alle Titel, die mit den Lehen
-            verbunden sind. Die jüngeren Kinder können ein geringeres Lehen erhalten, wenn eines frei ist; in diesem Fall
-            erhalten sie auch den mit diesem Lehen verbundenen Titel. MagierInnen und Geweihte müssen etwaige Lehen durch
-            VögtInnen verwalten lassen.
-        </Paragraph>
-        <Paragraph Style="{StaticResource Fließtext}">
-            Daneben kennt das Horasreich eine Fülle von Adelstiteln, die nicht mit Lehen verknüpft sind (Titularadel). Diese
-            Titel sind in der Regel nicht erblich, jedoch versuchen Adlige meist, denjenigen ihrer Kinder, die kein Lehen erben,
-            wenigstens einen hohen Titel zuzuschanzen. Grundsätzlich kann jede/r Adlige, die/der ein Lehen innehat, alle Titel
-            vergeben, die mehr als zwei Ränge unter ihrem/seinem eigenen Rang liegen. Dem mittelreichischen Junker- und
-            Edlentitel entspricht im Horasreich der erbliche bzw. nichterbliche Esquirio/a-Titel. Im Unterschied zum Mittelreich
-            kann im Horasreich ein gewöhnlicher Ritter (Cavalliere) nicht selbst den Ritterschlag erteilen, dazu braucht man
-            einen Grafen (oder hohe Ordensränge oder Hochgeweihte der Rondra). Anstelle von "von" verwendet man gern
-            bosparanisierend "da", "de", "di", "du" oder "della". Titularadel ist eine reine Auszeichnung wie ein Orden.
         </Paragraph>
     </FlowDocument>
 </ResourceDictionary>

@@ -208,7 +208,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
     public class HorasischeNamenFactory : NamenFactoryVornameNachname
     {
         #region //---- Felder ----
-        protected List<string> _adelskürzel = new List<String>(new string[] { "ya", "de", "di", "du", "della" });
+        protected List<string> _adelskürzel = new List<String>(new string[] { "ya", "da", "de", "di", "du", "della" });
         #endregion
 
 
@@ -289,6 +289,53 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 person.Name = string.Format("{0}",
                     _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
             }
+        }
+        #endregion
+    }
+
+    public class SüdländischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private string weitereVornamen;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public SüdländischeNamenFactory() :
+            base(NamenFactoryHelper.SÜDLÄNDISCHENAMEN, false, true)
+        {
+            // erzeuge mehr Nachnamen durch das ersetzen von -a/-o im Vornamen durch (uez)
+           foreach (string neuerName in _vornamenMännlich.Where(n => n.EndsWith("o")))
+           {
+               _nachnamen.Add(neuerName.Remove(neuerName.Length - 1) + "(u)ez");
+           }
+           foreach (string neuerName in _vornamenWeiblich.Where(n => n.EndsWith("a")))
+           {
+               _nachnamen.Add(neuerName.Remove(neuerName.Length - 1) + "(u)ez");
+           }
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        {
+            base.RegeneratePersonNurName(ref person, geschlecht, stand);
+
+            
+            if (RandomNumberGenerator.Generator.Next(2)==1)
+            {
+                // zwei weiterer Vorname
+                weitereVornamen = (person.Geschlecht == Geschlecht.weiblich) ?
+                    string.Format("{0} {1} ", _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())], _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())]) :
+                    string.Format("{0} {1} ", _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())], _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+            }
+            else
+            {
+                //ein weiterer Vorname
+                weitereVornamen = (person.Geschlecht == Geschlecht.weiblich) ?
+                    string.Format("{0} ", _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())]) :
+                    string.Format("{0} ", _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+            }
+            person.Name = weitereVornamen + person.Name;
         }
         #endregion
     }
