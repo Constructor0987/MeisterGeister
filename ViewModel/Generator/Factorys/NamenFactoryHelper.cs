@@ -69,7 +69,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                  * Achaz haben nur einen Vornamen
                  * Name ist nicht geschlechtsspezifisch
                  */
-                case ACHAZNAMEN: return new NamenFactoryVorname(ACHAZNAMEN, true, true);
+                case ACHAZNAMEN: return new AchazNamenFactory();
 
                 /* Albernische Namen haben einen Vornamen, annotiert mit Vorname
                  * Vorname kann von bestimmten Garehtischen Vornamen abgeleitet sein

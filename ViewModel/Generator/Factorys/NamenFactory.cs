@@ -15,13 +15,11 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Felder ----
-        protected string _informationenNamen; //später FlowDocuments nutzen; ggf. externe Ressource
         protected PersonNurName _tempPerson;
         #endregion
 
         #region //---- Eigenschaften ----
         public bool VornamenWeiblichFürAlle { get; protected set; }
-        public bool StandHatAuswirkung { get; protected set; }
         public bool GeneriertOrtsnamen { get; protected set; }
         public bool GeneriertNamensbedeutungen { get; protected set; }
         public bool InformationenNamenVerfügbar { get; protected set; }
@@ -143,6 +141,36 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
     }
 
     #region //---- Aventurische Namen Factorys ----
+
+    public class AchazNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        private List<string> _namensbedeutungen = new List<string>();
+        private int _selectedName;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public AchazNamenFactory() :
+            base(NamenFactoryHelper.ACHAZNAMEN, true, true, true)
+        {
+            _namensbedeutungen.AddRange(Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp).Where(n => n.Art == NAMENSARTVORNAMEN).Select(n => n.Bedeutung));
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        {
+            person.Namenstyp = this.Namenstyp;
+            person.Geschlecht = geschlecht;
+            person.Stand = stand;
+
+            _selectedName = RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count());
+            person.Name = _vornamenWeiblich[_selectedName];
+            person.Namensbedeutung = _namensbedeutungen[_selectedName];
+        }
+        #endregion
+    }
+
     public class TrollischeNamenFactory : NamenFactoryVorname
     {
 
