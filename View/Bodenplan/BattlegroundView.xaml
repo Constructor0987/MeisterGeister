@@ -157,10 +157,28 @@
                 </Border>
                 <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,13,0,0" Name="checkBox4" VerticalAlignment="Top" />
                 <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="133,34,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
-                <Button Content="Save" Width="75" Margin="282,0,898,78" Height="25" VerticalAlignment="Bottom" Click="Button_SaveXML_Click"/>
-                <Button Content="Load" Width="75" Margin="282,0,898,48" Height="25" VerticalAlignment="Bottom" Click="Button_LoadXML_Click"/>
-                <Button Content="Reset" Width="75" Margin="362,0,818,76" Height="25" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
+                <Border BorderBrush="Silver" BorderThickness="1" Height="97" HorizontalAlignment="Left" Margin="276,10,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
+                    <Grid Margin="0,0,9,0">
+                        <Button Content="Speichern" Width="75" Margin="10,35,0,0" Height="25" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
+                        <Button Content="Laden" Width="75" Margin="10,5,0,0" Height="25" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left"/>
+                        <CheckBox IsChecked="{Binding LoadWithoutPictures}" Content="Laden ohne Bilder" Height="16" VerticalAlignment="Top" Width="118" Margin="91,11,0,0" HorizontalAlignment="Left" FontSize="10"/>
+                        <CheckBox IsChecked="{Binding SaveWithoutPictures}" Content="Speichern ohne Bilder" Height="18" VerticalAlignment="Top" Margin="90,39,1,0" FontSize="10"/>
+                        <Button Content="Reset" Width="75" Margin="10,0,124,5" Height="25" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
+                    </Grid>
+                </Border>
+                <xctk:CheckListBox Height="90" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" SelectedValue="{Binding VisibleZLevels}" ItemsSource="{Binding BattlegroundObjects}" ToolTip="Wähle aus welche Z Level sichtbar sein sollen." Margin="524,13,0,0" />
+                <ListBox HorizontalAlignment="Left" Height="100" Margin="665,13,0,0" VerticalAlignment="Top" Width="100" />
+                <ListView HorizontalAlignment="Left" Height="100" Margin="770,13,0,0" VerticalAlignment="Top" Width="100" ItemsSource="{Binding BattlegroundObjects}" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Path=Objectname}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </Grid>
+           
+
+
 
         </DockPanel>
         <DockPanel Margin="12,131,0,12" Name="dockPanel2" HorizontalAlignment="Left" Width="200" Background="#12000000"></DockPanel>

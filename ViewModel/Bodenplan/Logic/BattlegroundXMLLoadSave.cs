@@ -16,7 +16,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
     public class BattlegroundXMLLoadSave
     {
-        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename)
+        public void SaveMapToXML(ObservableCollection<BattlegroundBaseObject> bbo, String filename, bool SaveWithoutPictures)
         {
             try
             {
@@ -24,9 +24,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 ObservableCollection<BattlegroundBaseObject> bboWithoutHeroes = new ObservableCollection<BattlegroundBaseObject>();
                 foreach (var o in bbo)
                 {
-                    if (!(o is BattlegroundCreature))
+                    if (!(o is BattlegroundCreature) && ((o is ImageObject && !SaveWithoutPictures) || (!(o is ImageObject))))
                     {
                         o.RunBeforeXMLSerialization();
+                        //Console.WriteLine("SAVE TO XML: " + o.ToString());
                         bboWithoutHeroes.Add(o);
                     }
                 }
@@ -62,7 +63,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-        public ObservableCollection<BattlegroundBaseObject> LoadMapFromXML(String filename)
+        public ObservableCollection<BattlegroundBaseObject> LoadMapFromXML(String filename, bool LoadWithoutPictures)
         {
             try
             {
@@ -71,12 +72,15 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 {
                     var loadedFile = (XmlCollectionHelper)(serializer.Deserialize(stream));
 
-                    foreach (var pic in loadedFile.BattlegroundXMLPictureBox)
+                    if (!LoadWithoutPictures)
                     {
-                        var currentPics = Ressources.GetPictureUrls();
-                        var found = currentPics.Where(x => x.EndsWith(pic.picName)).Any();
-                        
-                        if(!found) Base64ToImage(pic.picName,pic.picInBase64);
+                        foreach (var pic in loadedFile.BattlegroundXMLPictureBox)
+                        {
+                            var currentPics = Ressources.GetPictureUrls();
+                            var found = currentPics.Where(x => x.EndsWith(pic.picName)).Any();
+
+                            if (!found) Base64ToImage(pic.picName, pic.picInBase64);
+                        }
                     }
 
                     foreach (var element in loadedFile.ObsColl)

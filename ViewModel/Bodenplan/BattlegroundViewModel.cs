@@ -25,6 +25,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private double _currentMousePositionX, _currentMousePositionY;
         private PathGeometry _tilePathData = new PathGeometry();
         private Color _selectedColor = Colors.DarkGray, _selectedFillColor = Colors.LightGray;
+        private bool _loadWithoutPictures = false, _saveWithoutPictures = false;
         private KämpferInfoListe _kaempferliste;
 
         ObservableCollection<BattlegroundBaseObject> _battlegroundObjects;
@@ -201,6 +202,19 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private List<string> _paintedObjects = new List<string>();
+        public List<string> PaintedObjects
+        {
+            get { return _paintedObjects; }
+            set
+            {
+                foreach (var o in BattlegroundObjects)
+                {
+
+                }
+            }
+        }
+
         private bool _showZ;
         public bool ShowZ
         {
@@ -331,6 +345,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Console.WriteLine("Alpha: " + value + " || " + SelectedFillColor.ScA.ToString());
                 OnPropertyChanged("SelectedFillColorAlpha");
             }
+        }
+
+        public bool LoadWithoutPictures
+        {
+            get { return _loadWithoutPictures; }
+            set { _loadWithoutPictures = value; OnPropertyChanged("LoadWithoutPictures"); }
+        }
+
+        public bool SaveWithoutPictures
+        {
+            get { return _saveWithoutPictures; }
+            set { _saveWithoutPictures = value; OnPropertyChanged("SaveWithoutPictures"); }
         }
 
         public PathGeometry TilePathData
@@ -616,7 +642,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void SaveBattlegroundToXML(String filename) 
         {
             BattlegroundXMLLoadSave bg = new BattlegroundXMLLoadSave();
-            bg.SaveMapToXML(BattlegroundObjects, filename);
+            bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures);
         }
 
         public void LoadBattlegroundFromXML(String filename) 
@@ -624,11 +650,15 @@ namespace MeisterGeister.ViewModel.Bodenplan
             ClearBattleground();
 
             BattlegroundXMLLoadSave bg = new BattlegroundXMLLoadSave();
-            var ocloaded= bg.LoadMapFromXML(filename);
+            var ocloaded= bg.LoadMapFromXML(filename, LoadWithoutPictures);
 
             foreach (var element in ocloaded)
             {
-                BattlegroundObjects.Add(element);
+                if (!(element is ImageObject && LoadWithoutPictures))
+                {
+                    System.Console.WriteLine("LOAD FROM XML: " + element.ToString());
+                    BattlegroundObjects.Add(element);
+                }
             }
         }
 
