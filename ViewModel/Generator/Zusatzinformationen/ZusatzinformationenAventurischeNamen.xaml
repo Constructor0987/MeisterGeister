@@ -15,7 +15,7 @@
         <Setter Property="TextBlock.Margin" Value="10" />
     </Style>
     
-    <FlowDocument x:Key="Achaz_Namen">
+    <FlowDocument x:Key="Achaz Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
             Achaz Namen
         </Paragraph>
@@ -23,11 +23,13 @@
             allgemeine Namensinformationen
         </Paragraph>
         <Paragraph Style="{StaticResource Fließtext}">
-            Echsische Namen sind nicht geschlechtsspezifisch. Ein vorangestelltes H' drückt Heiligkeit, Göttlichkeit oder sonstige große Macht und Würde aus.
+            Echsische Namen sind nicht geschlechtsspezifisch. 
+            Ein vorangestelltes H' drückt Heiligkeit, Göttlichkeit oder sonstige große Macht und Würde aus.
+            Achaz besitzen bis zur sechsten Häutung vorläufige Rufnamen, die als endgültige Namen übernommen werden können.
         </Paragraph>
     </FlowDocument>
 
-    <FlowDocument x:Key="Trollische_Namen">
+    <FlowDocument x:Key="Trollische Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
             Trollische Namen
         </Paragraph>
@@ -39,7 +41,7 @@
         </Paragraph>
     </FlowDocument>
 
-    <FlowDocument x:Key="Utulu_Namen">
+    <FlowDocument x:Key="Utulu Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
             Utulu Namen
         </Paragraph>
@@ -53,7 +55,7 @@
         </Paragraph>
     </FlowDocument>
 
-    <FlowDocument x:Key="Zahori_Namen">
+    <FlowDocument x:Key="Zahori Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
             Zahori Namen
         </Paragraph>
@@ -67,7 +69,7 @@
         </Paragraph>
     </FlowDocument>
 
-    <FlowDocument x:Key="Albernische_Namen">
+    <FlowDocument x:Key="Albernische Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
             Zahori Namen
         </Paragraph>
@@ -98,7 +100,7 @@
         </Paragraph>
     </FlowDocument>
 
-    <FlowDocument x:Key="Horasische_Namen">
+    <FlowDocument x:Key="Horasische Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
             Zahori Namen
         </Paragraph>

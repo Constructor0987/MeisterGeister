@@ -45,7 +45,7 @@ namespace MeisterGeister_Tests
         }
 
         [Test]
-        public void GeneratorNamensgenerierungStringTest()
+        public void GeneratorNamenLeereNamenTest()
         {
             MeisterGeister.ViewModel.Generator.Factorys.NamenFactory aktuelleNamenFactory;
             foreach (String namenstyp in _namenstypen)
@@ -61,32 +61,9 @@ namespace MeisterGeister_Tests
                 }
             }
         }
-
+        
         [Test]
-        public void GeneratorNamensbedeutungTest()
-        {
-            MeisterGeister.ViewModel.Generator.Container.PersonNurName person;
-            MeisterGeister.ViewModel.Generator.Factorys.NamenFactory aktuelleNamenFactory;
-            foreach (String namenstyp in _namenstypen)
-            {
-                aktuelleNamenFactory = MeisterGeister.ViewModel.Generator.Factorys.NamenFactoryHelper.GetFactory(namenstyp);
-                if (aktuelleNamenFactory != null && aktuelleNamenFactory.GeneriertNamensbedeutungen)
-                {
-                    foreach (MeisterGeister.ViewModel.Generator.Container.Geschlecht geschlecht in Enum.GetValues(typeof(MeisterGeister.ViewModel.Generator.Container.Geschlecht)))
-                    {
-                        foreach (MeisterGeister.ViewModel.Generator.Container.Stand stand in Enum.GetValues(typeof(MeisterGeister.ViewModel.Generator.Container.Stand)))
-                        {
-                            person = new MeisterGeister.ViewModel.Generator.Container.PersonNurName();
-                            aktuelleNamenFactory.RegeneratePersonNurName(ref person, geschlecht, stand);
-                            Assert.IsNotEmpty(person.Namensbedeutung, "Leerer Namensbedeutung bei Factory " + namenstyp + " generiert (Parameter geschlecht=" + geschlecht.ToString() + ", stand=" + stand.ToString() + ").");
-                        }
-                    }
-                }
-            }
-        }
-
-        [Test]
-        public void GeneratorOrtsnamensgenerierungTest()
+        public void GeneratorOrtsnamenLeereNamenTest()
         {
             MeisterGeister.ViewModel.Generator.Factorys.NamenFactory aktuelleNamenFactory;
             foreach (String namenstyp in _namenstypen)

@@ -468,7 +468,7 @@ namespace MeisterGeister.ViewModel.Generator
         {
             if (key != NAMEN_NAMENSGENERATOR_EGAL && NamenFactoryHelper.GetFactory(key).InformationenNamenVerfügbar)
             {
-                Zusatzinformation = _zusatzinformationen[key.Replace(" ", "_")] as FlowDocument;
+                Zusatzinformation = _zusatzinformationen[key] as FlowDocument;
                 ZeigeZusatzinformationen = true;
             } else {
                 Zusatzinformation = _zusatzinformationen["keine_Infos"] as FlowDocument;

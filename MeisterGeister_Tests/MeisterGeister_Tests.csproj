@@ -88,7 +88,7 @@
     <Compile Include="HeldenblattImport_Tests.cs" />
     <Compile Include="Kalender_Tests.cs" />
     <Compile Include="Literatur_Tests.cs" />
-    <Compile Include="NscGenerator_Tests.cs" />
+    <Compile Include="Generator_Tests.cs" />
     <Compile Include="Probe_Tests.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="Serialization_Tests.cs" />
