@@ -164,7 +164,7 @@ namespace MeisterGeister.View.General
         public static List<string> ChooseFiles(string title, string filename, bool checkFileExists, params string[] extensions)
         {
             filename = GetValidFilename(filename);
-            FileDialog objDialog = new OpenFileDialog();
+            OpenFileDialog objDialog = new OpenFileDialog();
             objDialog.Title = title;
             objDialog.DefaultExt = String.Empty;
             objDialog.CheckFileExists = checkFileExists;
@@ -172,6 +172,7 @@ namespace MeisterGeister.View.General
 
             objDialog.AddExtension = true;
             objDialog.FileName = filename;
+            objDialog.Multiselect = true;
             objDialog.InitialDirectory = Environment.CurrentDirectory;
             if (objDialog.ShowDialog() == DialogResult.OK)
             {
