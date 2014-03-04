@@ -39,7 +39,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         //public const string NORBADISCHENAMEN = "Norbardische Namen";
         //public const string NORBADISCHESIPPENNAMEN = "Norbardische Namen (Sippenname)";
         //public const string NORDPROVINZENNAMEN = "Nordprovinzen";
-        //public const string NOSTRISCHENAMEN = "Nostrische Namen";
+        public const string NOSTRISCHENAMEN = "Nostrische Namen";
         //public const string ORKISCHENAMEN = "Orkische Namen";
         //public const string ORKISCHESVELLTALNAMEN = "Orkische Namen (Svelltal)";
         public const string SÜDLÄNDISCHENAMEN = "Südländische Namen";
@@ -50,10 +50,10 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         //public const string TULAMIDISCHENAMEN = "Tulamidische Namen";
         public const string UTULUNAMEN = "Utulu Namen";
         //public const string WALDMENSCHENNAMEN = "Waldmenschen Namen";
-        //public const string WEIDENERNAMEN = "Weidener Namen";
+        public const string WEIDENERNAMEN = "Weidener Namen";
         public const string ZAHORINAMEN = "Zahori Namen";
         //public const string ZWERGISCHENAMEN = "Zwergische Namen";
-        //public const string ZYKLOPÄISCHENAMEN = "Zyklopäische Namen";
+        public const string ZYKLOPÄISCHENAMEN = "Zyklopäische Namen";
         #endregion
 
         private static Dictionary<String, NamenFactory> _namenFactorys = _namenFactorys = new Dictionary<String, NamenFactory>();
@@ -65,16 +65,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
             switch (namenstyp)
             {
                 #region /---- Aventurische Namen ----
-                /* 
-                 * Achaz haben nur einen Vornamen
-                 * Name ist nicht geschlechtsspezifisch
-                 */
                 case ACHAZNAMEN: return new AchazNamenFactory();
 
-                /* Albernische Namen haben einen Vornamen, annotiert mit Vorname
-                 * Vorname kann von bestimmten Garehtischen Vornamen abgeleitet sein
-                 * Nachname annotiert mit Nachname
-                 */
                 //case ALBERNISCHENAMEN: return new AlbernischeNamenFactory();
 
                 //case ALMADISCHENAMEN:
@@ -103,18 +95,10 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 
                 //case GROLMISCHENAMEN:
                 
-                /* 
-                 * Holberker Namen haben einen Vornamen und Nachnamen
-                 */
                 case HOLBERKERNAMEN: return new NamenFactoryVornameNachname(HOLBERKERNAMEN);
                 
                 //case HORASIATCYCLOPENINSELNAMEN:
 
-                /*
-                 * Horasische Namen haben einen Vornamen und einen Nachnamen
-                 * bei Adel je nach Rang "ya","de","di","du","della"
-                 * Nachname bei Stadtfreien wie aufgeführt
-                 */
                 case HORASISCHENAMEN: return new HorasischeNamenFactory();
                 
                 //case HÜGELZWERGISCHENAMEN:
@@ -128,56 +112,38 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 //case NORBADISCHESIPPENNAMEN:
                 
                 //case NORDPROVINZENNAMEN:
-                
-                //case NOSTRISCHENAMEN:
+
+                case NOSTRISCHENAMEN: return new NostrischeNamenFactory();
                 
                 //case ORKISCHENAMEN:
                 
                 //case ORKISCHESVELLTALNAMEN:
 
-                /* 
-                 * Südländische Namen haben einen Vornamen und einen Nachnamebn
-                 * Koseformen werden mit "ito","elo"(m) oder "ita","ela"
-                 * bei Adel wird mit der Partikel "A'" vor den Wohnort gesetzt und angehängt und hängen mit "dyll"(m) oder "dylli"(w) zusaätzlich den Abstammungsort an
-                 */
                 case SÜDLÄNDISCHENAMEN: return new SüdländischeNamenFactory();
                 
                 //case THORWALSCHENAMEN:
 
-                /* 
-                 * Tocamuyac Namen haben nur einen Vornamen
-                 */
                 case TOCAMUYACNAMEN: return new NamenFactoryVorname(TOCAMUYACNAMEN, true, true);
                 
-                /*
-                 * Trolle haben nur einen Vornamen
-                 * zusätzlich führen sie "Sohn/Tochter des <Vatername>"
-                 */
                 case TROLLISCHENAMEN: return new TrollischeNamenFactory();
                 
                 //case TROLLZACKERNAMEN:
                 
                 //case TULAMIDISCHENAMEN:
 
-                /* 
-                 * Utulu Namen haben nur einen Vornamen
-                 * Name ist nicht geschlechtsspezifisch
-                 */
                 case UTULUNAMEN: return new NamenFactoryVorname(UTULUNAMEN, true, true);
                 
                 //case WALDMENSCHENNAMEN:
-                
-                //case WEIDENERNAMEN:
 
-                /* 
-                 * Zahori Namen haben einen Vornamen und Nachnamen 
-                 * TODO Es sind Namensinformationen verfügbar
-                 */
+
+
+                case WEIDENERNAMEN: return new WeidenerNamenFactory();
+
                 case ZAHORINAMEN: return new NamenFactoryVornameNachname(ZAHORINAMEN, false, true);
                 
                 //case ZWERGISCHENAMEN:
-                
-                //case ZYKLOPÄISCHENAMEN:
+
+                case ZYKLOPÄISCHENAMEN: return new ZyklopäischeNamenFactory();
                 #endregion
 
                 default: return null;

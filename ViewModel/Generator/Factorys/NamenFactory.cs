@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MeisterGeister.ViewModel.Generator.Container;
 using MeisterGeister.Logic.General;
+using MeisterGeister.Logic.Extensions;
 
 namespace MeisterGeister.ViewModel.Generator.Factorys
 {
@@ -39,7 +40,15 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Instanzmethoden ----
-        public abstract void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei);
+        public virtual void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        {
+            person.Namenstyp = this.Namenstyp;
+            person.Geschlecht = geschlecht;
+            person.Stand = stand;
+            RegenerateName(ref person);
+        }
+
+        public abstract void RegenerateName(ref PersonNurName person);
 
         public virtual PersonNurName GeneratePersonNurName(Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
         {
@@ -86,18 +95,15 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region /---- Instanzmethoden ----
-        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        public override void RegenerateName(ref PersonNurName person)
         {
-            person.Namenstyp = this.Namenstyp;
-            person.Geschlecht = geschlecht;
-            person.Stand = stand;
-            if (VornamenWeiblichFürAlle || geschlecht == Geschlecht.weiblich)
+            if (VornamenWeiblichFürAlle || person.Geschlecht == Geschlecht.weiblich)
             {
-                person.Name = _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())];
+                person.Name = _vornamenWeiblich.RandomElement();
             }
             else // Geschlecht kann nur männlich sein
             {
-                person.Name = _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())];
+                person.Name = _vornamenMännlich.RandomElement();
             }
         }
         #endregion
@@ -119,22 +125,19 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Instanzmethoden ----
-        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        public override void RegenerateName(ref PersonNurName person)
         {
-            person.Namenstyp = this.Namenstyp;
-            person.Geschlecht = geschlecht;
-            person.Stand = stand;
-            if (VornamenWeiblichFürAlle || geschlecht == Geschlecht.weiblich)
+            if (VornamenWeiblichFürAlle || person.Geschlecht == Geschlecht.weiblich)
             {
                 person.Name = string.Format("{0} {1}",
-                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
-                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+                    _vornamenWeiblich.RandomElement(),
+                    _nachnamen.RandomElement());
             }
             else // Geschlecht kann nur männlich sein
             {
                 person.Name = string.Format("{0} {1}",
-                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
-                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+                    _vornamenMännlich.RandomElement(),
+                    _nachnamen.RandomElement());
             }
         }
         #endregion
@@ -158,15 +161,11 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Instanzmethoden ----
-        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        public override void RegenerateName(ref PersonNurName person)
         {
-            person.Namenstyp = this.Namenstyp;
-            person.Geschlecht = geschlecht;
-            person.Stand = stand;
-
             _selectedName = RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count());
-            person.Name = _vornamenWeiblich[_selectedName];
-            person.Namensbedeutung = _namensbedeutungen[_selectedName];
+            person.Name = _vornamenWeiblich.ElementAt(_selectedName);
+            person.Namensbedeutung = _namensbedeutungen.ElementAt(_selectedName);
         }
         #endregion
     }
@@ -183,23 +182,20 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Instanzmethoden ----
-        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        public override void RegenerateName(ref PersonNurName person)
         {
-            person.Namenstyp = this.Namenstyp;
-            person.Geschlecht = geschlecht;
-            person.Stand = stand;
 
-            if (geschlecht == Geschlecht.weiblich)
+            if (person.Geschlecht == Geschlecht.weiblich)
             {
                 person.Name = string.Format("{0} Tochter des {1}",
-                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
-                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+                    _vornamenWeiblich.RandomElement(),
+                    _vornamenMännlich.RandomElement());
             }
             else
             {
                 person.Name = string.Format("{0} Sohn des {1}",
-                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
-                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+                    _vornamenMännlich.RandomElement(),
+                    _vornamenMännlich.RandomElement());
             }
         }
         #endregion
@@ -211,7 +207,6 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         protected List<string> _adelskürzel = new List<String>(new string[] { "ya", "da", "de", "di", "du", "della" });
         #endregion
 
-
         #region //---- Konstruktor ----
         public HorasischeNamenFactory() :
             base(NamenFactoryHelper.HORASISCHENAMEN, false, true, false, false)
@@ -221,13 +216,9 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #endregion
 
         #region //---- Instanzmethoden ----
-        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        public override void RegenerateName(ref PersonNurName person)
         {
-            person.Namenstyp = this.Namenstyp;
-            person.Geschlecht = geschlecht;
-            person.Stand = stand;
-
-            switch (stand) {
+            switch (person.Stand) {
                 // Unfrei gibt es nicht; Landfreie haben nur einen Vornamen
                 case Stand.stadtfrei:
                     setzeStadtfreienname(ref person);
@@ -248,16 +239,16 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
             if (person.Geschlecht == Geschlecht.weiblich)
             {
                 person.Name = string.Format("{0} {1} {2}",
-                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
-                    _adelskürzel[RandomNumberGenerator.Generator.Next(_adelskürzel.Count())],
-                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+                    _vornamenWeiblich.RandomElement(),
+                    _adelskürzel.RandomElement(),
+                    _nachnamen.RandomElement());
             }
             else // Geschlecht kann nur männlich sein
             {
                 person.Name = string.Format("{0} {1} {2}",
-                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
-                    _adelskürzel[RandomNumberGenerator.Generator.Next(_adelskürzel.Count())],
-                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+                    _vornamenMännlich.RandomElement(),
+                    _adelskürzel.RandomElement(),
+                    _nachnamen.RandomElement());
             }
         }
 
@@ -266,14 +257,14 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
             if (person.Geschlecht == Geschlecht.weiblich)
             {
                 person.Name = string.Format("{0} {1}",
-                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())],
-                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+                    _vornamenWeiblich.RandomElement(),
+                    _nachnamen.RandomElement());
             }
             else // Geschlecht kann nur männlich sein
             {
                 person.Name = string.Format("{0} {1}",
-                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())],
-                    _nachnamen[RandomNumberGenerator.Generator.Next(_nachnamen.Count())]);
+                    _vornamenMännlich.RandomElement(),
+                    _nachnamen.RandomElement());
             }
         }
 
@@ -282,12 +273,12 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
             if (person.Geschlecht == Geschlecht.weiblich)
             {
                 person.Name = string.Format("{0}",
-                    _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())]);
+                    _vornamenWeiblich.RandomElement());
             }
             else // Geschlecht kann nur männlich sein
             {
                 person.Name = string.Format("{0}",
-                    _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+                    _vornamenMännlich.RandomElement());
             }
         }
         #endregion
@@ -297,6 +288,13 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
     {
         #region //---- Felder ----
         private string weitereVornamen;
+        private delegate bool EmptyNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Namen zu steuern.
+         * Die Funktion wird bei Generierung von bis zu zwei weiteren Vornamen genutzt.
+         * Durch den wiederholten Aufruf für jeden Namen ergibt sich eine Normalverteilung.
+         */
+        private EmptyNameSelector emptyNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
         #endregion
 
         #region //---- Konstruktor ----
@@ -304,72 +302,347 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
             base(NamenFactoryHelper.SÜDLÄNDISCHENAMEN, false, true)
         {
             // erzeuge mehr Nachnamen durch das ersetzen von -a/-o im Vornamen durch (uez)
-           foreach (string neuerName in _vornamenMännlich.Where(n => n.EndsWith("o")))
-           {
-               _nachnamen.Add(neuerName.Remove(neuerName.Length - 1) + "(u)ez");
-           }
-           foreach (string neuerName in _vornamenWeiblich.Where(n => n.EndsWith("a")))
-           {
-               _nachnamen.Add(neuerName.Remove(neuerName.Length - 1) + "(u)ez");
-           }
+            foreach (string neuerName in _vornamenMännlich.Where(n => n.EndsWith("o")))
+            {
+                _nachnamen.Add(neuerName.Remove(neuerName.Length - 1) + "(u)ez");
+            }
+            foreach (string neuerName in _vornamenWeiblich.Where(n => n.EndsWith("a")))
+            {
+                _nachnamen.Add(neuerName.Remove(neuerName.Length - 1) + "(u)ez");
+            }
         }
+
+
         #endregion
 
         #region //---- Instanzmethoden ----
-        public override void RegeneratePersonNurName(ref PersonNurName person, Geschlecht geschlecht = Geschlecht.weiblich, Stand stand = Stand.stadtfrei)
+        public override void RegenerateName(ref PersonNurName person)
         {
-            base.RegeneratePersonNurName(ref person, geschlecht, stand);
+            // erzeuge zunächst einen regulären Vor/Nachnamen
+            base.RegenerateName(ref person);
 
-            
-            if (RandomNumberGenerator.Generator.Next(2)==1)
+            // erzeuge ein bis drei weitere Vornamen
+            if (person.Geschlecht == Geschlecht.weiblich)
             {
-                // zwei weiterer Vorname
-                weitereVornamen = (person.Geschlecht == Geschlecht.weiblich) ?
-                    string.Format("{0} {1} ", _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())], _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())]) :
-                    string.Format("{0} {1} ", _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())], _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+                weitereVornamen = string.Format("{0} {1} {2} ",
+                    _vornamenWeiblich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement());
             }
             else
             {
-                //ein weiterer Vorname
-                weitereVornamen = (person.Geschlecht == Geschlecht.weiblich) ?
-                    string.Format("{0} ", _vornamenWeiblich[RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count())]) :
-                    string.Format("{0} ", _vornamenMännlich[RandomNumberGenerator.Generator.Next(_vornamenMännlich.Count())]);
+                weitereVornamen = string.Format("{0} {1} {2} ",
+                    _vornamenMännlich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement());
             }
-            person.Name = weitereVornamen + person.Name;
+
+            // bereinige weitereVornamen und verkette
+            person.Name = weitereVornamen.EntferneMehrfacheLeerzeichen() + person.Name;
         }
         #endregion
     }
 
-    //public class albernischenamenfactory : namenfactoryvornamenachname
-    //{
-    //    #region //---- konstruktor ----
-    //    public albernischenamenfactory() :
-    //        base(namenfactoryhelper.albernischenamen, false, true, false, true)
-    //    {
+    public class ZyklopäischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        protected List<string> _städtenamen = new List<String>(new string[] { "Akiras", "Sienna", "Merymakon", "Rhetis", "Garén", "Mura", "Drum", "Athyros", "Tul'ka'var", "Tyrakos", "Balträa", "Aryios", "Kutaki", "Ferein", "Rhun", "Putras", "Kemethis", "Ayodon", "Teremon", "Skebos", "Laryios", "Palakar", "Lyios", "Rhetis", "Garén" });
+        protected List<string> _adelskürzel = new List<String>(new string[] { "dylli", "dyll" });
+        #endregion
 
-    //    }
-    //    #endregion
+        #region //---- Konstruktor ----
+        public ZyklopäischeNamenFactory() :
+            base(NamenFactoryHelper.ZYKLOPÄISCHENAMEN, false, true) { }
+        #endregion
 
-    //    #region //---- instanzmethoden ----
-    //    public override void regeneratepersonnurname(ref personnurname person, geschlecht geschlecht = geschlecht.weiblich, stand stand = stand.stadtfrei)
-    //    {
-    //        person.namenstyp = this.namenstyp;
-    //        person.geschlecht = geschlecht;
-    //        person.stand = stand;
-    //        if (vornamenweiblichfüralle || geschlecht == geschlecht.weiblich)
-    //        {
-    //            person.name = string.format("{0} {1}",
-    //                _vornamenweiblich[randomnumbergenerator.generator.next(_vornamenweiblich.count())],
-    //                _nachnamen[randomnumbergenerator.generator.next(_nachnamen.count())]);
-    //        }
-    //        else // geschlecht kann nur männlich sein
-    //        {
-    //            person.name = string.format("{0} {1}",
-    //                _vornamenmännlich[randomnumbergenerator.generator.next(_vornamenmännlich.count())],
-    //                _nachnamen[randomnumbergenerator.generator.next(_nachnamen.count())]);
-    //        }
-    //    }
-    //    #endregion
-    //}
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            switch (person.Stand)
+            {
+                // Unfrei gibt es nicht; Landfreie haben nur einen Vornamen
+                case Stand.stadtfrei:
+                    setzeStadtfreienname(ref person);
+                    break;
+                case Stand.adelig:
+                    setzeAdelsname(ref person);
+                    break;
+                case Stand.unfrei:
+                case Stand.landfrei:
+                default:
+                    setzeLandfreienname(ref person);
+                    break;
+            }
+        }
+
+        private void setzeAdelsname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1} A' {2} {3} {4}",
+                    _vornamenWeiblich.RandomElement(),
+                    _nachnamen.RandomElement(),
+                    _städtenamen.RandomElement(),
+                    _adelskürzel.RandomElement(),
+                    _städtenamen.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1} A' {2} {3} {4}",
+                    _vornamenMännlich.RandomElement(),
+                    _nachnamen.RandomElement(),
+                    _städtenamen.RandomElement(),
+                    _adelskürzel.RandomElement(),
+                    _städtenamen.RandomElement());
+            }
+        }
+
+        private void setzeStadtfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenWeiblich.RandomElement(),
+                    _nachnamen.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenMännlich.RandomElement(),
+                    _nachnamen.RandomElement());
+            }
+        }
+
+        private void setzeLandfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0}",
+                    _vornamenWeiblich.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0}",
+                    _vornamenMännlich.RandomElement());
+            }
+        }
+        #endregion
+    }
+
+    public class WeidenerNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private delegate bool EmptyNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Namen zu steuern.
+         * Die Funktion wird bei Generierung von bis zu zwei weiteren Vornamen genutzt.
+         * Durch den wiederholten Aufruf für jeden Namen ergibt sich eine Normalverteilung.
+         */
+        private EmptyNameSelector emptyNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        /**
+         * Funktion, die die Auswahl eines Nachnamens anstatt eines Familienstammsitz steuert
+         */
+        private EmptyNameSelector nachnamenSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public WeidenerNamenFactory() :
+            base(NamenFactoryHelper.WEIDENERNAMEN, false, true)
+        {
+
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            switch (person.Stand)
+            {
+                case Stand.stadtfrei:
+                    setzeStadtfreienname(ref person);
+                    break;
+                case Stand.adelig:
+                    setzeAdelsname(ref person);
+                    break;
+                case Stand.landfrei:
+                    setzeLandfreienname(ref person);
+                    break;
+                case Stand.unfrei:
+                default:
+                    setzeUnfreienname(ref person);
+                    break;
+            }
+        }
+
+        /**
+         * Adelsnamen erzeugen: 
+         * - Einen oder mehrere Vornamen (bis zu 3)
+         * - Nachname oder Familienstammsitz
+         * - "von <Geburtsort oder Lehen>"
+         */
+        private void setzeAdelsname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1} {2} {3} von {4}",
+                    _vornamenWeiblich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement(),
+                    nachnamenSelector() ? _nachnamen.RandomElement() : "<Ort: Familienstammsitz>",
+                    "<Geburtsort oder Lehen>").EntferneMehrfacheLeerzeichen();
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1} {2} {3} von {4}",
+                    _vornamenMännlich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement(),
+                    nachnamenSelector() ? _nachnamen.RandomElement() : "<Ort: Familienstammsitz>",
+                    "<Geburtsort oder Lehen>").EntferneMehrfacheLeerzeichen();
+            }
+        }
+
+        private void setzeStadtfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenWeiblich.RandomElement(),
+                    _nachnamen.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenMännlich.RandomElement(),
+                    _nachnamen.RandomElement());
+            }
+        }
+
+        private void setzeLandfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} von <Ort>",
+                    _vornamenWeiblich.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} von <Ort>",
+                    _vornamenMännlich.RandomElement());
+            }
+        }
+
+        private void setzeUnfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} aus <Ort>",
+                    _vornamenWeiblich.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} aus <Ort>",
+                    _vornamenMännlich.RandomElement());
+            }
+        }
+        #endregion
+    }
+
+    public class NostrischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private delegate bool EmptyNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Namen zu steuern.
+         * Die Funktion wird bei Generierung von bis zu zwei weiteren Vornamen genutzt.
+         * Durch den wiederholten Aufruf für jeden Namen ergibt sich eine Normalverteilung.
+         */
+        private EmptyNameSelector emptyNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public NostrischeNamenFactory() :
+            base(NamenFactoryHelper.NOSTRISCHENAMEN, false, true)
+        {
+
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            switch (person.Stand)
+            {
+                case Stand.stadtfrei:
+                    setzeStadtfreienname(ref person);
+                    break;
+                case Stand.adelig:
+                    setzeAdelsname(ref person);
+                    break;
+                //keine Unfreien Nostrianer
+                case Stand.landfrei:
+                case Stand.unfrei:
+                default:
+                    setzeLandfreienname(ref person);
+                    break;
+            }
+        }
+
+        private void setzeAdelsname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1} {2} von {3}-{4}",
+                    _vornamenWeiblich.RandomElement().Replace("(", "").Replace(")", ""),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement().Replace("(", "").Replace(")", ""),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement().Replace("(", "").Replace(")", ""),
+                    _nachnamen.RandomElement(),
+                    "<Stammsitz>").EntferneMehrfacheLeerzeichen();
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1} {2} von {3}-{4}",
+                    _vornamenMännlich.RandomElement().Replace("(", "").Replace(")", ""),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement().Replace("(", "").Replace(")", ""),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement().Replace("(", "").Replace(")", ""),
+                    _nachnamen.RandomElement(),
+                    "<Stammsitz>").EntferneMehrfacheLeerzeichen();
+            }
+        }
+
+        private void setzeStadtfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenWeiblich.RandomElement().Replace("(","").Replace(")",""),
+                    _nachnamen.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenMännlich.RandomElement().Replace("(", "").Replace(")", ""),
+                    _nachnamen.RandomElement());
+            }
+        }
+
+        private void setzeLandfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenWeiblich.RandomElement(),
+                    _nachnamen.RandomElement());
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1}",
+                    _vornamenMännlich.RandomElement(),
+                    _nachnamen.RandomElement());
+            }
+        }
+        #endregion
+    }
+
     #endregion
 }

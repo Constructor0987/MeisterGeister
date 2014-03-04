@@ -176,6 +176,97 @@
         </Paragraph>
     </FlowDocument>
 
+    <FlowDocument x:Key="Zyklopäische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Zyklopäische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            für Menschen und Zyklopen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die meisten ZyklopäerInnen tragen nur ihren Vornamen. Wird ein Nachname verlangt, so geben sie meist den
+            Namen ihres Wohnortes mit vorangestelltem “von” an (Rahjenysios von Praiokarnassos, Rondrariadne von
+            Traviakleia). In seltenen Fällen wird der Name eines Elternteils angegeben (“Sohn der/des ...”, “Tochter des/der
+            ...”). Einige benutzen allerdings auch Nachnamen wie "Phyrikos", "Sphareïos", "Uyis" oder "Pydoctis".
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Adelsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Adlige
+            nennen sich mit dem Partikel “a” nach ihrem Wohnort oder Lehen und hängen mit “dyll” oder “dylli” den
+            Familienstammsitz an: Alriksander A'Phyros dylli Aryios wohnt in Phyros und kommt aus Aryios.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Weidener Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Weidener Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Namen wie in Weiden kann man auch für Weiß-Tobrien, Greifenfurt und Teile Andergasts verwenden.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Adeligen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die Namen der Adligen des weidener Landes setzen sich zusammen aus einem oder mehreren Vornamen, dem
+            Familiennamen oder Namen des Familien-Stammsitzes, einem eingeschobenen “von” und schließlich dem Namen
+            des eigenen Lehens oder Geburtsorts; Beispiele: Raugunde Rondragabund Leuefrau Weißenburg von Hollerhag,
+            Josold Alweninger von Blaubinge.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Stadt- Land- und Unfreien
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die <Italic>Stadtfreien</Italic> tragen einen Vor- und einen Nachnamen wie beispielsweise:
+            Feengunde Schmiedefrau oder Giselwulf Erlenfold.
+            <LineBreak />
+            Die <Italic>Landfreien</Italic> nennen sich nach ihrem Wohnort, mit
+            eingeschobenem "von" zwischen Vor- und Ortsnamen, also z.B.: Peraindis von Braunenklamm oder Eichbart von
+            Mittenberge.
+            <LineBreak />
+            Die <Italic>Leibeigenen</Italic> ersetzen das "von" der Freien durch ein "aus": Gundel aus Erlenkuhl, Luppe aus
+            Krammetsweiler.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Ortsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die meisten Nachnamen eignen sich auch als Ortsnamen.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Nostrische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Nostrische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Adeligen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Das nostrische Lehenssystem ähnelt dem des Mittelreichs, kennt aber viele zusätzliche Titel wie etwa "Bombast",
+            "Wojwod" und "Enormität", die teils mit Landbesitz verbunden sind, teils nicht. Adlige tragen meist mehrere
+            Vornamen und fügen mit "von" den Familiennamen an und mit Bindestrich den Stammsitz: Gasparyn Tommelian
+            von Wirth-Kendrar, Ulse Linai Triumfina von Hochrößler-Aldenburg.
+            <LineBreak />
+            <Italic>wichtige Adelsfamilien:</Italic> Adersin, Karymea, Rheideryn, Sappenstiel, Smyden (kgl.), Storback (Salza), Wirth
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Bauern
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Landleute tragen gewöhnlich einen einzelnen Vornamen, der auch noch abgekürzt wird. Nachnamen ergeben sich dann
+            meist aus dem Wohnort (nicht dem Namen des Dorfes), z.B. Sine van der Veer, Valt ob der Wurt.
+        </Paragraph>
+    </FlowDocument>
+    
     <FlowDocument x:Key="Albernische Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
             Zahori Namen
