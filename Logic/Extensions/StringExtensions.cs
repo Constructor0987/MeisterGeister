@@ -38,5 +38,13 @@ namespace MeisterGeister.Logic.Extensions
                 return m.Groups[2].Value.Trim();
             return null;
         }
+
+        /// <summary>
+        /// Entfernt mehrfache Leerzeichen aus einem String. Diese werden durch ein einfaches ersetzt.
+        /// </summary>
+        public static string EntferneMehrfacheLeerzeichen(this string str)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(str, "[ ]+", " ");
+        }
     }
 }

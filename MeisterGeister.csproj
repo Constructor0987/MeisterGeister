@@ -181,6 +181,7 @@
     <Compile Include="Logic\Einstellung\EinstellungChangedEventHandler.cs" />
     <Compile Include="Logic\Extensions\ExtendedObservableCollection.cs" />
     <Compile Include="Logic\Extensions\FileExtensions.cs" />
+    <Compile Include="Logic\Extensions\ListExtensions.cs" />
     <Compile Include="Logic\Extensions\TypeExtensions.cs" />
     <Compile Include="Logic\Extensions\StringExtensions.cs" />
     <Compile Include="Logic\Extensions\IntExtenstions.cs" />
