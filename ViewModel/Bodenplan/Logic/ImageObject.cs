@@ -37,6 +37,12 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             ZDisplayY = y - 10;
         }
 
+        //Objectname
+        public override string ObjectName
+        {
+            get { return "Bildobjekt"; }
+        }
+
         public double ObjectSize
         {
             get { return _objectSize; }

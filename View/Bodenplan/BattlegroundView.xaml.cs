@@ -222,7 +222,7 @@ namespace MeisterGeister.View.Bodenplan
                 if (listboxItem != null)
                 {
                     BattlegroundBaseObject o = ArenaGrid.ItemContainerGenerator.ItemFromContainer(listboxItem) as BattlegroundBaseObject;
-                    vm.SelectedObject = o;
+                    vm.SelectedObject = o; //TODO: Zugriff muss aus dem anderen Thread ausgeführt werden.
                     vm.IsMoving = true;
                     e.Handled = true;
                 }
@@ -356,6 +356,12 @@ namespace MeisterGeister.View.Bodenplan
         {
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null) vm.ClearBattleground();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null) vm.StickHeroes();
         }
     }
 }

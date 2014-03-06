@@ -23,15 +23,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _zLevel = 10;
         private double _zDisplayX = 0, _zDisplayY = 0;
         private bool _isVisible = true;
-        private string _objektName = "";
 
-        //Name
-        public string ObjektName
+        public abstract string ObjectName { get; }
+   
+        //is sticked?
+        private bool _isSticked = false;
+        public bool IsSticked
         {
-            get { return _objektName; }
+            get { return _isSticked; }
             set
             {
-                Set(ref _objektName, value);
+                _isSticked = value;
             }
         }
 

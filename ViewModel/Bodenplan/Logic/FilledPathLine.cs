@@ -98,6 +98,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             RestoreThisElementUsingXMLSource();
         }
 
+        //Objectname
+        public override string ObjectName
+        {
+            get { return "Fläche"; }
+        }
+
+
         //save point data before serialization
         public void StorePathGeometryForXMLSerialization()
         {

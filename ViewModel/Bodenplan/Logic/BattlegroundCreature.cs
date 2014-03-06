@@ -29,6 +29,12 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             MoveObject(0,0); //for initial position of ZLevel Display
         }
 
+        //Objectname
+        public override string ObjectName
+        {
+            get { return "Held/Monster"; }
+        }
+
         public double _objectSize = 1;
         public double ObjectSize
         {

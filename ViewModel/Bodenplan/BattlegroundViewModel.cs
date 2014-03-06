@@ -27,6 +27,29 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private Color _selectedColor = Colors.DarkGray, _selectedFillColor = Colors.LightGray;
         private bool _loadWithoutPictures = false, _saveWithoutPictures = false;
         private KämpferInfoListe _kaempferliste;
+        private List<BattlegroundBaseObject> stickyHeroesTempList = new List<BattlegroundBaseObject>();
+
+        //TODO Fix this, doesnt work 
+        ObservableCollection<BattlegroundBaseObject> _selectedListBoxBattlegroundObjects;
+        public ObservableCollection<BattlegroundBaseObject> SelectedListBoxBattlegroundObjects 
+        {
+            get { 
+                if(_selectedListBoxBattlegroundObjects == null)
+                {
+                    _selectedListBoxBattlegroundObjects = new ObservableCollection<BattlegroundBaseObject>();
+                    _selectedListBoxBattlegroundObjects.CollectionChanged += _selectedListBoxBattlegroundObjects_CollectionChanged;
+                }
+
+                return _selectedListBoxBattlegroundObjects; Console.WriteLine("CheckListBoxGET used"); 
+            }
+            set { _selectedListBoxBattlegroundObjects = value; Console.WriteLine("CheckListBoxSET used"); }
+        }
+
+        void _selectedListBoxBattlegroundObjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(String.Format("CollectionChanged: {0} {1}", e.Action, e.NewItems)); 
+        }
+        
 
         ObservableCollection<BattlegroundBaseObject> _battlegroundObjects;
         public ObservableCollection<BattlegroundBaseObject> BattlegroundObjects
@@ -189,6 +212,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Ressources.SetVisibilityDependetOnZLevelSelection(ref _battlegroundObjects, VisibleZLevels, IgnorZLevel);
             }
 
+        }
+
+        private string _selectedObjectsFromListBox = "";
+        public string SelectedObjectsFromListBox
+        {
+            get { return _selectedObjectsFromListBox; }
+            set
+            {
+                _selectedObjectsFromListBox = value;
+                OnPropertyChanged("SelectedObjectsFromListBox");
+                Console.WriteLine(_selectedObjectsFromListBox);
+            }
         }
 
         private List<string> _possibleZLevels = new List<string>();
@@ -673,6 +708,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void ClearBattleground()
         {
             BattlegroundObjects.Where(x => !(x is BattlegroundCreature)).ToList().ForEach(x => BattlegroundObjects.Remove(x));
+        }
+
+        public void StickHeroes()
+        {
+            foreach (var h in BattlegroundObjects)
+            {
+                if (h is Held)
+                {
+                    stickyHeroesTempList.Add(h);
+                    //BattlegroundObjects.Remove(h);
+                }
+            }
         }
 
         #region INotifyPropertyChanged

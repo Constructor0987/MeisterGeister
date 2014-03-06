@@ -20,6 +20,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         [NonSerialized]
         private PathSegmentCollection _pathSegmentCollection = new PathSegmentCollection();
 
+        //Objectname
+        public override string ObjectName
+        {
+            get { return "Linie"; }
+        }
 
         public PathLine(Point p)
         {
