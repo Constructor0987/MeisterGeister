@@ -29,7 +29,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private KämpferInfoListe _kaempferliste;
         private List<BattlegroundBaseObject> stickyHeroesTempList = new List<BattlegroundBaseObject>();
 
-        //TODO Fix this, doesnt work 
         ObservableCollection<BattlegroundBaseObject> _selectedListBoxBattlegroundObjects;
         public ObservableCollection<BattlegroundBaseObject> SelectedListBoxBattlegroundObjects 
         {
@@ -49,7 +48,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             System.Diagnostics.Debug.WriteLine(String.Format("CollectionChanged: {0} {1}", e.Action, e.NewItems)); 
         }
-        
 
         ObservableCollection<BattlegroundBaseObject> _battlegroundObjects;
         public ObservableCollection<BattlegroundBaseObject> BattlegroundObjects

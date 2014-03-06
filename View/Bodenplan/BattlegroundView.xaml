@@ -92,6 +92,7 @@
                             <Label Content="Fill Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label2" Width="56" FontSize="10" Margin="10,29,0,0" Height="28" VerticalAlignment="Top" />
                             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateLine, Mode=TwoWay}" Content="[1] Line" Name="PathLineButton" Height="25" HorizontalAlignment="Left" Width="77" VerticalAlignment="Top" />
                             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateFilledLine, Mode=TwoWay}" Content="[2] Fläche" Name="FilledPathLineButton" Height="25" HorizontalAlignment="Right" Width="77" VerticalAlignment="Top" />
+                            <!--
                             <Grid Grid.Row="4" Name="PictureButtonGrid" Grid.Column="1" Height="439" VerticalAlignment="Top" Margin="0,0,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50" />
@@ -99,7 +100,6 @@
                                     <ColumnDefinition Width="50" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <!--<RowDefinition Height="5" />-->
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="50" />
@@ -108,7 +108,10 @@
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="50" />
                                 </Grid.RowDefinitions>
-                            </Grid>
+                            </Grid>-->
+                            <ScrollViewer x:Name="MyScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="4" Grid.Column="1" Height="379" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,10,0">
+                                <WrapPanel Grid.Row="4" Grid.Column="1" Name="PictureButtonWrapPanel" Width="165" Margin="0,0,1,0"/>
+                            </ScrollViewer>
                             <Button Content="Ebene +" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="0,31,0,0" Name="ButtonEbeneHigher" VerticalAlignment="Top" Width="77" Click="ButtonEbeneHigher_Click" />
                             <Button Content="Ebene -" Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="83,31,0,0" Name="ButtonEbeneLower" VerticalAlignment="Top" Width="77" Click="ButtonEbeneLower_Click" />
                             <local:SliderWithDisplayTextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,1,0,0" x:Name="sliderWithDisplayTextBox_ZLevel" SliderValue="{Binding ZLevel, Mode=TwoWay}" VerticalAlignment="Top" SliderMinValue="0" SliderMaxValue="20" SliderLabelTextValue="Z-Level" SliderMinTextValue="0" SliderMaxTextValue="20" TickFrequencyValue="1" Width="160" Height="58" />

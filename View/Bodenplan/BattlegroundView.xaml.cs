@@ -71,9 +71,10 @@ namespace MeisterGeister.View.Bodenplan
                         }
                     };
 
-                Grid.SetRow(b,Convert.ToInt32(i/3));
-                Grid.SetColumn(b,i%3);
-                PictureButtonGrid.Children.Add(b);
+                //Grid.SetRow(b,Convert.ToInt32(i/3));
+                //Grid.SetColumn(b,i%3);
+                //PictureButtonGrid.Children.Add(b);
+                PictureButtonWrapPanel.Children.Add(b);
             }
             
         }
