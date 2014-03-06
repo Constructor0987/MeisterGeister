@@ -118,8 +118,40 @@ namespace MeisterGeister.View.Bodenplan
             if (vm != null)
             {
                 if (vm.SelectedObject != null) vm.SelectionChangedUpdateSliders();
-                //handling different possibilities based on Objects (like Line1 Button)
-                if (vm.CreateLine)
+                //handling different possibilities based on Objects (like Line1 Button) 
+                //if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
+                //{
+                //    var currenthero = vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First();
+                //    currenthero.IsSticked = false;
+                //    vm.CurrentlySelectedCreature =
+                //        vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any() ?
+                //            ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Kurzname
+                //            : "";
+                //}
+                if (vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
+                {
+                    var currentcreature = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
+                    currentcreature.IsSticked = false;
+                    /*var kreatur = vm.BattlegroundObjects.Where(x => x.IsSticked).First();
+                    if (kreatur is MeisterGeister.Model.Held) vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)kreatur).Name;
+                    else if (kreatur is MeisterGeister.Model.Gegner) vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)kreatur).Name;
+                    else vm.CurrentlySelectedCreature = "";*/
+
+                    if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
+                    {
+                        vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
+                    }
+                    else if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any())
+                    {
+                        vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
+                    }
+                    else
+                    {
+                        vm.CurrentlySelectedCreature = "";
+                    }
+                    
+                }
+                else if (vm.CreateLine)
                 {
                     _x1 = e.GetPosition(ArenaGrid).X;
                     _y1 = e.GetPosition(ArenaGrid).Y;
@@ -174,6 +206,11 @@ namespace MeisterGeister.View.Bodenplan
                     vm.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
                     var listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
                     //handling different possibilities based on Objects (like MoveObject or Hero, Create Line..)
+                    var tempstick = vm.BattlegroundObjects.Where(x=>x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).ToList();
+                    foreach (var wesen in tempstick)
+                    {
+                        ((BattlegroundCreature)wesen).MoveObject(vm.CurrentMousePositionX, vm.CurrentMousePositionY,true);
+                    }
                     if (vm.CreatingNewLine || vm.CreatingNewFilledLine)
                     {
                         _x2 = e.GetPosition(ArenaGrid).X;
@@ -359,10 +396,16 @@ namespace MeisterGeister.View.Bodenplan
             if (vm != null) vm.ClearBattleground();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonStickHeroes_Click(object sender, RoutedEventArgs e)
         {
             var vm = DataContext as BattlegroundViewModel;
-            if (vm != null) vm.StickHeroes();
+            if (vm != null && !vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any()) vm.StickHeroes();
+        }
+
+        private void ButtonSticCreatues_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null) vm.StickEnemies();
         }
     }
 }

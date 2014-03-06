@@ -26,7 +26,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureX += r.Next(0, 500);
             r = new Random();
             CreatureY += r.Next(0, 500);
-            MoveObject(0,0); //for initial position of ZLevel Display
+            MoveObject(0,0,false); //for initial position of ZLevel Display
         }
 
         //Objectname
@@ -140,10 +140,18 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             CreatureWidth = _imageOriginalWidth * factor;
         }
 
-        public void MoveObject(double deltaX, double deltaY)
+        public void MoveObject(double deltaX, double deltaY,bool stickAtCursor)
         {
-            CreatureX = CreatureX + deltaX;
-            CreatureY = CreatureY + deltaY;
+            if (stickAtCursor)
+            {
+                CreatureX = deltaX;
+                CreatureY = deltaY;
+            }
+            else
+            {
+                CreatureX = CreatureX + deltaX;
+                CreatureY = CreatureY + deltaY;
+            }
             ZDisplayX = CreatureX - 10;
             ZDisplayY = CreatureY - 10;
             CreatureNameX = CreatureX - 40;

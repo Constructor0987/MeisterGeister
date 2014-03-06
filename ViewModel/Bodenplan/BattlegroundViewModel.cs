@@ -29,19 +29,10 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private KämpferInfoListe _kaempferliste;
         private List<BattlegroundBaseObject> stickyHeroesTempList = new List<BattlegroundBaseObject>();
 
-        ObservableCollection<BattlegroundBaseObject> _selectedListBoxBattlegroundObjects;
-        public ObservableCollection<BattlegroundBaseObject> SelectedListBoxBattlegroundObjects 
+        public List<BattlegroundBaseObject> StickyListBoxBattlegroundObjects 
         {
-            get { 
-                if(_selectedListBoxBattlegroundObjects == null)
-                {
-                    _selectedListBoxBattlegroundObjects = new ObservableCollection<BattlegroundBaseObject>();
-                    _selectedListBoxBattlegroundObjects.CollectionChanged += _selectedListBoxBattlegroundObjects_CollectionChanged;
-                }
-
-                return _selectedListBoxBattlegroundObjects; Console.WriteLine("CheckListBoxGET used"); 
-            }
-            set { _selectedListBoxBattlegroundObjects = value; Console.WriteLine("CheckListBoxSET used"); }
+            get { return BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); }
+            set { value = BattlegroundObjects.Where(x => x is Held && x.IsSticked).ToList(); OnPropertyChanged("StickyListBoxBattlegroundObjects"); }
         }
 
         void _selectedListBoxBattlegroundObjects_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -182,6 +173,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 _leftShiftPressed = value;
                 OnPropertyChanged("LeftShiftPressed");
             }
+        }
+
+        private String _currentlySelectedCreature = "";
+        public String CurrentlySelectedCreature
+        {
+            get { return _currentlySelectedCreature; }
+            set { _currentlySelectedCreature = value; OnPropertyChanged("CurrentlySelectedCreature"); }
         }
 
         //get / set ZLevel
@@ -575,7 +573,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 }
                 else if (SelectedObject is BattlegroundCreature)
                 {
-                    ((BattlegroundCreature)SelectedObject).MoveObject(xNew - xOld, yNew - yOld);
+                    ((BattlegroundCreature)SelectedObject).MoveObject(xNew - xOld, yNew - yOld,false);
                 }
             }
         }
@@ -710,14 +708,28 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         public void StickHeroes()
         {
+            if (BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any()) return;
             foreach (var h in BattlegroundObjects)
             {
                 if (h is Held)
                 {
-                    stickyHeroesTempList.Add(h);
-                    //BattlegroundObjects.Remove(h);
+                    h.IsSticked = true;
                 }
             }
+            CurrentlySelectedCreature = ((MeisterGeister.Model.Held)BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;
+        }
+
+        public void StickEnemies()
+        {
+            if (BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any()) return;
+            foreach (var h in BattlegroundObjects)
+            {
+                if (h is Gegner)
+                {
+                    h.IsSticked = true;
+                }
+            }
+            CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).First()).Name;
         }
 
         #region INotifyPropertyChanged
