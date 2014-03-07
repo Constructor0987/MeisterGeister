@@ -105,11 +105,9 @@ namespace MeisterGeister.View.Bodenplan
         }
 
         //Zoom Funktion
-        private void ArenaGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void ArenaGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e) 
         {
-            //if (e.Delta > 0) uiScaleSlider.Value += 0.1;
-            //else uiScaleSlider.Value -= 0.1;
-            //_zoomChanged = true;
+
         }
 
         private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

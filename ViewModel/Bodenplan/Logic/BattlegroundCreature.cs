@@ -131,7 +131,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public void LoadBattlegroundPortrait(string portraitFilename, bool ishero)
         {
             CreaturePictureUrl = ICON_DIR + "fragezeichen.png";
-            if(portraitFilename != null) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
+            if(portraitFilename != null ) if(portraitFilename.Length!=0) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
         }
 
         public void ScalePicture(double factor)

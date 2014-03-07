@@ -709,6 +709,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void StickHeroes()
         {
             if (BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner && x.IsSticked).Any()) return;
+            if (!BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held).Any()) return;
             foreach (var h in BattlegroundObjects)
             {
                 if (h is Held)
@@ -722,6 +723,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public void StickEnemies()
         {
             if (BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any()) return;
+            if (!BattlegroundObjects.Where(x => x is MeisterGeister.Model.Gegner).Any()) return;
             foreach (var h in BattlegroundObjects)
             {
                 if (h is Gegner)
