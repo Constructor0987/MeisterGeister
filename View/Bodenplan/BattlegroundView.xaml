@@ -29,8 +29,8 @@
                 <TextBlock Text="Oben" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
             <Border Style="{DynamicResource ControlContentBorder}">
-                <DockPanel Margin="9,12,9,0" Name="dockPanel1" Background="#0F000000" Height="113" VerticalAlignment="Top">
-                    <Grid Name="grid2" Width="1256" HorizontalAlignment="Left" Height="112" VerticalAlignment="Bottom" Margin="0,0,0,1">
+                <DockPanel Margin="-1,12,-1,0" Name="dockPanel1" Background="#0F000000" Height="113" VerticalAlignment="Top">
+                    <Grid Name="grid2" Width="1278" HorizontalAlignment="Left" Height="112" VerticalAlignment="Bottom" Margin="0,0,0,1">
                         <!--<Slider x:Name="uiScaleSlider" Value="1" Minimum="0.1" Maximum="4" Height="34" Width="200" Margin="443,36,613,43" />-->
                         <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="6,7,0,0" Name="border1" VerticalAlignment="Top" Width="110">
                             <Grid Margin="0,0,-1,0">
@@ -40,7 +40,7 @@
                         </Border>
                         <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,13,0,0" Name="checkBox4" VerticalAlignment="Top" />
                         <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="133,34,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
-                        <Border BorderBrush="Silver" BorderThickness="1" Height="97" HorizontalAlignment="Left" Margin="276,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
+                        <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="246,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
                             <Grid Margin="0,0,9,0">
                                 <Button Content="Speichern" Width="75" Margin="10,35,0,0" Height="25" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
                                 <Button Content="Laden" Width="75" Margin="10,5,0,0" Height="25" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left"/>
@@ -49,12 +49,12 @@
                                 <Button Content="Reset" Width="75" Margin="10,0,124,5" Height="25" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
                             </Grid>
                         </Border>
-                        <xctk:CheckListBox Height="97" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="1136,10,0,0" />
-                        <Border Margin="614,0,385,0" BorderBrush="Silver" BorderThickness="1">
+                        <xctk:CheckListBox Height="100" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="1136,7,0,0" />
+                        <Border Margin="471,7,0,5" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Width="252">
                             <Grid>
-                                <Label Content="Tool zum plazieren von Helden und Gegnern"  Margin="0,10,0,74"></Label>
+                                <Label Content="Tool zum plazieren von Helden und Gegnern"  Margin="0,0,0,69"></Label>
                                 <Button Content="Stick Helden" Margin="10,72,160,0" Height="22" VerticalAlignment="Top" Click="ButtonStickHeroes_Click"/>
-                                <TextBox Height="26" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" Margin="10,41,10,0" IsEnabled="False" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
+                                <TextBox Height="26" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentlySelectedCreature}" VerticalAlignment="Top" Margin="10,34,10,0" IsEnabled="False" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" RenderTransformOrigin="0.5,0.5"/>
                                 <Button Content="Stick Kreaturen" Margin="151,72,10,0" Height="22" VerticalAlignment="Top" Click="ButtonSticCreatues_Click"/>
                             </Grid>
                         </Border>
