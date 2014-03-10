@@ -641,12 +641,50 @@ namespace MeisterGeister.Model.Service
 #endif
         }
 
+        private void AddAllTitlesToDictionary(Audio_Theme theme, Dictionary<Guid, Audio_Titel> titles, List<Audio_Playlist_Titel> nullTitle)
+        {
+            foreach(var playlist in theme.Audio_Playlist)
+            {
+                foreach(var pt in playlist.Audio_Playlist_Titel)
+                {
+                    if (pt.Audio_Titel == null)
+                        nullTitle.Add(pt);
+                    else
+                    {
+                        if (!titles.ContainsKey(pt.Audio_Titel.Audio_TitelGUID))
+                            titles.Add(pt.Audio_Titel.Audio_TitelGUID, pt.Audio_Titel);
+                    }
+                }
+            }
+            foreach(var subtheme in theme.Audio_Theme1)
+            {
+                AddAllTitlesToDictionary(subtheme, titles, nullTitle);
+            }
+        }
 
         public bool InsertOrUpdateAudio(Audio_Theme aTheme)
         {
             LoadAudioUserData();
 
             DeleteAudioData(aTheme);
+
+            //Gather all Titles and null entries
+            Dictionary<Guid, Audio_Titel> titles = new Dictionary<Guid, Audio_Titel>();
+            List<Audio_Playlist_Titel> nullTitles = new List<Audio_Playlist_Titel>();
+            AddAllTitlesToDictionary(aTheme, titles, nullTitles);
+            //and repair them
+            foreach(var title in nullTitles)
+            {
+                if (titles.ContainsKey(title.Audio_TitelGUID))
+                    title.Audio_Titel = titles[title.Audio_TitelGUID];
+                else
+                {
+                    //TODO Import Log oder so
+                    System.Diagnostics.Debug.WriteLine(String.Format("Audio Titel {0} aus Playlist {1} konnte nicht gefunden werden und wird deshalb nicht importiert.", title.Audio_TitelGUID, title.Audio_Playlist.Name));
+                    title.Audio_Playlist.Audio_Playlist_Titel.Remove(title);
+                }
+            }
+
             Audio_Theme output = Context.AttachObjectGraph(aTheme,
                     h => h.Audio_Playlist,
                     h => h.Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
@@ -669,9 +707,8 @@ namespace MeisterGeister.Model.Service
                 //5
                     h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1,
                     h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Playlist,
-                    h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel
-                    );
-            /*,
+                    h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
+            
                 //6
                     h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1,
                     h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Playlist,
@@ -680,24 +717,26 @@ namespace MeisterGeister.Model.Service
                     h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1,
                     h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Playlist,
                     h => h.Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Theme1.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel
-                    );
-                    /*h => h.Audio_Theme1,
-                    h => h.Audio_Theme1.First().Audio_Playlist,
-                    h => h.Audio_Theme1.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
-                    h => h.Audio_Theme2,
-                    h => h.Audio_Theme2.First().Audio_Playlist,
-                    h => h.Audio_Theme2.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,        
-                    //Child-Ebene 1
-                    h => h.Audio_Theme1,
-                    h => h.Audio_Theme1.First().Audio_Playlist,
-                    h => h.Audio_Theme1.First().Audio_Playlist.First().Audio_Playlist_Titel.First().Audio_Titel,
-                    
-                );*/
+            );
+
 #if !DEBUG
             try
             {
 #endif
-            Save();
+
+            try
+            {
+                Save();
+            }
+            catch(System.Data.Entity.Validation.DbEntityValidationException dbe)
+            {
+                throw;
+            }
+            catch(System.Data.Entity.Core.UpdateException ue)
+            {
+                //Context.GetEntityKeyFromPrimaryKey(ue.StateEntries[0].Entity);
+                throw;
+            }
 #if !DEBUG
         }
             catch (Exception e)
@@ -808,28 +847,8 @@ namespace MeisterGeister.Model.Service
                 else
                 if (at != null && at.Audio_ThemeGUID == Guid.Parse("00000000-0000-0000-0000-00000000A11E") && soll == "")
                 {
-                    //playlist without theme
-                    int i  = 1;
-                    int cnt = at.Audio_Playlist.Where(pl => pl.Audio_Theme.Count == 1).
-                        Where(pl => pl.Audio_Theme.ElementAt(0).Audio_ThemeGUID == at.Audio_ThemeGUID).Count();
-                    foreach (Audio_Playlist aPlaylist in at.Audio_Playlist.Where(pl => pl.Audio_Theme.Count == 1).
-                        Where(pl => pl.Audio_Theme.ElementAt(0).Audio_ThemeGUID == at.Audio_ThemeGUID).ToList())
-                    {
-                        Global.SetIsBusy(true, string.Format("Importiere Playlist " + i + " von " + cnt));
-                        i++;
-                        InsertOrUpdateAudio(aPlaylist); 
-                    }
-
-                    //all themes except itself
-                    i  = 1;
-                    cnt = at.Audio_Theme2.Where(t => t.Audio_ThemeGUID != at.Audio_ThemeGUID).Count();
-                    foreach (Audio_Theme aTheme in at.Audio_Theme2.Where(t => t.Audio_ThemeGUID != at.Audio_ThemeGUID).ToList())
-                    {
-                        Global.SetIsBusy(true, string.Format("Importiere Theme " + i + " von " + cnt));
-                        i++;
-                        InsertOrUpdateAudio(aTheme);
-                    }
-                    return at.Audio_ThemeGUID;
+                    if(InsertOrUpdateAudio(at))
+                        return at.Audio_ThemeGUID;
                 }
                 else
                 if (at != null)
