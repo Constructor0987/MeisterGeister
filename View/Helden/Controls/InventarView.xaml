@@ -350,137 +350,13 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition />                                    
+                                    <ColumnDefinition />
                                     <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="btnZonenOverlay" Grid.Column="8" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ToolTip="Zonenrüstung setzen">
-                                    <!-- Click="ButtonZonenRsControl_Click"-->
-                                    <Grid>
-										<Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top" Margin="34,-33.75,0,0" ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
-                                        <StackPanel>											
-                                            <Image Margin="1" Height="50">
-                                                <Image.Source>
-                                                    <BitmapImage DecodePixelHeight="50" UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                                                </Image.Source>
-                                            </Image>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <StackPanel Background="#389E804D">
-                                            <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" />
-                                            <Grid Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <Grid.Background>
-                                                    <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
-                                                </Grid.Background>
-                                                <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
-                                                <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" />
-                                                <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedGegnerBase.RS[Kopf]}" />
-                                                <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedGegnerBase.RS[Brust]}" />
-                                                <ViewGeneral:IntBox Margin="130,59,62,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedGegnerBase.RS[Rücken]}" />
-                                                <ViewGeneral:IntBox Margin="17,95,175,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedGegnerBase.RS[ArmR]}" />
-                                                <ViewGeneral:IntBox Margin="177,95,15,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedGegnerBase.RS[ArmL]}" />
-                                                <ViewGeneral:IntBox Margin="81,125,84,118" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedGegnerBase.RS[Bauch]}" />
-                                                <ViewGeneral:IntBox Margin="40,179,125,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
-                                                <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
-                                            </Grid>
-                                        </StackPanel>
-                                    </Button.ToolTip>
-                                </Button>
-                                <StackPanel Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label Content="Tragkraft:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                    <Label Content="Gewicht:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                    <Label Content="Behinderung:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                    <Label Content="Überlastung:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
-                                </StackPanel>
 
-                                <StackPanel Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label Content="{Binding AktuelleTragkraft}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"  />
-                                    <Label Content="{Binding AktuellesGewicht}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                    <ViewGeneral:IntBox Margin="0,1.3" MinValue="0" MinWidth="20" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Content="{Binding AktuellesGewichtProzentResultierendeBE}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                        <Label Content="/" Height="25" Margin="0"/>
-                                        <Label Content="{Binding AktuellesGewichtInProzentZuTragkraft}" Margin="0" FontFamily="Segoe UI" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                        <Label Content="%" Height="25" Margin="0"/>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label Content="Attacke:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                    <Label Content="Parade:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                    <Label Content="Intuition:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                    <Label Content="RS-Gesamt"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label Content="{Binding SelectedHeld.AT}"  Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                    <Label Content="{Binding SelectedHeld.PA}"  Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                    <Label Content="{Binding SelectedHeld.IN}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                    <Grid>
-										<StackPanel Orientation="Horizontal">
-											<ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}" Height="25" />
-											<Image Height="16" Width="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill"  ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
-										</StackPanel>
-                                    </Grid>
-                                </StackPanel>
-                                <StackPanel Grid.Column="4" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label  FontWeight="Bold" >
-                                        <Label.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="Zonen-RS: " />
-
-                                            </Grid>
-                                        </Label.Content>
-                                    </Label>
-                                </StackPanel>
-                                <StackPanel Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left">
-                                    <Label>
-                                        <Label.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="13"/>                                                    
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding SelectedHeld.RS[Kopf],Mode=TwoWay}" ToolTip="Kopf" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="1" Text="|" />
-                                                <TextBlock Grid.Column="2" Text="{Binding SelectedHeld.RS[Brust]}" ToolTip="Brust" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="3" Text="|" />
-                                                <TextBlock Grid.Column="4" Text="{Binding SelectedHeld.RS[Rücken]}" ToolTip="Rücken" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="5" Text="|" />
-                                                <TextBlock Grid.Column="6" Text="{Binding SelectedHeld.RS[Bauch]}" ToolTip="Bauch" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="7" Text="|" />
-                                                <TextBlock Grid.Column="8" Text="{Binding SelectedHeld.RS[ArmL]}" ToolTip="ArmL" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="9" Text="|" />
-                                                <TextBlock Grid.Column="10" Text="{Binding SelectedHeld.RS[ArmR]}" ToolTip="ArmR" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="11" Text="|" />
-                                                <TextBlock Grid.Column="12" Text="{Binding SelectedHeld.RS[BeinL]}" ToolTip="BeinL" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="13" Text="|" />
-                                                <TextBlock Grid.Column="14" Text="{Binding SelectedHeld.RS[BeinR]}" ToolTip="BeinR" HorizontalAlignment="Center"/>
-                                                <TextBlock Grid.Column="15" Text="|" />
-                                                <TextBlock Grid.Column="16" Text="{Binding SelectedHeld.RS[Gesamt],Mode=TwoWay}" ToolTip="Gesamt" HorizontalAlignment="Center"/>
-                                            </Grid>
-                                        </Label.Content>
-                                    </Label>                                    
-                                </StackPanel>
-                                <Grid x:Name="RuestungZonen" Grid.Column="0">
-                                    <Grid>
-                                        <Grid Height="120" VerticalAlignment="Top" Visibility="Hidden" d:IsLocked="True">
+                                <Grid x:Name="Schnellauswahl" Grid.Column="0" d:IsLocked="True">
+                                    <Grid >
+                                        <Grid  Height="120" VerticalAlignment="Top" Visibility="Collapsed">
                                             <StackPanel ToolTipService.ToolTip="Kopf" HorizontalAlignment="Left" Height="30"  VerticalAlignment="Top" Orientation="Horizontal" Width="30" Margin="0,0,0,0" >
                                                 <Border Background="#CC000000" Width="30" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                                     <Image Source="/DSA MeisterGeister;component/Images/Koerperzonen/kopf.png" Stretch="Fill" Margin="0,0,0,0" >
@@ -594,20 +470,140 @@
                                         </Grid>
                                     </Grid>
                                 </Grid>
+                                <StackPanel Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                    <Label Content="Tragkraft:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label Content="Gewicht:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label Content="Behinderung:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label Content="Überlastung:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                    <Label Content="{Binding AktuelleTragkraft}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"  />
+                                    <Label Content="{Binding AktuellesGewicht}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                    <ViewGeneral:IntBox Margin="0,1.3" MinValue="0" MinWidth="20" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="{Binding AktuellesGewichtProzentResultierendeBE}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                        <Label Content="/" Height="25" Margin="0"/>
+                                        <Label Content="{Binding AktuellesGewichtInProzentZuTragkraft}" Margin="0" FontFamily="Segoe UI" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                        <Label Content="%" Height="25" Margin="0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                    <Label Content="Attacke:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label Content="Parade:"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label Content="Intuition:" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                    <Label Content="RS-Gesamt"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                    <Label Content="{Binding SelectedHeld.AT}"  Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                    <Label Content="{Binding SelectedHeld.PA}"  Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                    <Label Content="{Binding SelectedHeld.IN}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}" Height="25" />
+                                            <Image Height="16" Width="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill"  ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                    <Label  FontWeight="Bold" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="Zonen-RS: " />
+
+                                        </Grid>
+                                    </Label>
+                                </StackPanel>
+                                <StackPanel Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                    <Label>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="13"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding SelectedHeld.RS[Kopf], Mode=TwoWay}" ToolTip="Kopf" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="|" />
+                                            <TextBlock Grid.Column="2" Text="{Binding SelectedHeld.RS[Brust]}" ToolTip="Brust" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="3" Text="|" />
+                                            <TextBlock Grid.Column="4" Text="{Binding SelectedHeld.RS[Rücken]}" ToolTip="Rücken" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="5" Text="|" />
+                                            <TextBlock Grid.Column="6" Text="{Binding SelectedHeld.RS[Bauch]}" ToolTip="Bauch" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="7" Text="|" />
+                                            <TextBlock Grid.Column="8" Text="{Binding SelectedHeld.RS[ArmL]}" ToolTip="ArmL" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="9" Text="|" />
+                                            <TextBlock Grid.Column="10" Text="{Binding SelectedHeld.RS[ArmR]}" ToolTip="ArmR" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="11" Text="|" />
+                                            <TextBlock Grid.Column="12" Text="{Binding SelectedHeld.RS[BeinL]}" ToolTip="BeinL" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="13" Text="|" />
+                                            <TextBlock Grid.Column="14" Text="{Binding SelectedHeld.RS[BeinR]}" ToolTip="BeinR" HorizontalAlignment="Center"/>
+                                            <TextBlock Grid.Column="15" Text="|" />
+                                            <TextBlock Grid.Column="16" Text="{Binding SelectedHeld.RS[Gesamt], Mode=TwoWay}" ToolTip="Gesamt" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                    </Label>
+                                </StackPanel>
+                                <Grid x:Name="ZoenenRuestungOeffnen" Grid.Column="6">
+                                    <Button x:Name="btnZonenOverlay" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ToolTip="Zonenrüstung setzen">
+                                        <Button.ToolTip>
+                                            <StackPanel Background="#389E804D">
+                                                <TextBlock Text="Klicken, um Zonenrüstungsschutz einzustellen..." FontWeight="Bold" Margin="10" />
+                                                <Grid Height="266" Width="257" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Grid.Background>
+                                                        <ImageBrush ImageSource="/DSA MeisterGeister;component/Images/Koerperzonen/koerperzonen_01.png" Stretch="Uniform" TileMode="None" />
+                                                    </Grid.Background>
+                                                    <Image Width="45" Margin="15,15" VerticalAlignment="Top" HorizontalAlignment="Left" ToolTip="Rüstungsschutz" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
+                                                    <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" />
+                                                    <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedGegnerBase.RS[Kopf]}" />
+                                                    <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedGegnerBase.RS[Brust]}" />
+                                                    <ViewGeneral:IntBox Margin="130,59,62,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedGegnerBase.RS[Rücken]}" />
+                                                    <ViewGeneral:IntBox Margin="17,95,175,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedGegnerBase.RS[ArmR]}" />
+                                                    <ViewGeneral:IntBox Margin="177,95,15,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedGegnerBase.RS[ArmL]}" />
+                                                    <ViewGeneral:IntBox Margin="81,125,84,118" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedGegnerBase.RS[Bauch]}" />
+                                                    <ViewGeneral:IntBox Margin="40,179,125,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
+                                                    <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </Button.ToolTip>
+                                        <!-- Click="ButtonZonenRsControl_Click"-->
+                                        <Grid>
+                                            <Image Margin="1" Height="50">
+                                                <Image.Source>
+                                                    <BitmapImage DecodePixelHeight="50" UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
+                                                </Image.Source>
+                                            </Image>
+                                        </Grid>
+                                    </Button>
+                                    <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
+                                </Grid>
                             </Grid>
                         </Border>
                     </Grid>
                 </Expander>
-                <Expander Grid.Row="1" Margin="4,0,4,0" IsExpanded="True">
+                <Expander Grid.Row="1" Margin="4,0,4,0" IsExpanded="True" d:IsLocked="True">
                     <Expander.Header>
                         <TextBlock Text="Gegenstand hinzufügen" Style="{DynamicResource TextTitel}"/>
                     </Expander.Header>
-                    <Grid x:Name="Filter">
+                    <Grid x:Name="Gegenstaende">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Style="{DynamicResource ControlContentBorder}" BorderThickness="1,1,1,0">
+                        <Border x:Name="Gegenstaende_Hinzu" Grid.Row="0" Style="{DynamicResource ControlContentBorder}" BorderThickness="1,1,1,0">
                             <TabControl x:Name="Tab" Background="Transparent" SelectedIndex="{Binding SelectedFilterIndex, Mode=TwoWay}" Margin="0,-6,0,0" BorderThickness="0">
                                 <TabControl.Resources>
                                     <Style x:Key="TabItemFocusVisual">
@@ -850,11 +846,11 @@
                                             <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                                 <ComboBox.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                    	<VirtualizingStackPanel />
+                                                        <VirtualizingStackPanel />
                                                     </ItemsPanelTemplate>
                                                 </ComboBox.ItemsPanel>
                                                 <ComboBox.InputBindings>
-                                                	<KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
+                                                    <KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
                                                 </ComboBox.InputBindings>
                                             </ComboBox>
                                         </StackPanel>
@@ -911,7 +907,7 @@
                                 </TabItem>
                             </TabControl>
                         </Border>
-                        <Grid x:Name="Inventar" Margin="0" Grid.Row="1">
+                        <Grid x:Name="Gegenstaende_Body" Margin="0" Grid.Row="1">
                             <Border Style="{DynamicResource ControlContentBorder}" Grid.Row="1" BorderThickness="1,0,1,1">
                                 <Grid x:Name="InventarAnzeigen">
                                     <Grid.ColumnDefinitions>
@@ -963,7 +959,7 @@
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="2" x:Name="NIList" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <ListBox ItemTemplate="{DynamicResource NahkampfwaffeTemplate}" ItemsSource="{Binding HeldNahkampfWaffeImInventar}" BorderThickness="0" Background="{x:Null}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" HorizontalAlignment="Stretch"/>
+                                                <ListBox ItemTemplate="{DynamicResource NahkampfwaffeTemplate}" ItemsSource="{Binding HeldNahkampfWaffeImInventar}" BorderThickness="0" Background="{x:Null}" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" HorizontalAlignment="Stretch" ScrollViewer.IsDeferredScrollingEnabled="True"/>
                                             </Border>
                                         </Grid>
                                         <Grid Margin="5" x:Name="FI" Visibility="{Binding IsFernkampfwaffevorhanden}" Grid.Row="1">
@@ -1001,7 +997,7 @@
                                             </Border>
                                             <Border Grid.Row="2" x:Name="FIListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
                                                 <StackPanel>
-                                                    <ListBox ItemTemplate="{DynamicResource FernkampfwaffeTemplate}" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"/>
+                                                    <ListBox ItemTemplate="{DynamicResource FernkampfwaffeTemplate}" ItemsSource="{Binding HeldFernkampfwaffeImInventar}" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ScrollViewer.IsDeferredScrollingEnabled="True"/>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="*: Wundschwelle (KO/2)-2 | **: improvisiert" FontWeight="Bold" FontStyle="Italic"/>
                                                 </StackPanel>
                                             </Border>
@@ -1040,7 +1036,7 @@
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="2" x:Name="SIListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <ListBox ItemTemplate="{DynamicResource SchildTemplate}" ItemsSource="{Binding HeldSchildImInventar}" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" HorizontalAlignment="Stretch"/>
+                                                <ListBox ItemTemplate="{DynamicResource SchildTemplate}" ItemsSource="{Binding HeldSchildImInventar}" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" HorizontalAlignment="Stretch" ScrollViewer.IsDeferredScrollingEnabled="True"/>
                                             </Border>
                                         </Grid>
                                         <Grid x:Name="RI" Grid.Row="3" Margin="5" Visibility="{Binding IsRuestungVorhanden}" >
@@ -1073,11 +1069,11 @@
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="2" x:Name="RIListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
-                                                <ListBox ItemTemplate="{DynamicResource RuestungTemplate}" ItemsSource="{Binding HeldRuestungImInventar}" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}"/>
+                                                <ListBox ItemTemplate="{DynamicResource RuestungTemplate}" ItemsSource="{Binding HeldRuestungImInventar}" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ScrollViewer.IsDeferredScrollingEnabled="True"/>
                                             </Border>
                                         </Grid>
                                     </Grid>
-                                    <Grid Grid.Column="1">
+                                    <Grid x:Name="Filter" Grid.Column="1">
 
                                         <StackPanel>
                                             <Button x:Name="borderAll" Width="40" Height="40" ToolTipService.ToolTip="Alle Gegenstände" Click="brdKlicked">
@@ -1106,7 +1102,7 @@
                     </Grid>
                 </Expander>
             </Grid>
-            <Border x:Name="_rsZonenRsControl" Background="#F27A7A7A" Visibility="Hidden" d:IsLocked="True">
+            <Border x:Name="_rsZonenRsControl" Background="#F27A7A7A" Visibility="Hidden">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50" />
@@ -1143,7 +1139,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-            </Border>            
+            </Border>
         </Grid>
     </ScrollViewer>
 </UserControl>
