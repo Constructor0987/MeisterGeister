@@ -351,12 +351,13 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition />                                    
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="btnZonenOverlay" Grid.Column="8" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" >
+                                <Button x:Name="btnZonenOverlay" Grid.Column="8" Click="btnZonenOverlay_Click" IsEnabled="{Binding IsRuestungBerechnungZonen}" ToolTipService.ToolTip="Zonenrüstung setzen">
                                     <!-- Click="ButtonZonenRsControl_Click"-->
                                     <Grid>
-                                        <StackPanel>
+										<Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top" Margin="34,-33.75,0,0" ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
+                                        <StackPanel>											
                                             <Image Margin="1" Height="50">
                                                 <Image.Source>
                                                     <BitmapImage DecodePixelHeight="50" UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
@@ -414,7 +415,10 @@
                                     <Label Content="{Binding SelectedHeld.PA}"  Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                     <Label Content="{Binding SelectedHeld.IN}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                     <Grid>
-                                        <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}" Height="25" />
+										<StackPanel Orientation="Horizontal">
+											<ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}" Height="25" />
+											<Image Height="16" Width="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill"  ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
+										</StackPanel>
                                     </Grid>
                                 </StackPanel>
                                 <StackPanel Grid.Column="4" Margin="0,0,0,0" HorizontalAlignment="Left">
@@ -474,7 +478,7 @@
                                         </Label.Content>
                                     </Label>                                    
                                 </StackPanel>
-                                <Grid x:Name="RuestungZonen" Grid.Column="0" d:IsLocked="True">
+                                <Grid x:Name="RuestungZonen" Grid.Column="0">
                                     <Grid>
                                         <Grid Height="120" VerticalAlignment="Top" Visibility="Hidden" d:IsLocked="True">
                                             <StackPanel ToolTipService.ToolTip="Kopf" HorizontalAlignment="Left" Height="30"  VerticalAlignment="Top" Orientation="Horizontal" Width="30" Margin="0,0,0,0" >
@@ -594,7 +598,7 @@
                         </Border>
                     </Grid>
                 </Expander>
-                <Expander Grid.Row="1" Margin="4,0,4,0" IsExpanded="True" d:IsLocked="True">
+                <Expander Grid.Row="1" Margin="4,0,4,0" IsExpanded="True">
                     <Expander.Header>
                         <TextBlock Text="Gegenstand hinzufügen" Style="{DynamicResource TextTitel}"/>
                     </Expander.Header>
@@ -846,11 +850,11 @@
                                             <ComboBox Height="25.96" ItemsSource="{Binding RuestungListe}"  SelectedItem="{Binding SelectedRuestung}" Margin="0,0,0,3" DisplayMemberPath="Name" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsEditable="True">
                                                 <ComboBox.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <VirtualizingStackPanel />
+                                                    	<VirtualizingStackPanel />
                                                     </ItemsPanelTemplate>
                                                 </ComboBox.ItemsPanel>
                                                 <ComboBox.InputBindings>
-                                                    <KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
+                                                	<KeyBinding Key="Enter"  Command="{Binding OnAddRuestung}" />
                                                 </ComboBox.InputBindings>
                                             </ComboBox>
                                         </StackPanel>
@@ -1076,33 +1080,24 @@
                                     <Grid Grid.Column="1">
 
                                         <StackPanel>
-                                            <Border x:Name="borderAll" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Alle Gegenstände" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
+                                            <Button x:Name="borderAll" Width="40" Height="40" ToolTipService.ToolTip="Alle Gegenstände" Click="brdKlicked">
                                                 <Image x:Name="imageAll" Source="/DSA MeisterGeister;component/Images/Icons/General/filter.png"/>
-                                            </Border>
-                                            <Border x:Name="borderNahkampf" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Nahkampfwaffen" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
-                                                <Image x:Name="image" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5">
-                                                    <Image.RenderTransform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform/>
-                                                            <SkewTransform/>
-                                                            <RotateTransform/>
-                                                            <TranslateTransform/>
-                                                        </TransformGroup>
-                                                    </Image.RenderTransform>
-                                                </Image>
-                                            </Border>
-                                            <Border x:Name="borderFernkampf" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Fernkampfwaffen" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
+                                            </Button>
+                                            <Button x:Name="borderNahkampf" Width="40" Height="40" ToolTipService.ToolTip="Nahkampfwaffen" Click="brdKlicked">
+                                                <Image x:Name="image" Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" RenderTransformOrigin="0.5,0.5" />
+                                            </Button>
+                                            <Button x:Name="borderFernkampf" Width="40" Height="40" ToolTipService.ToolTip="Fernkampfwaffen" Click="brdKlicked">
                                                 <Image x:Name="image1" Source="/DSA MeisterGeister;component/Images/Icons/fernkampf.png"/>
-                                            </Border>
-                                            <Border x:Name="borderSchild" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Schild" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
+                                            </Button>
+                                            <Button x:Name="borderSchild" Width="40" Height="40" ToolTipService.ToolTip="Schild" Click="brdKlicked">
                                                 <Image x:Name="image2" Source="/DSA MeisterGeister;component/Images/Icons/schild.png"/>
-                                            </Border>
-                                            <Border x:Name="borderRuestung" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Rüstungen" MouseLeftButtonDown="brdKlicked" Background="#CC000000">
+                                            </Button>
+                                            <Button x:Name="borderRuestung" Width="40" Height="40" ToolTipService.ToolTip="Rüstungen" Click="brdKlicked">
                                                 <Image x:Name="image3" Source="/DSA MeisterGeister;component/Images/Icons/ruestung.png" Margin="-1,1,1,-1"/>
-                                            </Border>
-                                            <Border x:Name="borderSonstiges" Style="{DynamicResource ControlContentBorder}" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" MouseLeftButtonDown="brdKlicked" Background="#CC000000" Visibility="Hidden">
+                                            </Button>
+                                            <Button x:Name="borderSonstiges" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" Click="brdKlicked" Visibility="Hidden">
                                                 <Image x:Name="image4" Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png"/>
-                                            </Border>
+                                            </Button>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -1148,7 +1143,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-            </Border>
+            </Border>            
         </Grid>
     </ScrollViewer>
 </UserControl>

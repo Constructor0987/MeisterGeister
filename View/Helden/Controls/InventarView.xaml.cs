@@ -56,8 +56,9 @@ namespace MeisterGeister.View.Helden.Controls {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void brdKlicked(object sender, RoutedEventArgs e) {
-            switch ((sender as Border).Name) {
+        private void brdKlicked(object sender, RoutedEventArgs e)
+        {
+            switch ((sender as Button).Name) {
                 case "borderAll":
                     VM.SelectedFilterIndex = 0;
                     break;

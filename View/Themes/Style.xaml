@@ -196,7 +196,7 @@
 		<Setter Property="Template">			
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid>
+                    <Grid x:Name="grid">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                         		<VisualState x:Name="Normal">
@@ -279,7 +279,17 @@
                         				</ObjectAnimationUsingKeyFrames>
                         			</Storyboard>
                         		</VisualState>
-                        		<VisualState x:Name="Disabled"/>
+                        		<VisualState x:Name="Disabled">
+                        			<Storyboard>
+                        				<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background)" Storyboard.TargetName="grid">
+                        					<DiscreteObjectKeyFrame KeyTime="0">
+                        						<DiscreteObjectKeyFrame.Value>
+                        							<SolidColorBrush Color="#99000000"/>
+                        						</DiscreteObjectKeyFrame.Value>
+                        					</DiscreteObjectKeyFrame>
+                        				</ObjectAnimationUsingKeyFrames>
+                        			</Storyboard>
+                        		</VisualState>
                         	</VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Unfocused"/>
