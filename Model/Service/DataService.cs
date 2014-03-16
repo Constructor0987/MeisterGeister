@@ -215,9 +215,15 @@ namespace MeisterGeister.Model.Service
 
         #region Namen und NSC
         //später durch GUID-Variante ersetzen
-        public List<Name> LoadNamenByNamenstyp(string namenstyp)
+        //Geschlecht Methode ohne Geschlecht fliegt dann raus
+        public List<string> LoadNamenByNamenstypArt(string namenstyp, string art, bool bedeutungStattName = false)
         {
-            return Context.Name.Where(n => n.Herkunft == namenstyp).ToList();
+            return Context.Name.Where(n => (n.Herkunft == namenstyp && n.Art == art)).Select(n => bedeutungStattName ? n.Bedeutung : n.Name1).ToList();
+        }
+
+        public List<string> LoadNamenByNamenstypArtGeschlecht(string namenstyp, string art, bool weiblich, bool bedeutungStattName = false)
+        {
+            return Context.Name.Where(n => (n.Herkunft == namenstyp && n.Art == art && (n.Geschlecht == (weiblich ? "w" : "m") || n.Geschlecht == null))).Select(n => bedeutungStattName ? n.Bedeutung : n.Name1).ToList();
         }
 
         public List<string> getRasseByKulturName(string kultur, bool unüblicheKulturen = false)

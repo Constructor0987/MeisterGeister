@@ -13,6 +13,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         #region //---- Konstanten für DB-Abfragen ----
         public const string NAMENSARTVORNAMEN = "Vorname";
         public const string NAMENSARTNACHNAMEN = "Nachname";
+        public const string NAMENSARTVORNAMENNACHSILBEN = "Nachsilbe Vorname";
         #endregion
 
         #region //---- Felder ----
@@ -81,15 +82,14 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public NamenFactoryVorname(string namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertNamensbedeutungen = false, bool generiertOrtsnamen = false) :
             base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertNamensbedeutungen, generiertOrtsnamen)
         {
-            List<Model.Name> namensliste = Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp);
             if (VornamenWeiblichFürAlle)
             {
-                _vornamenWeiblich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN).Select(n => n.Name1));
+                _vornamenWeiblich.AddRange(Global.ContextHeld.LoadNamenByNamenstypArt(namenstyp,NAMENSARTVORNAMEN));
             }
             else
             {
-                _vornamenWeiblich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN && (n.Geschlecht == "w" || n.Geschlecht == null)).Select(n => n.Name1));
-                _vornamenMännlich.AddRange(namensliste.Where(n => n.Art == NAMENSARTVORNAMEN && (n.Geschlecht == "m" || n.Geschlecht == null)).Select(n => n.Name1));
+                _vornamenWeiblich.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(namenstyp, NAMENSARTVORNAMEN, true));
+                _vornamenMännlich.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(namenstyp, NAMENSARTVORNAMEN, false));
             }
         }
         #endregion
@@ -119,8 +119,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public NamenFactoryVornameNachname(string namenstyp, bool vornamenWeiblichFürAlle = false, bool informationenNamenVerfügbar = false, bool generiertNamensbedeutungen = false, bool generiertOrtsnamen = false) :
             base(namenstyp, vornamenWeiblichFürAlle, informationenNamenVerfügbar, generiertNamensbedeutungen, generiertOrtsnamen)
         {
-            List<Model.Name> namensliste = Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp);
-            _nachnamen.AddRange(namensliste.Where(n => n.Art == NAMENSARTNACHNAMEN).Select(n => n.Name1));
+            _nachnamen.AddRange(Global.ContextHeld.LoadNamenByNamenstypArt(namenstyp,NAMENSARTNACHNAMEN));
         }
         #endregion
 
@@ -145,6 +144,71 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
 
     #region //---- Aventurische Namen Factorys ----
 
+    /**
+     * Generiert Zwergische Vornamen
+     * Oberklasse für Hügelzwerge und Zwerge
+     */
+    public class ZwergischeVornamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        protected List<String> _vornamenNachsilben = new List<string>();
+        protected delegate bool EmptyNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Vornamenssilben zu steuern.
+         * Die Funktion wird bei Generierung einer weiteren Vornamenssilben genutzt.
+         */
+        protected EmptyNameSelector emptyVornameSilbenSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um keine Nachsilbe "a" bzw. "e" für weiblich Zwergnamen zu setzen.
+         */
+        protected EmptyNameSelector emptyWeiblicheVornamenNachsilbeSelector = () => RandomNumberGenerator.Generator.Next(20) == 0;
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um "a" statt "e" für weiblich Zwergnamen zu setzen.
+         */
+        protected EmptyNameSelector aWeiblicheNachsilbeSelector = () => RandomNumberGenerator.Generator.Next(2) == 0;
+        protected string _anfangsbuchstabeAktuellerName;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public ZwergischeVornamenFactory(bool informationenNamenVerfügbar = false) :
+            base(NamenFactoryHelper.ZWERGISCHENAMEN, true, informationenNamenVerfügbar)
+        {
+            _vornamenNachsilben.AddRange(Global.ContextHeld.LoadNamenByNamenstypArt(Namenstyp, NAMENSARTVORNAMENNACHSILBEN));
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = getZwergenvorname(ref person);
+        }
+
+        protected string getZwergenvorname(ref PersonNurName person, bool alliterationZuAktuellemNamen = false)
+        {
+            if (alliterationZuAktuellemNamen && person.Name.Length > 0)
+                _anfangsbuchstabeAktuellerName = person.Name.Remove(1);
+            else
+                alliterationZuAktuellemNamen = false;
+            
+            string vorname = string.Format("{0}{1}{2}",
+                alliterationZuAktuellemNamen ? _vornamenWeiblich.Where(n => n.StartsWith(_anfangsbuchstabeAktuellerName)).ToList().RandomElement() : _vornamenWeiblich.RandomElement(),
+                    _vornamenNachsilben.RandomElement(),
+                    emptyVornameSilbenSelector() ? "" : _vornamenNachsilben.RandomElement());
+
+            // Endung für weibliche Zwerge, falls diese nicht auf "a" oder "e" enden
+            if (person.Geschlecht == Geschlecht.weiblich
+                && !vorname.EndsWith("a")
+                && !vorname.EndsWith("e")
+                //Die Endungen kommen in seltenen Fällen nicht vor
+                && !emptyWeiblicheVornamenNachsilbeSelector())
+            {
+                vorname += aWeiblicheNachsilbeSelector() ? "a" : "e";
+            }
+            return vorname;
+        }
+        #endregion
+    }
+
     public class AchazNamenFactory : NamenFactoryVorname
     {
         #region //---- Felder ----
@@ -156,7 +220,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public AchazNamenFactory() :
             base(NamenFactoryHelper.ACHAZNAMEN, true, true, true)
         {
-            _namensbedeutungen.AddRange(Global.ContextHeld.LoadNamenByNamenstyp(Namenstyp).Where(n => n.Art == NAMENSARTVORNAMEN).Select(n => n.Bedeutung));
+            _namensbedeutungen.AddRange(Global.ContextHeld.LoadNamenByNamenstypArt(Namenstyp, NAMENSARTVORNAMEN, true));
         }
         #endregion
 
@@ -640,6 +704,530 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                     _vornamenMännlich.RandomElement(),
                     _nachnamen.RandomElement());
             }
+        }
+        #endregion
+    }
+
+    public class HügelzwergischeNamenFactory : ZwergischeVornamenFactory
+    {
+        #region //---- Felder ----
+        List<String> _sippennamen = new List<string>();
+        #endregion
+
+        #region //---- Konstruktor ----
+        public HügelzwergischeNamenFactory() :
+            base(true)
+        {
+            _sippennamen.AddRange(Global.ContextHeld.LoadNamenByNamenstypArt(NamenFactoryHelper.HÜGELZWERGISCHENAMEN, NAMENSARTNACHNAMEN));
+            this.Namenstyp = NamenFactoryHelper.HÜGELZWERGISCHENAMEN;
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = string.Format("{0} {1}",
+                this.getZwergenvorname(ref person),
+                _sippennamen.RandomElement());
+        }
+        #endregion
+    }
+
+    public class ZwergischeNamenFactory : ZwergischeVornamenFactory
+    {
+        #region //---- Felder ----
+        private delegate bool AlliterationNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, Alliterationen in Namen zu steuern.
+         * Die Funktion wird bei Generierung des Namen der Mutter oder des Vaters genutzt.
+         * Sie definiert, ob ein Alliterationen-Name vergeben wird oder nicht.
+         */
+        private EmptyNameSelector alliterationNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public ZwergischeNamenFactory() :
+            base(true)
+        {
+            
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = string.Format(
+                person.Geschlecht == Geschlecht.weiblich ? "{0} Tochter der {1}" : "{0} Sohn des {1}",
+                person.Name = getZwergenvorname(ref person),
+                alliterationNameSelector() ? getZwergenvorname(ref person, true) : getZwergenvorname(ref person));            
+        }
+        #endregion
+    }
+
+    public class AlbernischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private delegate bool ReputationNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um Reputations-Namen zu steuern.
+         * Die Funktion wird bei Generierung von Bürerlichen Namen genutzt und bestimmt, ob ein
+         * Reputationsname genutzt wird, oder nicht
+         */
+        private ReputationNameSelector reputationNameSelector = () => RandomNumberGenerator.Generator.Next(10) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public AlbernischeNamenFactory() :
+            base(NamenFactoryHelper.ALBERNISCHENAMEN, false, true)
+        {
+            // Bastel weitere Vornamen aus garethischen, männlichen Vornamen
+            foreach (string name in Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(NamenFactoryHelper.GARETHISCHENAMEN, NAMENSARTVORNAMEN, false))
+            {
+                if (name.EndsWith("ian"))
+                {
+                    _vornamenMännlich.Add(name.Substring(0, name.Length - 3) + "wyn");
+                    _vornamenMännlich.Add(name.Substring(0, name.Length - 3) + "uin");
+                } 
+                else if (name.EndsWith("dan"))
+                {
+                    _vornamenMännlich.Add(name.Substring(0, name.Length - 3) + "tin");
+                    _vornamenMännlich.Add(name.Substring(0, name.Length - 3) + "den");
+                }
+            }
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            switch (person.Stand)
+            {
+                // manchmal Reputationsnamen
+                case Stand.stadtfrei:
+                    setzeStadtfreienname(ref person);
+                    break;
+                // immer Reputationsnamen
+                case Stand.adelig:
+                    setzeReputationname(ref person);
+                    break;
+                //normaler Name
+                default:
+                    base.RegenerateName(ref person);
+                    break;
+            }
+        }
+
+
+        private void setzeStadtfreienname(ref PersonNurName person)
+        {
+            if(reputationNameSelector())
+                setzeReputationname(ref person);
+            else 
+                base.RegenerateName(ref person);
+        }
+
+
+        private void setzeReputationname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich )
+            {
+                person.Name = string.Format("{0} ni {1}",
+                    _vornamenWeiblich.RandomElement(),
+                    RandomNumberGenerator.Generator.Next(2)==1 ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement());
+            } else  {
+                person.Name = string.Format("{0} ui {1}",
+                    _vornamenMännlich.RandomElement(),
+                    RandomNumberGenerator.Generator.Next(2)==1 ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement());
+            }
+        }
+        #endregion
+    }
+
+    public class AlmadanischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        List<string> _zweiterVornameMännlich = new List<string>(new string[] { "Almadano", "Amirato", "Amado", "Beatus", "Bonus", "Celebratus", "Desidero", "Dulcineo", "Eximio", "Flavo",
+            "Glaciano", "Hilado", "Honorio", "Ingenioso", "Leovigildo", "Magnifico", "Maldonado", "Merito", "Misterio", "Nobilis",
+            "Nocturnus", "Optimas", "Pacifico", "Promeso", "Rosario", "Sempervivens", "Superbus", "Tenax", "Universalis", "Valeroso", 
+            "Violante", "Zonzo" });
+        List<string> _zweiterVornameWeiblich = new List<string>(new string[] { "Almadana", "Amirata", "Amada", "Beata", "Bona", "Celebrata", "Desidera", "Dulcinea", "Eximia", "Flava",
+            "Glaciana", "Hilada", "Honoria", "Ingeniosa", "Leovigilda", "Magnifica", "Maldonada", "Merita", "Misteria", "Nobilis",
+            "Nocturna", "Optimas", "Pacifica", "Promesa", "Rosaria", "Sempervivens", "Superba", "Tenax", "Universalis", "Valerosa", 
+            "Violanta", "Zonza" });
+        #endregion
+
+        #region //---- Konstruktor ----
+        public AlmadanischeNamenFactory() :
+            base(NamenFactoryHelper.ALMADISCHENAMEN, false, true)
+        {
+            
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+                person.Name = string.Format("{0} {1} {2}", _vornamenWeiblich.RandomElement(), _zweiterVornameWeiblich.RandomElement(), _nachnamen.RandomElement());
+            else
+                person.Name = string.Format("{0} {1} {2}", _vornamenMännlich.RandomElement(), _zweiterVornameMännlich.RandomElement(), _nachnamen.RandomElement());
+        }
+        #endregion
+    }
+
+    public class BornländischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private delegate bool EmptyNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Namen zu steuern.
+         * Die Funktion wird bei Generierung von bis zu zwei weiteren Vornamen genutzt.
+         * Durch den wiederholten Aufruf für jeden Namen ergibt sich eine Normalverteilung.
+         */
+        private EmptyNameSelector emptyNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public BornländischeNamenFactory() :
+            base(NamenFactoryHelper.BORNLÄNDISCHENAMEN, false, true)
+        {
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            switch (person.Stand)
+            {
+                case Stand.adelig:
+                    setzeAdeligenname(ref person);
+                    break;
+                case Stand.stadtfrei:
+                    base.RegenerateName(ref person);
+                    break;
+                case Stand.landfrei:
+                    setzeLandfreienname(ref person);
+                    break;
+                default:
+                    setzeUnfreienname(ref person);
+                    break;
+            }
+        }
+
+        private void setzeAdeligenname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1} {2} von {3} zu {4}",
+                    _vornamenWeiblich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenWeiblich.RandomElement(),
+                    "<Stammsitz>",
+                    "<Lehen>").EntferneMehrfacheLeerzeichen();
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1} {2} von {3} zu {4}",
+                    _vornamenMännlich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement(),
+                    emptyNameSelector() ? "" : _vornamenMännlich.RandomElement(),
+                    "<Stammsitz>",
+                    "<Lehen>").EntferneMehrfacheLeerzeichen();
+            }
+        }
+
+        private void setzeLandfreienname(ref PersonNurName person)
+        {
+            person.Name = string.Format("{0} aus {1}",
+                (person.Geschlecht == Geschlecht.weiblich) ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                "<Ortsname>");
+        }
+
+        private void setzeUnfreienname(ref PersonNurName person)
+        {
+            person.Name = (person.Geschlecht == Geschlecht.weiblich) ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement();
+        }
+        #endregion
+    }
+
+    public class GjalskerländischeNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        private List<string> _haerads = new List<string>(new string[] { "Alrudh", "Arryach-Mûr", "Chombaich", "Conneach", "Dhartaech", "Lyrgach", "Mortakh", "Nebbachodh", "Niellyn", "Rayyadh" });
+        private delegate bool MännlicheMentorenNameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um männliche Mentoren bei Schamanen zu steuern.
+         */
+        private MännlicheMentorenNameSelector männlicheMentorenNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public GjalskerländischeNamenFactory() :
+            base(NamenFactoryHelper.GJALSKERLÄNDISCHENAMEN, false, true)
+        {
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            switch (person.Stand)
+            {
+                case Stand.adelig:
+                    setzeSchamanenname(ref person);
+                    break;
+                default:
+                    setzeGjalskerländischenName(ref person);
+                    break;
+            }
+        }
+
+        private void setzeSchamanenname(ref PersonNurName person)
+        {
+            person.Name = string.Format("{0} dur {1} aus dem Haerad {2}",
+                person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                männlicheMentorenNameSelector() ? _vornamenMännlich.RandomElement() : _vornamenWeiblich.RandomElement(),
+                _haerads.RandomElement());
+        }
+
+        private void setzeGjalskerländischenName(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+                person.Name = string.Format("{0} brai {1} aus dem Haerad {2}",
+                    _vornamenWeiblich.RandomElement(), _vornamenWeiblich.RandomElement(), _haerads.RandomElement());
+            else
+                person.Name = string.Format("{0} bren {1} aus dem Haerad {2}",
+                    _vornamenMännlich.RandomElement(), _vornamenMännlich.RandomElement(), _haerads.RandomElement());
+        }
+        #endregion
+    }
+
+    public class ThorwalscheNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        private delegate bool NameSelector();
+        /**
+         * Funktionen, die wahr als Rückgabewert liefert, um Namen zu steuern.
+         */
+        private NameSelector dottirStattdotterNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        private NameSelector abstammungsnameVonMutterNameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public ThorwalscheNamenFactory() :
+            base(NamenFactoryHelper.THORWALSCHENAMEN, false, true)
+        {
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+                person.Name = string.Format("{0} {1}{2}",
+                    _vornamenWeiblich.RandomElement(),
+                    abstammungsnameVonMutterNameSelector() ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                    dottirStattdotterNameSelector() ? "dottir" : "dotter");
+            else
+                person.Name = string.Format("{0} {1}son",
+                    _vornamenMännlich.RandomElement(),
+                    abstammungsnameVonMutterNameSelector() ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement());
+        }
+        #endregion
+    }
+
+    public class NivesischeNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        #endregion
+
+        #region //---- Konstruktor ----
+        public NivesischeNamenFactory() :
+            base(NamenFactoryHelper.NIVESISCHENAMEN, false, true)
+        {
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = string.Format("{0} von {1}s und {2}s Stamm",
+                person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                _vornamenMännlich.RandomElement(), _vornamenWeiblich.RandomElement());
+        }
+        #endregion
+    }
+
+    public class NorbardischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private delegate bool NameSelector();
+        /**
+         * Funktionen, die wahr als Rückgabewert liefert, um Namen zu steuern.
+         */
+        private NameSelector männlicheSippennamenNameSelector = () => RandomNumberGenerator.Generator.Next(10) == 1;
+        private NameSelector männlicheSippennamenJoStattONameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public NorbardischeNamenFactory() :
+            base(NamenFactoryHelper.NORBADISCHENAMEN, false, true)
+        {
+            //Bastel weitere weibliche Vornamen aus den Männlichen durch anhängen von "ja" oder "a"
+            foreach (string name in _vornamenMännlich)
+            {
+                if (!name.EndsWith("ja"))
+                {
+                    _vornamenWeiblich.Add(name + "a");
+                    if (!name.EndsWith("j"))
+                        _vornamenWeiblich.Add(name + "ja");
+                }
+            }
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = string.Format("{0} {1}",
+                person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                männlicheSippennamenNameSelector() ? (_nachnamen.RandomElement() + (männlicheSippennamenJoStattONameSelector() ? "jo" : "o")) : _nachnamen.RandomElement());
+        }
+        #endregion
+    }
+
+    public class GarethischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private delegate bool NameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Zweitnamen bei Adelsnamen zu steuern.
+         */
+        private NameSelector ausStattVonNameSelector = () => RandomNumberGenerator.Generator.Next(3) == 1;
+        private NameSelector aufStattZuAdelsnameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        private NameSelector emptyZweiterDritterAdelsnameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        private NameSelector einfacheVorsilbenAdelsnameSelector = () => RandomNumberGenerator.Generator.Next(4) == 1;
+        private NameSelector bosperanischeAdelsnameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        private NameSelector kriegerischeAdelsnameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        private NameSelector berühmtheitenAdelsnameSelector = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public GarethischeNamenFactory() :
+            base(NamenFactoryHelper.GARETHISCHENAMEN, false, true)
+        {
+
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            switch (person.Stand)
+            {
+                case Stand.adelig:
+                    setzeAdelsname(ref person);
+                    break;
+                case Stand.stadtfrei:
+                    base.RegenerateName(ref person);
+                    break;   
+                case Stand.landfrei:
+                    setzeLandfreienname(ref person);
+                    break;
+                case Stand.unfrei:
+                default:
+                    setzeUnfreienname(ref person);
+                    break;
+            }
+        }
+
+        private void setzeAdelsname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = string.Format("{0} {1} {2} von {3} {4} {5}",
+                    _vornamenWeiblich.RandomElement(),
+                    emptyZweiterDritterAdelsnameSelector() ? "" : _vornamenWeiblich.RandomElement(),
+                    emptyZweiterDritterAdelsnameSelector() ? "" : _vornamenWeiblich.RandomElement(),
+                    "<Familienname>",
+                    aufStattZuAdelsnameSelector() ? "auf" : "zu",
+                    "<Lehen>").EntferneMehrfacheLeerzeichen();
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name = string.Format("{0} {1} {2} von {3} {4} {5}",
+                    _vornamenMännlich.RandomElement(),
+                    emptyZweiterDritterAdelsnameSelector() ? "" : _vornamenMännlich.RandomElement(),
+                    emptyZweiterDritterAdelsnameSelector() ? "" : _vornamenMännlich.RandomElement(),
+                    "<Familienname>",
+                    aufStattZuAdelsnameSelector() ? "auf" : "zu",
+                    "<Lehen>").EntferneMehrfacheLeerzeichen();
+            }
+        }
+
+        private void setzeLandfreienname(ref PersonNurName person)
+        {
+            person.Name = string.Format("{0} {1} {2}",
+                person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                ausStattVonNameSelector() ? "aus" : "von",
+                "<Ortsname>");
+        }
+
+        private void setzeUnfreienname(ref PersonNurName person)
+        {
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name = _vornamenWeiblich.RandomElement();
+            }
+            else // Geschlecht kann nur männlich sein
+            {
+                person.Name =  _vornamenMännlich.RandomElement();
+            }
+        }
+        #endregion
+    }
+
+    public class OrkischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        #endregion
+
+        #region //---- Konstruktor ----
+        public OrkischeNamenFactory() :
+            base(NamenFactoryHelper.ORKISCHENAMEN, false, true)
+        {
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = string.Format("{0} (Stamm:{1})",
+                person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                _nachnamen.RandomElement());
+        }
+        #endregion
+    }
+
+    public class OrkischeSvellttalNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        #endregion
+
+        #region //---- Konstruktor ----
+        public OrkischeSvellttalNamenFactory() :
+            base(NamenFactoryHelper.ORKISCHENAMEN, false, true)
+        {
+            this.Namenstyp = NamenFactoryHelper.ORKISCHESVELLTALNAMEN;
+            _nachnamen.Clear();
+            _nachnamen = Global.ContextHeld.LoadNamenByNamenstypArt(NamenFactoryHelper.ORKISCHESVELLTALNAMEN, NAMENSARTVORNAMEN);
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            base.RegenerateName(ref person);
         }
         #endregion
     }

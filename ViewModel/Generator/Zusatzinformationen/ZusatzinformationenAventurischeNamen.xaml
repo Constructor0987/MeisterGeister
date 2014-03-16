@@ -266,10 +266,61 @@
             meist aus dem Wohnort (nicht dem Namen des Dorfes), z.B. Sine van der Veer, Valt ob der Wurt.
         </Paragraph>
     </FlowDocument>
+
+    <FlowDocument x:Key="Hügelzwergische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Hügelzwergische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Informationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Hügelzwerge tragen Sippennamen, wie das auch viele
+            mittelländische Menschen tun. Bei allen Zwergenvölkern gehören die Kinder der Sippe ihrer Mutter an.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Zwergische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Zwergische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Zwerge hängen an ihren Eigennamen den des Vaters an, Zwerginnen den der Mutter. Man gibt den Kindern gern
+            Namen mit demselben Anfangsbuchstaben wie im elterlichen Namen; Beispiele: Hamo Sohn des Himgi, Angra
+            Tochter der Agescha. Bei allen Zwergenvölkern gehören die Kinder der Sippe ihrer Mutter an.
+            <LineBreak />
+            <Italic>Rogolan:</Italic> groscho "Sohn des"; groschna "Tochter der"
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Andergastsche Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Andergastsche Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Adeligen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Adlige hängen gegebenenfalls Titel und Lehen an: Wenzeslaus Hohensturmfels Freiherr zu Joborn, Firunz Kraxl Junker in
+            der Bärenklamm.
+            <Italic>wichtige Familien:</Italic> Anderwacht, Fryhoff, Hohensturmfels, Hussbek-Galahan (kgl. neu), Kujampen, Rauhbuch,
+            Zornbold (kgl. alt)
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Bauern und Bürgern
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Einfache Leute tragen meist einen einzelnen Vor- und einen Familiennamen; dabei übernehmen Frauen bei der
+            Heirat den Namen ihres Mannes und hängen "-in" an, also z.B. "Seffel Bodiak" und "Erlgard Bodiakin".
+        </Paragraph>
+    </FlowDocument>
     
     <FlowDocument x:Key="Albernische Namen">
         <Paragraph Style="{StaticResource Überschrift1}">
-            Zahori Namen
+            Albernische Namen
         </Paragraph>
         <Paragraph Style="{StaticResource Überschrift2}">
             allgemeine Namensinformationen
@@ -279,9 +330,9 @@
             allerdings von einer berühmten Person abstammt, nennt sich gern nach dieser, und zwar Männer mit dem Partikel
             “Ui” (gesprochen “O”), was Enkel oder Nachkomme des/der... bedeutet, und Frauen mit dem Partikel “Ni”
             (Tochter/Nachfahrin des/der...). Beispiele: Cuanu Ui Bennain, Inbher Ni Bennain.
-        </Paragraph>
-        <Paragraph Style="{StaticResource Fließtext}">
-            Ein paar Tips zur Aussprache:
+            <LineBreak />
+            <Italic>Ein paar Tips zur Aussprache:</Italic>
+            <LineBreak />
             “bh” und “mh” werden meist als “w” gesprochen; “dh” und “gh” werden meist ähnlich wie “ch” gesprochen; “sh”
             und “th” werden meist als “h” gesprochen; “s” wird vor i und e meist als “sch” gesprochen; “ai”, “ui” und “oi”
             werden oft als “i” gesprochen; “w” und “y” liegen in der Aussprache meist zwischen “w” und “u”.
@@ -295,6 +346,273 @@
             (Feld), Ard (Höhe), Ault (Bach), Ben (Berg), Brae (Hang), Coill (Wald), Dal (Wiese), Dram (Bergrücken), Dun
             (Burg), Glen (Gebirgstal), Knock (Hügel), Loch (See), Muir (Moor), Strath (Flußtal). Also z.B. Dun Bennain,
             Conchobairdun, Uisge Muir oder Glen Sidhe. Ansonsten kann man auch garethische Ortsnamen verwenden.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Almadanische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Almadanische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Almadanische Namen sind üblicherweise dreiteilig. Auf den Vor- oder Eigennamen folgt ein zweiter Vorname, der
+            eine Eigenschaft oder einen frommen Wunsch ausdrückt (auf Bosparano) oder auch von einer Heiligen oder einem
+            berühmten Vorfahren übernommen wurde. Dann kommt der Familienname, und bei belehnten Adligen schließlich
+            noch das Lehen. Neben diesen typisch almadanischen Namen kommen auch garethische (wie im zentralen
+            Mittelreich) und tulamidische vor.
+            <LineBreak />
+            <Italic>Ein paar Tips zur Aussprache:</Italic>
+            <LineBreak />
+            "ei" wie langes e; "nh" wie ny, "lh" wie ly mit y wie in "Yacht" oder "Yeti".
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Adelsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Adelige fügen hinter dem Familiennamen noch den Namen des Lehens an.
+            <LineBreak />
+            <Italic>bekannte Adelsgeschlechter:</Italic> Abundil, Agum, Alcorta, Al'Faran, Al'Kasim, Al'Shirasgan, Artesa, Berg ä.H., Bleichenwang, Braast, Culming,
+            Eschgeier, Franfeld, Harmamund, Jurios, di Lacara, di Madjani, Ragathsquell, di Rastino, Rebenthal, Scheffelstein,
+            Streitzig ä.H., Taladur ä.H., da Vanya, Viryamun
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Ortsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Werden aus zwei Wortteilen zusammengesetzt.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Bornländische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Bornländische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die Namensgebung im Bornland ist ähnlich wie im Mittelreich. Leibeigene besitzen üblicherweise keinen
+            Familiennamen. Landfreie nutzen meist ein "aus" und nennen ihren Heimatsort.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Adelsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Im Bornland erhält jedes adlige Kind bei der Geburt alle Titel beider Eltern; anders als etwa im Mittelreich sind die
+            Titel an die Herkunft gebunden und nicht an Landbesitz. Die Eltern entscheiden, ob sie ihr Land - so sie welches
+            haben - einem Kind vermachen oder auf die Kinder aufteilen. In weiten Teilen des Bornlands ist es nicht oder nur
+            mit Ausnahmeregelungen möglich, Nichtadlige in den Adelsstand zu erheben. Die verwendeten Titel entsprechen
+            denen des Mittelreiches (Baron/in, Graf/Gräfin, [Groß-]Fürst/in). Es gibt aber kein Lehenssystem, sondern jede/r
+            Adlige ist unumschränkte/r Herrscher/in auf dem eigenen Land und hat niemanden über sich, egal, ob der Titel nun
+            "Großfürstin" lautet oder bloß "Baron".
+            <LineBreak />
+            Beispiel: Großfürstin Ifirina Jovanka Thalionmel von und zu Wladiwalsach herrscht über den alten
+            Familienstammsitz Wladiwalsach. Ihr Bruder, Großfürst Travigor von Wladiwalsach zu Goblinogorsk, nennt bloß
+            den kleinen Fronhof Goblinogorsk sein Eigen. Großfürst Wulfjew Geron Sigiswild Meskinnskoff von Waldiwalsach,
+            der Jüngste der Familie, hat nur den Titel abbekommen, besitzt aber kein Land.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Ortsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Werden aus zwei Wortteilen zusammengesetzt.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Fjarningsche Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Fjarningsche Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Nachnamen sind nicht gebräuchlich, weil sie nicht nötig sind. Fjarninger nutzen dagegen gerne Kampf- und Ehrennamen.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Gjalskerländische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Gjalskerländische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            <Italic>bren</Italic> bedeutet "Sohn des",
+            <Italic>brai</Italic> bedeutet "Tochter der".
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Schamanennamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            <Italic>Schamanennamen werden über den Stand Adelig generiert.</Italic>
+            <LineBreak />
+            Das "dur" im Namen bedeutet "Hüter des Geistes von" bzw. "Hüter des Wissens von".
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Thorwalsche Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Thorwalsche Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            ThorwalerInnen tragen außer ihrem Vornamen einen Abstammungsnamen, der aus dem Vornamen des im
+            Zweikampf siegreichen Elternteils mit der Endung "-son" (für Söhne) bzw. "-dottir" oder "-dotter" (für Töchter) gebildet
+            wird. Beispiele: Jurga Tjalfsdotter ist Jurga, die Tochter des Tjalf; Asleif Phileasson ist Asleif, der Sohn des Phileas;
+            Swafsbold Jurgasson ist Swafsbold, der Sohn der Jurga. Sind die Eltern gleichstark, trägt das Kind ihre Namen
+            abwechselnd.
+            <LineBreak />
+            Zur Aussprache: "th" kann je nach Dialekt als "t" oder wie im Englischen ausgesprochen werden.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Recken und Helden
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die Verkleinerungsformen "-ske", "-ke" (bei Throwalern) oder "-je", "-ja" (bei Thorwalerinnen) wird nicht wie zu vermuten
+            wäre bei Kindern genutzt, sondern bei Kampferprobten Recken. Im Laufe des Lebens kann zudem der Abstammungsname durch einen
+            "Heldennamen" wie beispielsweise Hammerfasu, Windzwinger oder auch Stolperer ersetzt werden.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Nivesische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Nivesische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            NivesInnen tragen außer ihrem Rufnamen noch einen eher geheimen Wolfsnamen. In der Fremde geben sie zu ihrem
+            Eigennamen noch an, von welchem Stamm sie kommen. Viele Stämme haben einen Namen (Rauhwölfe, Lieska-Lie,
+            Lieska-Leddu), ansonsten nennt man die Namen der beiden Häuptlinge (jeder Stamm hat einen männlichen und
+            einen weiblichen Häuptling): Nirka von den Rauhwölfen, Pettajem von Einuks und Geikas Stamm.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Norbardische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Norbardische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            NorbardInnen tragen einen Vor- und einen Sippennamen. Männer heiraten normalerweise in die Sippe ihrer Frau ein
+            und nehmen deren Sippennamen an, demzufolge wird der Sippenname praktisch immer von der Mutter zu den
+            Kindern weitergegeben. Die weibliche Form der Sippennamen endet auf einen Konsonant. Männen hängen ein -o oder -jo
+            an, was jedoch fast in Vergessenheit geraten ist.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Garethische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Garethische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Namen für das zentrales Mittelreich: Garethien, Darpatien, Nordmarken, Kosch.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Adeligen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Adlige tragen in den Kernprovinzen des Mittelreiches mindestens zwei Vornamen, es können aber auch drei oder
+            mehr sein. Beliebt sind kriegerische Kunstnamen mit Silben wie "Leu-", "Sig-", "Helm-", "Kühn-" und "Rondr-"
+            (z.B. "Sigiswild", "Ruhmgewiß", "Rondratreue" oder "Ehrenfrau"), traditionelle bosparanische Namen, und die
+            Namen von Heiligen, Kaisern und berühmten Vorfahren. Dann folgt meistens mit "von" der Familienname, und
+            darauf mit "auf" oder "zu" das Lehen, falls vorhanden. (Beispiele: Burggraf Alarich Ruhmrath von Gareth zur
+            Sighelmsmark, Rittfrau Junivera Ardare Leuemuthe von Sturmfels.) Von dieser Regel gibt es aber reichlich
+            Ausnahmen.
+            <LineBreak />
+            <Bold>wichtige Adelsgeschlechter im Mittelreich:</Bold>
+            Bennain (Albernia), vom Berg, Binsböckel, Bregelsaum (Warunk), Conchobair, Crumold, Culming, Darbonia,
+            Dunkelstein, Eberstamm (Kosch), Ehrenstein (Tobrien), Eslamabad, Eslamsgrund, Faldahon (Beilunk), Falkenhag,
+            Galahan, Gareth (kaiserlich/Garethien und Almada), Greifax, vom Großen Fluß (Nordmarken), Grötz, Hardenfels,
+            Hartsteen, Hirschfurten, Ibenburg, Löwenhaupt (Weiden), Ni/Ui Llud, Luring, Mersingen, Pandlaril, Quintian-
+            Quandt, Rabenmund (Darpatien), Ragathsquell, Sanin (Windhag), Schetzeneck, Schnattermoor, Sighelms Halm,
+            Spogelsen, Stepahan, Stippwitz, Streitzig, Sturmfels, Wengenholm, Wertlingen (Greifenfurt), Weißenstein,
+            Zweifelfels
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Namen von Stadt- Land- und Unfreien
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Es ist bei den einfachen Leuten üblich, einen einzelnen Vornamen zu tragen. Freie tragen meist auch einen
+            Nachnamen, der je nach Gegend von der Mutter, vom Vater oder vom reicheren der Elternteile übernommen wird;
+            man kann im Zweifelsfall die Leute aber immer nach ihrem Beruf nennen (Alrik Ackermann, Harika Wirtin,
+            Herr/Frau Schneider/in, der olle Rübenbauer, ...). Viele Nachnamen leiten sich von Herkunfts- oder
+            Berufsbezeichnungen ab. Einen Nachnamen zu tragen ist nicht Pflicht; gerade Bauern begnügen sich oft mit dem
+            Vornamen und heißen im Bedarfsfall "Bauer", "Kornhofer", "Rübenacker", "Dreieichenhöferin", "Kuhhirtin" oder
+            ähnlich. Und daß jemand bei einem Berufs- oder Ortswechsel den Nachnamen ändert ist auch nicht selten und nicht
+            verwunderlich. Wenn die Tochter einer Weberfamilie eine Schusterlehre macht, heißt sie selbstverständlich nachher
+            "Schusterin" und nicht "Weberin"; ein geborener Herr Kramer, der eine Töpferin heiratet, wird über kurz oder lang
+            "Töpfer" heißen. Wer außerhalb seines bzw ihres Heimatorts unterwegs ist, gibt anstelle des Familiennamens oder
+            zusätzlich dazu oft noch an, woher er oder sie stammt, wahlweise mit "aus" oder "von": Alvide Müllerin aus
+            Goblinheim, Perainhilf von Appelhusen. Das "von" allein ist im zentralen Mittelreich kein Adelstitel.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Orkische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Orkische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Bei den Orks gibt es nur Männernamen, weil Frauen (die von den männlichen Orks als eine Art Haustiere betrachtet
+            werden) keine Namen bekommen. Gewöhnlich trägt ein Ork nur einen einzigen Namen; für herausragende Taten
+            kann jedoch ein ehrender Beiname hinzukommen.
+            <Italic>bekannte Stämme der Orks: </Italic> Korogai, Mokolash, Ochazzi, Olochtai, Orichai, Tordochai, Truanzhai, Tscharshai, Zholochai
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Orkische Namen (Svelltal)">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Orkische Namen (Svelltal)
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Bei den Orks gibt es nur Männernamen, weil Frauen (die von den männlichen Orks als eine Art Haustiere betrachtet
+            werden) keine Namen bekommen. Gewöhnlich trägt ein Ork nur einen einzigen Namen; für herausragende Taten
+            kann jedoch ein ehrender Beiname hinzukommen. Die orkischen Besatzer des Svellttals wählen solche Beinamen
+            neuerdings gern auf Garethi: Gharrai Mauerbrech, Khurrach Rittertod.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Goblinische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Goblinische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die festumer Goblins tragen bisweilen auch bornländische Garethi-Namen oder Mischformen aus goblinischen und
+            bornischen, etwa: Morkajescha, Suulje, Suviintine; bzw. Alrikwoork, Wutzjew, Guurkej; einige tragen auch
+            Nachnamen: Riibajescha Gerberow, Paabertz Festumske.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Grolmische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Grolmische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Wenn Grolme sich vorstellen, nennen sie zuerst den Namen ihres Arbeitgebers, dann erst
+            ihren eigenen. Beispiele: Quoks Gehilfe Nok; Kangs Lehrling Hang; Zornbrechts Einkäufer Yöng. Wer nur den
+            eigenen Namen nennt, ist offensichtlich selbstständig; wenn er außerdem auf eigene Angestellte verweisen kann
+            (Ahlrig, Chef einer Heldengruppe), genießt er einiges Ansehen bei Grolmen.
         </Paragraph>
     </FlowDocument>
 </ResourceDictionary>
