@@ -479,7 +479,13 @@
                                 <StackPanel Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left">
                                     <Label Content="{Binding AktuelleTragkraft}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"  />
                                     <Label Content="{Binding AktuellesGewicht}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                                    <ViewGeneral:IntBox Margin="0,1.3" MinValue="0" MinWidth="20" ShowButtons="True" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsBEEingebenVisibility}" ShowButtons="{Binding IsBehinderungEingeben, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Behinderung" Value="{Binding SelectedHeld.BE}" IsReadOnly="{Binding IsBehinderungEingeben}" NoBackground="{Binding IsBehinderungEingeben}" Style="{DynamicResource ReadOnlyStyle}" Height="25"/>
+                                            <Image Height="16" Width="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill"  ToolTipService.ToolTip="Kann in den Einstellungen zum editieren aktiviert/deaktiviert werden"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    
                                     <StackPanel Orientation="Horizontal">
                                         <Label Content="{Binding AktuellesGewichtProzentResultierendeBE}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
                                         <Label Content="/" Height="25" Margin="0"/>
@@ -500,7 +506,7 @@
                                     <Grid>
                                         <StackPanel Orientation="Horizontal">
                                             <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}" Height="25" />
-                                            <Image Height="16" Width="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill"  ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
+                                            <Image Height="16" Width="16" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill"  ToolTipService.ToolTip="Kann in den Einstellungen zum aktiviert/deaktiviert werden"/>
                                         </StackPanel>
                                     </Grid>
                                 </StackPanel>
@@ -588,7 +594,7 @@
                                             </Image>
                                         </Grid>
                                     </Button>
-                                    <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="Kann in den Einstellungen aktiviert/deaktiviert werden"/>
+                                    <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Source="/DSA MeisterGeister;component/Images/Icons/General/info.png" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="Kann in den Einstellungen zum aktiviert/deaktiviert werden"/>
                                 </Grid>
                             </Grid>
                         </Border>

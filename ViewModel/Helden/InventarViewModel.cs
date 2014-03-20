@@ -12,10 +12,8 @@ using Logik = MeisterGeister.ViewModel.Inventar.Logic;
 using Service = MeisterGeister.Model.Service;
 using E = MeisterGeister.Logic.Einstellung.Einstellungen;
 
-namespace MeisterGeister.ViewModel.Inventar
-{
-    public class InventarViewModel : Base.ViewModelBase, MeisterGeister.ViewModel.Helden.Logic.IChangeListener
-    {
+namespace MeisterGeister.ViewModel.Inventar {
+    public class InventarViewModel : Base.ViewModelBase, MeisterGeister.ViewModel.Helden.Logic.IChangeListener {
 
         #region //FELDER
 
@@ -34,6 +32,7 @@ namespace MeisterGeister.ViewModel.Inventar
         private Visibility isSchildVorhanden = Visibility.Hidden;
         private Visibility isRuestungVorhanden = Visibility.Hidden;
         private Visibility isRuestungEinfachEingeben = Visibility.Hidden;
+        private Visibility isBEEingebenVisibility = Visibility.Hidden;
 
         private bool isAllSelected;
         private bool isNahkampfWaffeSelected;
@@ -41,7 +40,8 @@ namespace MeisterGeister.ViewModel.Inventar
         private bool isSchildSelected;
         private bool isRuestungSelected;
         private bool isRuestungBerechnungZonen = false;
-        private bool isRuestungBerechnungEinfach = false;        
+        private bool isRuestungBerechnungEinfach = false;
+        private bool isBehinderungEingeben = false;
 
         private int selectedFilterIndex = 0;
 
@@ -82,109 +82,92 @@ namespace MeisterGeister.ViewModel.Inventar
 
         #region //EIGENSCHAFTEN
         //Intern
-        public bool ListenToChangeEvents
-        {
+        public bool ListenToChangeEvents {
             get { return listenToChangeEvents; }
             set { listenToChangeEvents = value; SelectedHeldChanged(); }
         }
 
         //UI      
-        public bool IsReadOnly
-        {
+        public bool IsReadOnly {
             get { return _isReadOnly; }
         }
-        public Visibility IsNahkampfwaffevorhanden
-        {
+        public Visibility IsNahkampfwaffevorhanden {
             get { return isNahkampfwaffevorhanden; }
-            set
-            {
+            set {
                 isNahkampfwaffevorhanden = value;
                 OnChanged("IsNahkampfwaffevorhanden");
             }
         }
-        public Visibility IsFernkampfwaffevorhanden
-        {
+        public Visibility IsFernkampfwaffevorhanden {
             get { return isFernkampfwaffevorhanden; }
-            set
-            {
+            set {
                 isFernkampfwaffevorhanden = value;
                 OnChanged("IsFernkampfwaffevorhanden");
             }
         }
-        public Visibility IsSchildVorhanden
-        {
+        public Visibility IsSchildVorhanden {
             get { return isSchildVorhanden; }
-            set
-            {
+            set {
                 isSchildVorhanden = value;
                 OnChanged("IsSchildVorhanden");
             }
         }
-        public Visibility IsRuestungVorhanden
-        {
+        public Visibility IsRuestungVorhanden {
             get { return isRuestungVorhanden; }
-            set
-            {
+            set {
                 isRuestungVorhanden = value;
                 OnChanged("IsRuestungVorhanden");
             }
         }
-        public Visibility IsRuestungEinfachEingeben
-        {
+        public Visibility IsRuestungEinfachEingeben {
             get { return isRuestungEinfachEingeben; }
-            set
-            {
+            set {
                 isRuestungEinfachEingeben = value;
                 OnChanged("IsRuestungEinfachEingeben");
             }
         }
+        public Visibility IsBEEingebenVisibility {
+            get { return isBEEingebenVisibility; }
+            set {
+                isBEEingebenVisibility = value;
+                OnChanged("IsBEEingebenVisibility");
+            }
+        }
 
-        public int SelectedFilterIndex
-        {
+        public int SelectedFilterIndex {
             get { return selectedFilterIndex; }
-            set
-            {
+            set {
                 selectedFilterIndex = value;
                 OnChanged("");
             }
         }
 
-        public bool IsAllSelected
-        {
+        public bool IsAllSelected {
             get { return isAllSelected; }
-            set
-            {
+            set {
                 isAllSelected = value;
-                if (value && HeldNahkampfWaffeImInventar.Count() > 0)
-                {
+                if (value && HeldNahkampfWaffeImInventar.Count() > 0) {
                     IsNahkampfwaffevorhanden = Visibility.Visible;
                 }
-                if (value && HeldFernkampfwaffeImInventar.Count() > 0)
-                {
+                if (value && HeldFernkampfwaffeImInventar.Count() > 0) {
                     IsFernkampfwaffevorhanden = Visibility.Visible;
                 }
-                if (value && HeldSchildImInventar.Count() > 0)
-                {
+                if (value && HeldSchildImInventar.Count() > 0) {
                     IsSchildVorhanden = Visibility.Visible;
                 }
 
-                if (value && HeldRuestungImInventar.Count() > 0)
-                {
+                if (value && HeldRuestungImInventar.Count() > 0) {
                     IsRuestungVorhanden = Visibility.Visible;
                 }
                 OnChanged("IsAllSelected");
             }
         }
-        public bool IsNahkampfWaffeSelected
-        {
+        public bool IsNahkampfWaffeSelected {
             get { return isNahkampfWaffeSelected; }
-            set
-            {
+            set {
                 isNahkampfWaffeSelected = value;
-                if (value)
-                {
-                    if (value && HeldNahkampfWaffeImInventar.Count() > 0)
-                    {
+                if (value) {
+                    if (value && HeldNahkampfWaffeImInventar.Count() > 0) {
                         IsNahkampfwaffevorhanden = Visibility.Visible;
                     }
                     IsFernkampfwaffevorhanden = Visibility.Collapsed;
@@ -195,16 +178,12 @@ namespace MeisterGeister.ViewModel.Inventar
                 OnChanged("IsNahkampfWaffeSelected");
             }
         }
-        public bool IsFernkampfwaffeSelected
-        {
+        public bool IsFernkampfwaffeSelected {
             get { return isFernkampfwaffeSelected; }
-            set
-            {
+            set {
                 isFernkampfwaffeSelected = value;
-                if (value)
-                {
-                    if (value && HeldFernkampfwaffeImInventar.Count() > 0)
-                    {
+                if (value) {
+                    if (value && HeldFernkampfwaffeImInventar.Count() > 0) {
                         IsFernkampfwaffevorhanden = Visibility.Visible;
                     }
                     IsNahkampfwaffevorhanden = Visibility.Collapsed;
@@ -215,16 +194,12 @@ namespace MeisterGeister.ViewModel.Inventar
                 OnChanged("IsFernkampfwaffeSelected");
             }
         }
-        public bool IsSchildSelected
-        {
+        public bool IsSchildSelected {
             get { return isSchildSelected; }
-            set
-            {
+            set {
                 isSchildSelected = value;
-                if (value)
-                {
-                    if (value && HeldSchildImInventar.Count() > 0)
-                    {
+                if (value) {
+                    if (value && HeldSchildImInventar.Count() > 0) {
                         IsSchildVorhanden = Visibility.Visible;
                     }
                     IsFernkampfwaffevorhanden = Visibility.Collapsed;
@@ -234,16 +209,12 @@ namespace MeisterGeister.ViewModel.Inventar
                 OnChanged("IsSchildSelected");
             }
         }
-        public bool IsRuestungSelected
-        {
+        public bool IsRuestungSelected {
             get { return isRuestungSelected; }
-            set
-            {
+            set {
                 isRuestungSelected = value;
-                if (value)
-                {
-                    if (value && HeldRuestungImInventar.Count() > 0)
-                    {
+                if (value) {
+                    if (value && HeldRuestungImInventar.Count() > 0) {
                         IsRuestungVorhanden = Visibility.Visible;
                     }
                     IsFernkampfwaffevorhanden = Visibility.Collapsed;
@@ -253,121 +224,100 @@ namespace MeisterGeister.ViewModel.Inventar
                 OnChanged("IsRuestungSelected");
             }
         }
-        public bool IsRuestungBerechnungEinfach
-        {
+        public bool IsRuestungBerechnungEinfach {
             get { return !(isRuestungBerechnungEinfach || E.IsReadOnly); }
-            set
-            {
+            set {
                 isRuestungBerechnungEinfach = value;
                 OnChanged("IsRuestungBerechnungEinfach");
             }
         }
-        public bool IsRuestungBerechnungZonen
-        {
+        public bool IsRuestungBerechnungZonen {
             get { return isRuestungBerechnungZonen; }
-            set
-            {
+            set {
                 isRuestungBerechnungZonen = value;
                 OnChanged("IsRuestungBerechnungZonen");
             }
         }
+        public bool IsBehinderungEingeben {
+            get { return !(isBehinderungEingeben || E.IsReadOnly); }
+            set {
+                isBehinderungEingeben = value;
+                OnChanged("IsBehinderungEingeben");
+            }
+        }
 
-        public Model.Held SelectedHeld
-        {
+
+        public Model.Held SelectedHeld {
             get { return selectedHeld; }
-            set
-            {
+            set {
                 selectedHeld = value;
                 OnChanged("SelectedHeld");
             }
         }
-        public Model.Talent SelectedNahkampfwaffeTalent
-        {
+        public Model.Talent SelectedNahkampfwaffeTalent {
             get { return selectedNahkampfwaffeTalent; }
-            set
-            {
+            set {
                 selectedNahkampfwaffeTalent = value;
-                if (value.Talentname != FILTERDEAKTIVIEREN)
-                {
+                if (value.Talentname != FILTERDEAKTIVIEREN) {
                     NahkampfwaffeListe = Global.ContextInventar.WaffeListe.Where(w => w.Talent.Contains(value)).OrderBy(w => w.Name).ToList();
-                }
-                else
-                {
+                } else {
                     NahkampfwaffeListe = Global.ContextInventar.WaffeListe.ToList();
                 }
                 OnChanged("SelectedNahkampfwaffeTalent");
             }
         }
-        public Model.Talent SelectedFernkampfwaffeTalent
-        {
+        public Model.Talent SelectedFernkampfwaffeTalent {
             get { return selectedFernkampfwaffeTalent; }
-            set
-            {
+            set {
                 selectedFernkampfwaffeTalent = value;
-                if (value.Talentname != FILTERDEAKTIVIEREN)
-                {
+                if (value.Talentname != FILTERDEAKTIVIEREN) {
                     FernkampfwaffeListe = Global.ContextInventar.FernkampfwaffeListe.Where(w => w.Talent.Contains(value)).OrderBy(w => w.Name).ToList();
-                }
-                else
-                {
+                } else {
                     FernkampfwaffeListe = Global.ContextInventar.FernkampfwaffeListe.ToList();
                 }
                 OnChanged("SelectedFernkampfwaffeTalent");
             }
         }
-        public Model.Waffe SelectedNahkampfwaffe
-        {
+        public Model.Waffe SelectedNahkampfwaffe {
             get { return selectedNahkampfwaffe; }
-            set
-            {
+            set {
                 selectedNahkampfwaffe = value;
                 OnChanged("SelectedNahkampfwaffe");
             }
         }
-        public Model.Fernkampfwaffe SelectedFernkampfwaffe
-        {
+        public Model.Fernkampfwaffe SelectedFernkampfwaffe {
             get { return selectedFernkampfwaffe; }
-            set
-            {
+            set {
                 selectedFernkampfwaffe = value;
                 OnChanged("SelectedFernkampfwaffe");
             }
         }
-        public Model.Schild SelectedSchild
-        {
+        public Model.Schild SelectedSchild {
             get { return selectedSchild; }
-            set
-            {
+            set {
                 selectedSchild = value;
                 OnChanged("SelectedSchild");
             }
         }
-        public Model.Rüstung SelectedRuestung
-        {
+        public Model.Rüstung SelectedRuestung {
             get { return selectedRuestung; }
-            set
-            {
+            set {
                 selectedRuestung = value;
                 OnChanged("SelectedRuestung");
             }
         }
 
-        public double AktuellesGewicht
-        {
+        public double AktuellesGewicht {
             get { return aktuellesGewicht; }
-            set
-            {
+            set {
                 aktuellesGewicht = value;
 
                 AktuellesGewichtInProzentZuTragkraft = ((AktuellesGewicht / AktuelleTragkraft) * 100);
 
                 double val;
-                if (AktuellesGewichtInProzentZuTragkraft / 50 - 2 > 0)
-                {
+                if (AktuellesGewichtInProzentZuTragkraft / 50 - 2 > 0) {
                     val = Convert.ToInt32(Math.Floor(AktuellesGewichtInProzentZuTragkraft / 50 - 2 + 1));
-                }
-                else
-                {
+                } else {
                     val = 0;
                 }
                 AktuellesGewichtProzentResultierendeBE = Convert.ToInt32(val);
@@ -375,33 +325,26 @@ namespace MeisterGeister.ViewModel.Inventar
                 OnChanged("AktuellesGewicht");
             }
         }
-        public double AktuelleTragkraft
-        {
+        public double AktuelleTragkraft {
             get { return aktuelleTragkraft; }
-            set
-            {
+            set {
                 aktuelleTragkraft = value;
                 OnChanged("AktuelleTragkraft");
             }
         }
-        public double AktuellesGewichtInProzentZuTragkraft
-        {
+        public double AktuellesGewichtInProzentZuTragkraft {
             get { return aktuellesGewichtInProzentZuTragkraft; }
-            set
-            {
+            set {
                 List<string> trimOnKomma = value.ToString().Split(',').ToList();
                 double inShort = Math.Round(value, 2, MidpointRounding.AwayFromZero);
                 aktuellesGewichtInProzentZuTragkraft = inShort;
                 OnChanged("AktuellesGewichtInProzentZuTragkraft");
             }
         }
-        public double AktuellesGewichtProzentResultierendeBE
-        {
+        public double AktuellesGewichtProzentResultierendeBE {
             get { return aktuellesGewichtProzentResultierendeBE; }
-            set
-            {
-                if (aktuellesGewichtProzentResultierendeBE != value)
-                {
+            set {
+                if (aktuellesGewichtProzentResultierendeBE != value) {
                     aktuellesGewichtProzentResultierendeBE = value;
                 }
                 OnChanged("AktuellesGewichtProzentResultierendeBE");
@@ -409,153 +352,117 @@ namespace MeisterGeister.ViewModel.Inventar
         }
 
         //EntityListen
-        public List<Model.Talent> NahkampfWaffeTalentListe
-        {
+        public List<Model.Talent> NahkampfWaffeTalentListe {
             get { return nahkampfWaffeTalentListe; }
-            set
-            {
+            set {
                 nahkampfWaffeTalentListe = value;
                 OnChanged("NahkampfWaffeTalentListe");
             }
         }
-        public List<Model.Talent> FernkampWaffeTalentListe
-        {
+        public List<Model.Talent> FernkampWaffeTalentListe {
             get { return fernkampWaffeTalentListe; }
-            set
-            {
+            set {
                 fernkampWaffeTalentListe = value;
                 OnChanged("FernkampWaffeTalentListe ");
             }
         }
-        public List<Model.Waffe> NahkampfwaffeListe
-        {
+        public List<Model.Waffe> NahkampfwaffeListe {
             get { return nahkampfwaffeListe; }
-            set
-            {
+            set {
                 nahkampfwaffeListe = value;
                 OnChanged("NahkampfwaffeListe");
             }
         }
-        public List<Model.Fernkampfwaffe> FernkampfwaffeListe
-        {
+        public List<Model.Fernkampfwaffe> FernkampfwaffeListe {
             get { return fernkampfwaffeListe; }
-            set
-            {
+            set {
                 fernkampfwaffeListe = value;
                 OnChanged("FernkampfwaffeListe");
             }
         }
-        public List<Model.Schild> SchildListe
-        {
+        public List<Model.Schild> SchildListe {
             get { return schildListe; }
-            set
-            {
+            set {
                 schildListe = value;
                 OnChanged("SchildListe");
             }
         }
-        public List<Model.Rüstung> RuestungListe
-        {
+        public List<Model.Rüstung> RuestungListe {
             get { return ruestungListe; }
-            set
-            {
+            set {
                 ruestungListe = value;
                 OnChanged("RuestungListe");
             }
         }
 
         //Zuordnung
-        public ObservableCollection<NahkampfItem> HeldNahkampfWaffeImInventar
-        {
+        public ObservableCollection<NahkampfItem> HeldNahkampfWaffeImInventar {
             get { return heldNahkampfWaffeImInventar; }
-            set
-            {
+            set {
                 heldNahkampfWaffeImInventar = value;
-                if (heldNahkampfWaffeImInventar.Count() != 0)
-                {
+                if (heldNahkampfWaffeImInventar.Count() != 0) {
                     IsNahkampfwaffevorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsNahkampfwaffevorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldNahkampfWaffeImInventar");
             }
         }
-        public ObservableCollection<FernkampfItem> HeldFernkampfwaffeImInventar
-        {
+        public ObservableCollection<FernkampfItem> HeldFernkampfwaffeImInventar {
             get { return heldFernkampfwaffeImInventar; }
-            set
-            {
+            set {
                 heldFernkampfwaffeImInventar = value;
-                if (heldFernkampfwaffeImInventar.Count() != 0)
-                {
+                if (heldFernkampfwaffeImInventar.Count() != 0) {
                     IsFernkampfwaffevorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsFernkampfwaffevorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldFernkampfwaffeImInventar");
             }
         }
-        public ObservableCollection<SchildItem> HeldSchildImInventar
-        {
+        public ObservableCollection<SchildItem> HeldSchildImInventar {
             get { return heldSchildImInventar; }
-            set
-            {
+            set {
                 heldSchildImInventar = value;
-                if (heldSchildImInventar.Count() != 0)
-                {
+                if (heldSchildImInventar.Count() != 0) {
                     IsSchildVorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsSchildVorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldSchildImInventar");
             }
         }
-        public ObservableCollection<RuestungItem> HeldRuestungImInventar
-        {
+        public ObservableCollection<RuestungItem> HeldRuestungImInventar {
             get { return heldRuestungImInventar; }
-            set
-            {
+            set {
                 heldRuestungImInventar = value;
-                if (heldRuestungImInventar.Count() != 0)
-                {
+                if (heldRuestungImInventar.Count() != 0) {
                     IsRuestungVorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsRuestungVorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldRuestungImInventar");
             }
         }
         //Commands
-        public Base.CommandBase OnAddNahkampfwaffe
-        {
+        public Base.CommandBase OnAddNahkampfwaffe {
             get { return onAddNahkampfwaffe; }
         }
-        public Base.CommandBase OnAddFernwaffe
-        {
+        public Base.CommandBase OnAddFernwaffe {
             get { return onAddFernkampfwaffe; }
         }
-        public Base.CommandBase OnAddSchild
-        {
+        public Base.CommandBase OnAddSchild {
             get { return onAddSchild; }
         }
-        public Base.CommandBase OnAddRuestung
-        {
+        public Base.CommandBase OnAddRuestung {
             get { return onAddRuestung; }
         }
         #endregion
 
         #region //KONSTRUKTOR
-        public InventarViewModel()
-        {
+        public InventarViewModel() {
             EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("RSBerechnung", ""));
+            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("BEBerechnung", ""));            
 
             onAddNahkampfwaffe = new Base.CommandBase(AddNahkampfwaffe, null);
             onAddFernkampfwaffe = new Base.CommandBase(AddFernkampfwaffe, null);
@@ -569,18 +476,15 @@ namespace MeisterGeister.ViewModel.Inventar
 
             SelectedFilterIndex = 0;
 
-            if (IsLoaded == false)
-            {
+            if (IsLoaded == false) {
                 IsAllSelected = true;
             }
         }
         #endregion
 
         #region //INSTANZMETHODEN
-        public void LoadDaten()
-        {
-            if (IsLoaded == false)
-            {
+        public void LoadDaten() {
+            if (IsLoaded == false) {
                 //Nahkampf
                 NahkampfWaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
                 if (Global.ContextTalent != null)
@@ -592,8 +496,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 //NahkampfWaffeTalentListe = NahkampfWaffeTalentListe;                
                 if (Global.ContextInventar != null)
                     NahkampfwaffeListe.AddRange(Global.ContextInventar.WaffeListe.Where(w => !NahkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
-                if (NahkampfwaffeListe.Count > 0)
-                {
+                if (NahkampfwaffeListe.Count > 0) {
                     IsNahkampfwaffevorhanden = Visibility.Visible;
                     OnChanged("IsNahkampfwaffevorhanden");
                 }
@@ -607,8 +510,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 if (Global.ContextInventar != null)
                     FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
                 OnChanged("FernkampfwaffeListe");
-                if (FernkampfwaffeListe.Count > 0)
-                {
+                if (FernkampfwaffeListe.Count > 0) {
                     IsFernkampfwaffevorhanden = Visibility.Visible;
                     OnChanged("IsFernkampfwaffevorhanden");
                 }
@@ -618,8 +520,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 if (Global.ContextInventar != null)
                     SchildListe.AddRange(Global.ContextInventar.SchildListe.Where(w => !SchildListe.Contains(w)).OrderBy(w => w.Name));
                 SchildListe = SchildListe;
-                if (SchildListe.Count > 0)
-                {
+                if (SchildListe.Count > 0) {
                     IsSchildVorhanden = Visibility.Visible;
                     OnChanged("IsSchildVorhanden");
                 }
@@ -629,8 +530,7 @@ namespace MeisterGeister.ViewModel.Inventar
                 if (Global.ContextInventar != null)
                     RuestungListe.AddRange(Global.ContextInventar.RuestungListe.Where(w => !RuestungListe.Contains(w)).OrderBy(w => w.Name));
                 RuestungListe = RuestungListe;
-                if (RuestungListe.Count > 0)
-                {
+                if (RuestungListe.Count > 0) {
                     IsRuestungVorhanden = Visibility.Visible;
                     OnChanged("IsRuestungVorhanden");
                 }
@@ -639,8 +539,7 @@ namespace MeisterGeister.ViewModel.Inventar
             }
         }
 
-        private Model.Held_Ausrüstung CreateHeldZuAusruestung(Model.Held aHeld, Model.Ausrüstung aAusruestung)
-        {
+        private Model.Held_Ausrüstung CreateHeldZuAusruestung(Model.Held aHeld, Model.Ausrüstung aAusruestung) {
             Model.Held_Ausrüstung tmp = new Model.Held_Ausrüstung();
             tmp.Held = aHeld;
             tmp.HeldGUID = aHeld.HeldGUID;
@@ -648,8 +547,7 @@ namespace MeisterGeister.ViewModel.Inventar
             tmp.Ausrüstung = aAusruestung;
             tmp.Ausrüstung.AusrüstungGUID = aAusruestung.AusrüstungGUID;
 
-            if (aAusruestung.Talente.Count() > 0)
-            {
+            if (aAusruestung.Talente.Count() > 0) {
                 tmp.Talent = aAusruestung.Talente.FirstOrDefault();
                 tmp.TalentGUID = aAusruestung.Talente.FirstOrDefault().TalentGUID;
             }
@@ -660,32 +558,28 @@ namespace MeisterGeister.ViewModel.Inventar
             return tmp;
         }
 
-        private NahkampfItem CreateItemVonNahkampfwaffe(Model.Waffe aNahkampfwaffe)
-        {
+        private NahkampfItem CreateItemVonNahkampfwaffe(Model.Waffe aNahkampfwaffe) {
             NahkampfItem tmpItem = new NahkampfItem(CreateHeldZuAusruestung(SelectedHeld, aNahkampfwaffe.Ausrüstung), aNahkampfwaffe);
             tmpItem.Trageort = "Rucksack";
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             return tmpItem;
         }
 
-        private FernkampfItem CreateItemVonFernkampfwaffe(Model.Fernkampfwaffe aFernkampfwaffe)
-        {
+        private FernkampfItem CreateItemVonFernkampfwaffe(Model.Fernkampfwaffe aFernkampfwaffe) {
             FernkampfItem tmpItem = new FernkampfItem(CreateHeldZuAusruestung(SelectedHeld, aFernkampfwaffe.Ausrüstung), aFernkampfwaffe);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
 
-        private SchildItem CreateItemVonSchild(Model.Schild aSchild)
-        {
+        private SchildItem CreateItemVonSchild(Model.Schild aSchild) {
             SchildItem tmpItem = new SchildItem(CreateHeldZuAusruestung(SelectedHeld, aSchild.Ausrüstung), aSchild);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
 
-        private RuestungItem CreateItemVonRuestung(Model.Rüstung aRuestung)
-        {
+        private RuestungItem CreateItemVonRuestung(Model.Rüstung aRuestung) {
             RuestungItem tmpItem = new RuestungItem(CreateHeldZuAusruestung(SelectedHeld, aRuestung.Ausrüstung), aRuestung);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
@@ -696,61 +590,74 @@ namespace MeisterGeister.ViewModel.Inventar
 
         #region //EVENTS
 
-        private void IsReadOnlyChanged(object sender, EventArgs e)
-        {
+        private void IsReadOnlyChanged(object sender, EventArgs e) {
             _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
-        
-        void EinstellungenChangedHandler(MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs e)
-        {            
-            if (e.PropertyName == "RSBerechnung")
-            {
-                switch (E.RSBerechnung)
-                {
-                    //Automatisch Zonen / Automatisch Einfach = 0,3                  
-                    case 1: //Einfach                    
-                        IsRuestungBerechnungEinfach = true;
-                        IsRuestungBerechnungZonen = false;
-                        IsRuestungEinfachEingeben = Visibility.Visible;
-                        break;
-                    case 2: //Zonen                    
-                        IsRuestungBerechnungEinfach = false;
-                        IsRuestungBerechnungZonen = true;
-                        IsRuestungEinfachEingeben = Visibility.Hidden;
-                        break;
-                    default:
-                        IsRuestungBerechnungEinfach = false;
-                        IsRuestungBerechnungZonen = false;
-                        IsRuestungEinfachEingeben = Visibility.Hidden;
-                        if (SelectedHeld != null) { 
-                            SelectedHeld.BerechneRüstungswerte();
-                        }
-                        break;
-                }
+
+        void EinstellungenChangedHandler(MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs e) {
+            switch (e.PropertyName) {
+                case "RSBerechnung":
+                    switch (E.RSBerechnung) {
+                        //Automatisch Zonen / Automatisch Einfach = 0,3                  
+                        case 1: //Einfach                    
+                            IsRuestungBerechnungEinfach = true;
+                            IsRuestungBerechnungZonen = false;
+                            IsRuestungEinfachEingeben = Visibility.Visible;
+                            break;
+                        case 2: //Zonen                    
+                            IsRuestungBerechnungEinfach = false;
+                            IsRuestungBerechnungZonen = true;
+                            IsRuestungEinfachEingeben = Visibility.Hidden;
+                            break;
+                        default:
+                            IsRuestungBerechnungEinfach = false;
+                            IsRuestungBerechnungZonen = false;
+                            IsRuestungEinfachEingeben = Visibility.Hidden;
+                            if (SelectedHeld != null) {
+                                SelectedHeld.BerechneRüstungswerte();
+                            }
+                            break;
+                    }
+                    break;
+                case "BEBerechnung":
+                    //Einstellung für BE-Berechnung
+                    switch (E.BEBerechnung) {
+                        case 0:
+                            IsBehinderungEingeben = false;
+                            IsBEEingebenVisibility = Visibility.Hidden;
+                            if (selectedHeld != null) {
+                                SelectedHeld.BerechneBehinderung();
+                            }
+                            break;
+                        case 1:
+                            IsBehinderungEingeben = true;
+                            IsBEEingebenVisibility = Visibility.Visible;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
-        void SelectedHeldChanged()
-        {
+        void SelectedHeldChanged() {
             //FIXME Hack
             if (!ListenToChangeEvents)
                 return;
 
             SelectedHeld = Global.SelectedHeld;
-            if (IsLoaded == false)
-            {
+            if (IsLoaded == false) {
                 LoadDaten();
             }
 
             AktuellesGewicht = 0;
-            if (SelectedHeld != null)
-            {
+            if (SelectedHeld != null) {
                 AktuelleTragkraft = SelectedHeld.Tragkraft;
                 AktuellesGewicht = SelectedHeld.BerechneAusrüstungsGewicht();
-            }
-            else
-            {
+            } else {
                 AktuelleTragkraft = 0;
                 AktuellesGewichtInProzentZuTragkraft = 0;
                 AktuellesGewichtProzentResultierendeBE = 0;
@@ -758,132 +665,98 @@ namespace MeisterGeister.ViewModel.Inventar
 
             //Nahkampf
             HeldNahkampfWaffeImInventar.Clear();
-            if (SelectedHeld != null)
-            {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Waffe != null))
-                {
+            if (SelectedHeld != null) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Waffe != null)) {
                     NahkampfItem value = new NahkampfItem(item, item.Ausrüstung.Waffe);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldNahkampfWaffeImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
                     SelectedFilterIndex == 1) &&
-                    HeldNahkampfWaffeImInventar.Count() > 0)
-                {
+                    HeldNahkampfWaffeImInventar.Count() > 0) {
                     IsNahkampfwaffevorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsNahkampfwaffevorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldNahkampfWaffeImInventar");
-            }
-            else
-            {
+            } else {
                 IsNahkampfwaffevorhanden = Visibility.Collapsed;
                 OnChanged("HeldNahkampfWaffeImInventar");
             }
 
             //Schild
             HeldSchildImInventar.Clear();
-            if (SelectedHeld != null)
-            {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Schild != null))
-                {
+            if (SelectedHeld != null) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Schild != null)) {
                     SchildItem value = new SchildItem(item, item.Ausrüstung.Schild);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldSchildImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
                     SelectedFilterIndex == 3) &&
-                   HeldSchildImInventar.Count() > 0)
-                {
+                   HeldSchildImInventar.Count() > 0) {
                     IsSchildVorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsSchildVorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldSchildImInventar");
-            }
-            else
-            {
+            } else {
                 IsSchildVorhanden = Visibility.Collapsed;
                 OnChanged("HeldSchildImInventar");
             }
 
             //Fernkampfwaffe
             HeldFernkampfwaffeImInventar.Clear();
-            if (SelectedHeld != null)
-            {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Fernkampfwaffe != null))
-                {
+            if (SelectedHeld != null) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Fernkampfwaffe != null)) {
                     FernkampfItem value = new FernkampfItem(item, item.Ausrüstung.Fernkampfwaffe);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldFernkampfwaffeImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
-                    SelectedFilterIndex == 2) && HeldFernkampfwaffeImInventar.Count() > 0)
-                {
+                    SelectedFilterIndex == 2) && HeldFernkampfwaffeImInventar.Count() > 0) {
                     IsFernkampfwaffevorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsFernkampfwaffevorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldFernkampfwaffeImInventar");
-            }
-            else
-            {
+            } else {
                 IsFernkampfwaffevorhanden = Visibility.Collapsed;
                 OnChanged("HeldFernkampfwaffeImInventar");
             }
 
             //Rüstung
             HeldRuestungImInventar.Clear();
-            if (SelectedHeld != null)
-            {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Rüstung != null))
-                {
+            if (SelectedHeld != null) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Rüstung != null)) {
                     RuestungItem value = new RuestungItem(item, item.Ausrüstung.Rüstung);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldRuestungImInventar.Add(value);
                 }
                 if ((SelectedFilterIndex == 0 ||
                     SelectedFilterIndex == 4) &&
-                    HeldRuestungImInventar.Count() > 0)
-                {
+                    HeldRuestungImInventar.Count() > 0) {
                     IsRuestungVorhanden = Visibility.Visible;
-                }
-                else
-                {
+                } else {
                     IsRuestungVorhanden = Visibility.Collapsed;
                 }
                 OnChanged("HeldRuestungImInventar");
-            }
-            else
-            {
+            } else {
                 IsRuestungVorhanden = Visibility.Collapsed;
                 OnChanged("HeldRuestungImInventar");
             }
 
-            if (SelectedHeld != null)
-            {
-                //Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
-                //SelectedHeld.BE = HeldRuestungImInventar.Sum(item => item.EntityR.BE);
+            if (SelectedHeld != null && E.BEBerechnung == 0) {
+                SelectedHeld.BerechneBehinderung();
             }
         }
 
         #region //--ADD
 
-        void AddNahkampfwaffe(object sender)
-        {
-            if (SelectedNahkampfwaffe != null && SelectedHeld != null && !IsReadOnly)
-            {
-                foreach (var item in HeldNahkampfWaffeImInventar)
-                {
-                    if (item.EntityNW.WaffeGUID == SelectedNahkampfwaffe.WaffeGUID)
-                    {
+        void AddNahkampfwaffe(object sender) {
+            if (SelectedNahkampfwaffe != null && SelectedHeld != null && !IsReadOnly) {
+                foreach (var item in HeldNahkampfWaffeImInventar) {
+                    if (item.EntityNW.WaffeGUID == SelectedNahkampfwaffe.WaffeGUID) {
                         item.EntityHA.Anzahl++;
                         OnChanged("HeldNahkampfWaffeImInventar");
                         AktuellesGewicht += SelectedNahkampfwaffe.Gewicht;
@@ -898,14 +771,10 @@ namespace MeisterGeister.ViewModel.Inventar
                 AktuellesGewicht += SelectedNahkampfwaffe.Gewicht;
             }
         }
-        void AddFernkampfwaffe(object sender)
-        {
-            if (SelectedFernkampfwaffe != null && SelectedHeld != null && !IsReadOnly)
-            {
-                foreach (var item in HeldFernkampfwaffeImInventar)
-                {
-                    if (item.EntityFW.FernkampfwaffeGUID == SelectedFernkampfwaffe.FernkampfwaffeGUID)
-                    {
+        void AddFernkampfwaffe(object sender) {
+            if (SelectedFernkampfwaffe != null && SelectedHeld != null && !IsReadOnly) {
+                foreach (var item in HeldFernkampfwaffeImInventar) {
+                    if (item.EntityFW.FernkampfwaffeGUID == SelectedFernkampfwaffe.FernkampfwaffeGUID) {
                         item.EntityHA.Anzahl++;
                         OnChanged("HeldFernkampfwaffeImInventar");
                         AktuellesGewicht += SelectedFernkampfwaffe.Gewicht;
@@ -921,14 +790,10 @@ namespace MeisterGeister.ViewModel.Inventar
                 AktuellesGewicht += SelectedFernkampfwaffe.Gewicht;
             }
         }
-        void AddSchild(object sender)
-        {
-            if (SelectedSchild != null && SelectedHeld != null && !IsReadOnly)
-            {
-                foreach (var item in HeldSchildImInventar)
-                {
-                    if (item.EntityS.SchildGUID == SelectedSchild.SchildGUID)
-                    {
+        void AddSchild(object sender) {
+            if (SelectedSchild != null && SelectedHeld != null && !IsReadOnly) {
+                foreach (var item in HeldSchildImInventar) {
+                    if (item.EntityS.SchildGUID == SelectedSchild.SchildGUID) {
                         item.EntityHA.Anzahl++;
                         OnChanged("HeldSchildImInventar");
                         AktuellesGewicht += SelectedSchild.Gewicht;
@@ -944,22 +809,20 @@ namespace MeisterGeister.ViewModel.Inventar
                 AktuellesGewicht += SelectedSchild.Gewicht;
             }
         }
-        void AddRuestung(object sender)
-        {
-            if (SelectedRuestung != null && SelectedHeld != null && !IsReadOnly)
-            {
-                foreach (var item in HeldRuestungImInventar)
-                {
-                    if (item.EntityR.RüstungGUID == SelectedRuestung.RüstungGUID)
-                    {
+        void AddRuestung(object sender) {
+            if (SelectedRuestung != null && SelectedHeld != null && !IsReadOnly) {
+                foreach (var item in HeldRuestungImInventar) {
+                    if (item.EntityR.RüstungGUID == SelectedRuestung.RüstungGUID) {
                         item.EntityHA.Anzahl++;
 
                         if (E.RSBerechnung == 0 ||
-                            E.RSBerechnung == 3)
-                        {
+                            E.RSBerechnung == 3) {
                             SelectedHeld.BerechneRüstungswerte();
                         }
 
+                        if (SelectedHeld != null && E.BEBerechnung == 0) {
+                            SelectedHeld.BerechneBehinderung();
+                        }
                         OnChanged("HeldRuestungImInventar");
                         AktuellesGewicht += SelectedRuestung.Gewicht / 2;
                         return;
@@ -970,13 +833,13 @@ namespace MeisterGeister.ViewModel.Inventar
                 HeldRuestungImInventar.Add(newItem);
 
                 if (E.RSBerechnung == 0 ||
-                    E.RSBerechnung == 3)
-                {
+                    E.RSBerechnung == 3) {
                     SelectedHeld.BerechneRüstungswerte();
                 }
 
-                //TODO DW: Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
-                //SelectedHeld.BE += newItem.EntityR.BE;
+                if (SelectedHeld != null && E.BEBerechnung == 0) {
+                    SelectedHeld.BerechneBehinderung();
+                }
                 OnChanged("HeldRuestungImInventar");
                 IsRuestungVorhanden = Visibility.Visible;
                 Global.ContextInventar.InsertHeldAusruestung(newItem.EntityHA);
@@ -988,20 +851,14 @@ namespace MeisterGeister.ViewModel.Inventar
 
         #region //--REMOVE
 
-        void RemoveAusruestung(object sender)
-        {
-            if (sender != null && SelectedHeld != null && !IsReadOnly)
-            {
+        void RemoveAusruestung(object sender) {
+            if (sender != null && SelectedHeld != null && !IsReadOnly) {
 
-                if (sender is NahkampfItem)
-                {
+                if (sender is NahkampfItem) {
                     NahkampfItem item = HeldNahkampfWaffeImInventar.Where(value => value == (sender as NahkampfItem)).FirstOrDefault();
-                    if (item != null)
-                    {
-                        foreach (var invItem in HeldNahkampfWaffeImInventar)
-                        {
-                            if (invItem.EntityNW.WaffeGUID == item.EntityNW.WaffeGUID)
-                            {
+                    if (item != null) {
+                        foreach (var invItem in HeldNahkampfWaffeImInventar) {
+                            if (invItem.EntityNW.WaffeGUID == item.EntityNW.WaffeGUID) {
                                 if (item.EntityHA.Anzahl <= 1)
                                     break;
                                 item.EntityHA.Anzahl--;
@@ -1013,8 +870,7 @@ namespace MeisterGeister.ViewModel.Inventar
                         HeldNahkampfWaffeImInventar.Remove(item);
                         OnChanged("HeldNahkampfWaffeImInventar");
                         AktuellesGewicht -= item.EntityNW.Gewicht;
-                        if (HeldNahkampfWaffeImInventar.Count() == 0)
-                        {
+                        if (HeldNahkampfWaffeImInventar.Count() == 0) {
                             IsNahkampfwaffevorhanden = Visibility.Collapsed;
                         }
                         Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
@@ -1022,15 +878,11 @@ namespace MeisterGeister.ViewModel.Inventar
                     }
                 }
 
-                if (sender is FernkampfItem)
-                {
+                if (sender is FernkampfItem) {
                     FernkampfItem item = HeldFernkampfwaffeImInventar.Where(value => value == (sender as FernkampfItem)).FirstOrDefault();
-                    if (item != null)
-                    {
-                        foreach (var invItem in HeldFernkampfwaffeImInventar)
-                        {
-                            if (invItem.EntityFW.FernkampfwaffeGUID == item.EntityFW.FernkampfwaffeGUID)
-                            {
+                    if (item != null) {
+                        foreach (var invItem in HeldFernkampfwaffeImInventar) {
+                            if (invItem.EntityFW.FernkampfwaffeGUID == item.EntityFW.FernkampfwaffeGUID) {
                                 if (item.EntityHA.Anzahl <= 1)
                                     break;
                                 item.EntityHA.Anzahl--;
@@ -1042,8 +894,7 @@ namespace MeisterGeister.ViewModel.Inventar
                         HeldFernkampfwaffeImInventar.Remove(item);
                         OnChanged("HeldFernkampfwaffeImInventar");
                         AktuellesGewicht -= item.EntityFW.Gewicht;
-                        if (HeldFernkampfwaffeImInventar.Count() == 0)
-                        {
+                        if (HeldFernkampfwaffeImInventar.Count() == 0) {
                             IsFernkampfwaffevorhanden = Visibility.Collapsed;
                         }
                         Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
@@ -1051,15 +902,11 @@ namespace MeisterGeister.ViewModel.Inventar
                     }
                 }
 
-                if (sender is SchildItem)
-                {
+                if (sender is SchildItem) {
                     SchildItem item = HeldSchildImInventar.Where(value => value == (sender as SchildItem)).FirstOrDefault();
-                    if (item != null)
-                    {
-                        foreach (var invItem in HeldSchildImInventar)
-                        {
-                            if (invItem.EntityS.SchildGUID == item.EntityS.SchildGUID)
-                            {
+                    if (item != null) {
+                        foreach (var invItem in HeldSchildImInventar) {
+                            if (invItem.EntityS.SchildGUID == item.EntityS.SchildGUID) {
                                 if (item.EntityHA.Anzahl <= 1)
                                     break;
                                 item.EntityHA.Anzahl--;
@@ -1071,8 +918,7 @@ namespace MeisterGeister.ViewModel.Inventar
                         HeldSchildImInventar.Remove(item);
                         OnChanged("HeldSchildImInventar");
                         AktuellesGewicht -= item.EntityS.Gewicht;
-                        if (HeldSchildImInventar.Count() == 0)
-                        {
+                        if (HeldSchildImInventar.Count() == 0) {
                             IsSchildVorhanden = Visibility.Collapsed;
                         }
                         Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
@@ -1081,22 +927,21 @@ namespace MeisterGeister.ViewModel.Inventar
                     }
                 }
 
-                if (sender is RuestungItem)
-                {
+                if (sender is RuestungItem) {
                     RuestungItem item = HeldRuestungImInventar.Where(value => value == (sender as RuestungItem)).FirstOrDefault();
-                    if (item != null)
-                    {
-                        foreach (var invItem in HeldRuestungImInventar)
-                        {
-                            if (invItem.EntityR.RüstungGUID == item.EntityR.RüstungGUID)
-                            {
+                    if (item != null) {
+                        foreach (var invItem in HeldRuestungImInventar) {
+                            if (invItem.EntityR.RüstungGUID == item.EntityR.RüstungGUID) {
                                 if (item.EntityHA.Anzahl <= 1)
                                     break;
                                 item.EntityHA.Anzahl--;
                                 if (E.RSBerechnung == 0 ||
-                                    E.RSBerechnung == 3)
-                                {
+                                    E.RSBerechnung == 3) {
                                     SelectedHeld.BerechneRüstungswerte();
+                                }
+
+                                if (SelectedHeld != null && E.BEBerechnung == 0) {
+                                    SelectedHeld.BerechneBehinderung();
                                 }
                                 OnChanged("HeldRuestungImInventar");
                                 AktuellesGewicht -= item.EntityR.Gewicht / 2;
@@ -1105,16 +950,16 @@ namespace MeisterGeister.ViewModel.Inventar
                         }
                         HeldRuestungImInventar.Remove(item);
                         if (E.RSBerechnung == 0 ||
-                            E.RSBerechnung == 3)
-                        {
+                            E.RSBerechnung == 3) {
                             SelectedHeld.BerechneRüstungswerte();
                         }
                         OnChanged("HeldRuestungImInventar");
                         AktuellesGewicht -= item.EntityR.Gewicht / 2;
-                        //Das Inventar schreibt noch nicht in den BE-Wert des Helden solange das inv nicht fertig ist
-                        //SelectedHeld.BE -= item.EntityR.BE;
-                        if (HeldRuestungImInventar.Count() == 0)
-                        {
+
+                        if (SelectedHeld != null && E.BEBerechnung == 0) {
+                            SelectedHeld.BerechneBehinderung();
+                        }
+                        if (HeldRuestungImInventar.Count() == 0) {
                             IsRuestungVorhanden = Visibility.Collapsed;
                         }
                         Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
@@ -1133,8 +978,7 @@ namespace MeisterGeister.ViewModel.Inventar
 
     #region //SUBKLASSEN
 
-    public class NahkampfItem : Base.ViewModelBase
-    {
+    public class NahkampfItem : Base.ViewModelBase {
 
         #region //FELDER
 
@@ -1158,22 +1002,18 @@ namespace MeisterGeister.ViewModel.Inventar
         public Model.Waffe EntityNW { get; set; }
 
         //UI
-        public bool Ausgeruestet
-        {
+        public bool Ausgeruestet {
             get { return ausgeruestet; }
-            set
-            {
+            set {
                 ausgeruestet = value;
                 OnChanged("Ausgeruestet");
                 EntityHA.Angelegt = value;
                 Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
             }
         }
-        public string Trageort
-        {
+        public string Trageort {
             get { return trageort; }
-            set
-            {
+            set {
                 trageort = value;
                 OnChanged("Trageort");
                 //EntityHA.Trageort = new Model.Trageort() { ;                
@@ -1185,8 +1025,7 @@ namespace MeisterGeister.ViewModel.Inventar
         public string WM { get { return wM; } set { wM = value; OnChanged("WM"); } }
 
         //Commands
-        public Base.CommandBase OnRemoveNahkampfwaffe
-        {
+        public Base.CommandBase OnRemoveNahkampfwaffe {
             get { return onRemoveNahkampfwaffe; }
         }
 
@@ -1194,22 +1033,17 @@ namespace MeisterGeister.ViewModel.Inventar
 
         #region //KONSTRUKTOR
 
-        public NahkampfItem(Model.Held_Ausrüstung aHA, Model.Waffe aNW)
-        {
+        public NahkampfItem(Model.Held_Ausrüstung aHA, Model.Waffe aNW) {
             bool isFirst = true;
             string talent = "";
             string tp = "";
             string tpkk = "";
 
-            foreach (var value in aNW.Talent)
-            {
-                if (isFirst)
-                {
+            foreach (var value in aNW.Talent) {
+                if (isFirst) {
                     talent += value.Talentname;
                     isFirst = false;
-                }
-                else
-                {
+                } else {
                     talent += " / " + value.Talentname;
                 }
             }
@@ -1233,10 +1067,8 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //EVENTS
 
         public event EventHandler RemoveItem;
-        void RemoveNahkampfwaffe(object sender)
-        {
-            if (RemoveItem != null)
-            {
+        void RemoveNahkampfwaffe(object sender) {
+            if (RemoveItem != null) {
                 RemoveItem(this, new EventArgs());
             }
 
@@ -1246,8 +1078,7 @@ namespace MeisterGeister.ViewModel.Inventar
 
     }
 
-    public class SchildItem : Base.ViewModelBase
-    {
+    public class SchildItem : Base.ViewModelBase {
 
         #region //FELDER
 
@@ -1272,22 +1103,18 @@ namespace MeisterGeister.ViewModel.Inventar
         public Model.Schild EntityS { get { return entityS; } set { entityS = value; OnChanged("EntityS"); } }
 
         //UI
-        public bool Ausgeruestet
-        {
+        public bool Ausgeruestet {
             get { return ausgeruestet; }
-            set
-            {
+            set {
                 ausgeruestet = value;
                 OnChanged("Ausgeruestet");
                 EntityHA.Angelegt = value;
                 Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
             }
         }
-        public Model.Trageort Trageort
-        {
+        public Model.Trageort Trageort {
             get { return trageort; }
-            set
-            {
+            set {
                 trageort = value;
                 OnChanged("Trageort");
                 EntityHA.Trageort = value;
@@ -1296,8 +1123,7 @@ namespace MeisterGeister.ViewModel.Inventar
         public string WM { get { return wM; } set { wM = value; OnChanged("WM"); } }
 
         //Commands
-        public Base.CommandBase OnRemoveSchild
-        {
+        public Base.CommandBase OnRemoveSchild {
             get { return onRemoveSchild; }
         }
 
@@ -1305,8 +1131,7 @@ namespace MeisterGeister.ViewModel.Inventar
 
         #region //KONSTRUKTOR
 
-        public SchildItem(Model.Held_Ausrüstung aHA, Model.Schild aS)
-        {
+        public SchildItem(Model.Held_Ausrüstung aHA, Model.Schild aS) {
             this.EntityHA = aHA;
             this.EntityS = aS;
             this.WM = aS.WMAT.ToString() + "/" + aS.WMPA.ToString();
@@ -1321,10 +1146,8 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //EVENTS
 
         public event EventHandler RemoveItem;
-        void RemoveSchild(object sender)
-        {
-            if (RemoveItem != null)
-            {
+        void RemoveSchild(object sender) {
+            if (RemoveItem != null) {
                 RemoveItem(this, new EventArgs());
             }
 
@@ -1334,8 +1157,7 @@ namespace MeisterGeister.ViewModel.Inventar
 
     }
 
-    public class FernkampfItem : Base.ViewModelBase
-    {
+    public class FernkampfItem : Base.ViewModelBase {
 
         #region //FELDER
 
@@ -1364,22 +1186,18 @@ namespace MeisterGeister.ViewModel.Inventar
         public Model.Fernkampfwaffe EntityFW { get { return entityFW; } set { entityFW = value; OnChanged("EntityFW"); } }
 
         //UI
-        public bool Ausgeruestet
-        {
+        public bool Ausgeruestet {
             get { return ausgeruestet; }
-            set
-            {
+            set {
                 ausgeruestet = value;
                 OnChanged("Ausgeruestet");
                 EntityHA.Angelegt = value;
                 Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
             }
         }
-        public Model.Trageort Trageort
-        {
+        public Model.Trageort Trageort {
             get { return trageort; }
-            set
-            {
+            set {
                 trageort = value;
                 OnChanged("Trageort");
                 EntityHA.Trageort = value;
@@ -1392,8 +1210,7 @@ namespace MeisterGeister.ViewModel.Inventar
         public string Preis { get { return preis; } set { preis = value; OnChanged("Preis"); } }
 
         //Commands
-        public Base.CommandBase OnRemoveNahkampfwaffe
-        {
+        public Base.CommandBase OnRemoveNahkampfwaffe {
             get { return onRemoveFernkampfwaffe; }
         }
 
@@ -1401,23 +1218,18 @@ namespace MeisterGeister.ViewModel.Inventar
 
         #region //KONSTRUKTOR
 
-        public FernkampfItem(Model.Held_Ausrüstung aHA, Model.Fernkampfwaffe aFW)
-        {
+        public FernkampfItem(Model.Held_Ausrüstung aHA, Model.Fernkampfwaffe aFW) {
             bool isFirst = true;
             string talent = "";
             string name = "";
             string tp = "";
             string gewicht = "";
 
-            foreach (var value in aFW.Talent)
-            {
-                if (isFirst)
-                {
+            foreach (var value in aFW.Talent) {
+                if (isFirst) {
                     talent += value.Talentname;
                     isFirst = false;
-                }
-                else
-                {
+                } else {
                     talent += " / " + value.Talentname;
                 }
             }
@@ -1441,10 +1253,8 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //EVENTS
 
         public event EventHandler RemoveItem;
-        void RemoveFernkampfwaffe(object sender)
-        {
-            if (RemoveItem != null)
-            {
+        void RemoveFernkampfwaffe(object sender) {
+            if (RemoveItem != null) {
                 RemoveItem(this, new EventArgs());
             }
 
@@ -1454,8 +1264,7 @@ namespace MeisterGeister.ViewModel.Inventar
 
     }
 
-    public class RuestungItem : Base.ViewModelBase
-    {
+    public class RuestungItem : Base.ViewModelBase {
 
         #region //FELDER
 
@@ -1479,22 +1288,18 @@ namespace MeisterGeister.ViewModel.Inventar
         public Model.Rüstung EntityR { get { return entityR; } set { entityR = value; OnChanged("EntityR"); } }
 
         //UI
-        public bool Ausgeruestet
-        {
+        public bool Ausgeruestet {
             get { return ausgeruestet; }
-            set
-            {
+            set {
                 ausgeruestet = value;
                 OnChanged("Ausgeruestet");
                 EntityHA.Angelegt = value;
                 Global.ContextInventar.UpdateHeldAusruestung(EntityHA);
             }
         }
-        public Model.Trageort Trageort
-        {
+        public Model.Trageort Trageort {
             get { return trageort; }
-            set
-            {
+            set {
                 trageort = value;
                 OnChanged("Trageort");
                 EntityHA.Trageort = value;
@@ -1502,8 +1307,7 @@ namespace MeisterGeister.ViewModel.Inventar
         }
 
         //Commands
-        public Base.CommandBase OnRemoveRuestung
-        {
+        public Base.CommandBase OnRemoveRuestung {
             get { return onRemoveRuestung; }
         }
 
@@ -1511,8 +1315,7 @@ namespace MeisterGeister.ViewModel.Inventar
 
         #region //KONSTRUKTOR
 
-        public RuestungItem(Model.Held_Ausrüstung aHA, Model.Rüstung aR)
-        {
+        public RuestungItem(Model.Held_Ausrüstung aHA, Model.Rüstung aR) {
             this.EntityHA = aHA;
             this.EntityR = aR;
             trageort = aHA.Trageort;
@@ -1526,10 +1329,8 @@ namespace MeisterGeister.ViewModel.Inventar
         #region //EVENTS
 
         public event EventHandler RemoveItem;
-        void RemoveRuestung(object sender)
-        {
-            if (RemoveItem != null)
-            {
+        void RemoveRuestung(object sender) {
+            if (RemoveItem != null) {
                 RemoveItem(this, new EventArgs());
             }
 

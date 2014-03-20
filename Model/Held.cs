@@ -1822,6 +1822,15 @@ namespace MeisterGeister.Model
             get { return Körperkraft * 40; }
         }
 
+        public int BerechneBehinderung() {
+            int retVal = 0;
+
+            foreach (Held_Ausrüstung ruestung in Held_Ausrüstung.Where(ha => ha.Ausrüstung.Rüstung != null)) {
+                retVal += (ruestung.Ausrüstung.Rüstung.BE ?? 0) * (ruestung.Anzahl ?? 0);
+            }
+            Behinderung = retVal;
+            return retVal;
+        }
         #endregion
 
         #region Bewegung / Geschwindigkeit
