@@ -569,9 +569,6 @@
     <Compile Include="View\AudioPlayer\SliderRange.xaml.cs">
       <DependentUpon>SliderRange.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AudioPlayer\TCButtons.xaml.cs">
-      <DependentUpon>TCButtons.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Beschwörung\BeschwörungView.xaml.cs">
       <DependentUpon>BeschwörungView.xaml</DependentUpon>
     </Compile>
@@ -983,10 +980,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioPlayer\SliderRange.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\AudioPlayer\TCButtons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

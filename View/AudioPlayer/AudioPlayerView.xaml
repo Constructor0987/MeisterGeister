@@ -218,7 +218,7 @@
             <ColumnDefinition Width="420" />
         </Grid.ColumnDefinitions>
 
-        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer"  Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <TabControl Margin="12,0,3,0" Name="tcAudioPlayer"  Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Tag="-1">
 
             <TabItem Header="Editor" Name="tiEditor" GotFocus="tiEditor_GotFocus" >
                 <Grid Background="{StaticResource Background1}">
@@ -259,11 +259,17 @@
                                         </Grid.RowDefinitions>
                                         <Border>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button Name="btnKlangNeuTheme" ToolTip="Neues Theme" Click="btnKlangNeuTheme_Click" Height="28" Width="28" >
+                                                <Button Name="btnKlangNeuTheme" ToolTip="Neues Theme" Click="btnKlangNeuTheme_Click" Height="28" Width="22" >
                                                     <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
                                                 </Button>
-                                                <Button  Name="btnKlangThemeImport" ToolTip="Theme importieren" Click="btnKlangThemeImport_Click" Height="28" Width="28" Margin="5,0,0,0" >
+                                                <Button  Name="btnKlangThemeImport" ToolTip="Theme importieren" Click="btnKlangThemeImport_Click" Height="28" Width="22" Margin="1,0,0,0" >
                                                     <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
+                                                </Button>
+                                                <Button Name="btnThemeExportALL" ToolTip="Alle Themes exportieren" Click="btnThemeExportAll_Click" Height="28" Width="22" Margin="1,0,0,0" >
+                                                    <Grid>
+                                                        <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
+                                                        <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="3,3,-3,-3" />
+                                                    </Grid>
                                                 </Button>
                                             </StackPanel>
                                         </Border>
@@ -315,11 +321,17 @@
                                         </StackPanel>
 
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Name="btnNeuePlaylist" ToolTip="Neue Playlist" Click="btnNeuePlaylist_Click" Height="28" Width="28" Grid.Column="1" >
+                                            <Button Name="btnNeuePlaylist" ToolTip="Neue Playlist" Click="btnNeuePlaylist_Click" Height="28" Width="22" Grid.Column="1" >
                                                 <Image Source="/Images/Icons/General/add.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
-                                            <Button Name="btnPlaylistImport" ToolTip="Playist importieren" Click="btnPlaylistImport_Click" Height="28" Width="28" Margin="5,0,0,0" >
+                                            <Button Name="btnPlaylistImport" ToolTip="Playist importieren" Click="btnPlaylistImport_Click" Height="28" Width="22" Margin="1,0,0,0" >
                                                 <Image Source="/Images/Icons/General/import.png" Style="{StaticResource ImageEnabled}" />
+                                            </Button>
+                                            <Button Name="btnPlaylistExportALL" ToolTip="Alle Playisten exportieren" Click="btnPlaylistExportAll_Click" Height="28" Width="22" Margin="1,0,0,0" >
+                                                <Grid>
+                                                    <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="-2,-2,2,2" />
+                                                    <Image Source="/Images/Icons/General/export.png" Style="{StaticResource ImageEnabled}" Margin="3,3,-3,-3" />
+                                                </Grid>
                                             </Button>
                                         </StackPanel>
 
@@ -348,8 +360,7 @@
                     </Border>
                     <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" />
 
-
-                    <Border Name="brdKlang" Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" Visibility="Collapsed" >
+                    <Border Name="brdKlang" Height="40" HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
                         <Grid Name="grdEditorPlaylistInfo">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100" />
@@ -360,6 +371,7 @@
                             <TextBox HorizontalAlignment="Stretch" Name="tboxEditorName" Text="NeuePlaylist" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um den Theme umzubenennen" Height="25" Grid.Column="1" Background="{x:Null}" LostFocus="tboxEditorName_LostFocus" ForceCursor="True" KeyUp="tboxEditorName_KeyUp" GotFocus="tbGotFocus" />
                         </Grid>
                     </Border>
+
                     <Border Style="{DynamicResource ControlContentBorder}" Margin="3,0,0,-10" HorizontalAlignment="Left" Grid.Column="3" >
                         <StackPanel Orientation="Horizontal" >
                             <Image Grid.RowSpan="2" Height="35" HorizontalAlignment="Left" Name="image1" Stretch="Fill" VerticalAlignment="Center" Width="35" Source="/DSA%20MeisterGeister;component/Images/Icons/General/info.png" MouseDown="image1_MouseDown" Cursor="Hand" FlowDirection="LeftToRight" Margin="3,5,0,0" ToolTip="Audio-Codec Informationen" />
@@ -379,12 +391,12 @@
                         </StackPanel>
                     </Border>
 
-                    <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
+                    <Grid Name="grdEditorMain" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="410*" />
                         </Grid.RowDefinitions>
-                        <Border Margin="0,10,0,0" Drop="brdEditorTheme_Drop" DragEnter="brdEditorTheme_DragEnter" >
+                        <Border Margin="0,10,0,0" Drop="brdEditorTheme_Drop" >
 
                             <StackPanel Orientation="Vertical">
                                 <Expander Name="expEditorThemesMusik" IsExpanded="True" ForceCursor="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Visibility="Collapsed" >
@@ -432,208 +444,196 @@
                             </StackPanel>
                         </Border>
 
-                        <TabControl Background="{StaticResource Background1}" Name="tcEditor" Margin="3,8,6,9" SelectionChanged="tcEditor_SelectionChanged" PreviewMouseMove="TabItem_PreviewMouseMove" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2">
-                            <TabItem Focusable="False" FontFamily="Arial Unicode MS" FontWeight="Bold" IsEnabled="True" IsHitTestVisible="True" IsSelected="False" IsTabStop="False" MouseUp="tiPlus_MouseUp" Name="tiPlus" Width="25" ToolTip="Hinzufügen einer Playlist in das Theme" Visibility="Collapsed">
-                                <TabItem.Header>
-                                    <StackPanel>
-                                        <Image Name="_image" Height="12" Width="12" Source="/Images/Icons/General/add.png" />
-                                    </StackPanel>
-                                </TabItem.Header>
-                                <GridSplitter Height="100" Name="gridSplitter1" Width="10" />
-                            </TabItem>
-                            <TabItem x:Name="tabItemTemp" Visibility="Hidden" >
-                                <Grid Name="GridX">
-                                    <Grid Name="grdEditorX" AllowDrop="True" Drop="grdEditorX_Drop" ToolTip="Musikdateien über Drag&amp;Drop einfügen"  Background="#389E804D" ShowGridLines="False">
+                        <Border Margin="3,8,6,9" Grid.Row="2" Style="{DynamicResource ControlContentBorder}">
+                            <Grid Name="grdEditorListe" >
+                                <Grid Name="grdEditor1" AllowDrop="True" Drop="grdEditorX_Drop" ToolTip="Musikdateien über Drag&amp;Drop einfügen" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="77" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Name="grdEditorTop1" Grid.RowSpan="2" >
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="77" />
-                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="23" />
+                                            <RowDefinition Height="23" />
+                                            <RowDefinition Height="354*" />
                                         </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1" />
+                                            <ColumnDefinition Width="35" />
+                                            <ColumnDefinition Width="350"/>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="23" />
+                                            <ColumnDefinition Width="92" />
+                                            <ColumnDefinition Width="56" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="110*" />
+                                        </Grid.ColumnDefinitions>
 
-                                        <Grid Name="grdEditorTopX" Grid.RowSpan="2" >
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="30" />
-                                                <RowDefinition Height="23" />
-                                                <RowDefinition Height="23" />
-                                                <RowDefinition Height="354*" />
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1" />
-                                                <ColumnDefinition Width="35" />
-                                                <ColumnDefinition Width="350"/>
-                                                <ColumnDefinition Width="50" />
-                                                <ColumnDefinition Width="23" />
-                                                <ColumnDefinition Width="92" />
-                                                <ColumnDefinition Width="56" />
-                                                <ColumnDefinition Width="80" />
-                                                <ColumnDefinition Width="80" />
-                                                <ColumnDefinition Width="110*" />
-                                            </Grid.ColumnDefinitions>
+                                        <Border Name="brdTopKlangKategorie1" Height="25" Margin="84,4,0,0" Width="195" Grid.Column="2" Grid.ColumnSpan="2" CornerRadius="5" HorizontalAlignment="Left" ToolTip="Kategorie" VerticalAlignment="Top">
+                                            <Border.Background>
+                                                <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                                                    <GradientStop Color="Beige" Offset="0" />
+                                                    <GradientStop Color="#FFFFFFC7" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <TextBox Name="tboxTopKlangKategorie1" Padding="2,0" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" VerticalContentAlignment="Center" LostFocus="tboxTopKategorieX_LostFocus" GotFocus="tbGotFocus"  />
+                                        </Border>
 
-                                            <Border Name="brdTopKlangKategorieX" Height="25" Margin="84,4,0,0" Width="195" Grid.Column="2" Grid.ColumnSpan="2" CornerRadius="5" HorizontalAlignment="Left" ToolTip="Kategorie" VerticalAlignment="Top">
-                                                <Border.Background>
-                                                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
-                                                        <GradientStop Color="Beige" Offset="0" />
-                                                        <GradientStop Color="#FFFFFFC7" Offset="1" />
-                                                    </LinearGradientBrush>
-                                                </Border.Background>
-                                                <TextBox Name="tboxTopKlangKategorieX" Padding="2,0" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" VerticalContentAlignment="Center" LostFocus="tboxTopKategorie_LostFocus" GotFocus="tbGotFocus"  />
-                                            </Border>
-
-                                            <GroupBox Name="gboxTopSongsParallelX" Header="Songs parallel" Grid.Column="2" Grid.RowSpan="3" Height="50" HorizontalAlignment="Right" Margin="0,0,-40,0" VerticalAlignment="Top" Width="100">
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <TextBox Name="tboxTopklangsongparallelX" Text="1" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallel_TextChanged" IsEnabled="True" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
-                                                    <Button Name="btnTopSongParMinusX" Width="18" Height="18" Click="btnSongParPlus_Click" Tag="-1" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/entf_02.png" />
-                                                    </Button>
-                                                    <Button Name="btnTopSongParPlusX" Tag="1" Width="18" Height="18" Click="btnSongParPlus_Click" IsTabStop="False">
-                                                        <Image Source="/Images/Icons/General/add.png" />
-                                                    </Button>
-                                                </StackPanel>
-                                            </GroupBox>
-
-                                            <GroupBox Visibility="Collapsed" Name="gboxTopMusikSortX" Header="Musik sortieren" Grid.Column="2" Grid.RowSpan="3" Height="50" HorizontalAlignment="Right" Margin="0,0,-40,0" VerticalAlignment="Top" Width="100">
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <ToggleButton Name="btnTopMusikAbisZX" Width="25" Height="25" IsTabStop="False" Margin="1" >
-                                                        <ToggleButton.BindingGroup>
-                                                            <BindingGroup/>
-                                                        </ToggleButton.BindingGroup>
-                                                        <Image Source="/Images/Icons/General/sort.png" />
-                                                    </ToggleButton>
-                                                    <ToggleButton Name="btnTopMusik1bis9X" Width="25" Height="25" IsTabStop="False" Margin="1" >
-                                                        <Image Source="/Images/Icons/General/sort1.png" />
-                                                    </ToggleButton>
-                                                </StackPanel>
-                                            </GroupBox>
-
-                                            <StackPanel Name="spnlTopHotkeyX" Orientation="Horizontal" Grid.Column="4" Grid.ColumnSpan="4" Margin="0,1,100,1" Visibility="Collapsed" >
-                                                <Label Content="Hotkey" />
-                                                <Button Content="nicht definiert" Width="80" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySetX" />
-                                                <ComboBox Name="cmboxTopHotkeyX" Grid.Column="4" Grid.ColumnSpan="4" Width="80" Visibility="Collapsed" />
-                                                <Button Name="btnHotkeyEntfernenX" ToolTip="Hotkey entfernen" Click="btnHotkeyEntfernen_Click" Margin="0,5" Visibility="Collapsed" >
-                                                    <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
+                                        <GroupBox Name="gboxTopSongsParallel1" Header="Songs parallel" Grid.Column="2" Grid.RowSpan="3" Height="50" HorizontalAlignment="Right" Margin="0,0,-40,0" VerticalAlignment="Top" Width="100">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <TextBox Name="tboxTopklangsongparallel1" Text="1" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallelX_TextChanged" IsEnabled="True" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                                                <Button Name="btnTopSongParMinus1" Width="18" Height="18" Click="btnSongParPlusX_Click" Tag="-1" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/entf_02.png" />
+                                                </Button>
+                                                <Button Name="btnTopSongParPlus1" Tag="1" Width="18" Height="18" Click="btnSongParPlusX_Click" IsTabStop="False">
+                                                    <Image Source="/Images/Icons/General/add.png" />
                                                 </Button>
                                             </StackPanel>
+                                        </GroupBox>
 
-                                            <GroupBox Name="gboxTopTypX" Header="Playlist-Typ" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="58" HorizontalAlignment="Left" Margin="5,0,70,0" VerticalAlignment="Top" Width="100" >
-                                                <StackPanel>
-                                                    <RadioButton Name="rbIstTopMusikPlaylistX" Content="Musik" GroupName="TypListe" IsChecked="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="80" Grid.Column="4" Padding="4,0,0,0" Margin="1,1,1,0" ToolTip="Auswahl als Musik-Playlist" />
-                                                    <RadioButton Name="rbIstTopKlangPlaylistX" Content="Geräusche" GroupName="TypListe" IsChecked="True" VerticalAlignment="Top" Grid.Column="4" Width="80" HorizontalAlignment="Left" Margin="1,4,1,1" ToolTip="Auswahl als Geräusche-Playlist" />
-                                                </StackPanel>
-                                            </GroupBox>
-
-                                            <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Style="{DynamicResource ControlContentBorder}" Margin="85,2,0,0" Width="160" Height="26" Name="brdTopFilterX" ToolTip="Zeilen Filter" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="26" />
-                                                        <ColumnDefinition Width="110" />
-                                                        <ColumnDefinition Width="20" />
-                                                        <ColumnDefinition Width="2*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                                    <TextBox Margin="2,1" Name="tbEditorTopFilterX" Grid.Column="1" TextChanged="tbEditorTopFilter_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
-                                                    <Button Grid.Column="2" Click="btnBGFilter_Click" Name="btnKlangTopFilterX" ToolTip="Filter löschen" >
-                                                        <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Width="15" Height="24" />
-                                                    </Button>
-                                                </Grid>
-                                            </Border>
-
-                                            <ToggleButton Name="tbtnKlangPauseX" Tag="true" Grid.Column="2" Margin="252,35,0,0" Width="30" Height="30" Checked="tbtnKlangPause_Checked" Unchecked="tbtnKlangPause_Unchecked" HorizontalAlignment="Left" Grid.RowSpan="3" ToolTip="Playlist abspielen/pausieren" VerticalAlignment="Top" Background="#00000000">
-                                                <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
-                                            </ToggleButton>
-                                            <CheckBox Name="chkbxTopAktivX" Grid.Column="2" Grid.Row="2" Height="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Click="chkbxTopAktivX_Click" Tag="0" IsTabStop="False" Content="Titel an/aus" />
-                                            <Label Name="lblTopDauerX" Content="Dauer" Grid.Column="3" Margin="0" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
-
-                                            <StackPanel Name="spnlTopGeräuschIconX" Grid.Column="4" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="23" />
-                                                        <RowDefinition Height="23" />
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="23" />
-                                                        <ColumnDefinition Width="92" />
-                                                        <ColumnDefinition Width="56" />
-                                                        <ColumnDefinition Width="80" />
-                                                        <ColumnDefinition Width="80" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Image Name="imgLaufstärkeX" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" ToolTip="Lautstärke aller aktiven Songs" />
-                                                    <Button Name="btnTopVolMinX" Content="&lt;&lt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 0% setzen" Tag="-100" Click="btnAllVolUp_Click" IsTabStop="False" />
-                                                    <Button Name="btnTopVolDownX" Content="&lt;" Grid.Column="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% verringern" Tag="-10" Click="btnAllVolUp_Click" IsTabStop="False" />
-                                                    <Button Name="btnTopVolUpX" Content="&gt;" Grid.Column="1"  Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% erhöhen" Click="btnAllVolUp_Click" Tag="10" IsTabStop="False"  />
-                                                    <Button Name="btnTopVolMaxX" Content="&gt;&gt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 100% setzen" Tag="100" Click="btnAllVolUp_Click" IsTabStop="False" />
-
-                                                    <CheckBox Name="chkbxTopVolChangeX" Grid.Column="2" ToolTip="Lautstärke aller aktiven Klänge automatisch variieren" Click="chkbxTopVolChangeX_Click" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Auto" FlowDirection="RightToLeft" Height="Auto" Margin="0,4" />
-                                                    <Label Content="min" Grid.Column="3" HorizontalAlignment="Center" Margin="25,0" />
-                                                    <Button Name="btnTopVolMinMinusX" Height="21" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" HorizontalAlignment="Left" Width="21" ToolTip="Minimale Lautstärke aller variierbaren Klänge verringern" Click="btnTopVolMinMinusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/entf_02.png" />
-                                                    </Button>
-                                                    <Button Name="btnTopVolMinPlusX" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" ToolTip="Minimale Lautstärke aller variierbaren Klänge erhöhen" Click="btnTopVolMinPlusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/add.png" />
-                                                    </Button>
-                                                    <Label Content="max" Grid.Column="4" HorizontalAlignment="Center" Margin="24,0" />
-                                                    <Button Name="btnTopVolMaxMinusX" Grid.Column="4" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Lautstärke aller variierbaren Klänge verringern" Click="btnTopVolMaxMinusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/entf_02.png" />
-                                                    </Button>
-                                                    <Button Name="btnTopVolMaxPlusX" Grid.Column="4" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" ToolTip="Maximale Lautstärke aller variierbaren Klänge erhöhen" Click="btnTopVolMaxPlusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/add.png" />
-                                                    </Button>
-
-                                                    <Border VerticalAlignment="Bottom" Grid.ColumnSpan="7" BorderBrush="Gray" Margin="-5,-1,-5,-1" Height="1" BorderThickness="1" Name="brdTrennstrichX" />
-
-                                                    <Image Name="imgPauseX" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" ToolTip="Pausenzeit aller aktiven Songs" />
-                                                    <Button Name="btnTopPauseMinX" Content="&lt;&lt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Minimum setzen" Click="btnAllPauseUp_Click" Tag="-2" IsTabStop="False" />
-                                                    <Button Name="btnTopPauseDownX" Content="&lt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Pausenzeit aller aktiven Klänge verringern" Click="btnAllPauseUp_Click" Tag="-1" IsTabStop="False" />
-                                                    <Button Name="btnTopPauseMaxX" Content="&gt;&gt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Maximum setzen" Tag="2" Click="btnAllPauseUp_Click" IsTabStop="False" />
-                                                    <Button Name="btnTopPauseUpX" Content="&gt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Click="btnAllPauseUp_Click" Tag="1" IsTabStop="False" />
-
-                                                    <CheckBox Name="chkbxTopPauseChangeX" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" Click="chkbxTopVolChangeX_Click" Tag="0" IsTabStop="False" Content="Auto" FlowDirection="RightToLeft" />
-                                                    <Label Content="min" Grid.Column="3" Grid.Row="1"  HorizontalAlignment="Center" />
-                                                    <Button Name="btnTopPauseMinMinusX" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="1" HorizontalAlignment="left" Width="20" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um eine Stelle verringern" Click="btnTopPauseMinMinusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/entf_02.png" />
-                                                    </Button>
-                                                    <Button Name="btnTopPauseMinPlusX" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um eine Stelle erhöhen" Click="btnTopPauseMinPlusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/add.png" />
-                                                    </Button>
-
-                                                    <Label Content="max" Grid.Column="4" Grid.Row="1"  HorizontalAlignment="Center" />
-                                                    <Button Name="btnTopPauseMaxMinusX" Grid.Column="4" Grid.Row="1" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Pausenzeit aller variierbaren Klänge eine Stelle verringern" Click="btnTopPauseMaxMinusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/entf_02.png" />
-                                                    </Button>
-                                                    <Button Name="btnTopPauseMaxPlusX" Grid.Column="4" Grid.Row="1" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="20" Margin="0,0,7,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge eine Stelle erhöhen" Click="btnTopPauseMaxPlusX_Click" IsTabStop="False" >
-                                                        <Image Source="/Images/Icons/General/add.png" />
-                                                    </Button>
-                                                </Grid>
-
+                                        <GroupBox Visibility="Collapsed" Name="gboxTopMusikSort1" Header="Musik sortieren" Grid.Column="2" Grid.RowSpan="3" Height="50" HorizontalAlignment="Right" Margin="0,0,-40,0" VerticalAlignment="Top" Width="100">
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <ToggleButton Name="btnTopMusikAbisZ1" Width="25" Height="25" IsTabStop="False" Margin="1" >
+                                                    <ToggleButton.BindingGroup>
+                                                        <BindingGroup/>
+                                                    </ToggleButton.BindingGroup>
+                                                    <Image Source="/Images/Icons/General/sort.png" />
+                                                </ToggleButton>
+                                                <ToggleButton Name="btnTopMusik1bis91" Width="25" Height="25" IsTabStop="False" Margin="1" >
+                                                    <Image Source="/Images/Icons/General/sort1.png" />
+                                                </ToggleButton>
                                             </StackPanel>
+                                        </GroupBox>
 
-                                            <Button Name="btnTopChPfadX" Width="30" Height="30" ToolTip="Anpassen des Playlist-Verzeichnisses" Grid.Column="8" HorizontalAlignment="Left" Visibility="Hidden">
-                                                <Grid>
-                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
-                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/suchen.png" Width="20" />
-                                                </Grid>
+                                        <StackPanel Name="spnlTopHotkey1" Orientation="Horizontal" Grid.Column="4" Grid.ColumnSpan="4" Margin="0,1,100,1" Visibility="Collapsed" >
+                                            <Label Content="Hotkey" />
+                                            <Button Content="nicht definiert" Width="80" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySet1" Click="btnTopHotkeySet_Click" />
+                                            <ComboBox Name="cmboxTopHotkey1" Grid.Column="4" Grid.ColumnSpan="4" Width="80" Visibility="Collapsed" KeyDown="cmboxTopHotkey_KeyDown" DropDownOpened="cmboxTopHotkey_DropDownOpened" DropDownClosed="cmboxTopHotkey_DropDownClosed" SelectionChanged="cmboxTopHotkey_SelectionChanged" />
+                                            <Button Name="btnHotkeyEntfernen1" ToolTip="Hotkey entfernen" Click="btnHotkeyEntfernenX_Click" Margin="0,5" Visibility="Collapsed" >
+                                                <Image Source="/Images/Icons/General/entf_01.png" Style="{StaticResource ImageEnabled}" />
                                             </Button>
+                                        </StackPanel>
 
-                                            <Button Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpenX" Width="30" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="8" VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" >
-                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" />
-                                            </Button>
+                                        <GroupBox Name="gboxTopTyp1" Header="Playlist-Typ" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="58" HorizontalAlignment="Left" Margin="5,0,70,0" VerticalAlignment="Top" Width="100" >
+                                            <StackPanel>
+                                                <RadioButton Name="rbIstTopMusikPlaylist1" Content="Musik" Click="rbTopIstMusikPlaylist_Click" GroupName="TypListe" IsChecked="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="80" Grid.Column="4" Padding="4,0,0,0" Margin="1,1,1,0" ToolTip="Auswahl als Musik-Playlist" />
+                                                <RadioButton Name="rbIstTopKlangPlaylist1" Content="Geräusche" Click="rbTopIstKlangPlaylist_Click" GroupName="TypListe" IsChecked="True" VerticalAlignment="Top" Grid.Column="4" Width="80" HorizontalAlignment="Left" Margin="1,4,1,1" ToolTip="Auswahl als Geräusche-Playlist" />
+                                            </StackPanel>
+                                        </GroupBox>
 
-                                            <Button Name="btnKlangUpdateFilesX" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="8" HorizontalAlignment="Left" Margin="0,0,10,0" ToolTipService.ShowDuration="10000" Visibility="Hidden" >
-                                                <Grid>
-                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
-                                                    <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/refresh.png" Width="20" />
-                                                </Grid>
-                                            </Button>
-                                            <Border Grid.Row="2" VerticalAlignment="Bottom" Grid.ColumnSpan="10" BorderBrush="DarkSlateGray" Margin="0,-1" Height="1" BorderThickness="1" />
+                                        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Style="{DynamicResource ControlContentBorder}" Margin="85,2,0,0" Width="160" Height="26" Name="brdTopFilter1" ToolTip="Zeilen Filter" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="26" />
+                                                    <ColumnDefinition Width="110" />
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="2*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                                <TextBox Margin="2,1" Name="tbEditorTopFilter1" Grid.Column="1" TextChanged="tbEditorTopFilterX_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                                                <Button Grid.Column="2" Click="btnBGFilter_Click" Name="btnKlangTopFilter1" ToolTip="Filter löschen" >
+                                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Left" Width="15" Height="24" />
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+
+                                        <ToggleButton Name="tbtnKlangPause1" Tag="true" Grid.Column="2" Margin="252,35,0,0" Width="30" Height="30" Checked="tbtnKlangPauseX_Checked" Unchecked="tbtnKlangPauseX_Unchecked" HorizontalAlignment="Left" Grid.RowSpan="3" ToolTip="Playlist abspielen/pausieren" VerticalAlignment="Top" Background="#00000000">
+                                            <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
+                                        </ToggleButton>
+                                        <CheckBox Name="chkbxTopAktiv1" Grid.Column="2" Grid.Row="2" Height="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Click="chkbxTopAktivX_Click" Tag="0" IsTabStop="False" Content="Titel an/aus" />
+                                        <Label Name="lblTopDauer1" Content="Dauer" Grid.Column="3" Margin="0" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
+
+                                        <StackPanel Name="spnlTopGeräuschIcon1" Grid.Column="4" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="23" />
+                                                    <RowDefinition Height="23" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="23" />
+                                                    <ColumnDefinition Width="92" />
+                                                    <ColumnDefinition Width="56" />
+                                                    <ColumnDefinition Width="80" />
+                                                    <ColumnDefinition Width="80" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Name="imgLaufstärke1" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" ToolTip="Lautstärke aller aktiven Songs" />
+                                                <Button Name="btnTopVolMin1" Content="&lt;&lt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 0% setzen" Tag="-100" Click="btnAllVolUp_Click" IsTabStop="False" />
+                                                <Button Name="btnTopVolDown1" Content="&lt;" Grid.Column="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% verringern" Tag="-10" Click="btnAllVolUp_Click" IsTabStop="False" />
+                                                <Button Name="btnTopVolUp1" Content="&gt;" Grid.Column="1"  Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% erhöhen" Click="btnAllVolUp_Click" Tag="10" IsTabStop="False"  />
+                                                <Button Name="btnTopVolMax1" Content="&gt;&gt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 100% setzen" Tag="100" Click="btnAllVolUp_Click" IsTabStop="False" />
+
+                                                <CheckBox Name="chkbxTopVolChange1" Grid.Column="2" ToolTip="Lautstärke aller aktiven Klänge automatisch variieren" Click="chkbxTopVolChangeX_Click" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Auto" FlowDirection="RightToLeft" Height="Auto" Margin="0,4" />
+                                                <Label Content="min" Grid.Column="3" HorizontalAlignment="Center" Margin="25,0" />
+                                                <Button Name="btnTopVolMinMinus1" Height="21" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" HorizontalAlignment="Left" Width="21" ToolTip="Minimale Lautstärke aller variierbaren Klänge verringern" Click="btnTopVolMinMinusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/entf_02.png" />
+                                                </Button>
+                                                <Button Name="btnTopVolMinPlus1" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" ToolTip="Minimale Lautstärke aller variierbaren Klänge erhöhen" Click="btnTopVolMinPlusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/add.png" />
+                                                </Button>
+                                                <Label Content="max" Grid.Column="4" HorizontalAlignment="Center" Margin="24,0" />
+                                                <Button Name="btnTopVolMaxMinus1" Grid.Column="4" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Lautstärke aller variierbaren Klänge verringern" Click="btnTopVolMaxMinusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/entf_02.png" />
+                                                </Button>
+                                                <Button Name="btnTopVolMaxPlus1" Grid.Column="4" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" ToolTip="Maximale Lautstärke aller variierbaren Klänge erhöhen" Click="btnTopVolMaxPlusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/add.png" />
+                                                </Button>
+
+                                                <Border VerticalAlignment="Bottom" Grid.ColumnSpan="7" BorderBrush="Gray" Margin="-5,-1,-5,-1" Height="1" BorderThickness="1" Name="brdTrennstrich1" />
+
+                                                <Image Name="imgPause1" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" ToolTip="Pausenzeit aller aktiven Songs" />
+                                                <Button Name="btnTopPauseMin1" Content="&lt;&lt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Minimum setzen" Click="btnAllPauseUp_Click" Tag="-2" IsTabStop="False" />
+                                                <Button Name="btnTopPauseDown1" Content="&lt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Pausenzeit aller aktiven Klänge verringern" Click="btnAllPauseUp_Click" Tag="-1" IsTabStop="False" />
+                                                <Button Name="btnTopPauseMax1" Content="&gt;&gt;" Grid.Column="1" Grid.Row="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Pausenzeit aller aktiven Klänge auf Maximum setzen" Tag="2" Click="btnAllPauseUp_Click" IsTabStop="False" />
+                                                <Button Name="btnTopPauseUp1" Content="&gt;" Grid.Column="1" Grid.Row="1" Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="22" ToolTip="Pausenzeit aller aktiven Klänge erhöhen" Click="btnAllPauseUp_Click" Tag="1" IsTabStop="False" />
+
+                                                <CheckBox Name="chkbxTopPauseChange1" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" ToolTip="Pausenzeit aller aktiven Klänge automatisch variieren" Click="chkbxTopVolChangeX_Click" Tag="0" IsTabStop="False" Content="Auto" FlowDirection="RightToLeft" />
+                                                <Label Content="min" Grid.Column="3" Grid.Row="1"  HorizontalAlignment="Center" />
+                                                <Button Name="btnTopPauseMinMinus1" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="1" HorizontalAlignment="left" Width="20" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um eine Stelle verringern" Click="btnTopPauseMinMinusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/entf_02.png" />
+                                                </Button>
+                                                <Button Name="btnTopPauseMinPlus1" Height="20" HorizontalAlignment="Right" Margin="0,0,7,1" VerticalAlignment="Bottom" Width="20" Grid.Column="3" Grid.Row="1" ToolTip="Minimale Pausenzeit aller variierbaren Klänge um eine Stelle erhöhen" Click="btnTopPauseMinPlusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/add.png" />
+                                                </Button>
+
+                                                <Label Content="max" Grid.Column="4" Grid.Row="1"  HorizontalAlignment="Center" />
+                                                <Button Name="btnTopPauseMaxMinus1" Grid.Column="4" Grid.Row="1" Height="20" Margin="7,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="20" ToolTip="Maximale Pausenzeit aller variierbaren Klänge eine Stelle verringern" Click="btnTopPauseMaxMinusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/entf_02.png" />
+                                                </Button>
+                                                <Button Name="btnTopPauseMaxPlus1" Grid.Column="4" Grid.Row="1" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="20" Margin="0,0,7,1" ToolTip="Maximale Pausenzeit aller variierbaren Klänge eine Stelle erhöhen" Click="btnTopPauseMaxPlusX_Click" IsTabStop="False" >
+                                                    <Image Source="/Images/Icons/General/add.png" />
+                                                </Button>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <!--  <Button Name="btnTopChPfad1" Width="30" Height="30" ToolTip="Anpassen des Playlist-Verzeichnisses" Grid.Column="8" HorizontalAlignment="Left" Visibility="Hidden">
+                                        <Grid>
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/suchen.png" Width="20" />
                                         </Grid>
+                                    </Button>-->
 
-                                        <ScrollViewer Name="sviewerX" Grid.Row="1" MinHeight="200" ToolTip="Musikdateien per Drag&amp;Drop einfügen" AllowDrop="True" Drop="grdEditorX_Drop" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
-                                            <WrapPanel Grid.Row="1" Name="wpnlX" Orientation="Vertical" />
-                                        </ScrollViewer>
+                                        <Button Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpen1" Click="btnTopKlangOpen_Click" Width="30" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="8" VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" >
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" />
+                                        </Button>
+
+                                        <Button Name="btnKlangUpdateFiles1" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="8" HorizontalAlignment="Left" Margin="0,0,10,0" ToolTipService.ShowDuration="10000" Visibility="Hidden" Click="btnKlangUpdateFiles_Click" >
+                                            <Grid>
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
+                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/refresh.png" Width="20" />
+                                            </Grid>
+                                        </Button>
+                                        <Border Grid.Row="2" VerticalAlignment="Bottom" Grid.ColumnSpan="10" BorderBrush="DarkSlateGray" Margin="0,-1" Height="1" BorderThickness="1" />
                                     </Grid>
-                                </Grid>
-                            </TabItem>
 
-                        </TabControl>
+                                    <ScrollViewer Name="sviewer1" Grid.Row="1" MinHeight="200" ToolTip="Musikdateien per Drag&amp;Drop einfügen" AllowDrop="True" Drop="grdEditorX_Drop" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                                        <WrapPanel Grid.Row="1" Name="wpnl1" Orientation="Vertical" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -783,13 +783,28 @@
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="35" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="35" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="366*" />
                     </Grid.RowDefinitions>
 
-                    <Border Name="brdPlyListPlyThemeTop" Style="{DynamicResource ControlContentBorder}" Margin="10,0" Grid.ColumnSpan="2">
+                    <Border Grid.ColumnSpan="2">
+                        <Expander IsExpanded="True" Margin="30,5,30,10" MinWidth="200" ForceCursor="False" >
+                            <Expander.Header>
+                                <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
+                            </Expander.Header>
+                            <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
+                                <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
+                                    <WrapPanel Name="wpnlPListThemes" ItemHeight="50" ItemWidth="150" MinHeight="60" />
+                                </ScrollViewer>
+                            </Border>
+                        </Expander>
+                    </Border>
+
+                    <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
+
+                    <Border Grid.Row="1" Name="brdPlyListPlyThemeTop" Style="{DynamicResource ControlContentBorder}" Margin="10,0" Grid.ColumnSpan="2">
                         <Border HorizontalAlignment="Center" ToolTip="Kategorie-Filter aller Playlists" VerticalAlignment="Center" Margin="-100,0,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -810,21 +825,6 @@
                             </Grid>
                         </Border>
                     </Border>
-
-                    <Border Grid.Row="1" Grid.ColumnSpan="2">
-                        <Expander IsExpanded="True" Margin="30,5,30,10" MinWidth="200" ForceCursor="False" >
-                            <Expander.Header>
-                                <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
-                            </Expander.Header>
-                            <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
-                                    <WrapPanel Name="wpnlPListThemes" ItemHeight="50" ItemWidth="150" MinHeight="60" />
-                                </ScrollViewer>
-                            </Border>
-                        </Expander>
-                    </Border>
-
-                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
 
                     <Border Grid.Row="2" Style="{DynamicResource ControlContentBorder}" Margin="10,2">
                         <Grid>
@@ -879,11 +879,8 @@
                                 <TextBlock Text="Musik-Playlists" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
-                                    <ListBox Name="lbPListMusik"  Background="Transparent" VerticalAlignment="Stretch" SelectionChanged="lbPListMusik_SelectionChanged" ToolTip="Anklicken um den Titel abzuspielen" ItemContainerStyle="{StaticResource SimpleListBoxItem}"  />
-                                </ScrollViewer>
+                                <ListBox Name="lbPListMusik"  Background="Transparent" VerticalAlignment="Stretch" SelectionChanged="lbPListMusik_SelectionChanged" ToolTip="Anklicken um den Titel abzuspielen" ItemContainerStyle="{StaticResource SimpleListBoxItem}" />
                             </Border>
-
                         </Expander>
                     </Border>
 
@@ -939,15 +936,14 @@
                                 <TextBlock Name="tbTest" Text="Geräusche-Playlists" Style="{DynamicResource TextTitel}" />
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}">
-                                <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
-                                    <ListBox Name="lbPListGeräusche" ItemContainerStyle="{StaticResource SimpleListBoxItem}" Background="Transparent" VerticalAlignment="Stretch" Style="{StaticResource ReadOnlyStyle}"></ListBox>
-                                </ScrollViewer>
+                                <ListBox Name="lbPListGeräusche" ItemContainerStyle="{StaticResource SimpleListBoxItem}" Background="Transparent" VerticalAlignment="Stretch" Style="{StaticResource ReadOnlyStyle}" />
                             </Border>
                         </Expander>
                     </Border>
                 </Grid>
             </TabItem>
         </TabControl>
+        <!--
         <Expander IsExpanded="False" Name="exEinstellungen" Grid.Column="1" Expanded="exEinstellungen_Expanded" Collapsed="exEinstellungen_Collapsed" Margin="0,0,0,200" Grid.RowSpan="2" VerticalAlignment="Top" Background="{DynamicResource Background1}"  >
             <Expander.Header>
                 <TextBlock Text="Einstellungen" Style="{DynamicResource TextTitel}" />
@@ -971,19 +967,18 @@
                             <ListBox Name="lbStandardPfade" Margin="0,1" Background="Transparent" />
                         </ScrollViewer>
 
-                        <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Margin="10,0,0,0" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Click="_rbtnGleichSpielen_Click" />
-
-
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1">
                             <Label Content="Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <Slider Height="23" HorizontalAlignment="Center" Name="_sldFading" VerticalAlignment="Center" Width="100" SmallChange="100" TickFrequency="100" Maximum="1500" Minimum="0" TickPlacement="BottomRight" LargeChange="100" Value="600" IsTabStop="False" ToolTip="6 Sekunden Fading" ValueChanged="_sldFading_ValueChanged" IsSnapToTickEnabled="True" />
                         </StackPanel>
-
+                        
+                        <CheckBox Content="Beim Auswählen direkt abspielen" Name="_rbtnGleichSpielen" Margin="10,0,0,0" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Click="_rbtnGleichSpielen_Click" />
                         <CheckBox Content="Gesamtspieldauer beim Abspielen berechnen" Name="_rbtnSpieldauerBerechnen" Click="_rbtnSpieldauerBerechnen_Click" Margin="10,40,0,10" Height="16" Grid.Row="1" VerticalContentAlignment="Center" Grid.ColumnSpan="3" IsChecked="True" />
                     </Grid>
                 </StackPanel>
             </Border>
         </Expander>
+        -->
 
         <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3" Visibility="Collapsed" >
             <StackPanel Orientation="Horizontal">
@@ -998,7 +993,7 @@
                 </ScrollViewer>
             </StackPanel>
         </GroupBox>
-        <ListBox x:Name="lbFading" Grid.Column="1" HorizontalAlignment="Left" Height="400" Margin="61,8,0,-2.45740200932899E+17" Grid.RowSpan="3" VerticalAlignment="Top" Width="334" Visibility="Hidden"/>
-        <!--<Button Content="Button" HorizontalAlignment="Left" Height="36" Margin="542,10,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>-->
+        <!--<ListBox x:Name="lbFading" Grid.Column="1" HorizontalAlignment="Left" Height="400" Margin="83,27,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="334" Visibility="Hidden" />
+        <Button Content="Fading-List" HorizontalAlignment="Left" Height="24" Margin="563,10,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click" Visibility="{x:Static mg:Global.INTERN_Visibility}" />-->
     </Grid>
 </UserControl>
