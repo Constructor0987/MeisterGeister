@@ -14,7 +14,8 @@
                     <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="350"/>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="23" />
@@ -24,23 +25,30 @@
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="110" />
                 </Grid.ColumnDefinitions>
+                <Image Name="imgTrash" Margin="0,14" Grid.RowSpan="2" Tag="0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" AllowDrop="False" Visibility="Hidden" />
+                <StackPanel Grid.RowSpan="2" Grid.Column="1" ToolTip="Reihenfolge" >
+                    <Button Name="btnMoveUp" Margin="0,1" Height="25" Visibility="Hidden" >
+                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_oben.png" />
+                    </Button>
+                    <Button Name="btnMoveDown" Margin="0,1" Height="25" Visibility="Hidden" >
+                        <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/pfeil_unten.png" />
+                    </Button>
+                </StackPanel>
+                <ProgressBar Name="pbarTitel" Height="18" Margin="15,16,0,16" Grid.Column="2" Grid.RowSpan="2" ToolTip="Rechte Maustaste für mehr Einstellungen" />
+                <CheckBox Name="chkTitel" Grid.Column="2" Grid.RowSpan="2" Content="Titel" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" IsTabStop="False" Margin="0,17" />
+                <Label Name="lblDauer" Content="-:--" Grid.Column="3" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,5" />
 
-                <Image Name="imgTrash" Margin="7" Grid.RowSpan="2"  Tag="0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/entf_01.png" ToolTip="Zeile löschen" AllowDrop="False" />
-                <ProgressBar Name="pbarTitel" Height="18" Margin="15,0,0,0" Grid.Column="1" Grid.RowSpan="2" ToolTip="Rechte Maustaste für mehr Einstellungen" />
-                <CheckBox Name="chkTitel" Grid.Column="1" Grid.RowSpan="2" Content="Titel" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="False" IsTabStop="False" />
-                <Label Name="lblDauer" Content="-:--" Grid.Column="2" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-                <local:SliderRange x:Name="rsldTeilSong" Grid.Column="1" Grid.RowSpan="2" LowerValue="0" UpperValue="10000" Minimum="0" Maximum="10000" Margin="17,2,0,0" VerticalAlignment="Center" Visibility="Hidden" />
-                <Button Name="btnGewichtung" Grid.Column="2" Grid.Row="1" ToolTip="Gewichtung 0" Tag="0" Click="btnGewichtung_Click" Margin="2,0,2,1" >
+                <local:SliderRange x:Name="rsldTeilSong" Grid.Column="2" Grid.RowSpan="2" LowerValue="0" UpperValue="10000" Minimum="0" Maximum="10000" Margin="17,16,0,14" VerticalAlignment="Center" Visibility="Hidden" />
+                <Button Name="btnGewichtung" Grid.Column="3" Grid.Row="1" ToolTip="Gewichtung 0" Tag="0" Click="btnGewichtung_Click" Margin="2,0,2,1" >
                     <Grid Name="grdbtnGewichtung">
                         <Border>
                             <Border.Background>
-                            <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
-                                <GradientStop Color="Beige" Offset="0" />
-                                <GradientStop Color="#FFFFFFC7" Offset="1" />
-                            </LinearGradientBrush>
+                                <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                                    <GradientStop Color="Beige" Offset="0" />
+                                    <GradientStop Color="#FFFFFFC7" Offset="1" />
+                                </LinearGradientBrush>
                             </Border.Background>
-                        </Border>                    
+                        </Border>
                         <Image Tag="5" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="-3" />
                         <Image Tag="3" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="3,-3,-3,-3" />
                         <Image Tag="1" Source="/DSA%20MeisterGeister;component/Images/Icons/General/neu.png" HorizontalAlignment="Left" Visibility="Hidden" Margin="9,-3,-3,-3" />
@@ -50,50 +58,50 @@
                 </Button>
                 <!--<TextBox Name="tboxKategorie" Grid.Column="1" Grid.Row="1" FontStyle="Italic" Text="ruhig, erholsam, gemütlich" Padding="2" Margin="15,0,0,0" Foreground="DarkSlateGray" Background="#83F5F5DC" />-->
 
-                <Image Name="imgLaufstärke" Grid.Column="3" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" />
-                <Image Name="imgPause" Grid.Column="3" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" />
-                
-                <Slider Name="sldKlangVol"  Grid.Column="4" Margin="6,2,4,0" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" VerticalAlignment="Center" />
-                <CheckBox Name="chkVolMove" Grid.Column="5" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,1,0" ToolTip="Lautstärke der Klangzeile automatisch variieren" />
-                <TextBox Name="tboxVolMin" Grid.Column="6" Text="0" HorizontalContentAlignment="Center" Margin="0,2,36,2" Tag="0" Padding="0" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" />
-                <Button Name="_btnVolMinMinus" Width="18" Height="18" Grid.Column="6" HorizontalAlignment="Right" Margin="18,0" Tag="-5" IsTabStop="False">
+                <Image Name="imgLaufstärke" Grid.Column="4" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" />
+                <Image Name="imgPause" Grid.Column="4" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" />
+
+                <Slider Name="sldKlangVol"  Grid.Column="5" Margin="6,2,4,1" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" VerticalAlignment="Center" />
+                <CheckBox Name="chkVolMove" Grid.Column="6" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,1,6" ToolTip="Lautstärke der Klangzeile automatisch variieren" />
+                <TextBox Name="tboxVolMin" Grid.Column="7" Text="0" HorizontalContentAlignment="Center" Margin="0,2,36,2" Tag="0" Padding="0" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" />
+                <Button Name="_btnVolMinMinus" Width="18" Height="18" Grid.Column="7" HorizontalAlignment="Right" Margin="0,4,18,3" Tag="-5" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
-                <Button Name="_btnVolMinPlus" Width="18" Height="18" Grid.Column="6" HorizontalAlignment="Right" Tag="5" IsTabStop="False">
+                <Button Name="_btnVolMinPlus" Width="18" Height="18" Grid.Column="7" HorizontalAlignment="Right" Tag="5" IsTabStop="False" Margin="0,4,0,3">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <TextBox Name="tboxVolMax" Grid.Column="7" Margin="0,2,36,2" Text="100" HorizontalContentAlignment="Center" DataContext="{Binding}" MaxLength="3" Tag="0" Padding="0" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" />
-                <Button Name="_btnVolMaxMinus" Width="18" Height="18" Grid.Column="7" HorizontalAlignment="Right" Margin="18,0" Tag="-5" IsTabStop="False">
+                <TextBox Name="tboxVolMax" Grid.Column="8" Margin="0,2,36,2" Text="100" HorizontalContentAlignment="Center" DataContext="{Binding}" MaxLength="3" Tag="0" Padding="0" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" />
+                <Button Name="_btnVolMaxMinus" Width="18" Height="18" Grid.Column="8" HorizontalAlignment="Right" Margin="0,4,18,3" Tag="-5" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
-                <Button Name="_btnVolMaxPlus" Width="18" Height="18" Grid.Column="7" HorizontalAlignment="Right" Tag="5" IsTabStop="False">
+                <Button Name="_btnVolMaxPlus" Width="18" Height="18" Grid.Column="8" HorizontalAlignment="Right" Tag="5" IsTabStop="False" Margin="0,4,0,3">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <Border VerticalAlignment="Bottom" Grid.ColumnSpan="5" BorderBrush="Gray" Margin="0,-1,-5,-1" Height="1" Grid.Column="3" BorderThickness="1" Name="brdTrennstrich" />
+                <Border VerticalAlignment="Bottom" Grid.ColumnSpan="6" BorderBrush="Gray" Margin="0,0,105,24" Height="1" Grid.Column="4" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
 
 
-                <Slider Name="sldKlangPause" Grid.Column="4" Grid.Row="1" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
-                        Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,2,4,0" 
+                <Slider Name="sldKlangPause" Grid.Column="5" Grid.Row="1" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
+                        Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,3,4,0" 
                         Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000, 50000" />
 
-                <CheckBox Name="chkKlangPauseMove" Grid.Column="5" Grid.Row="2" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,1,0" ToolTip="Pausezeiten der Klangzeile automatisch variieren" />
-                <TextBox Name="tboxPauseMin" Grid.Column="6" Grid.Row="2" Margin="0,2,36,2" Text="12345" HorizontalContentAlignment="Center" Tag="0" Padding="0" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" />
-                <Button Name="_btnPauseMinMinus" Grid.Column="6" Grid.Row="2" Margin="18,0" Tag="-200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False">
+                <CheckBox Name="chkKlangPauseMove" Grid.Column="6" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,6,1,6" ToolTip="Pausezeiten der Klangzeile automatisch variieren" />
+                <TextBox Name="tboxPauseMin" Grid.Column="7" Grid.Row="1" Margin="0,2,36,2" Text="12345" HorizontalContentAlignment="Center" Tag="0" Padding="0" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" />
+                <Button Name="_btnPauseMinMinus" Grid.Column="7" Grid.Row="1" Margin="0,3,18,4" Tag="-200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
-                <Button Name="_btnPauseMinPlus" Grid.Column="6" Grid.Row="2" Tag="200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False">
+                <Button Name="_btnPauseMinPlus" Grid.Column="7" Grid.Row="1" Tag="200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Margin="0,3,0,4">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <TextBox Name="tboxPauseMax" Grid.Column="7" Grid.Row="2" Margin="0,2,36,2" HorizontalContentAlignment="Center" Tag="0" Text="12345" Padding="0" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" />
-                <Button Name="_btnPauseMaxMinus" Width="18" Height="18" Grid.Column="7" Grid.Row="2" HorizontalAlignment="Right" Margin="18,0" Tag="-200" IsTabStop="False">
+                <TextBox Name="tboxPauseMax" Grid.Column="8" Grid.Row="1" Margin="0,2,36,2" HorizontalContentAlignment="Center" Tag="0" Text="12345" Padding="0" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" />
+                <Button Name="_btnPauseMaxMinus" Width="18" Height="18" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Right" Margin="0,3,18,4" Tag="-200" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
-                <Button Name="_btnPauseMaxPlus" Width="18" Height="18" Grid.Column="7" Grid.Row="2" HorizontalAlignment="Right" Tag="200" IsTabStop="False">
+                <Button Name="_btnPauseMaxPlus" Width="18" Height="18" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Right" Tag="200" IsTabStop="False" Margin="0,3,0,4">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="8" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="8,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
-                <Slider Name="sldPlaySpeed" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="8" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="45" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" ToolTip="Abspielgeschwinidkeit anpassen" Foreground="DarkSlateGray" />
-                <Image Source="/Images/Icons/General/hase.png" Grid.Column="8" Grid.RowSpan="2" HorizontalAlignment="Right" Margin="0,5,5,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp_1" />
+                <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="9" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="8,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />
+                <Slider Name="sldPlaySpeed" Maximum="5" Value="1" Ticks="0.1, 0.5, 0.75, 1, 2, 3, 4, 5" Grid.Column="9" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="46" IsTabStop="False" Focusable="False" TickPlacement="BottomRight" SelectionEnd="1" SelectionStart="1" IsSnapToTickEnabled="True" Minimum="0.1" ToolTip="Abspielgeschwinidkeit anpassen" Foreground="DarkSlateGray" Margin="32,14" />
+                <Image Source="/Images/Icons/General/hase.png" Grid.Column="9" Grid.RowSpan="2" HorizontalAlignment="Right" Margin="0,5,5,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp_1" />
             </Grid>
         </ListBoxItem>
     </Grid>

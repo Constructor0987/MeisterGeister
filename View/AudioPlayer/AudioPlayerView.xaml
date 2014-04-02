@@ -461,7 +461,8 @@
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1" />
-                                            <ColumnDefinition Width="35" />
+                                            <ColumnDefinition Width="17" />
+                                            <ColumnDefinition Width="18"/>
                                             <ColumnDefinition Width="350"/>
                                             <ColumnDefinition Width="50" />
                                             <ColumnDefinition Width="23" />
@@ -472,7 +473,7 @@
                                             <ColumnDefinition Width="110*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Name="brdTopKlangKategorie1" Height="25" Margin="84,4,0,0" Width="195" Grid.Column="2" Grid.ColumnSpan="2" CornerRadius="5" HorizontalAlignment="Left" ToolTip="Kategorie" VerticalAlignment="Top">
+                                        <Border Name="brdTopKlangKategorie1" Height="25" Margin="84,4,0,0" Width="195" Grid.Column="3" CornerRadius="5" HorizontalAlignment="Left" ToolTip="Kategorie" VerticalAlignment="Top">
                                             <Border.Background>
                                                 <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
                                                     <GradientStop Color="Beige" Offset="0" />
@@ -482,7 +483,7 @@
                                             <TextBox Name="tboxTopKlangKategorie1" Padding="2,0" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" VerticalContentAlignment="Center" LostFocus="tboxTopKategorieX_LostFocus" GotFocus="tbGotFocus"  />
                                         </Border>
 
-                                        <GroupBox Name="gboxTopSongsParallel1" Header="Songs parallel" Grid.Column="2" Grid.RowSpan="3" Height="50" HorizontalAlignment="Right" Margin="0,0,-40,0" VerticalAlignment="Top" Width="100">
+                                        <GroupBox Name="gboxTopSongsParallel1" Header="Songs parallel" Grid.Column="3" Grid.RowSpan="2" Height="50" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <TextBox Name="tboxTopklangsongparallel1" Text="1" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallelX_TextChanged" IsEnabled="True" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                                 <Button Name="btnTopSongParMinus1" Width="18" Height="18" Click="btnSongParPlusX_Click" Tag="-1" IsTabStop="False" >
@@ -494,7 +495,7 @@
                                             </StackPanel>
                                         </GroupBox>
 
-                                        <GroupBox Visibility="Collapsed" Name="gboxTopMusikSort1" Header="Musik sortieren" Grid.Column="2" Grid.RowSpan="3" Height="50" HorizontalAlignment="Right" Margin="0,0,-40,0" VerticalAlignment="Top" Width="100">
+                                        <GroupBox Visibility="Collapsed" Name="gboxTopMusikSort1" Header="Musik sortieren" Grid.Column="3" Grid.RowSpan="2" Height="50" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <ToggleButton Name="btnTopMusikAbisZ1" Width="25" Height="25" IsTabStop="False" Margin="1" >
                                                     <ToggleButton.BindingGroup>
@@ -508,7 +509,7 @@
                                             </StackPanel>
                                         </GroupBox>
 
-                                        <StackPanel Name="spnlTopHotkey1" Orientation="Horizontal" Grid.Column="4" Grid.ColumnSpan="4" Margin="0,1,100,1" Visibility="Collapsed" >
+                                        <StackPanel Name="spnlTopHotkey1" Orientation="Horizontal" Grid.Column="5" Grid.ColumnSpan="3" Margin="0,1,20,1" Visibility="Collapsed" >
                                             <Label Content="Hotkey" />
                                             <Button Content="nicht definiert" Width="80" Margin="0,2" FontStyle="Italic" Name="btnTopHotkeySet1" Click="btnTopHotkeySet_Click" />
                                             <ComboBox Name="cmboxTopHotkey1" Grid.Column="4" Grid.ColumnSpan="4" Width="80" Visibility="Collapsed" KeyDown="cmboxTopHotkey_KeyDown" DropDownOpened="cmboxTopHotkey_DropDownOpened" DropDownClosed="cmboxTopHotkey_DropDownClosed" SelectionChanged="cmboxTopHotkey_SelectionChanged" />
@@ -517,14 +518,14 @@
                                             </Button>
                                         </StackPanel>
 
-                                        <GroupBox Name="gboxTopTyp1" Header="Playlist-Typ" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="58" HorizontalAlignment="Left" Margin="5,0,70,0" VerticalAlignment="Top" Width="100" >
+                                        <GroupBox Name="gboxTopTyp1" Header="Playlist-Typ" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Height="58" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top" Width="100" >
                                             <StackPanel>
                                                 <RadioButton Name="rbIstTopMusikPlaylist1" Content="Musik" Click="rbTopIstMusikPlaylist_Click" GroupName="TypListe" IsChecked="False" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="80" Grid.Column="4" Padding="4,0,0,0" Margin="1,1,1,0" ToolTip="Auswahl als Musik-Playlist" />
                                                 <RadioButton Name="rbIstTopKlangPlaylist1" Content="Geräusche" Click="rbTopIstKlangPlaylist_Click" GroupName="TypListe" IsChecked="True" VerticalAlignment="Top" Grid.Column="4" Width="80" HorizontalAlignment="Left" Margin="1,4,1,1" ToolTip="Auswahl als Geräusche-Playlist" />
                                             </StackPanel>
                                         </GroupBox>
 
-                                        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Style="{DynamicResource ControlContentBorder}" Margin="85,2,0,0" Width="160" Height="26" Name="brdTopFilter1" ToolTip="Zeilen Filter" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Style="{DynamicResource ControlContentBorder}" Margin="85,2,0,0" Width="160" Height="26" Name="brdTopFilter1" ToolTip="Zeilen Filter" HorizontalAlignment="Left" VerticalAlignment="Top">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="26" />
@@ -540,13 +541,13 @@
                                             </Grid>
                                         </Border>
 
-                                        <ToggleButton Name="tbtnKlangPause1" Tag="true" Grid.Column="2" Margin="252,35,0,0" Width="30" Height="30" Checked="tbtnKlangPauseX_Checked" Unchecked="tbtnKlangPauseX_Unchecked" HorizontalAlignment="Left" Grid.RowSpan="3" ToolTip="Playlist abspielen/pausieren" VerticalAlignment="Top" Background="#00000000">
+                                        <ToggleButton Name="tbtnKlangPause1" Tag="true" Grid.Column="3" Margin="252,5,0,0" Width="30" Height="30" Checked="tbtnKlangPauseX_Checked" Unchecked="tbtnKlangPauseX_Unchecked" HorizontalAlignment="Left" Grid.RowSpan="2" ToolTip="Playlist abspielen/pausieren" VerticalAlignment="Top" Background="#00000000" Grid.Row="1">
                                             <Image Width="20" Height="20" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" />
                                         </ToggleButton>
-                                        <CheckBox Name="chkbxTopAktiv1" Grid.Column="2" Grid.Row="2" Height="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Click="chkbxTopAktivX_Click" Tag="0" IsTabStop="False" Content="Titel an/aus" />
-                                        <Label Name="lblTopDauer1" Content="Dauer" Grid.Column="3" Margin="0" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
+                                        <CheckBox Name="chkbxTopAktiv1" Grid.Column="3" Grid.Row="2" Height="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" ToolTip="Alle Titel an-/abwählen" Click="chkbxTopAktivX_Click" Tag="0" IsTabStop="False" Content="Titel an/aus" />
+                                        <Label Name="lblTopDauer1" Content="Dauer" Grid.Column="4" Margin="0,3,0,4" Padding="0" VerticalAlignment="Center" Grid.Row="2" />
 
-                                        <StackPanel Name="spnlTopGeräuschIcon1" Grid.Column="4" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
+                                        <StackPanel Name="spnlTopGeräuschIcon1" Grid.Column="5" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="23" />
@@ -615,22 +616,20 @@
                                         </Grid>
                                     </Button>-->
 
-                                        <Button Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpen1" Click="btnTopKlangOpen_Click" Width="30" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="8" VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" >
+                                        <Button Height="30" HorizontalAlignment="Right" Name="btnTopKlangOpen1" Click="btnTopKlangOpen_Click" Width="30" ToolTip="Hinzufügen von Musikdateien in die ausgewählte Liste" Grid.Column="9" VerticalAlignment="Center" Margin="0,0,5,0" TabIndex="1" >
                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/audioadd.png" />
                                         </Button>
 
-                                        <Button Name="btnKlangUpdateFiles1" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="8" HorizontalAlignment="Left" Margin="0,0,10,0" ToolTipService.ShowDuration="10000" Visibility="Hidden" Click="btnKlangUpdateFiles_Click" >
+                                        <Button Name="btnKlangUpdateFiles1" Width="30" Height="30" ToolTip="Update der Titel im Verzeichnis" Grid.Column="9" HorizontalAlignment="Left" ToolTipService.ShowDuration="10000" Visibility="Hidden" Click="btnKlangUpdateFiles_Click" >
                                             <Grid>
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/oeffnen.png" Width="35" Height="35" Margin="0,-3,0,0" />
                                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/refresh.png" Width="20" />
                                             </Grid>
                                         </Button>
-                                        <Border Grid.Row="2" VerticalAlignment="Bottom" Grid.ColumnSpan="10" BorderBrush="DarkSlateGray" Margin="0,-1" Height="1" BorderThickness="1" />
+                                        <Border Grid.Row="3" VerticalAlignment="Bottom" Grid.ColumnSpan="11" BorderBrush="DarkSlateGray" Margin="0,0,0,337" Height="1" BorderThickness="1" />
                                     </Grid>
 
-                                    <ScrollViewer Name="sviewer1" Grid.Row="1" MinHeight="200" ToolTip="Musikdateien per Drag&amp;Drop einfügen" AllowDrop="True" Drop="grdEditorX_Drop" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
-                                        <WrapPanel Grid.Row="1" Name="wpnl1" Orientation="Vertical" />
-                                    </ScrollViewer>
+                                    <ListBox Background="Transparent" Name="lbEditorListe" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="lbEditor_SelectionChanged" />
                                 </Grid>
                             </Grid>
                         </Border>
@@ -647,12 +646,12 @@
                     <Border Height="55" Name="border1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}">
                         <Grid>
                             <Border BorderBrush="Silver" BorderThickness="1" Height="45" Name="border3" Width="402" CornerRadius="20" />
-                            <ToggleButton Height="24" Name="btnShuffle" Margin="-320,0,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsEnabled="True" IsChecked="True" ToolTip="Shuffle-Mode" IsTabStop="False" >
+                            <ToggleButton Height="24" Name="btnShuffle" Margin="-320,0,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsChecked="True" ToolTip="Shuffle-Mode" IsTabStop="False" >
                                 <Image Name="btnShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" Style="{StaticResource ImageEnabled}" />
                             </ToggleButton>
 
-                            <ToggleButton Name="btnBGRepeat" Height="24" Margin="-260,0,0,0" Width="24" ClickMode="Press" IsEnabled="True" ToolTip="Wiederholen" IsTabStop="False" >
-                                <Image Name="btnRepeatImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/repeat.png" />
+                            <ToggleButton Name="btnBGRepeat" Height="24" Margin="-260,0,0,0" Width="24" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" IsTabStop="False" >
+                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/repeat.png" />
                             </ToggleButton>
 
                             <Border Width="2" Height="26" Margin="-205,0,0,0" />
@@ -711,7 +710,7 @@
                                     <GradientStop Color="#FFFFFFC7" Offset="1" />
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <ListBox Padding="4" Name="lbBackground"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" ItemContainerStyle="{StaticResource SimpleListBoxItem}" MouseDoubleClick="lbBackground_MouseDoubleClick" SelectionChanged="lbBackground_SelectionChanged" ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" />
+                            <ListBox Padding="4" Name="lbMusik"  Background="Transparent" FontSize="14" VerticalAlignment="Stretch" ItemContainerStyle="{StaticResource SimpleListBoxItem}" MouseDoubleClick="lbMusik_MouseDoubleClick" SelectionChanged="lbMusik_SelectionChanged" ForceCursor="False" Tag="-1" VerticalContentAlignment="Stretch" Margin="0,0,7,0" />
                         </Border>
 
                         <GridSplitter Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" />
