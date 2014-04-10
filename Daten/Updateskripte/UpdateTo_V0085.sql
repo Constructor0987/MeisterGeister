@@ -1,4 +1,10 @@
-﻿-- Rassen-Tabelle um ein Feld für die Operation (+,*,=) bei der Gewichtsberechnung ergänzt
+﻿-- Audio Player Shuffle & Repeat Funktion speichern
+ALTER TABLE [Audio_Playlist] ADD "Shuffle" bit NOT NULL DEFAULT 1;
+ALTER TABLE [Audio_Playlist] ADD "Repeat" bit NOT NULL DEFAULT 1;
+-- Audio Player Theme Einstellung "Nur Gräusche des Themes zusätzlich abspielen" speichern
+ALTER TABLE [Audio_Theme] ADD "NurGeräusche" bit NOT NULL DEFAULT 0;
+
+-- Rassen-Tabelle um ein Feld für die Operation (+,*,=) bei der Gewichtsberechnung ergänzt
 ALTER TABLE [Rasse] ADD GewichtOperator nvarchar(1) NOT NULL DEFAULT '+';
 
 -- Ausrüstungstabelle um ein Feld Basisausrüstung erweitern

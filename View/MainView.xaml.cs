@@ -421,7 +421,7 @@ namespace MeisterGeister.View
         private void _tabControlMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (IsInitialized && IsLoaded)
-                App.SaveAll();
+                 App.SaveAll();
         }
 
         private void MenuItemWeb_Click(object sender, RoutedEventArgs e)

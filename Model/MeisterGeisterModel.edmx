@@ -395,6 +395,8 @@
     <Property Name="Kategorie" Type="nvarchar" MaxLength="500" />
     <Property Name="Key" Type="nvarchar" MaxLength="30" />
     <Property Name="Modifiers" Type="nvarchar" MaxLength="25" />
+    <Property Name="Shuffle" Type="bit" Nullable="false" />
+    <Property Name="Repeat" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Audio_Playlist_Titel">
     <Key>
@@ -428,6 +430,7 @@
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
     <Property Name="Hintergrund_VolMod" Type="int" Nullable="false" />
     <Property Name="Klang_VolMod" Type="int" Nullable="false" />
+    <Property Name="NurGeräusche" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Audio_Theme_Playlist">
     <Key>
@@ -2470,6 +2473,8 @@
     <Property Name="Kategorie" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
     <Property Name="Key" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
     <Property Name="Modifiers" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="Shuffle" Type="Boolean" Nullable="false" />
+    <Property Name="Repeat" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
     <NavigationProperty Name="Audio_Theme" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Theme" />
   </EntityType>
@@ -2507,6 +2512,7 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
     <Property Name="Hintergrund_VolMod" Type="Int32" Nullable="false" />
     <Property Name="Klang_VolMod" Type="Int32" Nullable="false" />
+    <Property Name="NurGeräusche" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Audio_Playlist" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Theme" ToRole="Audio_Playlist" />
     <NavigationProperty Name="Audio_Theme1" Relationship="DatabaseDSAModel.Audio_Theme_Theme" FromRole="Audio_Theme" ToRole="Audio_Theme1" />
     <NavigationProperty Name="Audio_Theme2" Relationship="DatabaseDSAModel.Audio_Theme_Theme" FromRole="Audio_Theme1" ToRole="Audio_Theme" />
@@ -4213,6 +4219,8 @@
           <ScalarProperty Name="Kategorie" ColumnName="Kategorie" />
           <ScalarProperty Name="Key" ColumnName="Key" />
           <ScalarProperty Name="Modifiers" ColumnName="Modifiers" />
+          <ScalarProperty Name="Shuffle" ColumnName="Shuffle" />
+          <ScalarProperty Name="Repeat" ColumnName="Repeat" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4247,6 +4255,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Hintergrund_VolMod" ColumnName="Hintergrund_VolMod" />
           <ScalarProperty Name="Klang_VolMod" ColumnName="Klang_VolMod" />
+          <ScalarProperty Name="NurGeräusche" ColumnName="NurGeräusche" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

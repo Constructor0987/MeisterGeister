@@ -11,7 +11,7 @@
     mc:Ignorable="d"
     d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded" Unloaded="Window_Unloaded" KeyDown="Window_KeyDown" Margin="0,5,5,0" IsEnabled="True">
 
-    <UserControl.Resources>
+    <UserControl.Resources>        
         <Style x:Key="ImageEnabled" TargetType="Image">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -215,7 +215,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="766*" />
-            <ColumnDefinition Width="420" />
+            <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
 
         <TabControl Margin="12,0,3,0" Name="tcAudioPlayer"  Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Tag="-1">
@@ -365,10 +365,12 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="240" />
+                                <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
 
                             <Label Name="lblEditorListName" Content="Playlist-Name" VerticalContentAlignment="Center" />
                             <TextBox HorizontalAlignment="Stretch" Name="tboxEditorName" Text="NeuePlaylist" FontWeight="Bold" ToolTip="Text abändern und ENTER-Taste drücken um den Theme umzubenennen" Height="25" Grid.Column="1" Background="{x:Null}" LostFocus="tboxEditorName_LostFocus" ForceCursor="True" KeyUp="tboxEditorName_KeyUp" GotFocus="tbGotFocus" />
+                            <Image Name="imgPlaylistLängeCheck" Grid.Column="2" Margin="8" Source="/Images/Icons/General/refresh.png" Visibility="Hidden" />
                         </Grid>
                     </Border>
 
@@ -646,11 +648,11 @@
                     <Border Height="55" Name="border1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}">
                         <Grid>
                             <Border BorderBrush="Silver" BorderThickness="1" Height="45" Name="border3" Width="402" CornerRadius="20" />
-                            <ToggleButton Height="24" Name="btnShuffle" Margin="-320,0,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsChecked="True" ToolTip="Shuffle-Mode" IsTabStop="False" >
+                            <ToggleButton Height="24" Name="btnShuffle" Margin="-320,0,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsChecked="True" ToolTip="Shuffle-Mode" Focusable="False" IsTabStop="False" >
                                 <Image Name="btnShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" Style="{StaticResource ImageEnabled}" />
                             </ToggleButton>
 
-                            <ToggleButton Name="btnBGRepeat" Height="24" Margin="-260,0,0,0" Width="24" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" IsTabStop="False" >
+                            <ToggleButton Name="btnBGRepeat" Height="24" Margin="-260,0,0,0" Width="24" Click="btnBGRepeat_Click" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" Focusable="False" IsTabStop="False" >
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/repeat.png" />
                             </ToggleButton>
 
@@ -804,10 +806,9 @@
                     <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
 
                     <Border Grid.Row="1" Name="brdPlyListPlyThemeTop" Style="{DynamicResource ControlContentBorder}" Margin="10,0" Grid.ColumnSpan="2">
-                        <Border HorizontalAlignment="Center" ToolTip="Kategorie-Filter aller Playlists" VerticalAlignment="Center" Margin="-100,0,0,0">
+                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Style="{DynamicResource ControlContentBorder}" ToolTip="Filter für alle Playlisten" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="26" />
                                     <ColumnDefinition Width="*" MinWidth="150" />
                                     <ColumnDefinition Width="20" />
@@ -815,12 +816,11 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Label Content="Kategorie-Filter" />
-                                <Image Grid.Column="1" Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                <Button Grid.Column="3" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
+                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
                                     <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                 </Button>
-                                <TextBox Name="tbPListKategorie" Margin="2,1" Grid.Column="2" TextChanged="tbPListKategorie_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                                <TextBox Name="tbPListFilterAll" Margin="2,1" Grid.Column="1" TextChanged="tbPListFilterAll_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                             </Grid>
                         </Border>
                     </Border>
@@ -855,7 +855,7 @@
 
                                 <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistMusikVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistMusikVolume" Margin="10,0,0,0" ToolTip="50 %" />
                             </StackPanel>
-                            <Border Grid.Column="2" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Namens-Filter aller Musik-Playlists" Margin="3,0,20,0">
+                            <Border Grid.Column="2" HorizontalAlignment="Stretch" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Filter aller Musik-Playlisten" Margin="3,0,20,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="26" />
@@ -863,7 +863,7 @@
                                         <ColumnDefinition Width="20" />
                                     </Grid.ColumnDefinitions>
                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                    <TextBox Name="tbPListMusik" Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                                    <TextBox Name="tbPListMusikName" Margin="2,1" Grid.Column="1" TextChanged="tbPListFilterAll_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                     <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
                                         <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                     </Button>
@@ -912,7 +912,7 @@
                                 </Button>
                                 <Slider Height="22" Maximum="100" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" ToolTip="50 %" />
                             </StackPanel>
-                            <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Namens-Filter aller Geräusche-Playlists" Margin="3,0,20,0">
+                            <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Filter aller Geräusche-Playlisten" Margin="3,0,20,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="26" />
@@ -920,7 +920,7 @@
                                         <ColumnDefinition Width="20" />
                                     </Grid.ColumnDefinitions>
                                     <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                    <TextBox Margin="2,1" Grid.Column="1" TextChanged="tbPListKategorie_TextChanged" Name="tbPListGeräusche" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                                    <TextBox Name="tbPListGeräuscheName" Margin="2,1" Grid.Column="1" TextChanged="tbPListFilterAll_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
                                     <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
                                         <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
                                     </Button>
