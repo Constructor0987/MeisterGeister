@@ -11,21 +11,19 @@ using System.ComponentModel;
 using DependentProperty = MeisterGeister.Model.Extensions.DependentProperty;
 using MeisterGeister.Logic.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
+using E = MeisterGeister.Logic.Einstellung.Einstellungen;
 
-namespace MeisterGeister.Model
-{
+namespace MeisterGeister.Model {
     // Man kann Superklassen hinzufügen. Es sollten jedoch nicht die gleichen Eigenschaften, wie in der Datenbankklasse existieren.
-    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable, KampfLogic.IHasZonenRs, IHasWunden, IDisposable
-    {
-        public Held() : base()
-        {
+    public partial class Held : ViewModel.Kampf.Logic.Wesen, KampfLogic.IKämpfer, Extensions.IInitializable, KampfLogic.IHasZonenRs, IHasWunden, IDisposable {
+        public Held()
+            : base() {
             HeldGUID = Guid.NewGuid();
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
             SetDefaultValues();
         }
 
-        private void SetDefaultValues()
-        {
+        private void SetDefaultValues() {
             Name = "Alrik";
             AktiveHeldengruppe = true;
             MU = 8; KL = 8; IN = 8; CH = 8; FF = 8; GE = 8; KO = 8; KK = 8;
@@ -34,8 +32,7 @@ namespace MeisterGeister.Model
 
         #region IInitializable
         private bool _isInitialized = false;
-        public void Initialize()
-        {
+        public void Initialize() {
             if (_isInitialized)
                 return;
             kämpferWunden = new KampfLogic.Wunden((Model.Held)this);
@@ -47,135 +44,103 @@ namespace MeisterGeister.Model
         #region Modifikatorlisten
 
         [DependsOnModifikator(typeof(Mod.IModMU))]
-        public List<dynamic> ModifikatorenListeMU
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeMU {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModMU), MU);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModKL))]
-        public List<dynamic> ModifikatorenListeKL
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeKL {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModKL), KL);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModCH))]
-        public List<dynamic> ModifikatorenListeCH
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeCH {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModCH), CH);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModIN))]
-        public List<dynamic> ModifikatorenListeIN
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeIN {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModIN), IN);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModFF))]
-        public List<dynamic> ModifikatorenListeFF
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeFF {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModFF), FF);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModGE))]
-        public List<dynamic> ModifikatorenListeGE
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeGE {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModGE), GE);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModKO))]
-        public List<dynamic> ModifikatorenListeKO
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeKO {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModKO), KO);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModKK))]
-        public List<dynamic> ModifikatorenListeKK
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeKK {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModKK), KK);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModINIBasis))]
-        public List<dynamic> ModifikatorenListeINIbasis
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeINIbasis {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModINIBasis), InitiativeBasisOhneMod);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModATBasis))]
-        public List<dynamic> ModifikatorenListeATbasis
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeATbasis {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModPABasis))]
-        public List<dynamic> ModifikatorenListePAbasis
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListePAbasis {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModAT))]
-        public List<dynamic> ModifikatorenListeAT
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeAT {
+            get {
                 List<dynamic> list = ModifikatorenListe(typeof(Mod.IModATBasis), AttackeBasisOhneMod);
                 list.AddRange(ModifikatorenListe(typeof(Mod.IModAT), list.Count() == 0 ? AttackeBasisOhneMod : list.LastOrDefault().Wert));
                 return list;
             }
         }
         [DependsOnModifikator(typeof(Mod.IModPA))]
-        public List<dynamic> ModifikatorenListePA
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListePA {
+            get {
                 List<dynamic> list = ModifikatorenListe(typeof(Mod.IModPABasis), ParadeBasisOhneMod);
                 list.AddRange(ModifikatorenListe(typeof(Mod.IModPA), list.Count() == 0 ? ParadeBasisOhneMod : list.LastOrDefault().Wert));
                 return list;
             }
         }
         [DependsOnModifikator(typeof(Mod.IModFKBasis))]
-        public List<dynamic> ModifikatorenListeFKbasis
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeFKbasis {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModFKBasis), FernkampfBasisOhneMod);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModMR))]
-        public List<dynamic> ModifikatorenListeMR
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeMR {
+            get {
                 return ModifikatorenListe(typeof(Mod.IModMR), Magieresistenz);
             }
         }
         [DependsOnModifikator(typeof(Mod.IModGS))]
         [DependentProperty("Behinderung")]
-        public List<dynamic> ModifikatorenListeGS
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeGS {
+            get {
                 List<dynamic> li = ModifikatorenListe(typeof(Mod.IModGS), (double)GeschwindigkeitOhneMod);
                 if (Behinderung > 0)
                     li.AddRange(ModifikatorenListe(typeof(Mod.IModBE), li.Count == 0 ? GeschwindigkeitOhneMod : (int)li.LastOrDefault().Wert, new List<Mod.IModifikator>() { new Mod.BehinderungModifikator(Behinderung) }));
@@ -184,10 +149,8 @@ namespace MeisterGeister.Model
         }
         [DependsOnModifikator(typeof(Mod.IModAusweichen))]
         [DependentProperty("Behinderung")]
-        public List<dynamic> ModifikatorenListeAusweichen
-        {
-            get
-            {
+        public List<dynamic> ModifikatorenListeAusweichen {
+            get {
                 List<dynamic> li = ModifikatorenListe(typeof(Mod.IModAusweichen), AusweichenOhneMod);
                 if (Behinderung > 0)
                     li.AddRange(ModifikatorenListe(typeof(Mod.IModBE), li.Count == 0 ? AusweichenOhneMod : (int)li.LastOrDefault().Wert, new List<Mod.IModifikator>() { new Mod.BehinderungModifikator(Behinderung) }));
@@ -200,12 +163,10 @@ namespace MeisterGeister.Model
         #region Eigenschaften
         [DependentProperty("MU")]
         [DependsOnModifikator(typeof(Mod.IModMU))]
-        public int Mut
-        {
-            get
-            {
+        public int Mut {
+            get {
                 int mu = MU ?? 8;
-                if(Modifikatoren!=null)
+                if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMU).Select(m => (Mod.IModMU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mu = m.ApplyMUMod(mu));
                 return mu;
             }
@@ -213,10 +174,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("KL")]
         [DependsOnModifikator(typeof(Mod.IModKL))]
-        public int Klugheit
-        {
-            get
-            {
+        public int Klugheit {
+            get {
                 int e = KL ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModKL).Select(m => (Mod.IModKL)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKLMod(e));
@@ -226,10 +185,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("IN")]
         [DependsOnModifikator(typeof(Mod.IModIN))]
-        public int Intuition
-        {
-            get
-            {
+        public int Intuition {
+            get {
                 int e = IN ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModIN).Select(m => (Mod.IModIN)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyINMod(e));
@@ -239,10 +196,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("CH")]
         [DependsOnModifikator(typeof(Mod.IModCH))]
-        public int Charisma
-        {
-            get
-            {
+        public int Charisma {
+            get {
                 int e = CH ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModCH).Select(m => (Mod.IModCH)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyCHMod(e));
@@ -252,10 +207,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("FF")]
         [DependsOnModifikator(typeof(Mod.IModFF))]
-        public int Fingerfertigkeit
-        {
-            get
-            {
+        public int Fingerfertigkeit {
+            get {
                 int e = FF ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModFF).Select(m => (Mod.IModFF)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyFFMod(e));
@@ -265,10 +218,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("GE")]
         [DependsOnModifikator(typeof(Mod.IModGE))]
-        public int Gewandtheit
-        {
-            get
-            {
+        public int Gewandtheit {
+            get {
                 int e = GE ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModGE).Select(m => (Mod.IModGE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyGEMod(e));
@@ -278,10 +229,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("KO")]
         [DependsOnModifikator(typeof(Mod.IModKO))]
-        public int Konstitution
-        {
-            get
-            {
+        public int Konstitution {
+            get {
                 int e = KO ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModKO).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
@@ -291,10 +240,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("KO")]
         [DependsOnModifikator(typeof(Mod.IModKO))]
-        public int KonstitutionOhneWunden
-        {
-            get
-            {
+        public int KonstitutionOhneWunden {
+            get {
                 int e = KO ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModKO && !(m is Mod.WundenModifikatorBase)).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
@@ -304,10 +251,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("KK")]
         [DependsOnModifikator(typeof(Mod.IModKK))]
-        public int Körperkraft
-        {
-            get
-            {
+        public int Körperkraft {
+            get {
                 int e = KK ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
@@ -321,10 +266,8 @@ namespace MeisterGeister.Model
         /// <param name="eigenschaft">Name oder Abkürzung der gewünschten Eigenschaft.</param>
         /// <param name="ohneMod">'True' falls der unmodifizierte Wert gewünscht ist.</param>
         /// <returns>Eigenschaftswert.</returns>
-        public int EigenschaftWert(string eigenschaft, bool ohneMod = false)
-        {
-            switch (eigenschaft)
-            {
+        public int EigenschaftWert(string eigenschaft, bool ohneMod = false) {
+            switch (eigenschaft) {
                 case "MU":
                 case "Mut":
                     return ohneMod ? MU ?? 0 : Mut;
@@ -363,8 +306,7 @@ namespace MeisterGeister.Model
         /// <param name="eigenschaft">Name oder Abkürzung der gewünschten Eigenschaft.</param>
         /// <param name="ohneMod">'True' falls der unmodifizierte Wert gewünscht ist.</param>
         /// <returns>Eigenschaft.</returns>
-        public Eigenschaft Eigenschaft(string eigenschaft, bool ohneMod = false)
-        {
+        public Eigenschaft Eigenschaft(string eigenschaft, bool ohneMod = false) {
             return new Eigenschaft(eigenschaft, EigenschaftWert(eigenschaft, ohneMod), this);
         }
 
@@ -373,21 +315,17 @@ namespace MeisterGeister.Model
         #region Abenteuerpunkte
 
         [DependentProperty("APGesamt"), DependentProperty("APEingesetzt")]
-        public int APGuthaben
-        {
+        public int APGuthaben {
             get { return APGesamt.GetValueOrDefault() - APEingesetzt.GetValueOrDefault(); }
-            set
-            {
+            set {
                 // TODO ??: Soll eine Änderung des Guthabens die abhängigen AP-Werte ändern? Soll das möglich sein, oder eher nicht?
             }
         }
 
         [DependentProperty("APEingesetzt")]
-        public int Stufe
-        {
+        public int Stufe {
             get { return APEingesetzt.GetValueOrDefault() / 1000; }
-            set
-            {
+            set {
                 // TODO ??: Änderung der Stufe erhöht die AP-Werte? Soll das möglich sein, oder eher nicht?
             }
         }
@@ -398,10 +336,8 @@ namespace MeisterGeister.Model
         #region BaseEigenschaften / Für die Berechnung von abgeleiteten Werten
         [DependentProperty("MU")]
         [DependsOnModifikator(typeof(Mod.IModMU))]
-        public int BaseMU
-        {
-            get
-            {
+        public int BaseMU {
+            get {
                 int mu = MU ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModMU).Select(m => (Mod.IModMU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => mu = m.ApplyMUMod(mu));
@@ -410,10 +346,8 @@ namespace MeisterGeister.Model
         }
         [DependentProperty("KL")]
         [DependsOnModifikator(typeof(Mod.IModKL))]
-        public int BaseKL
-        {
-            get
-            {
+        public int BaseKL {
+            get {
                 int e = KL ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKL).Select(m => (Mod.IModKL)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKLMod(e));
@@ -422,10 +356,8 @@ namespace MeisterGeister.Model
         }
         [DependentProperty("IN")]
         [DependsOnModifikator(typeof(Mod.IModIN))]
-        public int BaseIN
-        {
-            get
-            {
+        public int BaseIN {
+            get {
                 int e = IN ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModIN).Select(m => (Mod.IModIN)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyINMod(e));
@@ -434,10 +366,8 @@ namespace MeisterGeister.Model
         }
         [DependentProperty("CH")]
         [DependsOnModifikator(typeof(Mod.IModCH))]
-        public int BaseCH
-        {
-            get
-            {
+        public int BaseCH {
+            get {
                 int e = CH ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModCH).Select(m => (Mod.IModCH)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyCHMod(e));
@@ -446,10 +376,8 @@ namespace MeisterGeister.Model
         }
         [DependentProperty("FF")]
         [DependsOnModifikator(typeof(Mod.IModFF))]
-        public int BaseFF
-        {
-            get
-            {
+        public int BaseFF {
+            get {
                 int e = FF ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModFF).Select(m => (Mod.IModFF)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyFFMod(e));
@@ -458,10 +386,8 @@ namespace MeisterGeister.Model
         }
         [DependentProperty("GE")]
         [DependsOnModifikator(typeof(Mod.IModGE))]
-        public int BaseGE
-        {
-            get
-            {
+        public int BaseGE {
+            get {
                 int e = GE ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModGE).Select(m => (Mod.IModGE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyGEMod(e));
@@ -470,10 +396,8 @@ namespace MeisterGeister.Model
         }
         [DependentProperty("KO")]
         [DependsOnModifikator(typeof(Mod.IModKO))]
-        public int BaseKO
-        {
-            get
-            {
+        public int BaseKO {
+            get {
                 int e = KO ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKO).Select(m => (Mod.IModKO)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKOMod(e));
@@ -482,10 +406,8 @@ namespace MeisterGeister.Model
         }
         [DependentProperty("KK")]
         [DependsOnModifikator(typeof(Mod.IModKK))]
-        public int BaseKK
-        {
-            get
-            {
+        public int BaseKK {
+            get {
                 int e = KK ?? 8;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModMitAuswirkungAufBerechneteWerte && m is Mod.IModKK).Select(m => (Mod.IModKK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKKMod(e));
@@ -496,40 +418,31 @@ namespace MeisterGeister.Model
 
         #region Lebensenergie
         [DependentProperty("BaseKO"), DependentProperty("BaseKK")]
-        public int LebensenergieBasis
-        {
-            get
-            {
+        public int LebensenergieBasis {
+            get {
                 return (int)Math.Round((BaseKO * 2 + BaseKK) / 2.0, 0, MidpointRounding.AwayFromZero);
             }
         }
         [DependentProperty("LE_Mod")]
-        public int LebensenergieMod
-        {
+        public int LebensenergieMod {
             get { return LE_Mod ?? 0; }
-            set
-            {
+            set {
                 LE_Mod = value;
                 OnChanged("LebensenergieMod");
             }
         }
         [DependentProperty("LE_Aktuell")]
-        public int LebensenergieAktuell
-        {
-            get
-            {
+        public int LebensenergieAktuell {
+            get {
                 return LE_Aktuell ?? 0;
             }
-            set
-            {
+            set {
                 LE_Aktuell = value;
             }
         }
         [DependentProperty("LebensenergieBasis"), DependentProperty("LebensenergieMod")]
-        public int LebensenergieMax
-        {
-            get
-            {
+        public int LebensenergieMax {
+            get {
                 int le = LebensenergieBasis + LebensenergieMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModLE).Select(m => (Mod.IModLE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => le = m.ApplyLEMod(le));
@@ -538,10 +451,8 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("LebensenergieAktuell"), DependentProperty("LebensenergieMax"), DependentProperty("Konstitution")]
-        public string LebensenergieStatus
-        {
-            get
-            {
+        public string LebensenergieStatus {
+            get {
                 return GetLebensenergieStatus();
             }
         }
@@ -550,41 +461,32 @@ namespace MeisterGeister.Model
         #region Ausdauer
 
         [DependentProperty("BaseMU"), DependentProperty("BaseKO"), DependentProperty("BaseGE")]
-        public int AusdauerBasis
-        {
-            get
-            {
+        public int AusdauerBasis {
+            get {
                 return (int)Math.Round((BaseMU + BaseKO + BaseGE) / 2.0, 0, MidpointRounding.AwayFromZero);
             }
         }
         [DependentProperty("AU_Aktuell")]
-        public int AusdauerAktuell
-        {
-            get
-            {
+        public int AusdauerAktuell {
+            get {
                 return AU_Aktuell ?? 0;
             }
-            set
-            {
+            set {
                 AU_Aktuell = value;
             }
         }
         [DependentProperty("AU_Mod")]
-        public int AusdauerMod
-        {
+        public int AusdauerMod {
             get { return AU_Mod ?? 0; }
-            set 
-            {
+            set {
                 AU_Mod = value;
                 //OnPropertyChanged(string.Empty);
             }
         }
         [DependentProperty("AusdauerBasis"), DependentProperty("AusdauerMod")]
         [DependsOnModifikator(typeof(Mod.IModAU))]
-        public int AusdauerMax
-        {
-            get
-            {
+        public int AusdauerMax {
+            get {
                 int e = AusdauerBasis + AusdauerMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModAU).Select(m => (Mod.IModAU)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAUMod(e));
@@ -593,10 +495,8 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("AusdauerAktuell"), DependentProperty("AusdauerMax")]
-        public string AusdauerStatus
-        {
-            get
-            {
+        public string AusdauerStatus {
+            get {
                 return GetAusdauerStatus();
             }
         }
@@ -604,38 +504,31 @@ namespace MeisterGeister.Model
 
         #region Karmaenergie
 
-        public bool Geweiht
-        {
-            get
-            {
-                return HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) || HatVorNachteil(VorNachteil.GeweihtAngrosch) || HatVorNachteil(VorNachteil.Sacerdos) || 
+        public bool Geweiht {
+            get {
+                return HatVorNachteil(VorNachteil.GeweihtZwölfgöttlicheKirche) || HatVorNachteil(VorNachteil.GeweihtNichtAlveranischeGottheit) || HatVorNachteil(VorNachteil.GeweihtHRanga) || HatVorNachteil(VorNachteil.GeweihtGravesh) || HatVorNachteil(VorNachteil.GeweihtAngrosch) || HatVorNachteil(VorNachteil.Sacerdos) ||
                     HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNamenloser) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheNichtAlveranischeGottheit) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.KontaktZumGroßenGeist) || HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.SpätweiheDunkleZeiten);
             }
         }
 
         [DependentProperty("KE_Aktuell")]
-        public int KarmaenergieAktuell
-        {
-            get
-            {
+        public int KarmaenergieAktuell {
+            get {
                 return KE_Aktuell ?? 0;
             }
-            set
-            {
+            set {
                 KE_Aktuell = value;
             }
         }
 
         [DependentProperty("KE_Mod")]
-        public int KarmaenergieMod
-        {
+        public int KarmaenergieMod {
             get {
                 //if(Geweiht) // hmm erstmal nicht
-                    return KE_Mod ?? 0;
+                return KE_Mod ?? 0;
                 //return 0;
             }
-            set
-            {
+            set {
                 KE_Mod = value;
                 //OnPropertyChanged(string.Empty);
             }
@@ -643,10 +536,8 @@ namespace MeisterGeister.Model
 
         [DependsOnModifikator(typeof(Mod.IModKE))]
         [DependentProperty("KarmaenergieMod")]
-        public int KarmaenergieMax
-        {
-            get
-            {
+        public int KarmaenergieMax {
+            get {
                 int e = KarmaenergieMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModKE).Select(m => (Mod.IModKE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyKEMod(e));
@@ -658,19 +549,15 @@ namespace MeisterGeister.Model
 
         #region Astralenergie
 
-        public bool Magiebegabt
-        {
-            get
-            {
+        public bool Magiebegabt {
+            get {
                 return HatVorNachteil(VorNachteil.Vollzauberer) || HatVorNachteil(VorNachteil.Halbzauberer) || HatVorNachteil(VorNachteil.Viertelzauberer) || HatVorNachteil(VorNachteil.ViertelzaubererUnbewusst);
             }
         }
 
         [DependentProperty("BaseMU"), DependentProperty("BaseIN"), DependentProperty("BaseCH")]
-        public int AstralenergieBasis
-        {
-            get
-            {
+        public int AstralenergieBasis {
+            get {
                 int basis = BaseMU + BaseIN + BaseCH;
                 if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.GefäßDerSterne))
                     basis += BaseCH;
@@ -679,27 +566,21 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("AE_Aktuell")]
-        public int AstralenergieAktuell
-        {
-            get
-            {
+        public int AstralenergieAktuell {
+            get {
                 return AE_Aktuell ?? 0;
             }
-            set
-            {
+            set {
                 AE_Aktuell = value;
             }
         }
 
         [DependentProperty("AE_Mod")]
-        public int AstralenergieMod
-        {
-            get
-            {
+        public int AstralenergieMod {
+            get {
                 return AE_Mod ?? 0;
             }
-            set
-            {
+            set {
                 AE_Mod = value;
                 //OnPropertyChanged(string.Empty);
             }
@@ -707,13 +588,10 @@ namespace MeisterGeister.Model
 
         [DependsOnModifikator(typeof(Mod.IModAE))]
         [DependentProperty("AstralenergieBasis"), DependentProperty("AstralenergieMod")]
-        public int AstralenergieMax
-        {
-            get
-            {
+        public int AstralenergieMax {
+            get {
                 // wenn er einen Zauberervorteil hat, sonst 0
-                if (Magiebegabt)
-                {
+                if (Magiebegabt) {
                     int e = AstralenergieBasis + AstralenergieMod;
                     if (Modifikatoren != null)
                         Modifikatoren.Where(m => m is Mod.IModAE).Select(m => (Mod.IModAE)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => e = m.ApplyAEMod(e));
@@ -727,43 +605,34 @@ namespace MeisterGeister.Model
 
         #region Magieresistenz
 
-        public int MagieresistenzBasis
-        {
-            get
-            {
+        public int MagieresistenzBasis {
+            get {
                 return (int)Math.Round((BaseMU + BaseKL + BaseKO) / 5.0, 0, MidpointRounding.AwayFromZero);
             }
         }
 
         [DependentProperty("MR_Mod")]
-        public int MagieresistenzMod
-        {
-            get
-            {
+        public int MagieresistenzMod {
+            get {
                 return MR_Mod ?? 0;
             }
-            set
-            {
+            set {
                 MR_Mod = value;
                 //OnPropertyChanged(string.Empty);
             }
         }
 
         [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
-        public int MagieresistenzOhneMod
-        {
-            get
-            {
+        public int MagieresistenzOhneMod {
+            get {
                 return MagieresistenzBasis + MagieresistenzMod;
             }
         }
 
         [DependentProperty("MR_Mod"), DependentProperty("MR"), DependentProperty("KL"), DependentProperty("KO")]
         [DependsOnModifikator(typeof(Mod.IModMR))]
-        public int Magieresistenz
-        {
-            get
-            {
+        public int Magieresistenz {
+            get {
                 //TODO ??: Aurapanzer etc.
                 int e = MagieresistenzOhneMod;
                 if (Modifikatoren != null)
@@ -776,20 +645,16 @@ namespace MeisterGeister.Model
 
         #region Wundschwellen
         [DependentProperty("Wundschwelle"), DependentProperty("Wundschwelle2"), DependentProperty("Wundschwelle3")]
-        public string Wundschwellen
-        {
-            get
-            {
+        public string Wundschwellen {
+            get {
                 return string.Format("{0} / {1} / {2}", Wundschwelle, Wundschwelle2, Wundschwelle3);
             }
         }
 
         [DependentProperty("Konstitution")]
-        public int Wundschwelle
-        {
-            get
-            {
-                int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+        public int Wundschwelle {
+            get {
+                int ko = E.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = Convert.ToInt32(Math.Round(ko / 2.0, 0, MidpointRounding.AwayFromZero));
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
@@ -800,11 +665,9 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("Konstitution")]
-        public int Wundschwelle2
-        {
-            get
-            {
-                int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+        public int Wundschwelle2 {
+            get {
+                int ko = E.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = ko;
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
@@ -815,11 +678,9 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("Konstitution")]
-        public int Wundschwelle3
-        {
-            get
-            {
-                int ko = Logic.Einstellung.Einstellungen.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
+        public int Wundschwelle3 {
+            get {
+                int ko = E.WundenVerändernWundschwelle ? Konstitution : KonstitutionOhneWunden;
                 int ws = Convert.ToInt32(Math.Round(ko * 1.5, 0, MidpointRounding.AwayFromZero));
                 if (HatVorNachteil(VorNachteil.Eisern))
                     ws += 2;
@@ -833,19 +694,15 @@ namespace MeisterGeister.Model
         #region Initiative
 
         [DependentProperty("InitiativeModGen"), DependentProperty("MU"), DependentProperty("IN"), DependentProperty("GE")]
-        public int InitiativeBasisOhneSonderfertigkeiten
-        {
-            get
-            {
+        public int InitiativeBasisOhneSonderfertigkeiten {
+            get {
                 return (int)Math.Round((BaseMU * 2 + BaseIN + BaseGE) / 5.0, 0, MidpointRounding.AwayFromZero) + InitiativeModGen;
             }
         }
 
         [DependentProperty("InitiativeBasisOhneSonderfertigkeiten")]
-        public int InitiativeBasisOhneMod
-        {
-            get
-            {
+        public int InitiativeBasisOhneMod {
+            get {
                 // berechneter Basiswert
                 int ini = InitiativeBasisOhneSonderfertigkeiten;
 
@@ -861,10 +718,8 @@ namespace MeisterGeister.Model
 
         [DependentProperty("InitiativeBasisOhneMod")]
         [DependsOnModifikator(typeof(Mod.IModINIBasis))]
-        public int InitiativeBasis
-        {
-            get
-            {
+        public int InitiativeBasis {
+            get {
                 int ini = InitiativeBasisOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModINIBasis).Select(m => (Mod.IModINIBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => ini = m.ApplyINIBasisMod(ini));
@@ -873,24 +728,18 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("INI_Mod")]
-        public int InitiativeModGen
-        {
-            get
-            {
+        public int InitiativeModGen {
+            get {
                 return INI_Mod ?? 0;
             }
-            set
-            {
+            set {
                 INI_Mod = value;
             }
         }
 
-        public WürfelEnum InitiativeZufall
-        {
-            get
-            {
-                if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Klingentänzer) && Behinderung <= 2)
-                {
+        public WürfelEnum InitiativeZufall {
+            get {
+                if (HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit.Klingentänzer) && Behinderung <= 2) {
                     return WürfelEnum._2W6;
                 }
                 return WürfelEnum._1W6;
@@ -902,20 +751,16 @@ namespace MeisterGeister.Model
         #region Attacke/Parade
 
         [DependentProperty("BaseMU"), DependentProperty("BaseGE"), DependentProperty("BaseKK")]
-        public int AttackeBasisOhneMod
-        {
-            get
-            {
+        public int AttackeBasisOhneMod {
+            get {
                 return (int)Math.Round((BaseMU + BaseGE + BaseKK) / 5.0, 0, MidpointRounding.AwayFromZero);
             }
         }
 
         [DependentProperty("AttackeBasisOhneMod")]
         [DependsOnModifikator(typeof(Mod.IModATBasis))]
-        public int AttackeBasis
-        {
-            get
-            {
+        public int AttackeBasis {
+            get {
                 int v = AttackeBasisOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModATBasis).Select(m => (Mod.IModATBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATBasisMod(v));
@@ -928,10 +773,8 @@ namespace MeisterGeister.Model
         /// </summary>
         [DependentProperty("AttackeBasis")]
         [DependsOnModifikator(typeof(Mod.IModAT))]
-        public int Attacke
-        {
-            get
-            {
+        public int Attacke {
+            get {
                 int v = AttackeBasis;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModAT).Select(m => (Mod.IModAT)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyATMod(v));
@@ -940,20 +783,16 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("BaseIN"), DependentProperty("BaseGE"), DependentProperty("BaseKK")]
-        public int ParadeBasisOhneMod
-        {
-            get
-            {
+        public int ParadeBasisOhneMod {
+            get {
                 return (int)Math.Round((BaseIN + BaseGE + BaseKK) / 5.0, 0, MidpointRounding.AwayFromZero);
             }
         }
 
         [DependentProperty("ParadeBasisOhneMod")]
         [DependsOnModifikator(typeof(Mod.IModPABasis))]
-        public int ParadeBasis
-        {
-            get
-            {
+        public int ParadeBasis {
+            get {
                 int v = ParadeBasisOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModPABasis).Select(m => (Mod.IModPABasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPABasisMod(v));
@@ -966,10 +805,8 @@ namespace MeisterGeister.Model
         /// </summary>
         [DependentProperty("ParadeBasis")]
         [DependsOnModifikator(typeof(Mod.IModPA))]
-        public int Parade
-        {
-            get
-            {
+        public int Parade {
+            get {
                 int v = ParadeBasis;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModPA).Select(m => (Mod.IModPA)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyPAMod(v));
@@ -982,20 +819,16 @@ namespace MeisterGeister.Model
         #region Fernkampf
 
         [DependentProperty("BaseIN"), DependentProperty("BaseFF"), DependentProperty("BaseKK")]
-        public int FernkampfBasisOhneMod
-        {
-            get
-            {
+        public int FernkampfBasisOhneMod {
+            get {
                 return (int)Math.Round((BaseIN + BaseFF + BaseKK) / 5.0, 0, MidpointRounding.AwayFromZero);
             }
         }
 
         [DependentProperty("FernkampfBasisOhneMod")]
         [DependsOnModifikator(typeof(Mod.IModPABasis))]
-        public int FernkampfBasis
-        {
-            get
-            {
+        public int FernkampfBasis {
+            get {
                 int v = FernkampfBasisOhneMod;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModFKBasis).Select(m => (Mod.IModFKBasis)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyFKBasisMod(v));
@@ -1008,10 +841,8 @@ namespace MeisterGeister.Model
         /// </summary>
         [DependentProperty("FernkampfBasis")]
         [DependsOnModifikator(typeof(Mod.IModFK))]
-        public int Fernkampf
-        {
-            get
-            {
+        public int Fernkampf {
+            get {
                 int v = FernkampfBasis;
                 if (Modifikatoren != null)
                     Modifikatoren.Where(m => m is Mod.IModFK).Select(m => (Mod.IModFK)m).OrderBy(m => m.Erstellt).ToList().ForEach(m => v = m.ApplyFKMod(v));
@@ -1022,8 +853,7 @@ namespace MeisterGeister.Model
 
         #region Talente
 
-        public Talent AddTalent(string tName, int wert)
-        {
+        public Talent AddTalent(string tName, int wert) {
             Talent talent = Global.ContextTalent.TalentListe.Where(t => t.Talentname == tName).SingleOrDefault();
 
             if (talent == null)
@@ -1032,18 +862,15 @@ namespace MeisterGeister.Model
             return AddTalent(talent, wert, null, null);
         }
 
-        public Talent AddTalent(Talent t, int wert)
-        {
+        public Talent AddTalent(Talent t, int wert) {
             return AddTalent(t, wert, null, null);
         }
 
-        public Talent AddTalent(Talent t, int wert, int? zuteilungAT, int? zuteilungPA)
-        {
+        public Talent AddTalent(Talent t, int wert, int? zuteilungAT, int? zuteilungPA) {
             if (t == null)
                 return null;
             IEnumerable<Held_Talent> existierendeZuordnung = Held_Talent.Where(hta => hta.TalentGUID == t.TalentGUID && hta.HeldGUID == HeldGUID);
-            if (existierendeZuordnung.Count() != 0)
-            {
+            if (existierendeZuordnung.Count() != 0) {
                 //Oder eine Exception werfen?
                 return existierendeZuordnung.First().Talent;
             }
@@ -1075,16 +902,13 @@ namespace MeisterGeister.Model
             return t;
         }
 
-        public void DeleteTalent(string talentname)
-        {
+        public void DeleteTalent(string talentname) {
             if (HatTalent(talentname))
                 DeleteTalent(Held_Talent.Where(h => h.Talent.Talentname == talentname).FirstOrDefault());
         }
 
-        public void DeleteTalent(Held_Talent ht)
-        {
-            if (ht != null)
-            {
+        public void DeleteTalent(Held_Talent ht) {
+            if (ht != null) {
                 Talent t = ht.Talent;
                 Global.ContextHeld.Delete<Model.Held_Talent>(ht);
 
@@ -1106,25 +930,20 @@ namespace MeisterGeister.Model
         /// exactMatch==false ermöglicht suche nach dem Muster talentName*.
         /// Bei Mehrfachtreffern wird der Eintrag mit dem höchsten Modifizierten TaW zurückgegeben.
         /// </summary>
-        public Held_Talent GetHeldTalent(string talentName, bool nurPositiv, out int taw, bool exactMatch = true)
-        {
+        public Held_Talent GetHeldTalent(string talentName, bool nurPositiv, out int taw, bool exactMatch = true) {
             Held_Talent ret = null;
             int maxtaw = Int32.MinValue;
-            foreach (Model.Held_Talent ht in Held_Talent.Where(h => (exactMatch && h.Talent.Talentname == talentName) || (!exactMatch && h.Talent.Talentname.StartsWith(talentName))))
-            {
+            foreach (Model.Held_Talent ht in Held_Talent.Where(h => (exactMatch && h.Talent.Talentname == talentName) || (!exactMatch && h.Talent.Talentname.StartsWith(talentName)))) {
                 int _taw = ht.TaW ?? 0;
-                if (Modifikatoren != null)
-                {
+                if (Modifikatoren != null) {
                     List<Mod.IModTalentwert> l = Modifikatoren.Where(m => m is Mod.IModTalentwert && (((Mod.IModTalentwert)m).Talentname == null || ((Mod.IModTalentwert)m).Talentname.Count == 0 || ((Mod.IModTalentwert)m).Talentname.Contains(ht.Talent.Talentname))).Select(m => (Mod.IModTalentwert)m).OrderBy(m => m.Erstellt).ToList();
-                    foreach (Mod.IModTalentwert m in l)
-                    {
+                    foreach (Mod.IModTalentwert m in l) {
                         int tawneu = m.ApplyTalentwertMod(_taw);
                         if (!nurPositiv || tawneu > _taw)
                             _taw = tawneu;
                     }
                 }
-                if (maxtaw < _taw)
-                {
+                if (maxtaw < _taw) {
                     maxtaw = _taw;
                     ret = ht;
                 }
@@ -1136,89 +955,76 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Der TaW eines Talentes. Liefert bei exactMatch = false den höchsten TaW zurück.
         /// </summary>
-        public int Talentwert(string talentName, bool nurPositiv, bool exactMatch = true)
-        {
+        public int Talentwert(string talentName, bool nurPositiv, bool exactMatch = true) {
             int maxtaw = 0;
             Held_Talent ht = GetHeldTalent(talentName, nurPositiv, out maxtaw, exactMatch);
-            return (maxtaw == Int32.MinValue)?0:maxtaw;
+            return (maxtaw == Int32.MinValue) ? 0 : maxtaw;
         }
 
         /// <summary>
         /// Der TaW eines Talentes.
         /// </summary>
-        public int Talentwert(string talentName)
-        {
+        public int Talentwert(string talentName) {
             return Talentwert(talentName, false);
         }
 
         /// <summary>
         /// Der TaW eines Talentes.
         /// </summary>
-        public int Talentwert(Talent t)
-        {
+        public int Talentwert(Talent t) {
             return Talentwert(t.Talentname, false);
         }
 
         /// <summary>
         /// Der TaW eines Talentes.
         /// </summary>
-        public int Talentwert(Talent t, bool nurPositiv)
-        {
+        public int Talentwert(Talent t, bool nurPositiv) {
             return Talentwert(t.Talentname, nurPositiv);
         }
 
         /// <summary>
         /// Hat mindestens den angegebenen TaW
         /// </summary>
-        public bool HatTalent(string talentname, int taw, bool exactMatch=true)
-        {
+        public bool HatTalent(string talentname, int taw, bool exactMatch = true) {
             if (!HatTalent(talentname, exactMatch))
                 return false;
-            if(taw == int.MinValue)
+            if (taw == int.MinValue)
                 return true;
             return Talentwert(talentname, true) >= taw;
         }
 
-        public bool HatTalent(Talent t)
-        {
+        public bool HatTalent(Talent t) {
             return Held_Talent.Where(ht => ht.Talent == t).Count() > 0;
         }
 
-        public bool HatTalent(string talentname, bool exactMatch = true)
-        {
+        public bool HatTalent(string talentname, bool exactMatch = true) {
             return Held_Talent.Where(ht => (exactMatch && ht.Talent.Talentname == talentname) || (!exactMatch && ht.Talent.Talentname.StartsWith(talentname))).Count() > 0;
         }
 
         /// <summary>
         /// Hat mindestens den angegebenen TaW
         /// </summary>
-        public bool HatTalent(Talent t, int taw)
-        {
+        public bool HatTalent(Talent t, int taw) {
             return HatTalent(t.Talentname, taw);
         }
-        
-        public List<string> Talentspezialisierungen(string talentName)
-        {
+
+        public List<string> Talentspezialisierungen(string talentName) {
             //TODO ??: bei GUID Umstellung statt Sonderfertigkeit.Name evtl auf GUID prüfen
-            if (Held_Sonderfertigkeit != null)
-            {
+            if (Held_Sonderfertigkeit != null) {
                 List<string> r = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit.Name == "Talentspezialisierung" && hs.Wert != null && hs.Wert.StartsWith(talentName)).OrderBy(hs => hs.Wert).Select(hs => hs.Wert).ToList();
                 r.ForEach(w => w = Talent.GetSpezialisierungName(talentName, w));
             }
             return null;
         }
 
-        public List<string> Talentspezialisierungen(Talent t)
-        {
+        public List<string> Talentspezialisierungen(Talent t) {
             if (t == null)
                 return null;
             return Talentspezialisierungen(t.Talentname);
         }
 
-        public void AddBasisTalente()
-        {
-            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis" && t.TalentgruppeID != 0).ToList())
-            {
+        public void AddBasisTalente() {
+            foreach (Talent t in Global.ContextHeld.Liste<Talent>().Where(t => t.Talenttyp == "Basis" && t.TalentgruppeID != 0).ToList()) {
                 if (t.TalentgruppeID != 1)
                     AddTalent(t, 0);
                 else
@@ -1230,8 +1036,7 @@ namespace MeisterGeister.Model
         /// TODO UNFERTIG
         /// </summary>
         /// <returns></returns>
-        public ProbenErgebnis TalentProbe(Talent t, int mod, string spezialisierung = null)
-        {
+        public ProbenErgebnis TalentProbe(Talent t, int mod, string spezialisierung = null) {
             if (!HatTalent(t)) //TODO: stattdessen Ableiten.
             {
                 ProbenErgebnis pe = new ProbenErgebnis();
@@ -1245,8 +1050,7 @@ namespace MeisterGeister.Model
             {
                 //t.Modifikator += t.BehinderungEff;
                 //return t.Würfeln();
-            }
-            else //per Dialog würfeln
+            } else //per Dialog würfeln
             {
                 return View.General.ViewHelper.ShowProbeDialog(t, this);
             }
@@ -1256,15 +1060,13 @@ namespace MeisterGeister.Model
 
         #region Zauber
 
-        public Zauber AddZauber(Zauber z, int wert, string rep)
-        {
+        public Zauber AddZauber(Zauber z, int wert, string rep) {
             if (z == null)
                 return null;
             IEnumerable<Held_Zauber> existierendeZuordnung = Held_Zauber.Where(hza => hza.ZauberGUID == z.ZauberGUID
                 && hza.Repräsentation == rep
                 && hza.HeldGUID == HeldGUID);
-            if (existierendeZuordnung.Count() != 0)
-            {
+            if (existierendeZuordnung.Count() != 0) {
                 //Oder eine Exception werfen?
                 return existierendeZuordnung.First().Zauber;
             }
@@ -1289,24 +1091,20 @@ namespace MeisterGeister.Model
         /// <param name="z">Zauber.</param>
         /// <param name="rep">Repräsentation.</param>
         /// <returns></returns>
-        public bool HatZauber(Zauber z, string rep)
-        {
+        public bool HatZauber(Zauber z, string rep) {
             return Held_Zauber.Where(hz => hz.Zauber == z && hz.Repräsentation == rep).Count() > 0;
         }
 
-        public bool HatZauber(Guid z, string rep)
-        {
+        public bool HatZauber(Guid z, string rep) {
             return Held_Zauber.Where(hz => hz.ZauberGUID == z && hz.Repräsentation == rep).Count() > 0;
         }
 
-        public bool HatZauber(string zaubername, bool exactMatch = true)
-        {
-            return Held_Zauber.Where(hz => (exactMatch && hz.Zauber.Name.ToUpperInvariant() == zaubername.ToUpperInvariant()) || (!exactMatch && hz.Zauber.Name.ToUpperInvariant().StartsWith(zaubername.ToUpperInvariant())) ).Count() > 0;
+        public bool HatZauber(string zaubername, bool exactMatch = true) {
+            return Held_Zauber.Where(hz => (exactMatch && hz.Zauber.Name.ToUpperInvariant() == zaubername.ToUpperInvariant()) || (!exactMatch && hz.Zauber.Name.ToUpperInvariant().StartsWith(zaubername.ToUpperInvariant()))).Count() > 0;
         }
 
         //TODO JT: Eventuell auch nur auf den anfang des Zaubernamens abprüfen
-        public bool HatZauber(string zaubername, int zfw, bool exactMatch = true)
-        {
+        public bool HatZauber(string zaubername, int zfw, bool exactMatch = true) {
             if (!HatZauber(zaubername, exactMatch))
                 return false;
             if (zfw == int.MinValue)
@@ -1317,17 +1115,14 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Der ZfW eines Zaubers.
         /// </summary>
-        public int Zauberfertigkeitswert(string zauberName, bool nurPositiv = false, bool exactMatch = true)
-        {
+        public int Zauberfertigkeitswert(string zauberName, bool nurPositiv = false, bool exactMatch = true) {
             Model.Held_Zauber hz = Held_Zauber.Where(h => (exactMatch && h.Zauber.Name.ToUpperInvariant() == zauberName.ToUpperInvariant()) || (!exactMatch && h.Zauber.Name.ToUpperInvariant().StartsWith(zauberName.ToUpperInvariant()))).FirstOrDefault();
             if (hz == null)
                 return 0;
             int zfw = hz.ZfW ?? 0;
-            if (Modifikatoren != null)
-            {
-                List<Mod.IModZauberwert> l = Modifikatoren.Where(m => m is Mod.IModZauberwert && (((Mod.IModZauberwert)m).Zaubername == null || ((Mod.IModZauberwert)m).Zaubername.Count == 0 || ((Mod.IModZauberwert)m).Zaubername.Contains(hz.Zauber.Name)) ).Select(m => (Mod.IModZauberwert)m).OrderBy(m => m.Erstellt).ToList();
-                foreach (Mod.IModZauberwert m in l)
-                {
+            if (Modifikatoren != null) {
+                List<Mod.IModZauberwert> l = Modifikatoren.Where(m => m is Mod.IModZauberwert && (((Mod.IModZauberwert)m).Zaubername == null || ((Mod.IModZauberwert)m).Zaubername.Count == 0 || ((Mod.IModZauberwert)m).Zaubername.Contains(hz.Zauber.Name))).Select(m => (Mod.IModZauberwert)m).OrderBy(m => m.Erstellt).ToList();
+                foreach (Mod.IModZauberwert m in l) {
                     int zfwneu = m.ApplyZauberwertMod(zfw);
                     if (!nurPositiv || zfwneu > zfw)
                         zfw = zfwneu;
@@ -1339,10 +1134,8 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Die Zauber, die der Held noch wählen kann.
         /// </summary>
-        public List<Zauber> ZauberWählbar
-        {
-            get
-            {
+        public List<Zauber> ZauberWählbar {
+            get {
                 return Global.ContextZauber.ZauberListe.OrderBy(z => z.Name).ToList();
             }
         }
@@ -1350,33 +1143,25 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Die erlernten Repräsentationen des Helden.
         /// </summary>
-        public IDictionary<Sonderfertigkeit, string> Repräsentationen
-        {
-            get
-            {
+        public IDictionary<Sonderfertigkeit, string> Repräsentationen {
+            get {
                 return Held_Sonderfertigkeit.Where(hsf => hsf.Sonderfertigkeit.Name.StartsWith("Repräsentation")).ToDictionary(hsf => hsf.Sonderfertigkeit, hsf => hsf.Wert);
             }
         }
 
-        public string RepräsentationStandard
-        {
-            get
-            {
+        public string RepräsentationStandard {
+            get {
                 var rep = Repräsentationen.Select(r => r.Key.Name.Replace("Repräsentation (", string.Empty).TrimEnd(')')).ToList();
 
-                if (rep != null && rep.Count == 1)
-                {
+                if (rep != null && rep.Count == 1) {
                     return Logic.General.Repräsentationen.GetKürzel(rep[0]);
-                }
-                else if (rep != null && rep.Count > 1)
-                {
+                } else if (rep != null && rep.Count > 1) {
                     // Held hat mehrerer Repräsentationen.
                     // Ermitteln welche Repäsentation mit den meisten Zaubern vertren ist.
 
                     var maxRep = Held_Zauber.GroupBy(hz => hz.Repräsentation).OrderByDescending(r => r.Count());
                     return maxRep.FirstOrDefault().Key;
-                }
-                else
+                } else
                     return "Mag";
             }
         }
@@ -1385,18 +1170,15 @@ namespace MeisterGeister.Model
 
         #region Vor/Nachteile
 
-        public VorNachteil AddVorNachteil(string vorNachName, string wert)
-        {
+        public VorNachteil AddVorNachteil(string vorNachName, string wert) {
             return AddVorNachteil(Global.ContextHeld.Liste<VorNachteil>().Where(vn => vn.Name == vorNachName).FirstOrDefault(), wert);
         }
 
-        public VorNachteil AddVorNachteil(VorNachteil vn, string wert)
-        {
+        public VorNachteil AddVorNachteil(VorNachteil vn, string wert) {
             if (vn == null)
                 return null;
             IEnumerable<Held_VorNachteil> existierendeZuordnung = Held_VorNachteil.Where(heldvn => heldvn.VorNachteilGUID == vn.VorNachteilGUID && heldvn.HeldGUID == HeldGUID);
-            if (existierendeZuordnung.Count() != 0)
-            {
+            if (existierendeZuordnung.Count() != 0) {
                 //Oder eine Exception werfen?
                 return existierendeZuordnung.First().VorNachteil;
             }
@@ -1407,29 +1189,21 @@ namespace MeisterGeister.Model
 
             hvn.VorNachteilGUID = vn.VorNachteilGUID;
             hvn.VorNachteil = vn;
-            
+
             hvn.Wert = wert;
-            if (vn.Vorteil != null)
-            {
-                if ((bool)vn.Vorteil)
-                {
+            if (vn.Vorteil != null) {
+                if ((bool)vn.Vorteil) {
                     hvn.VorNachteil.Vorteil = true;
                 }
-            }
-            else if (vn.Nachteil != null)
-            {
-                if ((bool)vn.Nachteil)
-                {
+            } else if (vn.Nachteil != null) {
+                if ((bool)vn.Nachteil) {
                     hvn.VorNachteil.Nachteil = true;
                 }
-            }
-            else
-            {
+            } else {
                 throw new System.ArgumentNullException("Weder Vor noch Nachteil gesetzt");
             }
             //check
-            if ( ! ( (bool)hvn.VorNachteil.Vorteil  ||  (bool)hvn.VorNachteil.Nachteil ) )
-            {
+            if (!((bool)hvn.VorNachteil.Vorteil || (bool)hvn.VorNachteil.Nachteil)) {
                 throw new System.ArgumentNullException("Weder Vor noch Nachteil gesetzt");
             }
             Held_VorNachteil.Add(hvn);
@@ -1451,19 +1225,16 @@ namespace MeisterGeister.Model
             else if (vn.Name == VorNachteil.TierempathieAlle || vn.Name == VorNachteil.TierempathieSpeziell)
                 AddTalent("Tierempathie", 3);
 
-            return vn;                        
+            return vn;
         }
 
-        public void DeleteVorNachteil(string vnName)
-        {
+        public void DeleteVorNachteil(string vnName) {
             if (HatVorNachteil(vnName))
                 DeleteVorNachteil(Held_VorNachteil.Where(h => h.VorNachteil.Name == vnName).FirstOrDefault());
         }
 
-        public void DeleteVorNachteil(Held_VorNachteil hvn)
-        {
-            if (hvn != null)
-            {
+        public void DeleteVorNachteil(Held_VorNachteil hvn) {
+            if (hvn != null) {
                 string vnName = hvn.VorNachteil.Name;
                 Global.ContextHeld.Delete<Model.Held_VorNachteil>(hvn);
 
@@ -1488,24 +1259,19 @@ namespace MeisterGeister.Model
             }
         }
 
-        public bool HatVorNachteil(VorNachteil vn)
-        {
+        public bool HatVorNachteil(VorNachteil vn) {
             return Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil == vn).Count() > 0;
         }
 
-        public bool HatVorNachteil(string vn, bool exactMatch = true)
-        {
+        public bool HatVorNachteil(string vn, bool exactMatch = true) {
             return HatVorNachteil(vn, null, exactMatch);
         }
 
-        public bool HatVorNachteil(string vn, string wert, bool exactMatch = true)
-        {
+        public bool HatVorNachteil(string vn, string wert, bool exactMatch = true) {
             string m1 = vn, m2 = string.Empty;
-            if (!exactMatch)
-            {
+            if (!exactMatch) {
                 var a = vn.Split('%');
-                if (a.Length > 2)
-                {
+                if (a.Length > 2) {
                     m1 = a[0];
                     m2 = a[1];
                 }
@@ -1516,27 +1282,20 @@ namespace MeisterGeister.Model
                     && (m2 == string.Empty || hvn2.VorNachteil.Name.EndsWith(m2))
                     )
                 )).ToList();
-            foreach (var hvn in hvnList)
-            {
+            foreach (var hvn in hvnList) {
                 //Wert abprüfen
-                if (wert != null && (hvn.VorNachteil.HatWert ?? false))
-                {
-                    if (hvn.VorNachteil.WertTyp != null && hvn.VorNachteil.WertTyp.ToLowerInvariant() == "int")
-                    {
+                if (wert != null && (hvn.VorNachteil.HatWert ?? false)) {
+                    if (hvn.VorNachteil.WertTyp != null && hvn.VorNachteil.WertTyp.ToLowerInvariant() == "int") {
                         int expected, actual;
-                        if (int.TryParse(wert, out expected) && int.TryParse(hvn.Wert, out actual))
-                        {
+                        if (int.TryParse(wert, out expected) && int.TryParse(hvn.Wert, out actual)) {
                             if (actual >= expected)
                                 return true;
                             continue;
-                        }
-                        else
-                        {
+                        } else {
                             System.Diagnostics.Debug.WriteLine("Fehler beim Parsen des Wertes {0} oder {1} zu einem Integer. HatVorNachteil({2},{0})", wert, hvn.Wert, vn);
                             continue;
                         }
-                    }
-                    else if(hvn.Wert == wert)
+                    } else if (hvn.Wert == wert)
                         return true;
                 }
                 return true;
@@ -1548,10 +1307,8 @@ namespace MeisterGeister.Model
         /// Die Vorteile des Helden.
         /// Nicht zum ändern von Werten, da die Werte in Held_VorNachteil stehen.
         /// </summary>
-        public IDictionary<VorNachteil, string> Vorteile
-        {
-            get
-            {
+        public IDictionary<VorNachteil, string> Vorteile {
+            get {
                 return Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Vorteil == true).ToDictionary(hvn => hvn.VorNachteil, hvn => hvn.Wert);
             }
         }
@@ -1559,10 +1316,8 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Die Vorteile, die der Held noch wählen kann.
         /// </summary>
-        public List<VorNachteil> VorteileWählbar
-        {
-            get
-            {
+        public List<VorNachteil> VorteileWählbar {
+            get {
                 return Global.ContextVorNachteil.VorNachteilListe.Where(v => v.Vorteil == true).Except(Vorteile.Keys).OrderBy(v => v.Name).ToList();
             }
         }
@@ -1571,10 +1326,8 @@ namespace MeisterGeister.Model
         /// Die Nachteile des Helden.
         /// Nicht zum ändern von Werten, da die Werte in Held_VorNachteil stehen.
         /// </summary>
-        public IDictionary<VorNachteil, string> Nachteile
-        {
-            get
-            {
+        public IDictionary<VorNachteil, string> Nachteile {
+            get {
                 return Held_VorNachteil.Where(hvn => hvn.VorNachteil != null && hvn.VorNachteil.Nachteil == true).ToDictionary(hvn => hvn.VorNachteil, hvn => hvn.Wert);
             }
         }
@@ -1582,10 +1335,8 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Die Nachteile, die der Held noch wählen kann.
         /// </summary>
-        public List<VorNachteil> NachteileWählbar
-        {
-            get
-            {
+        public List<VorNachteil> NachteileWählbar {
+            get {
                 return Global.ContextVorNachteil.VorNachteilListe.Where(n => n.Nachteil == true).Except(Nachteile.Keys).OrderBy(n => n.Name).ToList();
             }
         }
@@ -1595,16 +1346,14 @@ namespace MeisterGeister.Model
 
         #region Sonderfertigkeiten
 
-        public Sonderfertigkeit AddSonderfertigkeit(string sfName, string wert = "")
-        {
+        public Sonderfertigkeit AddSonderfertigkeit(string sfName, string wert = "") {
             return AddSonderfertigkeit(Global.ContextHeld.Liste<Sonderfertigkeit>().Where(sf => sf.Name == sfName).FirstOrDefault(), wert);
         }
 
-        public Sonderfertigkeit AddSonderfertigkeit(Sonderfertigkeit sf, string wert = "")
-        {
+        public Sonderfertigkeit AddSonderfertigkeit(Sonderfertigkeit sf, string wert = "") {
             if (sf == null)
                 return null;
-            
+
             IEnumerable<Held_Sonderfertigkeit> existierendeZuordnung = Held_Sonderfertigkeit.Where(heldsf => heldsf.SonderfertigkeitGUID == sf.SonderfertigkeitGUID && heldsf.HeldGUID == HeldGUID);
             if (existierendeZuordnung.Count() != 0) //es gibt bereits eine solche sonderfertigkeit auf dem helden
             {
@@ -1616,15 +1365,15 @@ namespace MeisterGeister.Model
                     return existierendeZuordnung.Where(hsf => hsf.Wert == wert || (string.IsNullOrWhiteSpace(wert) && string.IsNullOrWhiteSpace(hsf.Wert))).First().Sonderfertigkeit;
             }
 
-            Held_Sonderfertigkeit hs = Global.ContextHeld.New<Held_Sonderfertigkeit>();            
+            Held_Sonderfertigkeit hs = Global.ContextHeld.New<Held_Sonderfertigkeit>();
             hs.HeldGUID = HeldGUID;
             hs.Held = this;
 
             hs.SonderfertigkeitGUID = sf.SonderfertigkeitGUID;
             hs.Sonderfertigkeit = sf;
-            
+
             hs.Wert = wert ?? "";
-                        
+
             Held_Sonderfertigkeit.Add(hs);
 
             // Abhängige Talente automatisch einfügen.
@@ -1633,8 +1382,7 @@ namespace MeisterGeister.Model
             if (sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneAchaz || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneFerkina
                 || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneGjalsker || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneGoblin
                 || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneNivesen || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneOrk
-                || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneTrollzacker || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneWaldmenschen)
-            { // Schamanen...
+                || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneTrollzacker || sf.Name == Sonderfertigkeit.RitualkenntnisSchamaneWaldmenschen) { // Schamanen...
                 AddTalent("Geister aufnehmen", 3);
                 AddTalent("Geister bannen", 3);
                 AddTalent("Geister binden", 3);
@@ -1642,13 +1390,11 @@ namespace MeisterGeister.Model
             } // Runenkunde...
             else if (sf.Name == Sonderfertigkeit.Runenkunde)
                 AddTalent("Ritualkenntnis (Runenzauberei)", 3);
-            else if (sf.Name.StartsWith("Ritualkenntnis"))
-            { // Ritualkenntnis...
+            else if (sf.Name.StartsWith("Ritualkenntnis")) { // Ritualkenntnis...
                 string tradition = sf.Name.Replace("Ritualkenntnis (", string.Empty).Replace(")", string.Empty);
                 AddTalent("Ritualkenntnis (" + tradition + ")", 3);
             } // Liturgiekenntnis...
-            else if (sf.Name.StartsWith("Liturgiekenntnis"))
-            {
+            else if (sf.Name.StartsWith("Liturgiekenntnis")) {
                 string kirche = sf.Name.Replace("Liturgiekenntnis (", string.Empty).Replace(")", string.Empty);
                 AddTalent("Liturgiekenntnis (" + kirche + ")", 3);
             }
@@ -1656,16 +1402,13 @@ namespace MeisterGeister.Model
             return sf;
         }
 
-        public void DeleteSonderfertigkeit(string sfName)
-        {
+        public void DeleteSonderfertigkeit(string sfName) {
             if (HatSonderfertigkeit(sfName))
                 DeleteSonderfertigkeit(Held_Sonderfertigkeit.Where(h => h.Sonderfertigkeit.Name == sfName).FirstOrDefault());
         }
 
-        public void DeleteSonderfertigkeit(Held_Sonderfertigkeit hsf)
-        {
-            if (hsf != null)
-            {
+        public void DeleteSonderfertigkeit(Held_Sonderfertigkeit hsf) {
+            if (hsf != null) {
                 string sfName = hsf.Sonderfertigkeit.Name;
 
                 Global.ContextHeld.Delete<Model.Held_Sonderfertigkeit>(hsf);
@@ -1680,22 +1423,18 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit.
         /// </summary>
-        public bool HatSonderfertigkeit(Sonderfertigkeit s)
-        {
+        public bool HatSonderfertigkeit(Sonderfertigkeit s) {
             return Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit == s).Count() > 0;
         }
 
         /// <summary>
         /// Hat die Sonderfertigkeit mit bestimmtem Wert.
         /// </summary>
-        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert = null, bool exactMatch = true)
-        {
+        public bool HatSonderfertigkeit(string sonderfertigkeit, string wert = null, bool exactMatch = true) {
             string m1 = sonderfertigkeit, m2 = string.Empty;
-            if (!exactMatch)
-            {
+            if (!exactMatch) {
                 var a = sonderfertigkeit.Split('%');
-                if (a.Length > 2)
-                {
+                if (a.Length > 2) {
                     m1 = a[0];
                     m2 = a[1];
                 }
@@ -1707,8 +1446,7 @@ namespace MeisterGeister.Model
             if (hso.Count() == 0)
                 return false;
             //rekursiv die voraussetzungen prüfen
-            foreach (Held_Sonderfertigkeit hs in hso)
-            {
+            foreach (Held_Sonderfertigkeit hs in hso) {
                 //Wert prüfen
                 if (wert != null && (hs.Sonderfertigkeit.HatWert ?? false) && hs.Wert != wert)
                     continue;
@@ -1720,8 +1458,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit s)
-        {
+        public bool HatSonderfertigkeitUndVoraussetzungen(Sonderfertigkeit s) {
             if (Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null && hs.Sonderfertigkeit == s).Count() > 0)
                 return s.CheckVoraussetzungen(this);
             return false;
@@ -1730,14 +1467,11 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit mit bestimmtem Wert inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, string wert, bool exactMatch = true)
-        {
+        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, string wert, bool exactMatch = true) {
             string m1 = sonderfertigkeit, m2 = string.Empty;
-            if (!exactMatch)
-            {
+            if (!exactMatch) {
                 var a = sonderfertigkeit.Split('%');
-                if (a.Length > 2)
-                {
+                if (a.Length > 2) {
                     m1 = a[0];
                     m2 = a[1];
                 }
@@ -1745,19 +1479,18 @@ namespace MeisterGeister.Model
             IEnumerable<Held_Sonderfertigkeit> hso = Held_Sonderfertigkeit.Where(hs => hs.Sonderfertigkeit != null &&
                 (
                     (exactMatch && hs.Sonderfertigkeit.Name == sonderfertigkeit)
-                    || 
+                    ||
                     (
                         !exactMatch && hs.Sonderfertigkeit.Name.StartsWith(m1)
-                        && 
+                        &&
                         (m2 == string.Empty || hs.Sonderfertigkeit.Name.EndsWith(m2))
                     )
                 )
             );
-            if(hso.Count() == 0)
+            if (hso.Count() == 0)
                 return false;
             //rekursiv die voraussetzungen prüfen
-            foreach (Held_Sonderfertigkeit hs in hso)
-            {
+            foreach (Held_Sonderfertigkeit hs in hso) {
                 //Wert prüfen
                 if (wert != null && (hs.Sonderfertigkeit.HatWert ?? false) && hs.Wert != wert)
                     continue;
@@ -1770,8 +1503,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Hat die Sonderfertigkeit inklusive der Voraussetzungen.
         /// </summary>
-        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, bool exactMatch = true)
-        {
+        public bool HatSonderfertigkeitUndVoraussetzungen(string sonderfertigkeit, bool exactMatch = true) {
             return HatSonderfertigkeitUndVoraussetzungen(sonderfertigkeit, null);
         }
 
@@ -1779,15 +1511,12 @@ namespace MeisterGeister.Model
         /// Die Sonderfertigkeiten des Helden.
         /// Nicht zum ändern von Werten, da die Werte in Held_Sonderfertigkeit stehen.
         /// </summary>
-        public IDictionary<Sonderfertigkeit, ICollection<string>> Sonderfertigkeiten
-        {
-            get
-            {
+        public IDictionary<Sonderfertigkeit, ICollection<string>> Sonderfertigkeiten {
+            get {
                 Dictionary<Sonderfertigkeit, ICollection<string>> d = new Dictionary<Sonderfertigkeit, ICollection<string>>();
-                foreach (var hsf in Held_Sonderfertigkeit)
-                {
+                foreach (var hsf in Held_Sonderfertigkeit) {
                     if (!d.ContainsKey(hsf.Sonderfertigkeit))
-                        d.Add(hsf.Sonderfertigkeit, new List<string> {});
+                        d.Add(hsf.Sonderfertigkeit, new List<string> { });
                     d[hsf.Sonderfertigkeit].Add(hsf.Wert);
                 }
                 return d;
@@ -1798,51 +1527,21 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Die Sonderfertigkeiten, die der Held wählen kann. Die Voraussetzungen müssen erfüllt sein.
         /// </summary>
-        public List<Sonderfertigkeit> SonderfertigkeitenWählbar
-        {
-            get
-            {
-                return Global.ContextHeld.SonderfertigkeitListe.Except(Sonderfertigkeiten.Keys.Where(s => !s.HatWert??false)).OrderBy(sf => sf.Name).ToList();
+        public List<Sonderfertigkeit> SonderfertigkeitenWählbar {
+            get {
+                return Global.ContextHeld.SonderfertigkeitListe.Except(Sonderfertigkeiten.Keys.Where(s => !s.HatWert ?? false)).OrderBy(sf => sf.Name).ToList();
             }
         }
 
-        #endregion
-
-        #region Behinderung und Tragkraft
-
-        public int Behinderung
-        {
-            get { return BE ?? 0; }
-            set { BE = value; }
-        }
-
-        [DependentProperty("Körperkraft")]
-        public int Tragkraft
-        {
-            get { return Körperkraft * 40; }
-        }
-
-        public int BerechneBehinderung() {
-            int retVal = 0;
-
-            foreach (Held_Ausrüstung ruestung in Held_Ausrüstung.Where(ha => ha.Ausrüstung.Rüstung != null)) {
-                retVal += (ruestung.Ausrüstung.Rüstung.BE ?? 0) * (ruestung.Anzahl ?? 0);
-            }
-            Behinderung = retVal;
-            return retVal;
-        }
         #endregion
 
         #region Bewegung / Geschwindigkeit
 
         [DependentProperty("BaseGE")]
-        public int GeschwindigkeitOhneMod
-        {
-            get
-            {
+        public int GeschwindigkeitOhneMod {
+            get {
                 int gs = 8;
-                if (HatVorNachteil("Flink"))
-                {
+                if (HatVorNachteil("Flink")) {
                     gs++;
                     if (HatVorNachteil("Flink II"))
                         gs++;
@@ -1863,8 +1562,7 @@ namespace MeisterGeister.Model
 
         [DependentProperty("GeschwindigkeitOhneMod"), DependentProperty("Behinderung")]
         [DependsOnModifikator(typeof(Mod.IModGS))]
-        public double Geschwindigkeit
-        {
+        public double Geschwindigkeit {
             get {
                 double gs = GeschwindigkeitOhneMod;
                 if (Modifikatoren != null)
@@ -1883,10 +1581,8 @@ namespace MeisterGeister.Model
         /// Gibt alle Kampftalente des Helden als Liste zurück.
         /// </summary>
         [DependsOnModifikator(typeof(Mod.IModifikator))]
-        public List<Model.Held_Talent> Kampftalente
-        {
-            get
-            {
+        public List<Model.Held_Talent> Kampftalente {
+            get {
                 return Held_Talent.Where(ht => ht.Talent.IsKampfTalent).OrderByDescending(ht => ht.TaW).ThenBy(ht => ht.Talent.Talentname).ToList();
             }
         }
@@ -1895,20 +1591,16 @@ namespace MeisterGeister.Model
 
         #region IKämpfer
         private int _initiativeWurf = 0;
-        public int InitiativeWurf
-        {
+        public int InitiativeWurf {
             get { return _initiativeWurf; }
         }
-        public int Initiative(bool dialog = false)
-        {
+        public int Initiative(bool dialog = false) {
             // TODO ??: Dialog MVVM-konform aufrufen
-            if (dialog)
-            {
+            if (dialog) {
                 int wurf = View.General.ViewHelper.ShowWürfelDialog(InitiativeZufall, "Iinitiative Würfel-Wurf");
                 if (wurf != 0)
                     _initiativeWurf = wurf;
-            }
-            else
+            } else
                 _initiativeWurf = RandomNumberGenerator.Wurf(InitiativeZufall);
             int be = Behinderung;
             if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III")) //WdS 76
@@ -1916,8 +1608,7 @@ namespace MeisterGeister.Model
             return InitiativeBasis - be + InitiativeWurf;
         }
 
-        public int InitiativeMax()
-        {
+        public int InitiativeMax() {
             _initiativeWurf = (int)InitiativeZufall;
             int be = Behinderung;
             if (HatSonderfertigkeitUndVoraussetzungen("Rüstungsgewöhnung III")) //WdS 76
@@ -1926,8 +1617,7 @@ namespace MeisterGeister.Model
         }
 
         // WdS 55
-        public int? Orientieren(bool dialog = false)
-        {
+        public int? Orientieren(bool dialog = false) {
             // Mit SF Aufmerksamkeit keine Probe nötig
             if (HatSonderfertigkeitUndVoraussetzungen("Aufmerksamkeit"))
                 return InitiativeMax();
@@ -1945,40 +1635,33 @@ namespace MeisterGeister.Model
             return null;
         }
 
-        public string Position
-        {
+        public string Position {
             get { return null; }
         }
 
         //TODO ??: Wert der aktuellen Waffe verwenden.
-        public int? AT
-        {
+        public int? AT {
             get { return Attacke; }
         }
 
         //TODO ??: Wert der aktuellen Waffe verwenden.
-        public int? PA
-        {
+        public int? PA {
             get { return Parade; }
         }
 
-        public int MR
-        {
+        public int MR {
             get { return Magieresistenz; }
         }
 
-        public int MRGeist
-        {
+        public int MRGeist {
             //TODO ??: verschiedene Sonderfertigkeiten verändern die Geistmagieresistenz.
             get { return Magieresistenz; }
         }
 
         private Rüstungsschutz _rs = null;
-        public IRüstungsschutz RS
-        {
-            get
-            {
-                if(_rs == null)
+        public IRüstungsschutz RS {
+            get {
+                if (_rs == null)
                     _rs = new Rüstungsschutz((Model.Held)this);
                 return _rs;
             }
@@ -1989,8 +1672,7 @@ namespace MeisterGeister.Model
         /// </summary>
         [DependentProperty("ParadeBasis")]
         //[DependsOnModifikator(typeof(Mod.IModAusweichen))] //gibt noch keinen Mod für das Ausweichen
-        public int AusweichenOhneMod
-        {
+        public int AusweichenOhneMod {
             get {
                 int ausweichen = ParadeBasis;
                 if (HatSonderfertigkeitUndVoraussetzungen("Ausweichen I"))
@@ -2001,8 +1683,7 @@ namespace MeisterGeister.Model
                     ausweichen += 3;
                 if (HatVorNachteil("Zwergenwuchs"))
                     ausweichen += 1;
-                if (HatVorNachteil("Flink"))
-                {
+                if (HatVorNachteil("Flink")) {
                     ausweichen += 1;
                     if (HatVorNachteil("Flink II"))
                         ausweichen += 1;
@@ -2019,13 +1700,10 @@ namespace MeisterGeister.Model
         /// </summary>
         [DependentProperty("AusweichenOhneMod"), DependentProperty("Behinderung")]
         [DependsOnModifikator(typeof(Mod.IModAusweichen))]
-        public int? Ausweichen
-        {
-            get
-            {
+        public int? Ausweichen {
+            get {
                 int a = AusweichenOhneMod;
-                if (HatVorNachteil("Flink") && Behinderung >= 5)
-                {
+                if (HatVorNachteil("Flink") && Behinderung >= 5) {
                     a -= 1;
                     if (HatVorNachteil("Flink II") && Behinderung >= 7)
                         a -= 1;
@@ -2037,34 +1715,27 @@ namespace MeisterGeister.Model
             }
         }
 
-        public List<KampfLogic.Manöver.Manöver> Manöver
-        {
+        public List<KampfLogic.Manöver.Manöver> Manöver {
             get { return null; }
         }
 
         private Wunden kämpferWunden = null;
-        public IWunden WundenByZone
-        {
-            get
-            {
+        public IWunden WundenByZone {
+            get {
                 if (kämpferWunden == null)
                     kämpferWunden = new KampfLogic.Wunden((Model.Held)this);
                 return kämpferWunden;
             }
         }
-        
-        IWunden IKämpfer.Wunden
-        {
-            get
-            {
+
+        IWunden IKämpfer.Wunden {
+            get {
                 return WundenByZone;
             }
         }
 
-        public IList<IWaffe> Angriffswaffen
-        {
-            get
-            {
+        public IList<IWaffe> Angriffswaffen {
+            get {
                 //TODO: Cache?
                 //alle Waffen
                 List<IWaffe> waffen = new List<IWaffe>();
@@ -2075,16 +1746,14 @@ namespace MeisterGeister.Model
             }
         }
 
-        private System.Windows.Media.Color _farbmarkierung = System.Windows.Media.Color.FromArgb(0,0,0,0);
-        public System.Windows.Media.Color Farbmarkierung
-        {
+        private System.Windows.Media.Color _farbmarkierung = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
+        public System.Windows.Media.Color Farbmarkierung {
             get { return _farbmarkierung; }
             set { _farbmarkierung = value; OnChanged("Farbmarkierung"); }
         }
 
         private string _hinweisText = string.Empty;
-        public string HinweisText
-        {
+        public string HinweisText {
             get { return _hinweisText; }
             set { _hinweisText = value; OnChanged("HinweisText"); }
         }
@@ -2092,16 +1761,14 @@ namespace MeisterGeister.Model
         #endregion
 
         #region Import Export
-        public static Held Import(string pfad, bool batch = false)
-        {
+        public static Held Import(string pfad, bool batch = false) {
             return Import(pfad, Guid.Empty, batch);
         }
         /// <summary>
         /// Wenn newGuid nicht Emtpy ist, dann wird der held mit der neuen Guid als Kopie importiert.
         /// </summary>
         /// <returns></returns>
-        public static Held Import(string pfad, Guid newGuid, bool batch = false)
-        {
+        public static Held Import(string pfad, Guid newGuid, bool batch = false) {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             Guid heldGuid = serialization.ImportHeld(pfad, newGuid);
             if (heldGuid == Guid.Empty)
@@ -2111,30 +1778,26 @@ namespace MeisterGeister.Model
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
 
-        public void Export(string pfad, bool batch = false)
-        {
+        public void Export(string pfad, bool batch = false) {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             serialization.ExportHeld(HeldGUID, pfad);
         }
 
-        public Held Clone(bool batch = false)
-        {
+        public Held Clone(bool batch = false) {
             return Clone(Guid.NewGuid(), batch);
         }
 
-        public Held Clone(Guid newGuid, bool batch = false)
-        {
+        public Held Clone(Guid newGuid, bool batch = false) {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             Guid heldGuid = serialization.CloneHeld(HeldGUID, newGuid);
             if (heldGuid == Guid.Empty)
                 return null;
-            if(!batch)
+            if (!batch)
                 UpdateLists();
             return Global.ContextHeld.Liste<Held>().Where(h => h.HeldGUID == heldGuid).FirstOrDefault();
         }
 
-        public static void UpdateLists()
-        {
+        public static void UpdateLists() {
             Global.ContextHeld.UpdateList<Held>();
             Global.ContextHeld.UpdateList<Held_Talent>();
             Global.ContextHeld.UpdateList<Held_Zauber>();
@@ -2149,10 +1812,8 @@ namespace MeisterGeister.Model
         #region Sonstiges
 
         [DependentProperty("Name")]
-        public string Kurzname
-        {
-            get
-            {
+        public string Kurzname {
+            get {
                 string[] namenTeile = Name.Trim().Split(' ');
                 if (namenTeile.Length > 0)
                     return namenTeile[0];
@@ -2162,107 +1823,174 @@ namespace MeisterGeister.Model
         }
 
         [DependentProperty("Kampfwerte")]
-        public string Bemerkung
-        {
+        public string Bemerkung {
             get { return Kampfwerte; }
             set { Kampfwerte = value; OnChanged("Bemerkung"); }
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return Name;
         }
 
         #endregion
 
         #region IHasWunden
-        int IHasWunden.Wunden
-        {
-            get
-            {
+        int IHasWunden.Wunden {
+            get {
                 return this.Wunden ?? 0;
             }
-            set
-            {
+            set {
                 this.Wunden = value;
             }
         }
         #endregion
 
-        #region Inventar und Ausrüstung
-        double? ausrüstungsGewicht = null;
-        private double AusrüstungsGewicht
-        {
+        #region Inventar
+
+        #region //Felder
+        private int? ueberlastung = null;
+        private double? gewicht = null;
+        private double? gewichtZuTragkraftProzent = null;
+        #endregion
+
+        #region //Eigenschaften
+        [DependentProperty("Körperkraft")]
+        public int Tragkraft {
+            get { return Körperkraft * 40; }
+        }
+        public int Behinderung {
             get {
-                if (ausrüstungsGewicht == null)
-                    BerechneAusrüstungsGewicht();
-                return ausrüstungsGewicht ?? 0.0;
+                return (BE ?? 0);
             }
-            set { 
-                ausrüstungsGewicht = value;
-                OnChanged("AusrüstungsGewicht");
+            set { BE = value; }
+        }
+        public int Ueberlastung {
+            get {
+                if (ueberlastung == null)
+                    BerechneUeberlastung();
+                return ueberlastung ?? 0;
+            }
+            set {
+                if (E.IsMitUeberlastung && E.UeberlastungBerechnung == 1) {
+                    Behinderung = ((BE ?? 0) - (ueberlastung ?? 0 - value));
+                    ueberlastung = value;
+                } else {
+                    ueberlastung = value;
+                    if (E.UeberlastungBerechnung == 0) {
+                        BerechneBehinderung();
+                    }
+                }
+                OnChanged("Ueberlastung");
             }
         }
+        public double Gewicht {
+            get {
+                if (gewicht == null)
+                    BerechneAusruestungsGewicht();
+                return gewicht ?? 0.0;
+            }
+            set {
+                gewicht = value;
+                GewichtZuTragkraftProzent = ((Gewicht / Tragkraft) * 100);
+                OnChanged("Gewicht");
+            }
+        }
+        public double GewichtZuTragkraftProzent {
+            get {
+                if (gewichtZuTragkraftProzent == null)
+                    GewichtZuTragkraftProzent = ((Gewicht / Tragkraft) * 100);
+                return Math.Round(gewichtZuTragkraftProzent ?? 0.0, 2, MidpointRounding.AwayFromZero);
+            }
+            set {
+                gewichtZuTragkraftProzent = value;
+                BerechneUeberlastung();
+                OnChanged("GewichtZuTragkraftProzent");
+            }
+        }
+        #endregion
 
-        public double BerechneAusrüstungsGewicht()
-        {
+        #region //Public Methoden
+        /// <summary>
+        /// Berechnet Behinderung (Held.Behinderung) anhand der Ausrüstung + Ueberlastung
+        /// </summary>
+        /// <returns></returns>
+        public int BerechneBehinderung() {
+            int retVal = 0;
+            foreach (Held_Ausrüstung ruestung in Held_Ausrüstung.Where(ha => ha.Ausrüstung.Rüstung != null)) {
+                retVal += (ruestung.Ausrüstung.Rüstung.BE ?? 0) * (ruestung.Anzahl ?? 0);
+            }
+            if (E.IsMitUeberlastung) {
+                Behinderung = retVal + Ueberlastung;
+            } else {
+                Behinderung = retVal;
+            }
+            return retVal;
+        }
+        /// <summary>
+        /// Berechnet die aktuelle Ueberlastung (Held.Ueberlastung) anhand des GewichtZuTragkraftProzent
+        /// </summary>
+        public double BerechneUeberlastung() {
+            int retVal;
+            if (GewichtZuTragkraftProzent / 50 - 2 > 0) {
+                retVal = Convert.ToInt32(Math.Floor(GewichtZuTragkraftProzent / 50 - 2 + 1));
+            } else {
+                retVal = 0;
+            }
+            ueberlastung = retVal;
+            return retVal;
+        }
+        /// <summary>
+        /// Berechnet das aktuelle Gewicht (Held.Gewicht) anhand aller Gegenstände neu
+        /// </summary>
+        public double BerechneAusruestungsGewicht() {
             double g = 0.0;
-            foreach(Held_Ausrüstung ha in Held_Ausrüstung)
-            {
+            foreach (Held_Ausrüstung ha in Held_Ausrüstung) {
                 double effGewicht = ha.Trageort.TragkraftFaktor * ha.Ausrüstung.Gewicht * (ha.Anzahl ?? 0);
-                //TODO DW: Angelegt wird noch nicht berücksichtigt, keine UI steuerung aktl
-                //ha.Angelegt &&  einstweilen nicht relevant, alle items im Inv sind angelegt bis "Trageort" umgesetzt
+                //TODO DW: ha.Angelegt &&  einstweilen nicht relevant, alle items im Inv sind angelegt bis "Trageort" umgesetzt
                 if (ha.Ausrüstung.Rüstung != null)
                     effGewicht /= 2.0;
                 g += effGewicht;
             }
-            foreach (var hi in Held_Inventar)
-            {
+            foreach (var hi in Held_Inventar) {
                 g += hi.Trageort.TragkraftFaktor * (hi.Inventar.Gewicht ?? 0) * (hi.Anzahl ?? 0);
             }
-            foreach (var hm in Held_Munition)
-            {
+            foreach (var hm in Held_Munition) {
                 g += hm.Trageort.TragkraftFaktor * (hm.Fernkampfwaffe.Munitionsgewicht ?? 0) * (hm.Anzahl ?? 0);
             }
-            ausrüstungsGewicht = g;
+            Gewicht = g;
             return g;
         }
-        #endregion
-
-        #region Rüstung
         /// <summary>
         /// Berechnet die Rüstungswerte (Held.RS) des Helden anhand der angelegten Ausrüstung neu.
         /// </summary>
-        public void BerechneRüstungswerte()
-        {
-            bool zonenRüstung = Logic.Einstellung.Einstellungen.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.AutomatischZonen 
-                                || Logic.Einstellung.Einstellungen.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.Zonen;
+        public void BerechneRüstungswerte() {
+            bool zonenRüstung = E.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.AutomatischZonen
+                                || E.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.Zonen;
             IRüstungsschutz rs = new RüstungsWerte();
             int einfacherRs = 0;
-            foreach (Held_Ausrüstung ha in Held_Ausrüstung.Where(h_a => h_a.Ausrüstung.Rüstung != null))
-            {
+            foreach (Held_Ausrüstung ha in Held_Ausrüstung.Where(h_a => h_a.Ausrüstung.Rüstung != null)) {
                 //TODO DW: Angelegt wieder aktivieren wenn die UI dies anbietet
                 //if (ha.Angelegt)
                 //{
-                    //Hier könnte man noch Rüstungskombinationen beachten (wenn man zu viel Zeit hat)
-                    if (zonenRüstung) {
-                        rs = ha.Ausrüstung.Rüstung + rs;
-                    }
-                    else { 
-                        einfacherRs += ha.Ausrüstung.Rüstung.RS ?? 0;
-                    }
+                //Hier könnte man noch Rüstungskombinationen beachten (wenn man zu viel Zeit hat)
+                if (zonenRüstung) {
+                    rs = ha.Ausrüstung.Rüstung + rs;
+                } else {
+                    einfacherRs += ha.Ausrüstung.Rüstung.RS ?? 0;
+                }
                 //}
             }
-            if(zonenRüstung)
+            if (zonenRüstung)
                 RS.SetValues(rs);
             else
                 RS[Trefferzone.Gesamt] = einfacherRs;
         }
         #endregion
 
+        #endregion
+
         #region IDisposable
-        public void Dispose()
-        {
+        public void Dispose() {
             PropertyChanged -= DependentProperty.PropagateINotifyProperyChanged;
         }
         #endregion

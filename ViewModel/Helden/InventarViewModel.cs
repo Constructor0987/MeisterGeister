@@ -33,6 +33,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         private Visibility isRuestungVorhanden = Visibility.Hidden;
         private Visibility isRuestungEinfachEingeben = Visibility.Hidden;
         private Visibility isBEEingebenVisibility = Visibility.Hidden;
+        private Visibility isUeberlastungEingebenVisibility = Visibility.Hidden;
 
         private bool isAllSelected;
         private bool isNahkampfWaffeSelected;
@@ -42,8 +43,11 @@ namespace MeisterGeister.ViewModel.Inventar {
         private bool isRuestungBerechnungZonen = false;
         private bool isRuestungBerechnungEinfach = false;
         private bool isBehinderungEingeben = false;
+        private bool isUeberlastungEingeben = false;
 
         private int selectedFilterIndex = 0;
+
+        //private double aktuelleTragkraft = 0;
 
         private Model.Held selectedHeld;
         private Model.Talent selectedNahkampfwaffeTalent;
@@ -52,11 +56,6 @@ namespace MeisterGeister.ViewModel.Inventar {
         private Model.Fernkampfwaffe selectedFernkampfwaffe;
         private Model.Schild selectedSchild;
         private Model.Rüstung selectedRuestung;
-
-        private double aktuellesGewicht = 0;
-        private double aktuellesGewichtInProzentZuTragkraft = 0;
-        private double aktuellesGewichtProzentResultierendeBE = 0;
-        private double aktuelleTragkraft = 0;
 
         //Entitylisten
         private List<Model.Talent> nahkampfWaffeTalentListe = new List<Model.Talent>();
@@ -131,6 +130,13 @@ namespace MeisterGeister.ViewModel.Inventar {
             set {
                 isBEEingebenVisibility = value;
                 OnChanged("IsBEEingebenVisibility");
+            }
+        }
+        public Visibility IsUeberlastungEingebenVisibility {
+            get { return isUeberlastungEingebenVisibility; }
+            set {
+                isUeberlastungEingebenVisibility = value;
+                OnChanged("IsUeberlastungEingebenVisibility");
             }
         }
 
@@ -245,7 +251,13 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("IsBehinderungEingeben");
             }
         }
-
+        public bool IsUeberlastungEingeben {
+            get { return !(isUeberlastungEingeben || E.IsReadOnly); }
+            set {
+                isUeberlastungEingeben = value;
+                OnChanged("IsUeberlastungEingeben");
+            }
+        }
 
         public Model.Held SelectedHeld {
             get { return selectedHeld; }
@@ -306,51 +318,13 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("SelectedRuestung");
             }
         }
-
-        public double AktuellesGewicht {
-            get { return aktuellesGewicht; }
-            set {
-                aktuellesGewicht = value;
-
-                AktuellesGewichtInProzentZuTragkraft = ((AktuellesGewicht / AktuelleTragkraft) * 100);
-
-                double val;
-                if (AktuellesGewichtInProzentZuTragkraft / 50 - 2 > 0) {
-                    val = Convert.ToInt32(Math.Floor(AktuellesGewichtInProzentZuTragkraft / 50 - 2 + 1));
-                } else {
-                    val = 0;
-                }
-                AktuellesGewichtProzentResultierendeBE = Convert.ToInt32(val);
-                OnChanged("SelectedHeld");
-                OnChanged("AktuellesGewicht");
-            }
-        }
-        public double AktuelleTragkraft {
-            get { return aktuelleTragkraft; }
-            set {
-                aktuelleTragkraft = value;
-                OnChanged("AktuelleTragkraft");
-            }
-        }
-        public double AktuellesGewichtInProzentZuTragkraft {
-            get { return aktuellesGewichtInProzentZuTragkraft; }
-            set {
-                List<string> trimOnKomma = value.ToString().Split(',').ToList();
-                double inShort = Math.Round(value, 2, MidpointRounding.AwayFromZero);
-                aktuellesGewichtInProzentZuTragkraft = inShort;
-                OnChanged("AktuellesGewichtInProzentZuTragkraft");
-            }
-        }
-        public double AktuellesGewichtProzentResultierendeBE {
-            get { return aktuellesGewichtProzentResultierendeBE; }
-            set {
-                if (aktuellesGewichtProzentResultierendeBE != value) {
-                    aktuellesGewichtProzentResultierendeBE = value;
-                }
-                OnChanged("AktuellesGewichtProzentResultierendeBE");
-            }
-        }
-
+        //public double AktuelleTragkraft {
+        //    get { return aktuelleTragkraft; }
+        //    set {
+        //        aktuelleTragkraft = value;
+        //        OnChanged("AktuelleTragkraft");
+        //    }
+        //}
         //EntityListen
         public List<Model.Talent> NahkampfWaffeTalentListe {
             get { return nahkampfWaffeTalentListe; }
@@ -394,7 +368,6 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("RuestungListe");
             }
         }
-
         //Zuordnung
         public ObservableCollection<NahkampfItem> HeldNahkampfWaffeImInventar {
             get { return heldNahkampfWaffeImInventar; }
@@ -462,7 +435,9 @@ namespace MeisterGeister.ViewModel.Inventar {
         #region //KONSTRUKTOR
         public InventarViewModel() {
             EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("RSBerechnung", ""));
-            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("BEBerechnung", ""));            
+            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("BEBerechnung", ""));
+            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));
+            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("IsMitUeberlastung", ""));            
 
             onAddNahkampfwaffe = new Base.CommandBase(AddNahkampfwaffe, null);
             onAddFernkampfwaffe = new Base.CommandBase(AddFernkampfwaffe, null);
@@ -482,7 +457,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         }
         #endregion
 
-        #region //INSTANZMETHODEN
+        #region //Public Methoden
         public void LoadDaten() {
             if (IsLoaded == false) {
                 //Nahkampf
@@ -492,8 +467,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                         t.TalentgruppeID == 1
                         && (t.Untergruppe == TALENTNAHKAMPFWAFFEUNTERKATEGORIE
                         || t.Untergruppe == TALENTNAHKAMPFWAFFEATTECHNIK)
-                        && !NahkampfWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
-                //NahkampfWaffeTalentListe = NahkampfWaffeTalentListe;                
+                        && !NahkampfWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));                
                 if (Global.ContextInventar != null)
                     NahkampfwaffeListe.AddRange(Global.ContextInventar.WaffeListe.Where(w => !NahkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
                 if (NahkampfwaffeListe.Count > 0) {
@@ -506,7 +480,6 @@ namespace MeisterGeister.ViewModel.Inventar {
                 FernkampWaffeTalentListe.Add(new Model.Talent() { Talentname = FILTERDEAKTIVIEREN });
                 if (Global.ContextTalent != null)
                     FernkampWaffeTalentListe.AddRange(Global.ContextTalent.TalentListe.Where(t => t.TalentgruppeID == 1 && t.Untergruppe == TALENTFERNKAMPFWAFFEUNTERKATEGORIE && !FernkampWaffeTalentListe.Contains(t)).OrderBy(t => t.Talentname));
-                //FernkampWaffeTalentListe = FernkampWaffeTalentListe;    
                 if (Global.ContextInventar != null)
                     FernkampfwaffeListe.AddRange(Global.ContextInventar.FernkampfwaffeListe.Where(w => !FernkampfwaffeListe.Contains(w)).OrderBy(w => w.Name));
                 OnChanged("FernkampfwaffeListe");
@@ -538,7 +511,9 @@ namespace MeisterGeister.ViewModel.Inventar {
                 IsLoaded = true;
             }
         }
+        #endregion
 
+        #region //Private Methoden
         private Model.Held_Ausrüstung CreateHeldZuAusruestung(Model.Held aHeld, Model.Ausrüstung aAusruestung) {
             Model.Held_Ausrüstung tmp = new Model.Held_Ausrüstung();
             tmp.Held = aHeld;
@@ -557,44 +532,37 @@ namespace MeisterGeister.ViewModel.Inventar {
             tmp.Anzahl = 1;
             return tmp;
         }
-
         private NahkampfItem CreateItemVonNahkampfwaffe(Model.Waffe aNahkampfwaffe) {
             NahkampfItem tmpItem = new NahkampfItem(CreateHeldZuAusruestung(SelectedHeld, aNahkampfwaffe.Ausrüstung), aNahkampfwaffe);
             tmpItem.Trageort = "Rucksack";
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             return tmpItem;
         }
-
         private FernkampfItem CreateItemVonFernkampfwaffe(Model.Fernkampfwaffe aFernkampfwaffe) {
             FernkampfItem tmpItem = new FernkampfItem(CreateHeldZuAusruestung(SelectedHeld, aFernkampfwaffe.Ausrüstung), aFernkampfwaffe);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
-
         private SchildItem CreateItemVonSchild(Model.Schild aSchild) {
             SchildItem tmpItem = new SchildItem(CreateHeldZuAusruestung(SelectedHeld, aSchild.Ausrüstung), aSchild);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
-
         private RuestungItem CreateItemVonRuestung(Model.Rüstung aRuestung) {
             RuestungItem tmpItem = new RuestungItem(CreateHeldZuAusruestung(SelectedHeld, aRuestung.Ausrüstung), aRuestung);
             tmpItem.RemoveItem += (s, e) => { RemoveAusruestung(s); };
             tmpItem.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.Name == "Rucksack").FirstOrDefault();
             return tmpItem;
         }
-
         #endregion
 
         #region //EVENTS
-
         private void IsReadOnlyChanged(object sender, EventArgs e) {
             _isReadOnly = MeisterGeister.Logic.Einstellung.Einstellungen.IsReadOnly;
             OnChanged("IsReadOnly");
         }
-
         void EinstellungenChangedHandler(MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs e) {
             switch (e.PropertyName) {
                 case "RSBerechnung":
@@ -623,6 +591,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 case "BEBerechnung":
                     //Einstellung für BE-Berechnung
                     switch (E.BEBerechnung) {
+                        //Automatisch
                         case 0:
                             IsBehinderungEingeben = false;
                             IsBEEingebenVisibility = Visibility.Hidden;
@@ -630,6 +599,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                                 SelectedHeld.BerechneBehinderung();
                             }
                             break;
+                        //Eingegeben
                         case 1:
                             IsBehinderungEingeben = true;
                             IsBEEingebenVisibility = Visibility.Visible;
@@ -638,11 +608,44 @@ namespace MeisterGeister.ViewModel.Inventar {
                             break;
                     }
                     break;
-                default:
+                case "UeberlastungBerechnung":
+                    //Einstellung für Überlastung
+                    switch (E.UeberlastungBerechnung) {
+                        //Automatisch
+                        case 0:
+                            IsUeberlastungEingeben = false;
+                            IsUeberlastungEingebenVisibility = Visibility.Hidden;
+                            if (selectedHeld != null) {                                
+                                SelectedHeld.BerechneUeberlastung();
+                            }
+                            break;
+                        //Eingegeben
+                        case 1:
+                            IsUeberlastungEingeben = true;
+                            IsUeberlastungEingebenVisibility = Visibility.Visible;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "IsMitUeberlastung":
+                    switch (E.IsMitUeberlastung) {                        
+                        case true:                            
+                            EinstellungenChangedHandler(new MeisterGeister.Logic.Einstellung.EinstellungChangedEventArgs("UeberlastungBerechnung", ""));
+                            break;
+                        case false:
+                            IsUeberlastungEingeben = false;
+                            IsUeberlastungEingebenVisibility = Visibility.Hidden;                            
+                            //if (selectedHeld != null) {
+                            //    SelectedHeld.Ueberlastung = 0;
+                            //}
+                            break;
+                        default:
+                            break;
+                    }
                     break;
             }
         }
-
         void SelectedHeldChanged() {
             //FIXME Hack
             if (!ListenToChangeEvents)
@@ -651,17 +654,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             SelectedHeld = Global.SelectedHeld;
             if (IsLoaded == false) {
                 LoadDaten();
-            }
-
-            AktuellesGewicht = 0;
-            if (SelectedHeld != null) {
-                AktuelleTragkraft = SelectedHeld.Tragkraft;
-                AktuellesGewicht = SelectedHeld.BerechneAusrüstungsGewicht();
-            } else {
-                AktuelleTragkraft = 0;
-                AktuellesGewichtInProzentZuTragkraft = 0;
-                AktuellesGewichtProzentResultierendeBE = 0;
-            }
+            }           
 
             //Nahkampf
             HeldNahkampfWaffeImInventar.Clear();
@@ -749,17 +742,16 @@ namespace MeisterGeister.ViewModel.Inventar {
             if (SelectedHeld != null && E.BEBerechnung == 0) {
                 SelectedHeld.BerechneBehinderung();
             }
-        }
+        }        
 
-        #region //--ADD
-
+        //--ADD
         void AddNahkampfwaffe(object sender) {
             if (SelectedNahkampfwaffe != null && SelectedHeld != null && !IsReadOnly) {
                 foreach (var item in HeldNahkampfWaffeImInventar) {
                     if (item.EntityNW.WaffeGUID == SelectedNahkampfwaffe.WaffeGUID) {
                         item.EntityHA.Anzahl++;
                         OnChanged("HeldNahkampfWaffeImInventar");
-                        AktuellesGewicht += SelectedNahkampfwaffe.Gewicht;
+                        SelectedHeld.BerechneAusruestungsGewicht();
                         return;
                     }
                 }
@@ -768,7 +760,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("HeldNahkampfWaffeImInventar");
                 IsNahkampfwaffevorhanden = Visibility.Visible;
                 Global.ContextInventar.InsertHeldAusruestung(newItem.EntityHA);
-                AktuellesGewicht += SelectedNahkampfwaffe.Gewicht;
+                SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
         void AddFernkampfwaffe(object sender) {
@@ -777,7 +769,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                     if (item.EntityFW.FernkampfwaffeGUID == SelectedFernkampfwaffe.FernkampfwaffeGUID) {
                         item.EntityHA.Anzahl++;
                         OnChanged("HeldFernkampfwaffeImInventar");
-                        AktuellesGewicht += SelectedFernkampfwaffe.Gewicht;
+                        SelectedHeld.BerechneAusruestungsGewicht();
                         return;
                     }
                 }
@@ -787,7 +779,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("HeldFernkampfwaffeImInventar");
                 IsFernkampfwaffevorhanden = Visibility.Visible;
                 Global.ContextInventar.InsertHeldAusruestung(newItem.EntityHA);
-                AktuellesGewicht += SelectedFernkampfwaffe.Gewicht;
+                SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
         void AddSchild(object sender) {
@@ -796,7 +788,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                     if (item.EntityS.SchildGUID == SelectedSchild.SchildGUID) {
                         item.EntityHA.Anzahl++;
                         OnChanged("HeldSchildImInventar");
-                        AktuellesGewicht += SelectedSchild.Gewicht;
+                        SelectedHeld.BerechneAusruestungsGewicht();
                         return;
                     }
                 }
@@ -806,7 +798,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("HeldSchildImInventar");
                 IsSchildVorhanden = Visibility.Visible;
                 Global.ContextInventar.InsertHeldAusruestung(newItem.EntityHA);
-                AktuellesGewicht += SelectedSchild.Gewicht;
+                SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
         void AddRuestung(object sender) {
@@ -824,7 +816,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                             SelectedHeld.BerechneBehinderung();
                         }
                         OnChanged("HeldRuestungImInventar");
-                        AktuellesGewicht += SelectedRuestung.Gewicht / 2;
+                        SelectedHeld.BerechneAusruestungsGewicht();
                         return;
                     }
                 }
@@ -843,14 +835,11 @@ namespace MeisterGeister.ViewModel.Inventar {
                 OnChanged("HeldRuestungImInventar");
                 IsRuestungVorhanden = Visibility.Visible;
                 Global.ContextInventar.InsertHeldAusruestung(newItem.EntityHA);
-                AktuellesGewicht += SelectedRuestung.Gewicht / 2;
+                SelectedHeld.BerechneAusruestungsGewicht();
             }
         }
-
-        #endregion
-
-        #region //--REMOVE
-
+        
+        //--REMOVE
         void RemoveAusruestung(object sender) {
             if (sender != null && SelectedHeld != null && !IsReadOnly) {
 
@@ -863,18 +852,19 @@ namespace MeisterGeister.ViewModel.Inventar {
                                     break;
                                 item.EntityHA.Anzahl--;
                                 OnChanged("HeldNahkampfWaffeImInventar");
-                                AktuellesGewicht -= item.EntityNW.Gewicht;
+                                SelectedHeld.BerechneAusruestungsGewicht();
                                 return;
                             }
                         }
                         HeldNahkampfWaffeImInventar.Remove(item);
                         OnChanged("HeldNahkampfWaffeImInventar");
-                        AktuellesGewicht -= item.EntityNW.Gewicht;
+                        Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
+                        Global.ContextInventar.RemoveAusruestungVonHeld(item.EntityHA);                        
+                        SelectedHeld.BerechneAusruestungsGewicht();
                         if (HeldNahkampfWaffeImInventar.Count() == 0) {
                             IsNahkampfwaffevorhanden = Visibility.Collapsed;
                         }
-                        Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
-                        Global.ContextInventar.RemoveAusruestungVonHeld(item.EntityHA);
+                        
                     }
                 }
 
@@ -887,18 +877,18 @@ namespace MeisterGeister.ViewModel.Inventar {
                                     break;
                                 item.EntityHA.Anzahl--;
                                 OnChanged("HeldFernkampfwaffeImInventar");
-                                AktuellesGewicht -= item.EntityFW.Gewicht;
+                                SelectedHeld.BerechneAusruestungsGewicht();
                                 return;
                             }
                         }
                         HeldFernkampfwaffeImInventar.Remove(item);
                         OnChanged("HeldFernkampfwaffeImInventar");
-                        AktuellesGewicht -= item.EntityFW.Gewicht;
-                        if (HeldFernkampfwaffeImInventar.Count() == 0) {
-                            IsFernkampfwaffevorhanden = Visibility.Collapsed;
-                        }
                         Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
                         Global.ContextInventar.RemoveAusruestungVonHeld(item.EntityHA);
+                        SelectedHeld.BerechneAusruestungsGewicht();
+                        if (HeldFernkampfwaffeImInventar.Count() == 0) {
+                            IsFernkampfwaffevorhanden = Visibility.Collapsed;
+                        }                        
                     }
                 }
 
@@ -911,19 +901,18 @@ namespace MeisterGeister.ViewModel.Inventar {
                                     break;
                                 item.EntityHA.Anzahl--;
                                 OnChanged("HeldSchildImInventar");
-                                AktuellesGewicht -= item.EntityS.Gewicht;
+                                SelectedHeld.BerechneAusruestungsGewicht();
                                 return;
                             }
                         }
                         HeldSchildImInventar.Remove(item);
                         OnChanged("HeldSchildImInventar");
-                        AktuellesGewicht -= item.EntityS.Gewicht;
-                        if (HeldSchildImInventar.Count() == 0) {
-                            IsSchildVorhanden = Visibility.Collapsed;
-                        }
                         Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
                         Global.ContextInventar.RemoveAusruestungVonHeld(item.EntityHA);
-
+                        SelectedHeld.BerechneAusruestungsGewicht();
+                        if (HeldSchildImInventar.Count() == 0) {
+                            IsSchildVorhanden = Visibility.Collapsed;
+                        }                        
                     }
                 }
 
@@ -944,7 +933,7 @@ namespace MeisterGeister.ViewModel.Inventar {
                                     SelectedHeld.BerechneBehinderung();
                                 }
                                 OnChanged("HeldRuestungImInventar");
-                                AktuellesGewicht -= item.EntityR.Gewicht / 2;
+                                SelectedHeld.BerechneAusruestungsGewicht();
                                 return;
                             }
                         }
@@ -953,27 +942,21 @@ namespace MeisterGeister.ViewModel.Inventar {
                             E.RSBerechnung == 3) {
                             SelectedHeld.BerechneRüstungswerte();
                         }
-                        OnChanged("HeldRuestungImInventar");
-                        AktuellesGewicht -= item.EntityR.Gewicht / 2;
-
+                        OnChanged("HeldRuestungImInventar");                        
+                        Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
+                        Global.ContextInventar.RemoveAusruestungVonHeld(item.EntityHA);
+                        SelectedHeld.BerechneAusruestungsGewicht();
                         if (SelectedHeld != null && E.BEBerechnung == 0) {
                             SelectedHeld.BerechneBehinderung();
                         }
                         if (HeldRuestungImInventar.Count() == 0) {
                             IsRuestungVorhanden = Visibility.Collapsed;
-                        }
-                        Global.ContextInventar.HeldZuAusruestungListe.Remove(item.EntityHA);
-                        Global.ContextInventar.RemoveAusruestungVonHeld(item.EntityHA);
-
+                        }                        
                     }
                 }
             }
-        }
-
+        }        
         #endregion
-
-        #endregion
-
     }
 
     #region //SUBKLASSEN
