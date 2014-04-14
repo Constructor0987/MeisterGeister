@@ -615,4 +615,129 @@
             (Ahlrig, Chef einer Heldengruppe), genießt er einiges Ansehen bei Grolmen.
         </Paragraph>
     </FlowDocument>
+
+    <FlowDocument x:Key="Aranische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Aranische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            In Aranien werden überwiegend tulamidische Namen verwendet. Allerdings fügen aranische Frauen oft nicht den
+            Namen des Vaters an ihren eigenen an, sondern den der Mutter; meist mit -suni oder -sunya(ra).
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            <Bold>Ehrennamen</Bold> werden als Adelsnamen generiert.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            besondere Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Seltener wird der Name eines berühmten
+            <Bold>Lehrmeisters</Bold>
+            angeführt: "sâl" (Schüler des/der) bzw. "sâla" (Schülerin der/des) oder der
+            <Bold>Heimatort
+            </Bold> mit vorangestelltem "ay" (aus/von). Die seltenen aranischen, nachgestellten Familienamen leiten sich von
+            berühmten Ahnen (Alahjan, Elyeshinnah) oder einem tulamidischen Ortsnamen (Terekandi, Zorgahani), seltener auch 
+            aus den Nachnamen mittelreichischer Vorfahren (Damotil, Hainsate) ab.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Tulamidische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Tulamidische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Zur Aussprache: ”ch” wie in ”Bach”, ”j” wie in ”Journal”, ”y” wie ”j” in ”Jagd”, ”s” wie ß (auch am Wortanfang),
+            ”z” wie ”s” in ”Sahne”; ”q” ist ein Laut ähnlich wie ”g”, aber weiter hinten im Rachen gesprochen. Ein Vokal mit
+            Circonflex (^) ist lang und betont.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            <Bold>Ehrennamen</Bold> werden als Adelsnamen generiert.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            besondere Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Seltener wird der Name eines berühmten
+            <Bold>Lehrmeisters</Bold>
+            angeführt: "sâl" (Schüler des/der) bzw. "sâla" (Schülerin der/des) oder der
+            <Bold>Heimatort
+            </Bold> mit vorangestelltem "ay" (aus/von).
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Novadische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Novadische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Zur Aussprache: ”ch” wie in ”Bach”, ”j” wie in ”Journal”, ”y” wie ”j” in ”Jagd”, ”s” wie ß (auch am Wortanfang),
+            ”z” wie ”s” in ”Sahne”; ”q” ist ein Laut ähnlich wie ”g”, aber weiter hinten im Rachen gesprochen. Ein Vokal mit
+            Circonflex (^) ist lang und betont.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            <Bold>Ehrennamen</Bold> werden als Adelsnamen generiert.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            besondere Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Seltener wird der Name eines berühmten
+            <Bold>Lehrmeisters</Bold>
+            angeführt: "sâl" (Schüler des/der) bzw. "sâla" (Schülerin der/des) oder der
+            <Bold>Heimatort
+            </Bold> mit vorangestelltem "ay" (aus/von).
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Novadi-Frauen, die einen zwölfgöttergläubigen Vater haben, setzen das "bint" vor den Namen ihrer Mutter, statt "ben Vater".
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Ferkina Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Ferkina Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Männer nennen sich mit "iban" nach dem Vater, Frauen mit "sabu" nach dem Vater oder mit "zawsh(i)" nach dem
+            <Bold>Ehemann</Bold>/Besitzer: Jikhab iban Tsharik, Charika sabu Faruch, Charika zawsh-i-Jikhab. Den Anführer einer Sippe
+            nennt man "Haran", den Stammeshäuptling "Shahr".
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Zur Aussprache: ”ch” wie in ”Bach”, ”j” wie in ”Journal”, ”y” wie ”j” in ”Jagd”, ”s” wie ß (auch am Wortanfang),
+            ”z” wie ”s” in ”Sahne”; ”q” ist ein Laut ähnlich wie ”g”, aber weiter hinten im Rachen gesprochen. Ein Vokal mit
+            Circonflex (^) ist lang und betont.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Stammesnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Die beiden großen Stammesverbände der Ferkinas sind die Shai'aian im Raschtulswall und die Merech im Khoramgebirge; 
+            diese sind in viele kleinere Stämme unterteilt, und es gibt noch weitere Stämme in diesen und anderen Gebirgen. Stammesnamen
+            fangen mit "ban" an ("Söhne von...", Mehrzahl von "iban"). Man kann sie aus den o.a. Männernamen bilden,
+            eventuell unter Austauschen einiger Vokale: Ban Azud, Ban Dschufra, Ban Mhadjadri.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Trollzacker Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Trollzacker Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Namen der Eltern wie im Tulamidischen sind unüblich, können aber wie im verwandten Ferkina "iban" (bei Männern) oder "sabu" (bei Frauen) verwendet werden.
+        </Paragraph>
+    </FlowDocument>
 </ResourceDictionary>

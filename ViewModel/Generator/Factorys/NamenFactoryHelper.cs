@@ -19,12 +19,12 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public const string ALBERNISCHENAMEN = "Albernische Namen";
         public const string ALMADISCHENAMEN = "Almadanische Namen";
         public const string ANDERGASTSCHENAMEN = "Andergastsche Namen";
-        //public const string ARANISCHENAMEN = "Aranische Namen";
+        public const string ARANISCHENAMEN = "Aranische Namen";
         public const string BORNLÄNDISCHENAMEN = "Bornländische Namen";
         //public const string CYCLOPENINSELNNAMEN = "Cyclopeninseln";
         //public const string ELEMISCHENAMEN = "Elem Oberschicht";
         //public const string ELFISCHENAMEN = "Elfische Namen";
-        //public const string FERKINANAMEN = "Ferkina Namen";
+        public const string FERKINANAMEN = "Ferkina Namen";
         public const string FJARNINGSCHENAMEN = "Fjarningsche Namen";
         public const string GARETHISCHENAMEN = "Garethische Namen";
         public const string GJALSKERLÄNDISCHENAMEN = "Gjalskerländische Namen";
@@ -37,6 +37,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         //public const string MARASKANISCHENAMEN = "Maraskanische Namen";
         public const string NIVESISCHENAMEN = "Nivesische Namen";
         public const string NORBADISCHENAMEN = "Norbardische Namen";
+        public const string NOVADISCHENAMEN = "Novadische Namen";
         //public const string NORDPROVINZENNAMEN = "Nordprovinzen";
         public const string NOSTRISCHENAMEN = "Nostrische Namen";
         public const string ORKISCHENAMEN = "Orkische Namen";
@@ -45,8 +46,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public const string THORWALSCHENAMEN = "Thorwalsche Namen";
         public const string TOCAMUYACNAMEN = "Tocamuyac Namen";
         public const string TROLLISCHENAMEN = "Trollische Namen";
-        //public const string TROLLZACKERNAMEN = "Trollzacker Namen";
-        //public const string TULAMIDISCHENAMEN = "Tulamidische Namen";
+        public const string TROLLZACKERNAMEN = "Trollzacker Namen";
+        public const string TULAMIDISCHENAMEN = "Tulamidische Namen";
         public const string UTULUNAMEN = "Utulu Namen";
         //public const string WALDMENSCHENNAMEN = "Waldmenschen Namen";
         public const string WEIDENERNAMEN = "Weidener Namen";
@@ -72,8 +73,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 case ALMADISCHENAMEN: return new AlmadanischeNamenFactory();
 
                 case ANDERGASTSCHENAMEN: return new NamenFactoryVornameNachname(ANDERGASTSCHENAMEN, false, true);
-                
-                //case ARANISCHENAMEN:
+
+                case ARANISCHENAMEN: return new AranischeNamenFactory();
 
                 case BORNLÄNDISCHENAMEN: return new BornländischeNamenFactory();
                 
@@ -82,8 +83,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 //case ELEMISCHENAMEN:
                 
                 //case ELFISCHENAMEN:
-                
-                //case FERKINANAMEN:
+
+                case FERKINANAMEN: return new FerkinaNamenFactory();
 
                 case FJARNINGSCHENAMEN: return new NamenFactoryVorname(FJARNINGSCHENAMEN, false, true);
 
@@ -108,6 +109,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 case NIVESISCHENAMEN: return new NivesischeNamenFactory();
 
                 case NORBADISCHENAMEN: return new NorbardischeNamenFactory();
+
+                case NOVADISCHENAMEN: return new NovadischeNamenFactory();
                 
                 //case NORDPROVINZENNAMEN:
 
@@ -124,10 +127,10 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 case TOCAMUYACNAMEN: return new NamenFactoryVorname(TOCAMUYACNAMEN, true, true);
                 
                 case TROLLISCHENAMEN: return new TrollischeNamenFactory();
-                
-                //case TROLLZACKERNAMEN:
-                
-                //case TULAMIDISCHENAMEN:
+
+                case TROLLZACKERNAMEN: return new NamenFactoryVorname(TROLLZACKERNAMEN, false, true);
+
+                case TULAMIDISCHENAMEN: return new TulamidischeNamenFactory();
 
                 case UTULUNAMEN: return new NamenFactoryVorname(UTULUNAMEN, true, true);
                 

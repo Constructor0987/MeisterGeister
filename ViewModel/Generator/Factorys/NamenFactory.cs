@@ -14,6 +14,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public const string NAMENSARTVORNAMEN = "Vorname";
         public const string NAMENSARTNACHNAMEN = "Nachname";
         public const string NAMENSARTVORNAMENNACHSILBEN = "Nachsilbe Vorname";
+        public const string NAMENSARTEHRENNAMEN = "Ehrenname";
         #endregion
 
         #region //---- Felder ----
@@ -949,7 +950,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         }
         #endregion
     }
-
+    
     public class GjalskerländischeNamenFactory : NamenFactoryVorname
     {
         #region //---- Felder ----
@@ -1228,6 +1229,153 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public override void RegenerateName(ref PersonNurName person)
         {
             base.RegenerateName(ref person);
+        }
+        #endregion
+    }
+
+    public class AranischeNamenFactory : TulamidischeNamenFactory
+    {
+        #region //---- Felder ----
+        #endregion
+
+        #region //---- Konstruktor ----
+        public AranischeNamenFactory() :
+            base()
+        {
+            this.Namenstyp = NamenFactoryHelper.ARANISCHENAMEN;
+            _vornamenMännlich.Clear();
+            _vornamenWeiblich.Clear();
+            _vornamenMännlich.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTVORNAMEN, false));
+            _vornamenWeiblich.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTVORNAMEN, true));
+             mutterBeiWeiblichenNamen = () => RandomNumberGenerator.Generator.Next(10) < 9;
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        #endregion
+    }
+
+    public class TulamidischeNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        protected delegate bool NameSelector();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Zweitnamen bei Adelsnamen zu steuern.
+         */
+        protected NameSelector mutterBeiWeiblichenNamen = () => false;
+        protected NameSelector alStattEl = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        protected List<string> _tochter = new List<string>(new string[] { "{0} saba {1}", "{0} {1}suni", "{0} {1}sunni", "{0} {1}sunya", "{0} {1}sunyara" });
+        protected string _sohn = "{0} ibn {1}";
+        protected List<string> _ehrennamenMännlich = new List<string>();
+        protected List<string> _ehrennamenMännlichBedeutung = new List<string>();
+        protected List<string> _ehrennamenWeiblich = new List<string>();
+        protected List<string> _ehrennamenWeiblichBedeutung = new List<string>();
+        protected int _selectedEhrenname;
+        protected string _vorname, _elternname, _ehrenname;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public TulamidischeNamenFactory() :
+            base(NamenFactoryHelper.TULAMIDISCHENAMEN, false, true, true)
+        {
+            _ehrennamenWeiblich.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTEHRENNAMEN, true, false));
+            _ehrennamenWeiblichBedeutung.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTEHRENNAMEN, true, true));
+            _ehrennamenMännlich.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTEHRENNAMEN, false, false));
+            _ehrennamenMännlichBedeutung.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTEHRENNAMEN, false, true));
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            //Adel -> Ehrenname hinzufügen
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                _vorname = _vornamenWeiblich.RandomElement();
+                _elternname = mutterBeiWeiblichenNamen() ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement();
+                _selectedEhrenname = RandomNumberGenerator.Generator.Next(_ehrennamenWeiblich.Count());
+                if (person.Stand == Stand.adelig)
+                    _ehrenname = string.Format(alStattEl() ? "al {0}" : "el {0}", _ehrennamenWeiblich.ElementAt(_selectedEhrenname));
+                person.Name = string.Format(_tochter.RandomElement(),
+                    person.Stand == Stand.adelig ? _vorname + " " + _ehrenname : _vorname,
+                    _elternname);
+                person.Namensbedeutung = string.Format("{0} Tochter der/des {1}",
+                    person.Stand == Stand.adelig ? _vorname + " " + _ehrennamenWeiblichBedeutung.ElementAt(_selectedEhrenname) : _vorname,
+                    _elternname);
+            }
+            else
+            {
+                _vorname = _vornamenMännlich.RandomElement();
+                _elternname = _vornamenMännlich.RandomElement();
+                _selectedEhrenname = RandomNumberGenerator.Generator.Next(_ehrennamenMännlich.Count());
+                if (person.Stand == Stand.adelig)
+                    _ehrenname = string.Format(alStattEl() ? "al {0}" : "el {0}", _ehrennamenMännlich.ElementAt(_selectedEhrenname));
+                person.Name = string.Format(_sohn,
+                    person.Stand == Stand.adelig ? _vorname + " " + _ehrenname : _vorname,
+                    _elternname);
+                person.Namensbedeutung = string.Format(_sohn,
+                    person.Stand == Stand.adelig ? _vorname + " " + _ehrennamenMännlichBedeutung.ElementAt(_selectedEhrenname) : _vorname,
+                    _elternname);
+            }
+        }
+        #endregion
+    }
+
+    public class NovadischeNamenFactory : TulamidischeNamenFactory
+    {
+        #region //---- Felder ----
+        private List<string> _sippennamen = new List<string>(new string[] { "Tirah", "Ranah", "Ulah", "Sanrash" });
+        private int _selectedSippe;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public NovadischeNamenFactory() :
+            base()
+        {
+            this.Namenstyp = NamenFactoryHelper.NOVADISCHENAMEN;
+            _sohn = "{0} ben {1}";
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            base.RegenerateName(ref person);
+            // Sippe anhängen
+            _selectedSippe = RandomNumberGenerator.Generator.Next(_sippennamen.Count());
+            if (person.Geschlecht == Geschlecht.weiblich)
+            {
+                person.Name += " ben " + _sippennamen.ElementAt(_selectedSippe);
+                person.Namensbedeutung += " Sohn der Sippe " + _sippennamen.ElementAt(_selectedSippe);
+            }
+            else
+            {
+                person.Name += " saba " + _sippennamen.ElementAt(_selectedSippe);
+                person.Namensbedeutung += " Tochter der Sippe " + _sippennamen.ElementAt(_selectedSippe);
+            }
+        }
+        #endregion
+    }
+
+    public class FerkinaNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        private List<string> sippe = new List<string>(new string[] { " Bân ", " Ulad ", " Bem " });
+        #endregion
+
+        #region //---- Konstruktor ----
+        public FerkinaNamenFactory() :
+            base(NamenFactoryHelper.FERKINANAMEN, false, true)
+        {
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = string.Format(person.Geschlecht == Geschlecht.weiblich ? "{0} sabu {1}" : "{0} iban {1}",
+                person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                _vornamenMännlich.RandomElement());
         }
         #endregion
     }
