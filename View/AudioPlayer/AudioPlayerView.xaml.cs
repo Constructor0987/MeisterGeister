@@ -4672,6 +4672,7 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             catch (Exception) { }
         }
+
 		private void btnKlangNeuTheme_Click(object sender, RoutedEventArgs e)
 		{
 			try
@@ -5827,22 +5828,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception) { }
 		}
-
-		private void image1_MouseDown(object sender, MouseButtonEventArgs e)
-		{
-			try
-			{
-				CustomMessage("Codec Add-On Hinweis", "OGG-Dateien integrieren",
-					"OGG-Dateien können nach dem Installieren eines entsprechenden AddOns bzw. " + Environment.NewLine +
-					"Codec-Packs ebenfalls wiedergegeben werden." + Environment.NewLine + Environment.NewLine +
-					"Ein entsprechendes Codec bietet der 'Vobis'-Codec und " + Environment.NewLine +
-					"kann unter folgender Adresse heruntergeladen werden:" + Environment.NewLine + Environment.NewLine,
-                    "http://www.vorbis.com/files/1.0/tobias/OggDS0995.exe");
-			}
-			catch (Exception) { }
-		}
-
-
+        
 		private void btnClick(object sender, RoutedEventArgs e)
 		{
 			try
@@ -7753,52 +7739,110 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {
-                if (ViewHelper.ConfirmYesNoCancel("Unsicherer Verlauf", "ACHTUNG !!!" + Environment.NewLine + "-------------" + Environment.NewLine +
-                       "Leider konnte dieser Prozess noch NICHT ZUVERLÄSSIG programmiert werden." + Environment.NewLine +
-                       Environment.NewLine + "Es muss damit gerechtnet werden, das die exportierte Datei" + Environment.NewLine + "NICHT MEHR IMPORTIERT werden kann!" +
-                       Environment.NewLine + Environment.NewLine + "Soll der Vorgang trotzdem fortgesetzt werden?") != 2)
-                    return;
                 int mrRes = ViewHelper.ConfirmYesNoCancel("Löschen bestehender Daten", "Soll die aktuelle Datenbank erweitert werden?" + Environment.NewLine + Environment.NewLine + "Wählen sie 'Ja' damit die Datenbank erweitert wird." +
                     Environment.NewLine + "Wählen Sie 'Nein' um die bestehende Datenbank zu ersetzten. Achtung! Alle Daten gehen verloren.");
                 if (mrRes == 2 || mrRes == 1)
                 {
                     Global.SetIsBusy(true);
-                    string pfad = ViewHelper.ChooseFile("Audio-Daten importieren", "", false, "xml");
-                    if (pfad != null)
+
+
+                    int mrImpVar = (ViewHelper.ConfirmYesNoCancel("Komplette Sicherung", "Aus der Hostorie heraus, gibt es zwei Varianten einer Komplettsicherung." + Environment.NewLine +
+                            Environment.NewLine + "Die Sicherung der Musikdaten werden in neuerer Version auf verschiedene Dateien aufgeteilt." + Environment.NewLine +
+                            "Wenn Sie eine einzige XML-Datei als Komplettsicherung gespeichert haben, deutet das auf die vorherige Methode hin." + Environment.NewLine +
+                            Environment.NewLine + "Wollen Sie das Importieren des neuen Prozesses durchführen?"));
+                    if (mrImpVar == 0)
                     {
-                        try
+                        Global.SetIsBusy(false);
+                        return;
+                    }
+
+                    //Importieren aller Playlisten und danach aller Themelisten
+                    if (mrImpVar == 2)
+                    {
+                        System.Windows.Forms.FolderBrowserDialog folderDlg = new System.Windows.Forms.FolderBrowserDialog();
+                        folderDlg.SelectedPath = Environment.CurrentDirectory;
+                        folderDlg.Description = "Wählen Sie ein Verzeichnis das alle Dateien der Sicherung enthält";
+                        List<Audio_Playlist> lstAPlayList = new List<Audio_Playlist>();
+
+                        if (folderDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            string tmpFile = Directory.GetCurrentDirectory() + @"\AudioDB_temp.xml";
-                            _datenloeschen(mrRes, false, tmpFile);
+                            Global.SetIsBusy(true, string.Format("Alle Playlisten werden exportiert ..."));
+                            string pfad = folderDlg.SelectedPath;
 
-                            Global.SetIsBusy(true, string.Format("Neue Daten werden importiert ..."));
+                            DirectoryInfo d = new DirectoryInfo(pfad);
+                            List<string> listXML = new List<string>();
+                            foreach (FileInfo f in d.GetFiles("*.xml"))
+                                listXML.Add(f.DirectoryName + "\\" + f.Name);
 
-                            if (Audio_Playlist.Import(pfad, "") != null)
-                            {
-                                Global.SetIsBusy(true, string.Format("Datenbank wird gesichert..."));
-                                Global.ContextAudio.Save();
-                            }
+                            btnAudioDatenImport.Tag = listXML;
+                            btnPlaylistImport.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            btnKlangThemeImport.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            btnAudioDatenImport.Tag = null;
 
-                            Global.SetIsBusy(true, string.Format("Listen werden aktualisiert..."));
-                            AktualisiereMusikPlaylist();
-                            AktualisiereEditorPlaylist();
-                            AktualisiereHotKeys();
-                            Global.SetIsBusy(true, string.Format("Temporäre Daten werden gelöscht ..."));
-                            if (mrRes == 1)
-                                File.Delete(tmpFile);
-                            Global.SetIsBusy(false);
-                            rbEditorEditPList.IsChecked = false;
-                            tcAudioPlayer.Tag = -1;
 
-                            tiEditor_GotFocus(sender, null);
-                            rbEditorKlang_Click(rbEditorKlang, null);
-                            rbEditorEditPList.IsChecked = true;
-                            (wpnlPListThemes.Tag as List<Guid>).Clear();                                             
+
+                            /*List<string> lstr = Path
+                            Environment.CurrentDirectory = Path.GetDirectoryName(objDialog.FileName);
+
+                            List<string>(objDialog.FileNames)
+                            List<string> xmlFiles = 
+                            btnAudioDatenImport.Tag = 
+                            btnAudioDatenImport
+                        
+                        btnPlaylistImport.
+                        
+                        btnAudioDatenExport.Tag = true;
+
+                        btnPlaylistExportALL.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+                        btnAudioDatenExport.Tag = null;*/
                         }
-                       catch (Exception ex)
+                    }
+                    else
+                    {
+                        if (ViewHelper.ConfirmYesNoCancel("Unsicherer Verlauf", "ACHTUNG !!!" + Environment.NewLine + "-------------" + Environment.NewLine +
+                           "Leider konnte dieser Prozess noch NICHT ZUVERLÄSSIG programmiert werden." + Environment.NewLine +
+                           Environment.NewLine + "Es muss damit gerechtnet werden, das die exportierte Datei" + Environment.NewLine + "NICHT MEHR IMPORTIERT werden kann!" +
+                           Environment.NewLine + Environment.NewLine + "Soll der Vorgang trotzdem fortgesetzt werden?") != 2)
+                            return;
+
+                        string pfad = ViewHelper.ChooseFile("Audio-Daten importieren", "", false, "xml");
+                        if (pfad != null)
                         {
-                            Global.SetIsBusy(false);
-                            ViewHelper.ShowError("Beim Import ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", ex);
+                            try
+                            {
+                                string tmpFile = Directory.GetCurrentDirectory() + @"\AudioDB_temp.xml";
+                                _datenloeschen(mrRes, false, tmpFile);
+
+                                Global.SetIsBusy(true, string.Format("Neue Daten werden importiert ..."));
+
+                                if (Audio_Playlist.Import(pfad, "") != null)
+                                {
+                                    Global.SetIsBusy(true, string.Format("Datenbank wird gesichert..."));
+                                    Global.ContextAudio.Save();
+                                }
+
+                                Global.SetIsBusy(true, string.Format("Listen werden aktualisiert..."));
+                                AktualisiereMusikPlaylist();
+                                AktualisiereEditorPlaylist();
+                                AktualisiereHotKeys();
+                                Global.SetIsBusy(true, string.Format("Temporäre Daten werden gelöscht ..."));
+                                if (mrRes == 1)
+                                    File.Delete(tmpFile);
+                                Global.SetIsBusy(false);
+                                rbEditorEditPList.IsChecked = false;
+                                tcAudioPlayer.Tag = -1;
+
+                                tiEditor_GotFocus(sender, null);
+                                rbEditorKlang_Click(rbEditorKlang, null);
+                                rbEditorEditPList.IsChecked = true;
+                                (wpnlPListThemes.Tag as List<Guid>).Clear();
+                            }
+                            catch (Exception ex)
+                            {
+                                Global.SetIsBusy(false);
+                                ViewHelper.ShowError("Beim Import ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", ex);
+                            }
                         }
                     }
                     Global.SetIsBusy(false);
@@ -7837,6 +7881,7 @@ namespace MeisterGeister.View.AudioPlayer {
 					rbEditorKlang_Click(rbEditorKlang, null);
 					rbEditorEditPList.IsChecked = true;
                     (wpnlPListThemes.Tag as List<Guid>).Clear();
+                    lbEditorListe.Items.Clear();
 				}
 			}
 			catch (Exception ex)
@@ -7846,70 +7891,16 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 		}
 
-
-		private void btnKlangThemeImport_Click(object sender, RoutedEventArgs e)
-		{
-			try
-            {
-                if (ViewHelper.ConfirmYesNoCancel("Unsicherer Verlauf", "ACHTUNG !!!" + Environment.NewLine + "-------------" + Environment.NewLine +
-                       "Leider konnte dieser Prozess noch NICHT ZUVERLÄSSIG programmiert werden." + Environment.NewLine +
-                       Environment.NewLine + "Es muss damit gerechtnet werden, das die exportierte Datei" + Environment.NewLine + "NICHT MEHR IMPORTIERT werden kann!" +
-                       Environment.NewLine + Environment.NewLine + "Soll der Vorgang trotzdem fortgesetzt werden?") != 2)
-                    return;
-                List<string> dateien = ViewHelper.ChooseFiles("Theme importieren", "", false, "xml");
-                if (dateien != null)
-				{
-					try
-					{
-						bool _nicht_first = false;
-						foreach (string pfad in dateien)
-						{
-							Global.SetIsBusy(true, string.Format("Neues Theme  '" + System.IO.Path.GetFileNameWithoutExtension(pfad) + "'  wird importiert ..."));
-
-							Audio_Playlist.Import(pfad, "Audio_Theme", _nicht_first);
-							Global.ContextAudio.Save();
-							_nicht_first = true;
-						}                
-						Global.SetIsBusy(true, string.Format("Datenbank wird gesichert..."));
-						Global.ContextAudio.Save();
-
-						Global.SetIsBusy(true, string.Format("Listen werden aktualisiert..."));
-						AktualisiereMusikPlaylist();
-						AktualisiereEditorPlaylist();
-						AktualisiereHotKeys();    
-
-						Global.SetIsBusy(false);
-						   lbEditor.SelectedIndex = -1;
-
-						   rbEditorEditPList.IsChecked = false;
-						   tcAudioPlayer.Tag = -1;
-							
-						   tiEditor_GotFocus(sender, null);
-						   rbEditorKlang_Click(rbEditorKlang, null);
-						   rbEditorEditPList.IsChecked = true;
-                           (wpnlPListThemes.Tag as List<Guid>).Clear();
-					}
-					catch (Exception ex)
-					{
-						Global.SetIsBusy(false);
-						ViewHelper.ShowError("Beim Import des Themes ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", ex);
-					}
-				}
-			} 
-			catch (Exception ex)
-			{
-				Global.SetIsBusy(false);
-				ViewHelper.ShowError("Beim Importieren der Theme-Datenbank ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", ex);
-			}
-		}
-
-
-
+        
 		private void btnPlaylistImport_Click(object sender, RoutedEventArgs e)
 		{
 			try
 			{
-                List<string> dateien = ViewHelper.ChooseFiles("Playlist(en) importieren", "", false, "xml");
+                List<string> dateien;
+                if (btnAudioDatenImport.Tag != null)
+                    dateien = btnAudioDatenImport.Tag as List<string>;
+                else
+                    dateien = ViewHelper.ChooseFiles("Playlist(en) importieren", "", false, "xml");
                 if (dateien != null)
 				{
 					try
@@ -7929,10 +7920,12 @@ namespace MeisterGeister.View.AudioPlayer {
 						AktualisiereHotKeys();
 
                         lbEditor.SelectedIndex = -1;
-                        for (int i = 0; i < lbEditor.Items.Count; i++)
-                            if ((Guid)((ListboxItemIcon)lbEditor.Items[i]).Tag == AktKlangPlaylist.Audio_PlaylistGUID)
-                                lbEditor.SelectedIndex = i;
-
+                        if (AktKlangPlaylist != null)
+                        {
+                            for (int i = 0; i < lbEditor.Items.Count; i++)
+                                if (AktKlangPlaylist != null && (Guid)((ListboxItemIcon)lbEditor.Items[i]).Tag == AktKlangPlaylist.Audio_PlaylistGUID)
+                                    lbEditor.SelectedIndex = i;
+                        }
 						Global.SetIsBusy(false);
 					}
 					catch (Exception ex)
@@ -8094,42 +8087,7 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 		}
 
-		private void lbItembtnExportTheme_Click(object sender, RoutedEventArgs e)
-		{
-			try
-            {
-                if (ViewHelper.ConfirmYesNoCancel("Unsicherer Verlauf", "ACHTUNG !!!" + Environment.NewLine + "-------------" + Environment.NewLine +
-                    "Leider konnte dieser Prozess noch NICHT ZUVERLÄSSIG programmiert werden." + Environment.NewLine +
-                    Environment.NewLine + "Es muss damit gerechtnet werden, das die exportierte Datei" + Environment.NewLine + "NICHT MEHR IMPORTIERT werden kann!" +
-                    Environment.NewLine + Environment.NewLine + "Soll der Vorgang trotzdem fortgesetzt werden?") != 2)
-                    return;
-				Guid g = (Guid)((ListboxItemIcon)((StackPanel)((Button)sender).Parent).Parent).Tag;
-				Audio_Theme aTheme = Global.ContextAudio.ThemeListe.FirstOrDefault(t => t.Audio_ThemeGUID == g);
-				if (aTheme != null)
-				{
-                    string datei = ViewHelper.ChooseFile("Theme exportieren", "Theme_" + aTheme.Name.Replace("/", "_") + ".xml", true, "xml");
-					if (datei != null)
-					{
-						Global.SetIsBusy(true, string.Format("Das Theme wird exportiert ..."));
-
-                        File.Delete(datei);
-                        aTheme.Export(datei, Guid.Empty);    
- 
-						ViewHelper.Popup("Die Theme-Daten wurden erfolgreich gesichert.");
-					}                    
-					Global.SetIsBusy(false);
-				}
-				else
-					ViewHelper.ShowError("Das ausgewählte Theme konnte in der Datenbank nicht gefunden werden. Schließen Sie die Anwendung und wiederholen Sie den Vorgang." , new Exception());
-
-			}
-			catch (Exception ex)
-			{
-				Global.SetIsBusy(false);
-				ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Exportieren des Themes ist ein Fehler aufgetreten.", ex);
-			}
-		}
-
+		
 		private void lbItembtnExportPlaylist_Click(object sender, RoutedEventArgs e)
 		{
 			try
@@ -8165,6 +8123,18 @@ namespace MeisterGeister.View.AudioPlayer {
 			Global.ContextAudio.Save();
 			try
 			{
+                if (ViewHelper.ConfirmYesNoCancel("Komplette Sicherung", "Eine komplette Sicherung der Audiodaten wird durchgeführt, " + 
+                        Environment.NewLine + "bestehend aus der Sicherung aller Playlisten und aller vorhandene Themelisten." + Environment.NewLine +
+                       Environment.NewLine + "Wollen Sie den Prozess durchführen?") != 2)
+                    return;
+
+                btnAudioDatenExport.Tag = true;
+                btnPlaylistExportALL.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                
+                    
+                btnAudioDatenExport.Tag = null;
+				
+                /*
                 if (ViewHelper.ConfirmYesNoCancel("Unsicherer Verlauf", "ACHTUNG !!!" + Environment.NewLine + "-------------" + Environment.NewLine +
                        "Leider konnte dieser Prozess noch NICHT ZUVERLÄSSIG programmiert werden." + Environment.NewLine +
                        Environment.NewLine + "Es muss damit gerechtnet werden, das die exportierte Datei" + Environment.NewLine + "NICHT MEHR IMPORTIERT werden kann!" +
@@ -8195,7 +8165,7 @@ namespace MeisterGeister.View.AudioPlayer {
 						MessageBox.Show("Beim Export ist ein Fehler aufgetreten." + Environment.NewLine + ex, "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
 					}
 					MessageBox.Show("Die Audio-Daten wurden in \'" + pfad + "\' gespeichert.");
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -8284,6 +8254,22 @@ namespace MeisterGeister.View.AudioPlayer {
         }
     }*/
 
+
+        private void AlleThemesExportieren(string dlgFolder)
+        {
+            Global.SetIsBusy(true, string.Format("Alle Themes werden exportiert ..."));
+
+            foreach (Audio_Theme aTheme in Global.ContextAudio.ThemeListe.
+                                Where(t => t.Audio_ThemeGUID != Guid.Parse("00000000-0000-0000-0000-00000000A11E")))
+            {
+                Global.SetIsBusy(true, string.Format("Theme '" + aTheme.Name + "' wird exportiert"));
+                string pfaddatei = dlgFolder + "\\Theme_" + aTheme.Name.Replace("/", "_") + ".xml";
+                ExportTheme(aTheme, pfaddatei);
+            }
+
+            Global.SetIsBusy(true, string.Format("Theme Export beendet ..."));
+        }
+
         private void btnThemeExportAll_Click(object sender, RoutedEventArgs e)
         {
             Global.ContextAudio.Save();
@@ -8291,65 +8277,27 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 System.Windows.Forms.FolderBrowserDialog folderDlg = new System.Windows.Forms.FolderBrowserDialog();
                 folderDlg.SelectedPath = Environment.CurrentDirectory;
-                folderDlg.Description = "Wählen Sie ein Verzeichnis aus." + Environment.NewLine +
-                    "Hier wird ein Ordner mit dem Namen " + Environment.NewLine + "'Export-" + DateTime.Now.ToShortDateString() + "'  erstellt";
-                List<Audio_Playlist> lstAPlayList = new List<Audio_Playlist>();
+                folderDlg.Description = "Wählen Sie ein Verzeichnis aus in das alle Dateien gespeichert werden sollen." + Environment.NewLine;
                 if (folderDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    Global.SetIsBusy(true, string.Format("Alle Themes werden exportiert ..."));
-                    string pfad = folderDlg.SelectedPath + "\\Export-" + DateTime.Now.ToShortDateString();
+                  /*  string pfad = folderDlg.SelectedPath;
                     if (Directory.Exists(pfad))
                     {
                         if (ViewHelper.ConfirmYesNoCancel("Ordner löschen", "Der zu erstellende Ordner '" + pfad + "' existiert bereits." + Environment.NewLine +
                             Environment.NewLine + "Soll das Verzeichnis mit allen beinhalteten Daten vorher gelöscht werden?") == 2)
                         {
-                            Directory.Delete(pfad, true);
+                            Directory.Delete(pfad);
                             Directory.CreateDirectory(pfad);
                         }
                     }
                     else
-                        Directory.CreateDirectory(pfad);
+                        Directory.CreateDirectory(pfad);*/
 
-                    foreach (Audio_Theme aTheme in Global.ContextAudio.ThemeListe.
-                                        Where(t => t.Audio_ThemeGUID != Guid.Parse("00000000-0000-0000-0000-00000000A11E")))
-                    {
-                        Global.SetIsBusy(true, string.Format("Theme '" + aTheme.Name + "' wird exportiert"));
-                        lstAPlayList.AddRange(aTheme.Audio_Playlist);
-                        foreach (Audio_Theme aUnterTheme1 in aTheme.Audio_Theme1)
-                        {
-                            lstAPlayList.AddRange(aUnterTheme1.Audio_Playlist);
-                            foreach (Audio_Theme aUnterTheme2 in aUnterTheme1.Audio_Theme1)
-                            {
-                                lstAPlayList.AddRange(aUnterTheme2.Audio_Playlist);
-                                foreach (Audio_Theme aUnterTheme3 in aUnterTheme2.Audio_Theme1)
-                                {
-                                    lstAPlayList.AddRange(aUnterTheme3.Audio_Playlist);
-                                    foreach (Audio_Theme aUnterTheme4 in aUnterTheme3.Audio_Theme1)
-                                    {
-                                        lstAPlayList.AddRange(aUnterTheme4.Audio_Playlist);
-                                        foreach (Audio_Theme aUnterTheme5 in aUnterTheme4.Audio_Theme1)
-                                        {
-                                            lstAPlayList.AddRange(aUnterTheme5.Audio_Playlist);
-                                            foreach (Audio_Theme aUnterTheme6 in aUnterTheme5.Audio_Theme1)
-                                            {
-                                                lstAPlayList.AddRange(aUnterTheme6.Audio_Playlist);
-                                                foreach (Audio_Theme aUnterTheme7 in aUnterTheme6.Audio_Theme1)
-                                                    lstAPlayList.AddRange(aUnterTheme7.Audio_Playlist);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        string datei = pfad + "\\Theme_" + aTheme.Name.Replace("/", "_") + ".xml";
-                        File.Delete(datei);
-                        aTheme.Export(datei, Guid.Empty);
-                    }
-
-                    Global.SetIsBusy(true, string.Format("Theme Export beendet ..."));
-
-                    ViewHelper.Popup("Der Export wurde erfolgreich beendet" + Environment.NewLine + "Alle Themes wurden in das Verzeichnis" +
-                        Environment.NewLine + Environment.NewLine + pfad + Environment.NewLine + Environment.NewLine + "exportiert");
+                    AlleThemesExportieren(folderDlg.SelectedPath);
+                    
+                    ViewHelper.Popup("Der Export wurde erfolgreich beendet" + Environment.NewLine + "Alle Themelisten wurden folgednes Verzeichnis exportiert" +
+                        Environment.NewLine + Environment.NewLine + folderDlg.SelectedPath + Environment.NewLine + 
+                        Environment.NewLine + "!!! Bitte beachten Sie, dass Die PLAYLISTEN SEPARAT gesichert werden müssen !!!");
                     Global.SetIsBusy(false);
                 }
             }
@@ -8367,14 +8315,13 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 System.Windows.Forms.FolderBrowserDialog folderDlg = new System.Windows.Forms.FolderBrowserDialog();
                 folderDlg.SelectedPath = Environment.CurrentDirectory;
-                folderDlg.Description = "Wählen Sie ein Verzeichnis aus." + Environment.NewLine +
-                    "Hier wird ein Ordner mit dem Namen " + Environment.NewLine + "'Export-" + DateTime.Now.ToShortDateString() + "'  erstellt";
+                folderDlg.Description = "Wählen Sie ein Verzeichnis aus in das alle Dateien gespeichert werden sollen";
                 List<Audio_Playlist> lstAPlayList = new List<Audio_Playlist>();
                 if (folderDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     Global.SetIsBusy(true, string.Format("Alle Playlisten werden exportiert ..."));
-                    string pfad = folderDlg.SelectedPath + "\\Export-" + DateTime.Now.ToShortDateString();
-                    if (Directory.Exists(pfad))
+                    string pfad = folderDlg.SelectedPath;
+                    /*if (Directory.Exists(pfad))
                     {
                         if (ViewHelper.ConfirmYesNoCancel("Ordner löschen", "Der zu erstellende Ordner '" + pfad + "' existiert bereits." + Environment.NewLine +
                             Environment.NewLine + "Soll das Verzeichnis mit allen beinhalteten Daten vorher gelöscht werden?") == 2)
@@ -8384,7 +8331,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         }
                     }
                     else
-                        Directory.CreateDirectory(pfad);
+                        Directory.CreateDirectory(pfad);*/
                     
                     foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe)
                     {
@@ -8393,8 +8340,13 @@ namespace MeisterGeister.View.AudioPlayer {
 						File.Delete(datei);
 						aPlaylist.Export(datei, aPlaylist.Audio_PlaylistGUID);
                     }
-                    ViewHelper.Popup("Der Export wurde erfolgreich beendet" + Environment.NewLine + "Alle Playlisten wurden in das Verzeichnis" +
-                        Environment.NewLine + Environment.NewLine + pfad + Environment.NewLine + Environment.NewLine + "exportiert");
+
+                    if (btnAudioDatenExport.Tag != null && Convert.ToBoolean(btnAudioDatenExport.Tag))
+                        AlleThemesExportieren(pfad);
+                    else
+                        ViewHelper.Popup("Der Export wurde erfolgreich beendet" + Environment.NewLine + "Alle Playlisten wurden in folgendes Verzeichnis exportiert" +
+                            Environment.NewLine + Environment.NewLine + pfad + Environment.NewLine);
+
                     Global.SetIsBusy(false);
                 }                    
 			}
@@ -8805,6 +8757,268 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             if (IsInitialized)
                 exErwPlayerTheme.MaxHeight = tcAudioPlayer.ActualHeight * 2 / 3;
+        }
+
+        private void ExportTheme(Audio_Theme aTheme, string pfaddatei)
+        {
+            if (aTheme != null)
+            {
+                if (pfaddatei != null)
+                {
+                    Global.SetIsBusy(true, string.Format("Das Theme '" + aTheme.Name + "'  wird exportiert ..."));
+
+                    File.Delete(pfaddatei);
+                    XmlTextWriter textWriter = new XmlTextWriter(pfaddatei, null);
+                    textWriter.WriteStartDocument();
+
+                    textWriter.WriteComment("Theme-Export vom " + DateTime.Now.ToShortDateString());
+                    textWriter.WriteComment("Theme-Name: " + aTheme.Name);
+
+                    int i = 1;
+                    textWriter.WriteStartElement("Themename", aTheme.Name);
+
+                    foreach (Audio_Playlist aPlaylist in aTheme.Audio_Playlist)                    
+                    {
+                        textWriter.WriteStartElement("Playlist" + i);
+                            textWriter.WriteStartAttribute("Name");
+                                textWriter.WriteValue(aPlaylist.Name);
+                            textWriter.WriteEndAttribute();
+
+                            textWriter.WriteStartAttribute("Audio_PlaylistGUID");
+                                textWriter.WriteValue(aPlaylist.Audio_PlaylistGUID.ToString());
+                            textWriter.WriteEndAttribute();
+                        textWriter.WriteEndElement();
+                        i++;
+                    }
+                    int t_pos = 1;
+                    foreach (Audio_Theme aUTheme in aTheme.Audio_Theme1)
+                    {
+                        textWriter.WriteStartElement("Theme" + t_pos);
+                        textWriter.WriteStartAttribute("Name");
+                        textWriter.WriteValue(aUTheme.Name);
+                        textWriter.WriteEndAttribute();
+
+                        textWriter.WriteStartAttribute("Audio_ThemeGUID");
+                        textWriter.WriteValue(aUTheme.Audio_ThemeGUID.ToString());
+                        textWriter.WriteEndAttribute();
+                        textWriter.WriteEndElement();
+                        t_pos++;
+                    }
+                    textWriter.WriteEndDocument();
+                    textWriter.Close();
+
+                    //aTheme.Export(datei, Guid.Empty);   
+                    
+                }
+            }
+        }
+
+        private void lbItembtnExportTheme_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Guid g = (Guid)((ListboxItemIcon)((StackPanel)((Button)sender).Parent).Parent).Tag;
+                Audio_Theme aTheme = Global.ContextAudio.ThemeListe.FirstOrDefault(t => t.Audio_ThemeGUID == g);
+
+                if (aTheme != null)
+                {
+                    string pfaddatei = ViewHelper.ChooseFile("Theme exportieren", "Theme_" + aTheme.Name.Replace("/", "_") + ".xml", true, "xml");
+                    ExportTheme(aTheme, pfaddatei);
+                    ViewHelper.Popup("Die Themeliste wurde erfolgreich gesichert." + Environment.NewLine + Environment.NewLine + 
+                        "!!! Bitte beachten Sie, dass Die PLAYLISTEN SEPARAT gesichert werden müssen !!!");
+                    Global.SetIsBusy(false);
+                }
+                else
+                    ViewHelper.ShowError("Das ausgewählte Theme konnte in der Datenbank nicht gefunden werden. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", new Exception());
+            }
+            catch (Exception ex)
+            {
+                Global.SetIsBusy(false);
+                ViewHelper.ShowError("Allgmeiner Fehler" + Environment.NewLine + "Beim Exportieren des Themes ist ein Fehler aufgetreten.", ex);
+            }
+        }
+
+
+
+        private void btnKlangThemeImport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {             
+                List<string> dateien;
+                if (btnAudioDatenImport.Tag != null)
+                    dateien = btnAudioDatenImport.Tag as List<string>;
+                else
+                    dateien = ViewHelper.ChooseFiles("Theme importieren", "", false, "xml");
+                if (dateien != null)
+                {
+                    try
+                    {
+                        foreach (string pfad in dateien)
+                        {
+                            Global.SetIsBusy(true, string.Format("Neues Theme  '" + System.IO.Path.GetFileNameWithoutExtension(pfad) + "'  wird importiert ..."));
+
+                            XmlTextReader textReader = new XmlTextReader(pfad);
+                            textReader.Read();
+                            while (textReader.NodeType == XmlNodeType.XmlDeclaration ||
+                                (textReader.NodeType == XmlNodeType.Element && textReader.Name == "Audio_Theme"))
+                                textReader.Read();
+                            if (textReader.Name == "Audio_Playlist")
+                                continue;
+                            if (textReader.NodeType != XmlNodeType.Comment)
+                            {
+                                textReader.Read();
+                                XmlDocument doc = new XmlDocument();
+                                XmlNode node = doc.ReadNode(textReader);
+                                if (node.Attributes.Count > 0 && node.Attributes["Audio_ThemeGUID"] != null &&
+                                    node.Attributes["Audio_ThemeGUID"].Value == "00000000-0000-0000-0000-00000000a11e")
+                                    break;
+
+                                if (ViewHelper.ConfirmYesNoCancel("Unsicherer Verlauf", "Theme-Import:  " + System.IO.Path.GetFileNameWithoutExtension(pfad) + Environment.NewLine + Environment.NewLine +
+                                    "ACHTUNG !!!" + Environment.NewLine + "-------------" + Environment.NewLine +
+                                   "Leider konnte dieser Prozess noch NICHT ZUVERLÄSSIG programmiert werden." + Environment.NewLine +
+                                   Environment.NewLine + "Es muss damit gerechtnet werden, das die exportierte Datei" + Environment.NewLine + "NICHT MEHR IMPORTIERT werden kann!" +
+                                   Environment.NewLine + Environment.NewLine + "Soll der Vorgang trotzdem fortgesetzt werden?") != 2)
+                                {
+                                    Global.SetIsBusy(false);
+                                    return;
+                                }
+
+                                Audio_Playlist.Import(pfad, "Audio_Theme", false);
+                                Global.ContextAudio.Save();
+                            }
+                            else
+                            {
+                                string thName = "";
+                                List<string> aPlayListsName = new List<string>();
+                                List<string> aPlayListsGuid = new List<string>();
+                                List<string> aThemesName = new List<string>();
+                                List<string> aThemesGuid = new List<string>();
+                                List<string> lstNotInclude = new List<string>();
+                                while (textReader.Read())
+                                {
+                                    XmlDocument doc = new XmlDocument();
+                                    
+                                    if (textReader.NodeType == XmlNodeType.Element && textReader.Name == "Themename")
+                                    {
+                                        thName = textReader.NamespaceURI;
+                                        
+                                        textReader.Read();
+                                        while (textReader.NodeType == XmlNodeType.Element && 
+                                            textReader.Name.StartsWith("Playlist") || textReader.Name.StartsWith("Theme"))
+                                        {
+                                            XmlNode node = doc.ReadNode(textReader);
+                                            if (node.Attributes.Count > 0 && node.Attributes["Name"] != null &&
+                                                (node.Attributes["Audio_PlaylistGUID"] != null || node.Attributes["Audio_ThemeGUID"] != null))
+                                            {
+                                                if (node.Name.StartsWith("Playlist"))
+                                                {
+                                                    // Playlisten einlesen
+                                                    aPlayListsName.Add(node.Attributes["Name"].Value);
+                                                    aPlayListsGuid.Add(node.Attributes["Audio_PlaylistGUID"].Value);
+                                                }
+                                                else
+                                                if (node.Name.StartsWith("Theme"))
+                                                {
+                                                    // UnterThemes einlesen
+                                                    aThemesName.Add(node.Attributes["Name"].Value);
+                                                    aThemesGuid.Add(node.Attributes["Audio_ThemeGUID"].Value);
+                                                }
+                                            }
+                                            if (textReader.NodeType == XmlNodeType.EndElement)
+                                                break;
+                                        }
+                                        
+                                        // Theme erstellen
+                                        if (thName != "")
+                                        {
+                                            if (Global.ContextAudio.ThemeListe.FirstOrDefault(t => t.Name == thName) != null)
+                                            {
+                                                int resp = ViewHelper.ConfirmYesNoCancel("Doppelter Theme-Name", "Ein Theme mit dem Namen '" + thName + "' ist schon vorhanden." + Environment.NewLine +
+                                                    Environment.NewLine + "Soll das vorhandene Theme überschrieben werden");
+                                                if (resp == 2)
+                                                {
+                                                    AktKlangTheme = Global.ContextAudio.ThemeListe.FirstOrDefault(t => t.Name == thName);
+                                                    AktKlangTheme.Audio_Playlist.Clear();
+                                                    AktKlangTheme.Audio_Theme1.Clear();
+                                                    AktKlangTheme.Audio_Theme2.Clear();
+                                                } 
+                                                else
+                                                    if (resp == 0)
+                                                    {
+                                                        Global.SetIsBusy(false);
+                                                        return;
+                                                    }
+                                            }
+                                            else
+                                                NeueKlangThemeInDB(thName);
+
+                                            foreach (string aPlyLstGuid in aPlayListsGuid)
+                                            {
+                                                Audio_Playlist aPlayList = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID.ToString() == aPlyLstGuid);
+                                                if (aPlayList != null)
+                                                    AktKlangTheme.Audio_Playlist.Add(aPlayList);
+                                                else
+                                                    lstNotInclude.Add(aPlayListsName[aPlayListsGuid.IndexOf(aPlyLstGuid)]);
+                                            }
+
+                                            foreach (string aThemeGuid in aThemesGuid)
+                                            {
+                                                Audio_Theme aTheme = Global.ContextAudio.ThemeListe.FirstOrDefault(t => t.Audio_ThemeGUID.ToString() == aThemeGuid);
+                                                if (aTheme != null)
+                                                    AktKlangTheme.Audio_Theme1.Add(aTheme);
+                                                else
+                                                    lstNotInclude.Add(aThemesName[aThemesGuid.IndexOf(aThemeGuid)]);
+                                            }
+                                        }
+                                    }
+                                }
+                                Global.ContextAudio.Save();
+                                if (lstNotInclude.Count > 0)
+                                {
+                                    string text = "";
+                                    foreach (string s in lstNotInclude)
+                                        text += s + Environment.NewLine;
+
+                                    ViewHelper.Popup("ACHTUNG !!!" + Environment.NewLine + "-------------" + Environment.NewLine +
+                                        Environment.NewLine + "Import nur teilweise durchgeführt" + Environment.NewLine + Environment.NewLine + 
+                                        "Von dem Theme -" + thName + "- konnten folgende Playlisten/Unterthemes leider nicht gefunden werden." + 
+                                        Environment.NewLine + Environment.NewLine + text + Environment.NewLine +
+                                        "Bitte stellen Sie sicher, dass die Playlisten/Unterthemes integriert sind, bevor die Themes importiert werden.");
+                                }
+                            }
+                        }
+                        Global.SetIsBusy(true, string.Format("Datenbank wird gesichert..."));
+                        Global.ContextAudio.Save();
+
+                        Global.SetIsBusy(true, string.Format("Listen werden aktualisiert..."));
+                        AktualisiereMusikPlaylist();
+                        AktualisiereEditorPlaylist();
+                        AktualisiereHotKeys();
+
+                        Global.SetIsBusy(false);
+                        lbEditor.SelectedIndex = -1;
+
+                        rbEditorEditPList.IsChecked = false;
+                        tcAudioPlayer.Tag = -1;
+
+                        tiEditor_GotFocus(sender, null);
+                        rbEditorKlang_Click(rbEditorKlang, null);
+                        rbEditorEditPList.IsChecked = true;
+                        (wpnlPListThemes.Tag as List<Guid>).Clear();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Global.SetIsBusy(false);
+                        ViewHelper.ShowError("Beim Import des Themes ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", ex);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Global.SetIsBusy(false);
+                ViewHelper.ShowError("Beim Importieren der Theme-Datenbank ist ein Fehler aufgetreten. Schließen Sie die Anwendung und wiederholen Sie den Vorgang.", ex);
+            }
         }
 	}
 }
