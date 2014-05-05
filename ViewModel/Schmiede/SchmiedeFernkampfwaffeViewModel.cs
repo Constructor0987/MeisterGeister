@@ -664,7 +664,7 @@ namespace MeisterGeister.ViewModel.Schmiede
             if (tapStern > TawSchmied) tapStern = TawSchmied;
             tapStern /= 2;
             if (tapStern < 1) tapStern = 1;
-            ProbeDauerNApprox = (ProbePunkte  * (int)ProbeDauerInZe) / (4 * tapStern);
+            tapStern = (ProbePunkte * (int)ProbeDauerInZe) / (4 * tapStern);
             ProbeDauerNApprox = (tapStern > 0) ? tapStern : 1;
         }
 
