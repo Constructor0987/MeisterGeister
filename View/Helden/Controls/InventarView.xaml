@@ -375,7 +375,7 @@
                                         <Label Content="Gewicht" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="Behinderung" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                            <Image Height="16" ToolTipService.ToolTip="Kann in den Einstellungen zum editieren aktiviert/deaktiviert werden">
+                                            <Image Height="16" ToolTipService.ToolTip="(Behinderung) Kann in den Einstellungen aktiviert/deaktiviert werden">
                                                 <Image.Source>
                                                     <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
                                                 </Image.Source>
@@ -383,7 +383,7 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="Überlastung" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0"/>
-                                            <Image Margin="4,0,0,0"  Height="16" Width="16" ToolTipService.ToolTip="Kann in den Einstellungen zum aktiviert/deaktiviert werden">
+                                            <Image Margin="4,0,0,0"  Height="16" Width="16" ToolTipService.ToolTip="(Überlastung) Kann in den Einstellungen aktiviert/deaktiviert werden">
                                                 <Image.Source>
                                                     <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
                                                 </Image.Source>
@@ -416,7 +416,7 @@
                                         <Label Content="Intuition" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="RS-Gesamt"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                            <Image Height="16" Width="16" Stretch="Fill"  ToolTipService.ToolTip="Kann in den Einstellungen zum aktiviert/deaktiviert werden">
+                                            <Image Height="16" Width="16" Stretch="Fill"  ToolTipService.ToolTip="(RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
                                                 <Image.Source>
                                                     <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
                                                 </Image.Source>
@@ -529,7 +529,7 @@
                                             </Image>
                                         </Grid>
                                     </Button>
-                                    <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="Kann in den Einstellungen zum aktiviert/deaktiviert werden">
+                                    <Image Height="16" Width="16" x:Name="_imageAeKeHinweis" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Right" ToolTipService.ToolTip="(Zonen RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
                                         <Image.Source>
                                             <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/info.png" />
                                         </Image.Source>

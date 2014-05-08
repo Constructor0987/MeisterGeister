@@ -1860,7 +1860,11 @@ namespace MeisterGeister.Model {
         }
         public int Behinderung {
             get {
-                return (BE ?? 0);
+                if (E.IsMitUeberlastung && E.UeberlastungBerechnung == 0) {
+                    return (BE ?? 0) + (ueberlastung ?? 0);
+                } else {
+                    return (BE ?? 0);
+                }
             }
             set { BE = value; }
         }
@@ -1871,13 +1875,17 @@ namespace MeisterGeister.Model {
                 return ueberlastung ?? 0;
             }
             set {
-                if (E.IsMitUeberlastung && E.UeberlastungBerechnung == 1) {
-                    Behinderung = ((BE ?? 0) - (ueberlastung ?? 0 - value));
-                    ueberlastung = value;
+                if (E.IsMitUeberlastung == false) {
+                    ueberlastung = 0;
                 } else {
-                    ueberlastung = value;
-                    if (E.UeberlastungBerechnung == 0) {
-                        BerechneBehinderung();
+                    if (E.IsMitUeberlastung && E.UeberlastungBerechnung == 1) {
+                        Behinderung = ((BE ?? 0) - ((ueberlastung ?? 0) - value));
+                        ueberlastung = value;
+                    } else {
+                        ueberlastung = value;
+                        if (E.UeberlastungBerechnung == 0) {
+                            BerechneBehinderung();
+                        }
                     }
                 }
                 OnChanged("Ueberlastung");
@@ -1903,7 +1911,9 @@ namespace MeisterGeister.Model {
             }
             set {
                 gewichtZuTragkraftProzent = value;
-                BerechneUeberlastung();
+                if (E.IsMitUeberlastung && E.UeberlastungBerechnung == 0) {
+                    BerechneUeberlastung();
+                }
                 OnChanged("GewichtZuTragkraftProzent");
             }
         }
@@ -1936,7 +1946,8 @@ namespace MeisterGeister.Model {
             } else {
                 retVal = 0;
             }
-            ueberlastung = retVal;
+            Ueberlastung = retVal;
+            //OnChanged("Ueberlastung");
             return retVal;
         }
         /// <summary>
