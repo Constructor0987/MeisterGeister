@@ -413,7 +413,7 @@
                                     <StackPanel >
                                         <Label Content="Attacke"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
                                         <Label Content="Parade"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
-                                        <Label Content="Intuition" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
+                                        <Label Content="Iniative" Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="RS-Gesamt"  Style="{DynamicResource TextInStack}" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" />
                                             <Image Height="16" Width="16" Stretch="Fill"  ToolTipService.ToolTip="(RS) Kann in den Einstellungen aktiviert/deaktiviert werden">
@@ -428,7 +428,7 @@
                                     <StackPanel>
                                         <Label Content="{Binding SelectedHeld.AT}"  Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" />
                                         <Label Content="{Binding SelectedHeld.PA}"  Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                        <Label Content="{Binding SelectedHeld.IN}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                        <Label Content="{Binding SelectedHeld.InitiativeBasisOhneMod}" Margin="0" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                                         <Grid>
                                             <StackPanel Orientation="Horizontal">
                                                 <ViewGeneral:IntBox Margin="0,0" MinValue="0" MinWidth="20" ButtonHiddenMode="{Binding IsRuestungEinfachEingeben}" ShowButtons="{Binding IsRuestungBerechnungEinfach, Converter={StaticResource InverseBooleanConverter}}" ToolTip="Rüstungsschutz Gesamt" Value="{Binding SelectedHeld.RS[Gesamt]}" IsReadOnly="{Binding IsRuestungBerechnungEinfach}" NoBackground="{Binding IsRuestungBerechnungEinfach}" Style="{DynamicResource ReadOnlyStyle}" Height="25" />
