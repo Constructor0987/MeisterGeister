@@ -4,11 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="150">    
+             d:DesignHeight="50" d:DesignWidth="130">    
         <Grid Height="42" Width="119" >
-            <ToggleButton Name="tbtnTheme" Focusable="False" />
-        
-            <CheckBox Name="chkbxPlus" ToolTip="Nur Geräusche des Themes hinzufügen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3" FlowDirection="RightToLeft" >
+        <ToggleButton Name="tbtnTheme" Focusable="False" />
+        <CheckBox Name="chkbxPlus" ToolTip="Nur Geräusche des Themes hinzufügen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3" FlowDirection="RightToLeft" >
                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="20" Width="20" Margin="-5,-2,0,-5"/>
             </CheckBox>
     </Grid>

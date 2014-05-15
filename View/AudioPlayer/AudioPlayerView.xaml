@@ -243,7 +243,7 @@
                         <Grid Name="grdEditorList">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
-                                <RowDefinition Height="330*" />
+                                <RowDefinition Height="330*" MinHeight="30" />
                             </Grid.RowDefinitions>
 
                             <Expander Name="exEditorTheme" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Margin="0,-1,7,10" VerticalAlignment="Top" VerticalContentAlignment="Top" Visibility="Collapsed" >
@@ -298,7 +298,7 @@
 
                             <GridSplitter Name="grdsplitEditorList" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Visibility="Collapsed"  />
 
-                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" Name="exKlangPList" >
+                            <Expander HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" Name="exKlangPList" Expanded="exKlangPList_Expanded" Collapsed="exKlangPList_Collapsed" >
                                 <Expander.Header>
                                     <TextBlock Text="Playlists" Style="{DynamicResource TextTitel}" />
                                 </Expander.Header>
@@ -445,7 +445,7 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Margin="3,8,6,9" Grid.Row="2" Style="{DynamicResource ControlContentBorder}">
+                        <Border Name="brdEditorListe" Margin="3,8,6,9" Grid.Row="2" Style="{DynamicResource ControlContentBorder}">
                             <Grid Name="grdEditorListe" >
                                 <Grid Name="grdEditor1" AllowDrop="True" Drop="grdEditorX_Drop" ToolTip="Musikdateien über Drag&amp;Drop einfügen" >
                                     <Grid.RowDefinitions>
@@ -796,7 +796,7 @@
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
                                 <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
-                                    <WrapPanel Name="wpnlPListThemes" ItemHeight="50" ItemWidth="150" MinHeight="60" />
+                                    <WrapPanel Name="wpnlPListThemes" ItemHeight="50" ItemWidth="130" MinHeight="60" />
                                 </ScrollViewer>
                             </Border>
                         </Expander>
