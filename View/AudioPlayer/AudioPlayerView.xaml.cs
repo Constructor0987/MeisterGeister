@@ -991,7 +991,9 @@ namespace MeisterGeister.View.AudioPlayer {
 
 								_BGPlayer.AktTitel.Clear();
                                 btnBGRepeat.IsChecked = _BGPlayer.AktPlaylist.Repeat;
+                                
                                 btnShuffle.IsChecked = _BGPlayer.AktPlaylist.Shuffle;
+                                btnShuffle_Click(btnShuffle, null);
 
                                 if (playlistliste.Audio_Playlist_Titel.Count > 0)
                                 {
@@ -1596,6 +1598,12 @@ namespace MeisterGeister.View.AudioPlayer {
                                 ZeigeKlangSongsParallel(grpobj, false);
                                 ZeigeKlangTop(grpobj, false);
                                 grpobj.spnlTopHotkey.Visibility = Visibility.Collapsed;
+
+                                btnEditRepeat.IsChecked = AktKlangPlaylist.Repeat;
+                                btnEditShuffle.IsChecked = AktKlangPlaylist.Shuffle;
+                                btnEditRepeat.Visibility = Visibility.Visible;
+                                btnEditShuffle.Visibility = Visibility.Visible;
+                                btnShuffle_Click(btnEditShuffle, null);
                             }
                             else
                             {
@@ -1608,6 +1616,9 @@ namespace MeisterGeister.View.AudioPlayer {
 
                                 grpobj.btnHotkeyEntfernen.Visibility = hKey == null ? Visibility.Collapsed : Visibility.Visible;
                                 grpobj.cmboxTopHotkey.SelectedIndex = -1;
+
+                                btnEditRepeat.Visibility = Visibility.Collapsed;
+                                btnEditShuffle.Visibility = Visibility.Collapsed;
                             }
 
                             //Neue Playlist in Theme hinzufügen
@@ -1761,18 +1772,11 @@ namespace MeisterGeister.View.AudioPlayer {
                 // Pfad noch kein Standard-Pfad
                 if (ViewHelper.Confirm("Audio-Pfad ist kein Standard-Pfad", "Der Pfad der Audio-Datei konnte nicht unter den Standard-Pfaden gefunden werden." + 
                     Environment.NewLine + "In dieser Konstellation ist es nicht zulässig, den Titel abzuspielen." + Environment.NewLine +
-                    "Soll der Pfad mit in die Standard-Pfade integriert werden?"))
+                    "Soll der Pfad mit in die Standard-Pfade integriert werden?" + Environment.NewLine + Environment.NewLine + "Neuer Pfad:     " + aTitel.Pfad))
                 {
                     MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis =
                         MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis + "|" + aTitel.Pfad;
                     setStdPfad();
-                /*    ((ListboxItemBtn)lbStandardPfade.Items[lbStandardPfade.Items.Count - 1]).lblStdPfad.Content = aTitel.Pfad;
-
-                    ListboxItemBtn lbItemBtnLeer = new ListboxItemBtn();
-                    lbItemBtnLeer.lblStdPfad.Content = "";
-                    lbItemBtnLeer.btnStdPfad.Click += btnStdPfad_Click;
-                    lbItemBtnLeer.imgIcon.MouseUp += imgStdIconDelete_MouseUp;
-                    lbStandardPfade.Items.Add(lbItemBtnLeer);*/
                 }
                 return aTitel;
             }
@@ -1797,7 +1801,6 @@ namespace MeisterGeister.View.AudioPlayer {
                     aTitel.Datei = System.IO.Path.GetFileName(aTitel.Datei);
                     return aTitel;
                 }
-
             }
 
             //ab hier: kein Std.-Pfad ist gültig -> Check in jedem Std.-Pfad mit Suche incl. Unterverzeichnisse nach dem Dateinamen
@@ -4600,6 +4603,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					ZeigeKlangSongsParallel(grpobj, true);
 					ZeigeKlangTop(grpobj, true);
 					ZeigeZeileKlangSpalten(grpobj, true);
+                    btnEditRepeat.Visibility = Visibility.Collapsed;
+                    btnEditShuffle.Visibility = Visibility.Collapsed;
 
 					for (UInt16 i = 0; i < grpobj._listZeile.Count; i++)
 					{
@@ -4646,6 +4651,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					AktualisierePListPlaylist();
 
                     AlleKlangSongsAus(grpobj, false, false, false);
+                    btnEditRepeat.Visibility = Visibility.Visible;
+                    btnEditShuffle.Visibility = Visibility.Visible;
 
 					if (grpobj.wirdAbgespielt)
 					{
@@ -6190,77 +6197,31 @@ namespace MeisterGeister.View.AudioPlayer {
 		{
 			try
 			{
-				btnShuffleImg.Source = ((ToggleButton)sender).IsChecked == true ?
-					new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/shuffle.png")) :
-					new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/no_shuffle.png"));
-                _BGPlayer.AktPlaylist.Shuffle = ((ToggleButton)sender).IsChecked.Value;
-                Global.ContextAudio.Update<Audio_Playlist>(_BGPlayer.AktPlaylist);
+                if (tcAudioPlayer.SelectedItem == tiMusik)
+				    btnShuffleImg.Source = ((ToggleButton)sender).IsChecked == true ?
+					    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/shuffle.png")) :
+					    new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/no_shuffle.png"));
+                else
+                    btnEditShuffleImg.Source = ((ToggleButton)sender).IsChecked == true ?
+                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/shuffle.png")) :
+                        new BitmapImage(new Uri("pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/no_shuffle.png"));
+
+                if (tcAudioPlayer.SelectedItem == tiMusik)
+                {
+                    _BGPlayer.AktPlaylist.Shuffle = ((ToggleButton)sender).IsChecked.Value;
+                    Global.ContextAudio.Update<Audio_Playlist>(_BGPlayer.AktPlaylist);
+                }
+                else
+                {
+                    if (AktKlangPlaylist.Shuffle != ((ToggleButton)sender).IsChecked.Value)
+                    {
+                        AktKlangPlaylist.Shuffle = ((ToggleButton)sender).IsChecked.Value;
+                        Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
+                    }
+                }
 			}
 			catch (Exception) { }
 		}
-		
-		/*public void _rbtnGleichSpielen_Click(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				if (IsInitialized)
-                    MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen = (bool)_rbtnGleichSpielen.IsChecked;
-			}
-			catch (Exception) { }
-		}*/
-
-      /*  public void setNewLbFading(MediaPlayer mp)
-        {
-            try
-            {
-                if (mp != null && mp.Source != null)
-                {
-                    int i = lbFading.Items.Count - 1;
-                    while (i >= 0)
-                    {
-                        string s = ((ListBoxItem)lbFading.Items[i]).Content.ToString();
-                        s = s.Substring(0, s.IndexOf(" "));
-                        string s_now = Math.Round(mp.Volume, 2).ToString();
-                        if (s == s_now)
-                            return;
-                        i--;
-                        if (i < lbFading.Items.Count - 2)
-                            break;
-                    }
-                }
-
-                        
-            if (mp != null && mp.Source != null)
-            {
-                ListBoxItem lbi = new ListBoxItem();
-                lbi.Content = Math.Round(mp.Volume, 2) + "  " + System.IO.Path.GetFileNameWithoutExtension(mp.Source.AbsolutePath.Replace("%20", " "));
-                lbFading.Items.Add(lbi);
-                lbFading.ScrollIntoView(lbi);
-            }
-            }
-            catch (Exception ex)
-            {
-                ViewHelper.ShowError("Fading-Kommentar" + Environment.NewLine + "Fehler beim Erstellen der ListboxItem zum Kommentar", ex);
-            }
-        }        
-
-        public void setNewLbFading(MediaPlayer mp, string msg)
-        {
-            try
-            {
-                if (mp != null && mp.Source != null)
-                {
-                    ListBoxItem lbi = new ListBoxItem();
-                    lbi.Content = "8 " + msg + "  " + (mp.Source != null ? System.IO.Path.GetFileNameWithoutExtension(mp.Source.AbsolutePath.Replace("%20", " ")) : "_");
-                    lbFading.Items.Add(lbi);
-                    lbFading.ScrollIntoView(lbi);
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewHelper.ShowError("Fading-Kommentar" + Environment.NewLine + "Fehler beim Erstellen der ListboxItem zum Kommentar", ex);
-            }
-        }*/
 		
 		public void BGFadingOut(Musik BG, bool playerStoppen, bool sofort)
 		{
@@ -7800,7 +7761,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     Global.SetIsBusy(true);
 
 
-                    int mrImpVar = (ViewHelper.ConfirmYesNoCancel("Komplette Sicherung", "Aus der Hostorie heraus, gibt es zwei Varianten einer Komplettsicherung." + Environment.NewLine +
+                    int mrImpVar = (ViewHelper.ConfirmYesNoCancel("Komplette Sicherung", "Aus der Historie heraus, gibt es zwei Varianten einer Komplettsicherung." + Environment.NewLine +
                             Environment.NewLine + "Die Sicherung der Musikdaten werden in neuerer Version auf verschiedene Dateien aufgeteilt." + Environment.NewLine +
                             "Wenn Sie eine einzige XML-Datei als Komplettsicherung gespeichert haben, deutet das auf die vorherige Methode hin." + Environment.NewLine +
                             Environment.NewLine + "Wollen Sie das Importieren des neuen Prozesses durchführen?"));
@@ -8666,6 +8627,12 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             _BGPlayer.AktPlaylist.Repeat = btnBGRepeat.IsChecked.Value;
             Global.ContextAudio.Update<Audio_Playlist>(_BGPlayer.AktPlaylist);
+        }
+        
+        private void btnEditRepeat_Click(object sender, RoutedEventArgs e)
+        {
+            AktKlangPlaylist.Repeat = btnEditRepeat.IsChecked.Value;
+            Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
         }
 
         private void exPListPlaylists_Collapsed(object sender, RoutedEventArgs e)

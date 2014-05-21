@@ -484,6 +484,14 @@
                                             <TextBox Name="tboxTopKlangKategorie1" Padding="2,0" FontSize="12" FontStyle="Italic" TextWrapping="WrapWithOverflow" Background="{x:Null}" ToolTip="Kategorie der Playlist" VerticalContentAlignment="Center" LostFocus="tboxTopKategorieX_LostFocus" GotFocus="tbGotFocus"  />
                                         </Border>
 
+                                        <ToggleButton Height="24" Name="btnEditShuffle" Grid.Column="6" Margin="-320,2,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsChecked="True" ToolTip="Shuffle-Mode" Focusable="False" IsTabStop="False" >
+                                            <Image Name="btnEditShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" Style="{StaticResource ImageEnabled}" />
+                                        </ToggleButton>
+
+                                        <ToggleButton Name="btnEditRepeat" Height="24" Grid.Column="6" Margin="-260,2,0,0" Width="24" Click="btnEditRepeat_Click" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" Focusable="False" IsTabStop="False" >
+                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/repeat.png" />
+                                        </ToggleButton>
+
                                         <GroupBox Name="gboxTopSongsParallel1" Header="Songs parallel" Grid.Column="3" Grid.RowSpan="2" Height="50" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <TextBox Name="tboxTopklangsongparallel1" Text="1" VerticalAlignment="Center" Width="30" HorizontalAlignment="Left" TextChanged="tboxklangsongparallelX_TextChanged" IsEnabled="True" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
