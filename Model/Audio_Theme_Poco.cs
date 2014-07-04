@@ -104,6 +104,18 @@ namespace MeisterGeister.Model
     
         }
         private string _name;
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual bool NurGer‰usche
+        {
+            get { return _nurGer‰usche; }
+            set
+            {
+                Set(ref _nurGer‰usche, value);
+            }
+        }
+        private bool _nurGer‰usche;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int Hintergrund_VolMod
@@ -128,18 +140,6 @@ namespace MeisterGeister.Model
     
         }
         private int _klang_VolMod;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual bool NurGer√§usche
-        {
-            get { return _nurGer√§usche; }
-            set
-    		{ 
-    			Set(ref _nurGer√§usche, value);
-    		}
-    
-        }
-        private bool _nurGer√§usche;
 
         #endregion
 

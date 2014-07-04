@@ -1,4 +1,4 @@
-﻿<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
 <edmx:Runtime>
 <edmx:StorageModels>
 <Schema Namespace="DatabaseDSAModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
@@ -65,10 +65,6 @@
     <EntitySet Name="Zauber_Variante" EntityType="DatabaseDSAModel.Store.Zauber_Variante" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen" EntityType="DatabaseDSAModel.Store.Zauberzeichen" store:Type="Tables" />
     <EntitySet Name="Zauberzeichen_Setting" EntityType="DatabaseDSAModel.Store.Zauberzeichen_Setting" store:Type="Tables" />
-    <AssociationSet Name="FK__Zauber_Variante__0000000000000A6D" Association="DatabaseDSAModel.Store.FK__Zauber_Variante__0000000000000A6D">
-      <End Role="Zauber" EntitySet="Zauber" />
-      <End Role="Zauber_Variante" EntitySet="Zauber_Variante" />
-    </AssociationSet>
     <AssociationSet Name="fk_AbenteuerEreignis_Szene" Association="DatabaseDSAModel.Store.fk_AbenteuerEreignis_Szene">
       <End Role="Abenteuer_Szene" EntitySet="Abenteuer_Szene" />
       <End Role="Abenteuer_Ereignis" EntitySet="Abenteuer_Ereignis" />
@@ -269,6 +265,10 @@
       <End Role="Zauber" EntitySet="Zauber" />
       <End Role="Zauber_Setting" EntitySet="Zauber_Setting" />
     </AssociationSet>
+    <AssociationSet Name="fk_ZauberVariante_Zauber" Association="DatabaseDSAModel.Store.fk_ZauberVariante_Zauber">
+      <End Role="Zauber" EntitySet="Zauber" />
+      <End Role="Zauber_Variante" EntitySet="Zauber_Variante" />
+    </AssociationSet>
     <AssociationSet Name="FK_Zauberzeichen_Sonderfertigkeit" Association="DatabaseDSAModel.Store.FK_Zauberzeichen_Sonderfertigkeit">
       <End Role="Sonderfertigkeit" EntitySet="Sonderfertigkeit" />
       <End Role="Zauberzeichen" EntitySet="Zauberzeichen" />
@@ -468,7 +468,6 @@
     <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
     <Property Name="Bemerkung" Type="ntext" />
     <Property Name="Tags" Type="ntext" />
-    <Property Name="BasisAusrüstung" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Ausrüstung_Setting">
     <Key>
@@ -479,7 +478,6 @@
     <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Preis" Type="float" Nullable="false" />
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
-    <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Einstellung">
     <Key>
@@ -675,7 +673,6 @@
     <Property Name="HandelsgutGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Preis" Type="nvarchar" MaxLength="100" />
-    <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Held">
     <Key>
@@ -969,7 +966,6 @@
     <Property Name="INIMod" Type="int" Nullable="false" />
     <Property Name="Literatur" Type="nvarchar" MaxLength="300" />
     <Property Name="Setting" Type="nvarchar" MaxLength="100" />
-    <Property Name="GewichtOperator" Type="nvarchar" Nullable="false" MaxLength="1" />
   </EntityType>
   <EntityType Name="Rasse_Farbe">
     <Key>
@@ -1050,7 +1046,6 @@
     <Property Name="SonderfertigkeitGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
-    <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Talent">
     <Key>
@@ -1157,7 +1152,6 @@
     <Property Name="Kosten" Type="nvarchar" MaxLength="300" />
     <Property Name="Tags" Type="ntext" />
     <Property Name="Bemerkung" Type="ntext" />
-    <Property Name="Magieresistenz" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Zauber_Setting">
     <Key>
@@ -1167,7 +1161,6 @@
     <Property Name="ZauberGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Repräsentationen" Type="nvarchar" MaxLength="300" />
-    <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Zauber_Variante">
     <Key>
@@ -1176,10 +1169,7 @@
     </Key>
     <Property Name="ZauberGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
-    <Property Name="Erschwernis" Type="int" Nullable="false" />
-    <Property Name="MinZfW" Type="int" Nullable="false" />
     <Property Name="SpoMod" Type="bit" Nullable="false" />
-    <Property Name="MehrfachAnwendbar" Type="bit" Nullable="false" />
     <Property Name="Eigenschaft1" Type="nvarchar" MaxLength="2" />
     <Property Name="Eigenschaft2" Type="nvarchar" MaxLength="2" />
     <Property Name="Eigenschaft3" Type="nvarchar" MaxLength="2" />
@@ -1190,7 +1180,6 @@
     <Property Name="Wirkungsradius" Type="nvarchar" MaxLength="300" />
     <Property Name="Zielobjekt" Type="nvarchar" MaxLength="300" />
     <Property Name="Kosten" Type="nvarchar" MaxLength="300" />
-    <Property Name="Magieresistenz" Type="bit" />
     <Property Name="Tags" Type="ntext" />
     <Property Name="Bemerkung" Type="ntext" />
   </EntityType>
@@ -1218,22 +1207,7 @@
     <Property Name="ZauberzeichenGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="SettingGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="Verbreitung" Type="nvarchar" MaxLength="300" />
-    <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
-  <Association Name="FK__Zauber_Variante__0000000000000A6D">
-    <End Role="Zauber" Type="DatabaseDSAModel.Store.Zauber" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Zauber_Variante" Type="DatabaseDSAModel.Store.Zauber_Variante" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Zauber">
-        <PropertyRef Name="ZauberGUID" />
-      </Principal>
-      <Dependent Role="Zauber_Variante">
-        <PropertyRef Name="ZauberGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_AbenteuerEreignis_Szene">
     <End Role="Abenteuer_Szene" Type="DatabaseDSAModel.Store.Abenteuer_Szene" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1924,6 +1898,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_ZauberVariante_Zauber">
+    <End Role="Zauber" Type="DatabaseDSAModel.Store.Zauber" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Zauber_Variante" Type="DatabaseDSAModel.Store.Zauber_Variante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zauber">
+        <PropertyRef Name="ZauberGUID" />
+      </Principal>
+      <Dependent Role="Zauber_Variante">
+        <PropertyRef Name="ZauberGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Zauberzeichen_Sonderfertigkeit">
     <End Role="Sonderfertigkeit" Type="DatabaseDSAModel.Store.Sonderfertigkeit" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -2364,13 +2352,13 @@
       <End Role="Talentgruppe" EntitySet="Talentgruppe" />
       <End Role="Talent" EntitySet="Talent" />
     </AssociationSet>
-    <AssociationSet Name="FK__Zauber_Variante__0000000000000A6D" Association="DatabaseDSAModel.FK__Zauber_Variante__0000000000000A6D">
-      <End Role="Zauber" EntitySet="Zauber" />
-      <End Role="Zauber_Variante" EntitySet="Zauber_Variante" />
-    </AssociationSet>
     <AssociationSet Name="fk_ZauberSetting_Zauber" Association="DatabaseDSAModel.fk_ZauberSetting_Zauber">
       <End Role="Zauber" EntitySet="Zauber" />
       <End Role="Zauber_Setting" EntitySet="Zauber_Setting" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ZauberVariante_Zauber" Association="DatabaseDSAModel.fk_ZauberVariante_Zauber">
+      <End Role="Zauber" EntitySet="Zauber" />
+      <End Role="Zauber_Variante" EntitySet="Zauber_Variante" />
     </AssociationSet>
     <AssociationSet Name="fk_ZauberzeichenSetting_Zauberzeichen" Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Zauberzeichen">
       <End Role="Zauberzeichen" EntitySet="Zauberzeichen" />
@@ -2550,7 +2538,6 @@
     <Property Name="Literatur" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Bemerkung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Tags" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Name="BasisAusrüstung" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Ausrüstung_Setting" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" FromRole="Ausrüstung" ToRole="Ausrüstung_Setting" />
     <NavigationProperty Name="Fernkampfwaffe" Relationship="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" FromRole="Ausrüstung" ToRole="Fernkampfwaffe" />
     <NavigationProperty Name="Held_Ausrüstung" Relationship="DatabaseDSAModel.fk_HeldAusrüstung_Ausrüstung" FromRole="Ausrüstung" ToRole="Held_Ausrüstung" />
@@ -2567,7 +2554,6 @@
     <Property Name="SettingGUID" Type="Guid" Nullable="false" />
     <Property Name="Preis" Type="Double" Nullable="false" />
     <Property Name="Verbreitung" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
-    <Property Name="Name" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Ausrüstung" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" FromRole="Ausrüstung_Setting" ToRole="Ausrüstung" />
     <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_AusrüstungSetting_Setting" FromRole="Ausrüstung_Setting" ToRole="Setting" />
   </EntityType>
@@ -2769,7 +2755,6 @@
     <Property Name="HandelsgutGUID" Type="Guid" Nullable="false" />
     <Property Name="SettingGUID" Type="Guid" Nullable="false" />
     <Property Name="Preis" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="Name" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Handelsgut" Relationship="DatabaseDSAModel.fk_HandelsgutSetting_Handelsgut" FromRole="Handelsgut_Setting" ToRole="Handelsgut" />
     <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_HandelsgutSetting_Setting" FromRole="Handelsgut_Setting" ToRole="Setting" />
   </EntityType>
@@ -3097,7 +3082,6 @@
     <Property Name="INIMod" Type="Int32" Nullable="false" />
     <Property Name="Literatur" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Setting" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-    <Property Name="GewichtOperator" Type="String" Nullable="false" MaxLength="1" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Rasse_Farbe" Relationship="DatabaseDSAModel.fk_RasseFarbe_Rasse" FromRole="Rasse" ToRole="Rasse_Farbe" />
     <NavigationProperty Name="Rasse_Kultur" Relationship="DatabaseDSAModel.fk_RasseKultur_Rasse" FromRole="Rasse" ToRole="Rasse_Kultur" />
   </EntityType>
@@ -3195,7 +3179,6 @@
     <Property Name="SonderfertigkeitGUID" Type="Guid" Nullable="false" />
     <Property Name="SettingGUID" Type="Guid" Nullable="false" />
     <Property Name="Verbreitung" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
-    <Property Name="Name" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_SonderfertigkeitSetting_Setting" FromRole="Sonderfertigkeit_Setting" ToRole="Setting" />
     <NavigationProperty Name="Sonderfertigkeit" Relationship="DatabaseDSAModel.fk_SonderfertigkeitSetting_Sonderfertigkeit" FromRole="Sonderfertigkeit_Setting" ToRole="Sonderfertigkeit" />
   </EntityType>
@@ -3308,10 +3291,9 @@
     <Property Name="Kosten" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Tags" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Bemerkung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Name="Magieresistenz" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Held_Zauber" Relationship="DatabaseDSAModel.Zauber_FK" FromRole="Zauber" ToRole="Held_Zauber" />
-    <NavigationProperty Name="Zauber_Variante" Relationship="DatabaseDSAModel.FK__Zauber_Variante__0000000000000A6D" FromRole="Zauber" ToRole="Zauber_Variante" />
     <NavigationProperty Name="Zauber_Setting" Relationship="DatabaseDSAModel.fk_ZauberSetting_Zauber" FromRole="Zauber" ToRole="Zauber_Setting" />
+    <NavigationProperty Name="Zauber_Variante" Relationship="DatabaseDSAModel.fk_ZauberVariante_Zauber" FromRole="Zauber" ToRole="Zauber_Variante" />
   </EntityType>
   <EntityType Name="Zauber_Setting">
     <Key>
@@ -3321,7 +3303,6 @@
     <Property Name="ZauberGUID" Type="Guid" Nullable="false" />
     <Property Name="SettingGUID" Type="Guid" Nullable="false" />
     <Property Name="Repräsentationen" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
-    <Property Name="Name" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_ZauberSetting_Setting" FromRole="Zauber_Setting" ToRole="Setting" />
     <NavigationProperty Name="Zauber" Relationship="DatabaseDSAModel.fk_ZauberSetting_Zauber" FromRole="Zauber_Setting" ToRole="Zauber" />
   </EntityType>
@@ -3332,10 +3313,7 @@
     </Key>
     <Property Name="ZauberGUID" Type="Guid" Nullable="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
-    <Property Name="Erschwernis" Type="Int32" Nullable="false" />
-    <Property Name="MinZfW" Type="Int32" Nullable="false" />
     <Property Name="SpoMod" Type="Boolean" Nullable="false" />
-    <Property Name="MehrfachAnwendbar" Type="Boolean" Nullable="false" />
     <Property Name="Eigenschaft1" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
     <Property Name="Eigenschaft2" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
     <Property Name="Eigenschaft3" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
@@ -3346,10 +3324,9 @@
     <Property Name="Wirkungsradius" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Zielobjekt" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
     <Property Name="Kosten" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
-    <Property Name="Magieresistenz" Type="Boolean" />
     <Property Name="Tags" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Bemerkung" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <NavigationProperty Name="Zauber" Relationship="DatabaseDSAModel.FK__Zauber_Variante__0000000000000A6D" FromRole="Zauber_Variante" ToRole="Zauber" />
+    <NavigationProperty Name="Zauber" Relationship="DatabaseDSAModel.fk_ZauberVariante_Zauber" FromRole="Zauber_Variante" ToRole="Zauber" />
   </EntityType>
   <EntityType Name="Zauberzeichen">
     <Key>
@@ -3377,7 +3354,6 @@
     <Property Name="ZauberzeichenGUID" Type="Guid" Nullable="false" />
     <Property Name="SettingGUID" Type="Guid" Nullable="false" />
     <Property Name="Verbreitung" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
-    <Property Name="Name" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Setting" Relationship="DatabaseDSAModel.fk_ZauberzeichenSetting_Setting" FromRole="Zauberzeichen_Setting" ToRole="Setting" />
     <NavigationProperty Name="Zauberzeichen" Relationship="DatabaseDSAModel.fk_ZauberzeichenSetting_Zauberzeichen" FromRole="Zauberzeichen_Setting" ToRole="Zauberzeichen" />
   </EntityType>
@@ -4099,20 +4075,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Zauber_Variante__0000000000000A6D">
-    <End Role="Zauber" Type="DatabaseDSAModel.Zauber" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Zauber_Variante" Type="DatabaseDSAModel.Zauber_Variante" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Zauber">
-        <PropertyRef Name="ZauberGUID" />
-      </Principal>
-      <Dependent Role="Zauber_Variante">
-        <PropertyRef Name="ZauberGUID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_ZauberSetting_Zauber">
     <End Role="Zauber" Type="DatabaseDSAModel.Zauber" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -4123,6 +4085,20 @@
         <PropertyRef Name="ZauberGUID" />
       </Principal>
       <Dependent Role="Zauber_Setting">
+        <PropertyRef Name="ZauberGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ZauberVariante_Zauber">
+    <End Role="Zauber" Type="DatabaseDSAModel.Zauber" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Zauber_Variante" Type="DatabaseDSAModel.Zauber_Variante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zauber">
+        <PropertyRef Name="ZauberGUID" />
+      </Principal>
+      <Dependent Role="Zauber_Variante">
         <PropertyRef Name="ZauberGUID" />
       </Dependent>
     </ReferentialConstraint>
@@ -4303,7 +4279,6 @@
           <ScalarProperty Name="Literatur" ColumnName="Literatur" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
           <ScalarProperty Name="Tags" ColumnName="Tags" />
-          <ScalarProperty Name="BasisAusrüstung" ColumnName="BasisAusrüstung" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4314,7 +4289,6 @@
           <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
           <ScalarProperty Name="Preis" ColumnName="Preis" />
           <ScalarProperty Name="Verbreitung" ColumnName="Verbreitung" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4508,7 +4482,6 @@
           <ScalarProperty Name="HandelsgutGUID" ColumnName="HandelsgutGUID" />
           <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
           <ScalarProperty Name="Preis" ColumnName="Preis" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4807,7 +4780,6 @@
           <ScalarProperty Name="INIMod" ColumnName="INIMod" />
           <ScalarProperty Name="Literatur" ColumnName="Literatur" />
           <ScalarProperty Name="Setting" ColumnName="Setting" />
-          <ScalarProperty Name="GewichtOperator" ColumnName="GewichtOperator" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4891,7 +4863,6 @@
           <ScalarProperty Name="SonderfertigkeitGUID" ColumnName="SonderfertigkeitGUID" />
           <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
           <ScalarProperty Name="Verbreitung" ColumnName="Verbreitung" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -4997,7 +4968,6 @@
           <ScalarProperty Name="Kosten" ColumnName="Kosten" />
           <ScalarProperty Name="Tags" ColumnName="Tags" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
-          <ScalarProperty Name="Magieresistenz" ColumnName="Magieresistenz" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5007,7 +4977,6 @@
           <ScalarProperty Name="ZauberGUID" ColumnName="ZauberGUID" />
           <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
           <ScalarProperty Name="Repräsentationen" ColumnName="Repräsentationen" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5016,10 +4985,7 @@
         <MappingFragment StoreEntitySet="Zauber_Variante">
           <ScalarProperty Name="ZauberGUID" ColumnName="ZauberGUID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Erschwernis" ColumnName="Erschwernis" />
-          <ScalarProperty Name="MinZfW" ColumnName="MinZfW" />
           <ScalarProperty Name="SpoMod" ColumnName="SpoMod" />
-          <ScalarProperty Name="MehrfachAnwendbar" ColumnName="MehrfachAnwendbar" />
           <ScalarProperty Name="Eigenschaft1" ColumnName="Eigenschaft1" />
           <ScalarProperty Name="Eigenschaft2" ColumnName="Eigenschaft2" />
           <ScalarProperty Name="Eigenschaft3" ColumnName="Eigenschaft3" />
@@ -5030,7 +4996,6 @@
           <ScalarProperty Name="Wirkungsradius" ColumnName="Wirkungsradius" />
           <ScalarProperty Name="Zielobjekt" ColumnName="Zielobjekt" />
           <ScalarProperty Name="Kosten" ColumnName="Kosten" />
-          <ScalarProperty Name="Magieresistenz" ColumnName="Magieresistenz" />
           <ScalarProperty Name="Tags" ColumnName="Tags" />
           <ScalarProperty Name="Bemerkung" ColumnName="Bemerkung" />
         </MappingFragment>
@@ -5059,7 +5024,6 @@
           <ScalarProperty Name="ZauberzeichenGUID" ColumnName="ZauberzeichenGUID" />
           <ScalarProperty Name="SettingGUID" ColumnName="SettingGUID" />
           <ScalarProperty Name="Verbreitung" ColumnName="Verbreitung" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -5102,125 +5066,5 @@
 <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
 <Connection><DesignerInfoPropertySet><DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" /></DesignerInfoPropertySet></Connection>
 <edmx:Options />
-<edmx:Diagrams >
-      <Diagram DiagramId="ea76f9d6a804449e88a9a339199b6b31" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer" Width="1.5" PointX="16.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Ereignis" Width="1.5" PointX="21.25" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Szene" Width="1.5" PointX="19" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Abenteuer_Verweis" Width="1.5" PointX="23.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept" Width="1.5" PointX="11.75" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Alchimierezept_Setting" Width="1.5" PointX="14" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist" Width="1.5" PointX="21.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Playlist_Titel" Width="1.5" PointX="24" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Theme" Width="1.5" PointX="24" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Audio_Titel" Width="1.5" PointX="21.75" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung" Width="1.5" PointX="1.5" PointY="22" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Ausrüstung_Setting" Width="1.5" PointX="14" PointY="17" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Einstellung" Width="1.5" PointX="8.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Farbe" Width="1.5" PointX="5.75" PointY="41.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Fernkampfwaffe" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Gegner" Width="1.5" PointX="19" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase" Width="1.5" PointX="16.75" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Angriff" Width="1.5" PointX="19" PointY="27.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.GegnerBase_Kampfregel" Width="1.5" PointX="22" PointY="22.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut" Width="1.5" PointX="11.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Handelsgut_Setting" Width="1.5" PointX="14" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Ausrüstung" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Inventar" Width="1.5" PointX="6" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Munition" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Sonderfertigkeit" Width="1.5" PointX="3" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Talent" Width="1.5" PointX="6" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_VorNachteil" Width="1.5" PointX="6" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Held_Zauber" Width="1.5" PointX="9" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Inventar" Width="1.5" PointX="3.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kampfregel" Width="1.5" PointX="19.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur" Width="1.5" PointX="5.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Kultur_Name" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Literatur" Width="1.5" PointX="10.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.MenuLink" Width="1.5" PointX="2.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Munition" Width="1.5" PointX="0.75" PointY="36.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Name" Width="1.5" PointX="16.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Notizen" Width="1.5" PointX="8.75" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.NscMerkmal" Width="1.5" PointX="8.75" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse" Width="1.5" PointX="5.75" PointY="34.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Farbe" Width="1.5" PointX="8" PointY="36.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rasse_Kultur" Width="1.5" PointX="8" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Rüstung" Width="1.5" PointX="3.75" PointY="26.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Schild" Width="1.5" PointX="3.75" PointY="30.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Setting" Width="1.5" PointX="11.75" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit" Width="1.5" PointX="0.75" PointY="43.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Sonderfertigkeit_Setting" Width="1.5" PointX="14" PointY="27.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talent" Width="1.5" PointX="1.5" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Talentgruppe" Width="1.5" PointX="1.5" PointY="32.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Trageort" Width="1.5" PointX="0.75" PointY="40" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Version" Width="1.5" PointX="13.75" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.VorNachteil" Width="1.5" PointX="3.75" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Waffe" Width="1.5" PointX="6.75" PointY="26.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber" Width="1.5" PointX="6.75" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Setting" Width="1.5" PointX="14" PointY="20.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauber_Variante" Width="1.5" PointX="9" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen" Width="1.5" PointX="14.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseDSAModel.Zauberzeichen_Setting" Width="1.5" PointX="17" PointY="11.25" IsExpanded="true" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerSzene_Abenteuer" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerEreignis_Szene" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachEreignis" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonEreignis" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_NachSzene" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AbenteuerVerweis_VonSzene" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Alchimierezept" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AlchimierezeptSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Audio_Playlist_Titel_Titel" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Fernkampfwaffe_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Rüstung_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Schild_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Waffe_Ausrüstung" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_AusrüstungSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Farbe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Fernkampfwaffe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_Gegner_GegnerBase" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseAngriff_GegnerBase" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_GegnerBase" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_GegnerBaseKampfregel_Kampfregel" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Handelsgut" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HandelsgutSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Held" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Held" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Held" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_HeldFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_HeldFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Zauber_HeldFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldAusrüstung_Talent" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_TrageortGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_Inventar" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldInventar_TrageortGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_Munition" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_HeldMunition_TrageortGUID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_Sonderfertigkeit_SonderfertigkeitFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Talent_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Held_VorNachteil_VorNachteilFK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Zauber_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_KulturName_Kultur" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Kultur" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseFarbe_Rasse" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_RasseKultur_Rasse" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_SonderfertigkeitSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Setting" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_SonderfertigkeitSetting_Sonderfertigkeit" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK_Zauberzeichen_Sonderfertigkeit" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Gruppe" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.FK__Zauber_Variante__0000000000000A6D" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberSetting_Zauber" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.fk_ZauberzeichenSetting_Zauberzeichen" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Playlist" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Audio_Theme_Theme" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Fernkampfwaffe_Talent" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseDSAModel.Waffe_Talent" ManuallyRouted="false" />
-      </Diagram>
-    </edmx:Diagrams>
+<edmx:Diagrams />
 </edmx:Designer></edmx:Edmx>

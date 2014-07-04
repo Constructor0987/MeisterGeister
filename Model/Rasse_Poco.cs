@@ -356,18 +356,6 @@ namespace MeisterGeister.Model
     
         }
         private string _setting;
-    	///<summary>Database persistent property</summary>
-    	[DataMember]
-        public virtual string GewichtOperator
-        {
-            get { return _gewichtOperator; }
-            set
-    		{ 
-    			Set(ref _gewichtOperator, value);
-    		}
-    
-        }
-        private string _gewichtOperator;
 
         #endregion
 
