@@ -152,6 +152,18 @@ namespace MeisterGeister.Model
     
         }
         private string _tags;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string BasisAusrüstung
+        {
+            get { return _basisAusrüstung; }
+            set
+    		{ 
+    			Set(ref _basisAusrüstung, value);
+    		}
+    
+        }
+        private string _basisAusrüstung;
 
         #endregion
 

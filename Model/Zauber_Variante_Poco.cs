@@ -113,6 +113,30 @@ namespace MeisterGeister.Model
         private string _name;
     	///<summary>Database persistent property</summary>
     	[DataMember]
+        public virtual int Erschwernis
+        {
+            get { return _erschwernis; }
+            set
+    		{ 
+    			Set(ref _erschwernis, value);
+    		}
+    
+        }
+        private int _erschwernis;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual int MinZfW
+        {
+            get { return _minZfW; }
+            set
+    		{ 
+    			Set(ref _minZfW, value);
+    		}
+    
+        }
+        private int _minZfW;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
         public virtual bool SpoMod
         {
             get { return _spoMod; }
@@ -123,6 +147,18 @@ namespace MeisterGeister.Model
     
         }
         private bool _spoMod;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool MehrfachAnwendbar
+        {
+            get { return _mehrfachAnwendbar; }
+            set
+    		{ 
+    			Set(ref _mehrfachAnwendbar, value);
+    		}
+    
+        }
+        private bool _mehrfachAnwendbar;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Eigenschaft1
@@ -243,6 +279,18 @@ namespace MeisterGeister.Model
     
         }
         private string _kosten;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual Nullable<bool> Magieresistenz
+        {
+            get { return _magieresistenz; }
+            set
+    		{ 
+    			Set(ref _magieresistenz, value);
+    		}
+    
+        }
+        private Nullable<bool> _magieresistenz;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Tags

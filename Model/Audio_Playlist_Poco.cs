@@ -152,30 +152,6 @@ namespace MeisterGeister.Model
     
         }
         private string _kategorie;
-
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual bool Shuffle
-        {
-            get { return _shuffle; }
-            set
-            {
-                Set(ref _shuffle, value);
-            }
-        }
-        private bool _shuffle;
-        
-        ///<summary>Database persistent property</summary>
-        [DataMember]
-        public virtual bool Repeat
-        {
-            get { return _repeat; }
-            set
-            {
-                Set(ref _repeat, value);
-            }
-        }
-        private bool _repeat;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Key
@@ -200,6 +176,30 @@ namespace MeisterGeister.Model
     
         }
         private string _modifiers;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool Shuffle
+        {
+            get { return _shuffle; }
+            set
+    		{ 
+    			Set(ref _shuffle, value);
+    		}
+    
+        }
+        private bool _shuffle;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual bool Repeat
+        {
+            get { return _repeat; }
+            set
+    		{ 
+    			Set(ref _repeat, value);
+    		}
+    
+        }
+        private bool _repeat;
 
         #endregion
 
