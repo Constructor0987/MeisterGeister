@@ -142,6 +142,18 @@ namespace MeisterGeister.Model
     
         }
         private string _verbreitung;
+    	///<summary>Database persistent property</summary>
+    	[DataMember]
+        public virtual string Name
+        {
+            get { return _name; }
+            set
+    		{ 
+    			Set(ref _name, value);
+    		}
+    
+        }
+        private string _name;
 
         #endregion
 
