@@ -333,13 +333,6 @@
     </UserControl.Triggers>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
         <Grid x:Name="Content" HorizontalAlignment="Stretch">
-            <Border x:Name="Notiz" Style="{DynamicResource ControlContentBorder}" Visibility="Hidden">
-                <StackPanel Height="Auto" VerticalAlignment="Stretch">
-                    <TextBlock Margin="0,2,0,0" Text="HINWEIS: Dieser Text wird auch im Kampf-Tool angezeigt." FontSize="8" HorizontalAlignment="Center" FontStyle="Italic"/>
-                    <TextBox Margin="2" Padding="5" AcceptsReturn="True" HorizontalAlignment="Stretch" MinHeight="120" Text="{Binding SelectedHeld.Kampfwerte}" 
-        				Background="{DynamicResource BackgroundPergamentQuer}" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" />
-                </StackPanel>
-            </Border>
             <Grid x:Name="Uebersicht" RenderTransformOrigin="0.5,0.5">
                 <Grid.RenderTransform>
                     <TransformGroup>

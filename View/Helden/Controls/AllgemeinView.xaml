@@ -95,9 +95,26 @@
                     <Expander.Header>
                         <TextBlock Text="Notizen" Style="{DynamicResource TextTitel}" />
                     </Expander.Header>
-                    <Border Style="{DynamicResource ControlContentBorder}">
-                        <MeisterGeister_View_General:FormatTextBox x:Name="RTBNotiz" Margin="2" Padding="4" LostFocus="RTBNotiz_LostFocus" />
-                    </Border>
+                    <TabControl Background="{StaticResource Background1}">
+                        <TabItem Header="Allgemein" Background="{StaticResource Background1}">
+                            <Border Style="{DynamicResource ControlContentBorder}">
+                                <MeisterGeister_View_General:FormatTextBox x:Name="RTBNotiz" Margin="2" Padding="4" LostFocus="RTBNotiz_LostFocus" />
+                            </Border>
+                        </TabItem>
+                        <TabItem Header="Kampf" Background="{StaticResource Background1}">
+                            <Border x:Name="Notiz" Style="{DynamicResource ControlContentBorder}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Margin="0,2,0,0" Text="HINWEIS: Dieser Text wird auch im Kampf-Tool angezeigt." FontSize="8" HorizontalAlignment="Center" FontStyle="Italic"/>
+                                    <TextBox  Grid.Row="1" Margin="2" Padding="5" AcceptsReturn="True" HorizontalAlignment="Stretch" MinHeight="120" Text="{Binding SelectedHeld.Kampfwerte}" 
+        				                Background="{DynamicResource BackgroundPergamentQuer}" TextWrapping="Wrap" VerticalAlignment="Stretch" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" />
+                                </Grid>
+                            </Border>
+                        </TabItem>
+                    </TabControl>
                 </Expander>
 
                 <Expander Grid.Column="1" Grid.Row="0" IsExpanded="True">
