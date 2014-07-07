@@ -18,7 +18,7 @@ namespace MeisterGeister.Daten
         /// <summary>
         /// Die aktuell benötigte Datenbank-Version.
         /// </summary>
-        public const int DatenbankVersionAktuell = 85;
+        public const int DatenbankVersionAktuell = 86;
 
         private const string DatabasePwd = ";Password=m3ist3rg3ist3r;Persist Security Info=False";
 
@@ -287,6 +287,21 @@ namespace MeisterGeister.Daten
                     "ALTER TABLE Held_Zauber DROP CONSTRAINT Zauber_FK" + Environment.NewLine + "GO" + Environment.NewLine
                     + DropPrimaryKeySql("Zauber", connectionString) + Environment.NewLine + "GO" + Environment.NewLine
                     );
+            }
+
+            //Sonderbehandlung: Skripte 82 und 83 wurden evtl. nicht ausgeführt
+            if (version == 86)
+            {
+                var result = GetScalarFromDatabase("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Literatur' AND COLUMN_NAME = 'Größe'", connectionString);
+                if (result == null)
+                {
+                    sqlCommands.Add(" Korrektur_2.3.4.1-1", "ALTER TABLE [Literatur] ADD [Größe] float NULL");
+                    sqlCommands.Add(" Korrektur_2.3.4.1-2", "ALTER TABLE [Literatur] ADD [GrößeKomprimiert] float NULL");
+                    sqlCommands.Add(" Korrektur_2.3.4.1-3", "ALTER TABLE [Literatur] ADD [UrlPdf] nvarchar(500) NULL");
+                    sqlCommands.Add(" Korrektur_2.3.4.1-4", "ALTER TABLE [Literatur] ADD [UrlPrint] nvarchar(500) NULL");
+                    sqlCommands.Add(" Korrektur_2.3.4.1-5", "ALTER TABLE Audio_Titel ADD Datei nvarchar(500) NULL");
+                    sqlCommands.Add(" Korrektur_2.3.4.1-6", "ALTER TABLE Audio_Playlist_Titel ADD Reihenfolge int NOT NULL DEFAULT 0");
+                }
             }
 
             // Update-Commands ausführen
