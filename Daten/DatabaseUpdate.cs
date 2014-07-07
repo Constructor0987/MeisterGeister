@@ -300,7 +300,8 @@ namespace MeisterGeister.Daten
                     sqlCommands.Add(" Korrektur_2.3.4.1-3", "ALTER TABLE [Literatur] ADD [UrlPdf] nvarchar(500) NULL");
                     sqlCommands.Add(" Korrektur_2.3.4.1-4", "ALTER TABLE [Literatur] ADD [UrlPrint] nvarchar(500) NULL");
                     sqlCommands.Add(" Korrektur_2.3.4.1-5", "ALTER TABLE Audio_Titel ADD Datei nvarchar(500) NULL");
-                    sqlCommands.Add(" Korrektur_2.3.4.1-6", "ALTER TABLE Audio_Playlist_Titel ADD Reihenfolge int NOT NULL DEFAULT 0");
+                    sqlCommands.Add(" Korrektur_2.3.4.1-6", "ALTER TABLE Audio_Playlist_Titel DROP CONSTRAINT DF__Audio_Playlist_Titel__0000000000000A3F");
+                    sqlCommands.Add(" Korrektur_2.3.4.1-7", "ALTER TABLE Audio_Playlist_Titel ADD Reihenfolge int NOT NULL DEFAULT 0");
                 }
             }
 
