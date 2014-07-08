@@ -82,20 +82,6 @@ namespace MeisterGeister.Logic.Einstellung
             if (EinstellungChanged != null)
                 EinstellungChanged(new EinstellungChangedEventArgs(propertyName, einstellungName));
         }
-
-
-
-        public static bool IsMitUeberlastung
-        {
-            get
-            {
-                return GetEinstellung<bool>("MitUeberlastung");
-            }
-            set
-            {
-                SetEinstellung<bool>("MitUeberlastung", value);                
-            }
-        }
          
 
         private static Dictionary<string, Model.Einstellung> defaultValues = null;
@@ -175,6 +161,23 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        // TODO: Einstellung wird gecached, um Absturz bei Poben zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<bool> _cached_IsMitUeberlastung = null;
+        public static bool IsMitUeberlastung
+        {
+            get
+            {
+                if (_cached_IsMitUeberlastung == null)
+                    _cached_IsMitUeberlastung = GetEinstellung<bool>("MitUeberlastung");
+                return _cached_IsMitUeberlastung.GetValueOrDefault();
+            }
+            set
+            {
+                SetEinstellung<bool>("MitUeberlastung", value);
+                _cached_IsMitUeberlastung = value;
+            }
+        }
+
         public static int RSBerechnung
         {
             get
@@ -199,15 +202,20 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        // TODO: Einstellung wird gecached, um Absturz bei Poben zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<int> _cached_UeberlastungBerechnung = null;
         public static int UeberlastungBerechnung
         {
             get
             {
-                return GetEinstellung<int>("03_UeberlastungBerechnung");
+                if (_cached_UeberlastungBerechnung == null)
+                    _cached_UeberlastungBerechnung = GetEinstellung<int>("03_UeberlastungBerechnung");
+                return _cached_UeberlastungBerechnung.GetValueOrDefault();
             }
             set
             {
                 SetEinstellung<int>("03_UeberlastungBerechnung", value);
+                _cached_UeberlastungBerechnung = value;
             }
         }
 
