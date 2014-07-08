@@ -22,7 +22,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             String[] filenames = new string[0];
             try
             {
-               filenames = System.IO.Directory.GetFiles("Daten\\Bodenplan");
+               var allowedExtensions = new HashSet<string>(MeisterGeister.Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES, StringComparer.OrdinalIgnoreCase);
+                System.IO.DirectoryInfo dInfo = new DirectoryInfo("Daten\\Bodenplan");
+                filenames = dInfo.EnumerateFiles().Where(f => allowedExtensions.Contains(f.Extension.Remove(0, 1).ToLower())).Select(p => p.FullName).Distinct().ToArray();
             }
             catch (Exception e)
             {
