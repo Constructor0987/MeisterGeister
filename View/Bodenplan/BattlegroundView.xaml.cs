@@ -48,6 +48,8 @@ namespace MeisterGeister.View.Bodenplan
         //Adds dynamicly created Picturebuttons for each picture in folder "Pictures".
         private void AddPictureButtons()
         {
+            PictureButtonWrapPanel.Children.Clear(); // alte Bilder entfernen
+
             String[] picurls = Ressources.GetPictureUrls();
             for (int i = 0; i < picurls.Count(); i++)
             {
@@ -55,7 +57,7 @@ namespace MeisterGeister.View.Bodenplan
                 var brush = new ImageBrush();
                 brush.ImageSource = new BitmapImage(new Uri(picurls[i], UriKind.Relative));
                 String[] pathsplit = picurls[i].Split('\\');
-                Button b = new Button() { Width = 50, Height = 50, Name = _buttonPrefix+i};
+                Button b = new Button() { Width = 50, Height = 50, Name = _buttonPrefix+i, ToolTip = picurls[i]};
                 //b.Content = brush;
                 b.Background = brush;
 
