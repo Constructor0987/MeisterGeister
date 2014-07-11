@@ -1699,6 +1699,8 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0084.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0085.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0086.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0087.sql" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0088.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
