@@ -21,8 +21,6 @@ INSERT INTO [VorNachteil] (  [Name],  [Vorteil],  [Nachteil],  [HatWert],  [Wert
  VALUES (N'Prinzipientreue [Xo''Artal]' ,0 ,1 ,0 ,NULL ,N'Nachteile' ,N'Uthuria' ,'00000000-0000-0000-f024-000000000532' ,N'U2 102');
 INSERT INTO [VorNachteil] (  [Name],  [Vorteil],  [Nachteil],  [HatWert],  [WertTyp],  [Typ],  [Setting],  [VorNachteilGUID],  [Literatur]) 
  VALUES (N'Moralkodex [Xo''Artal]' ,0 ,1 ,0 ,NULL ,N'Nachteile' ,N'Uthuria' ,'00000000-0000-0000-f024-000000000533' ,N'U2 102');
-INSERT INTO [VorNachteil] (  [Name],  [Vorteil],  [Nachteil],  [HatWert],  [WertTyp],  [Typ],  [Setting],  [VorNachteilGUID],  [Literatur]) 
- VALUES (N'Spätweihe (Xo''Artal-Pantheon)' ,1 ,0 ,0 ,NULL ,N'Vorteile' ,N'Uthuria' ,'00000000-0000-0000-f024-000000000534' ,N'U2 103');
 
  --Sonderfertigkeit
  INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
@@ -111,7 +109,10 @@ INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  
  VALUES ('00000000-0000-0000-005f-000000001649' ,N'Liturgie: Verbannung des Götterbruders' ,0 ,N'Klerikal (Liturgie)' ,N'U2 109' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
  VALUES ('00000000-0000-0000-005f-000000001650' ,N'Liturgie: Gott der Götter (VII)' ,0 ,N'Klerikal (Liturgie)' ,N'LL 171 / U3 125' ,NULL);
+ INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
+ VALUES ('00000000-0000-0000-005f-000000001651' ,N'Spätweihe (Xo''Artal-Pantheon)' ,0 ,N'Klerikal' ,N'U2 103' ,NULL);
 
+--[Sonderfertigkeit_Setting]
  INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
  VALUES ('00000000-0000-0000-005f-000000000066' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
 INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
@@ -258,6 +259,8 @@ INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID]
  VALUES ('00000000-0000-0000-005f-000000001649' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
 INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
  VALUES ('00000000-0000-0000-005f-000000001650' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
+ INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+ VALUES ('00000000-0000-0000-005f-000000001651' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
 
  --Ausrüstung
  INSERT INTO [Ausrüstung] (  [AusrüstungGUID],  [Name],  [Gewicht],  [Literatur],  [Bemerkung],  [Tags],  [BasisAusrüstung]) 
