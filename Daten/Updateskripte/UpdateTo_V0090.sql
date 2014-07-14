@@ -538,3 +538,6 @@ INSERT INTO [Handelsgut_Setting] (  [HandelsgutGUID],  [SettingGUID],  [Preis], 
  VALUES ('00000000-0000-0000-002a-000000003475' ,'00000000-0000-0000-5e77-000000000001' ,NULL ,NULL);
 INSERT INTO [Handelsgut_Setting] (  [HandelsgutGUID],  [SettingGUID],  [Preis],  [Name]) 
  VALUES ('00000000-0000-0000-002a-000000003476' ,'00000000-0000-0000-5e77-000000000001' ,NULL ,NULL);
+
+ --Fehler in Basardaten
+ UPDATE [Handelsgut] SET [Name] = 'Furchtlos-Tropfen' WHERE [HandelsgutGUID] = '00000000-0000-0000-002a-000000000490';
