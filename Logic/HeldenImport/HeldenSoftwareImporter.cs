@@ -221,7 +221,7 @@ namespace MeisterGeister.Logic.HeldenImport
             _zauberMapping.Add("orkanwand", "wand aus luft (orkanwand)");
             _zauberMapping.Add("planastrale anderswelt", "planastrale anderwelt");
             _zauberMapping.Add("unsichtbare jäger", "unsichtbarer jäger");
-            _zauberMapping.Add("weiße mähn und goldener huf", "weiße mähn'' und gold''ner huf");
+            _zauberMapping.Add("weiße mähn und goldener huf", "weiße mähn' und gold'ner huf");
             _zauberMapping.Add("aquasphaero wasserball", "aquasphaero");
             _zauberMapping.Add("archosphaero erzball", "archosphaero");
             _zauberMapping.Add("humosphaero humusball", "humosphaero");
