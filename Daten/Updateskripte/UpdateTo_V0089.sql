@@ -7,6 +7,62 @@ INSERT INTO [Talent] (  [TalentGUID],  [Talentname],  [TalentgruppeID],  [Eigens
  VALUES ('00000000-0000-0000-007a-000000000409' ,N'Sprachen Kennen (Xoxota)' ,7 ,N'KL' ,N'IN' ,N'CH' ,N'Spezial' ,NULL ,NULL ,NULL ,N'A' ,NULL ,NULL ,N'Uthuria' ,N'U2 94');
 INSERT INTO [Talent] (  [TalentGUID],  [Talentname],  [TalentgruppeID],  [Eigenschaft1],  [Eigenschaft2],  [Eigenschaft3],  [Talenttyp],  [eBE],  [Spezialisierungen],  [Voraussetzungen],  [Steigerung],  [WikiLink],  [Untergruppe],  [Setting],  [Literatur]) 
  VALUES ('00000000-0000-0000-007a-000000000410' ,N'Lesen/Schreiben (Xo''Artal-Glyphen)' ,7 ,N'KL' ,N'KL' ,N'FF' ,N'Spezial' ,NULL ,NULL ,NULL ,N'A' ,NULL ,NULL ,N'Uthuria' ,N'U2 94');
+INSERT INTO [Talent] (  [TalentGUID],  [Talentname],  [TalentgruppeID],  [Eigenschaft1],  [Eigenschaft2],  [Eigenschaft3],  [Talenttyp],  [eBE],  [Spezialisierungen],  [Voraussetzungen],  [Steigerung],  [WikiLink],  [Untergruppe],  [Setting],  [Literatur]) 
+ VALUES ('00000000-0000-0000-007a-000000000411' ,N'Ritualkenntnis (Blutmagier)' ,10 ,N'MU' ,N'KL' ,N'KO' ,N'Spezial' ,NULL ,NULL ,NULL ,NULL ,N'Ritualkenntnis (Tradition)' ,NULL ,N'Uthuria' ,N'U2 97');
+INSERT INTO [Talent] (  [TalentGUID],  [Talentname],  [TalentgruppeID],  [Eigenschaft1],  [Eigenschaft2],  [Eigenschaft3],  [Talenttyp],  [eBE],  [Spezialisierungen],  [Voraussetzungen],  [Steigerung],  [WikiLink],  [Untergruppe],  [Setting],  [Literatur]) 
+ VALUES ('00000000-0000-0000-007a-000000000412' ,N'Liturgiekenntnis (Xo''Artal-Pantheon)' ,11 ,N'MU' ,N'IN' ,N'CH' ,N'Spezial' ,NULL ,NULL ,NULL ,NULL ,N'Liturgiekenntnis' ,NULL ,N'Uthuria' ,N'U2 97');
+
+-- Zauber
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000022' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Goldene Haut');
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000045' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000064' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Nepillomes Zunge / Des Goldenen Zunge / Rätselzunge');
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000073' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000074' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Obsidiankälte');
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000093' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000098' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000099' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000116' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Pantherkrallen / Jaguarkrallen');
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000118' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000137' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000144' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000146' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000186' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000190' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000193' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000197' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Caljixiuhs Grüne Hölle');
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000203' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000212' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Goldener Arm');
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000218' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000225' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Schön wie der Tag');
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000241' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000257' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000265' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,NULL);
+INSERT INTO [Zauber_Setting] (  [ZauberGUID],  [SettingGUID],  [Repräsentationen],  [Name]) 
+ VALUES ('00000000-0000-0000-00ca-000000000267' ,'00000000-0000-0000-5e77-000000000005' ,N'Xo''Artal' ,N'Xaa-Olkins-Starre');
 
  --VorNachteil
  INSERT INTO [VorNachteil] (  [Name],  [Vorteil],  [Nachteil],  [HatWert],  [WertTyp],  [Typ],  [Setting],  [VorNachteilGUID],  [Literatur]) 
@@ -44,41 +100,41 @@ INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
  VALUES ('00000000-0000-0000-005f-000000001617' ,N'Liturgie: Caljixiuhs Blutsaat' ,0 ,N'Klerikal (Liturgie)' ,N'U2 106' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001618' ,N'Apport (Uthuria)' ,0 ,N'Magisch (Ritual)' ,N'U2 109' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001618' ,N'Traditionsritual: Apport (Uthuria)' ,0 ,N'Magisch (Ritual)' ,N'U2 109' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001619' ,N'Blutanalyse' ,0 ,N'Magisch (Ritual)' ,N'U2 109' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001619' ,N'Traditionsritual: Blutanalyse' ,0 ,N'Magisch (Ritual)' ,N'U2 109' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001620' ,N'Blutopfer der Tetlachi' ,0 ,N'Magisch (Ritual)' ,N'U2 109, 110' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001620' ,N'Traditionsritual: Blutopfer der Tetlachi' ,0 ,N'Magisch (Ritual)' ,N'U2 109, 110' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001621' ,N'Auge der Sonne' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001621' ,N'Traditionsritual: Auge der Sonne' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001622' ,N'Blutsteingespür' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001622' ,N'Traditionsritual: Blutsteingespür' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001623' ,N'Kleine Formung des Blutsteins' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001623' ,N'Traditionsritual: Kleine Formung des Blutsteins' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001624' ,N'Schrei nach Macht' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001624' ,N'Traditionsritual: Schrei nach Macht' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001625' ,N'Bad im Blute' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001625' ,N'Traditionsritual: Bad im Blute' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001626' ,N'Blutraub' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001626' ,N'Traditionsritual: Blutraub' ,0 ,N'Magisch (Ritual)' ,N'U2 110' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001627' ,N'Haut des Erdblutes' ,0 ,N'Magisch (Ritual)' ,N'U2 110, 111' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001627' ,N'Traditionsritual: Haut des Erdblutes' ,0 ,N'Magisch (Ritual)' ,N'U2 110, 111' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001628' ,N'Große Formung des Blutsteins' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001628' ,N'Traditionsritual: Große Formung des Blutsteins' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001629' ,N'Iteration' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001629' ,N'Traditionsritual: Iteration' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001630' ,N'Kraft des Opfertieres' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001630' ,N'Traditionsritual: Kraft des Opfertieres' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001631' ,N'Blutbanner' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001631' ,N'Traditionsritual: Blutbanner' ,0 ,N'Magisch (Ritual)' ,N'U2 111' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001632' ,N'Erdblutwächter' ,0 ,N'Magisch (Ritual)' ,N'U2 112' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001632' ,N'Traditionsritual: Erdblutwächter' ,0 ,N'Magisch (Ritual)' ,N'U2 112' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001633' ,N'Fülle des Blutsteins' ,0 ,N'Magisch (Ritual)' ,N'U2 112' ,NULL);
+ VALUES ('00000000-0000-0000-005f-000000001633' ,N'Traditionsritual: Fülle des Blutsteins' ,0 ,N'Magisch (Ritual)' ,N'U2 112' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001634' ,N'Waffenloses Manöver (Coatls List)' ,0 ,N'Kampf' ,N'U2 95' ,N'Ringen 10');
+ VALUES ('00000000-0000-0000-005f-000000001634' ,N'Waffenlose Kampftechnik (Coatls List)' ,0 ,N'Kampf' ,N'U2 95' ,N'Ringen 10');
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
- VALUES ('00000000-0000-0000-005f-000000001635' ,N'Waffenloses Manöver (Jaguarklaue)' ,0 ,N'Kampf' ,N'U2 95' ,N'Raufen 10, Ringen 7');
+ VALUES ('00000000-0000-0000-005f-000000001635' ,N'Waffenlose Kampftechnik (Jaguarklaue)' ,0 ,N'Kampf' ,N'U2 95' ,N'Raufen 10, Ringen 7');
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
  VALUES ('00000000-0000-0000-005f-000000001636' ,N'Liturgie: Augen des Tieres' ,0 ,N'Klerikal (Liturgie)' ,N'U2 108' ,NULL);
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
@@ -111,6 +167,18 @@ INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  
  VALUES ('00000000-0000-0000-005f-000000001650' ,N'Liturgie: Gott der Götter (VII)' ,0 ,N'Klerikal (Liturgie)' ,N'LL 171 / U3 125' ,NULL);
  INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
  VALUES ('00000000-0000-0000-005f-000000001651' ,N'Spätweihe (Xo''Artal-Pantheon)' ,0 ,N'Klerikal' ,N'U2 103' ,NULL);
+INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
+ VALUES ('00000000-0000-0000-005f-000000001652' ,N'Bindung des Blutsteins' ,0 ,N'Magisch (Ritual)' ,N'U2 105' ,'Ritualkenntnis (Blutmagier) 3');
+INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
+ VALUES ('00000000-0000-0000-005f-000000001653' ,N'Blutmatrixgeber' ,0 ,N'Magisch' ,N'U2 106' ,'ARCANOVI 14, Magiekunde 14');
+INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
+ VALUES ('00000000-0000-0000-005f-000000001654' ,N'Statuenkonstrukteur' ,0 ,N'Magisch' ,N'U2 106' ,'MU 15, Magiekunde 11 | Götter/Kulte 11, SF Traditionsritual: Erdblutwächter | SF Liturgie: Ewiger Geisterwächter');
+INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
+ VALUES ('00000000-0000-0000-005f-000000001655' ,N'Repräsentation (Blutmagier)' ,0 ,N'Magisch' ,N'U2 97' ,NULL);
+INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
+ VALUES ('00000000-0000-0000-005f-000000001656' ,N'Ritualkenntnis (Blutmagier)' ,0 ,N'Magisch' ,N'U2 97' ,NULL);
+INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
+ VALUES ('00000000-0000-0000-005f-000000001657' ,N'Liturgiekenntnis (Xo''Artal-Pantheon)' ,0 ,N'Klerikal' ,N'U2 97' ,NULL);
 
 --[Sonderfertigkeit_Setting]
  INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
@@ -259,8 +327,20 @@ INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID]
  VALUES ('00000000-0000-0000-005f-000000001649' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
 INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
  VALUES ('00000000-0000-0000-005f-000000001650' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
- INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
  VALUES ('00000000-0000-0000-005f-000000001651' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
+INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+ VALUES ('00000000-0000-0000-005f-000000001652' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
+INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+ VALUES ('00000000-0000-0000-005f-000000001653' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
+INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+ VALUES ('00000000-0000-0000-005f-000000001654' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
+INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+ VALUES ('00000000-0000-0000-005f-000000001655' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
+INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+ VALUES ('00000000-0000-0000-005f-000000001656' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
+INSERT INTO [Sonderfertigkeit_Setting] (  [SonderfertigkeitGUID],  [SettingGUID],  [Verbreitung],  [Name]) 
+ VALUES ('00000000-0000-0000-005f-000000001657' ,'00000000-0000-0000-5e77-000000000005' ,NULL ,NULL);
 
  --Ausrüstung
  INSERT INTO [Ausrüstung] (  [AusrüstungGUID],  [Name],  [Gewicht],  [Literatur],  [Bemerkung],  [Tags],  [BasisAusrüstung]) 

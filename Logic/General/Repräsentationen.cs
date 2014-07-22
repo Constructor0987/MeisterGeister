@@ -39,6 +39,7 @@ namespace MeisterGeister.Logic.General
                     rlist.Add(new Repräsentation("Mudramulisch", "Mud", "IN", "OiC 50"));
                     rlist.Add(new Repräsentation("Satuarisch", "Sat", "IN", "OiC 51"));
                     rlist.Add(new Repräsentation("Druidisch-Geodisch", "Dru/Geo", "KL", "OiC 49"));
+                    rlist.Add(new Repräsentation("Blutmagisch Xo'Artal", "Xo'Artal", "KL", "U2 97"));
                     repräsentationenListe = rlist;
                 }
                 return repräsentationenListe;
