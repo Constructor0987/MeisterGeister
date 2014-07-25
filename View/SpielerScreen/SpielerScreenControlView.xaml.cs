@@ -30,6 +30,12 @@ namespace MeisterGeister.View.SpielerScreen
         {
             InitializeComponent();
 
+            _labelAnzeigen.Content = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
+            if (ScreenList.Count <= 1)
+                _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Visible;
+            else
+                _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Hidden;
+
             // Letzten Bilderpfad laden
             _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
             LoadImagesFromDir(_textBlockFilePath.Text);
@@ -40,6 +46,8 @@ namespace MeisterGeister.View.SpielerScreen
             if (SpielerWindow.IsInstantiated)
                 SetPreviews();
         }
+
+        List<System.Windows.Forms.Screen> ScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {

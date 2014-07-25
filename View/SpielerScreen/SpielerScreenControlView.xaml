@@ -100,6 +100,8 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Button Grid.Column="0" Grid.Row="0" Margin="2" Height="45" Click="ButtonSpielerInfo_Click" Width="45">
                 <Button.ToolTip>
@@ -133,8 +135,12 @@
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Margin="4,6,4,14" />
                 </Grid>
             </Button>
-            <Rectangle Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Width="90" Height="60" Name="_spielerWindowVorschau" />
+            <Border Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Width="90" Height="60" BorderBrush="Black" BorderThickness="1">
+                <Rectangle Name="_spielerWindowVorschau" />
+            </Border>
             <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Content="Vorschau..." Click="ButtonVorschau_Click" />
+            <Label Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Margin="5" Content="2 Bidschirm(e)" HorizontalAlignment="Center" Name="_labelAnzeigen" ToolTip="Erkannte Bildschirme" />
+            <TextBlock Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="2" Margin="5" Text="Das Tool kann erst mit mehreren Bildschirmen voll eingesetzt werden." HorizontalAlignment="Center" Name="_textBlockNurEinMonitor" TextWrapping="Wrap" Foreground="Red" FontSize="10" MaxWidth="85" TextAlignment="Center" Visibility="Hidden" />
         </Grid>
     </Grid>
 </UserControl>
