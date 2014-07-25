@@ -40,7 +40,7 @@ namespace MeisterGeister.View.Settings
             setStdPfad();
             CreateStandardPfadItems();
             // CheckBox & Slider aktualisieren
-            //_checkboxSpieldauerBerechnen.IsChecked = Einstellungen.AudioSpieldauerBerechnen;
+            _checkboxSpieldauerBerechnen.IsChecked = Einstellungen.AudioSpieldauerBerechnen;
             _sldFading.Value = Einstellungen.Fading;
         }
 

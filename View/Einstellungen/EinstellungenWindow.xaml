@@ -308,12 +308,12 @@
                             <!--<StackPanel Margin="4" Orientation="Horizontal">
                                 <CheckBox x:Name="_checkboxGleichSpielen"  Margin="2" IsChecked="{Binding IsAudioDirektAbspielen, Mode=TwoWay}" />
                                 <TextBlock Margin="4,0,0,0" Text="Audio-Player: Beim Auswählen direkt abspielen" Width="398" TextWrapping="WrapWithOverflow" />
-                            </StackPanel>
-
-                            <StackPanel Margin="4" Orientation="Horizontal">
-                                <CheckBox x:Name="_checkboxSpieldauerBerechnen" Margin="2" IsChecked="{Binding IsAudioSpieldauerBerechnen, Mode=TwoWay}" />
-                                <TextBlock Margin="4,0,0,0" Text="Audio-Player: Gesamtspieldauer beim Abspielen berechnen" Width="398" TextWrapping="WrapWithOverflow" />
                             </StackPanel>-->
+
+                            <StackPanel Margin="4,10" Orientation="Horizontal">
+                                <CheckBox x:Name="_checkboxSpieldauerBerechnen" Margin="2" IsChecked="{Binding IsAudioSpieldauerBerechnen, Mode=TwoWay}" />
+                                <TextBlock Margin="4,0,0,0" Text="Spieldauer der Titel und der Playlisten berechnen" Width="398" TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
                                 <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />

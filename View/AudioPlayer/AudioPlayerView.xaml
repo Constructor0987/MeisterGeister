@@ -655,7 +655,7 @@
                     <Border Height="55" Name="border1" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}">
                         <Grid>
                             <Border BorderBrush="Silver" BorderThickness="1" Height="45" Name="border3" Width="402" CornerRadius="20" />
-                            <ToggleButton Height="24" Name="btnShuffle" Margin="-320,0,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsChecked="True" ToolTip="Shuffle-Mode" Focusable="False" IsTabStop="False" >
+                            <ToggleButton Name="btnBGShuffle" Height="24" Margin="-320,0,0,0" Width="24" ClickMode="Press" Click="btnShuffle_Click" IsChecked="True" ToolTip="Shuffle-Mode" Focusable="False" IsTabStop="False" >
                                 <Image Name="btnShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" Style="{StaticResource ImageEnabled}" />
                             </ToggleButton>
 
