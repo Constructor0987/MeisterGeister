@@ -61,13 +61,16 @@ namespace MeisterGeister.View.SpielerScreen
                 LoadImage(pfad);
         }
 
+        public static string ImageFile = string.Empty;
+
         private void LoadImage(string file)
         {
             _textBlockFilePath.Text = file;
+            ImageFile = _textBlockFilePath.Text;
             try
             {
                 // Bild
-                LoadImage(_textBlockFilePath.Text, _image1);
+                LoadImage(ImageFile, _image1);
             }
             catch
             {
@@ -127,7 +130,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
-            SpielerWindow.SetImage(_textBlockFilePath.Text, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
+            SpielerWindow.SetImage(ImageFile, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
         }
 
         private void LoadImage(string path, Image img)
@@ -181,7 +184,7 @@ namespace MeisterGeister.View.SpielerScreen
         {
             try
             {
-                System.Diagnostics.Process.Start(_textBlockFilePath.Text);
+                System.Diagnostics.Process.Start(ImageFile);
             }
             catch (Exception ex)
             {
