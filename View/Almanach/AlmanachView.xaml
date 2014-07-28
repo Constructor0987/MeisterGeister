@@ -3,9 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General" 
              mc:Ignorable="d" Background="{StaticResource Background1}"
              d:DesignHeight="389" d:DesignWidth="685">
+    <UserControl.Resources>
+        <DataTemplate x:Key="AlmanachItemTemplate" >
+            <Border Margin="5" Padding="4" CornerRadius="5">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="1,0.5" Opacity="0.3" StartPoint="0,0.5">
+                        <GradientStop Color="WhiteSmoke" Offset="0" />
+                        <GradientStop Color="#FFFFFFC7" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel>
+                    <DockPanel Margin="0,2,0,0">
+                        <TextBlock Margin="2,2,0,0" Width="300" FontWeight="Bold" Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" />
+                        <TextBlock Margin="2,2,0,0" Width="260" Text="{Binding Path=Kategorie}" ToolTip="Kategorie" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
+                        <ViewGeneral:LiteraturControl DockPanel.Dock="Right" Height="32" Padding="2" Literaturangabe="{Binding Literatur}" LiteraturAnzeigeArt="TextLang" />
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <Grid>
-        <TextBlock Text="Hier entsteht das Almanach-Tool..." HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Expander Grid.Row="0" Margin="4" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Filter" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <Grid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
+                        <TextBox Margin="5,10" Width="250" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Expander>
+        <Expander Grid.Row="1" Margin="4" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Almanach-Einträge" Style="{DynamicResource TextTitel}" />
+            </Expander.Header>
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <ListBox Padding="4" Background="Transparent" FontSize="14" 
+                 ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
+                 ItemsSource="{Binding FilteredAlmanachItemListe}" ItemTemplate="{StaticResource AlmanachItemTemplate}"
+                 VirtualizingStackPanel.IsVirtualizing="True">
+                    <ListBox.BorderBrush>
+                        <SolidColorBrush />
+                    </ListBox.BorderBrush>
+                </ListBox>
+            </Border>
+        </Expander>
     </Grid>
 </UserControl>

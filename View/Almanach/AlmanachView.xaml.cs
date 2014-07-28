@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+// Eigene Usings
+using VM = MeisterGeister.ViewModel.Almanach;
 
 namespace MeisterGeister.View.Almanach
 {
@@ -23,6 +25,27 @@ namespace MeisterGeister.View.Almanach
         public AlmanachView()
         {
             InitializeComponent();
+            VM = new VM.AlmanachViewModel();
+        }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.AlmanachViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.AlmanachViewModel))
+                    return null;
+                return DataContext as VM.AlmanachViewModel;
+            }
+            set { DataContext = value; }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (VM != null)
+                VM.Refresh();
         }
     }
 }

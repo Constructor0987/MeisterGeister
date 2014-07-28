@@ -91,5 +91,10 @@ namespace MeisterGeister.Model
         {
             get { return TalentgruppeID == GRUPPE_KAMPF; }
         }
+
+        public string Name
+        {
+            get { return Talentname; }
+        }
     }
 }

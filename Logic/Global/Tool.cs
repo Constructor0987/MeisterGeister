@@ -144,6 +144,13 @@ namespace MeisterGeister
                 MenuGruppe = "Wege des Meisters",
                 ViewType = typeof(View.AresPlayer.AresPlayerView)
             });
+            ToolListe.Add("Almanach", new Tool()
+            {
+                Name = "Almanach",
+                Icon = "Icons/hesinde.png",
+                MenuGruppe = "Wege des Meisters",
+                ViewType = typeof(View.Almanach.AlmanachView)
+            });
             if (Global.INTERN) // im Release-Modus ausblenden
             {
                 ToolListe.Add("Alchimie", new Tool()
@@ -180,13 +187,6 @@ namespace MeisterGeister
                     Icon = "Icons/kartenzeichnen.png",
                     MenuGruppe = "Wege des Wanderers",
                     ViewType = typeof(View.Reise.ReiseView)
-                });
-                ToolListe.Add("Almanach", new Tool()
-                {
-                    Name = "Almanach",
-                    Icon = "Icons/hesinde.png",
-                    MenuGruppe = "Wege des Meisters",
-                    ViewType = typeof(View.Almanach.AlmanachView)
                 });
             }
         }
