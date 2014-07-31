@@ -30,8 +30,9 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "JingleAbstellen", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Jingle beim Start deaktivieren", Wert = "False" },
                 new Model.Einstellung() { Name = "ShowChangeLog", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "ChangeLog beim Start anzeigen", Wert = "True" },
 
-                new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "True" },
-                new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },
+                new Model.Einstellung() { Name = "Fading", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = "", Wert = "600" },               
+                new Model.Einstellung() { Name = "AudioInAnderemPfadSuchen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
+                new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
                 new Model.Einstellung() { Name = "AudioVerzeichnis", Kontext = "Audioplayer", Kategorie = null, Typ = "String", Beschreibung = null, Wert = "C:\\" },
                 new Model.Einstellung() { Name = "AudioSpieldauerBerechnen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = null, Wert = "1" },
 
@@ -292,20 +293,6 @@ namespace MeisterGeister.Logic.Einstellung
 
         public static EventHandler WuerfelSoundAbspielenChanged;
 
-        public static bool AudioDirektAbspielen
-        {
-            get
-            {
-                return GetEinstellung<bool>("AudioDirektAbspielen");
-            }
-            set
-            {
-                SetEinstellung<bool>("AudioDirektAbspielen", value);
-                if (AudioDirektAbspielen_Click != null)
-                    AudioDirektAbspielen_Click(null, new EventArgs());
-            }
-        }
-        public static EventHandler AudioDirektAbspielen_Click;
 
         public static string AudioVerzeichnis
         {
@@ -328,6 +315,18 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("AudioSpieldauerBerechnen", value);
+            }
+        }
+
+        public static bool AudioInAnderemPfadSuchen
+        {
+            get
+            {
+                return GetEinstellung<bool>("AudioInAnderemPfadSuchen");
+            }
+            set
+            {
+                SetEinstellung<bool>("AudioInAnderemPfadSuchen", value);
             }
         }
 

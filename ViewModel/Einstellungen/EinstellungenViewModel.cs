@@ -14,15 +14,6 @@ namespace MeisterGeister.ViewModel.Settings
 
         #region Property
                 
-        public Boolean IsAudioDirektAbspielen
-        {
-            get { return MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen; }
-            set
-            {
-                MeisterGeister.Logic.Einstellung.Einstellungen.AudioDirektAbspielen = value;
-                OnChanged("IsAudioDirektAbspielen");
-            }
-        }
 
         public Boolean IsAudioSpieldauerBerechnen
         {
@@ -31,6 +22,16 @@ namespace MeisterGeister.ViewModel.Settings
             {
                 MeisterGeister.Logic.Einstellung.Einstellungen.AudioSpieldauerBerechnen = value;
                 OnChanged("IsAudioSpieldauerBerechnen");
+            }
+        }
+
+        public Boolean IsInAnderemPfadSuchen
+        {
+            get { return MeisterGeister.Logic.Einstellung.Einstellungen.AudioInAnderemPfadSuchen; }
+            set
+            {
+                MeisterGeister.Logic.Einstellung.Einstellungen.AudioInAnderemPfadSuchen = value;
+                OnChanged("IsInAnderemPfadSuchen");
             }
         }
 

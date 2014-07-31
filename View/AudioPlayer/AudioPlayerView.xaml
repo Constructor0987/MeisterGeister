@@ -447,7 +447,7 @@
 
                         <Border Name="brdEditorListe" Margin="3,8,6,9" Grid.Row="2" Style="{DynamicResource ControlContentBorder}">
                             <Grid Name="grdEditorListe" >
-                                <Grid Name="grdEditor1" AllowDrop="True" Drop="grdEditorX_Drop" ToolTip="Musikdateien über Drag&amp;Drop einfügen" >
+                                <Grid Name="grdEditor1" AllowDrop="True" Drop="grdEditorX_Drop" ToolTip="Musikdateien über Drag&amp;Drop einfügen |  MusikZeilen mit gedrückter Strg-Taste kopieren" >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="77" />
                                         <RowDefinition Height="*" />
@@ -638,7 +638,7 @@
                                         <Border Grid.Row="3" VerticalAlignment="Bottom" Grid.ColumnSpan="11" BorderBrush="DarkSlateGray" Margin="0,0,0,337" Height="1" BorderThickness="1" />
                                     </Grid>
 
-                                    <ListBox Background="Transparent" Name="lbEditorListe" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="lbEditor_SelectionChanged" />
+                                    <ListBox Background="Transparent" Name="lbEditorListe" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="lbEditor_SelectionChanged" Drop="lbEditor_Drop" />
                                 </Grid>
                             </Grid>
                         </Border>

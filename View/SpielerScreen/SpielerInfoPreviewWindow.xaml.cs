@@ -92,35 +92,5 @@ namespace MeisterGeister.View.SpielerScreen
             if (SpielerInfoPreviewWindowClosed != null)
                 SpielerInfoPreviewWindowClosed(null, new EventArgs());
         }
-
-        private void ButtonKampf_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.SetKampfInfoView();
-        }
-
-        private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.ReOpen();
-        }
-
-        private void ButtonBodenplan_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.SetBodenplanView();
-        }
-
-        private void ButtonVorschau_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerInfoPreviewWindow.Show();
-        }
-
-        private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.Hide();
-        }
-
-        private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.SetImage(SpielerScreenControlView.ImageFile, Stretch.Uniform);
-        }
     }
 }

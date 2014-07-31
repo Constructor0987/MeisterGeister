@@ -30,12 +30,6 @@ namespace MeisterGeister.View.SpielerScreen
         {
             InitializeComponent();
 
-            _labelAnzeigen.Content = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
-            if (ScreenList.Count <= 1)
-                _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Visible;
-            else
-                _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Hidden;
-
             // Letzten Bilderpfad laden
             _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
             LoadImagesFromDir(_textBlockFilePath.Text);
@@ -46,8 +40,6 @@ namespace MeisterGeister.View.SpielerScreen
             if (SpielerWindow.IsInstantiated)
                 SetPreviews();
         }
-
-        List<System.Windows.Forms.Screen> ScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
@@ -61,16 +53,13 @@ namespace MeisterGeister.View.SpielerScreen
                 LoadImage(pfad);
         }
 
-        public static string ImageFile = string.Empty;
-
         private void LoadImage(string file)
         {
             _textBlockFilePath.Text = file;
-            ImageFile = _textBlockFilePath.Text;
             try
             {
                 // Bild
-                LoadImage(ImageFile, _image1);
+                LoadImage(_textBlockFilePath.Text, _image1);
             }
             catch
             {
@@ -130,7 +119,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
-            SpielerWindow.SetImage(ImageFile, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
+            SpielerWindow.SetImage(_textBlockFilePath.Text, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
         }
 
         private void LoadImage(string path, Image img)
@@ -184,7 +173,7 @@ namespace MeisterGeister.View.SpielerScreen
         {
             try
             {
-                System.Diagnostics.Process.Start(ImageFile);
+                System.Diagnostics.Process.Start(_textBlockFilePath.Text);
             }
             catch (Exception ex)
             {

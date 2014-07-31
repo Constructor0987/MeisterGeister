@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MeisterGeister.Daten;
-using System.Runtime.InteropServices;
 
 namespace MeisterGeister.View.Windows
 {
@@ -204,83 +203,13 @@ namespace MeisterGeister.View.Windows
 
             string auflösung = SystemParameters.PrimaryScreenWidth.ToString() + "x" + SystemParameters.PrimaryScreenHeight.ToString()
                 + " (" + SystemParameters.FullPrimaryScreenWidth.ToString() + "x" + SystemParameters.FullPrimaryScreenHeight.ToString() + ")";
-
-            string screenInfo = System.Windows.Forms.Screen.AllScreens.Length.ToString() + Environment.NewLine;
-            foreach (var item in System.Windows.Forms.Screen.AllScreens)
-            {
-                screenInfo += string.Format("{0} ({1}, BitsPerPixel: {2}, Primary: {3})\n", item.DeviceName, item.Bounds.ToString(), item.BitsPerPixel, item.Primary.ToString());
-            }
-
-            // zusätzliche Display Informationen ermitteln
-            var device = new DISPLAY_DEVICE();
-            device.cb = Marshal.SizeOf(device);
-            try
-            {
-                for (uint id = 0; EnumDisplayDevices(null, id, ref device, 0); id++)
-                {
-                    device.cb = Marshal.SizeOf(device);
-                    EnumDisplayDevices(device.DeviceName, 0, ref device, 0);
-                    device.cb = Marshal.SizeOf(device);
-
-                    screenInfo += string.Format("Nr={0}, Name={1}, DeviceString={2}, StateFlags={3}\n", id, device.DeviceName, device.DeviceString, device.StateFlags.ToString());
-                    if (device.DeviceName == null || device.DeviceName == "") continue;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(String.Format("{0}", ex.ToString()));
-            }
-
+            
             return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\nSQL-CE-Version: {4}\nArbeitsverzeichnis: {5}\nMeisterGeister-Verzeichnis: {6}"
                 + "\nLaufwerk: {7}\nProzessoranzahl: {8}\nWorkingSet: {9}\nRenderingebene: {10}\nAuflösung: {11}\nBildschirme: {12}\n\nPerformance:{13}",
                 Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), App.SqlCompactVersion == null ? "-" : App.SqlCompactVersion.ToString(), Environment.CurrentDirectory,
-                Logic.Extensions.FileExtensions.GetHomeDirectory(), driveInfoText, Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, screenInfo,
+                Logic.Extensions.FileExtensions.GetHomeDirectory(), driveInfoText, Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, System.Windows.Forms.Screen.AllScreens.Length,
                 Logic.General.Logger.PerformanceLog);
         }
-
-        #region // Display Informationen
-
-        [DllImport("user32.dll")]
-        public extern static bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
-
-        [Flags()]
-        public enum DisplayDeviceStateFlags : int
-        {
-            /// <summary>The device is part of the desktop.</summary>
-            AttachedToDesktop = 0x1,
-            MultiDriver = 0x2,
-            /// <summary>The device is part of the desktop.</summary>
-            PrimaryDevice = 0x4,
-            /// <summary>Represents a pseudo device used to mirror application drawing for remoting or other purposes.</summary>
-            MirroringDriver = 0x8,
-            /// <summary>The device is VGA compatible.</summary>
-            VGACompatible = 0x16,
-            /// <summary>The device is removable; it cannot be the primary display.</summary>
-            Removable = 0x20,
-            /// <summary>The device has more display modes than its output devices support.</summary>
-            ModesPruned = 0x8000000,
-            Remote = 0x4000000,
-            Disconnect = 0x2000000
-        }
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-        public struct DISPLAY_DEVICE
-        {
-            [MarshalAs(UnmanagedType.U4)]
-            public int cb;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            public string DeviceName;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-            public string DeviceString;
-            [MarshalAs(UnmanagedType.U4)]
-            public DisplayDeviceStateFlags StateFlags;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-            public string DeviceID;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-            public string DeviceKey;
-        }
-
-        #endregion
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
@@ -304,5 +233,4 @@ namespace MeisterGeister.View.Windows
             Clipboard.SetText(_textBoxMsg.Text);
         }
     }
-
 }

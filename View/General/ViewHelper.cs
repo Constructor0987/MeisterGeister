@@ -169,7 +169,7 @@ namespace MeisterGeister.View.General
             objDialog.DefaultExt = String.Empty;
             objDialog.CheckFileExists = checkFileExists;
             objDialog.Filter = GetExtensionsFilter(extensions);
-
+            
             objDialog.AddExtension = true;
             objDialog.FileName = filename;
             objDialog.Multiselect = true;
@@ -197,6 +197,12 @@ namespace MeisterGeister.View.General
                     case "ogg":
                     case "wma":
                         sname = "Audio-Dateien";
+                        break;
+                    case "m3u8":
+                        sname = "Winamp-Playlist";
+                        break;
+                    case "wpl":
+                        sname = "Windows MediaPlayer-Wiedergabeliste";
                         break;
                     case "bmp":
                     case "gif":

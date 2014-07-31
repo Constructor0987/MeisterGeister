@@ -41,6 +41,7 @@ namespace MeisterGeister.View.Settings
             CreateStandardPfadItems();
             // CheckBox & Slider aktualisieren
             _checkboxSpieldauerBerechnen.IsChecked = Einstellungen.AudioSpieldauerBerechnen;
+            _checkboxInAnderemPfadSuchen.IsChecked = Einstellungen.AudioInAnderemPfadSuchen;
             _sldFading.Value = Einstellungen.Fading;
         }
 

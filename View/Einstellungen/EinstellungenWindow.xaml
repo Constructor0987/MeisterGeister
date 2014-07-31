@@ -314,6 +314,11 @@
                                 <CheckBox x:Name="_checkboxSpieldauerBerechnen" Margin="2" IsChecked="{Binding IsAudioSpieldauerBerechnen, Mode=TwoWay}" />
                                 <TextBlock Margin="4,0,0,0" Text="Spieldauer der Titel und der Playlisten berechnen" Width="398" TextWrapping="WrapWithOverflow" />
                             </StackPanel>
+                            
+                            <StackPanel Margin="4,10" Orientation="Horizontal">
+                                <CheckBox x:Name="_checkboxInAnderemPfadSuchen" Margin="2" IsChecked="{Binding IsInAnderemPfadSuchen, Mode=TwoWay}" />
+                                <TextBlock Margin="4,0,0,0" Text="Suchen nicht gefundener Dateien in allen Standard-Pfaden" Width="398" TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="20,0,0,0" HorizontalAlignment="Left">
                                 <Label Content="Audio-Player Crossfading" HorizontalAlignment="Center" VerticalAlignment="Center" />

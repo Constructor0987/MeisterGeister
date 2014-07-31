@@ -96,11 +96,6 @@ namespace MeisterGeister.View.General
                     kürzel += " Errata";
 
                 Model.Literatur li = Model.Literatur.GetByAbkürzung(kürzel);
-                if (li == null)
-                {
-                    ViewHelper.Popup("Diesen Literatureintrag gibt es leider nicht, sodass kein PDF aufgerufen werden kann.");
-                    return;
-                }
                 if (string.IsNullOrEmpty(li.Pfad))
                 {
                     if (ViewHelper.ConfirmYesNoCancel("Kein PDF hinterlegt",

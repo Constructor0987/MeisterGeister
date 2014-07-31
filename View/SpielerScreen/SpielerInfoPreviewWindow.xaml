@@ -7,43 +7,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Margin="2" Height="35" Click="ButtonSpielerInfo_Click" Width="35">
-                <Button.ToolTip>
-                    <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
-            		    Ein leeres Fenster starten, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können.
-                    </TextBlock>
-                </Button.ToolTip>
-                <Image Source="/Images/Icons/General/screen.png" />
-            </Button>
-            <Button Margin="2" Height="35" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click" Width="35">
-                <Grid>
-                    <Image Source="/Images/Icons/General/screen.png" />
-                    <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
-                </Grid>
-            </Button>
-            <Button Margin="2" Height="35" Click="ButtonKampf_Click" Width="35" ToolTip="Den Spielern die INI-Liste des aktuellen Kampfes zeigen.">
-                <Grid>
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/nahkampf_01.png" Margin="4,6,4,14" />
-                </Grid>
-            </Button>
-            <Button Margin="2" Height="35" Click="ButtonBodenplan_Click" Width="35" ToolTip="Den Spielern den Kampf-Bodenplan zeigen.">
-                <Grid>
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/bodenplan.png" Margin="4,6,4,14" />
-                </Grid>
-            </Button>
-            <Button Margin="2" Height="35" Click="ButtonBildZeigen_Click" Width="35" ToolTip="Den Spielern das ausgewählte Bild zeigen.">
-                <Grid>
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
-                    <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Margin="4,6,4,14" />
-                </Grid>
-            </Button>
-        </StackPanel>
+        <CheckBox Grid.Row="0" Margin="5" Content="Fenster immer im Vordergrund" IsChecked="{Binding Topmost, ElementName=_spielerInfoPreviewWindow}" />
         <Rectangle Grid.Row="1" Name="_rectangle" />
-        <CheckBox Grid.Row="2" Margin="5" Content="Fenster immer im Vordergrund" IsChecked="{Binding Topmost, ElementName=_spielerInfoPreviewWindow}" />
     </Grid>
 </Window>
