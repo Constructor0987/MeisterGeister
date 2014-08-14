@@ -1706,6 +1706,8 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0089.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0090.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0091.sql" />
+    <Resource Include="Images\Icons\General\mouse_cursornormal.png" />
+    <Resource Include="Images\Icons\General\mouse_cursorplus.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

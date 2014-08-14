@@ -58,8 +58,8 @@
                 </Button>
                 <!--<TextBox Name="tboxKategorie" Grid.Column="1" Grid.Row="1" FontStyle="Italic" Text="ruhig, erholsam, gemütlich" Padding="2" Margin="15,0,0,0" Foreground="DarkSlateGray" Background="#83F5F5DC" />-->
 
-                <Image Name="imgLaufstärke" Grid.Column="4" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" />
-                <Image Name="imgPause" Grid.Column="4" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" />
+                <Image Name="imgLaufstärke" Grid.Column="4" Margin="5,0,-5,0" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" />
+                <Image Name="imgPause" Grid.Column="4" Margin="5,0,-5,0" Source="/DSA%20MeisterGeister;component/Images/Icons/kalender.png" Grid.Row="1" />
 
                 <Slider Name="sldKlangVol"  Grid.Column="5" Margin="6,2,4,1" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" VerticalAlignment="Center" />
                 <CheckBox Name="chkVolMove" Grid.Column="6" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,1,6" ToolTip="Lautstärke der Klangzeile automatisch variieren" />
