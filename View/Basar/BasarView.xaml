@@ -81,7 +81,10 @@
                             <SolidColorBrush Color="DarkGray" Opacity="0.5" />
                         </TextBlock.Background>
                     </TextBlock>
-                </StackPanel>
+                    
+                    <Label Content="Währung" VerticalAlignment="Center" />
+                    <ComboBox Height="23" VerticalAlignment="Center"  Name="_comboBoxWährung" Width="186" ToolTip="Benutzte Währung" Text="{Binding Path=WährungsText, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" />                        
+                    </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
                     <TextBox Margin="5,10" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />

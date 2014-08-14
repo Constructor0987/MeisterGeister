@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 // Eigene Usings
 using VM = MeisterGeister.ViewModel.Basar;
 using MeisterGeister.View.Windows;
+using MeisterGeister.Logic.Umrechner;
 // Weitere Usings
 
 namespace MeisterGeister.View.Basar
@@ -23,10 +24,18 @@ namespace MeisterGeister.View.Basar
     /// </summary>
     public partial class BasarView : UserControl
     {
+        private Währung _währung = new Währung();
+
         public BasarView()
         {
             InitializeComponent();
             VM = new VM.BasarViewModel();
+                        
+            // Währung
+            _comboBoxWährung.ItemsSource = _währung;
+            _comboBoxWährung.DisplayMemberPath = "Key";
+            _comboBoxWährung.SelectedValuePath = "Key";
+            _comboBoxWährung.Text = "Silbertaler";
         }
 
         /// <summary>
@@ -47,7 +56,6 @@ namespace MeisterGeister.View.Basar
         {
             if (VM != null)
                 VM.Refresh();
-        }
-
+        }       
     }
 }

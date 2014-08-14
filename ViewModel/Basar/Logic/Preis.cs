@@ -21,8 +21,9 @@ namespace MeisterGeister.ViewModel.Basar.Logic
             SetByString(preis);
         }
 
-        public Preis(double unter, double ober, string prä, string suf)
+        public Preis(double unter, double ober, string prä, string suf, string wsuf)
         {
+            _währungSuffix = wsuf;
             _untererPreis = unter;
             _obererPreis = ober;
             _präfix = prä;
@@ -35,6 +36,14 @@ namespace MeisterGeister.ViewModel.Basar.Logic
 
         private string _präfix = string.Empty; // z.B. "ca. "
         private string _suffix = string.Empty; // z.B. "+"
+
+        // Währungs-Suffix
+        private string _währungSuffix = "";
+        public string WährungSuffix
+        {
+            get { return _währungSuffix; }
+            set { _währungSuffix = value; }
+        }
 
         // untere Preisgrenze
         private double _untererPreis = 0;
@@ -97,9 +106,9 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         public override string ToString()
         {
             if (_obererPreis == 0)
-                return string.Format("{0}{1:0.##}{2} S", _präfix, _untererPreis, _suffix);
+                return string.Format("{0}{1:0.##}{2} "+ _währungSuffix, _präfix, _untererPreis, _suffix);
             else
-                return string.Format("{0}{1:0.##}-{2:0.##}{3} S", _präfix, _untererPreis, _obererPreis, _suffix);
+                return string.Format("{0}{1:0.##}-{2:0.##}{3} " + _währungSuffix, _präfix, _untererPreis, _obererPreis, _suffix);
         }
 
         #endregion
@@ -112,7 +121,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
             if (preis1 == null)
                 return new Preis();
             return new Preis(preis1._untererPreis * preis2, preis1._obererPreis * preis2,
-                preis1._präfix, preis1._suffix);
+                preis1._präfix, preis1._suffix, preis1.WährungSuffix);
         }
 
         #endregion

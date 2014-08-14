@@ -19,8 +19,11 @@ namespace MeisterGeister.ViewModel.Basar
         private double _anzahl = 1.0;
         private string _suchText = string.Empty;
 
-        private Model.Held _selectedHeld;
+        private string _währungsText = "Silbertaler";
 
+        private double _währungsFaktor = 1.0;
+        private Model.Held _selectedHeld;
+        
         // Listen
         private List<Model.Handelsgut> _handelsgutListe;
         private List<Model.Waffe> _waffeListe;
@@ -64,6 +67,136 @@ namespace MeisterGeister.ViewModel.Basar
                 // Änderung an BasarItems weiterreichen
                 foreach (var item in BasarItemListe)
                     item.Anzahl = _anzahl;
+            }
+        }
+
+        public double WährungsFaktor
+        {
+            get { return _währungsFaktor; }
+            set
+            {
+                if (_währungsFaktor == value || value < 0.0)
+                    return;
+                _währungsFaktor = value;
+                OnChanged("WährungsFaktor");
+
+                // Änderung an BasarItems weiterreichen
+                foreach (var item in BasarItemListe)
+                    item.WährungsFaktor = _währungsFaktor;                
+            }
+        }
+        
+        public string WährungsText
+        {
+            get { return _währungsText; }
+            set
+            {
+                _währungsText = value;
+                OnChanged("WährungsText");
+                MeisterGeister.Logic.Umrechner.Währung w = new MeisterGeister.Logic.Umrechner.Währung();                
+                WährungsFaktor = w.FirstOrDefault(t => t.Key == _währungsText).Value;
+
+                string wcode = // "-- Mittelreichische Münzen --"
+                            (_währungsText == "Kreuzer") ? "Kr" :
+                            (_währungsText == "Heller") ? "He" :
+                            (_währungsText == "Silbertaler") ? "S" :
+                            (_währungsText == "Dukaten") ? "Du" :
+                            (_währungsText == "Balihoer Rad (veraltet)") ? "BaR" :
+                            (_währungsText == "Puniner Dublone (veraltet)") ? "PuD" :
+                            (_währungsText == "Nickel (veraltet)") ? "Ni" :
+                            (_währungsText == "Eslamo (veraltet)") ? "Es" :
+
+                            //"-- Nostria und Andergast --"
+                            (_währungsText == "Nostrische Krone") ? "NoKr" :
+                            (_währungsText == "Andrataler") ? "An":
+
+                            //"-- Al'Anfanische Münzen --"
+                            (_währungsText == "Dirham") ? "Dir" :
+                            (_währungsText == "Kleiner Oreal") ? "KOr" :
+                            (_währungsText == "Oreal/Schilling") ? "Or" :
+                            (_währungsText == "Dublone") ? "Dub" :
+
+                            //"-- Amazonische Münzen --"
+                            (_währungsText == "Amazonenkrone") ? "Kro" :
+
+                            //"-- Brabaker Münzen --"
+                            (_währungsText == "Brabaker Kreuzer") ? "Kr" :
+                            (_währungsText == "Brabaker Krone") ? "Kro":
+                            (_währungsText == "Brabaker Krone (außerhalb Brabaks)") ? "Kro" :
+
+                            // "-- Münzen der Schwarzen Lande --") ? 0 :
+                            (_währungsText == "Gulden (Glorania)") ? "Gul" :
+                            (_währungsText == "Splitter (Xeraanien)") ? "Spl" :
+                            (_währungsText == "Zholvari (Xeraanien)") ? "Zho" :
+                            (_währungsText == "Borbaradstaler (Xeraanien)") ? "Bor" :
+
+                           // (_währungsText == "-- Aranische Münzen --"
+                            (_währungsText == "Rosenkreuzer") ? "Ros" :
+                            (_währungsText == "Hallah") ? "Hal" :
+                            (_währungsText == "Schekel") ? "Sch" :
+                            (_währungsText == "Dinar") ? "Din" :
+
+                            // "-- sonstige tulamidische Münzen --"
+                            (_währungsText == "Selemer Kupferschilling (veraltet)") ? "SKu" :
+                            (_währungsText == "Piaster (Rashdul)") ? "Pia" :
+                            (_währungsText == "Alastren (Khunchom)") ? "Ala" :
+
+                            // "-- Bornländische Münzen --"
+                            (_währungsText == "Deut") ? "Deu":
+                            (_währungsText == "Silbergroschen/Groschen") ? "Gro" :
+                            (_währungsText == "Batzen") ? "Bat" :
+
+                            // "-- Münzen des Kalifats --"
+                            (_währungsText == "Muwlat") ? "Mu" :
+                            (_währungsText == "Zechine") ? "Ze" :
+                            (_währungsText == "Marawedi") ? "Ma" :
+                            (_währungsText == "Shekel (veraltet)") ? "She" :
+                            (_währungsText == "Denar (veraltet)") ? "De" :
+                            (_währungsText == "Piaster (veraltet)") ? "Pia" :
+
+                            // "-- Münzen im Großemirat Mengbilla --"
+                            (_währungsText == "Ikossar") ? "Iko" :
+                            (_währungsText == "Tesar") ? "Tes" :
+                            (_währungsText == "Telar") ? "Tel" :
+                            (_währungsText == "Dekat") ? "Dek" :
+                            (_währungsText == "Mengbillaner Unze (veraltet)") ? "MUz" :
+
+                            // "-- Horasische Münzen --"
+                            (_währungsText == "Kusliker Rad (Horasdor)") ? "KRa" :
+                            (_währungsText == "Krone (veraltet)") ? "Kro" :
+                            (_währungsText == "Zehnt (veraltet)") ? "Z" :
+                            (_währungsText == "Schilling (veraltet)") ? "Sch" :
+                            (_währungsText == "Arivorer Silberdukaten (veraltet)") ? "Sid" :
+
+                            // "-- Paavische Münzen --"
+                            (_währungsText == "Gulden") ? "Gu" :
+
+                            // "-- Trahelische Münzen --"
+                            (_währungsText == "Trümmer") ? "Tr" :
+                            (_währungsText == "Ch'ryskl") ? "Ch" :
+                            (_währungsText == "Hedsch") ? "Hed" :
+                            (_währungsText == "Suvar") ? "Suv" :
+
+                            // "-- Vallusanische Münzen --"
+                            (_währungsText == "Flindrich") ? "Fl" :
+                            (_währungsText == "Stüber") ? "St" :
+                            (_währungsText == "Witten") ? "Wi" :
+
+                            // "-- Münzen der Zwerge --"
+                            (_währungsText == "Atebrox (Zwergengroschen)") ? "Ate" :
+                            (_währungsText == "Arganbrox (Zwergenschilling)") ? "Arg" :
+                            (_währungsText == "Auromox (Zwergentaler)") ? "Aur" :
+
+                            // "-- Weitere Münzen --"
+                            (_währungsText == "Chorhoper Heller") ? "Ch" :
+                            (_währungsText == "Syllaner Taler") ? "Syl" :
+                            (_währungsText == "Minisepe") ? "Min" :
+                            "S";
+                // Änderung an BasarItems weiterreichen
+                foreach (var item in BasarItemListe)
+                    item.WährungsCode = wcode;   
+
+                FilterListe();
             }
         }
 

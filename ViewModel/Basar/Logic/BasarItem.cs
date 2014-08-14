@@ -24,6 +24,9 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         private double _rabattAufschlag = 0.0;
         private double _anzahl = 1.0;
 
+        private double _währungsFaktor = 1.0;
+        private string _währungsCode = "S";
+
         //Commands
         private Base.CommandBase _onInventarAdd;
 
@@ -105,7 +108,20 @@ namespace MeisterGeister.ViewModel.Basar.Logic
             {
                 if (_preis == null)
                     _preis = new Preis(Item == null ? string.Empty : Item.Preis);
-                return _preis;
+
+                Preis _preisWM = new Preis();
+
+                if (WährungsFaktor != 0)
+                {
+                    _preisWM.ObererPreis = _preis.ObererPreis / WährungsFaktor;
+                    _preisWM.UntererPreis = _preis.UntererPreis / WährungsFaktor;
+                }
+                else
+                    _preisWM = _preis;
+
+                _preisWM.WährungSuffix = _währungsCode;
+                
+                return _preisWM;
             }
         }
 
@@ -132,15 +148,39 @@ namespace MeisterGeister.ViewModel.Basar.Logic
                 OnChanged("Anzahl");
             }
         }
+        
+        public double WährungsFaktor
+        {
+            get { return _währungsFaktor; }
+            set
+            {
+                if (_währungsFaktor == value || value < 0.0)
+                    return;
+                _währungsFaktor = value;
+                OnChanged("WährungsFaktor");
 
+            }
+        }
+
+        public string WährungsCode
+        {
+            get { return _währungsCode; }
+            set
+            {
+                _währungsCode = value;
+            }
+        }
+        
         [DependentProperty("Preis"), DependentProperty("RabattAufschlag")]
         public Preis PreisMod
         {
             get
             {
                 if (RabattAufschlag == 0)
-                    return Preis;
-                return Preis * (RabattAufschlag / 100.0 + 1.0);
+                {
+                    return Preis;// / WährungsFaktor ;
+                }
+                return Preis * (RabattAufschlag / 100.0 + 1.0);// *WährungsFaktor;
             }
         }
 
@@ -149,9 +189,9 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         {
             get
             {
-                if (Anzahl == 1)
-                    return PreisMod;
-                return PreisMod * Anzahl;
+                 if (Anzahl == 1)
+                     return PreisMod;
+                 return PreisMod * Anzahl;
             }
         }
 
