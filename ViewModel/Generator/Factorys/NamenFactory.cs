@@ -14,6 +14,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public const string NAMENSARTVORNAMEN = "Vorname";
         public const string NAMENSARTNACHNAMEN = "Nachname";
         public const string NAMENSARTVORNAMENNACHSILBEN = "Nachsilbe Vorname";
+        public const string NAMENSARTNACHNAMENNACHSILBEN = "Nachsilbe Nachname";
         public const string NAMENSARTEHRENNAMEN = "Ehrenname";
         #endregion
 
@@ -1377,6 +1378,126 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
                 _vornamenMännlich.RandomElement());
         }
+        #endregion
+    }
+
+    public class WaldmenschenNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        protected List<string> _vornamenBedeutung = new List<string>();
+        protected int _selectedVorname;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public WaldmenschenNamenFactory() :
+            base(NamenFactoryHelper.WALDMENSCHENNAMEN, true, true, true)
+        {
+            _vornamenBedeutung.AddRange(Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTVORNAMEN, true, true));
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            _selectedVorname = RandomNumberGenerator.Generator.Next(_vornamenWeiblich.Count());
+            person.Name = _vornamenWeiblich.ElementAt(_selectedVorname);
+            person.Namensbedeutung = _vornamenBedeutung.ElementAt(_selectedVorname);
+        }
+        #endregion
+    }
+
+    public class MaraskanischeNamenFactory : NamenFactoryVorname
+    {
+        #region //---- Felder ----
+        private delegate bool NameSelector();
+        private List<String> _vornamenWeiblichGarethi = new List<string>();
+        private List<String> _vornamenMännlichGarethi = new List<string>();
+        private List<String> _vornamenWeiblichTulamidiya = new List<string>();
+        private List<String> _vornamenMännlichTulamidiya = new List<string>();
+        private List<String> _ortsnamen = new List<string>() { 
+            "Achazak", "Alrurdan", "As'Far", "As'Khunchak", "Boran", "Buli", "Cavazoab", "Dinoda", "Geran", 
+            "Gipflak", "Guladasbîd", "Hemandu", "Huab", "Jergan", "Mazazaoab", "Mherweggyn", "Nuran", "Senan", 
+            "Sindibab", "Sinoda", "Syneggyn", "Tarschoggyn", "Tuzak", "Tzab", "Usdaran", "Uuz'Dornak", "Vezarak", 
+            "Yerkilan", "Zinobab" };
+        private List<String> _nachnamenTulamidiya = new List<string>();
+        private List<String> _nachnamenGarethi = new List<string>();
+        private List<String> _nachnamenSilben = new List<string>();
+        /**
+         * Funktion, die wahr als Rückgabewert liefert, um leere Zweitnamen bei Adelsnamen zu steuern.
+         */
+        private NameSelector keinZusammengesetzterVorname = () => RandomNumberGenerator.Generator.Next(10) < 7;
+        private NameSelector mitNachname = () => RandomNumberGenerator.Generator.Next(10) < 4;
+        private NameSelector garethiStattTulamidisch = () => RandomNumberGenerator.Generator.Next(2) == 1;
+        private NameSelector ortsnameStattZusammengesetzterNachname = () => RandomNumberGenerator.Generator.Next(10) < 8;
+        #endregion
+
+        #region //---- Konstruktor ----
+        public MaraskanischeNamenFactory() :
+            base(NamenFactoryHelper.MARASKANISCHENAMEN, false, true)
+        {
+            List<String> _silben = new List<string>();
+            List<String> _namen = new List<string>();
+            // neue weibliche Vornamen konstruieren
+            _silben = Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTVORNAMENNACHSILBEN, true, false);
+            _namen = Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(NamenFactoryHelper.GARETHISCHENAMEN, NAMENSARTVORNAMEN, true, false);
+            _vornamenWeiblichGarethi = _namen.SelectMany(name => _silben, (n, s) => n + s).ToList();
+            _namen = Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(NamenFactoryHelper.TULAMIDISCHENAMEN, NAMENSARTVORNAMEN, true, false);
+            _vornamenWeiblichTulamidiya = _namen.SelectMany(name => _silben, (n, s) => n + s).ToList();
+            // neue männliche Vornamen konstruieren
+            _silben = Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(Namenstyp, NAMENSARTVORNAMENNACHSILBEN, false, false);
+            _namen = Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(NamenFactoryHelper.GARETHISCHENAMEN, NAMENSARTVORNAMEN, false, false);
+            _vornamenMännlichGarethi = _namen.SelectMany(name => _silben, (n, s) => n + s).ToList();
+            _namen = Global.ContextHeld.LoadNamenByNamenstypArtGeschlecht(NamenFactoryHelper.TULAMIDISCHENAMEN, NAMENSARTVORNAMEN, false, false);
+            _vornamenMännlichTulamidiya = _namen.SelectMany(name => _silben, (n, s) => n + s).ToList();
+            //Nachnamen konstruieren
+            _ortsnamen = _ortsnamen.Select(n => "von " + n).ToList();
+            _silben = Global.ContextHeld.LoadNamenByNamenstypArt(Namenstyp, NAMENSARTNACHNAMENNACHSILBEN, false);
+            _namen = Global.ContextHeld.LoadNamenByNamenstypArt(NamenFactoryHelper.GARETHISCHENAMEN, NAMENSARTNACHNAMEN, false);
+            _nachnamenGarethi = _namen.SelectMany(name => _silben, (n, s) => n + s).ToList();
+            _namen = Global.ContextHeld.LoadNamenByNamenstypArt(NamenFactoryHelper.TULAMIDISCHENAMEN, NAMENSARTNACHNAMEN, false);
+            _nachnamenTulamidiya = _namen.SelectMany(name => _silben, (n, s) => n + s).ToList();
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            if (keinZusammengesetzterVorname())
+                person.Name = person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement();
+            else
+                if (garethiStattTulamidisch())
+                    person.Name = person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblichGarethi.RandomElement() : _vornamenMännlichGarethi.RandomElement();
+                else
+                    person.Name = person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblichTulamidiya.RandomElement() : _vornamenMännlichTulamidiya.RandomElement();
+            if (mitNachname())
+                person.Name += " " + (ortsnameStattZusammengesetzterNachname() ? _ortsnamen.RandomElement() : (garethiStattTulamidisch() ? _nachnamenGarethi.RandomElement() : _nachnamenTulamidiya.RandomElement()));
+        }
+
+        #endregion
+    }
+
+    public class ElfischeNamenFactory : NamenFactoryVornameNachname
+    {
+        #region //---- Felder ----
+        private List<String> _nachnamenSilben = new List<string>();
+        #endregion
+
+        #region //---- Konstruktor ----
+        public ElfischeNamenFactory() :
+            base(NamenFactoryHelper.ELFISCHENAMEN, false, true)
+        {
+            _nachnamenSilben.AddRange(Global.ContextHeld.LoadNamenByNamenstypArt(Namenstyp, NAMENSARTNACHNAMENNACHSILBEN, false));
+        }
+        #endregion
+
+        #region //---- Instanzmethoden ----
+        public override void RegenerateName(ref PersonNurName person)
+        {
+            person.Name = String.Format("{0} {1}{2}",
+                person.Geschlecht == Geschlecht.weiblich ? _vornamenWeiblich.RandomElement() : _vornamenMännlich.RandomElement(),
+                _nachnamen.RandomElement(), _nachnamenSilben.RandomElement());
+        }
+
         #endregion
     }
 

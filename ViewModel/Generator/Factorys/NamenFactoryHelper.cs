@@ -23,7 +23,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public const string BORNLÄNDISCHENAMEN = "Bornländische Namen";
         //public const string CYCLOPENINSELNNAMEN = "Cyclopeninseln";
         //public const string ELEMISCHENAMEN = "Elem Oberschicht";
-        //public const string ELFISCHENAMEN = "Elfische Namen";
+        public const string ELFISCHENAMEN = "Elfische Namen";
         public const string FERKINANAMEN = "Ferkina Namen";
         public const string FJARNINGSCHENAMEN = "Fjarningsche Namen";
         public const string GARETHISCHENAMEN = "Garethische Namen";
@@ -34,7 +34,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         //public const string HORASIATCYCLOPENINSELNAMEN = "Horasiat/Cyclopeninseln";
         public const string HORASISCHENAMEN = "Horasische Namen";
         public const string HÜGELZWERGISCHENAMEN = "Hügelzwergische Namen";
-        //public const string MARASKANISCHENAMEN = "Maraskanische Namen";
+        public const string MARASKANISCHENAMEN = "Maraskanische Namen";
         public const string NIVESISCHENAMEN = "Nivesische Namen";
         public const string NORBADISCHENAMEN = "Norbardische Namen";
         public const string NOVADISCHENAMEN = "Novadische Namen";
@@ -49,7 +49,7 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
         public const string TROLLZACKERNAMEN = "Trollzacker Namen";
         public const string TULAMIDISCHENAMEN = "Tulamidische Namen";
         public const string UTULUNAMEN = "Utulu Namen";
-        //public const string WALDMENSCHENNAMEN = "Waldmenschen Namen";
+        public const string WALDMENSCHENNAMEN = "Waldmenschen Namen";
         public const string WEIDENERNAMEN = "Weidener Namen";
         public const string ZAHORINAMEN = "Zahori Namen";
         public const string ZWERGISCHENAMEN = "Zwergische Namen";
@@ -81,8 +81,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 //case CYCLOPENINSELNNAMEN:
                 
                 //case ELEMISCHENAMEN:
-                
-                //case ELFISCHENAMEN:
+
+                case ELFISCHENAMEN: return new ElfischeNamenFactory();
 
                 case FERKINANAMEN: return new FerkinaNamenFactory();
 
@@ -103,8 +103,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 case HORASISCHENAMEN: return new HorasischeNamenFactory();
 
                 case HÜGELZWERGISCHENAMEN: return new HügelzwergischeNamenFactory();
-                
-                //case MARASKANISCHENAMEN:
+
+                case MARASKANISCHENAMEN: return new MaraskanischeNamenFactory();
 
                 case NIVESISCHENAMEN: return new NivesischeNamenFactory();
 
@@ -133,8 +133,8 @@ namespace MeisterGeister.ViewModel.Generator.Factorys
                 case TULAMIDISCHENAMEN: return new TulamidischeNamenFactory();
 
                 case UTULUNAMEN: return new NamenFactoryVorname(UTULUNAMEN, true, true);
-                
-                //case WALDMENSCHENNAMEN:
+
+                case WALDMENSCHENNAMEN: return new WaldmenschenNamenFactory();
 
                 case WEIDENERNAMEN: return new WeidenerNamenFactory();
 

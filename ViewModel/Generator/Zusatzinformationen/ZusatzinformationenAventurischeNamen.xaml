@@ -740,4 +740,113 @@
             Namen der Eltern wie im Tulamidischen sind unüblich, können aber wie im verwandten Ferkina "iban" (bei Männern) oder "sabu" (bei Frauen) verwendet werden.
         </Paragraph>
     </FlowDocument>
+
+    <FlowDocument x:Key="Waldmenschen Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Moha-Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Festlandstämme (Chirakahs, Yakosh-Dey, Mohaha, Anoiha, Oijanihas, Napewanha, Keke-Wanaq, Panaq-Si, (Altoum-)Darna)
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Waldmenschen tragen einen geheimen Tapam-Namen und einen Rufnamen, der eine auffällige
+            Eigenschaft, herausragende Tat oder ein Traumbild des Trägers bzw. der Trägerin ausdrückt. Der Rufname kann
+            jederzeit geändert werden. Die Namen sind an sich nicht geschlechtsspezifisch; man kann aber, wenn man unbedingt
+            will, durch Anhängen der Silbe -ca eine weibliche oder mit der Silbe -ha eine männliche Form bilden.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Maraskanische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Maraskanische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Namen für Maraskan.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Eingeborene MaraskanerInnen tragen oftmals keine Familiennamen oder nennen sie jedenfalls selten. Wenn doch,
+            kann man garethische Nachnamen verwenden, oder tulamidische Beinamen, die mit "al-" gebildet werden; in beiden
+            Fällen wird oft noch die Endsilbe -jiar oder -ja(a)r angehängt. Lieber geben MaraskanerInnen zu ihrem Eigennamen
+            an, in welchem Ort sie wohnen (Endijian von/aus Cavazoab) und bei größeren Orten und Verwechslungsgefahr noch
+            Handwerk und Familienstand (Xanjida von Sinoda, die Stoffdruckerin mit den drei Kindern, die Schwägerin von
+            Alrech dem Steinmetz).
+            <LineBreak />
+            Man kann aus allen möglichen Namen maraskanische basteln, indem man eine der weiblichen Endungen –jid, -jida,
+            -sab, -sabu, -yscha oder eine der männlichen Endungen –eran, -oran, -jian, -jin, -mold, -ziber anhängt (aus Endsilben
+            –rik wird im Maraskani –rech; also Alrech statt Alrik). Üblich sind als Basis tulamidische und garethische Namen,
+            aber Exilmaraskaner in Festum verwenden auch bornische Namen, solche in Al'Anfa al'anfanische; dabei sind auch
+            von Männernamen abgeleitete Frauennamen und umgekehrt möglich. Beispiele: Achmedjida/Achmedziber,
+            Harikasabu/Harikajian, Duchdyscha/Duchdoran, Alarajid/Alaramold. Das j wird wie in ”Journal” gesprochen.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Adelstitel
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Haran(i) = Graf/Gräfin
+            <LineBreak />
+            Cherzak(a) = Herzog(in)
+            <LineBreak />
+            Shîk(a) = Markgraf/gräfin, HerrscherIn über schwieriges Gebiet
+            <LineBreak />
+            Baruun(a) = Baron(in)
+            <LineBreak />
+            Dschunkar(a) = Junker(in)
+            <LineBreak />
+            Buskur(a) = Ritter(in) (nur vom König oder Tetrarchenrat zu ernennen)
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            Ortsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Maraskanische Ortsnamen enden oft auf –(o)ggyn, -oab oder –bab; Beispiele: Tarschoggyn, Narmoggyn, Syneggyn,
+            Cavazoab, Mazazoab, Praiobab, Zinobab.
+        </Paragraph>
+    </FlowDocument>
+
+    <FlowDocument x:Key="Elfische Namen">
+        <Paragraph Style="{StaticResource Überschrift1}">
+            Elfische Namen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Namen für Elfen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            allgemeine Namensinformationen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Einen häufigen Namen wie "Alrik" oder "Harika" bei den Menschen gibt es bei den Elfen nicht. Jede/r Elf/e ist ein
+            einzigartiges Wesen, und das drückt sich auch im Namen aus. Jede/r Elf/e trägt wenigstens zwei Namen. Der erste
+            oder Eigenname wird dem noch ungeborenen Kind von seinen Eltern gegeben. Der zweite Name kann der ganzen
+            Sippe gemeinsam sein oder einen bestimmenden Wesenszug des Trägers bzw. der Trägerin ausdrücken. Der dritte,
+            geheime Name offenbart sich der Elfe bzw. dem Elf im Lauf ihres/seines Lebens im Traum, wenn sie/er nicht zu
+            badoc dafür ist. Zwar kann es geschehen, daß zwei Elfen, die weit entfernt voneinander leben, denselben
+            Eigennamen tragen, aber kein/e Elf/e würde absichtlich denselben Namen wie ein/e Andere/r tragen, es sei denn den
+            einer/s verstorbenen Elfe/s, als deren/dessen Wiedergeburt er/sie sich fühlt. Wenn Elfen fühlen, daß ihr ganzes
+            Wesen sich verändert hat, meist nach einem einschneidenden Erlebnis, dann ändern sie ihre Namen. Einige bekannte
+            Elfennamen als Beispiele: Bigesia Schnee-auf-den-Gipfeln, Elodiron Kristallglanz, Dimiloë Sonnenlocke, Niamh
+            Goldhaar ["Niamh" sprich "Ni-ev"]; Ancoron Katzenzorn, Athavar Friedenslied, Delayar Wo-Regenbogen-Sprießen,
+            Farnion Finkenfarn, Rallion Regenflieder.
+        </Paragraph>
+        <Paragraph Style="{StaticResource Überschrift2}">
+            elfische Ortsnamen
+        </Paragraph>
+        <Paragraph Style="{StaticResource Fließtext}">
+            Elfenbehausungen tragen klingende Namen wie "Wald-wo-Regen-auf-Biberdämme-fällt". Wer sich das auf Isdira
+            zumuten will versuche es auf der Internetseite www.elfenlan.de, wo es möglicherweise Hilfen dazu gibt.
+            Bezeichnungen für Tiere und Pflanzen findet man in der Box "Drachen, Greifen, schwarzer Lotos".
+            Einige mögliche Elemente elfischer Ortsnamen: aar (Adler), a'dala (Schmetterling), aiyeona ("Wohnbaum seit ewig",
+            Ahorn), aigya ("wehrhafter Wohnbaum", Eiche), alwasala (Biber), a'shiana (Libelle), êibha ("Wachnest", Eibe), awa
+            (Bach, Fluß, Au), ban (eigenes Gebiet), bian (Gras), biunda (Auelfenland, Au, Feuchtwiese), del (Waldpflanze), dala
+            (Blume), dana (baumlose Au), dene (Moor), diundya (Steppe), tundra (Kältesteppe), dir (Hain), felya (Wildkatze),
+            fey (Elf, Eichhörnchen), fialgra (Ork), fir (Eis), ga (hell), gobian (Goblin), la (Wald), lairya (Reh), mamya (Robbe),
+            mandla (Blutulme), nanda (Einhorn), nurka (Troll), nuya (Nebel), oha (Regen), sala (Heim), sha (Sonne), tâ
+            (Singvogel), ten (Stein), veija (Habicht, Weihe), win (Wind)
+        </Paragraph>
+    </FlowDocument>
 </ResourceDictionary>
