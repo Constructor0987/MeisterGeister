@@ -30,9 +30,21 @@
                     <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
                         <TextBlock Margin="2,2,0,0" Width="250" FontWeight="Bold" Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" />
                         <TextBlock Margin="2,2,0,0" Width="260" Text="{Binding Path=Kategorie}" ToolTip="Kategorie" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
-                        <TextBlock Margin="2,2,5,2" Width="Auto" FontWeight="Bold" MinWidth="80" Text="{Binding Path=Preis}" TextAlignment="Left" ToolTip="Preis in Silbertaler" VerticalAlignment="Center" />
-                        <TextBlock Margin="2,2,5,2" Width="Auto" FontWeight="Bold" MinWidth="80" Text="{Binding Path=ME_Text}" TextAlignment="Left" ToolTip="Preis in Silbertaler" VerticalAlignment="Center" />
-                        <TextBlock Margin="5,2,5,2" MinWidth="140" FontWeight="Bold" Text="{Binding Path=PreisGesamt, StringFormat=Gesamt: \{0\}, IsAsync=True}" TextAlignment="Left" ToolTip="Gesamtpreis in Silbertaler" VerticalAlignment="Center" />
+                        <TextBlock Name="myTextBlock" Margin="2,2,5,2" Width="Auto" FontWeight="Bold" MinWidth="80" Text="{Binding Path=Preis}" TextAlignment="Left" VerticalAlignment="Center" >
+                            <TextBlock.ToolTip>
+                                <TextBlock Text="{Binding Path=WährungsText, StringFormat=Preis in {0:C}}" />
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                        <TextBlock Margin="2,2,5,2" Width="Auto" FontWeight="Bold" MinWidth="80" Text="{Binding Path=ME_Text}" TextAlignment="Left" VerticalAlignment="Center" >
+                            <TextBlock.ToolTip>
+                                <TextBlock Text="{Binding Path=WährungsText, StringFormat=Preis in {0:C}}" />
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                        <TextBlock Margin="5,2,5,2" MinWidth="140" FontWeight="Bold" Text="{Binding Path=PreisGesamt, StringFormat=Gesamt: \{0\}, IsAsync=True}" TextAlignment="Left" VerticalAlignment="Center" >
+                            <TextBlock.ToolTip>
+                                <TextBlock Text="{Binding Path=WährungsText, StringFormat=Gesamtpreis in {0:C}}" />
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                         <!--ToDo: Button zum Einfügen ins Inventar -->
                         <Button Width="23" Height="23" ToolTip="Ins Inventar des Helden übertragen." Command="{Binding OnInventarAdd}" Visibility="Collapsed">
                             <Image Source="/Images/Icons/ueberanstrengung.png" />
@@ -92,8 +104,8 @@
                     <ViewGeneral:DoubleBox Height="23" Margin="5" Width="75" MinValue="0" ShowButtons="True" Value="{Binding Anzahl}" VerticalAlignment="Center" />
                     <TextBlock Margin="5" Text="Rabatt/Aufschlag:" VerticalAlignment="Center" />
                     <ViewGeneral:IntBox Height="23" Margin="5" Width="75" ShowButtons="True" Value="{Binding RabattAufschlag}" VerticalAlignment="Center" />
-                    <TextBlock Margin="5" Text="%" VerticalAlignment="Center" />
-                </StackPanel>
+                    <TextBlock Margin="5" Text="%" VerticalAlignment="Center" />                        
+                    </StackPanel>
                 </Grid>
             </Border>
         </Expander>

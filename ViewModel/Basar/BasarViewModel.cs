@@ -95,7 +95,7 @@ namespace MeisterGeister.ViewModel.Basar
                 OnChanged("WährungsText");
                 MeisterGeister.Logic.Umrechner.Währung w = new MeisterGeister.Logic.Umrechner.Währung();                
                 WährungsFaktor = w.FirstOrDefault(t => t.Key == _währungsText).Value;
-
+                
                 string wcode = // "-- Mittelreichische Münzen --"
                             (_währungsText == "Kreuzer") ? "Kr" :
                             (_währungsText == "Heller") ? "He" :
@@ -194,7 +194,10 @@ namespace MeisterGeister.ViewModel.Basar
                             "S";
                 // Änderung an BasarItems weiterreichen
                 foreach (var item in BasarItemListe)
-                    item.WährungsCode = wcode;   
+                {
+                    item.WährungsCode = wcode;
+                    item.WährungsText = _währungsText;
+                }
 
                 FilterListe();
             }

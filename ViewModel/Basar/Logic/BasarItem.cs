@@ -26,6 +26,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
 
         private double _währungsFaktor = 1.0;
         private string _währungsCode = "S";
+        private string _währungsText = "Silbertaler";
 
         //Commands
         private Base.CommandBase _onInventarAdd;
@@ -170,6 +171,15 @@ namespace MeisterGeister.ViewModel.Basar.Logic
                 _währungsCode = value;
             }
         }
+
+        public string WährungsText
+        {
+            get { return _währungsText; }
+            set
+            {
+                _währungsText = value;
+            }
+        }
         
         [DependentProperty("Preis"), DependentProperty("RabattAufschlag")]
         public Preis PreisMod
@@ -178,9 +188,9 @@ namespace MeisterGeister.ViewModel.Basar.Logic
             {
                 if (RabattAufschlag == 0)
                 {
-                    return Preis;// / WährungsFaktor ;
+                    return Preis;
                 }
-                return Preis * (RabattAufschlag / 100.0 + 1.0);// *WährungsFaktor;
+                return Preis * (RabattAufschlag / 100.0 + 1.0);
             }
         }
 
