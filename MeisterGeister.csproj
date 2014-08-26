@@ -62,7 +62,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;TEST</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -1708,6 +1708,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0091.sql" />
     <Resource Include="Images\Icons\General\mouse_cursornormal.png" />
     <Resource Include="Images\Icons\General\mouse_cursorplus.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0092.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
