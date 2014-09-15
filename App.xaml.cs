@@ -398,21 +398,8 @@ namespace MeisterGeister {
                RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
             {
                 version += Environment.NewLine + "  v4.5";
-                int releaseKey = (int)ndpKey.GetValue("Release");
-                {
-                    if (releaseKey == 378389)
-
-                        version += Environment.NewLine + "    Full 4.5";
-
-                    if (releaseKey == 378758)
-
-                        version += Environment.NewLine + "    Full 4.5.1";
-
-                    if (releaseKey == 51209)
-
-                        version += Environment.NewLine + "    Full 4.5.2";
-
-                }
+                string versionKey = ndpKey.GetValue("Version").ToString();
+                version += Environment.NewLine + "    Full " + versionKey;
             }
             return version;
         }
