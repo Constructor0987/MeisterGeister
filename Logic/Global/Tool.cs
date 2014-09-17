@@ -41,7 +41,7 @@ namespace MeisterGeister
             });
             ToolListe.Add("Gegner", new Tool()
             {
-                Name = "Abenteuer",
+                Name = "Gegner",
                 Icon = "Icons/gegner.png",
                 MenuGruppe = "Wege des Kampfes",
                 ViewType = typeof(View.Kampf.Controls.GegnerView)
