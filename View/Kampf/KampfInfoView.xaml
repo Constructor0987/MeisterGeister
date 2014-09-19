@@ -186,16 +186,18 @@
                     <TextBlock VerticalAlignment="Center" Margin="5,0" Style="{DynamicResource TextTitel}" Text="Initiative-Liste" />
                 </StackPanel>
             </Expander.Header>
-            <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
-                <ItemsControl Padding="30, 20" ItemTemplate="{StaticResource InitiativeListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <Border Style="{DynamicResource ControlContentBorder}" Padding="2,0,2,0">
+                    <ItemsControl Padding="30, 20" ItemTemplate="{StaticResource InitiativeListTemplate}" ItemsSource="{Binding InitiativListe, UpdateSourceTrigger=PropertyChanged}"
                       Background="Transparent" FontSize="18">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </Border>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Border>
+            </ScrollViewer>
         </Expander>
     </Grid>
 </UserControl>
