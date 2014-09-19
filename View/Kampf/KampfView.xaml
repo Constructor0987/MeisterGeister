@@ -693,6 +693,12 @@
                                                 </MultiBinding>
                                             </TextBlock.Text>
                                         </TextBlock>
+                                        <TextBlock Margin="10,6,2,2" Text="GS: " ToolTip="Geschwindigkeit (GS)" />
+                                        <TextBlock Text="{Binding Path=SelectedKämpfer.Geschwindigkeit, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Geschwindigkeit (GS)" />
+                                        <TextBlock Margin="10,6,2,2" Text="MR: " ToolTip="Magieresistenz (MR)" />
+                                        <TextBlock Text="{Binding Path=SelectedKämpfer.MR, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Körper)" />
+                                        <TextBlock Margin="0,6,0,2" Text="/" />
+                                        <TextBlock Text="{Binding Path=SelectedKämpfer.MRGeist, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Geist)" />
                                     </StackPanel>
                                 </StackPanel>
                                 <Grid Grid.Row="2" Margin="0,8,0,0">
