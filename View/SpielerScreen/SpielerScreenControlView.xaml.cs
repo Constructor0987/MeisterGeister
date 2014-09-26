@@ -83,8 +83,13 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void LoadImagesFromDir(string pfad)
         {
-            if (string.IsNullOrWhiteSpace(pfad))
+            if (string.IsNullOrWhiteSpace(pfad) || !Directory.Exists(pfad))
+            {
+                _imagePfadInfo.Visibility = System.Windows.Visibility.Visible;
                 return;
+            }
+
+            _imagePfadInfo.Visibility = System.Windows.Visibility.Collapsed;
 
             string[] filesBmp = Directory.GetFiles(pfad, "*.bmp");
             string[] filesGif = Directory.GetFiles(pfad, "*.gif");

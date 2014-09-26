@@ -74,7 +74,10 @@
                                 </CheckBox.ToolTip>
                             </CheckBox>
                         </StackPanel>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="6" Name="_textBlockFilePath" Text="" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
+                        <StackPanel Grid.Column="0" Grid.Row="1" Margin="6" Orientation="Horizontal">
+                            <Image Name="_imagePfadInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" />
+                            <TextBlock Name="_textBlockFilePath" Text="" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
+                        </StackPanel>
                         <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" Background="Transparent" SelectionChanged="ListBoxDirectory_SelectionChanged" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
                         <Viewbox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="6" MinWidth="226" HorizontalAlignment="Right" MaxWidth="400">
                             <Image Name="_image1" ToolTip="Ein Links-Klick öffnet das Bild extern." MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
