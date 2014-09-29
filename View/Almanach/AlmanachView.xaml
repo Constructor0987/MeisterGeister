@@ -40,6 +40,7 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
                         <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
                         <TextBox Margin="5,10" Width="250" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
+                        <TextBlock Text="Hier kann eine Stichwortsuche über alle Literaturangaben durchgeführt werden." ToolTip="Es sind noch nicht sämliche Daten im Suchindex verfügbar. Dies wird in kommenden Versionen erweitert." TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Margin="5" FontSize="10" />
                     </StackPanel>
                 </Grid>
             </Border>
