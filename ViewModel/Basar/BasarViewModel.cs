@@ -415,7 +415,7 @@ namespace MeisterGeister.ViewModel.Basar
 
         void GoToBugForum(object sender)
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://meistergeister.orkenspalter.de/showthread.php?tid=191"));
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("http://forum.meistergeister.org/showthread.php?tid=191"));
         }
 
         #endregion

@@ -1074,7 +1074,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
                 txtLog.Text = _importPfad
-                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet sind, konnten denen in unserer Datenbank nicht zugeordnet werden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://meistergeister.orkenspalter.de/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die XML-Datei dort hoch. Vielen Dank!.\n\n";
+                    + "\n\nEinige Werte konnten nicht importiert werden.\nGegenstände, die hier aufgelistet sind, konnten denen in unserer Datenbank nicht zugeordnet werden. Diese wurden im Inventar unter Sonstiges aufgenommen.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://forum.meistergeister.org/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die XML-Datei dort hoch. Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;

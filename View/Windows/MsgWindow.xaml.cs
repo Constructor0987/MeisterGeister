@@ -169,7 +169,7 @@ namespace MeisterGeister.View.Windows
 
         private string GetHilfeString()
         {
-            return "Bitte prüfe die FAQ-Seite auf www.meistergeister.org und unser Forum (http://meistergeister.orkenspalter.de/) nach einer Fehlerlösung."
+            return "Bitte prüfe die FAQ-Seite auf www.meistergeister.org und unser Forum (http://forum.meistergeister.org/) nach einer Fehlerlösung."
                 + "\nBei weiteren Problemen kannst du das Problem im Forum melden oder dich an info@meistergeister.org wenden (Bitte die gesamte Meldung vollständig kopieren)."
                 + "\nDie Fehlermeldung wird in einer Log-Datei im MeisterGeister-Verzeichnis gespeichert.";
         }

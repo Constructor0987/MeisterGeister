@@ -397,7 +397,7 @@ namespace MeisterGeister.View
 
         private void MenuItemHilfeForum_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://meistergeister.orkenspalter.de/");
+            System.Diagnostics.Process.Start("http://forum.meistergeister.org/");
         }
 
         private void MenuItemHilfeFacebook_Click(object sender, RoutedEventArgs e)

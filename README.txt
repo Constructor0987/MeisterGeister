@@ -32,7 +32,7 @@ DSA MeisterGeister steht in enger Kooperation mit dem DereGlobus-Projekts (http:
 
 Für die Implementierung des NSC-Tools wurden uns von Benjamin Ernst (aus seiner Spielhilfe 1001 NSC (http://www.wiki-aventurica.de/wiki/1001NPC)) und Peter Diefenbach (aus seinem DSATool (http://www.pdiefenbach.de/dsatool/)) freundlicherweise ihre umfangreichen Daten zur Verfügung gestellt. Wir bedanken uns sehr für diese Unterstützung!
 
-Thomas Stolz von Orkenspalter (http://www.orkenspalter.de) stellt uns den Webspace für unser Forum (http://meistergeister.orkenspalter.de/) zur Verfügung.
+Thomas Stolz von Orkenspalter (http://www.orkenspalter.de) stellt uns den Webspace für unser Forum (http://forum.meistergeister.org/) zur Verfügung.
 
 
 ******************************************

@@ -1265,7 +1265,7 @@ namespace MeisterGeister.Logic.HeldenImport
                 txtLog.IsReadOnly = true;
                 txtLog.AcceptsReturn = true;
                 txtLog.Text = _importPfad
-                    + "\n\nEinige Werte konnten nicht importiert werden.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://meistergeister.orkenspalter.de/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die Excel-Datei dort hoch. Vielen Dank!.\n\n";
+                    + "\n\nEinige Werte konnten nicht importiert werden.\nWenn du bei der Verbesserung der Import-Funktion mitwirken möchtest, melde das Problem im Forum (http://forum.meistergeister.org/forumdisplay.php?fid=79) oder unserem Issue-Tracker (http://moonvega.pmhost.de/trac/) und lade die Excel-Datei dort hoch. Vielen Dank!.\n\n";
                 txtLog.Text += log;
                 txtLog.TextWrapping = System.Windows.TextWrapping.Wrap;
                 txtLog.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible;
