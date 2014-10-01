@@ -784,13 +784,48 @@
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="35" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="40*" />
                     </Grid.RowDefinitions>
+                    
+                    <Border Style="{DynamicResource ControlContentBorder}" Margin="10,0" Grid.ColumnSpan="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                                <Border HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,-100,0" Style="{DynamicResource ControlContentBorder}" ToolTip="Filter für alle Themes" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="26" />
+                                            <ColumnDefinition Width="*" MinWidth="150" />
+                                            <ColumnDefinition Width="20" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                        <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
+                                            <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                        </Button>
+                                        <TextBox Name="tbThemesFilterAll" Margin="2,1" Grid.Column="1" TextChanged="tbThemesFilterAll_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                                    </Grid>
 
-                    <Border Grid.ColumnSpan="2">
+                                </Border>
+                                <ToggleButton Name="tbThemeThemeNormSize" Grid.Column="1" HorizontalAlignment="Right" Width="25" Height="25" VerticalAlignment="Center" Margin="2" Click="tbThemeThemeNormSize_Click" Focusable="False" ClickMode="Press" >
+                                    <StackPanel>
+                                        <Image Name="imgThemeThemeNorm" Source="/Images/Icons/General/kachel.png" />                                    
+                                        <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="25" Stretch="Fill" Margin="-2,0,0,-1" />
+                                        <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="25" Stretch="Fill" Margin="-2,0,0,0" />
+                                    </StackPanel>
+                                </ToggleButton>
+                            </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.ColumnSpan="2">
                         <Expander Name="exErwPlayerTheme" IsExpanded="True" Margin="30,5,30,10" MinWidth="200" MaxHeight="500" ForceCursor="False" >
                             <Expander.Header>
                                 <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
@@ -803,29 +838,43 @@
                         </Expander>
                     </Border>
 
-                    <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
+                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
 
-                    <Border Grid.Row="1" Name="brdPlyListPlyThemeTop" Style="{DynamicResource ControlContentBorder}" Margin="10,0" Grid.ColumnSpan="2">
-                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Style="{DynamicResource ControlContentBorder}" ToolTip="Filter für alle Playlisten" >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="26" />
-                                    <ColumnDefinition Width="*" MinWidth="150" />
-                                    <ColumnDefinition Width="20" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
-                                <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
-                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
-                                </Button>
-                                <TextBox Name="tbPListFilterAll" Margin="2,1" Grid.Column="1" TextChanged="tbPListFilterAll_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
-                            </Grid>
-                        </Border>
+                    <Border Grid.Row="2" Name="brdPlyListPlyThemeTop" Style="{DynamicResource ControlContentBorder}" Margin="10,0" Grid.ColumnSpan="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Border HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,-100,0" Style="{DynamicResource ControlContentBorder}" ToolTip="Filter für alle Playlisten" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="26" />
+                                        <ColumnDefinition Width="*" MinWidth="150" />
+                                        <ColumnDefinition Width="20" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="/Images/Icons/General/filter.png" Stretch="Fill"/>
+                                    <Button Grid.Column="2" Click="btnBGFilter_Click" ToolTip="Filter löschen" >
+                                        <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                    </Button>
+                                    <TextBox Name="tbPListFilterAll" Margin="2,1" Grid.Column="1" TextChanged="tbPListFilterAll_TextChanged" GotFocus="tbGotFocus" LostFocus="tbLostFocus" />
+                                </Grid>
+                            </Border>
+                            
+                            <ToggleButton Name="tbThemePListNormSize" Width="25" Height="25" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="2" Click="tbThemePListNormSize_Click" Focusable="False" ClickMode="Press" >
+                                    <StackPanel>
+                                        <Image Name="imgThemePListNorm" Source="/Images/Icons/General/kachel.png" />
+                                        <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="25" Stretch="Fill" Margin="-2,0,0,-1" />
+                                        <Image Source="/Images/Icons/General/zeile.png" Height="10" Width="25" Stretch="Fill" Margin="-2,0,0,0" />
+                                    </StackPanel>
+                            </ToggleButton>
+                        </Grid>
                     </Border>
 
-                    <Border Grid.Row="2" Style="{DynamicResource ControlContentBorder}" Margin="10,2">
+                    <Border Grid.Row="3" Style="{DynamicResource ControlContentBorder}" Margin="10,2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="285" />
@@ -872,7 +921,7 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="3">
+                    <Border Grid.Row="4">
                         <Expander Name="exPListMusik" IsExpanded="True" Margin="30,5,30,10"  MinWidth="200" ForceCursor="False" Collapsed="exPListPlaylists_Collapsed" Expanded="exPListPlaylists_Collapsed" >
                             <Expander.Header>
                                 <TextBlock Text="Musik-Playlists" Style="{DynamicResource TextTitel}" />
@@ -883,9 +932,9 @@
                         </Expander>
                     </Border>
 
-                    <GridSplitter Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" Margin="0,0,-2,0" Grid.RowSpan="2" />
+                    <GridSplitter Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="5" Margin="0,0,-2,0" Grid.RowSpan="2" />
 
-                    <Border Grid.Column="1" Grid.Row="2" Style="{DynamicResource ControlContentBorder}" Margin="10,2">
+                    <Border Grid.Column="1" Grid.Row="3" Style="{DynamicResource ControlContentBorder}" Margin="10,2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="285*" MinWidth="200" />
@@ -930,7 +979,7 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Column="1" Grid.Row="3" >
+                    <Border Grid.Column="1" Grid.Row="4" >
                         <Expander Name="exPListPlaylists" Margin="30,5,30,10" IsExpanded="True" MinWidth="200" ForceCursor="False" Collapsed="exPListPlaylists_Collapsed" Expanded="exPListPlaylists_Collapsed" >
                             <Expander.Header>
                                 <TextBlock Text="Geräusche-Playlists" Style="{DynamicResource TextTitel}" />

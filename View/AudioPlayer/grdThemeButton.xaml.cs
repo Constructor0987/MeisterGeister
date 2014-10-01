@@ -22,6 +22,18 @@ namespace MeisterGeister.View.AudioPlayer
         public grdThemeButton()
         {
             InitializeComponent();        
-        }                        
+        }
+
+        private void grdTheme_MouseEnter(object sender, MouseEventArgs e)
+        {
+            chkbxPlus.Visibility = Visibility.Visible;
+        }
+
+        private void grdTheme_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (this.Height != 42)
+                chkbxPlus.Visibility = Visibility.Hidden;
+        }
+
     }
 }

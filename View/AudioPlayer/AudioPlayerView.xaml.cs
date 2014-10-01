@@ -1897,6 +1897,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         File.Exists(titelliste[0].Pfad + "\\" + titelliste[0].Datei))
                         Global.ContextAudio.Update<Audio_Titel>(titelliste[0]);
                 }*/
+                
                 if (System.IO.Path.IsPathRooted(System.IO.Path.GetDirectoryName(titelliste[0].Pfad + "\\" + titelliste[0].Datei)))
                 {
                     string titelRef = System.IO.Path.GetDirectoryName(titelliste[0].Pfad + "\\" + titelliste[0].Datei);
@@ -3521,22 +3522,38 @@ namespace MeisterGeister.View.AudioPlayer {
             for (int i = posistionThemeItem; i < cnt; i++)
                 lbEditorTheme.Items.RemoveAt(lbEditorTheme.Items.Count - 1);
         }
+        
+        private void tbThemeThemeNormSize_Click(object sender, RoutedEventArgs e)
+        {
+            imgThemeThemeNorm.Visibility = tbThemeThemeNormSize.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
+            AktualisierePlaylistThemes();
+        }
 
+        private void tbThemePListNormSize_Click(object sender, RoutedEventArgs e)
+        {
+            imgThemePListNorm.Visibility = tbThemePListNormSize.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
+            AktualisierePListPlaylist();
+        }        
+        
         private void AktualisierePlaylistThemes()
         {
             List<Audio_Theme> aThemes = Global.ContextAudio.ThemeListe;
             int cnt = 0;
             bool neu;
+            wpnlPListThemes.ItemHeight = tbThemeThemeNormSize.IsChecked.Value ? 25 : 50;
             foreach (Audio_Theme aTheme in aThemes.Where(t => t.Audio_ThemeGUID != Guid.Parse("00000000-0000-0000-0000-00000000A11E")).OrderBy(t => t.Name))
             {
+                if (!chkPListFilter(tbThemesFilterAll.Text, aTheme.Name))
+                    continue;
                 cnt++;
                 neu = wpnlPListThemes.Children.Count < cnt;
 
                 grdThemeButton grdThButton = neu ? new grdThemeButton() : (grdThemeButton)wpnlPListThemes.Children[cnt - 1];
                 grdThButton.Tag = aTheme.Audio_ThemeGUID;
-
+                grdThButton.Height = tbThemeThemeNormSize.IsChecked.Value ? 22 : 42;
                 grdThButton.tbtnTheme.Tag = aTheme.Audio_ThemeGUID;
                 grdThButton.tbtnTheme.Content = aTheme.Name;
+                grdThButton.chkbxPlus.Visibility = tbThemeThemeNormSize.IsChecked.Value ? Visibility.Hidden : Visibility.Visible;
                 grdThButton.chkbxPlus.Tag = aTheme;
                 grdThButton.chkbxPlus.IsChecked = aTheme.NurGeräusche;
                 
@@ -3568,7 +3585,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     wpnlPListThemes.Children.Add(grdThButton);
                 }
             }
-            wpnlPListThemes.Children.RemoveRange(aThemes.Count, wpnlPListThemes.Children.Count - aThemes.Count);
+            wpnlPListThemes.Children.RemoveRange(cnt, wpnlPListThemes.Children.Count - cnt);
         }
 
         private void chbxThemeNurGeräusche_Checked(object sender, RoutedEventArgs e)
@@ -6515,8 +6532,11 @@ namespace MeisterGeister.View.AudioPlayer {
 			bkwChkPlayable.RunWorkerAsync(aPlaylist);
 		}
 
+        // ***Problem***  hier könnte das Problem liegen, dass die Titel Deaktiviert werden, obwohl sie da sind
 		private void bkwChkPlayable_DoWork(object sender, DoWorkEventArgs args)
 		{
+            string old_Pfad;
+            string old_Datei;
 			MediaPlayer mp = new MediaPlayer();
 			
 			try
@@ -6530,14 +6550,20 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         KlangZeile klZeile = grpObj._listZeile.First(t => t.audiotitel.Audio_TitelGUID == plylst.Audio_Playlist_Titel.ElementAt(i).Audio_TitelGUID);
 
-                      /*  Audio_Titel neuaTitel = setTitelStdPfad(klZeile.audiotitel.Audio_Titel);
-                        if (neuaTitel.Pfad != klZeile.audiotitel.Audio_Titel.Pfad ||
-                            neuaTitel.Datei != klZeile.audiotitel.Audio_Titel.Datei)
+
+                        //***Problem : Vielleicht verursacht das Speichern der Daten eine Execption ?!?
+                        old_Pfad = klZeile.audiotitel.Audio_Titel.Pfad;
+                        old_Datei = klZeile.audiotitel.Audio_Titel.Datei;
+                        Audio_Titel neuaTitel = setTitelStdPfad(klZeile.audiotitel.Audio_Titel);
+                        if (neuaTitel.Pfad != old_Pfad ||
+                            neuaTitel.Datei != old_Datei)
                         {
                             klZeile.audiotitel.Audio_Titel = neuaTitel;
                             Global.ContextAudio.Update<Audio_Titel>(klZeile.audiotitel.Audio_Titel);
-                        }*/
-                        klZeile.playable = (System.IO.Path.IsPathRooted(System.IO.Path.GetDirectoryName(aTitel.Pfad + "\\" + aTitel.Datei)) && 
+                        }
+
+                        //***Problem : IsPathRooted wurde vorerst für Testzwecke entfernt (Problem DropBox Ordner erzeugt x von y Dateien nicht abspielbar ***//
+                        klZeile.playable = (//System.IO.Path.IsPathRooted(System.IO.Path.GetDirectoryName(aTitel.Pfad + "\\" + aTitel.Datei)) && 
                                             File.Exists(aTitel.Pfad + "\\" + aTitel.Datei));
                     });
 				}
@@ -7038,6 +7064,8 @@ namespace MeisterGeister.View.AudioPlayer {
 					mZeile.tbtnCheck.Visibility = Visibility.Collapsed;
 					lbPListMusik.Items.Add(mZeile);
                 }
+                ((Grid)mZeile.grdForceVol.Parent).RowDefinitions[1].Height = tbThemePListNormSize.IsChecked.Value ? new GridLength(0) : GridLength.Auto;
+                mZeile.ToolTip = (tbThemePListNormSize.IsChecked.Value && mZeile.tboxKategorie.Text!= "") ? mZeile.tboxKategorie.Text : null;
 				mZeile.Tag = playlistliste.Audio_PlaylistGUID;
 				mZeile.tblkTitel.Text = playlistliste.Name;
 				mZeile.tblkLänge.Text = (playlistliste.Länge != 0) ? TimeSpan.FromMilliseconds(playlistliste.Länge).ToString(@"hh\:mm\:ss") : "";
@@ -7067,6 +7095,16 @@ namespace MeisterGeister.View.AudioPlayer {
                     lbPListGeräusche.Items.Add(mZeile);
                 }
                 
+                Grid.SetRow(mZeile.grdForceVol,           tbThemePListNormSize.IsChecked.Value ? 0 : 1);
+                Grid.SetColumn(mZeile.grdForceVol,        tbThemePListNormSize.IsChecked.Value ? 2 : 0);                   
+                mZeile.tblkLänge.Visibility             = tbThemePListNormSize.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible;
+                mZeile.grdForceVol.ColumnDefinitions[0].Width = tbThemePListNormSize.IsChecked.Value ? new GridLength(20) : new GridLength(90);
+                mZeile.chkbxForceVol.Content            = tbThemePListNormSize.IsChecked.Value ? null : "Lautstärke";
+                mZeile.chkbxForceVol.Margin = tbThemePListNormSize.IsChecked.Value ? new Thickness(0, 1, 0, 0) : new Thickness(15, 1, 0, 0);
+                mZeile.brdKategorie.Visibility          = tbThemePListNormSize.IsChecked.Value ? Visibility.Collapsed : Visibility.Visible; 
+                ((Grid)mZeile.grdForceVol.Parent).ColumnDefinitions[1].Width = tbThemePListNormSize.IsChecked.Value ? new GridLength(100) : new GridLength(70);
+                mZeile.ToolTip = (tbThemePListNormSize.IsChecked.Value && mZeile.tboxKategorie.Text!= "") ? mZeile.tboxKategorie.Text : null;
+				
 				mZeile.Tag = playlistliste.Audio_PlaylistGUID;
                 mZeile.chkbxForceVol.Tag = playlistliste;
 			    mZeile.sldForceVolume.Tag = playlistliste;
@@ -7145,7 +7183,23 @@ namespace MeisterGeister.View.AudioPlayer {
 			}
 			catch (Exception) { }
 		}
-        
+
+        private void tbThemesFilterAll_TextChanged(object sender, TextChangedEventArgs e)
+		{
+            AktualisierePlaylistThemes();
+			/*try
+			{
+				for (int i = 0; i < wpnlPListThemes.Children.Count; i++)
+				{
+					if (chkPListFilter(tbThemesFilterAll.Text, ((grdThemeButton)wpnlPListThemes.Children[i]).tbtnTheme.Content.ToString()))
+                        ((grdThemeButton)wpnlPListThemes.Children[i]).Visibility = Visibility.Visible;
+                    else
+                        ((grdThemeButton)wpnlPListThemes.Children[i]).Visibility = Visibility.Collapsed;                    
+				}
+			}
+			catch (Exception) { }*/
+		}
+
 		private void tbPListFilterAll_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			try
@@ -7545,10 +7599,16 @@ namespace MeisterGeister.View.AudioPlayer {
                         folderDlg.SelectedPath = Environment.CurrentDirectory;
                         folderDlg.Description = "Wählen Sie ein Verzeichnis das alle Dateien der Sicherung enthält";
                         List<Audio_Playlist> lstAPlayList = new List<Audio_Playlist>();
-
+                        
                         if (folderDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            Global.SetIsBusy(true, string.Format("Alle Playlisten werden exportiert ..."));
+                            if (mrRes == 1)
+                            {
+                                btnAudioDatenDelete.Tag = true;
+                                btnAudioDatenDelete.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                                btnAudioDatenDelete.Tag = null;
+                            }
+                            Global.SetIsBusy(true, string.Format("Alle Playlisten werden importiert ..."));
                             string pfad = folderDlg.SelectedPath;
 
                             DirectoryInfo d = new DirectoryInfo(pfad);
@@ -7619,8 +7679,9 @@ namespace MeisterGeister.View.AudioPlayer {
 		{
 			try
 			{
-				int mrRes = ViewHelper.ConfirmYesNoCancel("Löschen ALLER bestehender Audio-Daten", "Soll die komplette Audio-Datenbank gelöscht werden?" + 
-                    Environment.NewLine + Environment.NewLine + "Achtung! Alle Daten gehen unwiderruflich verloren.");
+				int mrRes = btnAudioDatenDelete.Tag != null? 2 :
+                    ViewHelper.ConfirmYesNoCancel("Löschen ALLER bestehender Audio-Daten", "Soll die komplette Audio-Datenbank gelöscht werden?" + 
+                        Environment.NewLine + Environment.NewLine + "Achtung! Alle Daten gehen unwiderruflich verloren.");
 				if (mrRes == 2)
 				{
 					_datenloeschen(mrRes, true, "");
@@ -8917,6 +8978,6 @@ namespace MeisterGeister.View.AudioPlayer {
                 pointerZeileDragDrop = null;
             }
         }
-
+        
 	}
 }
