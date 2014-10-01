@@ -97,10 +97,10 @@ namespace MeisterGeister.ViewModel.Basar
                 WährungsFaktor = w.FirstOrDefault(t => t.Key == _währungsText).Value;
                 
                 string wcode = // "-- Mittelreichische Münzen --"
-                            (_währungsText == "Kreuzer") ? "Kr" :
-                            (_währungsText == "Heller") ? "He" :
+                            (_währungsText == "Kreuzer") ? "K" :
+                            (_währungsText == "Heller") ? "H" :
                             (_währungsText == "Silbertaler") ? "S" :
-                            (_währungsText == "Dukaten") ? "Du" :
+                            (_währungsText == "Dukaten") ? "D" :
                             (_währungsText == "Balihoer Rad (veraltet)") ? "BaR" :
                             (_währungsText == "Puniner Dublone (veraltet)") ? "PuD" :
                             (_währungsText == "Nickel (veraltet)") ? "Ni" :
