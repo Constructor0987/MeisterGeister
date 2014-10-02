@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DesignHeight="498" d:DesignWidth="800" Background="{StaticResource Background1}">
 
     <UserControl.Resources>
@@ -143,7 +143,7 @@
                 <Rectangle Name="_spielerWindowVorschau" />
             </Border>
             <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Content="Vorschau..." Click="ButtonVorschau_Click" />
-            <Label Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Margin="5" Content="2 Bidschirm(e)" HorizontalAlignment="Center" Name="_labelAnzeigen" ToolTip="Erkannte Bildschirme" />
+            <Label Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Margin="5" Content="{Binding BildschirmInfo}" HorizontalAlignment="Center" ToolTip="Erkannte Bildschirme" />
             <TextBlock Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="2" Margin="5" Text="Das Tool kann erst mit mehreren Bildschirmen voll eingesetzt werden." HorizontalAlignment="Center" Name="_textBlockNurEinMonitor" TextWrapping="Wrap" Foreground="Red" FontSize="10" MaxWidth="85" TextAlignment="Center" Visibility="Hidden" />
         </Grid>
     </Grid>

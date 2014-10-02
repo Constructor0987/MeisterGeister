@@ -536,6 +536,7 @@
     <Compile Include="ViewModel\Schmiede\SchmiedeFernkampfwaffeViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeNahkampfwaffeViewModel.cs" />
     <Compile Include="ViewModel\Schmiede\SchmiedeSchildViewModel.cs" />
+    <Compile Include="ViewModel\SpielerScreen\SpielerScreenControlViewModel.cs" />
     <Compile Include="ViewModel\Zauberzeichen\ZauberzeichenViewModel.cs" />
     <Compile Include="ViewModel\Zauber\Logic\ZauberProbe.cs" />
     <Compile Include="View\Abenteuer\AbenteuerView.xaml.cs">

@@ -16,6 +16,7 @@ using MeisterGeister.View;
 using System.IO;
 using MeisterGeister.View.Windows;
 using MeisterGeister.View.General;
+using VM = MeisterGeister.ViewModel.SpielerScreen;
 
 namespace MeisterGeister.View.SpielerScreen
 {
@@ -29,9 +30,10 @@ namespace MeisterGeister.View.SpielerScreen
         public SpielerScreenControlView()
         {
             InitializeComponent();
+             VM = new VM.SpielerScreenControlViewModel();
 
-            _labelAnzeigen.Content = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
-            if (ScreenList.Count <= 1)
+            // TOTO: nach MVVM Portierung entfernen
+            if (VM.ScreenList.Count <= 1)
                 _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Visible;
             else
                 _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Hidden;
@@ -47,7 +49,26 @@ namespace MeisterGeister.View.SpielerScreen
                 SetPreviews();
         }
 
-        List<System.Windows.Forms.Screen> ScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.SpielerScreenControlViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.SpielerScreenControlViewModel))
+                    return null;
+                return DataContext as VM.SpielerScreenControlViewModel;
+            }
+            set { DataContext = value; }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (VM != null)
+                VM.Refresh();
+        }
+
 
         private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
