@@ -44,7 +44,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Click="ButtonOpenImg_Click" ToolTip="Ein einzelnes Bild öffnen.">
+                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Command="{Binding OnOpenImage}" ToolTip="Ein einzelnes Bild öffnen.">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/Icons/pinsel.png" />
                                     <TextBlock Text="Bild öffnen" Margin="3,0" VerticalAlignment="Center" />
@@ -62,7 +62,7 @@
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Margin="2,4,2,10" />
                                 </Grid>
                             </Button>
-                            <Button Height="32" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click">
+                            <Button Height="32" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" ToolTip="Spieler-Fenster schließen." Command="{Binding OnSpielerInfoClose}">
                                 <Grid>
                                     <Image Source="/Images/Icons/General/screen.png" />
                                     <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
@@ -75,12 +75,12 @@
                             </CheckBox>
                         </StackPanel>
                         <StackPanel Grid.Column="0" Grid.Row="1" Margin="6" Orientation="Horizontal">
-                            <Image Name="_imagePfadInfo" Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" />
-                            <TextBlock Name="_textBlockFilePath" Text="" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" Visibility="{Binding PathNotFound, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
+                            <TextBlock Text="{Binding FilePath}" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bild" />
                         </StackPanel>
-                        <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" Background="Transparent" SelectionChanged="ListBoxDirectory_SelectionChanged" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
+                        <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding Images}" Background="Transparent" SelectionChanged="ListBoxDirectory_SelectionChanged" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
                         <Viewbox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="6" MinWidth="226" HorizontalAlignment="Right" MaxWidth="400">
-                            <Image Name="_image1" ToolTip="Ein Links-Klick öffnet das Bild extern." MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
+                            <Image Source="{Binding SelectedImage}" ToolTip="Ein Links-Klick öffnet das Bild extern." MouseLeftButtonDown="ImageVorschau_MouseLeftButtonDown" />
                         </Viewbox>
                     </Grid>
                 </Border>
@@ -115,7 +115,7 @@
                 </Button.ToolTip>
                 <Image Source="/Images/Icons/General/screen.png" />
             </Button>
-            <Button Grid.Column="1" Grid.Row="0" Margin="2" Height="45" ToolTip="Spieler-Fenster schließen." Click="ButtonSpielerInfoClose_Click" Width="45">
+            <Button Grid.Column="1" Grid.Row="0" Margin="2" Height="45" ToolTip="Spieler-Fenster schließen." Command="{Binding OnSpielerInfoClose}" Width="45">
                 <Grid>
                     <Image Source="/Images/Icons/General/screen.png" />
                     <Image Source="/Images/Icons/General/entf_01.png" Opacity="0.8" Width="26" Margin="0,0,0,4" />
@@ -144,7 +144,8 @@
             </Border>
             <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Content="Vorschau..." Click="ButtonVorschau_Click" />
             <Label Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Margin="5" Content="{Binding BildschirmInfo}" HorizontalAlignment="Center" ToolTip="Erkannte Bildschirme" />
-            <TextBlock Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="2" Margin="5" Text="Das Tool kann erst mit mehreren Bildschirmen voll eingesetzt werden." HorizontalAlignment="Center" Name="_textBlockNurEinMonitor" TextWrapping="Wrap" Foreground="Red" FontSize="10" MaxWidth="85" TextAlignment="Center" Visibility="Hidden" />
+            <TextBlock Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="2" Margin="5" Text="Das Tool kann erst mit mehreren Bildschirmen voll eingesetzt werden." HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="Red" FontSize="10" MaxWidth="85" TextAlignment="Center" 
+                       Visibility="{Binding NurEinMonitor, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
         </Grid>
     </Grid>
 </UserControl>

@@ -174,6 +174,8 @@ namespace MeisterGeister
         /// </summary>
         public static ViewModel.Kampf.KampfViewModel CurrentKampf { get; set; }
 
+        public static ViewModel.SpielerScreen.SpielerScreenControlViewModel CurrentSpielerScreen { get; set; }
+
         #endregion
 
         #region //KONSTRUKTOR

@@ -20,8 +20,6 @@ using VM = MeisterGeister.ViewModel.SpielerScreen;
 
 namespace MeisterGeister.View.SpielerScreen
 {
-    // TODO ??: MVVM konform umbauen
-
     /// <summary>
     /// Interaktionslogik für SpielerScreenControlView.xaml
     /// </summary>
@@ -30,17 +28,7 @@ namespace MeisterGeister.View.SpielerScreen
         public SpielerScreenControlView()
         {
             InitializeComponent();
-             VM = new VM.SpielerScreenControlViewModel();
-
-            // TOTO: nach MVVM Portierung entfernen
-            if (VM.ScreenList.Count <= 1)
-                _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Visible;
-            else
-                _textBlockNurEinMonitor.Visibility = System.Windows.Visibility.Hidden;
-
-            // Letzten Bilderpfad laden
-            _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
-            LoadImagesFromDir(_textBlockFilePath.Text);
+            VM = new VM.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
 
             SpielerWindow.SpielerWindowInstantiated += SpielerWindow_SpielerWindowInstantiated;
             SpielerWindow.SpielerWindowClosed += SpielerWindow_Closed;
@@ -60,7 +48,11 @@ namespace MeisterGeister.View.SpielerScreen
                     return null;
                 return DataContext as VM.SpielerScreenControlViewModel;
             }
-            set { DataContext = value; }
+            set
+            {
+                DataContext = value;
+                Global.CurrentSpielerScreen = value;
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -70,34 +62,7 @@ namespace MeisterGeister.View.SpielerScreen
         }
 
 
-        private void ButtonSpielerInfoClose_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.Hide();
-        }
-
-        private void ButtonOpenImg_Click(object sender, RoutedEventArgs e)
-        {
-            string pfad = ViewHelper.ChooseFile("Bild auswähllen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
-            if (!String.IsNullOrEmpty(pfad))
-                LoadImage(pfad);
-        }
-
-        public static string ImageFile = string.Empty;
-
-        private void LoadImage(string file)
-        {
-            _textBlockFilePath.Text = file;
-            ImageFile = _textBlockFilePath.Text;
-            try
-            {
-                // Bild
-                LoadImage(ImageFile, _image1);
-            }
-            catch
-            {
-                System.Windows.MessageBox.Show("Laden des Bildes fehlgeschlagen!");
-            }
-        }
+        // TODO: Methoden ins ViewModel verlagern
 
         private void ButtonOpenDir_Click(object sender, RoutedEventArgs e)
         {
@@ -107,85 +72,23 @@ namespace MeisterGeister.View.SpielerScreen
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad = dlg.SelectedPath;
-                _textBlockFilePath.Text = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
+                VM.FilePath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
 
-                LoadImagesFromDir(dlg.SelectedPath);
+                VM.LoadImagesFromDir(dlg.SelectedPath);
             }
-        }
-
-        private void LoadImagesFromDir(string pfad)
-        {
-            if (string.IsNullOrWhiteSpace(pfad) || !Directory.Exists(pfad))
-            {
-                _imagePfadInfo.Visibility = System.Windows.Visibility.Visible;
-                return;
-            }
-
-            _imagePfadInfo.Visibility = System.Windows.Visibility.Collapsed;
-
-            string[] filesBmp = Directory.GetFiles(pfad, "*.bmp");
-            string[] filesGif = Directory.GetFiles(pfad, "*.gif");
-            string[] filesJpg = Directory.GetFiles(pfad, "*.jpg");
-            string[] filesJpeg = Directory.GetFiles(pfad, "*.jpeg");
-            string[] filesJpe = Directory.GetFiles(pfad, "*.jpe");
-            string[] filesJfif = Directory.GetFiles(pfad, "*.jfif");
-            string[] filesPng = Directory.GetFiles(pfad, "*.png");
-            string[] filesTif = Directory.GetFiles(pfad, "*.tif");
-            string[] filesTiff = Directory.GetFiles(pfad, "*.tiff");
-
-            List<dynamic> fileList = new List<dynamic>();
-            AddImages(fileList, filesBmp);
-            AddImages(fileList, filesBmp);
-            AddImages(fileList, filesGif);
-            AddImages(fileList, filesJpg);
-            AddImages(fileList, filesJpeg);
-            AddImages(fileList, filesJpe);
-            AddImages(fileList, filesJfif);
-            AddImages(fileList, filesPng);
-            AddImages(fileList, filesTif);
-            AddImages(fileList, filesTiff);
-
-            _listBoxDirectory.ItemsSource = fileList.OrderBy(img => img.Name);
-        }
-
-        private void AddImages(List<dynamic> fileList, string[] files)
-        {
-            foreach (string file in files)
-                fileList.Add(new { Pfad = file, Name = Path.GetFileNameWithoutExtension(file) });
         }
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
-            SpielerWindow.SetImage(ImageFile, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
+            SpielerWindow.SetImage(VM.ImageFile, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
         }
 
-        private void LoadImage(string path, Image img)
-        {
-            System.Windows.Threading.DispatcherOperation op =
-                Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (System.Threading.ThreadStart)delegate()
-            {
-                try
-                {
-                    BitmapImage bmi = new BitmapImage();
-                    bmi.BeginInit();
-                    bmi.CacheOption = BitmapCacheOption.OnLoad;
-                    bmi.UriSource = new Uri(path, UriKind.Relative);
-                    bmi.EndInit();
-
-                    bmi.Freeze();		// freeze image source, used to move it across the thread
-                    img.Source = bmi;
-                }
-                catch (Exception)
-                {
-                    System.Windows.MessageBox.Show("Bild konnte nicht geladn werden:\n" + path, "Bild laden");
-                }
-            });
-        }
+        
 
         private void ListBoxDirectory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_listBoxDirectory.SelectedItem != null)
-                LoadImage(((dynamic)_listBoxDirectory.SelectedItem).Pfad);
+                VM.LoadImage(((dynamic)_listBoxDirectory.SelectedItem).Pfad);
         }
 
         private void ListBoxDirectory_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -210,7 +113,7 @@ namespace MeisterGeister.View.SpielerScreen
         {
             try
             {
-                System.Diagnostics.Process.Start(ImageFile);
+                System.Diagnostics.Process.Start(VM.ImageFile);
             }
             catch (Exception ex)
             {

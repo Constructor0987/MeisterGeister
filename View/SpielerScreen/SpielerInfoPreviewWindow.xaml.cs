@@ -120,7 +120,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
-            SpielerWindow.SetImage(SpielerScreenControlView.ImageFile, Stretch.Uniform);
+            SpielerWindow.SetImage(Global.CurrentSpielerScreen.ImageFile, Stretch.Uniform);
         }
     }
 }
