@@ -1044,5 +1044,44 @@
         </GroupBox>
         <!--<ListBox x:Name="lbFading" Grid.Column="1" HorizontalAlignment="Left" Height="400" Margin="83,27,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="334" Visibility="Hidden" />
         <Button Content="Fading-List" HorizontalAlignment="Left" Height="24" Margin="563,10,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click" Visibility="{x:Static mg:Global.INTERN_Visibility}" />-->
+
+        <!-- <TextBlock Canvas.Top="0" Canvas.Left="0" Name="myTextBlock" Grid.Column="1" FontSize="10pt">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation RepeatBehavior="Forever" AutoReverse="true"
+              Storyboard.TargetName="MyTranslateTransform"
+              Storyboard.TargetProperty="X"
+              From="200" To="-200" Duration="0:0:7" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="MyTranslateTransform" X="0" Y="0" />
+            </TextBlock.RenderTransform>
+                Dies ist ein langer Text (Lauftext)
+        </TextBlock>
+        <Grid>
+            <TextBlock x:Name="_box" FontSize="30" Text="Das ist eine Laufschrift, die eigentlich nicht ruckeln sollte :-(" Margin="0,77,-261,197">
+                <TextBlock.RenderTransform>
+                    <TranslateTransform x:Name="AnimatedTranslateTransform" X="0" Y="0" />
+                </TextBlock.RenderTransform>
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="TextBlock.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetName="AnimatedTranslateTransform"
+                                    Storyboard.TargetProperty="X"
+                                    From="-200" To="400" Duration="0:0:5"
+                                    AutoReverse="True" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
+        </Grid>-->
     </Grid>
 </UserControl>
