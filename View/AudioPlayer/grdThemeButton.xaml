@@ -6,7 +6,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="42" d:DesignWidth="130" MouseEnter="grdTheme_MouseEnter" MouseLeave="grdTheme_MouseLeave">    
         <Grid Width="119" >
-        <ToggleButton Name="tbtnTheme" Focusable="False" Margin="0" Padding="1,-1,1,1" />
+        <ToggleButton Name="tbtnTheme" Focusable="False" Margin="0" Padding="1,-1,1,1" >
+            <ToggleButton.Content>
+                <StackPanel>
+                    <Label Name="lblTheme" Content="Barzarg" Padding="2,0,0,0" />
+                    <Border Name="brdKategorie" Height="15" Width="110" CornerRadius="5" >
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
+                                <GradientStop Color="Beige" Offset="0" />
+                                <GradientStop Color="#FFFFFFC7" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Label Name="lblKategorie" Padding="2,0" FontSize="10" FontStyle="Italic" />
+                    </Border>
+                </StackPanel>
+            </ToggleButton.Content>
+        </ToggleButton>
         <CheckBox Name="chkbxPlus" Visibility="Hidden" ToolTip="Nur Geräusche des Themes hinzufügen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3" FlowDirection="RightToLeft" >
             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="20" Width="20" Margin="-5,-2,0,-5"/>
         </CheckBox>

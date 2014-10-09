@@ -104,6 +104,19 @@ namespace MeisterGeister.Model
     
         }
         private string _name;
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual string Kategorie
+        {
+            get { return _kategorie; }
+            set
+            {
+                Set(ref _kategorie, value);
+            }
+
+        }
+        private string _kategorie;
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int Hintergrund_VolMod
