@@ -397,6 +397,7 @@
     <Property Name="Modifiers" Type="nvarchar" MaxLength="25" />
     <Property Name="Shuffle" Type="bit" Nullable="false" />
     <Property Name="Repeat" Type="bit" Nullable="false" />
+    <Property Name="Fading" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Audio_Playlist_Titel">
     <Key>
@@ -2488,6 +2489,7 @@
     <Property Name="Modifiers" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
     <Property Name="Shuffle" Type="Boolean" Nullable="false" />
     <Property Name="Repeat" Type="Boolean" Nullable="false" />
+    <Property Name="Fading" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
     <NavigationProperty Name="Audio_Theme" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Theme" />
   </EntityType>
@@ -4247,6 +4249,7 @@
           <ScalarProperty Name="Modifiers" ColumnName="Modifiers" />
           <ScalarProperty Name="Shuffle" ColumnName="Shuffle" />
           <ScalarProperty Name="Repeat" ColumnName="Repeat" />
+          <ScalarProperty Name="Fading" ColumnName="Fading" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

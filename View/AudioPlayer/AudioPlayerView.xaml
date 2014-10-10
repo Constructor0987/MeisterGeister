@@ -529,6 +529,8 @@
                                             </StackPanel>
                                         </GroupBox>
 
+                                        <CheckBox Name="rbEditorFading" Click="rbEditorFading_Click" Grid.Column="3" Grid.Row="2" Margin="0,0,5,0" HorizontalAlignment="Right" Content="Fading" IsChecked="True" ToolTip="Fading der Playliste" VerticalAlignment="Center" />
+
                                         <GroupBox Visibility="Collapsed" Name="gboxTopMusikSort1" Header="Musik sortieren" Grid.Column="3" Grid.RowSpan="2" Height="50" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <ToggleButton Name="btnTopMusikAbisZ1" Width="25" Height="25" IsTabStop="False" Margin="1" >
@@ -1065,7 +1067,7 @@
             </StackPanel>
         </GroupBox>
 
-        <!--<ListBox Name="lbTest" Margin="708,10,0,0" Grid.RowSpan="2" />
+        <!--<ListBox Name="lbTest" Margin="56,29,599,31" Grid.Row="1" Visibility="Collapsed" />
         <ListBox  Name="lboxTest" HorizontalAlignment="Left" Height="145" Margin="708,10,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="68"/>
         <ListBox x:Name="lbFading" Grid.Column="1" HorizontalAlignment="Left" Height="400" Margin="83,27,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="334" Visibility="Hidden" />
         

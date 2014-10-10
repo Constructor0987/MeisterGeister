@@ -116,6 +116,7 @@ namespace MeisterGeister.Model
     
         }
         private bool _hintergrundmusik;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual int MaxSongsParallel
@@ -128,6 +129,20 @@ namespace MeisterGeister.Model
     
         }
         private int _maxSongsParallel;
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual bool Fading
+        {
+            get { return _fading; }
+            set
+            {
+                Set(ref _fading, value);
+            }
+
+        }
+        private bool _fading;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual double Länge
