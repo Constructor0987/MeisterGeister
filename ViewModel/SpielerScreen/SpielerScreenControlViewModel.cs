@@ -20,8 +20,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         // Felder
         private string _bildschirmInfo = "1 Bildschirm";
-        private string _filePath = string.Empty;
-        private string _imageFile = string.Empty;
+        private string _directoryPath = string.Empty;
+        private string _selectedImagePath = string.Empty;
         private BitmapImage _selectedImage = null;
         private bool _pathNotFound = true;
 
@@ -43,23 +43,23 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             get { return ScreenList.Count <= 1; }
         }
 
-        public string FilePath
+        public string DirectoryPath
         {
-            get { return _filePath; }
+            get { return _directoryPath; }
             set
             {
-                _filePath = value;
-                OnChanged("FilePath");
+                _directoryPath = value;
+                OnChanged("DirectoryPath");
             }
         }
 
-        public string ImageFile
+        public string SelectedImagePath
         {
-            get { return _imageFile; }
+            get { return _selectedImagePath; }
             set
             {
-                _imageFile = value;
-                OnChanged("ImageFile");
+                _selectedImagePath = value;
+                OnChanged("SelectedImagePath");
             }
         }
 
@@ -101,6 +101,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         #endregion
 
         #region //---- COMMANDS ----
+
+        private Base.CommandBase onReLoadImages = null;
+        public Base.CommandBase OnReLoadImages
+        {
+            get
+            {
+                if (onReLoadImages == null)
+                    onReLoadImages = new Base.CommandBase(ReLoadImages, null);
+                return onReLoadImages;
+            }
+        }
 
         private Base.CommandBase onOpenImage = null;
         public Base.CommandBase OnOpenImage
@@ -161,30 +172,31 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             _bildschirmInfo = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
 
             // Letzten Bilderpfad laden
-            FilePath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
-            LoadImagesFromDir(FilePath);
+            DirectoryPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
+            LoadImagesFromDir(DirectoryPath);
         }
 
-        private void OpenImage(object sender)
+        private void OpenImage(object sender = null)
         {
             string pfad = ChooseFile("Bild auswähllen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
             if (!String.IsNullOrEmpty(pfad))
                 LoadImage(pfad);
         }
 
-        private void SpielerInfoClose(object sender)
+        private void SpielerInfoClose(object sender = null)
         {
             SpielerWindow.Hide();
         }
 
         public void LoadImage(string file)
         {
-            FilePath = file;
-            ImageFile = FilePath;
+            SelectedImagePath = file;
+            FileInfo fInfo = new FileInfo(file);
+            DirectoryPath = fInfo.DirectoryName;
             try
             {
                 // Bild
-                SelectImage(ImageFile);
+                SelectImage(SelectedImagePath);
             }
             catch
             {
@@ -213,6 +225,11 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                         PopUp("Bild konnte nicht geladn werden:\n" + path);
                     }
                 });
+        }
+
+        private void ReLoadImages(object sender = null)
+        {
+            LoadImagesFromDir(DirectoryPath);
         }
 
         public void LoadImagesFromDir(string pfad)

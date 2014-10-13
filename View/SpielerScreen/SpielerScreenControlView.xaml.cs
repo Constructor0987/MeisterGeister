@@ -72,7 +72,7 @@ namespace MeisterGeister.View.SpielerScreen
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad = dlg.SelectedPath;
-                VM.FilePath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
+                VM.DirectoryPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
 
                 VM.LoadImagesFromDir(dlg.SelectedPath);
             }
@@ -80,7 +80,7 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {
-            SpielerWindow.SetImage(VM.ImageFile, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None );
+            SpielerWindow.SetImage(VM.SelectedImagePath, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None);
         }
 
         
@@ -113,7 +113,7 @@ namespace MeisterGeister.View.SpielerScreen
         {
             try
             {
-                System.Diagnostics.Process.Start(VM.ImageFile);
+                System.Diagnostics.Process.Start(VM.SelectedImagePath);
             }
             catch (Exception ex)
             {
