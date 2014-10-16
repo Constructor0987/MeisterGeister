@@ -61,15 +61,6 @@ namespace MeisterGeister.View.SpielerScreen
                 VM.Refresh();
         }
 
-
-        // TODO: Methoden ins ViewModel verlagern
-
-        private void ListBoxDirectory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (_listBoxDirectory.SelectedItem != null)
-                VM.LoadImage(((dynamic)_listBoxDirectory.SelectedItem).Pfad);
-        }
-
         private void ListBoxDirectory_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             string key = e.Key.ToString();
@@ -85,19 +76,6 @@ namespace MeisterGeister.View.SpielerScreen
                     _listBoxDirectory.ScrollIntoView(item);
                     break;
                 }
-            }
-        }
-
-        private void ImageVorschau_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                System.Diagnostics.Process.Start(VM.SelectedImagePath);
-            }
-            catch (Exception ex)
-            {
-                MsgWindow errWin = new MsgWindow("Fehler beim Starten eines externen Programms", "Beim Starten eines externen Programms ist ein Fehler aufgetreten!", ex);
-                errWin.ShowDialog();
             }
         }
 

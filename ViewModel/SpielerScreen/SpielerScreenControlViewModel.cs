@@ -24,6 +24,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private string _directoryPath = string.Empty;
         private string _selectedImagePath = string.Empty;
         private BitmapImage _selectedImage = null;
+        private dynamic _selectedImageObject = null;
         private bool _pathNotFound = true;
         private bool _isImageStretch = true;
 
@@ -71,6 +72,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             set
             {
                 _selectedImagePath = value;
+                LoadImage();
                 OnChanged("SelectedImagePath");
             }
         }
@@ -82,6 +84,18 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             {
                 _selectedImage = value;
                 OnChanged("SelectedImage");
+            }
+        }
+
+        public dynamic SelectedImageObject
+        {
+            get { return _selectedImageObject; }
+            set
+            {
+                _selectedImageObject = value;
+                if (value != null)
+                    SelectedImagePath = value.Pfad;
+                OnChanged("SelectedImageObject");
             }
         }
 
@@ -223,6 +237,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onOpenImageExtern = null;
+        public Base.CommandBase OnOpenImageExtern
+        {
+            get
+            {
+                if (onOpenImageExtern == null)
+                    onOpenImageExtern = new Base.CommandBase(OpenImageExtern, null);
+                return onOpenImageExtern;
+            }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -268,7 +293,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         {
             string pfad = ChooseFile("Bild auswähllen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
             if (!String.IsNullOrEmpty(pfad))
-                LoadImage(pfad);
+                SelectedImagePath = pfad;
         }
 
         private void OpenDirectory(object sender = null)
@@ -310,10 +335,21 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             SpielerWindow.SetText(TextToShow);
         }
 
-        public void LoadImage(string file)
+        public void OpenImageExtern(object sender = null)
         {
-            SelectedImagePath = file;
-            FileInfo fInfo = new FileInfo(file);
+            try
+            {
+                System.Diagnostics.Process.Start(SelectedImagePath);
+            }
+            catch (Exception ex)
+            {
+                ShowError("Beim Starten eines externen Programms ist ein Fehler aufgetreten!", ex);
+            }
+        }
+
+        private void LoadImage()
+        {
+            FileInfo fInfo = new FileInfo(SelectedImagePath);
             DirectoryPath = fInfo.DirectoryName;
             try
             {
