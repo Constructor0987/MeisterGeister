@@ -64,13 +64,6 @@ namespace MeisterGeister.View.SpielerScreen
 
         // TODO: Methoden ins ViewModel verlagern
 
-        private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.SetImage(VM.SelectedImagePath, (_checkBoxMax.IsChecked == true) ? Stretch.Uniform : Stretch.None);
-        }
-
-        
-
         private void ListBoxDirectory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_listBoxDirectory.SelectedItem != null)
@@ -133,24 +126,14 @@ namespace MeisterGeister.View.SpielerScreen
                 SpielerInfoPreviewWindow.Instance.SetVisualBrush();
         }
 
-        private void ButtonKampf_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.SetKampfInfoView();
-        }
-
-        private void ButtonSpielerInfo_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.ReOpen();
-        }
-
-        private void ButtonBodenplan_Click(object sender, RoutedEventArgs e)
-        {
-            SpielerWindow.SetBodenplanView();
-        }
-
         private void ButtonVorschau_Click(object sender, RoutedEventArgs e)
         {
             SpielerInfoPreviewWindow.Show();
+        }
+
+        private void RTBNotiz_LostFocus(object sender, RoutedEventArgs e)
+        {
+            VM.TextToShow = _RTBNotiz.ParseFlowDoumentToText();
         }
 
     }

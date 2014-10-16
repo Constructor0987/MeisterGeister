@@ -374,7 +374,10 @@
                                 <Button.ToolTip>
                                     <TextBlock Width="200" Height="Auto" TextWrapping="Wrap"><Run Text="Den Spielern den Text in einem separaten Fenster zeigen."/></TextBlock>
                                 </Button.ToolTip>
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png" />
+                                <Grid>
+                                    <Image Source="/Images/Icons/General/screen.png" />
+                                    <Image Source="/Images/Icons/General/feder.png" Margin="2,4,2,10" />
+                                </Grid>
                             </Button>
                             <Button Height="28" ToolTip="Spieler-Fenster schließen." Click="btnSpielerInfoClose_Click">
                                 <Grid>

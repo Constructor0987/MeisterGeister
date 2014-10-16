@@ -137,6 +137,37 @@ namespace MeisterGeister.View.SpielerScreen
             SetContent(txtBlock);
         }
 
+        public static void SetText(string text)
+        {
+            RichTextBox txtBlock = new RichTextBox();
+            FlowDocument flowDoc = new FlowDocument();
+
+            txtBlock.Document = flowDoc;
+            txtBlock.Background = (ImageBrush)App.Current.FindResource("BackgroundPergamentQuer");
+            txtBlock.BorderBrush = Brushes.Transparent;
+            txtBlock.Margin = new Thickness(40);
+            txtBlock.Padding = new Thickness(20);
+
+            try
+            {
+                // Umwandlung versuchen
+                if (text.StartsWith("<FlowDocument"))
+                    txtBlock.Document = System.Windows.Markup.XamlReader.Parse(text) as FlowDocument;
+                else
+                {
+                    FlowDocument tmpDoc = new FlowDocument(new Paragraph(new Run(text)));
+                    txtBlock.Document = tmpDoc;
+                }
+            }
+            catch (System.Windows.Markup.XamlParseException)
+            {
+                FlowDocument tmpDoc = new FlowDocument(new Paragraph(new Run(text)));
+                txtBlock.Document = tmpDoc;
+            }
+
+            SetContent(txtBlock);
+        }
+
         public static void SetImage(string pfad, Stretch stretch = Stretch.Uniform)
         {
             try

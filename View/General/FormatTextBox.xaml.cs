@@ -139,6 +139,11 @@ namespace MeisterGeister.View.General
             SpielerScreen.SpielerWindow.SetTextFromClipboard();
         }
 
+        public void ShowOnSpielerScreen()
+        {
+            btnSpielerInfo_Click(null, null);
+        }
+
         private void btnSpielerInfoClose_Click(object sender, RoutedEventArgs e)
         {
             SpielerScreen.SpielerWindow.Hide();

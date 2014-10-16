@@ -42,6 +42,12 @@
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/pinsel.png" Margin="4,6,4,14" />
                 </Grid>
             </Button>
+            <Button Margin="2" Height="35" Click="ButtonTextZeigen_Click" Width="35" ToolTip="Den Spielern den vorbereiteten Text zeigen.">
+                <Grid>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/feder.png" Margin="4,6,4,14" />
+                </Grid>
+            </Button>
         </StackPanel>
         <Rectangle Grid.Row="1" Name="_rectangle" />
         <CheckBox Grid.Row="2" Margin="5" Content="Fenster immer im Vordergrund" IsChecked="{Binding Topmost, ElementName=_spielerInfoPreviewWindow}" />

@@ -19,11 +19,13 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         #region //---- FELDER ----
 
         // Felder
+        private string _textToShow = string.Empty;
         private string _bildschirmInfo = "1 Bildschirm";
         private string _directoryPath = string.Empty;
         private string _selectedImagePath = string.Empty;
         private BitmapImage _selectedImage = null;
         private bool _pathNotFound = true;
+        private bool _isImageStretch = true;
 
         // Listen
         private List<System.Windows.Forms.Screen> _screenList = System.Windows.Forms.Screen.AllScreens.ToList();
@@ -32,6 +34,16 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
+
+        public string TextToShow
+        {
+            get { return _textToShow; }
+            set
+            {
+                _textToShow = value;
+                OnChanged("TextToShow");
+            }
+        }
 
         public string BildschirmInfo
         {
@@ -80,6 +92,16 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             {
                 _pathNotFound = value;
                 OnChanged("PathNotFound");
+            }
+        }
+
+        public bool IsImageStretch
+        {
+            get { return _isImageStretch; }
+            set
+            {
+                _isImageStretch = value;
+                OnChanged("IsImageStretch");
             }
         }
 
@@ -135,6 +157,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onSpielerInfoOpen = null;
+        public Base.CommandBase OnSpielerInfoOpen
+        {
+            get
+            {
+                if (onSpielerInfoOpen == null)
+                    onSpielerInfoOpen = new Base.CommandBase(SpielerInfoOpen, null);
+                return onSpielerInfoOpen;
+            }
+        }
+
         private Base.CommandBase onOpenDirectory = null;
         public Base.CommandBase OnOpenDirectory
         {
@@ -143,6 +176,50 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 if (onOpenDirectory == null)
                     onOpenDirectory = new Base.CommandBase(OpenDirectory, null);
                 return onOpenDirectory;
+            }
+        }
+
+        private Base.CommandBase onShowKampf = null;
+        public Base.CommandBase OnShowKampf
+        {
+            get
+            {
+                if (onShowKampf == null)
+                    onShowKampf = new Base.CommandBase(ShowKampf, null);
+                return onShowKampf;
+            }
+        }
+
+        private Base.CommandBase onShowBodenplan = null;
+        public Base.CommandBase OnShowBodenplan
+        {
+            get
+            {
+                if (onShowBodenplan == null)
+                    onShowBodenplan = new Base.CommandBase(ShowBodenplan, null);
+                return onShowBodenplan;
+            }
+        }
+
+        private Base.CommandBase onShowText = null;
+        public Base.CommandBase OnShowText
+        {
+            get
+            {
+                if (onShowText == null)
+                    onShowText = new Base.CommandBase(ShowText, null);
+                return onShowText;
+            }
+        }
+
+        private Base.CommandBase onShowImage = null;
+        public Base.CommandBase OnShowImage
+        {
+            get
+            {
+                if (onShowImage == null)
+                    onShowImage = new Base.CommandBase(ShowImage, null);
+                return onShowImage;
             }
         }
 
@@ -203,9 +280,34 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             LoadImagesFromDir(path);
         }
 
-        private void SpielerInfoClose(object sender = null)
+        public void SpielerInfoClose(object sender = null)
         {
             SpielerWindow.Hide();
+        }
+
+        public void SpielerInfoOpen(object sender = null)
+        {
+            SpielerWindow.ReOpen();
+        }
+
+        public void ShowKampf(object sender = null)
+        {
+            SpielerWindow.SetKampfInfoView();
+        }
+
+        public void ShowBodenplan(object sender = null)
+        {
+            SpielerWindow.SetBodenplanView();
+        }
+
+        public void ShowImage(object sender = null)
+        {
+            SpielerWindow.SetImage(SelectedImagePath, (IsImageStretch == true) ? Stretch.Uniform : Stretch.None);
+        }
+
+        public void ShowText(object sender = null)
+        {
+            SpielerWindow.SetText(TextToShow);
         }
 
         public void LoadImage(string file)
