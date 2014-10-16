@@ -20,6 +20,7 @@ namespace MeisterGeister.ViewModel.Base {
         private Func<string, string, bool> confirm;
         private Func<string, string, int> confirmYesNoCancel;
         private Func<string, string, bool, bool, string[], string> chooseFile;
+        private Func<string, bool, string> chooseDirectory;
         private Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog;
 
         public virtual Dispatcher Dispatcher { get; protected set; }
@@ -35,21 +36,23 @@ namespace MeisterGeister.ViewModel.Base {
         /// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
         /// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterung ...)</param>
         /// <param name="showProbeDialog">Zeigt einen Probe-Dialog an (Probe, Held).</param>
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError)
         {
             this.Dispatcher = Dispatcher.CurrentDispatcher;
             this.popup = popup;
             this.confirm = confirm;
             this.confirmYesNoCancel = confirmYesNoCancel;
             this.chooseFile = chooseFile;
+            this.chooseDirectory = chooseDirectory;
             this.showError = showError;
             this.showProbeDialog = showProbeDialog;
         }
 
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, null, showError) { }
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, showProbeDialog, showError) { }
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, showError) {}
-        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, null, null, showProbeDialog, showError) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, null, null, showError) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, chooseFile, chooseDirectory, null, showError) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, showProbeDialog, showError) { }
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Action<string, Exception> showError) : this(popup, confirm, confirmYesNoCancel, null, null, null, showError) {}
+        protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Func<Probe, Model.Held, ProbenErgebnis> showProbeDialog, Action<string, Exception> showError) : this(popup, confirm, null, null, null, showProbeDialog, showError) { }
         protected ViewModelBase(Action<string> popup, Func<string, string, bool> confirm, Action<string, Exception> showError) : this(popup, confirm, null, null, null, showError) { }
         protected ViewModelBase(Action<string> popup, Action<string, Exception> showError) : this(popup, null, null, null, null, showError) { }
         protected ViewModelBase(Func<string, string, bool> confirm, Action<string, Exception> showError) : this(null, confirm, null, null, null, showError) { }
@@ -144,6 +147,19 @@ namespace MeisterGeister.ViewModel.Base {
         {
             if (chooseFile != null)
                 return chooseFile(header, filename, save, askRelativePath, extensions);
+            return null;
+        }
+
+        /// <summary>
+        /// Auswahl eines Verzeichnisses.
+        /// </summary>
+        /// <param name="path">Vorausgewähltes Verzeichnis.</param>
+        /// <param name="askRelativePath">true, falls der User gefragt werden soll, ob der Pfad relativ oder absolut angegeben werden soll</param>
+        /// <returns></returns>
+        public string ChooseDirectory(string path, bool askRelativePath)
+        {
+            if (chooseDirectory != null)
+                return chooseDirectory(path, askRelativePath);
             return null;
         }
 

@@ -50,7 +50,7 @@
                                     <TextBlock Text="Bild öffnen" Margin="3,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
-                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Click="ButtonOpenDir_Click" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
+                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Command="{Binding OnOpenDirectory}" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/Icons/General/oeffnen.png" />
                                     <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />

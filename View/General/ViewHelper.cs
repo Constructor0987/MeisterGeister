@@ -82,6 +82,35 @@ namespace MeisterGeister.View.General
         }
 
         /// <summary>
+        /// Auswahl eines Verzeichnisses.
+        /// </summary>
+        /// <param name="path">Vorausgewähltes Verzeichnis.</param>
+        /// <param name="askRelativePath">true, falls der User gefragt werden soll, ob der Pfad relativ oder absolut angegeben werden soll</param>
+        /// <returns></returns>
+        public static string ChooseDirectory(string path, bool askRelativePath)
+        {
+            FolderBrowserDialog objDialog = new FolderBrowserDialog();
+            objDialog.SelectedPath = string.IsNullOrWhiteSpace(path) ? Environment.CurrentDirectory : path;
+
+            if (objDialog.ShowDialog() == DialogResult.OK)
+            {
+                Environment.CurrentDirectory = objDialog.SelectedPath;
+                string pathAbsolute = objDialog.SelectedPath;
+                if (askRelativePath && IsSameRootPath(pathAbsolute))
+                {
+                    string pathRelative = Logic.Extensions.FileExtensions.ConvertAbsoluteToRelativePath(objDialog.SelectedPath);
+
+                    if (ViewHelper.ConfirmYesNoCancel("Pfadangabe", string.Format("Absolute Pfadangabe (Ja)?\n{0}\n\nOder relative Pfadangabe (Nein)?\n{1}", pathAbsolute, pathRelative)) == 1)
+                        return pathRelative;
+                    else
+                        return pathAbsolute;
+                }
+                return pathAbsolute;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Zur Auswahl einer Datei.
         /// </summary>
         /// <param name="title">Fenstertitel</param>

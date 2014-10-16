@@ -28,7 +28,7 @@ namespace MeisterGeister.View.SpielerScreen
         public SpielerScreenControlView()
         {
             InitializeComponent();
-            VM = new VM.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ShowError);
+            VM = new VM.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
 
             SpielerWindow.SpielerWindowInstantiated += SpielerWindow_SpielerWindowInstantiated;
             SpielerWindow.SpielerWindowClosed += SpielerWindow_Closed;
@@ -63,20 +63,6 @@ namespace MeisterGeister.View.SpielerScreen
 
 
         // TODO: Methoden ins ViewModel verlagern
-
-        private void ButtonOpenDir_Click(object sender, RoutedEventArgs e)
-        {
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.SelectedPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
-
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad = dlg.SelectedPath;
-                VM.DirectoryPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
-
-                VM.LoadImagesFromDir(dlg.SelectedPath);
-            }
-        }
 
         private void ButtonBildZeigen_Click(object sender, RoutedEventArgs e)
         {

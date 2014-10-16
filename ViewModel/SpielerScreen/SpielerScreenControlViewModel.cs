@@ -135,6 +135,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onOpenDirectory = null;
+        public Base.CommandBase OnOpenDirectory
+        {
+            get
+            {
+                if (onOpenDirectory == null)
+                    onOpenDirectory = new Base.CommandBase(OpenDirectory, null);
+                return onOpenDirectory;
+            }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -151,8 +162,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         ///// <param name="confirm">Bestätigung einer Ja-Nein-Frage. (Fenstertitel, Frage)</param>
         ///// <param name="confirmYesNoCancel">Bestätigen eines YesNoCancel-Dialoges (cancel=0, no=1, yes=2). (Fenstertitel, Frage)</param>
         ///// <param name="chooseFile">Wahl einer Datei. (Fenstertitel, Dateiname, zum speichern, Dateierweiterungen ...)</param>
-        public SpielerScreenControlViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Action<string, Exception> showError) :
-            base(popup, confirm, confirmYesNoCancel, chooseFile, showError)
+        public SpielerScreenControlViewModel(Action<string> popup, Func<string, string, bool> confirm, Func<string, string, int> confirmYesNoCancel, Func<string, string, bool, bool, string[], string> chooseFile, Func<string, bool, string> chooseDirectory, Action<string, Exception> showError) :
+            base(popup, confirm, confirmYesNoCancel, chooseFile, chooseDirectory, showError)
         {
             Init();
         }
@@ -181,6 +192,15 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             string pfad = ChooseFile("Bild auswähllen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
             if (!String.IsNullOrEmpty(pfad))
                 LoadImage(pfad);
+        }
+
+        private void OpenDirectory(object sender = null)
+        {
+            string path = ChooseDirectory(Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad, true);
+
+            Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad = path;
+            DirectoryPath = path;
+            LoadImagesFromDir(path);
         }
 
         private void SpielerInfoClose(object sender = null)
