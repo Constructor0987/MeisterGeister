@@ -1,8 +1,9 @@
-﻿<Window x:Class="MeisterGeister.View.SpielerScreen.SpielerInfoPreviewWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Name="_spielerInfoPreviewWindow"
-        Title="SpielerInfo Vorschau" Height="320" Width="400" WindowStyle="ToolWindow" Topmost="True" Closed="SpielerInfoPreviewWindow_Closed">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MeisterGeister.View.SpielerScreen.SpielerInfoPreviewWindow"
+        x:Name="_spielerInfoPreviewWindow" ResizeMode="NoResize" 
+        Title="SpielerInfo Vorschau" WindowStyle="ToolWindow" Topmost="True" Closed="SpielerInfoPreviewWindow_Closed" Width="370" Height="241">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -12,9 +13,7 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button Margin="2" Height="35" Click="ButtonSpielerInfo_Click" Width="35">
                 <Button.ToolTip>
-                    <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
-            		    Ein leeres Fenster starten, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können.
-                    </TextBlock>
+                    <TextBlock Width="200" Height="Auto" TextWrapping="Wrap"><Run Text="Ein leeres Fenster starten, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können."/></TextBlock>
                 </Button.ToolTip>
                 <Image Source="/Images/Icons/General/screen.png" />
             </Button>
@@ -49,7 +48,10 @@
                 </Grid>
             </Button>
         </StackPanel>
-        <Rectangle Grid.Row="1" Name="_rectangle" />
-        <CheckBox Grid.Row="2" Margin="5" Content="Fenster immer im Vordergrund" IsChecked="{Binding Topmost, ElementName=_spielerInfoPreviewWindow}" />
+        <Rectangle Grid.Row="1" x:Name="_rectangle" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <CheckBox Margin="5" Content="Fenster immer im Vordergrund" IsChecked="{Binding Topmost, ElementName=_spielerInfoPreviewWindow}" />
+            <CheckBox Margin="5" Content="Fenstergröße fixieren" IsChecked="True" ToolTip="Fenstergröße wird auf eine zum 2. Bildschirm passende Größe fixiert." x:Name="_checkBoxWindowFixed" Unchecked="CheckBoxWindowFixed_CheckedChanged" Checked="CheckBoxWindowFixed_CheckedChanged" />
+        </StackPanel>
     </Grid>
 </Window>

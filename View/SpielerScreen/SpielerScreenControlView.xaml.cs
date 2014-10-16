@@ -28,10 +28,20 @@ namespace MeisterGeister.View.SpielerScreen
         public SpielerScreenControlView()
         {
             InitializeComponent();
-            VM = new VM.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
+            if (Global.CurrentSpielerScreen == null)
+            {
+                VM = new VM.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
+                Global.CurrentSpielerScreen = VM;
+            }
+            else
+                VM = Global.CurrentSpielerScreen;
 
             SpielerWindow.SpielerWindowInstantiated += SpielerWindow_SpielerWindowInstantiated;
             SpielerWindow.SpielerWindowClosed += SpielerWindow_Closed;
+
+            // Text-Feld setzen
+            if (!String.IsNullOrEmpty(VM.TextToShow))
+                _RTBNotiz.ParseTextToFlowDoument(VM.TextToShow);
 
             if (SpielerWindow.IsInstantiated)
                 SetPreviews();
@@ -51,7 +61,6 @@ namespace MeisterGeister.View.SpielerScreen
             set
             {
                 DataContext = value;
-                Global.CurrentSpielerScreen = value;
             }
         }
 

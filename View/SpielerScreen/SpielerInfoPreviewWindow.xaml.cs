@@ -53,7 +53,10 @@ namespace MeisterGeister.View.SpielerScreen
         {
             double width = SpielerWindow.Instance.Width;
             double height = SpielerWindow.Instance.Height;
-            Height = Width / width * height + 25;
+            Height = height * 0.2 + 39 + 26; // Fenstergröße entspricht 20% des 2. Bildschirm
+            Width = width * 0.2;
+            if (Width < 370)
+                Width = 370;
             _rectangle.Fill = SpielerWindow.VisualBrush;
         }
 
@@ -121,6 +124,17 @@ namespace MeisterGeister.View.SpielerScreen
         private void ButtonTextZeigen_Click(object sender, RoutedEventArgs e)
         {
             Global.CurrentSpielerScreen.ShowText();
+        }
+
+        private void CheckBoxWindowFixed_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if (_checkBoxWindowFixed.IsChecked == true)
+            {
+                SetVisualBrush();
+                ResizeMode = System.Windows.ResizeMode.NoResize;
+            }
+            else
+                ResizeMode = System.Windows.ResizeMode.CanResize;
         }
     }
 }
