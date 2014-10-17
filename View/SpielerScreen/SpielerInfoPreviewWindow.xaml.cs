@@ -58,7 +58,10 @@ namespace MeisterGeister.View.SpielerScreen
             Height = height * 0.2 + 39 + 26; // Fenstergröße entspricht 20% des 2. Bildschirm
             Width = width * 0.2;
             if (Width < 370)
+            {
+                Height = (height * 0.2) * 370 / Width + 39 + 26;
                 Width = 370;
+            }
             _rectangle.Fill = SpielerWindow.VisualBrush;
         }
 
