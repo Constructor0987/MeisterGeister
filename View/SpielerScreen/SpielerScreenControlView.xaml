@@ -38,7 +38,7 @@
                         <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" Text="Bild zeigen" Style="{DynamicResource TextTitel}" />
                     </StackPanel>
                 </TabItem.Header>
-                <Border Style="{DynamicResource ControlContentBorder}">
+                <Border Style="{DynamicResource ControlContentBorder}" AllowDrop="True" Drop="Bilder_Drop">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300*" />
@@ -50,13 +50,25 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Command="{Binding OnOpenImage}" ToolTip="Ein einzelnes Bild öffnen.">
+                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Command="{Binding OnOpenImage}">
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Text="Ein einzelnes Bild öffnen." />
+                                        <TextBlock FontStyle="Italic" Text="Bilder können auch per Drag&amp;Drop eingefügt werden." Margin="0,5,0,0" />
+                                    </StackPanel>
+                                </Button.ToolTip>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/Icons/pinsel.png" />
                                     <TextBlock Text="Bild öffnen" Margin="3,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
-                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Command="{Binding OnOpenDirectory}" ToolTip="Einen kompletten Ordner mit Bildern öffnen.">
+                            <Button Height="23" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" Command="{Binding OnOpenDirectory}">
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock Text="Einen kompletten Ordner mit Bildern öffnen." />
+                                        <TextBlock FontStyle="Italic" Text="Ordner können auch per Drag&amp;Drop eingefügt werden." Margin="0,5,0,0" />
+                                    </StackPanel>
+                                </Button.ToolTip>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="/Images/Icons/General/oeffnen.png" />
                                     <TextBlock Text="Ordner öffnen" Margin="3,0" VerticalAlignment="Center" />

@@ -123,5 +123,31 @@ namespace MeisterGeister.View.SpielerScreen
             VM.TextToShow = _RTBNotiz.ParseFlowDoumentToText();
         }
 
+        private void Bilder_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+            {
+                string[] droppedFiles = e.Data.GetData(System.Windows.DataFormats.FileDrop, true) as string[];
+                string file = droppedFiles.FirstOrDefault();
+
+                FileAttributes attr = File.GetAttributes(file);
+
+                //detect whether its a directory or file
+                if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                {
+                    VM.DirectoryPath = file;
+                    Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad = file;
+                }
+                else
+                {
+                    FileInfo fi = new FileInfo(file);
+                    if (!Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES.Contains(fi.Extension.Replace(".", string.Empty)))
+                        ViewHelper.Popup(file + "\n\nFalscher Dateityp!");
+                    else
+                        VM.SelectedImagePath = file;
+                }
+            }
+        }
+
     }
 }

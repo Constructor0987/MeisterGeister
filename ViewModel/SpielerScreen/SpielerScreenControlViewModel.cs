@@ -62,6 +62,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             set
             {
                 _directoryPath = value;
+                LoadImagesFromDir(_directoryPath);
                 OnChanged("DirectoryPath");
             }
         }
@@ -286,7 +287,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
             // Letzten Bilderpfad laden
             DirectoryPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
-            LoadImagesFromDir(DirectoryPath);
         }
 
         private void OpenImage(object sender = null)
@@ -302,7 +302,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
             Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad = path;
             DirectoryPath = path;
-            LoadImagesFromDir(path);
         }
 
         public void SpielerInfoClose(object sender = null)
@@ -350,7 +349,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private void LoadImage()
         {
             FileInfo fInfo = new FileInfo(SelectedImagePath);
-            DirectoryPath = fInfo.DirectoryName;
+            if (DirectoryPath != fInfo.DirectoryName)
+                DirectoryPath = fInfo.DirectoryName;
             try
             {
                 // Bild
