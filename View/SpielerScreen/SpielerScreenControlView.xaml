@@ -9,6 +9,7 @@
              d:DesignHeight="498" d:DesignWidth="800" Background="{StaticResource Background1}">
 
     <UserControl.Resources>
+        <ViewGeneral:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <ViewGeneral:LoadCachedImageConverter x:Key="LoadCachedImageConverter" />
         <DataTemplate x:Key="ImageListBoxItemTemplate">
             <Grid ToolTip="{Binding Pfad}">
@@ -79,6 +80,8 @@
                                     <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Bild auf maximale Größe vergrößern, andernfalls Origalgröße verwenden. Ist das Bild größer als der Bildschirm, wird es verkleinert." />
                                 </CheckBox.ToolTip>
                             </CheckBox>
+                            <ViewGeneral:DoubleBox Margin="5" MinWidth="65" MinValue="0" ShowButtons="True" Value="{Binding SlideShowInterval}" />
+                            <TextBlock Margin="5" Text="(Slide-Show Interval in Sekunden)" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel Grid.Column="0" Grid.Row="1" Margin="6" Orientation="Horizontal">
                             <Button Command="{Binding OnReLoadImages}" Height="14" Width="14" ToolTip="Bilder neu laden">
@@ -136,6 +139,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Button Grid.Column="0" Grid.Row="0" Margin="2" Height="45" Command="{Binding OnSpielerInfoOpen}" Width="45">
                 <Button.ToolTip>
@@ -176,12 +180,19 @@
                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/feder.png" Margin="4,6,4,14" />
                 </Grid>
             </Button>
-            <Border Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="5" Width="90" Height="60" BorderBrush="Black" BorderThickness="1">
+            <Button Grid.Column="0" Grid.Row="3" Margin="2" Height="45" Command="{Binding OnShowSlideShow}" Width="45" ToolTip="Slide-Show mit den Bildern des Ordners abspielen/stoppen.">
+                <Grid>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/screen.png"/>
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/play.png" Margin="4,6,4,14" Visibility="{Binding SlideShowStopped, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/stop.png" Margin="4,6,4,14" Visibility="{Binding SlideShowRunning, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </Grid>
+            </Button>
+            <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Width="90" Height="60" BorderBrush="Black" BorderThickness="1">
                 <Rectangle Name="_spielerWindowVorschau" />
             </Border>
-            <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Content="Vorschau..." Click="ButtonVorschau_Click" />
-            <Label Grid.Column="0" Grid.Row="5"  Grid.ColumnSpan="2" Margin="5" Content="{Binding BildschirmInfo}" HorizontalAlignment="Center" ToolTip="Erkannte Bildschirme" />
-            <TextBlock Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="2" Margin="5" Text="Das Tool kann erst mit mehreren Bildschirmen voll eingesetzt werden." HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="Red" FontSize="10" MaxWidth="85" TextAlignment="Center" 
+            <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="5" Content="Vorschau..." Click="ButtonVorschau_Click" />
+            <Label Grid.Column="0" Grid.Row="6"  Grid.ColumnSpan="2" Margin="5" Content="{Binding BildschirmInfo}" HorizontalAlignment="Center" ToolTip="Erkannte Bildschirme" />
+            <TextBlock Grid.Column="0" Grid.Row="7"  Grid.ColumnSpan="2" Margin="5" Text="Das Tool kann erst mit mehreren Bildschirmen voll eingesetzt werden." HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="Red" FontSize="10" MaxWidth="85" TextAlignment="Center" 
                        Visibility="{Binding NurEinMonitor, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
         </Grid>
     </Grid>

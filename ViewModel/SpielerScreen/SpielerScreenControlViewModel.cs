@@ -23,10 +23,13 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private string _bildschirmInfo = "1 Bildschirm";
         private string _directoryPath = string.Empty;
         private string _selectedImagePath = string.Empty;
+        private string _currentSlideShowImage = string.Empty;
         private BitmapImage _selectedImage = null;
         private dynamic _selectedImageObject = null;
         private bool _pathNotFound = true;
         private bool _isImageStretch = true;
+        private bool _slideShowRunning = false;
+        private double _slideShowInterval = 6.0;
 
         // Listen
         private List<System.Windows.Forms.Screen> _screenList = System.Windows.Forms.Screen.AllScreens.ToList();
@@ -78,6 +81,16 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        public string CurrentSlideShowImage
+        {
+            get { return _currentSlideShowImage; }
+            set
+            {
+                _currentSlideShowImage = value;
+                OnChanged("CurrentSlideShowImage");
+            }
+        }
+
         public BitmapImage SelectedImage
         {
             get { return _selectedImage; }
@@ -118,6 +131,32 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 _isImageStretch = value;
                 OnChanged("IsImageStretch");
             }
+        }
+
+        public bool SlideShowRunning
+        {
+            get { return _slideShowRunning; }
+            set
+            {
+                _slideShowRunning = value;
+                OnChanged("SlideShowRunning");
+                OnChanged("SlideShowStopped");
+            }
+        }
+
+        public double SlideShowInterval
+        {
+            get { return _slideShowInterval; }
+            set
+            {
+                _slideShowInterval = value;
+                OnChanged("SlideShowInterval");
+            }
+        }
+
+        public bool SlideShowStopped
+        {
+            get { return !_slideShowRunning; }
         }
 
         public List<System.Windows.Forms.Screen> ScreenList
@@ -249,6 +288,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onShowSlideShow = null;
+        public Base.CommandBase OnShowSlideShow
+        {
+            get
+            {
+                if (onShowSlideShow == null)
+                    onShowSlideShow = new Base.CommandBase(ShowSlideShow, null);
+                return onShowSlideShow;
+            }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -307,6 +357,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         public void SpielerInfoClose(object sender = null)
         {
             SpielerWindow.Hide();
+            SlideShowStop();
         }
 
         public void SpielerInfoOpen(object sender = null)
@@ -429,6 +480,60 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         {
             foreach (string file in files)
                 fileList.Add(new { Pfad = file, Name = Path.GetFileNameWithoutExtension(file) });
+        }
+
+        public void ShowSlideShow(object sender = null)
+        {
+            if (SlideShowRunning)
+                SlideShowStop();
+            else
+                SlideShowStart();
+        }
+
+        private System.Timers.Timer _slideShowTimer = new System.Timers.Timer();
+        private List<dynamic>.Enumerator _imagesEnumerator = new List<dynamic>.Enumerator();
+
+        private void SlideShowStart()
+        {
+            SlideShowRunning = true;
+            _slideShowTimer.Interval = SlideShowInterval * 1000;
+            _slideShowTimer.Elapsed += SlideShowTimer_Elapsed;
+            
+            _imagesEnumerator = Images.GetEnumerator();
+            if (_imagesEnumerator.MoveNext())
+            {
+                CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
+                SpielerWindow.SetSlideShow(this);
+                _slideShowTimer.Start();
+            }
+        }
+
+        private void SlideShowStop()
+        {
+            SlideShowRunning = false;
+            _slideShowTimer.Elapsed -= SlideShowTimer_Elapsed;
+            _slideShowTimer.Stop();
+        }
+
+        private void SlideShowMove()
+        {
+            if (_imagesEnumerator.MoveNext())
+            {
+                CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
+            }
+            else
+            {
+                _imagesEnumerator = Images.GetEnumerator();
+                if (_imagesEnumerator.MoveNext())
+                {
+                    CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
+                }
+            }
+        }
+
+        private void SlideShowTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            SlideShowMove();
         }
 
         #endregion

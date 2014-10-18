@@ -29,6 +29,8 @@ namespace MeisterGeister.View.SpielerScreen
             InitializeComponent();
 
             SetVisualBrush();
+
+            DataContext = Global.CurrentSpielerScreen;
         }
 
         public static SpielerInfoPreviewWindow Instance
@@ -129,6 +131,11 @@ namespace MeisterGeister.View.SpielerScreen
         private void ButtonTextZeigen_Click(object sender, RoutedEventArgs e)
         {
             Global.CurrentSpielerScreen.ShowText();
+        }
+
+        private void ButtonSlideShow_Click(object sender, RoutedEventArgs e)
+        {
+            Global.CurrentSpielerScreen.ShowSlideShow();
         }
 
         private void CheckBoxWindowFixed_CheckedChanged(object sender, RoutedEventArgs e)

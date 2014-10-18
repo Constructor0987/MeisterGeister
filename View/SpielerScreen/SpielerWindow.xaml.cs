@@ -188,6 +188,26 @@ namespace MeisterGeister.View.SpielerScreen
             catch { }
         }
 
+        public static void SetSlideShow(ViewModel.SpielerScreen.SpielerScreenControlViewModel vm)
+        {
+            Instance.DataContext = vm;
+
+            try
+            {
+                Image img = new Image();
+
+
+                Binding myBinding = new Binding("CurrentSlideShowImage");
+                myBinding.Source = vm;
+                img.SetBinding(Image.SourceProperty, myBinding);
+
+                Instance.Content = img;
+
+                Show();
+            }
+            catch { }
+        }
+
         public static void SetKampfInfoView()
         {
             if (Global.CurrentKampf != null)

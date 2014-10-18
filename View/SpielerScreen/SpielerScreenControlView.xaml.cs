@@ -148,6 +148,5 @@ namespace MeisterGeister.View.SpielerScreen
                 }
             }
         }
-
     }
 }
