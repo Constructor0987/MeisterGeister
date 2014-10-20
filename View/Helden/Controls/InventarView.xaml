@@ -151,6 +151,30 @@
                 </Grid>
             </Border>
         </DataTemplate>
+        <!--SonstigesTemplate-->
+        <DataTemplate x:Key="SonstigesTemplate">
+            <Border BorderBrush="#FFBEB3A3" BorderThickness="1">
+                <Grid>
+                    <Grid Margin="0,0,25,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding EntityHI.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding EntityI.Gewicht}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding EntityI.Name}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Button HorizontalAlignment="Right" Width="25" Command="{Binding OnRemoveInventar}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
+                        <Image>
+                            <Image.Source>
+                                <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/General/entf_01.png" />
+                            </Image.Source>
+                        </Image>
+                    </Button>
+                </Grid>
+            </Border>
+        </DataTemplate>
         <Style x:Key="ButtonBackground" TargetType="{x:Type Border}">
             <Setter Property="Background">
                 <Setter.Value>
@@ -847,7 +871,7 @@
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Sonstiges" Margin="0,0,10,0" VerticalAlignment="Center" />
-                                                <ComboBox Height="23"  Width="222" ItemsSource="{Binding InventarListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRuestung}" IsEditable="True">
+                                                <ComboBox Height="23"  Width="222" ItemsSource="{Binding InventarListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}" IsEditable="True">
                                                     <ComboBox.InputBindings>
                                                         <KeyBinding Key="Enter"  Command="{Binding OnAddInventar}" />
                                                     </ComboBox.InputBindings>
@@ -874,6 +898,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0" >
                                         <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
@@ -1046,6 +1071,38 @@
                                                 <ListBox ItemTemplate="{DynamicResource RuestungTemplate}" ItemsSource="{Binding HeldRuestungImInventar}" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ScrollViewer.IsDeferredScrollingEnabled="True"/>
                                             </Border>
                                         </Grid>
+                                        <Grid x:Name="SO" Grid.Row="4" Margin="5" Visibility="{Binding IsSonstigesVorhanden}" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <!-- Sonstiges -->
+                                            <Border Grid.Row="0" x:Name="SOTitel" BorderBrush="#B3996C" BorderThickness="1,1,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlTitelBorder}" Height="25">
+                                                <Grid >
+                                                    <Image Height="25" Width="25" >
+                                                        <Image.Source>
+                                                            <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />
+                                                        </Image.Source>
+                                                    </Image>
+                                                </Grid>
+                                            </Border>
+                                            <Border Grid.Row="1" x:Name="SOHead" BorderBrush="#B3996C" BorderThickness="1,0,1,0" VerticalAlignment="Top" Style="{DynamicResource ControlContentBorder}" >
+                                                <Grid Margin="0,0,25,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht"  Grid.Column="1" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Name" Grid.Column="2" Grid.ColumnSpan="1" />
+                                                </Grid>
+                                            </Border>
+                                            <Border Grid.Row="2" x:Name="SOListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >
+                                                <ListBox ItemTemplate="{DynamicResource SonstigesTemplate}" ItemsSource="{Binding HeldSonstigesImInventar}" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource ListBoxItemStretch}" ScrollViewer.IsDeferredScrollingEnabled="True"/>
+                                            </Border>
+                                        </Grid>
                                     </Grid>
                                     <Grid x:Name="Filter" Grid.Column="1">
 
@@ -1100,7 +1157,7 @@
                                                     </Image.Source>
                                                 </Image>
                                             </Button>
-                                            <Button x:Name="borderSonstiges" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" Click="brdKlicked" Visibility="Hidden">
+                                            <Button x:Name="borderSonstiges" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" Click="brdKlicked">
                                                 <Image x:Name="image4">
                                                     <Image.Source>
                                                         <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />

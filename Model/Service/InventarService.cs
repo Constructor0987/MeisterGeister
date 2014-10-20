@@ -43,6 +43,11 @@ namespace MeisterGeister.Model.Service {
             get { return Liste<Trageort>(); }
         }
 
+        public List<Model.Held_Inventar> HeldZuInventarListe
+        {
+            get { return Liste<Held_Inventar>(); }
+        }
+
         #endregion
 
         #region //KONSTRUKTOR
