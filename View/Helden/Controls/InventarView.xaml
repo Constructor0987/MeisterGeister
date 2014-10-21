@@ -869,7 +869,7 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal" IsEnabled="False">
                                                 <TextBlock Text="Sonstiges" Margin="0,0,10,0" VerticalAlignment="Center" />
                                                 <ComboBox Height="23"  Width="222" ItemsSource="{Binding InventarListe}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}" IsEditable="True">
                                                     <ComboBox.InputBindings>
@@ -883,6 +883,7 @@
                                                         </Image.Source>
                                                     </Image>
                                                 </Button>
+                                                <TextBlock Foreground="Red" Text="HINWEIS: Derzeit können Sonstige Gegenstände nur per Import eingefügt werden." VerticalAlignment="Center" Margin="5" />
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
@@ -1158,6 +1159,9 @@
                                                 </Image>
                                             </Button>
                                             <Button x:Name="borderSonstiges" Width="40" Height="40" ToolTipService.ToolTip="Sonstige Gegenstände" Click="brdKlicked">
+                                                <Button.Effect>
+                                                    <DropShadowEffect RenderingBias="Quality"/>
+                                                </Button.Effect>
                                                 <Image x:Name="image4">
                                                     <Image.Source>
                                                         <BitmapImage UriSource="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" />

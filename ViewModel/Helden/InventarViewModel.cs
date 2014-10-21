@@ -1043,6 +1043,35 @@ namespace MeisterGeister.ViewModel.Inventar {
                         }                        
                     }
                 }
+
+                if (sender is InventarItem)
+                {
+                    InventarItem item = HeldSonstigesImInventar.Where(value => value == (sender as InventarItem)).FirstOrDefault();
+                    if (item != null)
+                    {
+                        foreach (var invItem in HeldSonstigesImInventar)
+                        {
+                            if (invItem.EntityI.InventarGUID == item.EntityI.InventarGUID)
+                            {
+                                if (item.EntityHI.Anzahl <= 1)
+                                    break;
+                                item.EntityHI.Anzahl--;
+                                OnChanged("HeldSonstigesImInventar");
+                                SelectedHeld.BerechneAusruestungsGewicht();
+                                return;
+                            }
+                        }
+                        HeldSonstigesImInventar.Remove(item);
+                        OnChanged("HeldSonstigesImInventar");
+                        Global.ContextInventar.HeldZuInventarListe.Remove(item.EntityHI);
+                        Global.ContextInventar.RemoveInventarVonHeld(item.EntityHI);
+                        SelectedHeld.BerechneAusruestungsGewicht();
+                        if (HeldSonstigesImInventar.Count() == 0)
+                        {
+                            isSonstigesVorhanden = Visibility.Collapsed;
+                        }
+                    }
+                }
             }
         }        
         #endregion

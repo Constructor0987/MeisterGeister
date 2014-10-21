@@ -89,6 +89,18 @@ namespace MeisterGeister.Model.Service {
             }    
         }
 
+        public bool RemoveInventarVonHeld(Model.Held_Inventar aHI)
+        {
+            try
+            {
+                return base.Delete<Held_Inventar>(aHI);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region //--UPDATE
