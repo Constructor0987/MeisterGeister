@@ -73,7 +73,8 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "GegnerViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "11" },
                 new Model.Einstellung() { Name = "GegnerDetailViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "110" },
                 new Model.Einstellung() { Name = "SpielerInfoBilderPfad", Kontext = "SpielerInfo", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = string.Empty },
-                new Model.Einstellung() { Name = "INTERN", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" }
+                new Model.Einstellung() { Name = "INTERN", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
+                new Model.Einstellung() { Name = "SlideShowInterval", Kontext = "SpielerInfo", Kategorie = "Versteckt", Typ = "Double", Beschreibung = "", Wert = "6" }
             };
         }
 
@@ -525,6 +526,18 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<string>("SpielerInfoBilderPfad", value);
+            }
+        }
+
+        public static double SlideShowInterval
+        {
+            get
+            {
+                return GetEinstellung<double>("SlideShowInterval");
+            }
+            set
+            {
+                SetEinstellung<double>("SlideShowInterval", value);
             }
         }
 

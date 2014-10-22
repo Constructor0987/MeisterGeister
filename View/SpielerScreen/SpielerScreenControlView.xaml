@@ -80,7 +80,7 @@
                                     <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Bild auf maximale Größe vergrößern, andernfalls Origalgröße verwenden. Ist das Bild größer als der Bildschirm, wird es verkleinert." />
                                 </CheckBox.ToolTip>
                             </CheckBox>
-                            <ViewGeneral:DoubleBox Margin="5" MinWidth="65" MinValue="0" ShowButtons="True" Value="{Binding SlideShowInterval}" />
+                            <ViewGeneral:DoubleBox Margin="5" MinWidth="65" MinValue="0.5" ShowButtons="True" Value="{Binding SlideShowInterval}" />
                             <TextBlock Margin="5" Text="(Slide-Show Interval in Sekunden)" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel Grid.Column="0" Grid.Row="1" Margin="6" Orientation="Horizontal">
