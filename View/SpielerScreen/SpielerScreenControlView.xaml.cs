@@ -95,8 +95,8 @@ namespace MeisterGeister.View.SpielerScreen
 
         private void SetPreviews()
         {
-            double width = SpielerWindow.Instance.Width;
-            double height = SpielerWindow.Instance.Height;
+            double width = VM.SpielerScreen.Bounds.Width;
+            double height = VM.SpielerScreen.Bounds.Height;
             _spielerWindowVorschau.Height = _spielerWindowVorschau.Width / width * height;
             _spielerWindowVorschau.Fill = SpielerWindow.VisualBrush;
             _spielerWindowVorschau.ToolTip = new System.Windows.Shapes.Rectangle() { Width = 400, Height = 400.0 / width * height, Fill = SpielerWindow.VisualBrush };

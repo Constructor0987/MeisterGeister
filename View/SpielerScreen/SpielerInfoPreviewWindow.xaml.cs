@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.View.General;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -45,6 +46,16 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
+        private ViewModel.SpielerScreen.SpielerScreenControlViewModel VM
+        {
+            get
+            {
+                if (Global.CurrentSpielerScreen == null)
+                    Global.CurrentSpielerScreen = new ViewModel.SpielerScreen.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
+                return Global.CurrentSpielerScreen;
+            }
+        }
+
         public static bool IsInstantiated
         {
             get
@@ -55,8 +66,8 @@ namespace MeisterGeister.View.SpielerScreen
 
         public void SetVisualBrush()
         {
-            double width = SpielerWindow.Instance.Width;
-            double height = SpielerWindow.Instance.Height;
+            double width = VM.SpielerScreen.Bounds.Width;
+            double height = VM.SpielerScreen.Bounds.Height;
             Height = height * 0.2 + 39 + 26; // Fenstergröße entspricht 20% des 2. Bildschirm
             Width = width * 0.2;
             if (Width < 370)
