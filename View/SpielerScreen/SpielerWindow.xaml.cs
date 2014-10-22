@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.View.General;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,14 +26,8 @@ namespace MeisterGeister.View.SpielerScreen
             InitializeComponent();
 
             int xPoint = 0, yPoint = 0;
-            foreach (System.Windows.Forms.Screen objActualScreen in ScreenList)
-            {
-                if (!objActualScreen.Primary)
-                {
-                    xPoint = objActualScreen.Bounds.Location.X + 20;
-                    yPoint = objActualScreen.Bounds.Location.Y + 20;
-                }
-            }
+            xPoint = VM.SpielerScreen.Bounds.Location.X + 20;
+            yPoint = VM.SpielerScreen.Bounds.Location.Y + 20;
             WindowStartupLocation = WindowStartupLocation.Manual;
             Left = Convert.ToDouble(xPoint);
             Top = Convert.ToDouble(yPoint);
@@ -50,6 +45,16 @@ namespace MeisterGeister.View.SpielerScreen
                         SpielerWindowInstantiated(_instance, new EventArgs());
                 }
                 return _instance;
+            }
+        }
+
+        private ViewModel.SpielerScreen.SpielerScreenControlViewModel VM
+        {
+            get
+            {
+                if (Global.CurrentSpielerScreen == null)
+                    Global.CurrentSpielerScreen = new ViewModel.SpielerScreen.SpielerScreenControlViewModel(ViewHelper.Popup, ViewHelper.Confirm, ViewHelper.ConfirmYesNoCancel, ViewHelper.ChooseFile, ViewHelper.ChooseDirectory, ViewHelper.ShowError);
+                return Global.CurrentSpielerScreen;
             }
         }
 
@@ -229,13 +234,11 @@ namespace MeisterGeister.View.SpielerScreen
             }
         }
 
-        List<System.Windows.Forms.Screen> ScreenList = System.Windows.Forms.Screen.AllScreens.ToList();
-
         public bool IsKampfInfoModus { get; set; }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (ScreenList.Count > 1)
+            if (VM.ScreenList.Count > 1)
             {
                 WindowState = System.Windows.WindowState.Maximized;
                 WindowStyle = System.Windows.WindowStyle.None;

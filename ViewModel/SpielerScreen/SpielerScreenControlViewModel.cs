@@ -168,6 +168,28 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             get { return _screenList; }
         }
 
+        private System.Windows.Forms.Screen _spielerScreen = null;
+        public System.Windows.Forms.Screen SpielerScreen
+        {
+            get
+            {
+                if (_spielerScreen == null)
+                {
+                    if (ScreenList.Count <= 1)
+                        _spielerScreen = ScreenList.FirstOrDefault();
+                    else
+                    {
+                        foreach (System.Windows.Forms.Screen objActualScreen in ScreenList)
+                        {
+                            if (!objActualScreen.Primary)
+                                _spielerScreen = objActualScreen;
+                        }
+                    }
+                }
+                return _spielerScreen;
+            }
+        }
+
         public List<dynamic> Images
         {
             get { return _images; }
