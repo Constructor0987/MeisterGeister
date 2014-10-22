@@ -43,6 +43,16 @@
                 <ColumnDefinition Width="370*" />
             </Grid.ColumnDefinitions>
             <TabControl Grid.Row="1" IsEnabled="{Binding SelectedHeldIsNotNull}" Background="{StaticResource Background1}" x:Name="tabControl1" SelectedItem="{Binding SelectedTabItem}" SelectedIndex="{Binding SelectedTabIndex}" SelectionChanged="tabControl1_SelectionChanged">
+                <TabControl.Style>
+                    <Style TargetType="TabControl">
+                        <Setter Property="Opacity" Value="0.3" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedHeldIsNotNull}" Value="True">
+                                <Setter Property="Opacity" Value="1" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabControl.Style>
                 <TabItem Header="Allgemein" x:Name="_tabItemAllgemein">
                     <!--<Held:AllgemeinView />-->
                 </TabItem>
