@@ -25,6 +25,13 @@
                 <DataTrigger Binding="{Binding AktiveHeldengruppe}" Value="false">
                     <Setter Property="Opacity" Value="0.7" />
                 </DataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding AktiveHeldengruppe, RelativeSource={RelativeSource PreviousData}}" Value="true" />
+                        <Condition Binding="{Binding AktiveHeldengruppe}" Value="false" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Margin" Value="0,40,0,0" />
+                </MultiDataTrigger>
             </Style.Triggers>
         </Style>
         <DataTemplate x:Key="HeldListTemplate">
