@@ -1014,6 +1014,9 @@
                     </Border>
                 </Grid>
             </TabItem>
+            <TabItem Name="tiDebug" Header="Debug" GotFocus="tiDebug_GotFocus">
+                <TreeView Name="tvDebug" />
+            </TabItem>
         </TabControl>
         
         <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3" Visibility="Collapsed" >
@@ -1030,11 +1033,10 @@
             </StackPanel>
         </GroupBox>
 
-        <!--<StackPanel Grid.Column="1">
-            <Label Name="lblTest" Content="{Binding XPos}" Height="20" />
+        <StackPanel Grid.Column="1">
+            <Label Name="lblTest" Content="{Binding Path=AktKlangPlaylist.Name}" Height="20" />
             <Button Click="btnTest_Click" Height="20" />            
         </StackPanel>
--->
         <!--<ListBox Name="lbTest" Margin="56,29,599,31" Grid.Row="1" Visibility="Collapsed" />
         <ListBox  Name="lboxTest" HorizontalAlignment="Left" Height="145" Margin="708,10,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="68"/>
         <ListBox x:Name="lbFading" Grid.Column="1" HorizontalAlignment="Left" Height="400" Margin="83,27,0,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="334" Visibility="Hidden" />

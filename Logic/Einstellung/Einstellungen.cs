@@ -35,6 +35,8 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "AudioDirektAbspielen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = "", Wert = "1" },
                 new Model.Einstellung() { Name = "AudioVerzeichnis", Kontext = "Audioplayer", Kategorie = null, Typ = "String", Beschreibung = null, Wert = "C:\\" },
                 new Model.Einstellung() { Name = "AudioSpieldauerBerechnen", Kontext = "Audioplayer", Kategorie = null, Typ = "Boolean", Beschreibung = null, Wert = "1" },
+                new Model.Einstellung() { Name = "GeneralMusikVolume", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = null, Wert = "50" },
+                new Model.Einstellung() { Name = "GeneralGeräuscheVolume", Kontext = "Audioplayer", Kategorie = null, Typ = "Integer", Beschreibung = null, Wert = "100" },
 
                 new Model.Einstellung() { Name = "PdfReaderCommand", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "Befehl zum starten des PDF-Readers", Wert = null },
                 new Model.Einstellung() { Name = "PdfReaderArguments", Kontext = "Almanach", Kategorie = null, Typ = "String", Beschreibung = "Parameter für den Aufruf des PDF-Readers", Wert = null },
@@ -328,6 +330,30 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("AudioInAnderemPfadSuchen", value);
+            }
+        }
+
+        public static int GeneralMusikVolume
+        {
+            get
+            {
+                return GetEinstellung<int>("GeneralMusikVolume");
+            }
+            set
+            {
+                SetEinstellung<int>("GeneralMusikVolume", value);
+            }
+        }
+
+        public static int GeneralGeräuscheVolume
+        {
+            get
+            {
+                return GetEinstellung<int>("GeneralGeräuscheVolume");
+            }
+            set
+            {
+                SetEinstellung<int>("GeneralGeräuscheVolume", value);
             }
         }
 

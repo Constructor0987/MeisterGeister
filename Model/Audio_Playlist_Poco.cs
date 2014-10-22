@@ -88,8 +88,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _audio_PlaylistGUID, value);
-    		}
-    
+    		}    
         }
         private System.Guid _audio_PlaylistGUID;
     	///<summary>Database persistent property</summary>
@@ -100,8 +99,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _name, value);
-    		}
-    
+    		}    
         }
         private string _name;
     	///<summary>Database persistent property</summary>
@@ -112,8 +110,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _hintergrundmusik, value);
-    		}
-    
+    		}    
         }
         private bool _hintergrundmusik;
 
@@ -125,8 +122,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _maxSongsParallel, value);
-    		}
-    
+    		}    
         }
         private int _maxSongsParallel;
 
@@ -139,9 +135,33 @@ namespace MeisterGeister.Model
             {
                 Set(ref _fading, value);
             }
-
         }
         private bool _fading;
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual bool DoForce
+        {
+            get { return _doForce; }
+            set
+            {
+                Set(ref _doForce, value);
+            }
+
+        }
+        private bool _doForce;
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual int ForceVolume
+        {
+            get { return _forceVol; }
+            set
+            {
+                Set(ref _forceVol, value);
+            }
+        }
+        private int _forceVol;
 
     	///<summary>Database persistent property</summary>
     	[DataMember]
@@ -151,10 +171,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _länge, value);
-    		}
-    
+    		}    
         }
         private double _länge;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Kategorie
@@ -163,10 +183,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _kategorie, value);
-    		}
-    
+    		}    
         }
         private string _kategorie;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Key
@@ -175,10 +195,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _key, value);
-    		}
-    
+    		}    
         }
         private string _key;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual string Modifiers
@@ -187,10 +207,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _modifiers, value);
-    		}
-    
+    		}    
         }
         private string _modifiers;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual bool Shuffle
@@ -199,10 +219,10 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _shuffle, value);
-    		}
-    
+    		}    
         }
         private bool _shuffle;
+
     	///<summary>Database persistent property</summary>
     	[DataMember]
         public virtual bool Repeat
@@ -211,8 +231,7 @@ namespace MeisterGeister.Model
             set
     		{ 
     			Set(ref _repeat, value);
-    		}
-    
+    		}    
         }
         private bool _repeat;
 

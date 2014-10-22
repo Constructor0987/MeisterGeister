@@ -15,8 +15,9 @@ namespace MeisterGeister.Model
         #region Import Export
 
         public static Audio_Playlist Import(string pfad, string soll, bool batch = false)
-        {
+        { 
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
+            
             Guid audio_playlistGuid = serialization.ImportAudio(pfad, soll);
             if (audio_playlistGuid == Guid.Empty)
                 return null;
@@ -41,6 +42,28 @@ namespace MeisterGeister.Model
         {
             Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
             serialization.ExportAudioPlaylist(g, pfad); //Audio_PlaylistGUID
+        }
+
+
+        
+        public static void Export(List<Audio_Playlist> aPlaylistListe, string pfad, bool batch = false)
+        {
+            foreach (Audio_Playlist aPlaylist in aPlaylistListe)
+            {
+                //MUSS JEDES MAL AUSGEFÜHRT WERDEN, DA SONST DER EXPORT FEHLERHAFT IST
+                Service.SerializationService serialization = Service.SerializationService.GetInstance(!batch);
+                //////////////////////////////////////////////////////////////////////
+
+                Global.SetIsBusy(true, string.Format("Playliste '" + aPlaylist.Name.Replace("/", "_") + "' wird exportiert"));
+                string datei = pfad + "\\Playlist_" + aPlaylist.Name.Replace("/", "_") + ".xml";
+
+                datei = datei.Replace("--", "-");
+                while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
+                    datei = datei.Substring(0, datei.Length - 5) + ".xml";
+
+                System.IO.File.Delete(datei);
+                serialization.ExportAudioPlaylist(aPlaylist.Audio_PlaylistGUID, datei);
+            }
         }
 
         public static void UpdateLists()

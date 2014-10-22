@@ -398,6 +398,8 @@
     <Property Name="Shuffle" Type="bit" Nullable="false" />
     <Property Name="Repeat" Type="bit" Nullable="false" />
     <Property Name="Fading" Type="bit" Nullable="false" />
+    <Property Name="DoForce" Type="bit" Nullable="false" />
+    <Property Name="ForceVolume" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Audio_Playlist_Titel">
     <Key>
@@ -2490,6 +2492,8 @@
     <Property Name="Shuffle" Type="Boolean" Nullable="false" />
     <Property Name="Repeat" Type="Boolean" Nullable="false" />
     <Property Name="Fading" Type="Boolean" Nullable="false" />
+    <Property Name="DoForce" Type="Boolean" Nullable="false" />
+    <Property Name="ForceVolume" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
     <NavigationProperty Name="Audio_Theme" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Theme" />
   </EntityType>
@@ -4250,6 +4254,8 @@
           <ScalarProperty Name="Shuffle" ColumnName="Shuffle" />
           <ScalarProperty Name="Repeat" ColumnName="Repeat" />
           <ScalarProperty Name="Fading" ColumnName="Fading" />
+          <ScalarProperty Name="DoForce" ColumnName="DoForce" />
+          <ScalarProperty Name="ForceVolume" ColumnName="ForceVolume" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

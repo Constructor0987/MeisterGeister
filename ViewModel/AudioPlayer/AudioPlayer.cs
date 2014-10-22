@@ -8,15 +8,31 @@ using MeisterGeister.Model;
 
 namespace MeisterGeister.ViewModel.AudioPlayer
 {
-
-
     class ZeileVM : INotifyPropertyChanged
     {
         // property changed event
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private double _volume = 50;
+        #region //---- FELDER ----
 
+        private double _volume = 50;
+        double _XPos = 10;
+
+        #endregion
+
+        #region //---- EIGENSCHAFTEN ----
+
+        public double XPos
+        {
+            get { return _XPos; }
+            set
+            {
+                _XPos = value;
+                OnPropertyChanged("XPos");
+            }
+        }
+
+        
         private void OnPropertyChanged(String property)
         {
             if (PropertyChanged != null)
@@ -32,15 +48,26 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 OnPropertyChanged("ZeileVMVolume");
             }
         }
+        
+        #endregion
+
     }
     
-    public class AudioPlayer : Base.ViewModelBase
-    {       
+    public class AudioPlayerVM : Base.ViewModelBase
+    {
 
-        public AudioPlayer()
+        public AudioPlayerVM()
         {
 
         }
+
+        Audio_Playlist _aPlayList = new Audio_Playlist();
+        public Audio_Playlist APlayList
+        {
+            get { return _aPlayList; }
+            set { _aPlayList = value; OnChanged("APlayList"); }
+        }
+
 
         private List<Audio_Playlist> _playlistListe;
 
@@ -50,7 +77,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             set
             {
                 _playlistListe = value;
-                OnChanged("PlaylistListe");
+                OnChanged("PlaylistListe"); //OnChanged
             }
         }
 
