@@ -14,14 +14,16 @@
         <DataTemplate x:Key="ImageListBoxItemTemplate">
             <Grid ToolTip="{Binding Pfad}">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
                     <ColumnDefinition Width="32" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="28" />
                 </Grid.RowDefinitions>
-                <Image Grid.Column="0" Source="{Binding Pfad, IsAsync=True, Converter={StaticResource LoadCachedImageConverter}}" />
-                <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="4,0,0,0" />
+                <CheckBox Grid.Column="0" Margin="4" VerticalAlignment="Center" ToolTip="In Slide-Show einbeziehen" IsChecked="{Binding IsInSlideShow}" />
+                <Image Grid.Column="1" Source="{Binding Pfad, IsAsync=True, Converter={StaticResource LoadCachedImageConverter}}" />
+                <TextBlock Grid.Column="2" Text="{Binding Name}" Margin="4,0,0,0" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

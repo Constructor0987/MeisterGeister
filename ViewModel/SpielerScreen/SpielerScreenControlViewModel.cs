@@ -33,7 +33,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         // Listen
         private List<System.Windows.Forms.Screen> _screenList = System.Windows.Forms.Screen.AllScreens.ToList();
-        private List<dynamic> _images = null;
+        private List<ImageItem> _images = null;
 
         #endregion
 
@@ -190,7 +190,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
-        public List<dynamic> Images
+        public List<ImageItem> Images
         {
             get { return _images; }
             set
@@ -489,7 +489,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             string[] filesTif = Directory.GetFiles(pfad, "*.tif");
             string[] filesTiff = Directory.GetFiles(pfad, "*.tiff");
 
-            List<dynamic> fileList = new List<dynamic>();
+            List<ImageItem> fileList = new List<ImageItem>();
             AddImages(fileList, filesBmp);
             AddImages(fileList, filesBmp);
             AddImages(fileList, filesGif);
@@ -504,10 +504,10 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             Images = fileList.OrderBy(img => img.Name).ToList();
         }
 
-        private void AddImages(List<dynamic> fileList, string[] files)
+        private void AddImages(List<ImageItem> fileList, string[] files)
         {
             foreach (string file in files)
-                fileList.Add(new { Pfad = file, Name = Path.GetFileNameWithoutExtension(file) });
+                fileList.Add(new ImageItem() { Pfad = file, Name = Path.GetFileNameWithoutExtension(file), IsInSlideShow = true });
         }
 
         public void ShowSlideShow(object sender = null)
@@ -519,14 +519,14 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         }
 
         private System.Timers.Timer _slideShowTimer = new System.Timers.Timer();
-        private List<dynamic>.Enumerator _imagesEnumerator = new List<dynamic>.Enumerator();
+        private List<ImageItem>.Enumerator _imagesEnumerator = new List<ImageItem>.Enumerator();
 
         private void SlideShowStart()
         {
             SlideShowRunning = true;
             _slideShowTimer.Elapsed += SlideShowTimer_Elapsed;
-            
-            _imagesEnumerator = Images.GetEnumerator();
+
+            _imagesEnumerator = Images.Where(img => img.IsInSlideShow == true).ToList().GetEnumerator();
             if (_imagesEnumerator.MoveNext())
             {
                 CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
@@ -550,7 +550,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
             else
             {
-                _imagesEnumerator = Images.GetEnumerator();
+                _imagesEnumerator = Images.Where(img => img.IsInSlideShow == true).ToList().GetEnumerator();
                 if (_imagesEnumerator.MoveNext())
                 {
                     CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
@@ -565,4 +565,15 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         #endregion
     }
+
+    #region // ImageItem
+
+    public class ImageItem : ViewModel.Base.ViewModelBase
+    {
+        public string Name { get; set; }
+        public string Pfad { get; set; }
+        public bool IsInSlideShow { get; set; }
+    }
+
+    #endregion
 }
