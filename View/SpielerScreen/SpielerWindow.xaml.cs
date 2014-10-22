@@ -267,5 +267,20 @@ namespace MeisterGeister.View.SpielerScreen
                 SpielerWindowClosed(null, new EventArgs());
         }
 
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Toogle Vollbildmodus
+            if (WindowStyle == System.Windows.WindowStyle.SingleBorderWindow)
+            {
+                WindowState = System.Windows.WindowState.Maximized;
+                WindowStyle = System.Windows.WindowStyle.None;
+            }
+            else
+            {
+                WindowState = System.Windows.WindowState.Normal;
+                WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+            }
+        }
+
     }
 }

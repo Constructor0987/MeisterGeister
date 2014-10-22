@@ -1,7 +1,7 @@
 ﻿<Window x:Class="MeisterGeister.View.SpielerScreen.SpielerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DSA MeisterGeister - Spieler Informationen" Height="559" Width="850" Background="Black" Loaded="Window_Loaded" WindowStyle="None" Topmost="True" KeyDown="Window_KeyDown" Closed="Window_Closed">
+        Title="DSA MeisterGeister - Spieler Informationen" Height="559" Width="850" Background="Black" Loaded="Window_Loaded" WindowStyle="None" Topmost="True" KeyDown="Window_KeyDown" Closed="Window_Closed" MouseDoubleClick="Window_MouseDoubleClick">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

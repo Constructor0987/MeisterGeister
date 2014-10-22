@@ -145,7 +145,8 @@
                 <Button.ToolTip>
                     <TextBlock Width="200" Height="Auto" TextWrapping="Wrap">
             		    Ein leeres Fenster starten, um den Spielern bestimmte Informationen (auf einem zweiten Bildschirm, falls vorhanden) zeigen zu können.
-                        Mit Drücken der ESC-Taste auf dem SpielerInfo-Fenster, kann der Vollbildmodus verlassen werden.
+                        Mit Drücken der ESC-Taste oder Doppel-Klick auf dem SpielerInfo-Fenster, kann der Vollbildmodus verlassen werden.
+                        Mit Doppel-Klick kann man wieder in den Vollbildmodus wechseln.
                     </TextBlock>
                 </Button.ToolTip>
                 <Image Source="/Images/Icons/General/screen.png" />
