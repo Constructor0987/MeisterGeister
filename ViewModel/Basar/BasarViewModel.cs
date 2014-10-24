@@ -403,8 +403,9 @@ namespace MeisterGeister.ViewModel.Basar
             if (sender != null && sender is BasarItem && SelectedHeld != null)
             {
                 BasarItem item = (BasarItem)sender;
-                SelectedHeld.AddInventar(item.Item);
-                PopUp(string.Format("'{0}' zum Inventar von '{1}' hinzugefügt.", item.Name, SelectedHeld.Name));
+                int anzahl = (int)Math.Ceiling(Anzahl);
+                SelectedHeld.AddInventar(item.Item, anzahl);
+                PopUp(string.Format("{0}x '{1}' zum Inventar von '{2}' hinzugefügt.", anzahl, item.Name, SelectedHeld.Name));
             }
         }
 
