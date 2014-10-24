@@ -42,5 +42,11 @@ namespace MeisterGeister.ViewModel.Inventar.Logic
             get;
             set;
         }
+
+        Model.Ausrüstung Ausrüstung
+        {
+            get;
+            set;
+        }
     }
 }

@@ -45,10 +45,12 @@
                                 <TextBlock Text="{Binding Path=WährungsText, StringFormat=Gesamtpreis in {0:C}}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <!--ToDo: Button zum Einfügen ins Inventar -->
-                        <Button Width="23" Height="23" ToolTip="Ins Inventar des Helden übertragen." Command="{Binding OnInventarAdd}" Visibility="Collapsed">
-                            <Image Source="/Images/Icons/ueberanstrengung.png" />
-                         </Button>
+                        <Button Width="23" Height="23" ToolTip="Ins Inventar des Helden übertragen." Command="{Binding OnInventarAdd}" HorizontalAlignment="Right">
+                            <Grid>
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/ueberanstrengung.png" Height="18" Margin="-2,-2,2,2" />
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/add.png" Height="18" Margin="4,4,-4,-4" />
+                            </Grid>
+                        </Button>
                     </StackPanel>
                     <StackPanel Margin="20,2,0,0" Orientation="Horizontal">
                         <TextBlock Margin="2,2,0,0" Width="Auto" FontSize="11" FontStyle="Italic" MinWidth="230" Text="{Binding Path=Gewicht, StringFormat='{}Gewicht: {0} Unzen'}" ToolTip="Gewicht" VerticalAlignment="Center" />
@@ -85,26 +87,26 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" ToolTip="Einkaufender Held">
-                    <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
-                    <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
-                    <TextBlock Margin="5,10" Padding="4" Text="{Binding Path=HeldTalentwerte}">
-                        <TextBlock.Background>
-                            <SolidColorBrush Color="DarkGray" Opacity="0.5" />
-                        </TextBlock.Background>
-                    </TextBlock>
-                    
-                    <Label Content="Währung" VerticalAlignment="Center" />
-                    <ComboBox Height="23" VerticalAlignment="Center"  Name="_comboBoxWährung" Width="186" ToolTip="Benutzte Währung" Text="{Binding Path=WährungsText, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" />                        
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" ToolTip="Einkaufender Held">
+                        <Image Margin="5" Source="/Images/Icons/helden.png" Width="24" />
+                        <ComboBox Margin="5,10" Width="250" Padding="4" ItemsSource="{Binding HeldListe}" SelectedValue="{Binding SelectedHeld}" DisplayMemberPath="Name" FontWeight="Bold" />
+                        <TextBlock Margin="5,10" Padding="4" Text="{Binding Path=HeldTalentwerte}">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="DarkGray" Opacity="0.5" />
+                            </TextBlock.Background>
+                        </TextBlock>
+
+                        <Label Content="Währung" VerticalAlignment="Center" />
+                        <ComboBox Height="23" VerticalAlignment="Center"  Name="_comboBoxWährung" Width="186" ToolTip="Benutzte Währung" Text="{Binding Path=WährungsText, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" />
                     </StackPanel>
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
-                    <TextBox Margin="5,10" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
-                    <TextBlock Margin="5" Text="Anzahl:" VerticalAlignment="Center" />
-                    <ViewGeneral:DoubleBox Height="23" Margin="5" Width="75" MinValue="0" ShowButtons="True" Value="{Binding Anzahl}" VerticalAlignment="Center" />
-                    <TextBlock Margin="5" Text="Rabatt/Aufschlag:" VerticalAlignment="Center" />
-                    <ViewGeneral:IntBox Height="23" Margin="5" Width="75" ShowButtons="True" Value="{Binding RabattAufschlag}" VerticalAlignment="Center" />
-                    <TextBlock Margin="5" Text="%" VerticalAlignment="Center" />                        
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
+                        <TextBox Margin="5,10" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
+                        <TextBlock Margin="5" Text="Anzahl:" VerticalAlignment="Center" />
+                        <ViewGeneral:DoubleBox Height="23" Margin="5" Width="75" MinValue="0" ShowButtons="True" Value="{Binding Anzahl}" VerticalAlignment="Center" />
+                        <TextBlock Margin="5" Text="Rabatt/Aufschlag:" VerticalAlignment="Center" />
+                        <ViewGeneral:IntBox Height="23" Margin="5" Width="75" ShowButtons="True" Value="{Binding RabattAufschlag}" VerticalAlignment="Center" />
+                        <TextBlock Margin="5" Text="%" VerticalAlignment="Center" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -113,18 +115,18 @@
             <Expander.Header>
                 <TextBlock Text="Basarliste" Style="{DynamicResource TextTitel}" />
             </Expander.Header>
-                <Border Style="{DynamicResource ControlContentBorder}">
-                    <ListBox Padding="4" Background="Transparent" FontSize="14" 
+            <Border Style="{DynamicResource ControlContentBorder}">
+                <ListBox Padding="4" Background="Transparent" FontSize="14" 
                  ItemContainerStyle="{DynamicResource ListBoxItemStretch}"
                  ItemsSource="{Binding FilteredBasarItemListe}" ItemTemplate="{StaticResource WareTemplate}" Name="_listBoxWare"
                  VirtualizingStackPanel.IsVirtualizing="True">
-                        <ListBox.BorderBrush>
-                            <SolidColorBrush />
-                        </ListBox.BorderBrush>
-                    </ListBox>
-                </Border>
-            </Expander>
-            <Grid Grid.Row="2">
+                    <ListBox.BorderBrush>
+                        <SolidColorBrush />
+                    </ListBox.BorderBrush>
+                </ListBox>
+            </Border>
+        </Expander>
+        <Grid Grid.Row="2">
             <TextBlock Height="23" Margin="18,0,0,0" HorizontalAlignment="Left" Text="{Binding ElementName=_listBoxWare, Path=ItemsSource.Count, StringFormat='{}{0} Handelsgüter'}" />
             <TextBlock Height="23" Margin="18,0" HorizontalAlignment="Right" ToolTip="Melde fehlerhafte Daten in unserem Forum...">
                 <Hyperlink Command="{Binding OnGoToBugForum}">

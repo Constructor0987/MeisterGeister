@@ -253,10 +253,13 @@ namespace MeisterGeister.ViewModel.Basar.Logic
             return true;
         }
 
-        void InventarAdd(object sender)
+        private void InventarAdd(object sender)
         {
-            // TODO ??: Insert ins Helden-Inventar
+            if (InventarAddEvent != null)
+                InventarAddEvent(this, new EventArgs());
         }
+
+        public event EventHandler InventarAddEvent;
 
         #endregion
 

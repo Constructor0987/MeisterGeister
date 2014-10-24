@@ -883,7 +883,7 @@
                                                         </Image.Source>
                                                     </Image>
                                                 </Button>
-                                                <TextBlock Foreground="Red" Text="HINWEIS: Derzeit können Sonstige Gegenstände nur per Import eingefügt werden." VerticalAlignment="Center" Margin="5" />
+                                                <TextBlock Foreground="Red" Text="HINWEIS: Derzeit können Gegenstände nur über den Basar eingefügt werden." VerticalAlignment="Center" Margin="5" />
                                             </StackPanel>
                                         </Grid>
                                     </Grid>

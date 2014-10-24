@@ -332,7 +332,10 @@ namespace MeisterGeister.ViewModel.Basar
 
         #region //---- KONSTRUKTOR ----
 
-        public BasarViewModel()
+        public BasarViewModel() : this(null, null) { }
+
+        public BasarViewModel(Action<string> popup, Action<string, Exception> showError)
+            : base(popup, showError)
         {
             _onGoToBugForum = new Base.CommandBase(GoToBugForum, null);
 
@@ -363,29 +366,46 @@ namespace MeisterGeister.ViewModel.Basar
 
             // Handelsgüter einfügen
             foreach (var item in HandelsgutListe)
-                itemList.Add(new BasarItem() { Item = item });
+                itemList.Add(NewBasarItem(item));
 
             // Waffen einfügen
             foreach (var item in WaffeListe)
-                itemList.Add(new BasarItem() { Item = item });
+                itemList.Add(NewBasarItem(item));
 
             // Fernkampfwaffen einfügen
             foreach (var item in FernkampfwaffeListe)
-                itemList.Add(new BasarItem() { Item = item });
+                itemList.Add(NewBasarItem(item));
 
             // Schilde einfügen
             foreach (var item in SchildListe)
-                itemList.Add(new BasarItem() { Item = item });
+                itemList.Add(NewBasarItem(item));
 
             // Rüstungen einfügen
             foreach (var item in RüstungListe)
-                itemList.Add(new BasarItem() { Item = item });
+                itemList.Add(NewBasarItem(item));
 
             BasarItemListe = itemList;
 
             Refresh();
 
             FilterListe();
+        }
+
+        private BasarItem NewBasarItem(IHandelsgut item)
+        {
+            BasarItem basarItem = new BasarItem() { Item = item };
+            basarItem.InventarAddEvent += (s, e) => { AddToInventar(s); };
+            return basarItem;
+        }
+
+        void AddToInventar(object sender)
+        {
+            if (sender != null && sender is BasarItem && SelectedHeld != null)
+            {
+                BasarItem item = (BasarItem)sender;
+                SelectedHeld.AddInventar(item.Item);
+                PopUp(string.Format("'{0}' zum Inventar von '{1}' hinzugefügt.", item.Name, SelectedHeld.Name));
+            }
         }
 
         /// <summary>

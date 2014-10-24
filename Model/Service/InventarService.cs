@@ -113,6 +113,18 @@ namespace MeisterGeister.Model.Service {
             }    
         }
 
+        public bool UpdateHeldInventar(Model.Held_Inventar aHI)
+        {
+            try
+            {
+                return base.Update<Held_Inventar>(aHI);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #endregion

@@ -12,6 +12,8 @@ using DependentProperty = MeisterGeister.Model.Extensions.DependentProperty;
 using MeisterGeister.Logic.Extensions;
 using MeisterGeister.ViewModel.Helden.Logic;
 using E = MeisterGeister.Logic.Einstellung.Einstellungen;
+using MeisterGeister.ViewModel.Inventar.Logic;
+using MeisterGeister.ViewModel.Basar.Logic;
 
 namespace MeisterGeister.Model {
     // Man kann Superklassen hinzufügen. Es sollten jedoch nicht die gleichen Eigenschaften, wie in der Datenbankklasse existieren.
@@ -1996,6 +1998,72 @@ namespace MeisterGeister.Model {
             else
                 RS[Trefferzone.Gesamt] = einfacherRs;
         }
+
+        // TODO: Diese Add-Logik sollte mit dem Importer und dem InventarViewModel homogenisiert werden, sodass alle Stellen diese Methode verwenden
+        public void AddInventar(IHandelsgut gegenstand, int anzahl = 1)
+        {
+            // In Held_Ausrüstung oder Held_inventar hinzufügen, bzw anzahl erhöhen.
+            if (gegenstand is IAusrüstung)
+            {
+                IAusrüstung a = (IAusrüstung)gegenstand;
+                Held_Ausrüstung ha = Held_Ausrüstung.Where(hha => hha.AusrüstungGUID == a.Ausrüstung.AusrüstungGUID).FirstOrDefault();
+                if (ha == null)
+                {
+                    ha = Global.ContextHeld.New<Held_Ausrüstung>();
+                    ha.AusrüstungGUID = a.Ausrüstung.AusrüstungGUID;
+                    ha.HeldGUID = HeldGUID;
+                    ha.Angelegt = false;
+                    ha.Anzahl = anzahl;
+                    ha.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
+                    ha.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == ha.TrageortGUID).FirstOrDefault();
+                    Held_Ausrüstung.Add(ha);
+                }
+                else
+                    ha.Anzahl += anzahl;
+            }
+            else if (gegenstand is Handelsgut)
+            {
+                Handelsgut h = (Handelsgut)gegenstand;
+                Inventar i = Global.ContextHeld.Liste<Inventar>().Where(li => li.HandelsgutGUID == h.HandelsgutGUID && li.Name == h.Name).FirstOrDefault();
+
+                if (i == null)
+                {
+                    if (h != null)
+                    {
+                        i = Global.ContextHeld.New<Inventar>();
+                        i.Name = h.Name;
+                        i.Tags = h.Tags;
+                        i.Preis = h.Preis;
+                        i.ME = h.ME;
+                        i.Literatur = h.Literatur;
+                        i.Kategorie = h.Kategorie;
+                        i.HandelsgutGUID = h.HandelsgutGUID;
+                        i.Gewicht = h.Gewicht;
+                        i.Bemerkung = h.Bemerkung;
+                        Global.ContextHeld.Insert<Inventar>(i);
+                    }
+                }
+
+                Held_Inventar hi = Held_Inventar.Where(hhi => hhi.InventarGUID == i.InventarGUID).FirstOrDefault();
+                
+                if (hi == null)
+                {
+                    hi = Global.ContextHeld.New<Held_Inventar>();
+                    hi.HeldGUID = HeldGUID;
+                    hi.InventarGUID = i.InventarGUID;
+                    hi.Anzahl = anzahl;
+                    hi.Angelegt = false;
+                    hi.TrageortGUID = Guid.Parse("00000000-0000-0000-001a-000000000011"); //Rucksack
+                    hi.Trageort = Global.ContextInventar.TrageortListe.Where(item => item.TrageortGUID == hi.TrageortGUID).FirstOrDefault();
+                    hi.Inventar = i;
+                    Held_Inventar.Add(hi);
+                }
+                else
+                    hi.Anzahl += anzahl;
+            }
+
+        }
+
         #endregion
 
         #endregion
@@ -2005,6 +2073,5 @@ namespace MeisterGeister.Model {
             PropertyChanged -= DependentProperty.PropagateINotifyProperyChanged;
         }
         #endregion
-
     }
 }

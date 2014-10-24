@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using VM = MeisterGeister.ViewModel.Basar;
 using MeisterGeister.View.Windows;
 using MeisterGeister.Logic.Umrechner;
+using MeisterGeister.View.General;
 // Weitere Usings
 
 namespace MeisterGeister.View.Basar
@@ -29,7 +30,7 @@ namespace MeisterGeister.View.Basar
         public BasarView()
         {
             InitializeComponent();
-            VM = new VM.BasarViewModel();
+            VM = new VM.BasarViewModel(ViewHelper.Popup, ViewHelper.ShowError);
                         
             // Währung
             _comboBoxWährung.ItemsSource = _währung;
