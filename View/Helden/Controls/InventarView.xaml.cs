@@ -117,5 +117,10 @@ namespace MeisterGeister.View.Helden.Controls {
         {
             _rsZonenRsControl.Visibility = Visibility.Hidden;
         }
+
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+        }
     }
 }
