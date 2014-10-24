@@ -7624,7 +7624,7 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 if (IsInitialized)
                 {
-                    slPlaylistVolume.ToolTip = Math.Round(slPlaylistVolume.Value) + " %";
+                    slPlaylistVolume.ToolTip = Math.Round(slPlaylistVolume.Value) + "% der Playlisten-Lautstärke";
                     if (Convert.ToDouble(btnPListPListSpeaker.Tag) != -1)
                         btnPListPListSpeaker.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     foreach (MusikZeile mZeile in lbPListGeräusche.Items)
@@ -9448,7 +9448,6 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             tvItem.ExpandSubtree();            
         }
-
     }
 
 
