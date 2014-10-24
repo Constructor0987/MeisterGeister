@@ -715,7 +715,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             //Nahkampf
             HeldNahkampfWaffeImInventar.Clear();
             if (SelectedHeld != null) {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Waffe != null)) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Waffe != null).OrderBy(i => i.Ausrüstung.Name)) {
                     NahkampfItem value = new NahkampfItem(item, item.Ausrüstung.Waffe);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldNahkampfWaffeImInventar.Add(value);
@@ -736,7 +736,8 @@ namespace MeisterGeister.ViewModel.Inventar {
             //Schild
             HeldSchildImInventar.Clear();
             if (SelectedHeld != null) {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Schild != null)) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Schild != null).OrderBy(i => i.Ausrüstung.Name))
+                {
                     SchildItem value = new SchildItem(item, item.Ausrüstung.Schild);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldSchildImInventar.Add(value);
@@ -757,7 +758,8 @@ namespace MeisterGeister.ViewModel.Inventar {
             //Fernkampfwaffe
             HeldFernkampfwaffeImInventar.Clear();
             if (SelectedHeld != null) {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Fernkampfwaffe != null)) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Fernkampfwaffe != null).OrderBy(i => i.Ausrüstung.Name))
+                {
                     FernkampfItem value = new FernkampfItem(item, item.Ausrüstung.Fernkampfwaffe);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldFernkampfwaffeImInventar.Add(value);
@@ -777,7 +779,8 @@ namespace MeisterGeister.ViewModel.Inventar {
             //Rüstung
             HeldRuestungImInventar.Clear();
             if (SelectedHeld != null) {
-                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Rüstung != null)) {
+                foreach (Model.Held_Ausrüstung item in Global.ContextInventar.HeldZuAusruestungListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Ausrüstung != null && hw.Ausrüstung.Rüstung != null).OrderBy(i => i.Ausrüstung.Name))
+                {
                     RuestungItem value = new RuestungItem(item, item.Ausrüstung.Rüstung);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
                     HeldRuestungImInventar.Add(value);
@@ -803,7 +806,7 @@ namespace MeisterGeister.ViewModel.Inventar {
             heldSonstigesImInventar.Clear();
             if (SelectedHeld != null)
             {
-                foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Inventar != null))
+                foreach (Model.Held_Inventar item in Global.ContextInventar.HeldZuInventarListe.Where(hw => hw.HeldGUID == Global.SelectedHeldGUID && hw.Inventar != null).OrderBy(i => i.Inventar.Name))
                 {
                     InventarItem value = new InventarItem(item, item.Inventar);
                     value.RemoveItem += (s, e) => { RemoveAusruestung(s); };
