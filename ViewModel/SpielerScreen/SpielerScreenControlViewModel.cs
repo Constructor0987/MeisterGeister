@@ -526,12 +526,13 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             SlideShowRunning = true;
             _slideShowTimer.Elapsed += SlideShowTimer_Elapsed;
 
-            _imagesEnumerator = Images.Where(img => img.IsInSlideShow == true).ToList().GetEnumerator();
-            if (_imagesEnumerator.MoveNext())
+            _imagesEnumerator = Images.GetEnumerator();
+            while (_imagesEnumerator.MoveNext() && _imagesEnumerator.Current.IsInSlideShow)
             {
                 CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
                 SpielerWindow.SetSlideShow(this);
                 _slideShowTimer.Start();
+                break;
             }
         }
 
@@ -544,17 +545,22 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         private void SlideShowMove()
         {
-            if (_imagesEnumerator.MoveNext())
+            while (_imagesEnumerator.MoveNext())
             {
-                CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
-            }
-            else
-            {
-                _imagesEnumerator = Images.Where(img => img.IsInSlideShow == true).ToList().GetEnumerator();
-                if (_imagesEnumerator.MoveNext())
+                if (_imagesEnumerator.Current.IsInSlideShow)
                 {
                     CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
+                    return;
                 }
+                else
+                    continue;
+            }
+
+            _imagesEnumerator = Images.GetEnumerator();
+            while (_imagesEnumerator.MoveNext() && _imagesEnumerator.Current.IsInSlideShow)
+            {
+                CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
+                break;
             }
         }
 
