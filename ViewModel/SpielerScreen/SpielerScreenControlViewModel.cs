@@ -25,7 +25,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private string _selectedImagePath = string.Empty;
         private string _currentSlideShowImage = string.Empty;
         private BitmapImage _selectedImage = null;
-        private dynamic _selectedImageObject = null;
+        private ImageItem _selectedImageObject = null;
         private bool _pathNotFound = true;
         private bool _isImageStretch = true;
         private bool _slideShowRunning = false;
@@ -101,7 +101,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
-        public dynamic SelectedImageObject
+        public ImageItem SelectedImageObject
         {
             get { return _selectedImageObject; }
             set
@@ -533,6 +533,11 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             _imagesEnumerator = Images.GetEnumerator();
             while (_imagesEnumerator.MoveNext() && _imagesEnumerator.Current.IsInSlideShow)
             {
+                if (!string.IsNullOrEmpty(SelectedImagePath))
+                {
+                    if (SelectedImagePath != _imagesEnumerator.Current.Pfad)
+                        continue;
+                }
                 CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
                 SpielerWindow.SetSlideShow(this);
                 _slideShowTimer.Start();
