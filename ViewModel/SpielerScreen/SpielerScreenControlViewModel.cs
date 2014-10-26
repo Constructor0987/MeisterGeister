@@ -396,21 +396,25 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         public void ShowKampf(object sender = null)
         {
             SpielerWindow.SetKampfInfoView();
+            SlideShowStop();
         }
 
         public void ShowBodenplan(object sender = null)
         {
             SpielerWindow.SetBodenplanView();
+            SlideShowStop();
         }
 
         public void ShowImage(object sender = null)
         {
             SpielerWindow.SetImage(SelectedImagePath, (IsImageStretch == true) ? Stretch.Uniform : Stretch.None);
+            SlideShowStop();
         }
 
         public void ShowText(object sender = null)
         {
             SpielerWindow.SetText(TextToShow);
+            SlideShowStop();
         }
 
         public void OpenImageExtern(object sender = null)

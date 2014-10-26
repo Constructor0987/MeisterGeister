@@ -198,13 +198,27 @@ namespace MeisterGeister.View.General
         private void ButtonPlus_Click(object sender, RoutedEventArgs e)
         {
             if (!IsReadOnly)
-                IncreaseValue();
+                IncreaseValueCeiling();
+        }
+
+        private void IncreaseValueCeiling()
+        {
+            double nextValue = Math.Ceiling(Value.Value);
+            double addValue = (nextValue == Value) ? 1 : nextValue - Value.Value;
+            IncreaseValue(addValue);
         }
 
         private void ButtonMinus_Click(object sender, RoutedEventArgs e)
         {
             if (!IsReadOnly)
-                DecreaseValue();
+                DecreaseValueFloor();
+        }
+
+        private void DecreaseValueFloor()
+        {
+            double nextValue = Math.Floor(Value.Value);
+            double subValue = (nextValue == Value) ? 1 : Value.Value - nextValue;
+            DecreaseValue(subValue);
         }
 
         private void UserControl_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -212,9 +226,9 @@ namespace MeisterGeister.View.General
             if (!NoMouseWheel && !IsReadOnly)
             {
                 if (e.Delta < 0)
-                    DecreaseValue();
+                    DecreaseValueFloor();
                 else
-                    IncreaseValue();
+                    IncreaseValueCeiling();
                 e.Handled = true;
             }
         }
