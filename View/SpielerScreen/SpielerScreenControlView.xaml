@@ -92,7 +92,7 @@
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" Visibility="{Binding PathNotFound, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
                             <TextBlock Text="{Binding DirectoryPath}" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bilder-Ordner" />
                         </StackPanel>
-                        <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding Images}" Background="Transparent" SelectedItem="{Binding SelectedImageObject}" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" />
+                        <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding Images}" Background="Transparent" SelectedItem="{Binding SelectedImageObject}" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" MouseDoubleClick="_listBoxDirectory_MouseDoubleClick" />
                         <Viewbox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="6" MinWidth="226" HorizontalAlignment="Right" MaxWidth="400">
                             <Viewbox.InputBindings>
                                 <MouseBinding Gesture="LeftClick" Command="{Binding OnOpenImageExtern}" />
