@@ -133,6 +133,29 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private bool _isPointerVisible = false;
+        public bool IsPointerVisible
+        {
+            get { return _isPointerVisible; }
+            set
+            {
+                _isPointerVisible = value;
+                PointerVisibility = value == true ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                OnChanged("IsPointerVisible");
+            }
+        }
+
+        private System.Windows.Visibility _pointerVisibility = System.Windows.Visibility.Collapsed;
+        public System.Windows.Visibility PointerVisibility
+        {
+            get { return _pointerVisibility; }
+            set
+            {
+                _pointerVisibility = value;
+                OnChanged("PointerVisibility");
+            }
+        }
+
         public bool SlideShowRunning
         {
             get { return _slideShowRunning; }
@@ -326,6 +349,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onSetPointer = null;
+        public Base.CommandBase OnSetPointer
+        {
+            get
+            {
+                if (onSetPointer == null)
+                    onSetPointer = new Base.CommandBase(SetPointer, null);
+                return onSetPointer;
+            }
+        }
+
         #endregion
 
         #region //---- KONSTRUKTOR ----
@@ -514,6 +548,64 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 fileList.Add(new ImageItem() { Pfad = file, Name = Path.GetFileNameWithoutExtension(file), IsInSlideShow = true });
         }
 
+        // TODO: Der Laserpointer sollte überarbeitet werden, da das Feature 'quick & dirty' implementiert ist
+        public void SetPointer(object parameter)
+        {
+            if (parameter == null || !(parameter is Grid))
+                return;
+            Grid grid = (Grid)parameter;
+            System.Windows.Point mousePos = System.Windows.Input.Mouse.GetPosition(grid);
+            _xScale = mousePos.X / grid.ActualWidth;
+            _yScale = mousePos.Y / grid.ActualHeight;
+            PointerMargin = new System.Windows.Thickness(mousePos.X, mousePos.Y, 0, 0);
+        }
+
+        private double _xScale = 1;
+        private double _yScale = 1;
+
+        private System.Windows.Thickness _pointerMargin = new System.Windows.Thickness();
+        public System.Windows.Thickness PointerMargin
+        {
+            get
+            {
+                return _pointerMargin;
+            }
+            set
+            {
+                _pointerMargin = value;
+                OnChanged("PointerMargin");
+                if (SpielerWindow.Instance.Content is Grid)
+                {
+                    Grid g = (Grid)SpielerWindow.Instance.Content;
+                    Image img = new Image();
+                    foreach (var item in g.Children)
+                    {
+                        if (item is Image)
+                        {
+                            img = (Image)item;
+                            break;
+                        }
+                    }
+                    PointerMarginSpieler = new System.Windows.Thickness(img.ActualWidth * _xScale + (g.ActualWidth - img.ActualWidth) / 2,
+                        img.ActualHeight * _yScale + (g.ActualHeight - img.ActualHeight) / 2, 0, 0);
+                }
+            }
+        }
+
+        private System.Windows.Thickness _pointerMarginSpieler = new System.Windows.Thickness();
+        public System.Windows.Thickness PointerMarginSpieler
+        {
+            get
+            {
+                return _pointerMarginSpieler;
+            }
+            set
+            {
+                _pointerMarginSpieler = value;
+                OnChanged("PointerMarginSpieler");
+            }
+        }
+
         public void ShowSlideShow(object sender = null)
         {
             if (SlideShowRunning)
@@ -593,4 +685,5 @@ namespace MeisterGeister.ViewModel.SpielerScreen
     }
 
     #endregion
+
 }

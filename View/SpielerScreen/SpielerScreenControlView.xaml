@@ -92,18 +92,67 @@
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" Visibility="{Binding PathNotFound, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
                             <TextBlock Text="{Binding DirectoryPath}" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bilder-Ordner" />
                         </StackPanel>
+                        <CheckBox Grid.Row="1" Grid.Column="1" Margin="5" Content="Bild-Pointer anzeigen" IsChecked="{Binding IsPointerVisible}" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
+                            <CheckBox.ToolTip>
+                                <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Auf dem Bild einen Zeiger anzeigen." />
+                            </CheckBox.ToolTip>
+                        </CheckBox>
                         <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding Images}" Background="Transparent" SelectedItem="{Binding SelectedImageObject}" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" MouseDoubleClick="_listBoxDirectory_MouseDoubleClick" />
-                        <Viewbox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="6" MinWidth="226" HorizontalAlignment="Right" MaxWidth="400">
+                        <Viewbox Grid.Column="1" Grid.Row="2" Name="viewboxImage" Margin="6" MinWidth="226">
                             <Viewbox.InputBindings>
-                                <MouseBinding Gesture="LeftClick" Command="{Binding OnOpenImageExtern}" />
+                                <MouseBinding MouseAction="MiddleClick" Command="{Binding OnOpenImageExtern}" />
                             </Viewbox.InputBindings>
                             <Viewbox.ToolTip>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{Binding SelectedImagePath}" />
-                                    <TextBlock Text="Ein Links-Klick öffnet das Bild extern." />
+                                    <TextBlock Text="Ein Mittel-Klick öffnet das Bild extern." />
                                 </StackPanel>
                             </Viewbox.ToolTip>
-                            <Image Source="{Binding SelectedImage}" />
+                            <Grid Name="grid">
+                                <Grid.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding OnSetPointer}" CommandParameter="{Binding ElementName=grid}" />
+                                </Grid.InputBindings>
+                                <Image>
+                                    <Image.Source>
+                                        <Binding Path="SelectedImage" IsAsync="True">
+                                            <Binding.FallbackValue>
+                                                <ImageSource>
+                                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                </ImageSource>
+                                            </Binding.FallbackValue>
+                                            <Binding.TargetNullValue>
+                                                <ImageSource>
+                                                    /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
+                                                </ImageSource>
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Image.Source>
+                                </Image>
+                                <Ellipse Name="ellipsePointer" Fill="Yellow" Stroke="Red" Height="25" Width="25" Margin="{Binding PointerMargin}" Visibility="{Binding PointerVisibility}" StrokeThickness="1" Opacity="0.5" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Ellipse.Triggers>
+                                        <EventTrigger RoutedEvent="Ellipse.Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                                                    Storyboard.TargetName="ellipsePointer">
+                                                    <ColorAnimation From="Yellow" To="Red" Duration="0:0:1" AutoReverse="True"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                            <!--<BeginStoryboard>
+                                                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="Height"
+                                                    Storyboard.TargetName="ellipsePointer">
+                                                    <DoubleAnimation From="25" To="50" Duration="0:0:1" AutoReverse="True"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                            <BeginStoryboard>
+                                                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="Width"
+                                                    Storyboard.TargetName="ellipsePointer">
+                                                    <DoubleAnimation From="25" To="50" Duration="0:0:1" AutoReverse="True"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>-->
+                                        </EventTrigger>
+                                    </Ellipse.Triggers>
+                                </Ellipse>
+                            </Grid>
                         </Viewbox>
                     </Grid>
                 </Border>

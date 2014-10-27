@@ -68,6 +68,8 @@ namespace MeisterGeister.View.SpielerScreen
         {
             if (VM != null)
                 VM.Refresh();
+
+            
         }
 
         private void ListBoxDirectory_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
