@@ -152,7 +152,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 if (value <= 0)
                     value = 0.5;
                 _slideShowInterval = value;
-                _slideShowTimer.Interval = _slideShowInterval * 1000;
+                if (!SlideShowRunning)
+                    _slideShowTimer.Interval = _slideShowInterval * 1000;
                 Logic.Einstellung.Einstellungen.SlideShowInterval = value;
                 OnChanged("SlideShowInterval");
             }
@@ -358,8 +359,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         public void Init()
         {
-            // Bildschirminfos
-            _bildschirmInfo = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
+            // Bildschirminfos_bildschirmInfo = string.Format("{0} Bildschirm{1}", ScreenList.Count, ScreenList.Count == 1 ? string.Empty : "e");
 
             // Letzten Bilderpfad laden
             DirectoryPath = Logic.Einstellung.Einstellungen.SpielerInfoBilderPfad;
@@ -576,6 +576,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private void SlideShowTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             SlideShowMove();
+            if (_slideShowInterval * 1000 != _slideShowTimer.Interval)
+                _slideShowTimer.Interval = _slideShowInterval * 1000;
         }
 
         #endregion
