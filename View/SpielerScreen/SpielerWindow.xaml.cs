@@ -197,6 +197,7 @@ namespace MeisterGeister.View.SpielerScreen
                 Grid grid = new Grid();
                 grid.Children.Add(img);
                 grid.Children.Add(pointer);
+                grid.DataContext = Global.CurrentSpielerScreen;
 
                 SetContent(grid);
             }

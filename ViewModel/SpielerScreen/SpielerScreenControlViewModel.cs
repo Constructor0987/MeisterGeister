@@ -639,14 +639,22 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             SlideShowRunning = true;
             _slideShowTimer.Elapsed += SlideShowTimer_Elapsed;
 
+            ImageItem selectedImage = null;
+            if (!string.IsNullOrEmpty(SelectedImagePath))
+                selectedImage = Images.Where(img => img.Pfad == SelectedImagePath).FirstOrDefault();
+
             _imagesEnumerator = Images.GetEnumerator();
-            while (_imagesEnumerator.MoveNext() && _imagesEnumerator.Current.IsInSlideShow)
+            while (_imagesEnumerator.MoveNext())
             {
-                if (!string.IsNullOrEmpty(SelectedImagePath))
+                if (!_imagesEnumerator.Current.IsInSlideShow) // nicht für SlideShow ausgewählt, dann weiter
+                    continue;
+
+                if (selectedImage != null && selectedImage.IsInSlideShow) // ein Bild ist selektiert und für SlideShow ausgewählt
                 {
                     if (SelectedImagePath != _imagesEnumerator.Current.Pfad)
                         continue;
                 }
+
                 CurrentSlideShowImage = _imagesEnumerator.Current.Pfad;
                 SpielerWindow.SetSlideShow(this);
                 _slideShowTimer.Start();
