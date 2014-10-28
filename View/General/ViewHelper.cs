@@ -438,9 +438,10 @@ namespace MeisterGeister.View.General
         {
             if (System.Threading.Thread.CurrentThread.GetApartmentState() == System.Threading.ApartmentState.STA)
             {
-                Web.WebBrowserWindow win = new Web.WebBrowserWindow(url, title);
+                Web.WebBrowserWindow win = new Web.WebBrowserWindow(title);
                 win.Owner = App.Current.MainWindow; // MainWindow als Owner setzen
                 win.Show();
+                win.Navigate(url);
                 return win;
             }
             return null;

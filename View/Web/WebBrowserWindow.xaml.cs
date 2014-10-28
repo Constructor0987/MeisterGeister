@@ -24,11 +24,9 @@ namespace MeisterGeister.View.Web
             InitializeComponent();
         }
 
-        public WebBrowserWindow(string url, string title) : this()
+        public WebBrowserWindow(string title) : this()
         {
             Title += ": " + title;
-            _textUrl.Text = url;
-            _webBrowser.Navigate(url);
         }
 
         private void _webBrowser_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
@@ -46,6 +44,12 @@ namespace MeisterGeister.View.Web
             {
                 View.General.ViewHelper.ShowError("Fehler beim Starten des Browsers", ex);
             }
+        }
+
+        public void Navigate(string url)
+        {
+            _textUrl.Text = url;
+            _webBrowser.Navigate(url);
         }
     }
 }
