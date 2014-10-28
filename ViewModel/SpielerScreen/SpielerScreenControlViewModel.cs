@@ -619,6 +619,9 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
         private void SlideShowStart()
         {
+            if (Images == null)
+                return;
+
             SlideShowRunning = true;
             _slideShowTimer.Elapsed += SlideShowTimer_Elapsed;
 
@@ -656,6 +659,9 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 else
                     continue;
             }
+
+            if (Images == null)
+                return;
 
             _imagesEnumerator = Images.GetEnumerator();
             while (_imagesEnumerator.MoveNext() && _imagesEnumerator.Current.IsInSlideShow)
