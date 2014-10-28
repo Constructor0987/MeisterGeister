@@ -753,6 +753,9 @@
     <Compile Include="View\SpielerScreen\SpielerInfoPreviewWindow.xaml.cs">
       <DependentUpon>SpielerInfoPreviewWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SpielerScreen\SpielerPointer.xaml.cs">
+      <DependentUpon>SpielerPointer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Web\WebBrowserWindow.xaml.cs">
       <DependentUpon>WebBrowserWindow.xaml</DependentUpon>
     </Compile>
@@ -1170,6 +1173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SpielerScreen\SpielerInfoPreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpielerScreen\SpielerPointer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

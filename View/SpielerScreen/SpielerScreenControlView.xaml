@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
+             xmlns:s="clr-namespace:MeisterGeister.View.SpielerScreen"
              xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
              mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DesignHeight="498" d:DesignWidth="800" Background="{StaticResource Background1}">
@@ -92,10 +93,16 @@
                             <Image Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" Visibility="{Binding PathNotFound, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
                             <TextBlock Text="{Binding DirectoryPath}" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bilder-Ordner" />
                         </StackPanel>
-                        <CheckBox Grid.Row="1" Grid.Column="1" Margin="5" Content="Bild-Pointer anzeigen" IsChecked="{Binding IsPointerVisible}" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
+                        <CheckBox Grid.Row="1" Grid.Column="1" Margin="5" IsChecked="{Binding IsPointerVisible}" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
                             <CheckBox.ToolTip>
                                 <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Auf dem Bild einen Zeiger anzeigen." />
                             </CheckBox.ToolTip>
+                            <CheckBox.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Fill="Yellow" Stroke="Red" Height="15" Width="15" StrokeThickness="1" Opacity="0.5" Stretch="Fill" Margin="0,0,5,0" />
+                                    <TextBlock Text="Bild-Pointer anzeigen" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </CheckBox.Content>
                         </CheckBox>
                         <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding Images}" Background="Transparent" SelectedItem="{Binding SelectedImageObject}" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" MouseDoubleClick="_listBoxDirectory_MouseDoubleClick" />
                         <Viewbox Grid.Column="1" Grid.Row="2" Name="viewboxImage" Margin="6" MinWidth="226">
@@ -128,30 +135,7 @@
                                         </Binding>
                                     </Image.Source>
                                 </Image>
-                                <Ellipse Name="ellipsePointer" Fill="Yellow" Stroke="Red" Height="25" Width="25" Margin="{Binding PointerMargin}" Visibility="{Binding PointerVisibility}" StrokeThickness="1" Opacity="0.5" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Ellipse.Triggers>
-                                        <EventTrigger RoutedEvent="Ellipse.Loaded">
-                                            <BeginStoryboard>
-                                                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
-                                                    Storyboard.TargetName="ellipsePointer">
-                                                    <ColorAnimation From="Yellow" To="Red" Duration="0:0:1" AutoReverse="True"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                            <!--<BeginStoryboard>
-                                                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="Height"
-                                                    Storyboard.TargetName="ellipsePointer">
-                                                    <DoubleAnimation From="25" To="50" Duration="0:0:1" AutoReverse="True"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                            <BeginStoryboard>
-                                                <Storyboard BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetProperty="Width"
-                                                    Storyboard.TargetName="ellipsePointer">
-                                                    <DoubleAnimation From="25" To="50" Duration="0:0:1" AutoReverse="True"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>-->
-                                        </EventTrigger>
-                                    </Ellipse.Triggers>
-                                </Ellipse>
+                                <s:SpielerPointer Margin="{Binding PointerMargin}" />
                             </Grid>
                         </Viewbox>
                     </Grid>

@@ -188,25 +188,11 @@ namespace MeisterGeister.View.SpielerScreen
                 bmi.Freeze();		// freeze image source, used to move it across the thread
                 img.Source = bmi;
 
-                Ellipse pointer = new Ellipse()
-                {
-                    Fill = Brushes.Yellow,
-                    Height = 25,
-                    Width = 25,
-                    StrokeThickness = 1,
-                    Stroke = Brushes.Red,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Opacity = 0.5
-                };
+                SpielerPointer pointer = new SpielerPointer();
 
                 Binding pointerMarginBinding = new Binding("PointerMarginSpieler");
                 pointerMarginBinding.Source = Global.CurrentSpielerScreen;
-                pointer.SetBinding(Ellipse.MarginProperty, pointerMarginBinding);
-
-                Binding pointerVisibilityBinding = new Binding("PointerVisibility");
-                pointerVisibilityBinding.Source = Global.CurrentSpielerScreen;
-                pointer.SetBinding(Ellipse.VisibilityProperty, pointerVisibilityBinding);
+                pointer.SetBinding(UserControl.MarginProperty, pointerMarginBinding);
 
                 Grid grid = new Grid();
                 grid.Children.Add(img);
