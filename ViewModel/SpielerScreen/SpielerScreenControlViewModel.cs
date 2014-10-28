@@ -30,6 +30,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         private bool _isImageStretch = true;
         private bool _slideShowRunning = false;
         private double _slideShowInterval = 6.0;
+        private double _pointerDurchmesser = 25.0;
 
         // Listen
         private List<System.Windows.Forms.Screen> _screenList = System.Windows.Forms.Screen.AllScreens.ToList();
@@ -179,6 +180,19 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                     _slideShowTimer.Interval = _slideShowInterval * 1000;
                 Logic.Einstellung.Einstellungen.SlideShowInterval = value;
                 OnChanged("SlideShowInterval");
+            }
+        }
+
+        public double PointerDurchmesser
+        {
+            get
+            {
+                return _pointerDurchmesser;
+            }
+            set
+            {
+                _pointerDurchmesser = value;
+                OnChanged("PointerDurchmesser");
             }
         }
 
@@ -557,7 +571,7 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             System.Windows.Point mousePos = System.Windows.Input.Mouse.GetPosition(grid);
             _xScale = mousePos.X / grid.ActualWidth;
             _yScale = mousePos.Y / grid.ActualHeight;
-            PointerMargin = new System.Windows.Thickness(mousePos.X, mousePos.Y, 0, 0);
+            PointerMargin = new System.Windows.Thickness(mousePos.X - PointerDurchmesser / 2, mousePos.Y - PointerDurchmesser / 2, 0, 0);
         }
 
         private double _xScale = 1;
@@ -586,8 +600,8 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                             break;
                         }
                     }
-                    PointerMarginSpieler = new System.Windows.Thickness(img.ActualWidth * _xScale + (g.ActualWidth - img.ActualWidth) / 2,
-                        img.ActualHeight * _yScale + (g.ActualHeight - img.ActualHeight) / 2, 0, 0);
+                    PointerMarginSpieler = new System.Windows.Thickness(img.ActualWidth * _xScale + (g.ActualWidth - img.ActualWidth) / 2 - PointerDurchmesser / 2,
+                        img.ActualHeight * _yScale + (g.ActualHeight - img.ActualHeight) / 2 - PointerDurchmesser / 2, 0, 0);
                 }
             }
         }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Visibility="{Binding PointerVisibility}">
     <Grid>
-        <Ellipse Name="ellipsePointer" Fill="Yellow" Stroke="Red" Height="25" Width="25" StrokeThickness="1" Opacity="0.5" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Ellipse Name="ellipsePointer" Fill="Yellow" Stroke="Red" Height="{Binding PointerDurchmesser, FallbackValue=25, TargetNullValue=25}" Width="{Binding PointerDurchmesser, FallbackValue=25, TargetNullValue=25}" StrokeThickness="1" Opacity="0.5" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Ellipse.Triggers>
                 <EventTrigger RoutedEvent="Ellipse.Loaded">
                     <BeginStoryboard>
