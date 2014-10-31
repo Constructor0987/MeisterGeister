@@ -2062,6 +2062,8 @@ namespace MeisterGeister.Model {
                     hi.Anzahl += anzahl;
             }
 
+            BerechneAusruestungsGewicht();
+
         }
 
         #endregion
