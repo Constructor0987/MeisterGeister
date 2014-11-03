@@ -874,6 +874,7 @@
                     </Border>
 
                     <Border Grid.Row="1" Grid.ColumnSpan="2">
+                        <StackPanel>
                         <Expander Name="exErwPlayerTheme" IsExpanded="True" Margin="30,5,30,10" MinWidth="200" MaxHeight="500" ForceCursor="False" >
                             <Expander.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
@@ -887,6 +888,17 @@
                                 </ScrollViewer>
                             </Border>
                         </Expander>
+
+                            <Expander Name="exErwPlayerDebug" IsExpanded="True" Margin="30,5,30,10" MinWidth="200" MaxHeight="500" ForceCursor="False" Visibility="{Binding Path=IsChecked, ElementName=tbtnErwPlayerDebug, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                            <Expander.Header>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
+                                    <Image Source="/Images/Icons/General/feder.png" />
+                                    <TextBlock Text="Debug" Style="{DynamicResource TextTitel}" />
+                                </StackPanel>
+                            </Expander.Header>
+                                <TreeView Name="tvDebug" Visibility="{Binding DEBUG, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                            </Expander>
+                        </StackPanel>
                     </Border>
 
                     <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />
@@ -989,6 +1001,11 @@
                                     </Button>
                                 </Grid>
                             </Border>
+                            <Border Grid.Column="2" HorizontalAlignment="Right">
+                                <ToggleButton Name="tbtnErwPlayerDebug" Width="20" Height="20" Click="tbtnErwPlayerDebug_Click" >
+                                    <Image Source="/Images/Icons/General/feder.png" />
+                                </ToggleButton>
+                            </Border>
                         </Grid>
                     </Border>
 
@@ -1019,25 +1036,32 @@
                             </Border>
                         </Expander>
                     </Border>
+                    
                 </Grid>
-            </TabItem>
-            <TabItem Name="tiDebug" Header="Debug" GotFocus="tiDebug_GotFocus">
-                <TreeView Name="tvDebug" />
-            </TabItem>
+            </TabItem>            
         </TabControl>
         
         <GroupBox Header="Hotkeys"  Name="gbxHotkeys" VerticalAlignment="Bottom" Margin="10,-5,10,0" Height="60" Padding="0,-1,0,-3" Visibility="Collapsed" >
-            <StackPanel Orientation="Horizontal">
-                <Button Height="30" Style="{StaticResource GlasButton}" Background="Black" Width="30" ToolTip="Stoppen aller laufenden Hotkeys" Name="btnHotkeyStop" Click="btnHotkeyStop_Click" IsEnabled="False">
-                    <Image Source="/Images/Icons/General/stop.png" Margin="5,6,4,4" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="35" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <Button Height="30" Style="{StaticResource GlasButton}" Background="Black" Width="30" ToolTip="Stoppen aller laufenden Hotkeys" Name="btnHotkeyStop" Click="btnHotkeyStop_Click" IsEnabled="False">
+                        <Image Source="/Images/Icons/General/stop.png" Margin="5,6,4,4" />
+                    </Button>
+                    <Slider Width="22" Maximum="100" Name="slHotkey" UseLayoutRounding="True" Value="50" SmallChange="1" LargeChange="10" ValueChanged="slHotkey_ValueChanged" Orientation="Vertical" Margin="2" ToolTip="50 %" />
+                    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                        <Grid Name="gbxHotkeysgrdHotkeys" >
+                            <StackPanel Name="spnlHotkeys" Orientation="Horizontal" Margin="5,0,0,0" />
+                        </Grid>
+                    </ScrollViewer>
+                </StackPanel>
+                <Button Name="btnHotkeysLöschen" Grid.Column="1" VerticalAlignment="Center" Height="25" Width="25" ToolTip="Alle Hotkeys löschen" Margin="5,0" Click="btnHotkeysLöschen_Click" >
+                    <Image Source="/Images/Icons/General/entf_all.png" Style="{StaticResource ImageEnabled}" />
                 </Button>
-                <Slider Width="22" Maximum="100" Name="slHotkey" UseLayoutRounding="True" Value="50" SmallChange="1" LargeChange="10" ValueChanged="slHotkey_ValueChanged" Orientation="Vertical" Margin="2" ToolTip="50 %" />
-                <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                    <Grid Name="gbxHotkeysgrdHotkeys" >
-                        <StackPanel Name="spnlHotkeys" Orientation="Horizontal" Margin="5,0,0,0" />
-                    </Grid>
-                </ScrollViewer>
-            </StackPanel>
+            </Grid>
         </GroupBox>
         <!--
         <StackPanel Grid.Column="1">
