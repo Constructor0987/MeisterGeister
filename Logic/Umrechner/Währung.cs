@@ -108,6 +108,12 @@ namespace MeisterGeister.Logic.Umrechner
             Add("Syllaner Taler", 1);
             Add("Minisepe", 0.1);
 
+            Add("-- Myranische Münzen --", 0);
+            Add("Obulos", 0.01);
+            Add("Pekunos", 0.1);
+            Add("Argental", 1);
+            Add("Aureal", 10);
+
         }
 
         public double WertUmrechnen(string von, string nach, double? wert)

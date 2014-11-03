@@ -191,6 +191,12 @@ namespace MeisterGeister.ViewModel.Basar
                             (_währungsText == "Chorhoper Heller") ? "Ch" :
                             (_währungsText == "Syllaner Taler") ? "Syl" :
                             (_währungsText == "Minisepe") ? "Min" :
+
+                            // "-- Myranische Münzen --"
+                            (_währungsText == "Obulos") ? "Ob" :
+                            (_währungsText == "Pekunos") ? "Pk" :
+                            (_währungsText == "Argental") ? "Ag" :
+                            (_währungsText == "Aureal") ? "Au" :
                             "S";
                 // Änderung an BasarItems weiterreichen
                 foreach (var item in BasarItemListe)
