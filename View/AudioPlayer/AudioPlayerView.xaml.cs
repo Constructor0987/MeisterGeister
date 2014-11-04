@@ -281,10 +281,6 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             InitializeComponent();
 
-#if !DEBUG
-            tiDebug.Visibility = Visibility.Collapsed;
-#endif
-
             //_zeile.XPos = 10;
             //XPos = 10;
             this.DataContext = this;
