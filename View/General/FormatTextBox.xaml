@@ -302,7 +302,9 @@
                             <StackPanel Orientation="Horizontal" FocusManager.IsFocusScope="True">
                                 <ToggleButton Width="28" x:Name="btnBold" Content="F" FontWeight="Bold" TabIndex="10" Height="28" ToolTip="Fett" FontSize="16" IsChecked="{Binding CurrentFontBold}" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleBold" />
                                 <ToggleButton Width="28" x:Name="btnItalic" Content="K" FontStyle="Italic" TabIndex="11" Height="28" ToolTip="Kursiv" FontSize="16" IsChecked="{Binding CurrentFontItalic}" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleItalic" />
-                                <ToggleButton Width="28" x:Name="btnUnderline" Content="U" TabIndex="12" Height="28" ToolTip="Unterstreichen" FontSize="16" IsChecked="{Binding CurrentFontUnderline}" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleUnderline" />
+                                <ToggleButton Width="28" x:Name="btnUnderline" TabIndex="12" Height="28" ToolTip="Unterstreichen" FontSize="16" IsChecked="{Binding CurrentFontUnderline}" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleUnderline">
+                                    <TextBlock Text="U" TextDecorations="Underline" />
+                                </ToggleButton>
                             </StackPanel>
                         </Border>
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
