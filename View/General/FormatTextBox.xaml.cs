@@ -289,8 +289,8 @@ namespace MeisterGeister.View.General
             }
         }
 
-        private Nullable<FontFamily> _currentFontFamily;
-        public Nullable<FontFamily> CurrentFontFamily
+        private FontFamily _currentFontFamily;
+        public FontFamily CurrentFontFamily
         {
             get { return _currentFontFamily; }
             set
