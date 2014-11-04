@@ -21,7 +21,7 @@
                     <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox Name="cbFontStyle" Margin="4,0,4,0"  MinWidth="200" Background="White" TabIndex="7" Height="24" ToolTip="Schriftart" SelectionChanged="cbFontStyle_SelectionChanged">
+                                <ComboBox Name="cbFontStyle" Margin="4,0,4,0" ItemsSource="{Binding FontFamilies}" SelectedItem="{Binding CurrentFontFamily}"  MinWidth="200" Background="White" TabIndex="7" Height="24" ToolTip="Schriftart">
                                     <ComboBox.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <VirtualizingStackPanel />
@@ -33,51 +33,8 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ComboBox x:Name="cmbFontSizes" Margin="4,0,4,0" MinWidth="45" SelectionChanged="cmbFontSizes_SelectionChanged" Background="White" TabIndex="8" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Height="24" ToolTip="Schriftgrad">
-                                    <ComboBox.Resources>
-                                        <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
-                                            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                                            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                                            <Setter Property="Padding" Value="3,0,3,0"/>
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                                                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                                                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5"/>
-                                                        </Border>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsHighlighted" Value="true">
-                                                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                                                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
-                                                            </Trigger>
-                                                            <Trigger Property="IsEnabled" Value="false">
-                                                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </ComboBox.Resources>
-                                    <ComboBoxItem Content="8" Tag="8"/>
-                                    <ComboBoxItem Content="9" Tag="9"/>
-                                    <ComboBoxItem Content="10" Tag="10"/>
-                                    <ComboBoxItem Content="11" Tag="11" IsSelected="True"/>
-                                    <ComboBoxItem Content="12" Tag="12"/>
-                                    <ComboBoxItem Content="14" Tag="14"/>
-                                    <ComboBoxItem Content="16" Tag="16"/>
-                                    <ComboBoxItem Content="18" Tag="18"/>
-                                    <ComboBoxItem Content="20" Tag="20"/>
-                                    <ComboBoxItem Content="22" Tag="22"/>
-                                    <ComboBoxItem Content="24" Tag="24"/>
-                                    <ComboBoxItem Content="26" Tag="26"/>
-                                    <ComboBoxItem Content="28" Tag="28"/>
-                                    <ComboBoxItem Content="36" Tag="36"/>
-                                    <ComboBoxItem Content="48" Tag="48"/>
-                                    <ComboBoxItem Content="72" Tag="72"/>
-                                </ComboBox>
-                                <ComboBox Margin="4,0,4,0" x:Name="cmbFontColor" MinWidth="48" Background="White" SelectionChanged="cmbFontColor_SelectionChanged" TabIndex="9" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Style="{DynamicResource ComboBoxStyle}" Height="24">
+                                <ComboBox x:Name="cmbFontSizes" Margin="4,0,4,0" MinWidth="45" ItemsSource="{Binding FontSizes}" SelectedItem="{Binding CurrentFontSize}" Background="White" TabIndex="8" Height="24" ToolTip="Schriftgrad" />
+                                <ComboBox Margin="4,0,4,0" x:Name="cmbFontColor" MinWidth="48" Background="White" SelectionChanged="cmbFontColor_SelectionChanged" TabIndex="9" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Style="{DynamicResource ComboBoxStyle}" Height="24" ToolTip="Schriftfarbe">
                                     <ComboBox.Resources>
                                         <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
                                             <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
@@ -343,9 +300,9 @@
                         </Border>
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal" FocusManager.IsFocusScope="True">
-                                <Button Width="28" x:Name="btnBold"  Content="F" FontWeight="Bold" TabIndex="10" Height="28" ToolTip="Fett" FontSize="16" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleBold" />
-                                <Button Width="28" x:Name="btnItalic"  Content="K" FontStyle="Italic" TabIndex="11" Height="28" ToolTip="Kursiv" FontSize="16" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleItalic" />
-                                <Button Width="28" x:Name="btnUnderline"  Content="U" TabIndex="12" Height="28" ToolTip="Unterstreichen" FontSize="16" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleUnderline" />
+                                <ToggleButton Width="28" x:Name="btnBold" Content="F" FontWeight="Bold" TabIndex="10" Height="28" ToolTip="Fett" FontSize="16" IsChecked="{Binding CurrentFontBold}" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleBold" />
+                                <ToggleButton Width="28" x:Name="btnItalic" Content="K" FontStyle="Italic" TabIndex="11" Height="28" ToolTip="Kursiv" FontSize="16" IsChecked="{Binding CurrentFontItalic}" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleItalic" />
+                                <ToggleButton Width="28" x:Name="btnUnderline" Content="U" TabIndex="12" Height="28" ToolTip="Unterstreichen" FontSize="16" IsChecked="{Binding CurrentFontUnderline}" CommandTarget="{Binding ElementName=RTBNotiz}" Command="EditingCommands.ToggleUnderline" />
                             </StackPanel>
                         </Border>
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
@@ -389,7 +346,7 @@
                         </StackPanel>
                     </WrapPanel>
                 </Border>
-                <RichTextBox x:Name="RTBNotiz" Grid.Row="1" Padding="10" TextChanged="RTBNotiz_TextChanged" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource BackgroundPergamentQuer}" />
+                <RichTextBox x:Name="RTBNotiz" Grid.Row="1" Padding="10" TextChanged="RTBNotiz_TextChanged" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource BackgroundPergamentQuer}" SelectionChanged="RTBNotiz_SelectionChanged" />
             </Grid>
         </Grid>
     </Grid>

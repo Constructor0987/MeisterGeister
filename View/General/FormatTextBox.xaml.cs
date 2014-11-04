@@ -46,10 +46,27 @@ namespace MeisterGeister.View.General
         public FormatTextBox() {
             this.InitializeComponent();
 
-            LoadSystemFonts();
+            VM = new FormatTextBoxViewModel(RTBBox, this);
         }
 
         #endregion
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public FormatTextBoxViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is FormatTextBoxViewModel))
+                    return null;
+                return DataContext as FormatTextBoxViewModel;
+            }
+            set
+            {
+                DataContext = value;
+            }
+        }
 
         #region //Instanzmethoden
 
@@ -57,32 +74,7 @@ namespace MeisterGeister.View.General
             RTBNotiz.SelectAll();
         }
 
-        /// <summary>
-        /// Lädt die installierten System-Fonts in die ComboBox
-        /// </summary>
-        void LoadSystemFonts()
-        {
-            var viewSource = new CollectionViewSource();
-            viewSource.Source = Fonts.SystemFontFamilies;
-            viewSource.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("Source", System.ComponentModel.ListSortDirection.Ascending));
-            cbFontStyle.ItemsSource = viewSource.View;
-        }
-
         #region Font, Color & Size
-
-        private void cbFontStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.OriginalSource != null)
-                RTBNotiz.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, new FontFamily((e.OriginalSource as ComboBox).SelectedValue.ToString()));
-            ReturnFocus();
-        }
-
-        private void cmbFontSizes_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (RTBNotiz != null && RTBNotiz.Selection.Text.Length > 0) {
-                RTBNotiz.Selection.ApplyPropertyValue(Run.FontSizeProperty, double.Parse((cmbFontSizes.SelectedItem as ComboBoxItem).Tag.ToString()));
-            }
-            ReturnFocus();
-        }
 
         private void cmbFontColor_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (RTBNotiz != null && RTBNotiz.Selection.Text.Length > 0) {
@@ -188,7 +180,7 @@ namespace MeisterGeister.View.General
             }
         }
 
-        private void ReturnFocus() {
+        public void ReturnFocus() {
             if (RTBNotiz != null) {
                 RTBNotiz.Focus();
             }
@@ -207,5 +199,192 @@ namespace MeisterGeister.View.General
 
         #endregion
 
+        private void RTBNotiz_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            VM.SetCurrentFontFormat();
+        }
+
+    }
+
+    public class FormatTextBoxViewModel : ViewModel.Base.ViewModelBase
+    {
+        public FormatTextBoxViewModel(RichTextBox rtb, FormatTextBox ftb)
+        {
+            RTBNotiz = rtb;
+            FormatTB = ftb;
+
+            Init();
+        }
+
+        private void Init()
+        {
+            // Schriftgrade
+            _fontSizes.Add(8);
+            _fontSizes.Add(9);
+            _fontSizes.Add(10);
+            _fontSizes.Add(11);
+            _fontSizes.Add(12);
+            _fontSizes.Add(14);
+            _fontSizes.Add(16);
+            _fontSizes.Add(18);
+            _fontSizes.Add(20);
+            _fontSizes.Add(22);
+            _fontSizes.Add(24);
+            _fontSizes.Add(26);
+            _fontSizes.Add(28);
+            _fontSizes.Add(36);
+            _fontSizes.Add(48);
+            _fontSizes.Add(72);
+
+            LoadSystemFonts();
+        }
+
+        /// <summary>
+        /// Lädt die installierten System-Fonts in die ComboBox
+        /// </summary>
+        void LoadSystemFonts()
+        {
+            var viewSource = new CollectionViewSource();
+            viewSource.Source = Fonts.SystemFontFamilies;
+            viewSource.View.SortDescriptions.Add(new System.ComponentModel.SortDescription("Source", System.ComponentModel.ListSortDirection.Ascending));
+            FontFamilies = viewSource.View;
+        }
+
+        public RichTextBox RTBNotiz { get; set; }
+        public FormatTextBox FormatTB { get; set; }
+
+        private List<double> _fontSizes = new List<double>();
+        public List<double> FontSizes
+        {
+            get { return _fontSizes; }
+            set
+            {
+                _fontSizes = value;
+                OnChanged("FontSizes");
+            }
+        }
+
+        private Nullable<double> _currentFontSize = 11;
+        public Nullable<double> CurrentFontSize
+        {
+            get { return _currentFontSize; }
+            set
+            {
+                _currentFontSize = value;
+                if (value.HasValue && !FontSizes.Contains(value.Value))
+                    FontSizes.Add(value.Value);
+                ChangeFontSize();
+                OnChanged("CurrentFontSize");
+            }
+        }
+
+        private ICollectionView _fontFamilies;
+        public ICollectionView FontFamilies
+        {
+            get { return _fontFamilies; }
+            set
+            {
+                _fontFamilies = value;
+                OnChanged("FontFamilies");
+            }
+        }
+
+        private Nullable<FontFamily> _currentFontFamily;
+        public Nullable<FontFamily> CurrentFontFamily
+        {
+            get { return _currentFontFamily; }
+            set
+            {
+                _currentFontFamily = value;
+                ChangeFontFamily();
+                OnChanged("CurrentFontFamily");
+            }
+        }
+
+        private bool _currentFontBold = false;
+        public bool CurrentFontBold
+        {
+            get { return _currentFontBold; }
+            set
+            {
+                _currentFontBold = value;
+                OnChanged("CurrentFontBold");
+            }
+        }
+
+        private bool _currentFontItalic = false;
+        public bool CurrentFontItalic
+        {
+            get { return _currentFontItalic; }
+            set
+            {
+                _currentFontItalic = value;
+                OnChanged("CurrentFontItalic");
+            }
+        }
+
+        private bool _currentFontUnderline = false;
+        public bool CurrentFontUnderline
+        {
+            get { return _currentFontUnderline; }
+            set
+            {
+                _currentFontUnderline = value;
+                OnChanged("CurrentFontUnderline");
+            }
+        }
+
+        private void ChangeFontSize()
+        {
+            if (RTBNotiz != null && !_positionInfo && RTBNotiz.Selection.Text.Length > 0)
+            {
+                RTBNotiz.Selection.ApplyPropertyValue(Inline.FontSizeProperty, CurrentFontSize);
+            }
+            FormatTB.ReturnFocus();
+        }
+
+        private void ChangeFontFamily()
+        {
+            if (RTBNotiz != null && !_positionInfo && !RTBNotiz.Selection.IsEmpty)
+            {
+                RTBNotiz.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, new FontFamily(CurrentFontFamily.ToString()));
+            }
+            FormatTB.ReturnFocus();
+        }
+
+        private bool _positionInfo = false;
+
+        public void SetCurrentFontFormat()
+        {
+            if (RTBNotiz != null)
+            {
+                _positionInfo = true;
+
+                TextRange tr = new TextRange(RTBNotiz.Selection.Start, RTBNotiz.Selection.End);
+
+                object temp = tr.GetPropertyValue(Inline.FontWeightProperty);
+                CurrentFontBold = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontWeights.Bold));
+
+                temp = tr.GetPropertyValue(Inline.FontStyleProperty);
+                CurrentFontItalic = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontStyles.Italic));
+
+                temp = tr.GetPropertyValue(Inline.TextDecorationsProperty);
+                CurrentFontUnderline = (temp != DependencyProperty.UnsetValue) && (temp.Equals(TextDecorations.Underline));
+
+                temp = tr.GetPropertyValue(Inline.FontFamilyProperty);
+                if (temp != DependencyProperty.UnsetValue)
+                    CurrentFontFamily = (FontFamily)temp;
+                else
+                    CurrentFontFamily = null;
+
+                temp = tr.GetPropertyValue(Inline.FontSizeProperty);
+                if (temp != DependencyProperty.UnsetValue)
+                    CurrentFontSize = (double)temp;
+                else
+                    CurrentFontSize = null;
+
+                _positionInfo = false;
+            }
+        }
     }
 }
