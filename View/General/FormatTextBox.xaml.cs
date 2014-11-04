@@ -74,10 +74,10 @@ namespace MeisterGeister.View.General
             RTBNotiz.SelectAll();
         }
 
-        #region Font, Color & Size
-
-        private void cmbFontColor_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (RTBNotiz != null && RTBNotiz.Selection.Text.Length > 0) {
+        private void cmbFontColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (RTBNotiz != null)
+            {
                 string color = (cmbFontColor.SelectedItem as ComboBoxItem).Tag.ToString();
 
                 SolidColorBrush brush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(
@@ -85,12 +85,16 @@ namespace MeisterGeister.View.General
                     byte.Parse(color.Substring(2, 2), System.Globalization.NumberStyles.HexNumber),
                     byte.Parse(color.Substring(4, 2), System.Globalization.NumberStyles.HexNumber),
                     byte.Parse(color.Substring(6, 2), System.Globalization.NumberStyles.HexNumber)));
-                RTBNotiz.Selection.ApplyPropertyValue(Run.ForegroundProperty, brush);
+
+                if (RTBNotiz.Selection.IsEmpty)
+                { // kein Text ausgewählt
+                    RTBNotiz.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, brush);
+                }
+                else // Text ausgewählt
+                    RTBNotiz.Selection.ApplyPropertyValue(Inline.ForegroundProperty, brush);
             }
             ReturnFocus();
         }
-
-        #endregion
 
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
@@ -336,18 +340,28 @@ namespace MeisterGeister.View.General
 
         private void ChangeFontSize()
         {
-            if (RTBNotiz != null && !_positionInfo && RTBNotiz.Selection.Text.Length > 0)
+            if (RTBNotiz != null && !_positionInfo)
             {
-                RTBNotiz.Selection.ApplyPropertyValue(Inline.FontSizeProperty, CurrentFontSize);
+                if (RTBNotiz.Selection.IsEmpty)
+                { // kein Text ausgewählt
+                    RTBNotiz.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, CurrentFontSize);
+                }
+                else // Text ausgewählt
+                    RTBNotiz.Selection.ApplyPropertyValue(Inline.FontSizeProperty, CurrentFontSize);
             }
             FormatTB.ReturnFocus();
         }
 
         private void ChangeFontFamily()
         {
-            if (RTBNotiz != null && !_positionInfo && !RTBNotiz.Selection.IsEmpty)
+            if (RTBNotiz != null && !_positionInfo)
             {
-                RTBNotiz.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, new FontFamily(CurrentFontFamily.ToString()));
+                if (RTBNotiz.Selection.IsEmpty)
+                { // kein Text ausgewählt
+                    RTBNotiz.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, new FontFamily(CurrentFontFamily.ToString()));
+                }
+                else // Text ausgewählt
+                    RTBNotiz.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, new FontFamily(CurrentFontFamily.ToString()));
             }
             FormatTB.ReturnFocus();
         }
