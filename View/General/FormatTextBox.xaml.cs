@@ -369,7 +369,26 @@ namespace MeisterGeister.View.General
                 CurrentFontItalic = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontStyles.Italic));
 
                 temp = tr.GetPropertyValue(Inline.TextDecorationsProperty);
-                CurrentFontUnderline = (temp != DependencyProperty.UnsetValue) && (temp.Equals(TextDecorations.Underline));
+                if (temp != DependencyProperty.UnsetValue)
+                {
+                    TextDecorationCollection decorations = (TextDecorationCollection)temp;
+                    if (decorations != null && decorations.Count > 0)
+                    {
+                        foreach (TextDecoration item in decorations)
+                        {
+                            if (item.Location == TextDecorationLocation.Underline)
+                            {
+                                CurrentFontUnderline = true;
+                                break;
+                            }
+                            CurrentFontUnderline = false;
+                        }
+                    }
+                    else
+                        CurrentFontUnderline = false;
+                }
+                else
+                    CurrentFontUnderline = false;
 
                 temp = tr.GetPropertyValue(Inline.FontFamilyProperty);
                 if (temp != DependencyProperty.UnsetValue)
