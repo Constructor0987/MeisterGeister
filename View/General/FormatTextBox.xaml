@@ -309,13 +309,23 @@
                         </Border>
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal" FocusManager.IsFocusScope="True">
-                                <Button x:Name="btnCut" ToolTip="Ausschneiden"  TabIndex="13" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Cut" ToolTipService.ShowOnDisabled="True">
+                                <Button ToolTip="Rückgängig (Strg + Z)"  TabIndex="13" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Undo" ToolTipService.ShowOnDisabled="True">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/undo.png" Stretch="Fill" />
+                                </Button>
+                                <Button ToolTip="Wiederholen (Strg + Y)"  TabIndex="14" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Redo" ToolTipService.ShowOnDisabled="True">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/redo.png" Stretch="Fill" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
+                            <StackPanel Orientation="Horizontal" FocusManager.IsFocusScope="True">
+                                <Button x:Name="btnCut" ToolTip="Ausschneiden (Strg + X)"  TabIndex="13" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Cut" ToolTipService.ShowOnDisabled="True">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/cut.png" Stretch="Fill" />
                                 </Button>
-                                <Button x:Name="btnCopy" ToolTip="Kopieren"  TabIndex="14" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Copy" ToolTipService.ShowOnDisabled="True">
+                                <Button x:Name="btnCopy" ToolTip="Kopieren (Strg + C)"  TabIndex="14" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Copy" ToolTipService.ShowOnDisabled="True">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/copy.png" Stretch="Fill" />
                                 </Button>
-                                <Button x:Name="btnPaste" ToolTip="Einfügen"  TabIndex="15" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Paste" ToolTipService.ShowOnDisabled="True">
+                                <Button x:Name="btnPaste" ToolTip="Einfügen (Strg + V)"  TabIndex="15" Height="28" Width="28" CommandTarget="{Binding ElementName=RTBNotiz}" Command="ApplicationCommands.Paste" ToolTipService.ShowOnDisabled="True">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/paste.png" Stretch="Fill" />
                                 </Button>
                             </StackPanel>
