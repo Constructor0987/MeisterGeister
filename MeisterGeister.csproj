@@ -450,7 +450,7 @@
     <Compile Include="ViewModel\Almanach\AlmanachViewModel.cs" />
     <Compile Include="ViewModel\Almanach\Logic\AlmanachItem.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
-    <Compile Include="ViewModel\AudioPlayer\AudioPlayer.cs" />
+    <Compile Include="ViewModel\AudioPlayer\AudioPlayerViewModel.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
@@ -1720,6 +1720,8 @@
     <Resource Include="Images\Icons\General\redo.png" />
     <Resource Include="Images\Icons\General\undo.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0093.sql" />
+    <Resource Include="Images\Icons\General\repeat0.png" />
+    <Resource Include="Images\Icons\General\repeat1.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />

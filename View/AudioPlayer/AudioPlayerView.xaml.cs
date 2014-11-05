@@ -33,7 +33,7 @@ using MeisterGeister.View.Windows;
 using Global = MeisterGeister.Global;
 using MeisterGeister.Model;
 using MeisterGeister.View.AudioPlayer;
-using MeisterGeister.ViewModel.AudioPlayer;
+using VM = MeisterGeister.ViewModel.AudioPlayer;
 using MeisterGeister.ViewModel.Base;
 
 public class MyTimer 
@@ -272,7 +272,7 @@ namespace MeisterGeister.View.AudioPlayer {
 
         DispatcherTimer _debugTreeview = new DispatcherTimer();
 
-        ZeileVM _zeile = new ZeileVM();
+        VM.ZeileVM _zeile = new VM.ZeileVM();
 
         delegate void UpdateUI();
 
@@ -280,10 +280,9 @@ namespace MeisterGeister.View.AudioPlayer {
         public AudioPlayerView()
         {
             InitializeComponent();
+            VM = new VM.AudioPlayerViewModel();
 
-            //_zeile.XPos = 10;
-            //XPos = 10;
-            this.DataContext = this;
+        //    this.DataContext = this;
             
             _BGPlayer.BG.Add(new Musik());
             _BGPlayer.BG.Add(new Musik());
@@ -292,8 +291,9 @@ namespace MeisterGeister.View.AudioPlayer {
             fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
             slPlaylistVolume.Value = Einstellungen.GeneralGeräuscheVolume;
             slBGVolume.Value = Einstellungen.GeneralMusikVolume;
+            slHotkey.Value = Einstellungen.GeneralHotkeyVolume;
 
-            DataContext = _zeile;
+       //     DataContext = _zeile;
             AktualisiereHotKeys();
                         
             _timerFadingIn.Tick += new EventHandler(_timerFadingIn_Tick);
@@ -303,9 +303,9 @@ namespace MeisterGeister.View.AudioPlayer {
             _timerBGFadingOut.Tick += new EventHandler(_timerBGFadingOut_Tick);
 
 
-            _debugTreeview.Tick += new EventHandler(_debugTreeview_Tick);
+          /*  _debugTreeview.Tick += new EventHandler(_debugTreeview_Tick);
             _debugTreeview.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            _debugTreeview.Tag = 0;
+            _debugTreeview.Tag = 0;*/
 
             KlangProgBarTimer.Tick += new EventHandler(KlangProgBarTimer_Tick);
             KlangProgBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
@@ -316,8 +316,30 @@ namespace MeisterGeister.View.AudioPlayer {
             //myTextBlock.BeginAnimation();
             //_box.BeginAnimation(tbBGFilter,)
 
-            tbtnErwPlayerDebug.Visibility = Global.INTERN? Visibility.Visible: Visibility.Collapsed;
+          //  tbtnErwPlayerDebug.Visibility = Global.INTERN? Visibility.Visible: Visibility.Collapsed;
+
+            //VM.Anzahl = 22;
         }
+
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.AudioPlayerViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.AudioPlayerViewModel))
+                    return null;
+                return DataContext as VM.AudioPlayerViewModel;
+            }
+            set { DataContext = value; }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (VM != null)
+                VM.Refresh();
+        }       
 
 
         private void imgStdIconDelete_MouseUp(object sender, MouseButtonEventArgs e)
@@ -1195,7 +1217,7 @@ namespace MeisterGeister.View.AudioPlayer {
                             {
                                 MusikProgBarTimer.Stop();
                                 btnBGAbspielen.Tag = true;
-                                btnBGAbspielen_Click(btnBGAbspielen, null);// new RoutedEventArgs());
+                                btnBGAbspielen_Click(btnBGAbspielen, null);
                             }
 
                             Audio_Playlist playlistliste = Global.ContextAudio.PlaylistListe.FindAll(t => t.Audio_PlaylistGUID.Equals(((MusikZeile)lbMusik.SelectedItem).Tag)).FirstOrDefault();
@@ -1209,6 +1231,12 @@ namespace MeisterGeister.View.AudioPlayer {
 
                                 _BGPlayer.AktTitel.Clear();
                                 btnBGRepeat.IsChecked = _BGPlayer.AktPlaylist.Repeat;
+                                ((Image)btnBGRepeat.Content).Source = new BitmapImage(new Uri(
+                                    (btnBGRepeat.IsChecked == null) ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat1.png" :
+                                    (btnBGRepeat.IsChecked.Value)?    "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat.png":
+                                                                      "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat0.png"));
+                                btnBGRepeat.ToolTip = (btnBGRepeat.IsChecked == null) ? "Einzelstück wiederholen" :
+                                    btnBGRepeat.IsChecked.Value ? "Playliste wiederholen" : "Keine Wiederholung";
 
                                 btnBGShuffle.IsChecked = _BGPlayer.AktPlaylist.Shuffle;
                                 btnShuffle_Click(btnBGShuffle, null);
@@ -1321,7 +1349,20 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void SpieleNeuenMusikTitel(Guid Index)
         {
-            if (_BGPlayer.NochZuSpielen.Count == 0 && _BGPlayer.AktPlaylist.Repeat)
+            if (_BGPlayer.AktPlaylist.Repeat == null && lbMusiktitellist.SelectedIndex != -1)
+            {
+                int war = lbMusiktitellist.SelectedIndex;
+                lbMusiktitellist.SelectionChanged -= lbMusiktitellist_SelectionChanged;
+                lbMusiktitellist.SelectedIndex = -1; 
+                lbMusiktitellist.SelectionChanged += lbMusiktitellist_SelectionChanged;
+                lbMusiktitellist.SelectedIndex = war;
+                                
+                if (lbMusiktitellist.SelectedItem != null)
+                    lbMusiktitellist.ScrollIntoView(lbMusiktitellist.SelectedItem);
+
+                return;
+            }
+            if (_BGPlayer.NochZuSpielen.Count == 0 && _BGPlayer.AktPlaylist.Repeat.Value)
                 RenewMusikNochZuSpielen();
 
             if (_BGPlayer.BG[_BGPlayer.aktiv].mPlayer != null && _BGPlayer.BG[_BGPlayer.aktiv].mPlayer.Position.TotalMilliseconds > 0)
@@ -1405,8 +1446,6 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             else
             {
-                //lbMusik.Tag = -1;
-                //	lbMusik.SelectedIndex = -1;
                 lbMusiktitellist.SelectedIndex = -1;
             }
         }
@@ -1439,7 +1478,7 @@ namespace MeisterGeister.View.AudioPlayer {
         private void btnBGAbspielen_Click(object sender, RoutedEventArgs e)
         {                                   //btnBGAbspielen.Tag = 0 --> Button hat Play-Icon, kein Sound spielt
             try
-            {
+            {                
                 if (!Convert.ToBoolean(btnBGAbspielen.Tag) && !_BGPlayer.BG[_BGPlayer.aktiv].isPaused ||
                     _BGPlayer.BG[_BGPlayer.aktiv].isPaused &&
                     (_BGPlayer.BG[_BGPlayer.aktiv].aPlaylist == null ||
@@ -1778,6 +1817,13 @@ namespace MeisterGeister.View.AudioPlayer {
                                 grpobj.spnlTopHotkey.Visibility = Visibility.Collapsed;
 
                                 btnEditRepeat.IsChecked = AktKlangPlaylist.Repeat;
+                                ((Image)btnEditRepeat.Content).Source = new BitmapImage(new Uri(
+                                    (btnEditRepeat.IsChecked == null) ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat1.png" :
+                                    (btnEditRepeat.IsChecked.Value) ?   "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat.png" :
+                                                                        "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat0.png"));
+                                btnEditRepeat.ToolTip = (btnEditRepeat.IsChecked == null) ? "Einzelstück wiederholen" :
+                                    btnEditRepeat.IsChecked.Value ? "Playliste wiederholen" : "Keine Wiederholung";
+
                                 btnEditShuffle.IsChecked = AktKlangPlaylist.Shuffle;
                                 btnShuffle_Click(btnEditShuffle, null);
                             }
@@ -3033,7 +3079,7 @@ namespace MeisterGeister.View.AudioPlayer {
             playlist.MaxSongsParallel = 1;
             playlist.Name = playlistname;
             playlist.Hintergrundmusik = false;
-            playlist.Repeat = btnEditRepeat.IsChecked.Value;
+            playlist.Repeat = btnEditRepeat.IsChecked;
             playlist.Shuffle = btnEditShuffle.IsChecked.Value;
 
             //zur datenbank hinzufügen
@@ -3565,11 +3611,17 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             try
             {
-                ((Slider)sender).ToolTip = e.NewValue + " %";
-                hotkeys.FindAll(t => t.mp != null).ForEach(delegate(hotkey hkey)
+                if (IsInitialized)
                 {
-                    hkey.mp.Volume = e.NewValue / 100;
-                });
+                    ((Slider)sender).ToolTip = Math.Round(e.NewValue) + " %";
+                    hotkeys.FindAll(t => t.mp != null).ForEach(delegate(hotkey hkey)
+                    {
+                        hkey.mp.Volume = e.NewValue / 100;
+                    });
+
+                    if (Einstellungen.GeneralHotkeyVolume != (int)Math.Round(((Slider)sender).Value))
+                        Einstellungen.SetEinstellung<int>("GeneralHotkeyVolume", (int)Math.Round(((Slider)sender).Value));
+                }
             }
             catch (Exception ex)
             {
@@ -4145,7 +4197,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 else
                     playlist.Hintergrundmusik = true;
 
-                playlist.Repeat = btnEditRepeat.IsChecked.Value;
+                playlist.Repeat = btnEditRepeat.IsChecked;
                 playlist.Shuffle = btnEditShuffle.IsChecked.Value;
 
                 //zur datenbank hinzufügen
@@ -4194,7 +4246,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         lbMusik.SelectedIndex = Convert.ToInt16(lbMusik.Tag);
                         lbMusik.SelectionChanged += lbMusik_SelectionChanged;
                     }
-                    if (e != null && e.RemovedItems.Count == 0)
+                    if (e != null && e.RemovedItems.Count == 0 && _BGPlayer.AktPlaylist.Repeat != null)
                         RenewMusikNochZuSpielen();
                     chkbxPlayRange.IsChecked = false;
                     rsldTeilSong.Visibility = Visibility.Hidden;
@@ -6478,6 +6530,7 @@ namespace MeisterGeister.View.AudioPlayer {
         private class group
         {
             public GruppenObjekt grpobj = null;
+            public MusikZeile mZeile = null;
             public double zielProzent;
             public double startProzent;
             public DateTime StartZeit;
@@ -6502,6 +6555,16 @@ namespace MeisterGeister.View.AudioPlayer {
             newgroup.zielProzent = grpobj.force_Volume == null ? slPlaylistVolume.Value : (double)grpobj.force_Volume * 100;
             newgroup.startProzent = grpobj.Vol_PlaylistMod != slPlaylistVolume.Value ? grpobj.Vol_PlaylistMod : 0;
             newgroup.StartZeit = DateTime.MinValue;
+
+            for (int i = 0; i < lbPListGeräusche.Items.Count; i++)
+            {
+                if ((Guid)((MusikZeile)lbPListGeräusche.Items[i]).Tag == grpobj.aPlaylist.Audio_PlaylistGUID)
+                {
+                    newgroup.mZeile = (MusikZeile)lbPListGeräusche.Items[i];
+                    newgroup.mZeile.recProzent.Visibility = Visibility.Visible;
+                    break;
+                }
+            }
 
             if (!_timerFadingInGeräusche.IsEnabled)
             {
@@ -6548,9 +6611,13 @@ namespace MeisterGeister.View.AudioPlayer {
                         gruppe.grpobj.Vol_PlaylistMod / 100;
                     l = kZeile._mplayer.Volume;
                 }
+                gruppe.mZeile.recProzent.Width = Math.Round(gruppe.grpobj.Vol_PlaylistMod, 2) * .65;
 
                 if (!gruppe.grpobj.wirdAbgespielt || gruppe.grpobj.Vol_PlaylistMod == gruppe.zielProzent)
+                {
+                    //gruppe.mZeile.recProzent.Visibility = Visibility.Collapsed;
                     grpToDelete.Add(gruppe);
+                }
             }
             //Check noch angeklickt zum FadingIn
             for (int c = 0; c < grpToDelete.Count; c++)
@@ -6564,6 +6631,16 @@ namespace MeisterGeister.View.AudioPlayer {
         {
             group newgroup = new group();
             newgroup.grpobj = grpobj;
+
+            for (int i = 0; i < lbPListGeräusche.Items.Count; i++)
+            {
+                if ((Guid)((MusikZeile)lbPListGeräusche.Items[i]).Tag == grpobj.aPlaylist.Audio_PlaylistGUID)
+                {
+                    newgroup.mZeile = (MusikZeile)lbPListGeräusche.Items[i];
+                    newgroup.mZeile.recProzent.Visibility = Visibility.Visible;
+                    break;
+                }
+            }
             newgroup.startProzent = grpobj.force_Volume != null? grpobj.force_Volume.Value*100: grpobj.Vol_PlaylistMod;
             newgroup.zielProzent = 0;
             newgroup.StartZeit = DateTime.MinValue;
@@ -6624,6 +6701,8 @@ namespace MeisterGeister.View.AudioPlayer {
                                 gruppe.grpobj.Vol_PlaylistMod / 100;
                             l = kZeile._mplayer.Volume;
                         }
+                        gruppe.mZeile.recProzent.Width = Math.Round(gruppe.grpobj.Vol_PlaylistMod, 2) * .65;// (gruppe.mZeile.grdForceVol.ActualWidth / 100 - .05);
+                        //gruppe.mZeile.tbProzent.Text = Math.Round(gruppe.grpobj.Vol_PlaylistMod,2) + "%";                        
                         
                         if (gruppe.grpobj.Vol_PlaylistMod == 0)
                         {
@@ -6631,9 +6710,10 @@ namespace MeisterGeister.View.AudioPlayer {
                             {
                                 kZeile.istPause = true;
                                 kZeile._mplayer.Pause();
-                                kZeile.istStandby = true; //f
+                                kZeile.istStandby = true; 
                                 kZeile.istLaufend = false;
                             }
+                            gruppe.mZeile.recProzent.Visibility = Visibility.Collapsed;
                             grpToDelete.Add(gruppe);
                         }
                     }
@@ -7628,7 +7708,7 @@ namespace MeisterGeister.View.AudioPlayer {
             return result;
         }
 
-        private void slPlaylistVolume_ValueChanged(object sender, RoutedEventArgs e)
+        private void slPlaylistVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             try
             {
@@ -8737,15 +8817,31 @@ namespace MeisterGeister.View.AudioPlayer {
         }
 
         private void btnBGRepeat_Click(object sender, RoutedEventArgs e)
-        {
+        {    
+            ((Image)btnBGRepeat.Content).Source = new BitmapImage(new Uri(
+                (btnBGRepeat.IsChecked == null) ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat1.png" :
+                (btnBGRepeat.IsChecked.Value) ?   "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat.png" :
+                                                  "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat0.png"));
+            btnBGRepeat.ToolTip = (btnBGRepeat.IsChecked == null) ? "Einzelstück wiederholen" :
+                btnBGRepeat.IsChecked.Value ? "Playliste wiederholen" : "Keine Wiederholung";
+
             if (_BGPlayer.AktPlaylist == null) return;
-            _BGPlayer.AktPlaylist.Repeat = btnBGRepeat.IsChecked.Value;
+            
+            _BGPlayer.AktPlaylist.Repeat = btnBGRepeat.IsChecked;
             Global.ContextAudio.Update<Audio_Playlist>(_BGPlayer.AktPlaylist);
         }
 
+        
         private void btnEditRepeat_Click(object sender, RoutedEventArgs e)
         {
-            AktKlangPlaylist.Repeat = btnEditRepeat.IsChecked.Value;
+            ((Image)btnEditRepeat.Content).Source = new BitmapImage(new Uri(
+                (btnEditRepeat.IsChecked == null) ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat1.png" :
+                (btnEditRepeat.IsChecked.Value) ?   "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat.png" :
+                                                    "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/repeat0.png"));
+            btnEditRepeat.ToolTip = (btnEditRepeat.IsChecked == null) ? "Einzelstück wiederholen" :
+                btnEditRepeat.IsChecked.Value ? "Playliste wiederholen" : "Keine Wiederholung";
+
+            AktKlangPlaylist.Repeat = btnEditRepeat.IsChecked;
             Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
         }
 
@@ -9411,6 +9507,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
         #endregion
 
+
+        /*
         private void tbtnErwPlayerDebug_Click(object sender, RoutedEventArgs e)
         {
             if (tbtnErwPlayerDebug.IsChecked.Value)
@@ -9460,6 +9558,7 @@ namespace MeisterGeister.View.AudioPlayer {
             }
             tvItem.ExpandSubtree();            
         }
+        */
     }
 
 

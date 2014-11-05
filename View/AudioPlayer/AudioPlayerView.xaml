@@ -3,14 +3,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:vm="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
+    xmlns:vmAudioPlayer="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
     xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
     xmlns:local="clr-namespace:MeisterGeister.View.AudioPlayer"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"  	    
     mc:Ignorable="d"
     d:DesignHeight="571" d:DesignWidth="1046" Background="{StaticResource Background1}" Loaded="Window_Loaded" Unloaded="Window_Unloaded" KeyDown="Window_KeyDown" Margin="0,5,5,0" IsEnabled="True">
 
+
+
+
     <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        
         <Style x:Key="ImageEnabled" TargetType="Image">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -512,9 +518,11 @@
                                             <Image Name="btnEditShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" Style="{StaticResource ImageEnabled}" />
                                         </ToggleButton>
 
-                                        <ToggleButton Name="btnEditRepeat" Height="24" Grid.Column="6" Margin="-260,2,0,0" Width="24" Click="btnEditRepeat_Click" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" Focusable="False" IsTabStop="False" Visibility="{Binding Path=IsChecked, ElementName=rbIstTopMusikPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                                        <ToggleButton Name="btnEditRepeat" Height="24" Grid.Column="6" Margin="-260,2,0,0" Width="30" Click="btnEditRepeat_Click" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" Focusable="False" IsTabStop="False" Visibility="{Binding Path=IsChecked, ElementName=rbIstTopMusikPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" IsThreeState="True" >
                                             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/repeat.png" />
                                         </ToggleButton>
+
+                                        <!--<ViewGeneral:DoubleBox Grid.Column="6" Height="23" Margin="5" Width="75" MinValue="0" ShowButtons="True" Value="{Binding Anzahl}" VerticalAlignment="Center" />-->
 
                                         <GroupBox Name="gboxTopSongsParallel1" Header="Songs parallel" Grid.Column="3" Grid.RowSpan="2" Height="50" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="100" Grid.ColumnSpan="2" Visibility="{Binding Path=IsChecked, ElementName=rbIstTopKlangPlaylist1, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -596,7 +604,7 @@
                                                     <ColumnDefinition Width="80" />
                                                 </Grid.ColumnDefinitions>
                                                 <Image Name="imgLaufstärke1" Source="/DSA%20MeisterGeister;component/Images/Icons/audio2.png" ToolTip="Lautstärke aller aktiven Songs" />
-                                                <Button Name="btnTopVolMin1" Content="&lt;&lt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 0% setzen" Tag="-100" Click="btnAllVolUp_Click" IsTabStop="False" />
+                                                <Button Name="btnTopVolMin1" Content="&lt;&lt;" Grid.Column="1" Height="21" Margin="0,-1,0,3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 0% setzen" Tag="-100" Click="btnAllVolUp_Click" IsTabStop="False" />
                                                 <Button Name="btnTopVolDown1" Content="&lt;" Grid.Column="1" Height="21" HorizontalAlignment="Left" Margin="23,0,0,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% verringern" Tag="-10" Click="btnAllVolUp_Click" IsTabStop="False" />
                                                 <Button Name="btnTopVolUp1" Content="&gt;" Grid.Column="1"  Height="21" HorizontalAlignment="Right" Margin="0,0,22,1" VerticalAlignment="Bottom" Width="21" ToolTip="Lautstärke aller aktiven Klänge um 10% erhöhen" Click="btnAllVolUp_Click" Tag="10" IsTabStop="False"  />
                                                 <Button Name="btnTopVolMax1" Content="&gt;&gt;" Grid.Column="1" Height="21" Margin="0,0,0,1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="21" ToolTip="Lautstärke aller aktiven Klänge auf 100% setzen" Tag="100" Click="btnAllVolUp_Click" IsTabStop="False" />
@@ -678,7 +686,7 @@
                                 <Image Name="btnShuffleImg" Source="/DSA%20MeisterGeister;component/Images/Icons/General/shuffle.png" Style="{StaticResource ImageEnabled}" />
                             </ToggleButton>
 
-                            <ToggleButton Name="btnBGRepeat" Height="24" Margin="-260,0,0,0" Width="24" Click="btnBGRepeat_Click" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" Focusable="False" IsTabStop="False" >
+                            <ToggleButton Name="btnBGRepeat" Height="24" Margin="-260,0,0,0" Width="30" Click="btnBGRepeat_Click" ClickMode="Press" IsChecked="True" ToolTip="Wiederholen" Focusable="False" IsTabStop="False" IsThreeState="True" >
                                 <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/repeat.png" />
                             </ToggleButton>
 
@@ -889,7 +897,7 @@
                             </Border>
                         </Expander>
 
-                            <Expander Name="exErwPlayerDebug" IsExpanded="True" Margin="30,5,30,10" MinWidth="200" MaxHeight="500" ForceCursor="False" Visibility="{Binding Path=IsChecked, ElementName=tbtnErwPlayerDebug, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                         <!--   <Expander Name="exErwPlayerDebug" IsExpanded="True" Margin="30,5,30,10" MinWidth="200" MaxHeight="500" ForceCursor="False" Visibility="{Binding Path=IsChecked, ElementName=tbtnErwPlayerDebug, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                             <Expander.Header>
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" >
                                     <Image Source="/Images/Icons/General/feder.png" />
@@ -897,7 +905,7 @@
                                 </StackPanel>
                             </Expander.Header>
                                 <TreeView Name="tvDebug" Visibility="{Binding DEBUG, Converter={StaticResource BooleanToVisibilityConverter1}}" />
-                            </Expander>
+                            </Expander>-->
                         </StackPanel>
                     </Border>
 
@@ -977,7 +985,7 @@
                                 <Button Width="26" Height="26" Tag="-1" Name="btnPListPListSpeaker" Click="btnPListPListSpeaker_Click">
                                     <Image Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Name="btnimgPListPListSpeaker" />
                                 </Button>
-                                <Slider Height="22" Maximum="200" UseLayoutRounding="True" Value="100" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" ToolTip="100 % der Playlisten-Lautstärke" >
+                                <Slider Height="22" Maximum="200" UseLayoutRounding="False" Value="100" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slPlaylistVolume_ValueChanged" MouseWheel="slVolume_MouseWheel" Name="slPlaylistVolume" Margin="10,0,0,0" ToolTip="100 % der Playlisten-Lautstärke" Interval="1" >
                                     <Slider.Background>
                                         <LinearGradientBrush EndPoint="1,0.5" Opacity="0.2" StartPoint="0,-1">
                                             <GradientStop Color="#FF00FF52" Offset="0.5" />
@@ -1001,11 +1009,11 @@
                                     </Button>
                                 </Grid>
                             </Border>
-                            <Border Grid.Column="2" HorizontalAlignment="Right">
+                           <!-- <Border Grid.Column="2" HorizontalAlignment="Right">
                                 <ToggleButton Name="tbtnErwPlayerDebug" Width="20" Height="20" Click="tbtnErwPlayerDebug_Click" >
                                     <Image Source="/Images/Icons/General/feder.png" />
                                 </ToggleButton>
-                            </Border>
+                            </Border>-->
                         </Grid>
                     </Border>
 

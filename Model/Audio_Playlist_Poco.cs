@@ -225,7 +225,7 @@ namespace MeisterGeister.Model
 
     	///<summary>Database persistent property</summary>
     	[DataMember]
-        public virtual bool Repeat
+        public virtual Nullable<bool> Repeat
         {
             get { return _repeat; }
             set
@@ -233,7 +233,7 @@ namespace MeisterGeister.Model
     			Set(ref _repeat, value);
     		}    
         }
-        private bool _repeat;
+        private Nullable<bool> _repeat;
 
         #endregion
 
