@@ -91,6 +91,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                     return loadedFile.ObsColl;
                 }
             }
+            catch (InvalidOperationException  e)
+            {
+                Console.WriteLine("[InvalidOperationException]" + e.Message);
+            }
             catch (IOException e)
             {
                 Console.WriteLine("[IOEXCEPTION] [LOAD]" + e.Message);
