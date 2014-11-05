@@ -41,8 +41,13 @@ namespace MeisterGeister.ViewModel.Helden
             get { return selectedHeld; }
             set
             {
+                if (selectedHeld != null)
+                    selectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
                 selectedHeld = value;
                 Global.SelectedHeld = value;
+                if (selectedHeld != null)
+                    selectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
+
                 OnChanged("SelectedHeld");
             }
         }
@@ -59,28 +64,29 @@ namespace MeisterGeister.ViewModel.Helden
             OnChanged("IsReadOnly");
         }
 
-        private void SelectedHeldChanged()
-        {
-            SelectedHeld = Global.SelectedHeld;
-            if (SelectedHeld != null)
-                SelectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
-        }
+        // TODO: Werden diese Methoden noch gebrauch?
+        //private void SelectedHeldChanged()
+        //{
+        //    SelectedHeld = Global.SelectedHeld;
+        //    if (SelectedHeld != null)
+        //        SelectedHeld.PropertyChanged += OnSelectedHeldPropertyChanged;
+        //}
 
-        private void SelectedHeldChanging()
-        {
-            if (Global.SelectedHeld != null)
-            {
-                if (hasChanges)
-                    Global.ContextHeld.Update<Model.Held>(SelectedHeld);
-                hasChanges = false;
-                Global.SelectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
-            }
-        }
+        //private void SelectedHeldChanging()
+        //{
+        //    if (Global.SelectedHeld != null)
+        //    {
+        //        if (hasChanges)
+        //            Global.ContextHeld.Update<Model.Held>(SelectedHeld);
+        //        hasChanges = false;
+        //        Global.SelectedHeld.PropertyChanged -= OnSelectedHeldPropertyChanged;
+        //    }
+        //}
 
         private void OnSelectedHeldPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            //if (new string[] { "Name", "BildLink", "Rasse", "Kultur", "Profession", "AktiveHeldengruppe" }.Contains(args.PropertyName))
-            //    hasChanges = true;
+            if (new string[] { "Name", "Spieler", "AktiveHeldengruppe" }.Contains(args.PropertyName))
+                SortList();
         }
 
         public List<Model.Held> HeldListe
@@ -119,13 +125,18 @@ namespace MeisterGeister.ViewModel.Helden
             SelectedHeld = null;
             if (Global.ContextHeld != null)
             {
-                if (SelectedSortierung == "Spieler")
-                    HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
-                else
-                    HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
+                SortList();
                 if (tmp != Guid.Empty)
                     SelectedHeld = HeldListe.Where(h => h.HeldGUID == tmp).FirstOrDefault();
             }
+        }
+
+        private void SortList()
+        {
+            if (SelectedSortierung == "Spieler")
+                HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Spieler).ThenBy(h => h.Name).ToList();
+            else
+                HeldListe = Global.ContextHeld.Liste<Held>().OrderByDescending(h => h.AktiveHeldengruppe).ThenBy(h => h.Name).ThenBy(h => h.Spieler).ToList();
         }
 
         private Base.CommandBase onNewHeld = null;
