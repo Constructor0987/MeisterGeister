@@ -1233,6 +1233,8 @@ namespace MeisterGeister.Logic.HeldenImport
                     break;
                 case ImportTypen.Talent:
                     typString = "Talent: ";
+                    if ((new string[] { "Galanterie", "Seefischerei", "Schiffbau", "Eissegler fahren", "Hundeschlitten fahren", "Kapellmeister", "Steuermann" }).Contains(name))
+                        hinweis += "(DSA4 Talent, das in 4.1 gestrichen wurde. Import daher nicht möglich!)";
                     break;
                 case ImportTypen.Zauber:
                     typString = "Zauber: ";
