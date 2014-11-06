@@ -361,6 +361,7 @@ namespace MeisterGeister.Logic.HeldenImport
 
         private static string[] zwölfGötter = new string[] { "Praios", "Rondra", "Efferd", "Travia", "Boron", "Hesinde", "Firun", "Tsa", "Phex", "Peraine", "Ingerimm", "Rahja" };
         private static string[] hranga = new string[] { "H'Szinth", "Zsahh" };
+        private static string[] dsa4Talente = new string[] { "Galanterie", "Seefischerei", "Schiffbau", "Eissegler Fahren", "Hundeschlitten Fahren", "Kapellmeister", "Steuermann" };
 
         private static string GetGötterArt(string nameDesGottes, bool fürSpätweihe = false)
         {
@@ -1233,8 +1234,8 @@ namespace MeisterGeister.Logic.HeldenImport
                     break;
                 case ImportTypen.Talent:
                     typString = "Talent: ";
-                    if ((new string[] { "Galanterie", "Seefischerei", "Schiffbau", "Eissegler fahren", "Hundeschlitten fahren", "Kapellmeister", "Steuermann" }).Contains(name))
-                        hinweis += "(DSA4 Talent, das in 4.1 gestrichen wurde. Import daher nicht möglich!)";
+                    if (dsa4Talente.Contains(name))
+                        hinweis += "(Talent in DSA4.1 gestrichen! Import daher nicht möglich!)";
                     break;
                 case ImportTypen.Zauber:
                     typString = "Zauber: ";
