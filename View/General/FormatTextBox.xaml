@@ -9,7 +9,16 @@
     x:Name="UserControl"
     BorderThickness="1" BorderBrush="AliceBlue"
     d:DesignWidth="823" d:DesignHeight="293">
-
+    <UserControl.Resources>
+        <Style x:Key="menuVisibleButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Content" Value="˄" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=MenuVisible}" Value="false">
+                    <Setter Property="Content" Value="˅" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
         <Grid>
             <Grid x:Name="ToolBarGrid" HorizontalAlignment="Stretch">
@@ -17,7 +26,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Border BorderThickness="0,0,0,1" Padding="0" Margin="0" BorderBrush="#FF8C8E94">
+                <Border BorderThickness="0,0,0,1" Padding="0" Margin="0,0,25,0" BorderBrush="#FF8C8E94" Visibility="{Binding MenuVisible, Converter={StaticResource BooleanToVisibilityConverter1}}">
                     <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border Margin="2,0" BorderThickness="1" BorderBrush="#97A9A9A9">
                             <StackPanel Orientation="Horizontal">
@@ -362,6 +371,7 @@
                     </WrapPanel>
                 </Border>
                 <RichTextBox x:Name="RTBNotiz" Grid.Row="1" Padding="10" TextChanged="RTBNotiz_TextChanged" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource BackgroundPergamentQuer}" SelectionChanged="RTBNotiz_SelectionChanged" />
+                <Button Background="LightGray" Opacity="0.8" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Menüband ein-/ausblenden" Margin="5,5,5,-50" Command="{Binding OnMenuVisible}" FontWeight="Bold" Style="{StaticResource menuVisibleButtonStyle}" />
             </Grid>
         </Grid>
     </Grid>

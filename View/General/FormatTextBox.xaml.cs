@@ -346,6 +346,33 @@ namespace MeisterGeister.View.General
             }
         }
 
+        private bool _menuVisible = true;
+        public bool MenuVisible
+        {
+            get { return _menuVisible; }
+            set
+            {
+                _menuVisible = value;
+                OnChanged("MenuVisible");
+            }
+        }
+
+        private ViewModel.Base.CommandBase _onMenuVisible = null;
+        public ViewModel.Base.CommandBase OnMenuVisible
+        {
+            get
+            {
+                if (_onMenuVisible == null)
+                    _onMenuVisible = new ViewModel.Base.CommandBase(MenuVisibleSwitch, null);
+                return _onMenuVisible;
+            }
+        }
+
+        private void MenuVisibleSwitch(object obj)
+        {
+            MenuVisible = !MenuVisible;
+        }
+
         private void ChangeFontSize()
         {
             if (RTBNotiz != null && !_positionInfo)
