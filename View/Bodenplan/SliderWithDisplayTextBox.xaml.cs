@@ -106,6 +106,7 @@ namespace MeisterGeister.View.Bodenplan
 
         private void UIStrokeThicknessTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
+            if (UIStrokeThicknessTextBox.Text.Length == 0) return;
             if (SliderValue != Convert.ToDouble(UIStrokeThicknessTextBox.Text)) UpdateSliderAndValue(); //, CultureInfo.InvariantCulture
         }
 

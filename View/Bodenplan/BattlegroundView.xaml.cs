@@ -68,7 +68,7 @@ namespace MeisterGeister.View.Bodenplan
                         {
                             int strlength = b.Name.Length-1;
                             int buttonNr = Convert.ToInt32(b.Name.Substring(_buttonPrefix.Length, b.Name.Length - _buttonPrefix.Length));
-                            var newpic = vm.CreateImageObject(Ressources.Decoder(Ressources.GetFullApplicationPath() +"\\"+ Ressources.GetPictureUrls()[buttonNr]), new Point(_xMovingOld,_yMovingOld));
+                            var newpic = vm.CreateImageObject(Ressources.Decoder(Ressources.GetFullApplicationPath() + "\\" + Ressources.GetPictureUrls()[buttonNr]), new Point(_xMovingOld + 500, _yMovingOld- 500));//_xMovingOld+800,_yMovingOld
                             vm.UpdateCreatureLevelToTop();
                         }
                     };
@@ -112,31 +112,37 @@ namespace MeisterGeister.View.Bodenplan
 
         }
 
+        private void ArenaGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var vm = DataContext as BattlegroundViewModel;
+            if (vm != null)
+            {
+                if (vm.SelectedObject == null) return;
+
+                if (vm.SelectedObject is ViewModel.Kampf.Logic.Wesen)
+                {
+                    ((BattlegroundCreature)vm.SelectedObject).CalculateNewSightLineSektor(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
+                }
+                else if (vm.SelectedObject is ImageObject)
+                {
+                    ((ImageObject)vm.SelectedObject).CalculateNewDirection(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
+                }
+            }
+
+        }
+
         private void ArenaGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
                 if (vm.SelectedObject != null) vm.SelectionChangedUpdateSliders();
-                //handling different possibilities based on Objects (like Line1 Button) 
-                //if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
-                //{
-                //    var currenthero = vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First();
-                //    currenthero.IsSticked = false;
-                //    vm.CurrentlySelectedCreature =
-                //        vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any() ?
-                //            ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Kurzname
-                //            : "";
-                //}
+
                 if (vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).Any())
                 {
                     var currentcreature = vm.BattlegroundObjects.Where(x => x is ViewModel.Kampf.Logic.Wesen && x.IsSticked).First();
                     currentcreature.IsSticked = false;
-                    /*var kreatur = vm.BattlegroundObjects.Where(x => x.IsSticked).First();
-                    if (kreatur is MeisterGeister.Model.Held) vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)kreatur).Name;
-                    else if (kreatur is MeisterGeister.Model.Gegner) vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Gegner)kreatur).Name;
-                    else vm.CurrentlySelectedCreature = "";*/
-
+                   
                     if (vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).Any())
                     {
                         vm.CurrentlySelectedCreature = ((MeisterGeister.Model.Held)vm.BattlegroundObjects.Where(x => x is MeisterGeister.Model.Held && x.IsSticked).First()).Name;

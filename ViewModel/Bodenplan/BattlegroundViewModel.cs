@@ -270,6 +270,29 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
         }
 
+        private bool _showSightArea = true;
+        public bool ShowSightArea
+        {
+            get { return _showSightArea; }
+            set
+            {
+                _showSightArea = value;
+                OnPropertyChanged("ShowSightArea");
+            }
+        }
+
+        private double _sightAreaLenght = 120;
+        public double SightAreaLenght
+        {
+            get { return _sightAreaLenght; }
+            set 
+            { 
+                _sightAreaLenght = value;
+                OnPropertyChanged("SightAreaLenght");
+                Ressources.SetNewSightAreaLength(ref _battlegroundObjects, SightAreaLenght);
+            }
+        }
+
         private bool _isEditorModeEnabled = true;
         public bool IsEditorModeEnabled
         {
@@ -297,7 +320,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         //get / set stroke thickness
         public double StrokeThickness
         {
-            get { return SelectedObject != null ? SelectedObject.StrokeThickness : 19; }
+            get { return SelectedObject != null ? SelectedObject.StrokeThickness : 20; }
             set
             {
                 if (SelectedObject != null) SelectedObject.StrokeThickness = value;
@@ -691,6 +714,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     BattlegroundObjects.Add(element);
                 }
             }
+            PossibleZLevels = Ressources.GetPossibleZLevels(BattlegroundObjects);
+
         }
 
         public void SelectionChangedUpdateSliders()

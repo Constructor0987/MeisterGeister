@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -18,6 +19,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _imageOriginalWidth = 100;
         private double _imageOriginalHeigth = 100;
         private double _objectSize = 1;
+        private double _rotateAngle = 0;
 
 
         public ImageObject()
@@ -51,6 +53,16 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 _objectSize = value;
                 ScalePicture(value);
                 OnChanged("ObjectSize");
+            }
+        }
+
+        public double RotateAngle
+        {
+            get { return _rotateAngle; }
+            set
+            {
+                _rotateAngle = value;
+                OnChanged("RotateAngle");
             }
         }
 
@@ -161,6 +173,12 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             ms.Write(imageBytes, 0, imageBytes.Length);
             Image image = Image.FromStream(ms, true);
             return image;
+        }
+
+        public void CalculateNewDirection(System.Windows.Point currentMousePos)
+        {
+            //rotates images per leftclick for 45°
+            RotateAngle += 45;
         }
     }
 }
