@@ -173,7 +173,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             CreaturePictureUrl = ICON_DIR + "fragezeichen.png";
             //if(!File.Exists(portraitFilename)) 
-            if(portraitFilename != null ) if(portraitFilename.Length!=0 && File.Exists(portraitFilename)) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
+            if(portraitFilename != null ) if(portraitFilename.Length!=0) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
         }
 
         public void ScalePicture(double factor)
