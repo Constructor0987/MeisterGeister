@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Windows;
+using System.IO;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -171,7 +172,8 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public void LoadBattlegroundPortrait(string portraitFilename, bool ishero)
         {
             CreaturePictureUrl = ICON_DIR + "fragezeichen.png";
-            if(portraitFilename != null ) if(portraitFilename.Length!=0) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
+            //if(!File.Exists(portraitFilename)) 
+            if(portraitFilename != null ) if(portraitFilename.Length!=0 && File.Exists(portraitFilename)) CreaturePictureUrl = ishero ? portraitFilename : @portraitFilename.Replace("/DSA MeisterGeister;component", string.Empty);
         }
 
         public void ScalePicture(double factor)
