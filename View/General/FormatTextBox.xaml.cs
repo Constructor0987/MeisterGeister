@@ -145,6 +145,14 @@ namespace MeisterGeister.View.General
             SpielerScreen.SpielerWindow.Hide();
         }
 
+        private void btnQuelltext_Click(object sender, RoutedEventArgs e)
+        {
+            View.Windows.MsgWindow msg = new Windows.MsgWindow("Quelltext", ParseFlowDoumentToText()
+                .Replace("</", Environment.NewLine + "</")
+                .Replace("<Paragraph", Environment.NewLine + "<Paragraph"), false);
+            msg.Show();
+        }
+
         public void ParseTextToFlowDoument(string text)
         {
             try

@@ -335,6 +335,9 @@
                                 <Button x:Name="btnExport"  Click="btnExport_Click" Height="28" ToolTip="Als Textdokument speichern." Width="28">
                                     <Image Source="/DSA MeisterGeister;component/Images/Icons/General/export.png" Stretch="Fill" />
                                 </Button>
+                                <Button Click="btnQuelltext_Click" Height="28" ToolTip="Quelltext anzeigen." Width="28">
+                                    <TextBlock Text="&lt;/&gt;" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                </Button>
                             </StackPanel>
                         </Border>
                         <TextBlock Text="*Hinweis: Ein normaler Zeilenumbruch mit SHIFT + ENTER einfügen." FontStyle="Italic" FontSize="9" TextWrapping="WrapWithOverflow" Width="150" Margin="10,0,35,0" VerticalAlignment="Center" />
