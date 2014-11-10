@@ -7,6 +7,7 @@ using MeisterGeister.ViewModel.Basar.Logic;
 using Base = MeisterGeister.ViewModel.Base;
 using Model = MeisterGeister.Model;
 using Service = MeisterGeister.Model.Service;
+using MeisterGeister.Logic.Umrechner;
 
 namespace MeisterGeister.ViewModel.Basar
 {
@@ -32,6 +33,7 @@ namespace MeisterGeister.ViewModel.Basar
         private List<Model.Rüstung> _rüstungListe;
         private List<BasarItem> _basarItemListe;
         private List<BasarItem> _filteredBasarItemListe;
+        private Währung _währungen;
 
         //Commands
         private Base.CommandBase _onGoToBugForum;
@@ -93,115 +95,13 @@ namespace MeisterGeister.ViewModel.Basar
             {
                 _währungsText = value;
                 OnChanged("WährungsText");
-                MeisterGeister.Logic.Umrechner.Währung w = new MeisterGeister.Logic.Umrechner.Währung();                
-                WährungsFaktor = w.FirstOrDefault(t => t.Key == _währungsText).Value;
+                Währungsinformationen winfo  = Währungen.FirstOrDefault(t => t.Key == _währungsText).Value;
+                WährungsFaktor = winfo.WährungsFaktor;
                 
-                string wcode = // "-- Mittelreichische Münzen --"
-                            (_währungsText == "Kreuzer") ? "K" :
-                            (_währungsText == "Heller") ? "H" :
-                            (_währungsText == "Silbertaler") ? "S" :
-                            (_währungsText == "Dukaten") ? "D" :
-                            (_währungsText == "Balihoer Rad (veraltet)") ? "BaR" :
-                            (_währungsText == "Puniner Dublone (veraltet)") ? "PuD" :
-                            (_währungsText == "Nickel (veraltet)") ? "Ni" :
-                            (_währungsText == "Eslamo (veraltet)") ? "Es" :
-
-                            //"-- Nostria und Andergast --"
-                            (_währungsText == "Nostrische Krone") ? "NoKr" :
-                            (_währungsText == "Andrataler") ? "An":
-
-                            //"-- Al'Anfanische Münzen --"
-                            (_währungsText == "Dirham") ? "Dir" :
-                            (_währungsText == "Kleiner Oreal") ? "KOr" :
-                            (_währungsText == "Oreal/Schilling") ? "Or" :
-                            (_währungsText == "Dublone") ? "Dub" :
-
-                            //"-- Amazonische Münzen --"
-                            (_währungsText == "Amazonenkrone") ? "Kro" :
-
-                            //"-- Brabaker Münzen --"
-                            (_währungsText == "Brabaker Kreuzer") ? "Kr" :
-                            (_währungsText == "Brabaker Krone") ? "Kro":
-                            (_währungsText == "Brabaker Krone (außerhalb Brabaks)") ? "Kro" :
-
-                            // "-- Münzen der Schwarzen Lande --") ? 0 :
-                            (_währungsText == "Gulden (Glorania)") ? "Gul" :
-                            (_währungsText == "Splitter (Xeraanien)") ? "Spl" :
-                            (_währungsText == "Zholvari (Xeraanien)") ? "Zho" :
-                            (_währungsText == "Borbaradstaler (Xeraanien)") ? "Bor" :
-
-                           // (_währungsText == "-- Aranische Münzen --"
-                            (_währungsText == "Rosenkreuzer") ? "Ros" :
-                            (_währungsText == "Hallah") ? "Hal" :
-                            (_währungsText == "Schekel") ? "Sch" :
-                            (_währungsText == "Dinar") ? "Din" :
-
-                            // "-- sonstige tulamidische Münzen --"
-                            (_währungsText == "Selemer Kupferschilling (veraltet)") ? "SKu" :
-                            (_währungsText == "Piaster (Rashdul)") ? "Pia" :
-                            (_währungsText == "Alastren (Khunchom)") ? "Ala" :
-
-                            // "-- Bornländische Münzen --"
-                            (_währungsText == "Deut") ? "Deu":
-                            (_währungsText == "Silbergroschen/Groschen") ? "Gro" :
-                            (_währungsText == "Batzen") ? "Bat" :
-
-                            // "-- Münzen des Kalifats --"
-                            (_währungsText == "Muwlat") ? "Mu" :
-                            (_währungsText == "Zechine") ? "Ze" :
-                            (_währungsText == "Marawedi") ? "Ma" :
-                            (_währungsText == "Shekel (veraltet)") ? "She" :
-                            (_währungsText == "Denar (veraltet)") ? "De" :
-                            (_währungsText == "Piaster (veraltet)") ? "Pia" :
-
-                            // "-- Münzen im Großemirat Mengbilla --"
-                            (_währungsText == "Ikossar") ? "Iko" :
-                            (_währungsText == "Tesar") ? "Tes" :
-                            (_währungsText == "Telar") ? "Tel" :
-                            (_währungsText == "Dekat") ? "Dek" :
-                            (_währungsText == "Mengbillaner Unze (veraltet)") ? "MUz" :
-
-                            // "-- Horasische Münzen --"
-                            (_währungsText == "Kusliker Rad (Horasdor)") ? "KRa" :
-                            (_währungsText == "Krone (veraltet)") ? "Kro" :
-                            (_währungsText == "Zehnt (veraltet)") ? "Z" :
-                            (_währungsText == "Schilling (veraltet)") ? "Sch" :
-                            (_währungsText == "Arivorer Silberdukaten (veraltet)") ? "Sid" :
-
-                            // "-- Paavische Münzen --"
-                            (_währungsText == "Gulden") ? "Gu" :
-
-                            // "-- Trahelische Münzen --"
-                            (_währungsText == "Trümmer") ? "Tr" :
-                            (_währungsText == "Ch'ryskl") ? "Ch" :
-                            (_währungsText == "Hedsch") ? "Hed" :
-                            (_währungsText == "Suvar") ? "Suv" :
-
-                            // "-- Vallusanische Münzen --"
-                            (_währungsText == "Flindrich") ? "Fl" :
-                            (_währungsText == "Stüber") ? "St" :
-                            (_währungsText == "Witten") ? "Wi" :
-
-                            // "-- Münzen der Zwerge --"
-                            (_währungsText == "Atebrox (Zwergengroschen)") ? "Ate" :
-                            (_währungsText == "Arganbrox (Zwergenschilling)") ? "Arg" :
-                            (_währungsText == "Auromox (Zwergentaler)") ? "Aur" :
-
-                            // "-- Weitere Münzen --"
-                            (_währungsText == "Chorhoper Heller") ? "Ch" :
-                            (_währungsText == "Syllaner Taler") ? "Syl" :
-                            (_währungsText == "Minisepe") ? "Min" :
-
-                            // "-- Myranische Münzen --"
-                            (_währungsText == "Obulos") ? "Ob" :
-                            (_währungsText == "Pekunos") ? "Pk" :
-                            (_währungsText == "Argental") ? "Ag" :
-                            (_währungsText == "Aureal") ? "Au" :
-                            "S";
                 // Änderung an BasarItems weiterreichen
                 foreach (var item in BasarItemListe)
                 {
-                    item.WährungsCode = wcode;
+                    item.WährungsCode = winfo.WährungAbkürzung;
                     item.WährungsText = _währungsText;
                 }
 
@@ -326,6 +226,16 @@ namespace MeisterGeister.ViewModel.Basar
             }
         }
 
+        public Währung Währungen
+        {
+            get { return _währungen; }
+            set
+            {
+                _währungen = value;
+                OnChanged("Währungen");
+            }
+        }
+
         #endregion
 
         //Commands
@@ -366,6 +276,7 @@ namespace MeisterGeister.ViewModel.Basar
             FernkampfwaffeListe = Global.ContextInventar == null ? new List<Model.Fernkampfwaffe>() : Global.ContextInventar.FernkampfwaffeListe;
             SchildListe = Global.ContextInventar == null ? new List<Model.Schild>() : Global.ContextInventar.SchildListe;
             RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.RuestungListe;
+            Währungen = new Währung();
 
             // Globale Listen der unterschiedlichen Handelsgütern in eine Gesamt-Liste zusammenführen
             List<BasarItem> itemList = new List<BasarItem>();

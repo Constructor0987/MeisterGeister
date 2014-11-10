@@ -106,9 +106,9 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         public override string ToString()
         {
             if (_obererPreis == 0)
-                return string.Format("{0}{1:0.##}{2} "+ _währungSuffix, _präfix, _untererPreis, _suffix);
+                return string.Format("{0}{1:0.##}{2} {3}", _präfix, _untererPreis, _suffix, _währungSuffix);
             else
-                return string.Format("{0}{1:0.##}-{2:0.##}{3} " + _währungSuffix, _präfix, _untererPreis, _obererPreis, _suffix);
+                return string.Format("{0}{1:0.##}-{2:0.##}{3} {4}", _präfix, _untererPreis, _obererPreis, _suffix, _währungSuffix);
         }
 
         #endregion

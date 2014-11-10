@@ -5,114 +5,114 @@ using System.Text;
 
 namespace MeisterGeister.Logic.Umrechner
 {
-    public class Währung : System.Collections.Generic.Dictionary<string, double>
+    public class Währung : System.Collections.Generic.Dictionary<string, Währungsinformationen>
     {
         public Währung()
         {
             // siehe im Wiki unter
             // Aventurische Währungen
 
-            Add("-- Mittelreichische Münzen --", 0);
-            Add("Kreuzer", 0.01);
-            Add("Heller", 0.1);
-            Add("Silbertaler", 1);
-            Add("Dukaten", 10);
-            Add("Balihoer Rad (veraltet)", 100);
-            Add("Puniner Dublone (veraltet)", 8);
-            Add("Nickel (veraltet)", 0.02);
-            Add("Eslamo (veraltet)", 100);
+            Add("-- Mittelreichische Münzen --", new Währungsinformationen(0,""));
+            Add("Kreuzer", new Währungsinformationen(0.01,"K"));
+            Add("Heller", new Währungsinformationen(0.1,"H"));
+            Add("Silbertaler", new Währungsinformationen(1,"S"));
+            Add("Dukaten", new Währungsinformationen(10,"D"));
+            Add("Balihoer Rad (veraltet)", new Währungsinformationen(100, "BaR"));
+            Add("Puniner Dublone (veraltet)", new Währungsinformationen(8, "PuD"));
+            Add("Nickel (veraltet)", new Währungsinformationen(0.02,"Ni"));
+            Add("Eslamo (veraltet)", new Währungsinformationen(100,"Es"));
 
-            Add("-- Nostria und Andergast --", 0);
-            Add("Nostrische Krone", 5);
-            Add("Andrataler", 5);
+            Add("-- Nostria und Andergast --", new Währungsinformationen(0,""));
+            Add("Nostrische Krone", new Währungsinformationen(5, "NoKr"));
+            Add("Andrataler", new Währungsinformationen(5,"An"));
 
-            Add("-- Al'Anfanische Münzen --", 0);
-            Add("Dirham", 0.01);
-            Add("Kleiner Oreal", 0.5);
-            Add("Oreal/Schilling", 1);
-            Add("Dublone", 20);
+            Add("-- Al'Anfanische Münzen --", new Währungsinformationen(0,""));
+            Add("Dirham", new Währungsinformationen(0.01,"Dir"));
+            Add("Kleiner Oreal", new Währungsinformationen(0.5,"KOr"));
+            Add("Oreal/Schilling", new Währungsinformationen(1,"Or"));
+            Add("Dublone", new Währungsinformationen(20,"Dub"));
 
-            Add("-- Amazonische Münzen --", 0);
-            Add("Amazonenkrone", 12);
+            Add("-- Amazonische Münzen --", new Währungsinformationen(0,""));
+            Add("Amazonenkrone", new Währungsinformationen(12, "Kro"));
 
-            Add("-- Brabaker Münzen --", 0);
-            Add("Brabaker Kreuzer", 0.01);
-            Add("Brabaker Krone", 10);
-            Add("Brabaker Krone (außerhalb Brabaks)", 5);
+            Add("-- Brabaker Münzen --", new Währungsinformationen(0,""));
+            Add("Brabaker Kreuzer", new Währungsinformationen(0.01,"Kr"));
+            Add("Brabaker Krone", new Währungsinformationen(10,"Kro"));
+            Add("Brabaker Krone (außerhalb Brabaks)", new Währungsinformationen(5, "Kro"));
 
-            Add("-- Münzen der Schwarzen Lande --", 0);
-            Add("Gulden (Glorania)", 5);
-            Add("Splitter (Xeraanien)", 0.14);
-            Add("Zholvari (Xeraanien)", 1);
-            Add("Borbaradstaler (Xeraanien)", 7);
+            Add("-- Münzen der Schwarzen Lande --", new Währungsinformationen(0,""));
+            Add("Gulden (Glorania)", new Währungsinformationen(5, "Gul"));
+            Add("Splitter (Xeraanien)", new Währungsinformationen(0.14, "Spl"));
+            Add("Zholvari (Xeraanien)", new Währungsinformationen(1, "Zho"));
+            Add("Borbaradstaler (Xeraanien)", new Währungsinformationen(7, "Bor"));
 
-            Add("-- Aranische Münzen --", 0);
-            Add("Rosenkreuzer", 0.01);
-            Add("Hallah", 0.1);
-            Add("Schekel", 1);
-            Add("Dinar", 10);
+            Add("-- Aranische Münzen --", new Währungsinformationen(0,""));
+            Add("Rosenkreuzer", new Währungsinformationen(0.01, "Ros"));
+            Add("Hallah", new Währungsinformationen(0.1, "Hal"));
+            Add("Schekel", new Währungsinformationen(1, "Sch"));
+            Add("Dinar", new Währungsinformationen(10, "Din"));
 
-            Add("-- sonstige tulamidische Münzen --", 0);
-            Add("Selemer Kupferschilling (veraltet)", 0.1);
-            Add("Piaster (Rashdul)", 50);
-            Add("Alastren (Khunchom)", 5000);
+            Add("-- sonstige tulamidische Münzen --", new Währungsinformationen(0,""));
+            Add("Selemer Kupferschilling (veraltet)", new Währungsinformationen(0.1, "SKu"));
+            Add("Piaster (Rashdul)", new Währungsinformationen(50,"Pia"));
+            Add("Alastren (Khunchom)", new Währungsinformationen(5000,"Ala"));
 
-            Add("-- Bornländische Münzen --", 0);
-            Add("Deut", 0.1);
-            Add("Silbergroschen/Groschen", 1);
-            Add("Batzen", 10);
+            Add("-- Bornländische Münzen --", new Währungsinformationen(0,""));
+            Add("Deut", new Währungsinformationen(0.1,"Deu"));
+            Add("Silbergroschen/Groschen", new Währungsinformationen(1,"Gro"));
+            Add("Batzen", new Währungsinformationen(10,"Bat"));
 
-            Add("-- Münzen des Kalifats --", 0);
-            Add("Muwlat", 0.05);
-            Add("Zechine", 2);
-            Add("Marawedi", 20);
-            Add("Shekel (veraltet)", 0.05);
-            Add("Denar (veraltet)", 2);
-            Add("Piaster (veraltet)", 20);
+            Add("-- Münzen des Kalifats --", new Währungsinformationen(0,""));
+            Add("Muwlat", new Währungsinformationen(0.05,"Mu"));
+            Add("Zechine", new Währungsinformationen(2,"Ze"));
+            Add("Marawedi", new Währungsinformationen(20,"Ma"));
+            Add("Shekel (veraltet)", new Währungsinformationen(0.05,"She"));
+            Add("Denar (veraltet)", new Währungsinformationen(2,"De"));
+            Add("Piaster (veraltet)", new Währungsinformationen(20,"Pia"));
 
-            Add("-- Münzen im Großemirat Mengbilla --", 0);
-            Add("Ikossar", 0.05);
-            Add("Tesar", 0.25);
-            Add("Telar", 1);
-            Add("Dekat", 10);
-            Add("Mengbillaner Unze (veraltet)", 10);
+            Add("-- Münzen im Großemirat Mengbilla --", new Währungsinformationen(0,""));
+            Add("Ikossar", new Währungsinformationen(0.05, "Iko"));
+            Add("Tesar", new Währungsinformationen(0.25, "Tes"));
+            Add("Telar", new Währungsinformationen(1, "Tel"));
+            Add("Dekat", new Währungsinformationen(10, "Dek"));
+            Add("Mengbillaner Unze (veraltet)", new Währungsinformationen(10,"MUz"));
 
-            Add("-- Horasische Münzen --", 0);
-            Add("Kusliker Rad (Horasdor)", 200);
-            Add("Krone (veraltet)", 10);
-            Add("Zehnt (veraltet)", 1);
-            Add("Schilling (veraltet)", 0.1);
-            Add("Arivorer Silberdukaten (veraltet)", 5);
+            Add("-- Horasische Münzen --", new Währungsinformationen(0,""));
+            Add("Kusliker Rad (Horasdor)", new Währungsinformationen(200, "KRa"));
+            Add("Krone (veraltet)", new Währungsinformationen(10, "Kro"));
+            Add("Zehnt (veraltet)", new Währungsinformationen(1,"Z"));
+            Add("Schilling (veraltet)", new Währungsinformationen(0.1,"Sch"));
+            Add("Arivorer Silberdukaten (veraltet)", new Währungsinformationen(5,"Sid"));
 
-            Add("-- Paavische Münzen --", 0);
-            Add("Gulden", 5);
+            Add("-- Paavische Münzen --", new Währungsinformationen(0, ""));
+            Add("Gulden", new Währungsinformationen(5, "Gu"));
 
-            Add("-- Trahelische Münzen --", 0);
-            Add("Trümmer", 0.01);
-            Add("Ch'ryskl", 0.1);
-            Add("Hedsch", 1);
-            Add("Suvar", 10);
+            Add("-- Trahelische Münzen --", new Währungsinformationen(0,""));
+            Add("Trümmer", new Währungsinformationen(0.01, "Tr"));
+            Add("Ch'ryskl", new Währungsinformationen(0.1, "Ch"));
+            Add("Hedsch", new Währungsinformationen(1, "Hed"));
+            Add("Suvar", new Währungsinformationen(10, "Suv"));
 
-            Add("-- Vallusanische Münzen --", 0);
-            Add("Flindrich", 0.1);
-            Add("Stüber", 1);
-            Add("Witten", 10);
+            Add("-- Vallusanische Münzen --", new Währungsinformationen(0,""));
+            Add("Flindrich", new Währungsinformationen(0.1, "Fl"));
+            Add("Stüber", new Währungsinformationen(1, "St"));
+            Add("Witten", new Währungsinformationen(10, "Wi"));
 
-            Add("-- Münzen der Zwerge --", 0);
-            Add("Atebrox (Zwergengroschen)", 0.2);
-            Add("Arganbrox (Zwergenschilling)", 2);
-            Add("Auromox (Zwergentaler)", 12);
+            Add("-- Münzen der Zwerge --", new Währungsinformationen(0,""));
+            Add("Atebrox (Zwergengroschen)", new Währungsinformationen(0.2, "Ate"));
+            Add("Arganbrox (Zwergenschilling)", new Währungsinformationen(2, "Arg"));
+            Add("Auromox (Zwergentaler)", new Währungsinformationen(12, "Aur"));
 
-            Add("-- Weitere Münzen --", 0);
-            Add("Chorhoper Heller", 0.1);
-            Add("Syllaner Taler", 1);
-            Add("Minisepe", 0.1);
+            Add("-- Weitere Münzen --", new Währungsinformationen(0,""));
+            Add("Chorhoper Heller", new Währungsinformationen(0.1, "Ch"));
+            Add("Syllaner Taler", new Währungsinformationen(1, "Syl"));
+            Add("Minisepe", new Währungsinformationen(0.1, "Min"));
 
-            Add("-- Myranische Münzen --", 0);
-            Add("Obulos", 0.01);
-            Add("Pekunos", 0.1);
-            Add("Argental", 1);
-            Add("Aureal", 10);
+            Add("-- Myranische Münzen --", new Währungsinformationen(0,""));
+            Add("Obulos", new Währungsinformationen(0.01, "Ob"));
+            Add("Pekunos", new Währungsinformationen(0.1, "Pk"));
+            Add("Argental", new Währungsinformationen(1, "Ag"));
+            Add("Aureal", new Währungsinformationen(10, "Au"));
 
         }
 
@@ -121,9 +121,21 @@ namespace MeisterGeister.Logic.Umrechner
             double ergebnis = 0;
 
             if (ContainsKey(von) && ContainsKey(nach))
-                ergebnis = (double)wert * this[von] / this[nach];
+                ergebnis = (double)wert * this[von].WährungsFaktor / this[nach].WährungsFaktor;
 
             return ergebnis;
         }
+    }
+
+    public class Währungsinformationen
+    {
+        public Währungsinformationen(double währungsFaktor, string währungAbkürzung)
+        {
+            WährungAbkürzung = währungAbkürzung;
+            WährungsFaktor = währungsFaktor;
+        }
+
+        public double WährungsFaktor { get; set; }
+        public string WährungAbkürzung { get; set; }
     }
 }
