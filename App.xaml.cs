@@ -235,34 +235,32 @@ namespace MeisterGeister {
             }
         }
 
-        public static Version[] GetVersionDownload() {
-            Version[] v = new Version[] { new Version(), new Version() };
-            WebClient w = new WebClient();
+        public static Version GetVersionDownload() {
+            Version v = new Version();
+            XmlDocument xmlDoc;
             try {
-                string s = w.DownloadString("http://www.meistergeister.org/version/");
+                xmlDoc = new XmlDocument();
+                xmlDoc.Load("http://meistergeister.org/download/675/");
 
-                MatchCollection m1 = Regex.Matches(s, "(<span id=\"version\".*?>.*?</span>)", RegexOptions.Singleline);
-                MatchCollection m2 = Regex.Matches(s, "(<span id=\"versionBeta\".*?>.*?</span>)", RegexOptions.Singleline);
+                string version = string.Empty;
+                string url = string.Empty;
 
-                if (m1.Count > 0) {
-                    string value = m1[0].Value;
-                    value = value.Replace("<span id=\"version\">", string.Empty).Replace("</span>", string.Empty);
-                    string[] values = value.Split('.');
+                XmlNodeList versionXml = xmlDoc.SelectNodes("meistergeister/version");
+                if (versionXml != null && versionXml.Count > 0)
+                {
+                    version = versionXml[0].InnerText;
+                    string[] values = version.Split('.');
                     if (values.Length == 3)
-                        v[0] = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), 0, Convert.ToInt32(values[2]));
+                        v = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), 0, Convert.ToInt32(values[2]));
                     else if (values.Length > 3)
-                        v[0] = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), Convert.ToInt32(values[3]), Convert.ToInt32(values[2]));
+                        v = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), Convert.ToInt32(values[3]), Convert.ToInt32(values[2]));
                 }
-                if (m2.Count > 0) {
-                    string value = m2[0].Value;
-                    value = value.Replace("<span id=\"versionBeta\">", string.Empty).Replace("</span>", string.Empty);
-                    string[] values = value.Split('.');
-                    if (values.Length == 3)
-                        v[1] = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), 0, Convert.ToInt32(values[2]));
-                    else if (values.Length > 3)
-                        v[1] = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), Convert.ToInt32(values[3]), Convert.ToInt32(values[2]));
+
+                XmlNodeList urlNode = xmlDoc.SelectNodes("meistergeister/url");
+                if (urlNode != null && urlNode.Count > 0)
+                {
+                    url = versionXml[0].InnerText;
                 }
-                return v;
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Auf Updates prüfen");
             }
@@ -285,30 +283,29 @@ namespace MeisterGeister {
         }
 
         public static void CheckUpdates(bool popupWhenUpToDate) {
-            Version[] vDownload = GetVersionDownload();
+            Version vDownload = GetVersionDownload();
             Version vProgramm = GetVersionProgramm();
-            string vDownloadString = GetVersionString(vDownload[0]);
-            string vDownloadBetaString = GetVersionString(vDownload[1]);
+            string vDownloadString = GetVersionString(vDownload);
             string vProgrammString = GetVersionString(vProgramm);
             string infoText = string.Empty;
             int compareVersions = int.MinValue;
 
-            if (vDownload == null || vDownload[0] == new Version())
+            if (vDownload == null || vDownload == new Version())
                 infoText = "Die aktuelle Programm Version konnte nicht geprüft werden.";
             else {
                 vProgramm = new Version(vProgramm.Major, vProgramm.Minor, vProgramm.Revision, vProgramm.Build);
-                vDownload[1] = new Version(vDownload[1].Major, vDownload[1].Minor, vDownload[1].Revision, vDownload[1].Build);
+                vDownload = new Version(vDownload.Major, vDownload.Minor, vDownload.Revision, vDownload.Build);
 
-                compareVersions = vDownload[1].CompareTo(vProgramm);
+                compareVersions = vDownload.CompareTo(vProgramm);
                 if (compareVersions == 0)
                     infoText += string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
                 else if (compareVersions > 0)
-                    infoText = string.Format("Es liegt eine neue Programm-Version vor.\n\nInstallierte Version: {0}\nDownload Version: {1}\nDownload Version: {2} BETA"
-                    + "\n\nDie aktuelle Version kann unter '{3}' runtergeladen werden.", vProgrammString, vDownloadString, vDownloadBetaString,
+                    infoText = string.Format("Es liegt eine neue Programm-Version vor.\n\nInstallierte Version: {0}\nDownload Version: {1}"
+                    + "\n\nDie aktuelle Version kann unter '{3}' runtergeladen werden.", vProgrammString, vDownloadString,
                     MeisterGeister.Properties.Settings.Default.MeisterGeisterURL);
                 else
-                    infoText = string.Format("Die installierte Programm-Version ist neuer als die Download-Version.\n\nInstallierte Version: {0}\nDownload Version: {1}\nDownload Version: {2} BETA",
-                    vProgrammString, vDownloadString, vDownloadBetaString);
+                    infoText = string.Format("Die installierte Programm-Version ist neuer als die Download-Version.\n\nInstallierte Version: {0}\nDownload Version: {1}",
+                    vProgrammString, vDownloadString);
             }
 
             infoText += "\n\nLetzte Update-Prüfung: " + Einstellungen.LastUpdateCheck.ToShortDateString();
