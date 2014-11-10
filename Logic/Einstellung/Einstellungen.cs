@@ -60,6 +60,9 @@ namespace MeisterGeister.Logic.Einstellung
                 
                 new Model.Einstellung() { Name = "ToolTitelAusblenden", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Tool Name im Tab-Titel ausblenden", Wert = "False" },
 
+                new Model.Einstellung() { Name = "CheckForUpdates", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Täglich nach neuen Updates suchen", Wert = "True" },
+                new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "DateTime", Beschreibung = "", Wert = DateTime.Now.ToString() },
+
                 //Versteckte
                 new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
                 new Model.Einstellung() { Name = "Standort", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "Gareth#29.79180235685203#3.735098459067687" },
@@ -257,6 +260,30 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("WundenVerändernWundschwelle", value);
+            }
+        }
+
+        public static bool CheckForUpdates
+        {
+            get
+            {
+                return GetEinstellung<bool>("CheckForUpdates");
+            }
+            set
+            {
+                SetEinstellung<bool>("CheckForUpdates", value);
+            }
+        }
+
+        public static DateTime LastUpdateCheck
+        {
+            get
+            {
+                return GetEinstellung<DateTime>("LastUpdateCheck");
+            }
+            set
+            {
+                SetEinstellung<DateTime>("LastUpdateCheck", value);
             }
         }
 

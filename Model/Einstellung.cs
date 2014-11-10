@@ -67,6 +67,8 @@ namespace MeisterGeister.Model
                     return typeof(bool);
                 if (Typ == "Double" || Typ == "Float")
                     return typeof(double);
+                if (Typ == "DateTime")
+                    return typeof(DateTime);
                 return Type.GetType(Typ, true, true); 
             }
         }

@@ -284,13 +284,14 @@ namespace MeisterGeister {
             return assemName.Version;
         }
 
-        public static void CheckUpdates() {
+        public static void CheckUpdates(bool popupWhenUpToDate) {
             Version[] vDownload = GetVersionDownload();
             Version vProgramm = GetVersionProgramm();
             string vDownloadString = GetVersionString(vDownload[0]);
             string vDownloadBetaString = GetVersionString(vDownload[1]);
             string vProgrammString = GetVersionString(vProgramm);
             string infoText = string.Empty;
+            int compareVersions = int.MinValue;
 
             if (vDownload == null || vDownload[0] == new Version())
                 infoText = "Die aktuelle Programm Version konnte nicht geprüft werden.";
@@ -298,9 +299,9 @@ namespace MeisterGeister {
                 vProgramm = new Version(vProgramm.Major, vProgramm.Minor, vProgramm.Revision, vProgramm.Build);
                 vDownload[1] = new Version(vDownload[1].Major, vDownload[1].Minor, vDownload[1].Revision, vDownload[1].Build);
 
-                int compareVersions = vDownload[1].CompareTo(vProgramm);
+                compareVersions = vDownload[1].CompareTo(vProgramm);
                 if (compareVersions == 0)
-                    infoText = string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
+                    infoText += string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
                 else if (compareVersions > 0)
                     infoText = string.Format("Es liegt eine neue Programm-Version vor.\n\nInstallierte Version: {0}\nDownload Version: {1}\nDownload Version: {2} BETA"
                     + "\n\nDie aktuelle Version kann unter '{3}' runtergeladen werden.", vProgrammString, vDownloadString, vDownloadBetaString,
@@ -310,7 +311,15 @@ namespace MeisterGeister {
                     vProgrammString, vDownloadString, vDownloadBetaString);
             }
 
-            MessageBox.Show(infoText, "Versions-Prüfung", MessageBoxButton.OK);
+            infoText += "\n\nLetzte Update-Prüfung: " + Einstellungen.LastUpdateCheck.ToShortDateString();
+            infoText += "\n(Die automatische Update-Prüfung kann in den Einstellungen deaktiviert werden.)";
+
+            Einstellungen.LastUpdateCheck = DateTime.Now.Date;
+
+            if (compareVersions == 0 && !popupWhenUpToDate)
+                return;
+            
+            MessageBox.Show(infoText, "Versions-Prüfung", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 

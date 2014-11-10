@@ -340,13 +340,28 @@ namespace MeisterGeister.View
 
         private void MenuItemUpdateCheck_Click(object sender, RoutedEventArgs e)
         {
+            CheckForUpdates(true);
+        }
+
+        private void CheckForUpdates(bool popupWhenUpToDate)
+        {
+            _statusInfoTextBox.Text = "Es wird auf neue Updates geprüft...";
+            _statusBar.Visibility = System.Windows.Visibility.Visible;
+
             // Update-Prüfung in einem eigenen Thread ausführen
-            System.Threading.Thread t = new System.Threading.Thread(
-                delegate()
-                {
-                    App.CheckUpdates();
-                });
-            t.Start();
+            var bw = new System.ComponentModel.BackgroundWorker();
+
+            // define the event handlers
+            bw.DoWork += (sender, args) => {
+                App.CheckUpdates(popupWhenUpToDate);
+            };
+            bw.RunWorkerCompleted += (sender, args) =>
+            {
+                _statusInfoTextBox.Text = string.Empty;
+                _statusBar.Visibility = System.Windows.Visibility.Collapsed;
+            };
+
+            bw.RunWorkerAsync(); // starts the background worker
         }
 
         private void MenuItemEinstellungen_Click(object sender, RoutedEventArgs e)
@@ -481,6 +496,10 @@ namespace MeisterGeister.View
                       + "\nSie ist nicht mit dem normalen Release-Zweig kompatibel und dient nur internen Testzwecken!", "Test-Version",
                       MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
+            // UpdateCheck
+            if (Einstellungen.CheckForUpdates && Einstellungen.LastUpdateCheck.CompareTo(DateTime.Now.Date) != 0)
+                CheckForUpdates(false);
+
             // ChangeLog Meldung
             if (Einstellungen.ShowChangeLog)
                 ViewHelper.ShowBrowserChangeLog(true);
