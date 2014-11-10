@@ -141,6 +141,8 @@ namespace MeisterGeister.ViewModel.Notiz
             }
 
             #endregion
+
+            public double VerticalOffset { get; set; }
         }
 
         #endregion

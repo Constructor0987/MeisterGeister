@@ -30,19 +30,46 @@ namespace MeisterGeister.View.Notiz
         {
             try
             {
-                (this.DataContext as VM.Notiz.NotizViewModel).LoadDaten();
+                VM.LoadDaten();
             }
             catch (Exception) { }
+        }
+
+        public VM.Notiz.NotizViewModel VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.Notiz.NotizViewModel))
+                    return null;
+                return DataContext as VM.Notiz.NotizViewModel;
+            }
+            set
+            {
+                DataContext = value;
+            }
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
+                object oldNotizObject = null;
+                if (e.RemovedItems != null && e.RemovedItems.Count > 0)
+                    oldNotizObject = e.RemovedItems[0];
+
                 // aktuelles FlowDocument in RichtTextBox anzeigen
-                Model.Notizen notiz = (this.DataContext as VM.Notiz.NotizViewModel).SelectedNotiz.EntityNotiz;
+                Model.Notizen notiz = VM.SelectedNotiz.EntityNotiz;
                 if (notiz != null)
+                {
+                    if (oldNotizObject != null)
+                    {
+                        // Scroll-Position speichern
+                        ViewModel.Notiz.NotizViewModel.NotizItem oldNotizItem = (ViewModel.Notiz.NotizViewModel.NotizItem)oldNotizObject;
+                        oldNotizItem.VerticalOffset = RTBNotiz.RTBBox.VerticalOffset;
+                    }
                     RTBNotiz.Document = notiz.Document;
+                    RTBNotiz.RTBBox.ScrollToVerticalOffset(VM.SelectedNotiz.VerticalOffset);
+                }
             }
             catch (Exception) { }
         }
