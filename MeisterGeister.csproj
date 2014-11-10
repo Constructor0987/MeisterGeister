@@ -1690,10 +1690,28 @@
     <Resource Include="Images\Icons\General\stop.png" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0080.sql" />
     <Resource Include="Daten\Updateskripte\UpdateTo_V0081.sql" />
+    <Content Include="Daten\Bodenplan\DoorHorizontalClosed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\Bodenplan\DoorHorizontalOpen.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\Bodenplan\ShelfHorizontal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\Bodenplan\StairCornerLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\Bodenplan\StairsVertical.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Daten\Bodenplan\Stein.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Daten\Bodenplan\Strauch.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Daten\Bodenplan\Torch.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Daten\Bodenplan\toterMann.png">
