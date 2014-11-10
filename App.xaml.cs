@@ -301,7 +301,7 @@ namespace MeisterGeister {
                     infoText += string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
                 else if (compareVersions > 0)
                     infoText = string.Format("Es liegt eine neue Programm-Version vor.\n\nInstallierte Version: {0}\nDownload Version: {1}"
-                    + "\n\nDie aktuelle Version kann unter '{3}' runtergeladen werden.", vProgrammString, vDownloadString,
+                    + "\n\nDie aktuelle Version kann unter '{2}' runtergeladen werden.", vProgrammString, vDownloadString,
                     MeisterGeister.Properties.Settings.Default.MeisterGeisterURL);
                 else
                     infoText = string.Format("Die installierte Programm-Version ist neuer als die Download-Version.\n\nInstallierte Version: {0}\nDownload Version: {1}",
