@@ -16,7 +16,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
 
         #region Bodenplan
         string Bild { get; }
-        string Position { get; }
+        Position Position { get; }
         #endregion
 
         //Notwendige Eigenschaften

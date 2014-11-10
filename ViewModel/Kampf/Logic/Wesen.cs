@@ -28,6 +28,17 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        private Position _position = Position.stehend;
+        public Position Position
+        {
+            get { return _position; }
+            set
+            {
+                _position = value;
+                OnChanged("Position");
+            }
+        }
+
         #region Modifikatoren
         #region ModifikatorChanged Event
         private event NotifyCollectionChangedEventHandler ModifikatorenChanged;

@@ -520,6 +520,7 @@
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\WundenModifikatoren.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\Modifikator.cs" />
     <Compile Include="ViewModel\Kampf\Logic\Modifikatoren\NiedrigeEnergieModifikatoren.cs" />
+    <Compile Include="ViewModel\Kampf\Logic\Position.cs" />
     <Compile Include="ViewModel\NscGeneratorAlt\NscGeneratorAltViewModel.cs" />
     <Compile Include="ViewModel\NscGeneratorAlt\Person.cs" />
     <Compile Include="ViewModel\Notiz\NotizViewModel.cs" />

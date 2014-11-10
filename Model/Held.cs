@@ -1637,10 +1637,6 @@ namespace MeisterGeister.Model {
             return null;
         }
 
-        public string Position {
-            get { return null; }
-        }
-
         //TODO ??: Wert der aktuellen Waffe verwenden.
         public int? AT {
             get { return Attacke; }

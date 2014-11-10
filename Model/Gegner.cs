@@ -134,11 +134,6 @@ namespace MeisterGeister.Model
             get { return INIBasis; }
         }
 
-        public string Position
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         [DependentProperty("Konstitution")]
         public int Körperkraft
         {

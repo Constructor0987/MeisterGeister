@@ -15,6 +15,7 @@
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
         <!--<ViewGeneral:EnumItemsSource x:Key="KampfstilValueConverter" Type="{x:Type KampfLogic:Kampfstil}" />-->
         <ViewGeneral:EnumItemsSource x:Key="TrefferzonenValues" Type="{x:Type KampfLogic:Trefferzone}" />
+        <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type KampfLogic:Position}" />
         <ViewGeneral:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <ViewGeneral:EnumMatchToBooleanConverter x:Key="EnumMatchToBooleanConverter" />
         <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
@@ -699,6 +700,7 @@
                                         <TextBlock Text="{Binding Path=SelectedKämpfer.MR, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Körper)" />
                                         <TextBlock Margin="0,6,0,2" Text="/" />
                                         <TextBlock Text="{Binding Path=SelectedKämpfer.MRGeist, FallbackValue=0}" TextAlignment="Center" Margin="2,6,2,2" VerticalAlignment="Center" FontWeight="Bold" MinWidth="25" ToolTip="Magieresistenz (Geist)" />
+                                        <ComboBox SelectedValue="{Binding Path=SelectedKämpfer.Position, Converter={StaticResource PositionenValues}}" ItemsSource="{StaticResource PositionenValues}" Width="100" ToolTip="Position" />
                                     </StackPanel>
                                 </StackPanel>
                                 <Grid Grid.Row="2" Margin="0,8,0,0">
