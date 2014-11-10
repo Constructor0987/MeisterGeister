@@ -929,9 +929,6 @@ namespace MeisterGeister.View.AudioPlayer {
                                         if (grpobj._listZeile[posZeile].audioZeile.chkTitel != null)
                                         {
                                             chkTitel0_0_Click(grpobj._listZeile[posZeile].audioZeile.chkTitel, new RoutedEventArgs());
-
-                                            //if (grpobj.aPlaylist.Fading)
-                                            //    FadingInGeräusch(grpobj);
                                         }
                                         else
                                         {
@@ -2849,6 +2846,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void abspielProzess(GruppenObjekt grpObj, bool checkStatus, bool sollStandby, KlangZeile klZeile, RoutedEventArgs e)
         {
+            if (klZeile.audiotitel.Audio_Titel == null) 
+                return;
             Audio_Titel aTitel = setTitelStdPfad(klZeile.audiotitel.Audio_Titel);
             if (aTitel.Pfad != klZeile.audiotitel.Audio_Titel.Pfad ||
                 aTitel.Datei != klZeile.audiotitel.Audio_Titel.Datei)
@@ -2900,9 +2899,10 @@ namespace MeisterGeister.View.AudioPlayer {
                                         klZeile.audiotitel.Audio_Titel.Pfad + "\\" + klZeile.audiotitel.Audio_Titel.Datei,
                                         klZeile.Aktuell_Volume, grpObj.istMusik);
 
-                                klZeile.mediaHashCode = klZeile._mplayer.GetHashCode();
+                                if (klZeile._mplayer != null)
+                                    klZeile.mediaHashCode = klZeile._mplayer.GetHashCode();
 
-                                if (grpObj.visuell)
+                                if (grpObj.visuell && klZeile._mplayer != null)
                                 {
                                     if (klZeile._mplayer.NaturalDuration.HasTimeSpan)
                                         klZeile.audioZeile.pbarTitel.Maximum =
@@ -6561,7 +6561,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 if ((Guid)((MusikZeile)lbPListGeräusche.Items[i]).Tag == grpobj.aPlaylist.Audio_PlaylistGUID)
                 {
                     newgroup.mZeile = (MusikZeile)lbPListGeräusche.Items[i];
-                    newgroup.mZeile.recProzent.Visibility = Visibility.Visible;
+                    //newgroup.mZeile.recProzent.Visibility = Visibility.Visible;
                     break;
                 }
             }
@@ -6611,11 +6611,11 @@ namespace MeisterGeister.View.AudioPlayer {
                         gruppe.grpobj.Vol_PlaylistMod / 100;
                     l = kZeile._mplayer.Volume;
                 }
-                gruppe.mZeile.recProzent.Width = Math.Round(gruppe.grpobj.Vol_PlaylistMod, 2) * .65;
+                if (gruppe.mZeile != null)
+                    gruppe.mZeile.recProzent.Width = Math.Round(gruppe.grpobj.Vol_PlaylistMod, 2) * .65;
 
                 if (!gruppe.grpobj.wirdAbgespielt || gruppe.grpobj.Vol_PlaylistMod == gruppe.zielProzent)
                 {
-                    //gruppe.mZeile.recProzent.Visibility = Visibility.Collapsed;
                     grpToDelete.Add(gruppe);
                 }
             }
@@ -6637,7 +6637,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 if ((Guid)((MusikZeile)lbPListGeräusche.Items[i]).Tag == grpobj.aPlaylist.Audio_PlaylistGUID)
                 {
                     newgroup.mZeile = (MusikZeile)lbPListGeräusche.Items[i];
-                    newgroup.mZeile.recProzent.Visibility = Visibility.Visible;
+                    //newgroup.mZeile.recProzent.Visibility = Visibility.Visible;
                     break;
                 }
             }
@@ -6701,8 +6701,8 @@ namespace MeisterGeister.View.AudioPlayer {
                                 gruppe.grpobj.Vol_PlaylistMod / 100;
                             l = kZeile._mplayer.Volume;
                         }
-                        gruppe.mZeile.recProzent.Width = Math.Round(gruppe.grpobj.Vol_PlaylistMod, 2) * .65;// (gruppe.mZeile.grdForceVol.ActualWidth / 100 - .05);
-                        //gruppe.mZeile.tbProzent.Text = Math.Round(gruppe.grpobj.Vol_PlaylistMod,2) + "%";                        
+                        if (gruppe.mZeile != null)                    
+                            gruppe.mZeile.recProzent.Width = Math.Round(gruppe.grpobj.Vol_PlaylistMod, 2) * .65;// (gruppe.mZeile.grdForceVol.ActualWidth / 100 - .05);
                         
                         if (gruppe.grpobj.Vol_PlaylistMod == 0)
                         {
@@ -6713,7 +6713,8 @@ namespace MeisterGeister.View.AudioPlayer {
                                 kZeile.istStandby = true; 
                                 kZeile.istLaufend = false;
                             }
-                            gruppe.mZeile.recProzent.Visibility = Visibility.Collapsed;
+                            //if (gruppe.mZeile != null)
+                            //    gruppe.mZeile.recProzent.Visibility = Visibility.Collapsed;
                             grpToDelete.Add(gruppe);
                         }
                     }
@@ -7372,7 +7373,8 @@ namespace MeisterGeister.View.AudioPlayer {
                         ((Image)grpobj.tbtnKlangPause.Content).Margin = new Thickness(3, 4, 2, 2);
                     }
                     btnPListPListAbspielen.Tag = true;
-
+                    if (!grpobj.aPlaylist.Fading)
+                        mZeile.recProzent.Width = 65;
                     ////////////////////////
                     //if (grpobj.aPlaylist.Fading)
                     //    FadingInGeräusch(grpobj);
@@ -7431,6 +7433,8 @@ namespace MeisterGeister.View.AudioPlayer {
                 if (grpobj != null && grpobj.wirdAbgespielt)
                 {
                     grpobj.tbtnKlangPause.RaiseEvent(new RoutedEventArgs(ToggleButton.UncheckedEvent));
+                    if (!grpobj.aPlaylist.Fading)
+                        mZeile.recProzent.Width = 0;
 
                     if (_GrpObjecte.FindAll(t => t.wirdAbgespielt).Count == 0)
                         btnPListPListAbspielen.Tag = false;
@@ -9222,6 +9226,7 @@ namespace MeisterGeister.View.AudioPlayer {
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
+                bool kopieren = Keyboard.Modifiers == ModifierKeys.Control? true: false;
 
                 List<string> gedroppteDateien = new List<string>();
                 gedroppteDateien.Add((string)aZeile.chkTitel.Tag);
@@ -9240,7 +9245,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     lbEditorListe.Items.MoveCurrentToPosition(audioZeileMouseOverDropped);
                 }
 
-                if (aPlaylist != AktKlangPlaylist && Keyboard.Modifiers != ModifierKeys.Control)             //Verschieben = Löschen in akt. Playliste
+                if (aPlaylist != AktKlangPlaylist && !kopieren)             //Verschieben = Löschen in akt. Playliste
                 {
                     Audio_Titel aTitel = Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)aZeile.Tag);
                     Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, aTitel);
