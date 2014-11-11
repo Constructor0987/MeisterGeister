@@ -498,12 +498,12 @@ namespace MeisterGeister.View
 #endif
 
 #if !(DEBUG)
-            // UpdateCheck
-            if (Einstellungen.CheckForUpdates && Einstellungen.LastUpdateCheck.CompareTo(DateTime.Now.Date) != 0)
+            // UpdateCheck (nicht ausführen, wenn von IDE ausgeführt)
+            if (System.Diagnostics.Debugger.IsAttached == false && Einstellungen.CheckForUpdates && Einstellungen.LastUpdateCheck.CompareTo(DateTime.Now.Date) != 0)
                 CheckForUpdates(false);
 
-            // ChangeLog Meldung
-            if (Einstellungen.ShowChangeLog)
+            // ChangeLog Meldung (nicht ausführen, wenn von IDE ausgeführt)
+            if (System.Diagnostics.Debugger.IsAttached == false && Einstellungen.ShowChangeLog)
                 ViewHelper.ShowBrowserChangeLog(true);
 #endif
         }
