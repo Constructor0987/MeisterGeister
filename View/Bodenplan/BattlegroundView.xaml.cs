@@ -37,6 +37,13 @@ namespace MeisterGeister.View.Bodenplan
             
             ArenaGrid.Cursor = Cursors.Arrow;
             AddPictureButtons();
+            AddFogOfWar();
+        }
+
+        private void AddFogOfWar()
+        {
+            //http://stackoverflow.com/questions/17767097/writeablebitmap-doesnt-change-pixel-color-in-wpf
+
         }
 
         public BattlegroundViewModel VM
