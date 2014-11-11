@@ -235,15 +235,20 @@ namespace MeisterGeister {
             }
         }
 
-        public static Version GetVersionDownload() {
+        /// <summary>
+        /// Verfügbare Download-Versionen abrufen.
+        /// </summary>
+        /// <returns>[0] enthällt die öffentliche Release Version, [1] die interne Release Version</returns>
+        public static Version[] GetVersionDownload() {
             Version v = new Version();
+            Version vIntern = new Version();
+            Version[] versionen = new Version[] { v, vIntern };
             XmlDocument xmlDoc;
             try {
                 xmlDoc = new XmlDocument();
                 xmlDoc.Load("http://meistergeister.org/download/675/");
 
                 string version = string.Empty;
-                string url = string.Empty;
 
                 XmlNodeList versionXml = xmlDoc.SelectNodes("meistergeister/version");
                 if (versionXml != null && versionXml.Count > 0)
@@ -254,18 +259,25 @@ namespace MeisterGeister {
                         v = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), 0, Convert.ToInt32(values[2]));
                     else if (values.Length > 3)
                         v = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), Convert.ToInt32(values[3]), Convert.ToInt32(values[2]));
+                    versionen[0] = v;
                 }
 
-                XmlNodeList urlNode = xmlDoc.SelectNodes("meistergeister/url");
-                if (urlNode != null && urlNode.Count > 0)
+                versionXml = xmlDoc.SelectNodes("meistergeister/version_intern");
+                if (versionXml != null && versionXml.Count > 0)
                 {
-                    url = versionXml[0].InnerText;
+                    version = versionXml[0].InnerText;
+                    string[] values = version.Split('.');
+                    if (values.Length == 3)
+                        vIntern = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), 0, Convert.ToInt32(values[2]));
+                    else if (values.Length > 3)
+                        vIntern = new Version(Convert.ToInt32(values[0]), Convert.ToInt32(values[1]), Convert.ToInt32(values[3]), Convert.ToInt32(values[2]));
+                    versionen[1] = vIntern;
                 }
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Auf Updates prüfen");
             }
 
-            return v;
+            return versionen;
         }
 
         public static string GetVersionString(Version v) {
@@ -283,20 +295,25 @@ namespace MeisterGeister {
         }
 
         public static void CheckUpdates(bool popupWhenUpToDate) {
-            Version vDownload = GetVersionDownload();
+            Version[] vDownload = GetVersionDownload();
             Version vProgramm = GetVersionProgramm();
-            string vDownloadString = GetVersionString(vDownload);
+            string vDownloadString = GetVersionString(vDownload[0]);
+            string vDownloadInternString = GetVersionString(vDownload[1]);
             string vProgrammString = GetVersionString(vProgramm);
             string infoText = string.Empty;
             int compareVersions = int.MinValue;
 
-            if (vDownload == null || vDownload == new Version())
+            if (vDownload == null || vDownload[0] == null || vDownload[0] == new Version())
                 infoText = "Die aktuelle Programm Version konnte nicht geprüft werden.";
             else {
                 vProgramm = new Version(vProgramm.Major, vProgramm.Minor, vProgramm.Revision, vProgramm.Build);
-                vDownload = new Version(vDownload.Major, vDownload.Minor, vDownload.Revision, vDownload.Build);
+                vDownload[0] = new Version(vDownload[0].Major, vDownload[0].Minor, vDownload[0].Revision, vDownload[0].Build);
+                if (vDownload[1] == null || vDownload[1] == new Version())
+                    vDownload[1] = new Version(0, 0, 0, 0);
+                else
+                    vDownload[1] = new Version(vDownload[1].Major, vDownload[1].Minor, vDownload[1].Revision, vDownload[1].Build);
 
-                compareVersions = vDownload.CompareTo(vProgramm);
+                compareVersions = vDownload[0].CompareTo(vProgramm);
                 if (compareVersions == 0)
                     infoText += string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
                 else if (compareVersions > 0)
@@ -304,8 +321,15 @@ namespace MeisterGeister {
                     + "\n\nDie aktuelle Version kann unter '{2}' runtergeladen werden.", vProgrammString, vDownloadString,
                     MeisterGeister.Properties.Settings.Default.MeisterGeisterURL);
                 else
-                    infoText = string.Format("Die installierte Programm-Version ist neuer als die Download-Version.\n\nInstallierte Version: {0}\nDownload Version: {1}",
-                    vProgrammString, vDownloadString);
+                {
+                    // möglicherweise handelt es sich um einen Intern-Release
+                    compareVersions = vDownload[1].CompareTo(vProgramm);
+                    if (compareVersions == 0)
+                        infoText = string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
+                    else
+                        infoText = string.Format("Die installierte Programm-Version ist neuer als die Download-Version.\n\nInstallierte Version: {0}\nDownload Version: {1}",
+                            vProgrammString, vDownloadString);
+                }
             }
 
             infoText += "\n\nLetzte Update-Prüfung: " + Einstellungen.LastUpdateCheck.ToShortDateString();

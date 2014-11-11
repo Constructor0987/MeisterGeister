@@ -496,6 +496,8 @@ namespace MeisterGeister.View
                       + "\nSie ist nicht mit dem normalen Release-Zweig kompatibel und dient nur internen Testzwecken!", "Test-Version",
                       MessageBoxButton.OK, MessageBoxImage.Warning);
 #endif
+
+#if !(DEBUG)
             // UpdateCheck
             if (Einstellungen.CheckForUpdates && Einstellungen.LastUpdateCheck.CompareTo(DateTime.Now.Date) != 0)
                 CheckForUpdates(false);
@@ -503,6 +505,7 @@ namespace MeisterGeister.View
             // ChangeLog Meldung
             if (Einstellungen.ShowChangeLog)
                 ViewHelper.ShowBrowserChangeLog(true);
+#endif
         }
 
         private void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)
