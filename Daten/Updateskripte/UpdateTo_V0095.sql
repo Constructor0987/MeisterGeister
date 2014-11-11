@@ -1,4 +1,7 @@
-﻿--- Neue Sonderfertigkeiten
+﻿-- Literatur korrigieren
+UPDATE [Literatur] SET [Abkürzung] = 'VTuU' WHERE [LiteraturGUID] = '00000000-0000-0000-0011-000000000011';
+
+-- Neue Sonderfertigkeiten
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
  VALUES ('00000000-0000-0000-005f-000000001658' ,N'Schattenpfade I' ,0 ,N'Magisch' ,N'Goldene Dächer, düstere Gassen 185' ,N'Gassenwissen 7, SF Ortkenntnis');
 INSERT INTO [Sonderfertigkeit] (  [SonderfertigkeitGUID],  [Name],  [HatWert],  [Typ],  [Literatur],  [Voraussetzungen]) 
