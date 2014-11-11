@@ -10,9 +10,14 @@ LO 8 KK 26 TK x7 ZK x14' ,N'ZBA 157' ,N'Aventurien' ,NULL ,NULL ,N'300 Rationen 
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000002' ,N'Abu al''Hamam, der Herr des Bades' ,N'Elementar' ,N'' ,11 ,N'1W6' ,2 ,14 ,32 ,0 ,64 ,0 ,0 ,15 ,NULL ,10 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,7 ,4 ,NULL ,N'Dschinn, Wasser' ,N'Eigenschaften: (Elementar), mit Wasser (7 Schritt), Ertränken, Verschmelzen mit Element; Kampfregeln und -manöver: Aufmerksamkeit, Finte, Gegenhalten, Klingensturm Klingenwand, Niederwerfen, Wuchtschlag; Talente: Elementare Hellsicht 8, Elementare Kunstfertigkeit 14; Zauber: alle Zauber Elementar (Wasser) bis Komplexität D 12, MEMORANS 7, NEBELLEIB, REFLECTIMAGO, SAPEFACTA 14, WEIHRAUCHWOLKE 10, SILENTIUM 8, WASSERATEM 15' ,N'EG 167' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,15 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000003' ,N'Achaz-Herrschermumie' ,N'Untot' ,N'' ,11 ,N'1W6' ,2 ,8 ,50 ,0 ,0 ,0 ,0 ,17 ,19 ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,13 ,NULL ,8 ,NULL ,NULL ,N'' ,N'' ,N'VTuT 113' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,9 ,0);
+ VALUES ('00000000-0000-0000-006e-000000000003' ,N'Achaz-Herrschermumie' ,N'Untot' ,N'' ,11 ,N'1W6' ,2 ,8 ,50 ,9999 ,0 ,3 ,0 ,17 ,19 ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,7 ,NULL ,8 ,7 ,NULL ,N'Untot' ,N'Eigenschaften: Mumie (Belebte Gliedmaßen, Schreckgestalt I, Resitenz (profane Waffen), Verwundbarkeit (Feuer), Erhöhtes Infektionsrisiko (I)), Astralsinn
+Ahnenmacht: Fluch (HExenflüche je 5 ZfP*), Zauber (Aus der Liste Böser Blick, Große Gier, IMPERAVI), Aktivierung von Arkanoglyphen, die sich versteckt oder sichtbar am Körper oder dem Szepter der Mumie befinden. Kosten jeweils 3 ZfP*. Möglich sind Auge des Basilisken, Fanal der Herrschaft, Hypnotisches Zeichen, Siegel der Stille, Siegel der Zweiten Haut, Siegel der Schatten, Verderben des Magiers, Wimmelndes Zeichen, Zeichen des Stillstandes, Zeichen gegen Magie.
+Besondere Kampfregel und Manöver: Mumie (gezielter Angriff / Niederwerfen (2), +8TP Waffenschaden durch ihre hohe Stärke. Jeder Waffenangriff ist automatisch ein Niederwerfen-Manöver)
+3 Punkte des RS (die Schuppen des Achaz) schützen auch vor Feuer und müssen erst überwunden werden, bevor die Verwundbarkeit vor Feuer wirkt.' ,N'VTuU 113, 19' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,9 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000004' ,N'Achaz-Zombie' ,N'Untot' ,N'' ,7 ,N'1W6' ,2 ,5 ,29 ,0 ,0 ,0 ,0 ,10 ,NULL ,4 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,9 ,NULL ,4 ,NULL ,NULL ,N'' ,N'' ,N'VTuT 113' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,10 ,0);
+ VALUES ('00000000-0000-0000-006e-000000000004' ,N'Achaz-Zombie' ,N'Untot' ,N'' ,7 ,N'1W6' ,2 ,5 ,29 ,9999 ,0 ,0 ,0 ,10 ,NULL ,4 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,9 ,NULL ,4 ,4 ,NULL ,N'Untot, Thargunitoth' ,N'Eigenschaten: Zombie (Immunität gegen Wunden)
+Ahnenmacht: Untotenführer, Durch (Humus) Gehen, Belebte Gliedmaßen
+Besondere Kampfregel und -manöver: Finte, gezielter Stich, Umreißen' ,N'VTuU 113' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,10 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000005' ,N'Achaz (erfahren)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/achaz.png' ,12 ,N'1W6' ,2 ,12 ,27 ,28 ,0 ,0 ,14 ,7 ,7 ,8 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Reptil, Schuppenkriecher, Eidechse, Achaz, Echsenmensch' ,N'Größe: um 1,80 Schritt Gewicht: um 60 Stein
 MU 7–15 FF 9–17 KL 8–17 GE 9–17
@@ -141,7 +146,7 @@ Sonderfertigkeiten: Aufmerksamkeit, Gegenhalten, Niederwerfen, Wuchtschlag
 Besondere Eigenschaften: Körperlosigkeit II Talente: Elementare Kunstfertigkeit 20
 Mögliche Dienste: Bewegung, Kontrolle über das Element Erz (Erdstöße, Zerstörung von Gebäuden und Objekten aus Stein, Erdbeben, Vulkanausbruch, u.ä.)' ,N'WdZ 207' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,0 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000024' ,N'Amrychoth' ,N'Dämon' ,N'/DSA MeisterGeister;component/Images/Wesen/daemon.png' ,10 ,N'1W6' ,2 ,0 ,90 ,9999 ,0 ,0 ,9999 ,14 ,NULL ,15 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,16 ,NULL ,15 ,7 ,30 ,N'Dämon, Gehörnter, Charyptoroth, Gal''k''zuul, Efferd, Der Dunkelrochen, Schatten im Zyklon' ,N'Eigenschaften: Astralsinn (TaW 12), Empfindlichkeit (leicht, geweihte Objekte), Empfindlichkeit (mittel, Ingerimm), Geisterpanzer, Immunität gegen die Merkmale Eigenschaften, Form, Heilung, Illusion, Objekt, Telekinese und Umwelt, Immunität gegen Gifte und Krankheiten, Paraphysikalität I, Regeneration im Limbus I, Resistenz gegen die Merkmale Einfluss, Hellsicht, Herrschaft und Verständigung, Resistenz gegen profane Waffen
+ VALUES ('00000000-0000-0000-006e-000000000024' ,N'Amrychoth' ,N'Dämon' ,N'/DSA MeisterGeister;component/Images/Wesen/daemon.png' ,10 ,N'1W6' ,2 ,0 ,90 ,9999 ,0 ,0 ,10004 ,14 ,NULL ,15 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,16 ,NULL ,15 ,7 ,30 ,N'Dämon, Gehörnter, Charyptoroth, Gal''k''zuul, Efferd, Der Dunkelrochen, Schatten im Zyklon' ,N'Eigenschaften: Astralsinn (TaW 12), Empfindlichkeit (leicht, geweihte Objekte), Empfindlichkeit (mittel, Ingerimm), Geisterpanzer, Immunität gegen die Merkmale Eigenschaften, Form, Heilung, Illusion, Objekt, Telekinese und Umwelt, Immunität gegen Gifte und Krankheiten, Paraphysikalität I, Regeneration im Limbus I, Resistenz gegen die Merkmale Einfluss, Hellsicht, Herrschaft und Verständigung, Resistenz gegen profane Waffen
 Sonderfertigkeiten: Aufmerksamkeit, Gegenhalten, Niederwerfen, Wuchtschlag 
 Besondere Kampfregeln und -manöver: sehr großer Gegner
 Besondere Eigenschaften: Angriff mit verfluchtem Wasser (AT 6, 3W6 TP), Regeneration I, Wasserwesen
@@ -464,9 +469,9 @@ Besondere Eigenschaften: Körperlosigkeit I, Schreckgestalt II, Verwundbarkeit (
 Zauber: BÖSER BLICK (18), HORRIPHOBUS (18) 
 Mögliche Dienste: Alptraum, Bewegung, Bindung, Bereitstellung von Fähigkeiten (Erschrecken), Manifestation, Wache, Zauber' ,N'WdZ 210/ TcD 133' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,12 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000081' ,N'Brandbock' ,N'Untot' ,N'' ,9 ,N'1W6' ,2 ,8 ,25 ,0 ,0 ,0 ,0 ,12 ,10 ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,10 ,NULL ,5 ,NULL ,NULL ,N'' ,N'' ,N'VTuT 112' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,13 ,0);
-INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000082' ,N'Brandleiche' ,N'Untot' ,N'' ,8 ,N'1W6' ,2 ,3 ,30 ,0 ,0 ,0 ,0 ,9 ,10 ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,8 ,NULL ,4 ,NULL ,NULL ,N'' ,N'' ,N'VTuT 112' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,10 ,0);
+ VALUES ('00000000-0000-0000-006e-000000000082' ,N'Brandleiche' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,8 ,N'1W6' ,2 ,3 ,30 ,9999 ,0 ,0 ,0 ,9 ,10 ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,8 ,NULL ,4 ,NULL ,NULL ,N'Untot' ,N'Eigenschaften: Brandleiche (Folgeschaden (Feuer), Immunität gegen Feuer), Durch (Feuer) Gehen, Rauch, Regeneration I
+Ahnenmacht: Angriff (Feuer), Aura (Feuer), Paraphysikalität II, Formlosigkeit II
+Besondere Kampfregeln und -manöver: –' ,N'VTuU 112, 18' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,10 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000083' ,N'Bremse' ,NULL ,NULL ,0 ,N'1W6' ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Tier, Insekt, Zweiflügler, Fliege' ,N'AT = SG/2, Es entsteht kein relevanter Schaden durch den Stich oder das Saugen, es besteht jedoch für jede gelungene AT eine 5%-ige Chance an einer der folgenden Krankheiten zu erkranken (siehe Folgen).
 Folgen (W20: Lutanas (1–5), Schlafkrankheit (6–7), Sumpffieber (8–15), Rascher Wahn (16–20).)
@@ -972,7 +977,7 @@ MU 10 KL 2 IN 5 CH 3
 FF 4 GE 10 KO 13 KK 17
 Parade am Boden 3
 Besondere Kampfregeln: Flugangriff, Sturzflug, Gelände (Sumpf)
-* Die Flugechse greift zunächst stets im Sturzflug an. Erst wenn sie flugunfähig ist, geht sie in den Nahkampf am Boden über.' ,N'ZBA 98' ,N'Aventurien' ,N'Südaventurien, Echsensümpfe (Sumpf, Küste)' ,NULL ,N'20 Rationen Fleisch (ungenießbar), Haut der Schwingen (zähes Leder, teuer)' ,N'2+1W3 Tiere' ,0 ,0);
+* Die Flugechse greift zunächst stets im Sturzflug an. Erst wenn sie flugunfähig ist, geht sie in den Nahkampf am Boden über.' ,N'ZBA 98 / U1 67' ,N'Aventurien, Uthuria' ,N'Südaventurien, Echsensümpfe (Sumpf, Küste)' ,NULL ,N'20 Rationen Fleisch (ungenießbar), Haut der Schwingen (zähes Leder, teuer)' ,N'2+1W3 Tiere' ,0 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000165' ,N'Frostfee' ,N'Elementar' ,N'' ,7 ,N'1W6' ,2 ,5 ,20 ,0 ,20 ,0 ,0 ,0 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Elementar, Eis' ,N'Eigenschaften: (Elementar), Schreckgestalt I; Kampfregeln und -manöver: Wuchtschlag; Zauber: BÖSER BLICK 9, EIGNE ÄNGSTE 10, GROSSE VERWIRRUNG 8' ,N'EG 156' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,10 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
@@ -1097,7 +1102,7 @@ Besondere Kampfregeln: Hinterhalt (35), Gezielter Angriff / Würgeangriff***
 ** Der erste Angriff des Gestaltwandlers erfolgt stets aus dem Hinterhalt und gilt dabei in jedem Falle beim Gelingen als Gezielter Angriff.
 *** Der Würgeangriff wird regeltechnisch wie ein Schwitzkasten (WdS 92) geregelt.' ,N'ZBA 102' ,N'Aventurien' ,N'ganz Aventurien' ,NULL ,NULL ,N'stets einzeln' ,12 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000193' ,N'Ghul' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,2 ,9 ,35 ,60 ,0 ,0 ,18 ,15 ,10 ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,9 ,NULL ,NULL ,NULL ,NULL ,N'' ,N'Größe: 8 bis 10 Spann Gewicht: 60 bis 80 Stein
+ VALUES ('00000000-0000-0000-006e-000000000193' ,N'Ghul' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,2 ,9 ,43 ,60 ,-8 ,0 ,18 ,15 ,10 ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,9 ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Größe: 8 bis 10 Spann Gewicht: 60 bis 80 Stein
 Besondere Kampfregeln: Gezielter Angriff*
 Besonderheiten: MU-Probe +3. Ghule können Krankheiten übertragen: Pro 5 SP besteht eine 5%ige Wahrscheinlichkeit, an einer der folgenden Krankheiten zu erkranken (W20): Schlafkrankheit 1–3, Lutanas 4–6, Paralyse 7–10, Schlachtfeldfieber 11–20. Näheres zu den Krankheiten finden Sie in GA 206. 
 * Bei Gezieltem Angriff gelingt es dem Ghul, sein Opfer zu beißen (1W6+4 TP). Fallen dabei Schadenspunkte an, kommt das Gift des Ghuls zum Tragen (mehrmals): Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'ZBA 102' ,N'Aventurien' ,N'ganz Aventurien (Boronanger und sonstige Leichenfelder, zum Beispiel  nach blutigen Schlachten)' ,NULL ,NULL ,N'meist einzeln, in Ausnahmefällen bis zu 3W6 Ghule' ,0 ,0);
@@ -1696,7 +1701,9 @@ Typische Waffen: Speer, Keule, Beil
 Typische Rüstungen: Fell- und Lederkleidung
 Magie: viele Viertelzauberer, zumeist elfische Selbstverwandlung, Heilung und Hellsicht' ,N'ZBA 110-111' ,N'Aventurien' ,N'Orkland' ,NULL ,NULL ,NULL ,16 ,17);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000280' ,N'Höllenschädel' ,N'Untot' ,N'' ,10 ,N'1W6' ,2 ,0 ,20 ,0 ,0 ,0 ,0 ,15 ,12 ,8 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,9 ,NULL ,7 ,NULL ,NULL ,N'' ,N'' ,N'VTuT 112' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,15 ,0);
+ VALUES ('00000000-0000-0000-006e-000000000280' ,N'Höllenschädel' ,N'Untot' ,N'' ,10 ,N'1W6' ,2 ,0 ,20 ,9999 ,0 ,0 ,0 ,15 ,12 ,8 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,9 ,NULL ,7 ,NULL ,2 ,N'Untot' ,N'Eigenschaften: Brandleiche (Folgeschaden (Feuer), Immunität gegen Feuer), Aura (Feuer), Immobil, Immunität gegen Wunden, Zerbersten (Feuer), kann keine weiteren Eigenschaften durch ZfP* erhalten
+Ahnenmacht: Flächenangriff (Feuer), Zauber (MOTORICUS oder NIHILOGRAVO)
+Besondere Kampfregeln und -manöver: Kann als Improvisierte Waffe geworfen werden (Distanz 5/10/15/20/30)' ,N'VTuU 112, 19' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,15 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000281' ,N'Homunculus' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/golem.png' ,8 ,N'1W6' ,2 ,2 ,90 ,500 ,0 ,0 ,9999 ,15 ,NULL ,5 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,12 ,NULL ,16 ,3 ,NULL ,N'Golem, Erz' ,N'MU 12 KL 3 IN 1 CH 1
 FF 4 GE 10 KO 18 KK 14
@@ -2098,7 +2105,7 @@ Mögliche Dienste: Bewegung, Gefolgschaft, Wache, Warte' ,N'WdZ 231' ,N'Aventuri
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000343' ,N'Lebender Baum' ,N'Elementar' ,N'' ,7 ,N'1W6' ,2 ,6 ,80 ,0 ,0 ,0 ,0 ,12 ,NULL ,5 ,NULL ,NULL ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Elementar, Humus' ,N'Eigenschaften: (Elementar), Elementare Regeneration, Elementares Wachstum, Immunität gegen Kritische Treffer, sehr großer Gegner; Kampfregeln und -manöver: Gelände (Wald), Hinterhalt (10), Niederwerfen; (6 Hieb), Umklammern/Würgen (6), Wuchtschlag' ,N'EG 163' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,12 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000344' ,N'Lebender Leichnam' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,9 ,N'1W6' ,2 ,4 ,25 ,9999 ,0 ,0 ,4 ,5 ,NULL ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,4 ,NULL ,2 ,3 ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Lichtscheu, Mittlere Empfindlichkeit gegen geweihte Gegenstände aller Götter und sogar eine Schwere Empfindlichkeit gegen borongeweihte Objekte, Immunität gegen Gifte und Krankheiten, Resistenz gegen die Merkmale Einfluss und Eigenschaften und eine Immunität gegen die Merkmale Herrschaft und Form. Krankheitsüberträger für Paralyse (WdS 156) und Schlafkrankheit (WdS 157). Benötigt kein Licht zum Sehen. Immun gegen alle Manöver die direkt oder indirekt eine Finte voraussetzen. Keine Abzüge durch Wundschwellen, aber Mali durch Wunden.
+ VALUES ('00000000-0000-0000-006e-000000000344' ,N'Lebender Leichnam' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,9 ,N'1W6' ,2 ,4 ,25 ,9999 ,0 ,0 ,4 ,5 ,NULL ,4 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,4 ,NULL ,2 ,3 ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Lichtscheu, Mittlere Empfindlichkeit gegen geweihte Gegenstände aller Götter und sogar eine Schwere Empfindlichkeit gegen borongeweihte Objekte, Immunität gegen Gifte und Krankheiten, Resistenz gegen die Merkmale Einfluss und Eigenschaften und eine Immunität gegen die Merkmale Herrschaft und Form. Krankheitsüberträger für Paralyse (WdS 156) und Schlafkrankheit (WdS 157). Benötigt kein Licht zum Sehen. Immun gegen alle Manöver die direkt oder indirekt eine Finte voraussetzen. Keine Abzüge durch Wundschwellen, aber Mali durch Wunden.
 Sonderfertigkeiten: Niederwerfen, Schildparade, Wuchtschlag
 Start-LO 10 Unterhaltskosten: 3 AsP' ,N'WdZ 227' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,8 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
@@ -2242,7 +2249,9 @@ Besondere Kampfregeln: Gezielter Angriff (SP statt TP)
 * Ab einer Größe von 5 Spann kann die Maraske ihren Stachel auch in der Distanzklasse N einsetzen.
 ** Verursacht der Stich SP, kommt das Gift der Maraske zum Tragen (auch mehrmalig): Stufe LA/2; Wirkung: 1W6 SP pro KR / 1W3 SP pro KR; Beginn: sofort; Dauer: LA/2 KR.' ,N'ZBA 175' ,N'Aventurien' ,N'Maraskan, Aranien, Mhanadistan (Wald, Waldrand, Steppe)' ,NULL ,N'Gift (2 S–12 D)' ,N'einzeln' ,6 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000365' ,N'Maru-Krieger' ,N'Untot' ,N'' ,12 ,N'1W6' ,2 ,9 ,36 ,0 ,0 ,0 ,0 ,10 ,NULL ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,10 ,NULL ,5 ,NULL ,NULL ,N'' ,N'' ,N'VTuT 114' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,13 ,0);
+ VALUES ('00000000-0000-0000-006e-000000000365' ,N'Maru-Krieger (untot)' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/maru.png' ,12 ,N'1W6' ,2 ,9 ,36 ,9999 ,0 ,0 ,0 ,10 ,NULL ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,10 ,NULL ,5 ,5 ,NULL ,N'Untot' ,N'Eigenschaften: Zombie (Immunität gegen Wunden)
+Ahnenmacht: Untotenanführer, Säure-Geifer. Gestank
+Besondere Kampfregel und -manöver: Kampf im Wasser, Biss, gezielter Biss / Verbeißen, Schwanzschlag / Umreißen (4), Befreiungsschlag, Wuchtschlag, Beidhändiger Kampf I, Doppelangriff, Kampfreflexe' ,N'VTuU 114, 20' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,13 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000366' ,N'Maru (erfahren)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/maru.png' ,11 ,N'1W6' ,2 ,13 ,34 ,36 ,0 ,0 ,14 ,8 ,8 ,8 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Reptil, Krokodil, Kaiman, Wüt-Echse' ,N'Größe: 1,80 bis 2,00 Schritt Gewicht: um 95 Stein
 MU 10–18 FF 7–15 KL 6–15 GE 9–17
@@ -2480,7 +2489,7 @@ INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBas
 Um einen saugenden Moskito mit der flachen Hand zu erschlagen, ist eine GEProbe erforderlich, fällt dabei eine 1, so konnten gar zwei Fliegen ‘mit einer Klappe erschlagen’ werden. Flieht man vor den Schwärmen, so kommen pro Kampfrunde 1W20–(3×KR) (seit Fluchtbeginn) neue Moskitos hinzu, während man W6 in der Luft schwirrende Fliegen abhängen kann. Während der Flucht können nur durch Zufallstreffer (1 auf W20) auf der Haut sitzende Fliegen erschlagen werden.
 ' ,N'ZBA 171' ,N'Aventurien' ,NULL ,NULL ,NULL ,N'SG: 3W20 + bis zu 1W20/KR' ,0 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000401' ,N'Mumie' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,12 ,N'1W6' ,2 ,7 ,45 ,9999 ,0 ,0 ,14 ,15 ,NULL ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12 ,NULL ,6 ,7 ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Lichtscheu, Mittlere Empfindlichkeit gegen geweihte Gegenstände aller Götter und sogar eine Schwere Empfindlichkeit gegen borongeweihte Objekte, Immunität gegen Gifte und Krankheiten, Resistenz gegen die Merkmale Einfluss und Eigenschaften und eine Immunität gegen die Merkmale Herrschaft und Form. Krankheitsüberträger für Paralyse (WdS 156) und Schlafkrankheit (WdS 157). Benötigt kein Licht zum Sehen. Immun gegen alle Manöver die direkt oder indirekt eine Finte voraussetzen. Keine Abzüge durch Wundschwellen, aber Mali durch Wunden.
+ VALUES ('00000000-0000-0000-006e-000000000401' ,N'Mumie (Lebender Leichnam)' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,8 ,N'1W6' ,2 ,7 ,43 ,9999 ,-5 ,0 ,14 ,15 ,NULL ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12 ,NULL ,6 ,7 ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Lichtscheu, Mittlere Empfindlichkeit gegen geweihte Gegenstände aller Götter und sogar eine Schwere Empfindlichkeit gegen borongeweihte Objekte, Immunität gegen Gifte und Krankheiten, Resistenz gegen die Merkmale Einfluss und Eigenschaften und eine Immunität gegen die Merkmale Herrschaft und Form. Krankheitsüberträger für Paralyse (WdS 156) und Schlafkrankheit (WdS 157). Benötigt kein Licht zum Sehen. Immun gegen alle Manöver die direkt oder indirekt eine Finte voraussetzen. Keine Abzüge durch Wundschwellen, aber Mali durch Wunden.
 Sonderfertigkeiten: Niederwerfen, Schildparade, Wuchtschlag
 Start-LO 7 Unterhaltskosten: 5 AsP
 Besondere Kampfregeln und -manöver: Gezielter Angriff / Niederwerfen (2). Körperteile einer Mumie führen ein Eigenleben und kämpfen weiter – wer das einmal gesehen hat, auf den wirken auch weitere
@@ -3075,7 +3084,7 @@ INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBas
 Mögliche Ausbildungen: keine' ,N'ZBA 163' ,N'Aventurien' ,N'Liebliches Feld, Zyklopeninseln, Maraskan' ,NULL ,N'Wolle, Milch (wird meist zu Käse verarbeitet), Horn (bei Widdern)' ,NULL ,0 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000481' ,N'Piranha' ,NULL ,NULL ,10 ,N'2W6' ,2 ,0 ,4 ,10 ,0 ,0 ,7 ,5 ,5 ,10 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Fisch, Salmlerartig, Piranha, Blutfisch, Flussfetzer' ,N'Größe: bis 2 Spann Gewicht: bis 0,5 Stein
-Besondere Kampfregeln: Gelände (Wasser), Raserei (2, Blut im Wasser), sehr kleiner Gegner (AT+4 / PA+8)' ,N'ZBA 76' ,N'Aventurien' ,N'Südaventurien (Flüsse, Bäche)' ,NULL ,N'1/4 Ration Fleisch' ,N'1W20+20 Tiere und mehr' ,0 ,0);
+Besondere Kampfregeln: Gelände (Wasser), Raserei (2, Blut im Wasser), sehr kleiner Gegner (AT+4 / PA+8)' ,N'ZBA 76 / U1 52' ,N'Aventurien, Uthuria' ,N'Südaventurien (Flüsse, Bäche)' ,N'Das Blut macht die Fische rasend. Sie kämpfen bis zum Tod.' ,N'1/4 Ration Fleisch' ,N'1W20+20 Tiere und mehr' ,0 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
  VALUES ('00000000-0000-0000-006e-000000000482' ,N'Plattwal' ,NULL ,NULL ,5 ,N'1W6' ,2 ,0 ,300 ,150 ,0 ,0 ,30 ,2 ,7 ,11 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,17 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Wal' ,N'Größe: bis 20 Schritt Gewicht: bis 30 Quader
 Besondere Kampfregeln: Gelände (Wasser), Sehr großer Gegner
@@ -3600,7 +3609,7 @@ INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBas
  VALUES ('00000000-0000-0000-006e-000000000574' ,N'Selemferkel' ,NULL ,NULL ,0 ,N'1W6' ,2 ,0 ,15 ,15 ,0 ,0 ,5 ,1 ,5 ,1 ,3 ,6 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Paarhufer, Schwein' ,N'Größe: um 20 Finger Gewicht: 60 Stein
 LO 7 KK 3 TK 3*KK ZK 5*KK' ,N'ZBA 172' ,N'Aventurien' ,N'Nord- und Mittelaventurien' ,NULL ,N'40 Rationen Fleisch, Fett, Leder' ,NULL ,0 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000575' ,N'Shadif' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/pferd.png' ,9 ,N'1W6' ,2 ,8 ,57 ,0 ,0 ,0 ,18 ,0 ,8 ,2 ,12 ,15 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,8 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Unpaarhufer, Pferd, Boronsmähne' ,N'Größe: um 77 Finger Gewicht: ca. 450 Stein
+ VALUES ('00000000-0000-0000-006e-000000000575' ,N'Shadif' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/pferd.png' ,9 ,N'1W6' ,2 ,8 ,57 ,0 ,0 ,0 ,18 ,0 ,8 ,-3 ,12 ,15 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,8 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Unpaarhufer, Pferd, Boronsmähne' ,N'Größe: um 77 Finger Gewicht: ca. 450 Stein
 AU 6/5
 LO 10 KK 21 TK x5 ZK –
 Vor-/Nachteile: Ausdauernd, sehr lernfähig, Nervosität, Schnell, Zäh
@@ -3753,7 +3762,7 @@ INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBas
 Besondere Kampfregeln: Gelände (Baum), Sehr kleiner Gegner (AT+2 / PA+5), Raserei (2, von Firun bis Peraine)
 * Die Baumschleimer spucken nur zur Eröffnung des Kampfes und wenn sie sich zur Flucht wenden. Der nässende Ausschlag verursacht, wenn kein Resistenzwurf (KO-Probe) gelingt, während der nächsten zwei Wochen 1W6–1 SP pro Tag (die sogenannte Marderkrätze, eine Krankheit der Stufe 5).' ,N'ZBA 183' ,N'Aventurien' ,N'Maraskan (Wald)' ,N'Spucken und Flucht oder Angriff (Winter)' ,N'6 Rationen Fleisch (ungenießbar), Fell wertlos' ,N'einzeln' ,11 ,15);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000604' ,N'Spuk' ,N'Geist' ,N'' ,12 ,N'1W6' ,2 ,0 ,40 ,9999 ,0 ,0 ,9999 ,15 ,15 ,8 ,NULL ,NULL ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,NULL ,5 ,4 ,NULL ,N'Untoter, Geist' ,N'Eigenschaften: Astralsinn (TaW 14), Formlosigkeit I, Geisterpanzer, Immunität gegen profane Waffen, Immunität gegen Gift und Krankheiten, Körperlosigkeit I Präsenz I, Unsichtbarkeit II, Verwundbarkeit (Boron)
+ VALUES ('00000000-0000-0000-006e-000000000604' ,N'Spuk' ,N'Geist' ,N'' ,12 ,N'1W6' ,2 ,0 ,40 ,9999 ,0 ,0 ,9999 ,15 ,15 ,8 ,-5 ,NULL ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,NULL ,5 ,4 ,NULL ,N'Untoter, Geist' ,N'Eigenschaften: Astralsinn (TaW 14), Formlosigkeit I, Geisterpanzer, Immunität gegen profane Waffen, Immunität gegen Gift und Krankheiten, Körperlosigkeit I Präsenz I, Unsichtbarkeit II, Verwundbarkeit (Boron)
 Besondere Kampfregeln und -manöver: Gezielter Angriff (Schadenszauber gegen unbelebte Materie, z.B. KLICKERADOMMS, DESINTEGRATUS, MOTORICUS, ZAGIBU o.ä.)
 Besondere Eigenschaften: Gegenstände beleben, Schaden gegen unbelebte Materie, Schreckgestalt II (wenn er doch irgendwie sichtbar ist) 
 Mögliche Dienste: Suche (einen Gegenstand – nicht der Sitz seiner Seele), Kampf, Körperliche Hilfe (planlose Verwüstung, Belästigung durch Gepolter und Gerumpel)
@@ -5206,7 +5215,7 @@ INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBas
 Besondere Kampfregeln: Gelände (Wasser)
 * Alle 2W6 KR sendet der Rochen einen Schlag aus (2W6 SP – nur im/unter Wasser; pro Schritt Entfernung ist von der Schadenswirkung ein Punkt abzuziehen). Misslingt eine KO-Probe + halbe SP, ist das Opfer gelähmt, bis ihm die Probe gelingt, wobei pro KR ein Versuch erlaubt ist. Gelähmte – und damit ertrinkende – Schwimmer erleiden pro KR einen Verlust von 1W6 AuP; ab einer Ausdauer von 0 einen Schaden von 1W6 SP pro KR.' ,N'ZBA 161' ,N'Aventurien' ,N'alle Meere (Tiefsee, Offenes Meer, Küstengebiete)' ,NULL ,N'100 Rationen Fleisch (ungenießbar, Ausnahme: selemitische Küche)' ,N'einzeln' ,10 ,0);
 INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
- VALUES ('00000000-0000-0000-006e-000000000803' ,N'Zombie' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,6 ,N'1W6' ,2 ,2 ,25 ,0 ,0 ,0 ,0 ,8 ,NULL ,4 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6 ,NULL ,3 ,4 ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Lichtscheu, Mittlere Empfindlichkeit gegen geweihte Gegenstände aller Götter und sogar eine Schwere Empfindlichkeit gegen borongeweihte Objekte, Immunität gegen Gifte und Krankheiten, Resistenz gegen die Merkmale Einfluss und Eigenschaften und eine Immunität gegen die Merkmale Herrschaft und Form. Krankheitsüberträger für Paralyse (WdS 156) und Schlafkrankheit (WdS 157). Benötigt kein Licht zum Sehen. Immun gegen alle Manöver die direkt oder indirekt eine Finte voraussetzen. Keine Abzüge durch Wundschwellen, aber Mali durch Wunden.
+ VALUES ('00000000-0000-0000-006e-000000000803' ,N'Zombie' ,N'Untot' ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,6 ,N'1W6' ,2 ,2 ,25 ,9999 ,0 ,0 ,0 ,8 ,NULL ,2 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6 ,NULL ,3 ,4 ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Lichtscheu, Mittlere Empfindlichkeit gegen geweihte Gegenstände aller Götter und sogar eine Schwere Empfindlichkeit gegen borongeweihte Objekte, Immunität gegen Gifte und Krankheiten, Resistenz gegen die Merkmale Einfluss und Eigenschaften und eine Immunität gegen die Merkmale Herrschaft und Form. Krankheitsüberträger für Paralyse (WdS 156) und Schlafkrankheit (WdS 157). Benötigt kein Licht zum Sehen. Immun gegen alle Manöver die direkt oder indirekt eine Finte voraussetzen. Keine Abzüge durch Wundschwellen, aber Mali durch Wunden.
 Sonderfertigkeiten: Niederwerfen, Schildparade, Wuchtschlag
 Start-LO 12 Unterhaltskosten: 2 AsP
 Besondere Kampfregeln und -manöver: Zombies erleiden keine Wunden' ,N'WdZ 227' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,7 ,0);
@@ -5291,6 +5300,1153 @@ INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBas
 Besondere Kampfregeln: Kopfstoß, Niederwerfen, Wuchtschlag
 Besonderheiten: Durch ihr Magiegespür können sie Feenpfade aufspüren und nutzen.
 Minotauren können Rüstungen tragen, meist aus Fellen improvisiert (RS 2).' ,N'ZBA 137-138' ,N'Aventurien' ,N'Zyklopeninseln' ,NULL ,NULL ,N'einzeln oder in Gruppen bis 2W6' ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000815' ,N'Albtraumwurzel' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/schrat.png' ,0 ,N'1W6' ,2 ,11 ,40 ,999 ,21 ,0 ,0 ,7 ,NULL ,8 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,10 ,NULL ,NULL ,NULL ,NULL ,N'Elementar, Humus' ,N'Zauber: HORRIPHOBUS (10, nur gegen einen Gegner, dessen Blut sie gekostet hat.)
+Konfliktverhalten: Jede Albtraumwurzel sucht sich einen Gegner, den sie unerbittlich verfolgt. Ist dieser besiegt oder hat er die Flucht ergriffen, begibt sich die Wurzel wieder in Ruhestellung. Ein Angriff auf den Baru, der die jeweilige Wurzel lenkt, kann einen Vorteil verscha en: Wird er bewusstlos, geht die Wurzel sofort in Ruhestellung. Wird er abgelenkt, erstarrt die Wurzel für eine Runde. Die Baru können sich in ihrer Trance nicht wehren und besitzen jeweils 25 LeP.' ,N'U1 54' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,15 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000816' ,N'Necker (untot)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,13 ,N'1W6' ,2 ,9 ,34 ,9999 ,0 ,0 ,0 ,12 ,NULL ,4 ,10 ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,10 ,NULL ,5 ,6 ,4 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Wasserleiche (Regeneration I (Charyptoroth- Unheiligtümer), Schwere Empfi ndlichkeit gegen geweihte Objekte des Efferd, Immunität gegen Wunden, Ersäufen), Wasserwesen
+Ahnenmacht: Aura (Wasser), Einlullen (Gesang), Halluzination (Gesang), Lockruf
+Besondere Kampfregeln und -manöver: Unterwasserkampf, Würgen (WdS 114), Tiermanöver Raserei (4, Kontakt mit Blut)
+GS 10 (unter Wasser)' ,N'VTuU 136, 57' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000817' ,N'Troll (untot, versteinert)' ,NULL ,NULL ,5 ,N'1W6' ,2 ,0 ,60 ,0 ,0 ,0 ,0 ,6 ,NULL ,2 ,NULL ,NULL ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,13 ,NULL ,8 ,8 ,5 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Steinknochen (6)
+Ahnenmacht: Grabeklauen, Zerbersten (Erzsplitter), Erzerner Griff (2, Folgeschaden ist Würgen (2W6SP(A) pro KR)
+Besondere Kampfregeln und -manöver: Großer Gegner, Wuchtschlag, Niederwerfen, Befreiungsschlag' ,N'VTuU 126, 44' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000818' ,N'Xo''Artal-Krieger (Adlerkrieger, erfahren)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,38 ,39 ,0 ,0 ,14 ,4 ,NULL ,7 ,NULL ,-5 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 9
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86).
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung (Iryanrüstung) I, Schnellziehen, Scharfschütze, Kampfreflexe, weitere passende Manöver.' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000819' ,N'Mishkara-Balg (Mutter und Kind)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/golem.png' ,11 ,N'1W6' ,3 ,6 ,32 ,9999 ,0 ,0 ,0 ,10 ,NULL ,9 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,10 ,NULL ,5 ,6 ,4 ,N'Groteske Scheußlichkeiten, Untoter, Zombie' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Schreckgestalt II, Schreckgeheul I, Zusätzliche Aktion (Maul), Parasit (Kind im Bauch)
+Ahnenmacht: Lähmendes Geheul, Lockruf, Klebriges Sekret
+Besondere Kampfregeln und -manöver: Anspringen (3), Tiermanöver Raserei (4, Tod oder Ablösen des Balges), Gezielter Biss / Verbeißen
+Das Balg hat 12 LeP und kann durch gezielte Angriffe getötet werden. Führt ein Gezielter Biss zum Verbeißen, löst es sich aus dem ‘Mutterleib’ und verursacht jede KR weiteren Schaden, bis sein Opfer oder es selbst getötet wurde. Die Wirkung der Eigenschaft Parasit tritt ein, wenn das Balg ein Opfer tötet. Beachten Sie auch die eintretende Raserei der ‘Mutter’, wenn das Balg vernichtet wurde oder sich durch Verbeißen von ihr gelöst hat.
+' ,N'VTuU 128, 46' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000820' ,N'Piratenkapitän aus der Charyptik (untot)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,12 ,N'1W6' ,2 ,14 ,45 ,50 ,0 ,0 ,14 ,14 ,NULL ,8 ,-6 ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Untoter, Zombie' ,N'Eigenschaften:
+MU 15    KL 14 
+IN 12       CH 16
+FF 15       GE 12 
+KO 14      KK 13
+
+Wichtige Vor-/Nachteile: Herausragende Balance, Entfernungssinn, Innerer Kompass, Nachtsicht, Richtungssinn, Schwer zu verzaubern, Zeitgefühl / Angst vor Feuer 8, Größenwahn 9, Jähzorn 9
+
+Wichtige Talente: Fechtwaffen 12, Säbel 13, Klettern 13, Körperbeherrschung 15, Fesseln/Entfesseln 11, Orientierung 18, Wettervorhersage 15, Geografie 12, Sternkunde 12, Boote fahren 13, Holzbearbeitung 15, Kartografie 16, Seefahrt 19, Seiler 10, Zimmermann 12
+
+Ausweichen 11
+
+Sonderfertigkeiten: Aufmerksamkeit, Ausfall, Ausweichen II, Finte, Gezielter Stich, Kampf im Wasser, Schnellziehen, Unterwasserkampf, Wuchtschlag
+
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Angriff mit Brackwasserstrahl (das stinkende Wasser löst Übelkeit und den Verlust der nächsten W6 Aktionen aus, wenn keine KO-Probe + Sensibler Geruchssinn gelingt), Ersäufen, Immunität gegen Wunden, Klebriges Sekret, Parasit, Regeneration I (auf seinem Schiff), Schwere Empfindlichkeit gegen geweihte Objekte des Efferd' ,N'VTuU 147, 78' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,17 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000821' ,N'Xo''Artal-Krieger (Stierkrieger, elite)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,40 ,41 ,0 ,0 ,15 ,4 ,NULL ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 10
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Niederwerfen, Rüstungsgewöhnung I (Schwerer Hartholzharnisch), Wuchtschlag, Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000822' ,N'Todesweihe' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/schrat.png' ,8 ,N'1W6' ,2 ,13 ,58 ,72 ,0 ,-3 ,18 ,17 ,NULL ,8 ,NULL ,NULL ,7 ,7 ,7 ,7 ,7 ,7 ,7 ,7 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Monstrositöt, Untoter' ,N'Eigenschaften:
+MU 16   KL 9 
+IN 11      CH 8
+FF 9        GE 10 
+KO 18      KK 17
+
+Wichtige Vor-/Nachteile: Nachtsicht, Eisern / Blutdurst 10
+Wichtige Talente: Sich Verstecken 15, Selbstbeherrschung 16, Sinnenschärfe 12
+
+Ausweichen 7
+
+Sonderfertigkeiten und besondere Kampfregeln: Aufmerksamkeit, Gezielter Biss / Verbeißen (Maul), Wuchtschlag, Niederwerfen
+Eigenschaften: Leichte Empfi ndlichkeit (geweihte Objekte), Mittlere Empfindlichkeit (geweihte Objekte Tsas und Borons), Immunität (Gifte), Immunität (Krankheiten), Lebenssinn, Lichtscheu, Lockruf, Nebel, Resistenz (Stumpfe Waffen), Resistenz (Wunden), Säure-Geifer, Schreckgestalt I, Tarnung (mittels Sich Verstecken kann es sich als Baum tarnen), Unnatürliche Aura' ,N'VTuU 144, 71' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,15 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000823' ,N'Seelenfresser (halbkörperlich)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,13 ,N'1W6' ,2 ,10 ,34 ,28 ,0 ,0 ,15 ,10 ,NULL ,8 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Seelenfresser, Untoter' ,N'Eigenschaften:
+MU 15  KL 10 
+IN 13    CH 8 
+FF 12    GE 10 
+KO 15   KK 11
+
+Wichtige Vor-/Nachteile: Dämmerungssicht
+
+Wichtige Talente: Schleichen 14, Sich Verstecken 16, Sinnenschärfe 9, Menschenkenntnis 12
+
+Sonderfertigkeiten: Aufmerksamkeit, Ausweichen I
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Erhöhtes Infektionsrisiko (5), Flimmernde Körperlosigkeit, Gestank, Lähmender Blick, Lebensraub II, Pestodem, Regeneration I, Schwächende Aura, Unnatürliche Aura' ,N'VTuU 146, 74' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000824' ,N'Xo''Artal-Krieger (Jaguarkrieger, erfahren)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,-3 ,38 ,39 ,0 ,-1 ,14 ,4 ,NULL ,6 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 9
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung I (Pflanzenfaserrüstung), Wuchtschlag, Kampfreflexe, weitere passende Manöver.' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000825' ,N'Xo''Artal-Krieger (Stierkrieger, erfahren)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,38 ,39 ,0 ,0 ,14 ,4 ,NULL ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 9
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Niederwerfen, Rüstungsgewöhnung I (Schwerer Hartholzharnisch), Wuchtschlag, Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000826' ,N'Knochenloser' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,4 ,N'1W6' ,2 ,2 ,0 ,9999 ,0 ,0 ,0 ,0 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,NULL ,6 ,4 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Formlosigkeit I, Resistenz (Hiebwaffen)
+Ahnenmacht: Belebte Gliedmaßen, Regeneration I, Immunität gegen kritische Treffer, Immunität (Hiebwaffen)
+Besondere Kampfregeln und -manöver: –' ,N'VTuU 137, 61' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,10 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000827' ,N'Todrichter (Djalapa)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/basilisk.png' ,10 ,N'1W6' ,2 ,0 ,35 ,38 ,0 ,0 ,0 ,13 ,NULL ,14 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,8 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Besondere Kampfregeln: Anspringen (5) *, Verbeißen
+Besondere Eigenschaften: Totenmaske**, Verborgene Sinne***
+
+
+*) Todrichter können große Sprünge vollführen, indem sie wild mit ihren kurzen Flügeln schlagen. Die Distanz entspricht dabei der GS in Schritt.
+
+**) Als freie Aktion können Todrichter einem vernunftbegabten Feind das Gesicht eines verstorbenen Freundes, eines ermordeten Feindes o.ä. zeigen. Die Auswirkungen ähneln der übernatürlichen Fähigkeit Schreckgestalt I (Wege der Zauberei 235). Dem Betro enen muss eine MU-Probe +2 gelingen oder er erhält gegenüber dem jeweiligen Todrichter Abzüge in Höhe von 1W6 Punkten auf MU, KL, CH, FF, AT, PA, FK und INI-Basis (keine Neuberechnung der abgeleiteten Werte). Dieser Malus baut sich fern des Todrichters mit einem Punkt pro halbe Stunde ab. Die Auswirkungen können gleichzeitig gegenüber mehreren Vögeln bestehen, sind aber nicht kumulativ.
+
+***) Es ist nicht bekannt wie, aber Todrichter verfügen über alle fünf Sinne und ignorieren sämtliche Abzüge für schlechte Sichtbedingungen etc.
+
+Konfliktverhalten: Selbst in kleinen Jagdgruppen kämpfen Todrichter nur, wenn sie sich deutlich überlegen wähnen.
+Ansonsten treten sie den Rückzug an. Bleibt ihnen kein anderer Ausweg, kämpfen sie, bis sie  iehen können oder gesiegt haben.' ,N'U1 93, 94' ,N'Uthuria' ,NULL ,N'' ,N'25 Rationen Fleisch, Gefieder (besser), Zähne (in manchen Stämmen Ritualzutat für Weissagungen; dort teuer)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000828' ,N'Numinoru-Qualle' ,NULL ,NULL ,9 ,N'1W6' ,2 ,0 ,12 ,15 ,0 ,0 ,0 ,14 ,7 ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,3 ,NULL ,NULL ,NULL ,NULL ,N'Tier' ,N'Besondere Kampfregeln: sehr kleiner Gegner, , Gezielter Angriff
+Konfliktverhalten: Die Quallen sind wenig intelligent und reagieren instinktiv auf Eindringlinge um sie herum durch das Ausfahren ihrer giftigen Nesseln. Dabei wirkt ihr Gift schädigend auf ihre Opfer. Bei ernstzunehmenden Angriffen schwimmen die kleinen Schwärme auseinander und  fliehen.' ,N'U3 68' ,N'Uthuria' ,N'Meer' ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000829' ,N'Skelett (Schleuderer)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,8 ,N'1W6' ,2 ,5 ,30 ,9999 ,0 ,0 ,0 ,0 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,7 ,7 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Parasit (Sobald die Schlingzunge dem Opfer 3 Wunden zugefügt hat, wechselt der Parasit in den Körper des Opfers: Das Maul löst sich von der Schlingzunge und verschwindet in der Wunde. Von nun an frisst der Parasit den Wirt von innen auf, mit 1W6 SP pro Stunde.)
+
+Ahnenmacht: Schwarmkörper (sehr klein, Schlangen), Nekrotischer Biss, Lähmender Biss
+
+Besondere Kampfregeln und -manöver:  Verursacht ein Angriff der Schlingzunge eine Wunde, führt dies automatisch zu einem Verbeißen in das Opfer (wie beim Kampf gegen Tiere, WdS 114) mit 1W6+2 echten TP und zu Wunden aufaddierenden Schadenspunkten.
+
+Eine Entfernung ist mit einer Probe auf Heilkunde Wunden +10 oder Heilkunde Krankheit +7 möglich.' ,N'VTuU 132, 52' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,10 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000830' ,N'Riesenfangschrecke (Xamantis)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/grünschrecke.png' ,19 ,N'1W6' ,2 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,9 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Größe: 4-6 Schritt Gewicht: 150 Stein
+Besondere Kampfregeln: großer Gegner, Anspringen (8), Doppelangri (2 Chitinklingen), Gezielter Biss, Hinterhalt (5), keine Kampfunfähigkeit bei unter 5 LeP
+Konfliktverhalten: Die Xamantis lauert ihren Opfern im Hinterhalt auf, um sie von dort aus anzuspringen. Sie spürt kaum Schmerz und kämpft schnell und gefühllos bis zum Tod.' ,N'U2 121, 122' ,N'Uthuria' ,N'Dschungeln und Bergen Norduthurias' ,NULL ,N'Panzer und Klingen (200 D)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000831' ,N'Weißfell (Guereni) erfahren' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/sumpfranze.png' ,17 ,N'1W6' ,2 ,0 ,100 ,130 ,0 ,0 ,0 ,15 ,NULL ,12 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,14 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Primat, Affe' ,N'Sonderfertigkeiten: Entwaffnen, Hammerschlag, Sturmangriff, Wuchtschlag
+
+Besondere Kampfregeln: Anspringen (4/6/8), Doppelangriff (zwei Prankenhiebe oder Prankenhieb und Biss), Gezielter Angriff (Biss) / Lebensraub I, großer Gegner, Raserei (5, LeP unter 20),
+
+Besondere Eigenschaften*: Beben**, Dunkelsicht, Lebenssinn***, Lebensraub II, Resistenz (profane, elementar, magisch),
+Schreckgebrüll****, Verwundbarkeit (Mindorium)
+
+*) Seine Eigenschaften erhält der Guereni durch die Obsidianaugen. Wenn er mit der Verwundbarkeit konfrontiert wird
+(Mindorium im Blut oder etwa 1 Stein in bis zu 5 Schritt Umgebung), verliert er sie alle (bis auf die Verwundbarkeit). Weiterhin sinken INI, AT, PA, MR, GS je um 5 und die TP um 1W.
+**) Durch stampfende Fußtritte und Hiebe kann er die Erde im Radius von 5 Schritt auf magische Weise so heftig erbeben lassen, dass Körperbeherrschung-Proben +5 nötig sind, um auf den Beinen zu bleiben.
+***) Erkennt zusätzlich auch die Höhe der LeP
+****) Sein Gebrüll, für das er 1 Aktion aufwendet, geht in Mark und Bein. Wer es hört, muss eine MU-Probe erschwert um Aberglaube ablegen, bei deren Misslingen er -1W6 auf MU, KL, CH, FF, AT, PA, FK und INI-Basis erhält (keine Neuberechnung der Werte). Die Mali bauen sich mit 1 Punkt pro SR wieder ab.
+Bei Gelingen muss man für diesen Kampf keine weiteren Proben gegen das Gebrüll mehr ablegen.' ,N'U1 96' ,N'Uthuria' ,NULL ,NULL ,N'100 Rationen Fleisch (ungenießbar), Fell (Luxus), Obsidianaugen' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000832' ,N'Zombie-Teil (Arm)' ,NULL ,NULL ,3 ,N'1W6' ,2 ,6 ,6 ,9999 ,0 ,0 ,0 ,7 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,4 ,NULL ,3 ,3 ,1 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Besondere Kampfregeln und -manöver: Ringen-Manöver Griff, Wurf' ,N'VTuU 139, 61' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000833' ,N'Löwenkadaver (Zombie)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/loewe.png' ,8 ,N'1W6' ,2 ,7 ,43 ,9999 ,0 ,0 ,0 ,0 ,NULL ,14 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12 ,NULL ,4 ,3 ,2 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett, Tierkadaver' ,N'Eigenschaften: Zombie (Immunität gegen Wunden) / Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Tiermanöver Raserei (3, Erstes Blut), Immunität gegen Schwerter, Säble, Stäbe, Immunität gegen Wunden
+Besondere Kampfregeln und -manöver: Hinterhalt (4), Anspringen (10) / Verbeißen, Gezielter Angriff / Doppelangriff (Prankenhieb und Biss)' ,N'VTuU 135, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000834' ,N'Ewiger Wächter' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,19 ,N'1W6' ,2 ,15 ,45 ,50 ,0 ,0 ,16 ,9 ,NULL ,8 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Mordbrenner, Untoter' ,N'Wichtige Vor-/Nachteile: Nachtsicht, Grausamkeit 12
+Wichtige Talente: Athletik 10, Klettern 15, Schleichen 12, Sich Verstecken 12, Fallenstellen 11, Geschichtswissen 10
+Eigenschaften:
+MU 16    KL 12 
+IN 15      CH 6
+FF 11      GE 17 
+KO 16     KK 15
+
+Ausweichen 15
+Sonderfertigkeiten: Aufmerksamkeit, Ausweichen I-II, Finte, Gezielter Stich, Halbschwert, Kampfgespür, Kampfreflexe, Meisterparade, Todesstoß, Windmühle, Wuchtschlag
+Eigenschaften: Krallen (2), Langer Arm, Schreckgeheul II, Schwächende Berührung, Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+' ,N'VTuU 145, 73' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,17 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000835' ,N'Xo''Artal-Krieger (Adlerkrieger, Anführer)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,-7 ,40 ,41 ,0 ,0 ,15 ,0 ,NULL ,7 ,-2 ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 13
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante), Eisern
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86).
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung (Iryanrüstung) I, Schnellziehen, Scharfschütze, Kampfreflexe, weitere passende Manöver.' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000836' ,N'Xo''Artal-Krieger (Jaguarkrieger)' ,NULL ,NULL ,11 ,N'1W6' ,2 ,0 ,35 ,34 ,0 ,-1 ,14 ,4 ,NULL ,6 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 8
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung I (Pflanzenfaserrüstung), Wuchtschlag' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000837' ,N'Verlorener Theaterritter' ,NULL ,NULL ,9 ,N'1W6' ,2 ,15 ,48 ,65 ,0 ,30 ,16 ,16 ,NULL ,8 ,NULL ,NULL ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Untoter Priester, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften:
+MU 17  KL 12 
+IN 12    CH 14
+FF 10    GE 12 
+KO 16    KK 18
+
+Wichtige Vor-/Nachteile: Eisern, Geweiht, Kampfrausch/ Autoritätsgläubig (10), Streitsucht (8)
+
+Wichtige Talente: Selbstbeherrschung 18, Sinnenschärfe 12, Überzeugen 10, Geschichtswissen 14
+
+Ausweichen 7
+Sonderfertigkeiten: Befreiungsschlag, Gegenhalten, Hammerschlag, Meisterparade, Rüstungsgewöhnung III, Schildspalter, Wuchtschlag, Niederwerfen
+
+Liturgiekenntnis (Rondra) 10
+
+Liturgien: SEGNUNG DER STÄHLERNEN STIRN (I Fluch der Stählernen Stirn, die MU senkt), EHRENHAFTER ZWEI KAMPF (II, Erzwungener Zweikampf gegen den Schwächsten der Gruppe), THALIONMELS SCHLACHTGESANG (III, Kakophonie, die AT senkt, WS um 2 senkt und Patzer schon bei 19–20 auf W20 auftreten lässt)
+
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Regeneration I, Schwächende Aura' ,N'VTuU 143' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,17 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000838' ,N'Maraskanischer Zaubermeister' ,NULL ,NULL ,11 ,N'1W6' ,2 ,11 ,54 ,60 ,50 ,0 ,15 ,18 ,NULL ,8 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften:
+MU 17   KL 14 
+IN 15     CH 10
+FF 8       GE 9 
+KO 15    KK 14
+
+Wichtige Vor-/Nachteile: – / Rachsucht 9, Größenwahn 10, Jähzorn 7
+Wichtige Talente: Schleichen 7, Selbstbeherrschung 16, Menschenkenntnis 11, Überreden 9, Magiekunde 18, Alchimie 10
+
+Wichtige Zauber: ARMATRUTZ 12, CORPOFRIGO 9, DUNKELHEIT 13, EISENROST 10, FULMINICTUS 14, HERZSCHLAG RUHE 14, HÖLLENPEIN 13, KRABBELNDER SCHRECKEN 10, PARALYSIS 10, SALANDER 14
+
+Die Werte können mit RkP* erhöht werden: TP+1 je 2 RkP*, AT+1 je RkP*, PA des Gegners –1 je 2 RkP*, GS +1 je RkP*
+
+Ausweichen 7
+
+Magische Sonderfertigkeiten: Merkmalskenntnis (Form, Schaden), Regeneration II, Repräsentation (Magier), Ritualkenntnis (Gildenmagie) 13, Stabzauber (Bindung, Apport, Ewige Flamme, Flammenschwert, Kraftfokus, Zauberspeicher), Verbotene Pforten, Zauberroutine
+
+Eigenschaften: Immunität gegen profane Angriffe, Lebensraub I, Regeneration II' ,N'VTuU 140, 67' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000839' ,N'Schlangen-Gesela' ,NULL ,NULL ,11 ,N'1W6' ,2 ,13 ,32 ,38 ,15 ,0 ,0 ,6 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 13  KL 13 
+IN 14    CH 12
+FF 13     GE 14 
+KO 13    KK 12 
+SO 4
+
+Vorteile/Nachteile: Entfernungssinn, Dämmerungssicht, Hitzeresistenz, Resistenz gegen tierische Gifte, Schlangenmensch
+Meisterhandwerk: IN, Klettern, Schleichen, Sich Verstecken
+
+Sonderfertigkeiten: Finte, Sumpfkundig; Ritualkenntnis Durro-Dûn 6
+
+Übernatürliche Begabungen: Adlerauge, Chamaeleoni, Spurlos, Vipernblick
+' ,N'U3 86' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,10 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000840' ,N'Yaxu' ,NULL ,NULL ,0 ,N'1W6' ,2 ,0 ,25 ,70 ,0 ,0 ,0 ,0 ,NULL ,15 ,3 ,6 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,3 ,NULL ,NULL ,NULL ,NULL ,N'Lasttier' ,N'Schulterhöhe: 6 Spann Gewicht: 60 Stein
+LO 7 KK 10 TK 7,5 x KK
+Bekannt für: Guter Orientierungssinn, Schnell, Nervosität, Sprungsicherheit
+Futterbedarf: 3 Stein / 3 Stein / 4 Stein / 5 Stein
+Preis: 15 D
+Besondere Kampfregeln: Gezielter Angriff / Niederwerfen (4)
+Allgemeine Ausbildung: Lasttier' ,N'U2 123' ,N'Uthuria' ,N'Wälder' ,N'Yaxus versuchen ihren Gegner umzustoßen und flüchten dann.' ,N'40 Rationen Fleisch, Geweih (Trophäe), Fell oder Leder (besser)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000841' ,N'Buruxal-Blutpriester (elite)' ,NULL ,NULL ,9 ,N'1W6' ,2 ,10 ,28 ,28 ,-4 ,32 ,12 ,7 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14    KL 13 
+IN 13     CH 14
+FF 12     GE 12 
+KO 12    KK 11
+
+Vorteile / Nachteile: Geweiht (Xo’Artal-Panthoen), Resistenz gegen Krankheiten; Arroganz 8, Blutsteingebunden, Moralkodex
+
+Talente: Athletik 4, Selbstbeherrschung 7, Sinnenschärfe 6, Menschenkenntnis 7, Überreden 8, Überzeugen 8, Götter/ Kulte 8, Aufmerksamkeit, Ausweichen I und II
+
+Sonderfertigkeiten: Karmalqueste, Liturgiekenntnis (Xo’Artal-Pantheon) 15
+
+Liturgien: Blutopfer der Tlamachil, Weisheitssegen (Ziel nur G), Schutzsegen, Märtyrersegen, Eidsegen, Tranksegen, Innere Ruhe, Namenloses Vergessen (I), Pech und Schwefel, Namenlose Raserei (II), Waffenfluch (III), Herbeirufung der Diener des Herrn, Hand des Blutgoldes (II), Haut des Feindes, Herbeirufung der Heerscharen Burdus (III), Schwindende Zauberkraft, Seelenschatten (IV), weitere Liturgien' ,N'U3 85' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,6 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000842' ,N'Riesengürteltier' ,NULL ,NULL ,8 ,N'1W6' ,2 ,0 ,60 ,80 ,0 ,0 ,0 ,10 ,12 ,6 ,NULL ,NULL ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,13 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Besondere Kampfregeln: sehr großer Gegner
+Konfliktverhalten: Das Riesengürteltier ist bereit, seine Beute zu verteidigen und droht zunächst jedem, der sich bis auf 10 Schritt heranwagt. Verbleibt ein Held länger als 10 KR in diesem Radius, greift es an und kämpft bis zum Tod.' ,N'U1 65' ,N'Uthuria' ,N'Uthuria' ,NULL ,N'120 Rationen Fleisch' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000843' ,N'Xo''Artal-Krieger (Schlangenkrieger, elite)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,40 ,41 ,0 ,0 ,15 ,4 ,NULL ,8 ,NULL ,3 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 10
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Gezielter Stich, Rüstungsgewöhnung I (Schlangenlederkleidung), Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000844' ,N'Knochengarde' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,10 ,N'1W6' ,2 ,9 ,30 ,9999 ,-6 ,0 ,0 ,6 ,NULL ,6 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,NULL ,6 ,5 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Nebel
+Ahnenmacht: Untotenanführer, Dunkelheit, Immunität gegen Schwerter, Säbel, Stäbe
+Besondere Kampfregeln und -manöver: Schildkampf II, Rüstungsgewöhnung III, Wuchtschlag, Niederwerfen, Sturmangriff, Gegenhalten
+Die Knochengarde ist in der Regel besser gerüstet als andere Skelette und besitzt auch bessere Fertigkeiten. Schwere Rüstungen, Schuppenpanzer oder Plattenharnische (mit RS 5 oder 6) sowie Helme sind üblich. Schilde  können verwendet werden. Je nach Kultur können regionale Waffen und Rüstungen verwendet werden.' ,N'VTuU 130, 49' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000845' ,N'Xo''Artal-Krieger (Stierkrieger, Anführer)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,40 ,41 ,0 ,0 ,15 ,4 ,NULL ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 13
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante), Eisern
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Niederwerfen, Rüstungsgewöhnung I (Schwerer Hartholzharnisch), Wuchtschlag, Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000846' ,N'Friedloser (Escaladir)' ,NULL ,NULL ,9 ,N'1W6' ,2 ,0 ,100 ,110 ,0 ,0 ,0 ,5 ,NULL ,14 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,14 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Besondere Kampfregeln: Raserei (4)*, Verbeißen, Überrennen (11, 3W6+4), Niederwerfen (8, Stoß), großer Gegner *) Besessene Tiere geraten in Raserei, wenn ihre Lebenspunkte unter 50 gefallen sind.
+Konfliktverhalten: Friedlose kämpfen nur, wenn ihnen keine Fluchtmöglichkeit bleibt. Dann jedoch attackieren sie mit aller Macht das vermeintlich schwächste Glied in den Reihen der Angreifer, um durchzubrechen. Vom Caladir befallene Exemplare greifen jedes Lebewesen an, dessen sie ansichtig werden und kämpfen bis zum bitteren Ende. Gelingt es, den Blutwurm zu entfernen, bleibt der Friedlose noch weitere 1W6 SR unter dessen Kontrolle, bevor er versucht zu  iehen.' ,N'U1 97' ,N'Uthuria' ,NULL ,NULL ,N'700 Rationen Fleisch, Haut (Leder) oder Fell (beides teuer), Gebiss (Trophäe), Caladir (1W3, Luxus, nur bei „versklavten“ Tieren)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000847' ,N'Xo''Artal-Krieger (Schlangenkrieger, Anführer)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,40 ,41 ,0 ,0 ,15 ,4 ,NULL ,8 ,NULL ,3 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 13
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante), Eisern
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Gezielter Stich, Rüstungsgewöhnung I (Schlangenlederkleidung), Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000848' ,N'Schlangenkadaver' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/bodirwurm.png' ,12 ,N'1W6' ,2 ,4 ,10 ,0 ,0 ,0 ,0 ,12 ,NULL ,4 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,5 ,NULL ,5 ,5 ,1 ,N'Untoter, Thargunitoth, Tijakool, Boron, Tierkadaver' ,N'Eigenschaften: Mumie (Schreckgestalt I, Resistenz (profane Waffen), Verwundbarkeit (Feuer), Erhöhtes Infektionsrisiko (1)), Gift (Stufe 5, GE und INI –2 für 2W6 KR)
+Ahnenmacht: Würgen (WdS 114)
+Besondere Kampfregeln und -manöver: Sehr kleiner Gegner (AT+3/PA+6), Gezielter Angriff (bei Glücklicher Attacke; umgeht RS).' ,N'VTuU 134, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000849' ,N'Krummbuckel (Knochengolem)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,8 ,N'1W6' ,2 ,0 ,27 ,200 ,0 ,0 ,11 ,10 ,NULL ,7 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,10 ,3 ,NULL ,N'Golem, Skelett, Thargunitoth' ,N'Besondere Kampfregeln und -manöver: Kleiner Gegner (+1/+2)
+Besondere Eigenschaften: Immunität gegen Form, leichte Empfindlichkeit gegen geweihte Objekte, mittlere Empfindlichkeit gegen geweihte Objekte des Boron, Verbindung zum Beschwörer' ,N'VTuU 119' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000850' ,N'Gefiederte Schlange (Coatl, 100 Jahre)' ,NULL ,NULL ,13 ,N'1W6' ,3 ,0 ,100 ,100 ,60 ,0 ,0 ,10 ,NULL ,22 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,12 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Schuppenkriechtier, Schlange' ,N'Größe: 12 Schritt Spannweite Gewicht: 3 Quader
+
+MU 17-21
+FF 6-10 
+KL 10-13 
+GE 17-21
+IN 10-13 
+KO 17-26 
+CH 9-14 
+KK 17-28
+
+Besondere Kampfregeln: großer Gegner, Flugangriff (Klauen), Flugangriff / Umschlingen (5) / Biss, Flugangriff / Schwanzschlag / Niederwerfen (7), Niederwerfen (Schwanzschlag oder Halsschwenker, 6), Sturzflug (Klauen), Gezielter Angriff / Verbeißen (6, Biss), zusätzliche Aktion (1)
+Magie: kompetent in Gedankensprache, Flugfähigkeit, durchschnittlich in Einfluss, Hellsicht, Telekinese, Verständigung' ,N'U2 117, 118' ,N'Uthuria' ,N'Dschungelgebiete oder Gebirgsketten' ,N'Je nach Individuum unterschiedlich, jedoch fallen ihnen durch ihre Flugfähigkeiten sowohl Überraschungsangriffe als auch eine Flucht sehr leicht.' ,N'Federn (je 5 D, insgesamt etwa 2000 Dukaten), Karfunkel (400 D)' ,N'Einzelgänger' ,4 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000851' ,N'Ghul (Morokun)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,2 ,0 ,40 ,70 ,0 ,0 ,0 ,15 ,10 ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12 ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Eigenschaften: Ghul (Schreckgestalt II (4), Erhöhtes Infektionsrisiko (5)), Astralsinn, Dunkelheit, Schreckgestalt II (4), Einlullen (Blick), Halluzination (Blick), Zauber (verschiedene möglich, zum Beispiel EIGENE ÄNGSTE, ERINNERUNG, WIDERWILLE)
+Besondere Kampfregeln und -manöver: Gezielter Angriff (Biss mit 1W+4 TP, Ghulgift)
+Ghulgift: Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'VTuU 118, 25' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000852' ,N'Schlinger (Skelett)' ,NULL ,NULL ,5 ,N'1W6' ,2 ,1 ,85 ,9999 ,0 ,0 ,0 ,10 ,NULL ,12 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,17 ,NULL ,7 ,4 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett, Tierkadaver' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche,
+Speere, Pfeile, Bolzen)
+Ahnenmacht: Steinknochen, zusätzliche Aktion, Säure-Geifer
+Besondere Kampfregeln und -manöver: Niederwerfen (10, Schwanzangriff), sehr großer Gegner, Tiermanöver Raserei (5, Hälfte der LeP verloren), Verbeißen; kann jede KR mit Biss und Schwanz zwei verschiedene Gegner angreifen' ,N'VTuU 135, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000853' ,N'Eisleiche' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,7 ,N'1W6' ,2 ,0 ,24 ,9999 ,0 ,0 ,0 ,0 ,NULL ,4 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,8 ,NULL ,3 ,2 ,3 ,N'Untoter, Humanoid' ,N'Eigenschaften: Eisleiche (Regeneration I (Nagrach-Unheiligtümer), Schwere Empfindlichkeit gegen geweihte Objekte des Firun, Kälte-Griff (2), Immunität gegen Eis und Kälte, Verwundbarkeit gegen Feuer und Vulkanglas), Immunität gegen Wunden
+Ahnenmacht: Aura (Kälte), Lähmende Berührung, Lebenshauch' ,N'VTuU 116, 23' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000854' ,N'Xo''Artal-Krieger (Schlangenkrieger, erfahren)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,38 ,39 ,0 ,0 ,14 ,4 ,NULL ,8 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 9
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Gezielter Stich, Rüstungsgewöhnung I (Schlangenlederkleidung), Kampfreflexe, weitere passende Manöver.' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000855' ,N'Blutbestie' ,NULL ,NULL ,14 ,N'1W6' ,2 ,0 ,45 ,0 ,5 ,0 ,0 ,18 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,16 ,NULL ,10 ,12 ,6 ,N'Groteske Scheußlichkeiten' ,N'Eigenschaften: Formlosigkeit II, Regeneration I, Resistenz gegen profane Angriffe, Immunität gegen Wunden, Immunität gegen kritische Treffer, Immunität (Dolche, Fechtwaffen, Pfeile, Bolzen), Schreckgestalt II, Wachstum (Durch SP mit dem Maul)
+Ahnenmacht: Teilung, Immunität gegen profane Angriffe, Wachstum (durch SP mit den Blutpeitschen)
+Besondere Kampfregeln und -manöver: Tiermanöver Raserei (2, Erster Schaden durch Maul); Jede KR hat die Blutbestie eine Angriffsaktion mit dem Maul, sowie eine Anzahl von Angriffs- und Verteidigungsaktionen mit den Blutpeitschen je nach Größenkategorie durch das Wachstum (mittel: je eine, groß je 2, sehr groß je 3)' ,N'VTuU 128, 46' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000856' ,N'Schulenlose Xo''Artal-Krieger' ,NULL ,NULL ,0 ,N'1W6' ,2 ,10 ,33 ,32 ,0 ,0 ,12 ,3 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 12 KL 10 
+IN 12 CH 11
+FF 11 GE 13 
+KO 12 KK 12
+Vorteile / Nachteile: Hitzeresistenz; Aberglaube 6, Randgruppe (schulenlose Krieger)
+
+Talente: Körperbeherrschung 5, Selbstbeherrschung 5, Gassenwissen 6
+Sonderfertigkeiten: Geländekunde (Dschungel), Kulturkunde (Xo’Artal), Linkhand, Aufmerksamkeit, Formation
+Ausrüstung: Wurfbeil, Jagdmesser, Kurzspeer, Chilmalli (Holz), Lendenschurz, Wasser und Proviant für 3 Tage
+Konfliktverhalten: Die schulenlosen Krieger Tipoxatls sind gegen ihren Willen und gegen ihr Schicksal einberufen worden.
+Daher verfügen sie zwar über grundlegende Fähigkeiten, nicht jedoch das Selbstverständnis klassischer Xo’Artal- Krieger. Im Verbund stellen sie zwar einen ernstzunehmenden Gegner dar, für den Flucht und Aufgabe je nach Situation aber durchaus Optionen sind.
+' ,N'U3 84' ,N'Uthuria' ,N'Dschungel' ,NULL ,NULL ,NULL ,11 ,12);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000857' ,N'Buruxal-Blutpriester (erfahren)' ,NULL ,NULL ,9 ,N'1W6' ,2 ,10 ,28 ,28 ,0 ,22 ,12 ,6 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14    KL 13 
+IN 13     CH 14
+FF 12     GE 11 
+KO 12    KK 11
+
+Vorteile / Nachteile: Geweiht (Xo’Artal-Panthoen), Resistenz gegen Krankheiten; Arroganz 8, Blutsteingebunden, Moralkodex
+
+Talente: Athletik 4, Selbstbeherrschung 7, Sinnenschärfe 6, Menschenkenntnis 7, Überreden 8, Überzeugen 8, Götter/ Kulte 8, Aufmerksamkeit, Ausweichen I
+
+Sonderfertigkeiten: Karmalqueste, Liturgiekenntnis (Xo’Artal-Pantheon) 10
+
+Liturgien: Blutopfer der Tlamachil, Weisheitssegen (Ziel nur G), Schutzsegen, Märtyrersegen, Eidsegen, Tranksegen, Innere Ruhe, Namenloses Vergessen (I), Pech und Schwefel, Namenlose Raserei (II), Waffenfluch (III), Goldene Hand (I), Herbeirufung der Diener des Herrn oder Hand des Blutgoldes (II), Haut des Feindes, Herbeirufung der Heerscharen Burdus (III)' ,N'U3 85' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,10 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000858' ,N'Ghul (Späher)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,3 ,0 ,30 ,80 ,0 ,0 ,0 ,15 ,10 ,9 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,11 ,NULL ,NULL ,NULL ,NULL ,N'Untoter ' ,N'Eigenschaften: Ghul (Schreckgestalt I (3), Erhöhte Infektionsrisiko (5)), Zusätzliche Aktion
+Besondere Kampfregeln und -manöver: Gezielter Angriff (Biss mit 1W+4 TP, Ghulgift), TaW Klettern 7, Anspringen (3), Hinterhalt
+Ghulgift: Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'VTuU 118, 25' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000859' ,N'gefallener Krieger (Lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,10 ,N'1W6' ,2 ,9 ,0 ,9999 ,0 ,0 ,0 ,6 ,NULL ,5 ,NULL ,-5 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,8 ,NULL ,3 ,3 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Ahnenmacht: Lebenshauch, Untotenanführer, Schwächende Aura
+Besondere Kmapfregeln und -manöver: Wuchtschlag
+mögliche Rüstungen: Kettenhemd, Waffenrock, Lederrüstung' ,N'VTuU 121, 33' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,9);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000860' ,N'Krokodilkrieger (Gesela) der Nimu-Wanaq' ,NULL ,NULL ,0 ,N'1W6' ,2 ,11 ,33 ,34 ,0 ,0 ,0 ,3 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Waldmensch' ,N'Sonderfertigkeiten: Hauch des Odûn, Haut des Odûn, Kampf im Wasser, Ritualkenntnis Durro-Dûn 8, Unterwasserkampf
+
+Talente: Körperbeherrschung +7, Boote Fahren (Krokodilgespann) +8 (+10), Heilkunde Wunden +6, Wildnisleben +7
+Konfliktverhalten: Die Gesela kämpfen, um zu töten – entweder auf der Jagd oder gegen ihre Feinde. Allein im Kräftemessen mit den Krokodilen vermeiden sie es.' ,N'U1 44' ,N'Uthuria' ,N'Dschungel' ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000861' ,N'Flederäffchen' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/fledermaus.png' ,8 ,N'2W6' ,2 ,0 ,10 ,30 ,0 ,0 ,0 ,3 ,NULL ,14 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,3 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Primat, Kleinaffe' ,N'Besondere Kampfregeln: Flugangri , Gelände (Höhle), Gezielter Angriff / Verbeißen, sehr kleiner Gegner (AT+4 / PA+8),
+Raserei (Licht, 3)
+Konfliktverhalten: Licht bereitet den an die Dunkelheit der Höhle angepassten Flederä chen Schmerzen und lässt sie in Raserei verfallen. Sie werfen sich im Rudel mit Flugangriffen auf alles, was eine Lichtquelle bei sich trägt. Bei guten Attacken verbeißen sie sich. In Finsternis scheren sie sich nicht um die Helden und bleiben friedlich. Wenn die Hälfte besiegt wurde, ziehen sie sich zurück.' ,N'U1 68' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000862' ,N'Ghul (Ghulkönig)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,7 ,N'1W6' ,2 ,0 ,55 ,50 ,0 ,0 ,0 ,15 ,10 ,7 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,13 ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Eigenschaften: Ghul (Schreckgestalt II (5), Erhöhte Infektionsrisiko (5)), Wachstum (Gefressene Opfer), Säure-Geifer
+Besondere Kampfregeln und -manöver: Gezielter Angriff (Biss mit 1W+6 TP +Folgeschaden durch Säure-Geifer, Ghulgift), Niederwerfen (Arme, 3), großer Gegner
+Ghulgift: Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'VTuU 118, 25' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000863' ,N'Buruxal-Blutmagier (elite)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/magier.png' ,6 ,N'1W6' ,2 ,11 ,25 ,28 ,43 ,0 ,12 ,8 ,NULL ,8 ,NULL ,6 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften
+MU 14     KL 15 
+IN 12       CH 14
+FF 12       GE 12 
+KO 12      KK 13
+
+Vorteile / Nachteile: Eisenaffine Aura, Feste Matrix, Vollzauberer, Speisegebote, Blutsteingebunden, Wahrer Name, Arroganz 6, Neugier 5, Aufmerksamkeit, Ausweichen I, Finte, Wuchtschlag
+
+Talente: Athletik 4, Selbstbeherrschung 7, Sinnenschärfe 6, Menschenkenntnis 7, Überreden 8, Magiekunde 8
+
+Sonderfertigkeiten: Regeneration I, Große Meditation, Repräsentation Blutmagier, Ritualkenntnis Blutmagier 6, Verbotene Pforten
+
+Zauber: Goldene Haut 10, Attributo 9, Blick aufs Wesen 10, Horriphobus 12, Plumbumbarum 10, Arachnea 14, Spinnenlauf 10, Somnigravis 10, Höllenpein 12, Hexengalle 8, Odem Arcanum 12, Blutklinge 11
+
+Rituale: Ritualkenntnis Blutmagier 15, Blutopfer der Tetlachi (I), kleine Formung des Blutsteins, Apport (I), Kraft des Tieres (II), Haut des Erdblutes (III), Blutraub (III), Pfad der Blutrache (IV), weitere passende Rituale' ,N'U3 85' ,N'Uhruia' ,NULL ,NULL ,NULL ,NULL ,13 ,-1);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000864' ,N'Priestermumie (Lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,12 ,N'1W6' ,2 ,9 ,40 ,9999 ,0 ,0 ,0 ,15 ,NULL ,5 ,-3 ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,13 ,NULL ,8 ,8 ,5 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Mumie (Belebte Gliedmaßen, Schreckgestalt I), Resitenz (profane Waffen), Verwundbarkeit (Feuer), Erhöhte Infektionsrisiko (I)), Lebenssinn
+
+Ahnenmacht: Astralsinn, Langer Arm, Schwarmkörper (winzig, Käfer), Zauber (aus der Liste Arachnae, Böser Blick, Höllenpein, Krabbelnder Schrecken, Vipernblick)
+
+Besondere Kampfregeln und -manöver: Mumie (Gezielter Angriff/ Niederwerfen (2) , +8TP Waffenschaden durch ihre hohe Stärk. Jeder Waffenangriff ist automatisch ein Niederwerfen-Manöver), Würgen
+
+Artefakte: Petrokal, zwei Ladungen Dunkelheit (12 ZfP*), Auslösen freie Aktion' ,N'VTuU 125, 42' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000865' ,N'Ledermann  (Moorleiche, Lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,0 ,N'1W6' ,2 ,5 ,32 ,9999 ,0 ,0 ,0 ,7 ,NULL ,5 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,7 ,NULL ,5 ,5 ,2 ,N'Untoter, Thargunitoth, Tijakool, Boron, lebender Leichnam' ,N'Eigenschaften: Moorleiche (Ersäufen, Schreckgestalt I)
+Ahnenmacht: Angriff (Humus/Wasser), Durch (Wasser/ Humus) gehen, Gestank
+Besondere Kampfregeln und -manöver: Hinterhalt, Kampf im Wasser, Würgen' ,N'VTuU 123, 37' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000866' ,N'Drachenschildkröte (Tutuxa, 500 Jahre)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/sumpfechse.png' ,9 ,N'1W6' ,2 ,0 ,100 ,250 ,90 ,0 ,0 ,7 ,19 ,4 ,8 ,NULL ,10 ,10 ,10 ,10 ,10 ,10 ,10 ,10 ,18 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Schildkröte' ,N'Größe: 10 Schritt Körperlange Gewicht: 20 Quader
+MU 14-18 KL 15-25 IN 16-22 CH 15-22
+FF 2-6 GE 8-14 KO 25-30 KK 15-20
+Besondere Kampfregeln: sehr großer Gegner, Gelände (Wasser), Unterwasserkampf, Niederwerfen (Rammstoß und Wasserstrahl, 5 / 6 / 7), Gezielter Angriff / Verbeißen (3, Biss) Magie: meisterlich in Gedankensprache, Verständigung und Hellsicht, kompetent in Elementar(Wasser), Antimagie, Umwelt und Temporal
+Konfliktverhalten: Drachenschildkröten sehen Kämpfe nur als letztes Mittel und versuchen sie zu vermeiden. Sie greifen nur unterstützend durch Rat, aber auch Magie, für die Seite des Guten ein. Falls sie zum Kampf gezwungen sind, setzen sie zur Verteidigung ihre Wassermagie und Wasserstrahlen ein. Unter Wasser nutzen sie auch Rammstöße und Bisse. Sie scheuen sich nicht, sich zurückzuziehen, falls nötig, jedoch verteidigen sie im Falle von Gefahren für eine sie wichtige Sache notfalls auch bis zum Tode.' ,N'U3 132, 133' ,N'Uthuria' ,N'offenes Meer' ,NULL ,N'Panzer (500 Dukaten)' ,N'einzeln' ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000867' ,N'Bleichlurch (Cipactli)' ,NULL ,N'' ,0 ,N'1W6' ,2 ,0 ,150 ,140 ,0 ,0 ,0 ,0 ,NULL ,14 ,NULL ,NULL ,8 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,17 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Schuppenkriechtier, Schlange' ,N'Der Kopf ist stark gepanzert und hat einen erhöhten RS. Alle Angriffe von der Vorderseite müssen den höheren RS überwinden.
+Besondere Kampfregeln: sehr großer Gegner, Hinterhalt (5), Sturmangri (5), Umreißen (6, Schwanzschlag), Unterwasserkampf, Verbeißen (2)
+Besondere Eigenschaften: Regeneration I, Wasserwesen
+Konfliktverhalten: Der Cipactli schlägt für gewöhnlich per Sturmangriff aus dem Hinterhalt mit einem Rammstoß zu. Im weiteren Kampf setzt er gegen kleinere Wesen gezielt Schwanzschläge und Bisse ein. Zwar können ihm  flinke Wesen entkommen, an Gegenwehr ist er aber kaum gewöhnt. Sinken seine LeP deshalb unter 50, versucht er zu  fliehen.
+Durch eine (magische) Metamorphose ist das Cipactli in der Lage, sich an Land zu bewegen und dort zu leben. Es gelten folgende Modifkationen:
+Unterwasserkampf wird zu Kampf im Wasser und er wird vom Wasserwesen zum Amphibischen Wesen, der Rammstoß fällt weg und wird durch Überrennen / Trampeln (8, AT 15, TP 5W6) ersetzt, die GS an Land beträgt 5, die INI sinkt um 3 Punkte, die Regeneration fällt weg.
+' ,N'U2 116, 117' ,N'Uthuria' ,N'Seefahrt an den nördlichen Küsten' ,NULL ,N'-' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000868' ,N'Faulkrähe' ,NULL ,NULL ,8 ,N'1W6' ,2 ,0 ,5 ,9999 ,0 ,0 ,0 ,13 ,NULL ,11 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,3 ,NULL ,3 ,2 ,1 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett, Tierkadaver' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Limbuswanderer, Geisternebel, Dunkelheit
+Besondere Kampfregeln und -manöver: Flugangriff (+2/+4), Sehr kleiner Gegner (AT+3/PA+6), Gezielter Angriff (bei Glücklicher Attacke; umgeht RS), Festkrallen, Sturzflug
+Faulkrähen können auch spontan entstehen, wenn durch einen KRÄHENRUF gerufene Tiere fallen. Sie haben in diesem Fall automatisch die zusätzlichen Eigenschaften Geisternebel und Lockruf.' ,N'VTuU 133, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,7 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000869' ,N'Skelett (Schütze)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,10 ,N'1W6' ,2 ,6 ,20 ,9999 ,0 ,0 ,0 ,5 ,NULL ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,7 ,NULL ,4 ,5 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Verfügt über einen Bogen aus Gebein (Werte wie Kompositbogen mit TP +1, dazu Feuerpfeile sowie Knochenpfeile die nach Wahl wie Nekrotische Berührung wirken oder Folgeschaden (Feuer) haben), Immunität gegen Schwerter, Säbel, Stäbe
+Besondere Kampfregeln und -manöver: Scharfschütze, Schnellladen (Bogen)
+RS nach Rüstung' ,N'VTuU 131, 50' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,10 ,20);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000870' ,N'Xo''Artal-Krieger (Adlerkrieger)' ,NULL ,NULL ,11 ,N'1W6' ,2 ,0 ,35 ,36 ,0 ,0 ,14 ,4 ,NULL ,7 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 8
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86).
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung (Iryanrüstung) I, Schnellziehen, Scharfschütze' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,3);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000871' ,N'Löwenkadaver (Skelett)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/loewe.png' ,6 ,N'1W6' ,2 ,5 ,48 ,9999 ,0 ,0 ,0 ,8 ,NULL ,14 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12 ,NULL ,4 ,3 ,2 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett, Tierkadaver' ,N'Eigenschaften: Zombie (Immunität gegen Wunden) / Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Tiermanöver Raserei (3, Erstes Blut), Immunität gegen Schwerter, Säble, Stäbe, Immunität gegen Wunden
+Besondere Kampfregeln und -manöver: Hinterhalt (4), Anspringen (10) / Verbeißen, Gezielter Angriff / Doppelangriff (Prankenhieb und Biss)' ,N'VTuU 135, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000872' ,N'Troll (untot)' ,NULL ,NULL ,8 ,N'1W6' ,2 ,0 ,60 ,0 ,0 ,0 ,0 ,6 ,NULL ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,13 ,NULL ,8 ,8 ,5 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Steinknochen (6)
+Ahnenmacht: Grabeklauen, Zerbersten (Erzsplitter), Erzerner Griff (2, Folgeschaden ist Würgen (2W6SP(A) pro KR)
+Besondere Kampfregeln und -manöver: Großer Gegner, Wuchtschlag, Niederwerfen, Befreiungsschlag' ,N'VTuU 126, 44' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000873' ,N'Uthurische Werkatze (Quentiko)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/gepard.png' ,0 ,N'1W6' ,2 ,0 ,70 ,70 ,0 ,0 ,0 ,4 ,8 ,10 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,15 ,NULL ,NULL ,NULL ,NULL ,N'Werwesen' ,N'Besondere Kampfregeln: großer Gegner, Anspringen (6, Klauen), Niederwerfen (6), Verbeißen (5, Biss), Raserei (4, während Verwandlung sowie bei Verletzung in Tierform), Zusätzliche Kampfaktion (1)
+
+Besondere Eigenschaften: Immunität (Hellsicht; Quentikos werden nicht als magisch wahrgenommen), Infektion (Lykanthropie), Lebensraub I (Je 3 SP aus Bissen 1 LeP), Nachtsicht, Nachteil Raubtiergeruch, Regeneration I, Resistenz (profane und magische Angri e), Schreckgeheul I, Traum-Lockruf (ähnlich TRAUMGESTALT; der Quentiko lockt sein schlafwandelndes Opfer zu sich, das mit Selbstbeherrschungs-Probe +12-MR widerstehen kann), Verwundbarkeit (Elemente Feuer und Humus
+sowie Waffen, deren Metall oder Holz in derselben Mondphase wie die aktuelle Erscheinungsform geschmiedet bzw. gefällt wurden; sie wirken verletzend und richten bei Schaden zusätzlich eine Wunde an)
+
+Tierform: Werte siehe oben
+
+Menschenform: Die Werte entsprechen dem des Menschen, aber mit den gleichen Besonderen Eigenschaften wie in der Tierform
+
+Skelettform: Wie Tierform, jedoch zusätzlich Kältegri (+3 TP und Folgeschaden von 1 SP pro KR für 3 KR), Schreckgeheul I ersetzt durch Schreckgestalt I, kein Anspringen und Verbeißen
+
+Schattenform: Wie Tierform, jedoch keine besonderen Kampfregeln, Formlosigkeit II, Unsichtbarkeit I und Immunität statt Resistenz gegen profane Angri e; keine Verwundbarkeiten gegen Feuer und Humus' ,N'U2 120' ,N'Uthuria' ,NULL ,N'Das Werwesen kämpft grausam und kaltherzig mit Bissen und Klauen, hängt jedoch an seiner Existenz und flieht bei weniger als 20 LeP oder wenn es aufgrund seiner Verwundbarkeiten zu unterliegen droht.' ,N'Fell (20 D)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000874' ,N'Mondkrieger' ,NULL ,NULL ,11 ,N'1W6' ,2 ,9 ,42 ,45 ,0 ,0 ,0 ,6 ,NULL ,6 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,10 ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Waldmensch' ,N'Besondere Kampfregeln: Aufmerksamkeit, Eisern, Mondlicht: Ein Mondkrieger kann sich als Aktion genau eine Kampfrunde lang unsichtbar machen
+Konfliktverhalten: Ist ein Mondkrieger schwer verletzt (LeP unter 10), wird er die Flucht ergreifen.' ,N'U1 62' ,N'Uthuria' ,N'Dschungel' ,NULL ,NULL ,NULL ,18 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000875' ,N'Sonnenpanther (erfahrene Stammeskrieger)' ,NULL ,NULL ,10 ,N'1W6' ,2 ,13 ,37 ,40 ,0 ,0 ,15 ,2 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15  KL 11 
+IN 13    CH 12
+FF 13    GE 16 
+KO 15   KK 14 
+SO 4
+
+Vorteile/Nachteile: Hitzeresistenz; Aberglaube 7, Meeresangst 8
+Sonderfertigkeiten: Aufmerksamkeit, Wuchtschlag
+
+Konfliktverhalten: Angesichts der überlegenen Kampfkraft der Buruxal greifen die Sonnenpanther oft in Überzahl (WdS 58) und aus dem Hinterhalt (WdS 78) an. Sie fliehen, sobald mehr als die Hälfte von ihnen eine Wunde erlitten oder die Hälfte ihrer LeP verloren hat.
+Besonderheiten: Die meisten tragen Uburu-Rüstungen (2/2).' ,N'U3 86' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,14 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000876' ,N'Mishkara-Balg (herausgelöstes Kind)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/grolm.png' ,11 ,N'1W6' ,1 ,6 ,12 ,9999 ,0 ,0 ,0 ,10 ,NULL ,9 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Groteske Scheußlichkeiten, Untoter, Zombie' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Schreckgestalt II
+Ahnenmacht: Lockruf, Klebriges Sekret
+Besondere Kampfregeln und -manöver: Gezielter Biss / Verbeißen
+
+Die Wirkung der Eigenschaft Parasit tritt ein, wenn das Balg ein Opfer tötet. Beachten Sie auch die eintretende Raserei der ‘Mutter’, wenn das Balg vernichtet wurde oder sich durch Verbeißen von ihr gelöst hat.' ,N'VTuU 128, 46' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,10 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000877' ,N'Zombie-Minotaurus' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/minotaurus.png' ,8 ,N'1W6' ,2 ,0 ,40 ,9999 ,0 ,0 ,0 ,7 ,NULL ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,11 ,NULL ,7 ,6 ,5 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Unnatürliche Aura
+Ahnenmacht: Schreckgeheul I (Kampfschrei), Untotenanführer, Säure-Geifer
+Besondere Kampfregeln und -manöver: Großer Gegner, Kopfstoß/Niederwerfen (3), Wuchtschlag' ,N'VTuU 127, 43' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000878' ,N'Wachspinne' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/maraskantarantel.png' ,6 ,N'2W6' ,2 ,9 ,25 ,40 ,0 ,0 ,0 ,10 ,NULL ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,6 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Spinnentier, Spinne' ,N'Größe: etwa 1,5 Schritt Körperlänge
+Gewicht: um 25 Stein' ,N'U3 85' ,N'Uthuria' ,N'Dschungel' ,NULL ,N'Gift (20 S)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000879' ,N'Kriegerspinne (Chilmani-Tocatl, Veteran)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/maraskantarantel.png' ,17 ,N'2W6' ,4 ,0 ,200 ,250 ,0 ,7 ,0 ,16 ,NULL ,14 ,NULL ,NULL ,10 ,10 ,10 ,10 ,10 ,10 ,10 ,10 ,18 ,NULL ,NULL ,NULL ,NULL ,N'Spinne' ,N'Größe: 5 Schritt Torso Gewicht: 1 Quader
+MU 20-25 KL 8-11 IN 12-15 CH 6-9
+GE 14-18 FF 6-12 KO 30-34 KK 24-28
+Besondere Kampfregeln: Sehr großer Gegner, Festnageln (Bein), Finte, Gezielter Stich (Bein), Hinterhalt (7), Nachtsicht, Netz (8), Schreckgestalt I, Todesstoß (Bein), Trampeln (4W6+8), Überrennen (10, 5W6), Gezielter Angriff/ Verbeißen (Biss), zusätzliche Aktion (2) / zusätzliche Aktion (4)
+Konfliktverhalten: Kriegerspinnen spüren keinen Schmerz und kämpfen loyal bis zum Ende. Sie beginnen einen Kampf gerne mit entweder einem Hinterhalt oder dem Verschießen ihrer Netze. Gleich darauf greifen sie das überraschte oder im Netz eingesponnene Ziel gnadenlos und gezielt mit ihren Beinen mit gezielten Stichen, Todesstößen oder Festnageln an.' ,N'U3 130' ,N'Uthuria' ,N'Höhlen' ,NULL ,N'Gift (5 D), Chitinpanzerung (300 D)' ,N'einzeln oder zu mehreren' ,0 ,4);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000880' ,N'Raubliane' ,NULL ,NULL ,8 ,N'1W6' ,2 ,0 ,50 ,90 ,0 ,0 ,0 ,17 ,NULL ,0 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,11 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Besondere Kampfregeln: Verbeißen (Maul)*, Umklammern (4, Klebrige Lianen)*
+Konfliktverhalten: Die Pflanze beißt schnell und gierig alles, was sie zu fassen kriegt. Mangels Fluchtmöglichkeiten tut sie
+dies bis zum Tod.
+
+*) Aus der Haftung der Liane kann man sich wie beim Umklammern mit KK- oder GE-Probe +4 befreien. Die Lianen können auch abgetrennt werden (je LeP 12 und RS 3). Die Raubliane hat ihr Opfer innerhalb von W6+1 KR zum Maul gezogen und greift dann gewöhnlich durch ihren Biss an und kann sich Verbeißen.' ,N'U1 98' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000881' ,N'Zombie-Teil (Kopf)' ,NULL ,NULL ,3 ,N'1W6' ,2 ,0 ,6 ,9999 ,0 ,0 ,0 ,8 ,NULL ,1 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,4 ,NULL ,3 ,3 ,1 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Besondere Kampfregeln und -manöver: Gezielter Biss / Verbeißen' ,N'VTuU 139, 61' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,8 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000882' ,N'Mumie (VTuU, Lebender Leichnam) ' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,0 ,N'1W6' ,2 ,8 ,40 ,9999 ,0 ,0 ,0 ,15 ,NULL ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12 ,NULL ,6 ,7 ,5 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Mumie (Belebte Gliedmaßen, Schreckgestalt I, Resitenz (profane Waffen), Verwundbarkeit (Feuer), Erhöhtes Infektionsrisiko (I))
+Ahnenmacht: Langer Arm, Lebenssinn, Schwarmkörper (winzig, Käfer)
+Besondere Kampfregeln und -manöver: Mumie (gezielter Angriff/ Niederstrecken (2), +8TP Waffenschaden durch ihre hohe Stärke. Jeder Waffenangriff ist automatisch en Niederwerfen-Manöver).' ,N'VTuU 124, 39' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,11 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000883' ,N'Gefiederte Schlange (Coatl, 1000 Jahre)' ,NULL ,NULL ,13 ,N'1W6' ,3 ,0 ,150 ,180 ,140 ,0 ,0 ,10 ,NULL ,22 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,19 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Schuppenkriechtier, Schlange' ,N'Größe: 12 Schritt Spannweite Gewicht: 3 Quader
+
+MU 17-21
+FF 6-10 
+KL 10-13 
+GE 17-21
+IN 10-13 
+KO 17-26 
+CH 9-14 
+KK 17-28
+
+Besondere Kampfregeln: großer Gegner, Flugangriff (Klauen), Flugangriff / Umschlingen (5) / Biss, Flugangriff / Schwanzschlag / Niederwerfen (7), Niederwerfen (Schwanzschlag oder Halsschwenker, 6), Sturzflug (Klauen), Gezielter Angriff / Verbeißen (6, Biss), zusätzliche Aktion (1)
+Magie: kompetent in Gedankensprache, Flugfähigkeit, durchschnittlich in Einfluss, Hellsicht, Telekinese, Verständigung' ,N'U2 117, 118' ,N'Uthuria' ,N'Dschungelgebiete oder Gebirgsketten' ,N'Je nach Individuum unterschiedlich, jedoch fallen ihnen durch ihre Flugfähigkeiten sowohl Überraschungsangriffe als auch eine Flucht sehr leicht.' ,N'Federn (je 5 D, insgesamt etwa 2000 Dukaten), Karfunkel (400 D)' ,N'Einzelgänger' ,5 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000884' ,N'Humunkuli (Knochengolem)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,8 ,N'1W6' ,2 ,0 ,50 ,500 ,0 ,0 ,18 ,15 ,NULL ,5 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,12 ,NULL ,16 ,1 ,NULL ,N'Golem, Skelett, Thargunitoth' ,N'Besondere Kampfregeln und -manöver: Niederwerfen, Zusätzliches Gliederpaar
+Besondere Eigenschaften: Skelett (Resitenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Immunität gegen Form, leichte Empfindlichkeit gegen geweihte Objekte, mittlere Empfindlichkeit gegen geweihte Objekte des Boron' ,N'VTuU 119, 32' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000885' ,N'Kind des Moores (Lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,0 ,N'1W6' ,2 ,0 ,28 ,9999 ,0 ,0 ,0 ,7 ,NULL ,5 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,11 ,NULL ,5 ,6 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Moorleiche (Ersäufen, Schreckgestalt I), Krallen (2), Lockruf, Unschuldiges Antlitz
+Ahnenmacht: Durch (Wasser/ Humus) gehen, Dunkelheit, Schwächende Berührung
+Besondere Kampfregeln und -manöver: Hinterhalt, Kampf im Wasser, Tiermanöver: Raserei (3, Erstes Blut), Würgen' ,N'VTuU 121, 37' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000886' ,N'Medizinmann, untot' ,NULL ,NULL ,9 ,N'1W6' ,2 ,13 ,48 ,55 ,34 ,0 ,16 ,14 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften:
+MU 16    KL 13 
+IN 17      CH 14
+FF 8        GE 10 
+KO 16     KK 12
+
+Wichtige Vor-/Nachteile: Astrale Regeneration I, Magiegespür 7 / Blutgier 12, Jähzorn 9
+Wichtige Talente: Schleichen 14, Selbstbeherrschung 17, Magiekunde 10, Pflanzenkunde 14
+
+Sonderfertigkeiten: Wuchtschlag 
+
+Magische Sonderfertigkeiten: Blutmagie, Regeneration I, Ritualkenntnis (Schamane) 14, Verbotene Pforten
+
+Rituale: Geisterkerker (II), Tabuzone (II), Farben des Krieges (III), Schlangengeist (III), Schlangenfl uch (IV)
+
+Keulenrituale: Weihe der Keule, Hilfe der Keule, Kraft der Keule, Opferkeule
+
+Eigenschaften: Geisternebel, Immunität gegen profane Angriffe, Nekrotischer Griff, Regeneration I, Schreckgestalt I, Unnatürliche Aura 
+
+Ausweichen 7
+
+In zwei Geisterkerkern (einem Schrumpfkopf und einem hölzernen Käfig) trägt er einen Braggu (WdZ 210) und einen Heshthot (WdZ 213) bei sich, die er bei Bedarf entfesselt.' ,N'VTuU 141' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000887' ,N'Springschlangen (Xoxota: Zakax)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/bodirwurm.png' ,16 ,N'1W6' ,2 ,0 ,16 ,30 ,0 ,0 ,0 ,7 ,3 ,9 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,8 ,NULL ,NULL ,NULL ,NULL ,N'Schlange' ,N'Größe: 1,5 Schritt Gewicht: 2 Stein
+Besondere Kampfregeln: sehr kleiner Gegner,  Hinterhalt (5) / Anspringen (3, bis zu 5 Schritt), Gezielter Biss, Verbeißen (2)
+Konfliktverhalten: Haben die Springschlangen passende Opfer gefunden, umzingeln sie diese in einem Hinterhalt und greifen mit blitzschnellen Sprungangri en über mehrere Schritt Entfernung an, um sie mit ihrem Gift zu lähmen und zu töten. Sie fliehen nicht.' ,N'U3 130' ,N'Uthurua' ,N'Sümpfen, Wüsten, Dschungeln, Flüssen und dem Grasland Norduthurias' ,N'fliehen nicht' ,N'Schlangenleder, Gift und 2 Rationen Nahrung' ,N'2W6 Tiere' ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000888' ,N'Huzpal' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/sumpfechse.png' ,6 ,N'1W6' ,2 ,0 ,24 ,80 ,4 ,0 ,0 ,0 ,NULL ,5 ,5 ,NULL ,-2 ,-2 ,-2 ,-2 ,-2 ,-2 ,-2 ,-2 ,3 ,NULL ,NULL ,NULL ,NULL ,N'Lasttier' ,N'Schulterhöhe: 3 Spann Gewicht: 90 Stein
+LO 7 KK 12 TK 7,5 x KK
+Bekannt für: Trittsicherheit, eigenwillig, ausdauernd, erhöhte Tragkraft, genügsam, zäh, störrisch
+Futterbedarf: 1,5 Stein / 1,5 Stein / 2 Stein / 2,5 Stein
+Preis: 15 D
+Besondere Kampfregeln: Verbeißen
+Allgemeine Ausbildung: Lasttier
+' ,N'U2 123' ,N'Uthuria' ,NULL ,N'Huzpal verbeißen sich in einen Gegner, werden sie weiter angegriffen, flüchten sie in der Regel.' ,N'60 Rationen Fleisch, Haut (Leder, teuer)' ,NULL ,0 ,-4);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000889' ,N'Blutkolibri' ,NULL ,NULL ,13 ,N'1W6' ,2 ,0 ,1 ,50 ,0 ,0 ,0 ,3 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,NULL ,NULL ,NULL ,NULL ,N'Vogel' ,N'Besondere Kampfregeln: Folgeschaden (Blutverlust, 1 SP pro KR für 1W6 KR), Gezielter Stich (SP statt TP), winziger Gegner (AT +5, keine PA erlaubt)
+Konfliktverhalten: Der Kolibri landet schnell, sticht zu, um Blut zu saugen, und ist in der Regel auch schon wieder verschwunden.' ,N'U1 99' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000890' ,N'Schindmähre (Skelett)' ,NULL ,NULL ,4 ,N'1W6' ,2 ,4 ,54 ,9999 ,0 ,0 ,0 ,8 ,NULL ,11 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,8 ,NULL ,5 ,2 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, untotes Pferd, Tierkadaver' ,N'Eigenschaften: Zombie (Immunität gegen Wunden) / Resistenz (Schwerter, Säbel, Stäbe), Immunität (Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Nebel, Unnatürliche Aura
+Ahnenmacht: Flimmernde Körperlosigkeit, Limbuswanderer, Feuerhufe (3, wie Feuer-Griff)
+Besondere Kampfregeln und -manöver: Niederwerfen (4, Tritt), großer Gegner' ,N'VTuU 134, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,10 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000891' ,N'Drachenschildkröte (Tutuxa, 1000 Jahre)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/sumpfechse.png' ,9 ,N'1W6' ,2 ,0 ,120 ,300 ,120 ,0 ,0 ,7 ,19 ,4 ,8 ,NULL ,12 ,12 ,12 ,12 ,12 ,12 ,12 ,12 ,18 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Schildkröte' ,N'Größe: 10 Schritt Körperlange Gewicht: 20 Quader
+MU 14-18 KL 15-25 IN 16-22 CH 15-22
+FF 2-6 GE 8-14 KO 25-30 KK 15-20
+Besondere Kampfregeln: sehr großer Gegner, Gelände (Wasser), Unterwasserkampf, Niederwerfen (Rammstoß und Wasserstrahl, 5 / 6 / 7), Gezielter Angriff / Verbeißen (3, Biss) Magie: meisterlich in Gedankensprache, Verständigung und Hellsicht, kompetent in Elementar(Wasser), Antimagie, Umwelt und Temporal
+Konfliktverhalten: Drachenschildkröten sehen Kämpfe nur als letztes Mittel und versuchen sie zu vermeiden. Sie greifen nur unterstützend durch Rat, aber auch Magie, für die Seite des Guten ein. Falls sie zum Kampf gezwungen sind, setzen sie zur Verteidigung ihre Wassermagie und Wasserstrahlen ein. Unter Wasser nutzen sie auch Rammstöße und Bisse. Sie scheuen sich nicht, sich zurückzuziehen, falls nötig, jedoch verteidigen sie im Falle von Gefahren für eine sie wichtige Sache notfalls auch bis zum Tode.' ,N'U3 132, 133' ,N'Uthuria' ,N'offenes Meer' ,NULL ,N'Panzer (500 Dukaten)' ,N'einzeln' ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000892' ,N'Nagebarsch' ,NULL ,NULL ,7 ,N'1W6' ,2 ,0 ,60 ,10 ,0 ,0 ,0 ,5 ,9 ,12 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,13 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Fisch, Barschartig' ,N'Besondere Kampfregeln: Gelände (Wasser), großer Gegner 
+Konfliktverhalten: Er beginnt mit Rammstößen, bis jemand ins Wasser fällt, den er mit Bissen angreift. Verliert er die Hälfte seiner LeP, zieht er sich zurück. Gelingt es ihm in 20 KR nicht, jemanden vom Boot zu stoßen, lässt er ab.' ,N'U1 68' ,N'Uthuria' ,NULL ,NULL ,N'500 Rationen Fleisch' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000893' ,N'Hesindegeweihte (untot)' ,NULL ,NULL ,9 ,N'1W6' ,2 ,10 ,36 ,38 ,0 ,26 ,14 ,0 ,NULL ,8 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Untoter Priester, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften:
+MU 12   KL 15 
+IN 10     CH 12
+FF 10     GE 9 
+KO 14    KK 11
+
+Wichtige Vor-/Nachteile: Akademische Ausbildung (Gelehrte), Geweiht / Jähzorn 8, Wahnvorstellungen
+Wichtige Talente: Selbstbeherrschung 9, Menschenkenntnis 7, Überzeugen 11, Magiekunde 12, Sternkunde 12
+
+Sonderfertigkeiten: Aufmerksamkeit, Nandusgefälliges Wissen
+
+Magische Sonderfertigkeiten: Liturgiekenntnis (Hesinde) 9
+
+Liturgien: SICHT AUF MADAS WELT (II, gibt ein Trugbild meist feindseliger Farben wider), AURA DER FORM (III, lässt Lügen sehen, die die Geweihte gerne sehen will), TIERGESTALT (III, Verwandlung in untote Schlange (siehe Von Toten und Untoten Seite 134))
+
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Zombie (Immunität gegen Wunden), Nekrotischer Griff' ,N'VTuU 143, 70' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,11 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000894' ,N'Ghul (Würger)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,7 ,N'1W6' ,2 ,0 ,42 ,65 ,0 ,0 ,0 ,15 ,10 ,5 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,10 ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Eigenschaften: Ghul (Schreckgestalt I (3), Erhöhtes Infektionsrisiko (5), Wachstum (Gefressene Opfer), Säure Geifer, Fleischtasche, Gestank
+Besondere Kampfregeln und -manöver: Gezielter Angriff (Ausspeien des Mageninhalts mit 1W+3 TP +Folgeschaden Säure Geifer)
+Ghulgift: Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'VTuU 117, 25' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000895' ,N'Kelero-Affe' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/affenmensch.png' ,12 ,N'1W6' ,2 ,9 ,25 ,30 ,0 ,0 ,0 ,2 ,NULL ,9 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,9 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Primat, Affe' ,N'Besondere Kampfregeln: Wuchtschlag
+Konfliktverhalten: Die hiesigen Kerelos  fliehen, wenn ihr Anführer oder die Hälfte von ihnen besiegt ist. Außerdem haben sie große Angst vor dem Guereni, weshalb es meist ein schlechtes Zeichen ist, wenn die Affen ohne Kampf plötzlich fliehen.' ,N'U1 72' ,N'Uthuria' ,N'Dschungel' ,NULL ,NULL ,N'1W3+2' ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000896' ,N'Xo''Artal-Krieger (Haikrieger, Anführer)' ,NULL ,NULL ,12 ,N'1W6' ,2 ,0 ,40 ,41 ,0 ,0 ,15 ,4 ,NULL ,7 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 13
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante), Eisern
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Finte, Gezielter Stich, Kampf im Wasser, Rüstungsgewöhnung I (Rochenlederrüstung), Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000897' ,N'Ziegensauger (Xupacabrax)' ,NULL ,NULL ,20 ,N'1W6' ,2 ,0 ,60 ,60 ,1 ,4 ,0 ,3 ,6 ,9 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Besondere Kampfregeln: großer Gegner, Gezielter Angriff (7, Saugzunge), Entwaffnen (AT 12, Saugzunge, Greifschwanz), Hinterhalt (12), Umreißen (5, Greifschwanz), Verbeißen (5, Biss), Zusätzliche Kampfaktion (1)
+
+Besondere Eigenschaften: Tarnung (wirkt wie ein CHAMAELIONIZauber mit 14 ZfP*' ,N'U2 118' ,N'Uthuria' ,NULL ,N'Der Xupacabrax ist ein  exibler Kämpfer. Er kann sich getarnt aus dem Hinterhalt auf Beute stürzen und sich verbeißen oder mit der Saugzunge ihr Blut trinken, aber auch seinen Greifschwanz für Manöver wie Entwaffnen oder Umreißen nutzen. Er kämpft gewitzt und schnell. Kann er seinen
+Gegner nicht gleich besiegen, tarnt er sich und lauert auf eine günstigere Gelegenheit.' ,N'Leder (150 D) *) Kleidung aus dem Leder eines Tieres wirkt für eine Anzahl Wochen gleich der TaP* der Lederarbeiten-Probe zu ihrer Herstellung wie ein CHAMELIONI. Die ZfP* entsprechen ebenfalls den TaP* bei der Bearbeitung. Nach diesem Zeitraum verringert sich die im Leder innewohnende Magie drastisch und der Träger hat lediglich 3 Punkte Erleichterung auf Sich Verstecken-Proben.' ,N'Einzelgänger' ,3 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000898' ,N'Ghul (Sammler)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,2 ,0 ,30 ,70 ,0 ,0 ,0 ,15 ,10 ,6 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,8 ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Eigenschaften: Ghul (Schreckgestalt I (3), Erhöhtes Infektionsrisiko (5)), Fleischtasche
+Besondere Kampfregeln und -manöver: Gezielter Angriff (Biss mit 1W+4 TP, Ghulgift)
+Ghulgift: Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'VTuU 117, 25' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000899' ,N'Knochenritter' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,0 ,N'1W6' ,3 ,8 ,40 ,9999 ,0 ,0 ,0 ,0 ,NULL ,4 ,10 ,NULL ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,10 ,NULL ,7 ,5 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), zusätzliche Aktion (Biss/Tritt)
+Ahnenmacht: Untotenanführer, Limbuswanderer, Flimmernde Körperlosigkeit, Feuerhufe (3, wie Feuer-Griff)
+Besondere Kampfregeln und -manöver: Reiterkampf, Kriegsreiterei; Reiter und Pferd bilden eine Einheit mit gemeinsamen Lebenspunkten und Initiative.
+' ,N'VTuU 131, 51' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000900' ,N'Sonnenpanther' ,NULL ,NULL ,10 ,N'1W6' ,2 ,13 ,32 ,35 ,0 ,0 ,14 ,2 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 13  KL 11 
+IN 13    CH 12
+FF 13    GE 14 
+KO 14   KK 13 
+SO 4
+
+Vorteile/Nachteile: Hitzeresistenz; Aberglaube 7, Meeresangst 8
+Sonderfertigkeiten: Aufmerksamkeit, Wuchtschlag
+
+Konfliktverhalten: Angesichts der überlegenen Kampfkraft der Buruxal greifen die Sonnenpanther oft in Überzahl (WdS 58) und aus dem Hinterhalt (WdS 78) an. Sie fliehen, sobald mehr als die Hälfte von ihnen eine Wunde erlitten oder die Hälfte ihrer LeP verloren hat.
+Besonderheiten: Die meisten tragen Uburu-Rüstungen (2/2).' ,N'U3 86' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,14 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000901' ,N'Kriegsbiest (Brazerox)' ,NULL ,NULL ,0 ,N'1W6' ,2 ,0 ,90 ,100 ,0 ,-5 ,0 ,0 ,5 ,4 ,NULL ,NULL ,7 ,7 ,7 ,7 ,7 ,7 ,7 ,7 ,15 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Größe: 6 Schritt Länge Gewicht: 7 Quader
+
+Vor-/Nachteile als Reittier: Eigenwillig, Einzelgänger, Erhöhte Tragkraft, Lernfähig, Stark, Trittsicherheit, Zäh
+
+Futterbedarf: 25 Stein / 30 Stein / 40 Stein / 50 Stein (Kraftfutter)
+Ausbildung: Reittier (200 TaP* bei Abrichten-Probe +6): GS +2, +20 LeP, +20 AuP; das Tier kann mit einem Sattelkorb geritten werden. Die Tragkraft beträgt 300 Stein, pro 30 Stein darüber sinkt die GS um einen und die Ausdauer um 10 Punkte.
+
+Besondere Kampfregeln: großer Gegner, Niederwerfen (10), Überrennen (10, 5W6*/5W6+10* mit Panzermaske), Trampeln,
+Gelände (Dschungel) Besondere Eigenschaften: Immunität (mineralische Gifte), *Kristallsplitter (Bei einer Guten AT beim Trampeln, Überrennen oder mit dem Schwanz kommt es zu Absplitterungen von scharfen Kristallstücken, die 1W6+3 TP bei allen Personen in einem Halbkreis von 5 Schritt Radius anrichten. Nur Ausweichen oder Schildparaden schützen. Eventuelle Reiter des Tiers sind nicht betro en.)
+
+Konfliktverhalten: Im Krieg eingesetzt, wird es durch seine Reiter und nicht selten zusätzliche Anpeitscher, die ihm Qualen zufügen, so aggressiv gemacht, dass es mitten durch die Reihen der Feinde prescht, alles niedertrampelt und mit seinem Schwanzschlag wild um sich schlägt. Für gewöhnlich ist es dazu mit metallener Panzermaske und stählernen Schwanzwaffen ausgerüstet, um zusätzlichen Schaden anzurichten.' ,N'U2 122, 123' ,N'Uthuria' ,N'felsige Dschungel' ,N'Der typische Reflex des Brazerox im Kampf ist das Überrennen oder Rammen des Gegners, um dann zur Flucht anzusetzen, denn im Grunde ist das Tier friedlich. ' ,N'Haut (teuer), Kristallauswüchse (100 Dukaten)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000902' ,N'Bluthund (Tierkadaver)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/hund.png' ,10 ,N'1W6' ,2 ,4 ,24 ,9999 ,0 ,0 ,0 ,1 ,NULL ,8 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,7 ,NULL ,5 ,3 ,2 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Lebenssinn, Erhöhtes Infektionsrisiko (3)
+Ahnenmacht: Nekrotischer Biss, Schreckgeheul I, Lähmendes Geheul
+Besondere Kampfregeln und -manöver: Anspringen (2), Gezielter Angriff / Verbeißen / Niederwerfen (2), Tiermanöver Raserei (2, Geruch eines Opfers)' ,N'VTuU 133, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000903' ,N'Weißfell (Guereni) Veteran' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/sumpfranze.png' ,17 ,N'1W6' ,2 ,0 ,120 ,160 ,0 ,0 ,0 ,15 ,NULL ,12 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,15 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Primat, Affe' ,N'Sonderfertigkeiten: Entwaffnen, Hammerschlag, Sturmangriff, Wuchtschlag
+
+Besondere Kampfregeln: Anspringen (4/6/8), Doppelangriff (zwei Prankenhiebe oder Prankenhieb und Biss), Gezielter Angriff (Biss) / Lebensraub I, großer Gegner, Raserei (5, LeP unter 20)
+
+Besondere Eigenschaften*: Beben**, Dunkelsicht, Lebenssinn***, Lebensraub II, Resistenz (profane, elementar, magisch),
+Schreckgebrüll****, Verwundbarkeit (Mindorium)
+
+*) Seine Eigenschaften erhält der Guereni durch die Obsidianaugen. Wenn er mit der Verwundbarkeit konfrontiert wird
+(Mindorium im Blut oder etwa 1 Stein in bis zu 5 Schritt Umgebung), verliert er sie alle (bis auf die Verwundbarkeit). Weiterhin sinken INI, AT, PA, MR, GS je um 5 und die TP um 1W.
+**) Durch stampfende Fußtritte und Hiebe kann er die Erde im Radius von 5 Schritt auf magische Weise so heftig erbeben lassen, dass Körperbeherrschung-Proben +5 nötig sind, um auf den Beinen zu bleiben.
+***) Erkennt zusätzlich auch die Höhe der LeP
+****) Sein Gebrüll, für das er 1 Aktion aufwendet, geht in Mark und Bein. Wer es hört, muss eine MU-Probe erschwert um Aberglaube ablegen, bei deren Misslingen er -1W6 auf MU, KL, CH, FF, AT, PA, FK und INI-Basis erhält (keine Neuberechnung der Werte). Die Mali bauen sich mit 1 Punkt pro SR wieder ab.
+Bei Gelingen muss man für diesen Kampf keine weiteren Proben gegen das Gebrüll mehr ablegen.' ,N'U1 96' ,N'Uthuria' ,NULL ,NULL ,N'100 Rationen Fleisch (ungenießbar), Fell (Luxus), Obsidianaugen' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000904' ,N'Helfende Hand' ,NULL ,NULL ,13 ,N'1W6' ,2 ,13 ,14 ,9999 ,10 ,0 ,8 ,8 ,NULL ,12 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,NULL ,NULL ,NULL ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften
+MU 12 KL 9 
+IN 12   CH 8
+FF 17   GE 14 
+KO 8    KK 9
+
+Eigenschaften: Astralsinn, Lebenssinn, Lebenshauch (TaW Athletik 4, Schleichen 5, Sich Verstecken 5, Raufen 8, Schlösser Knacken 3), Schwächende Berührung
+
+Besondere Kampfregeln und -manöver: Anspringen (1), Hinterhalt, Würgen, Waffenloser Kampfstil Bornländisch (Schwinger, Schmutzige Tricks, Würgegriff), sehr kleiner Gegner (+4/+8)
+
+Der Siegelring der helfenden Hand ist beseelt mit Teilen des Geistes des Brabacischen Hexers Boromez sowie seines Vertrautentieres, einem Kater. Zwar bindet sich die Hand nicht an einen Hexer oder anderen Magiekundigen, akzeptiert aber zeitweise einen Meister, den es sich selbst auswählt. Zu diesem verfügt sie über Vertrautenmagie und kann Flüche überbringen und beherrscht die Vertrautenrituale Dinge aufspüren, Stimmungssinn, Schlaf Rauben und Ungesehener Beobachter.' ,N'VTuU 129, 47' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000905' ,N'Ertrunkener' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,6 ,N'1W6' ,2 ,5 ,40 ,0 ,0 ,0 ,0 ,12 ,NULL ,3 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,6 ,NULL ,4 ,5 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie ' ,N'Eigenschaften: Wasserleiche (Regeneration I (Charyptoroth- Unheiligtümer), Schwere Empfindlichkeit gegen geweihte Objekte des Efferd, Immunität gegen Wunden, Ersäufen)
+Ahnenmacht: Angriff (Wasser), Nebel, Untotenanführer
+Besondere Kampfregeln und -manöver: Kampf im Wasser, Würgen (WdS 114)' ,N'VTuU 136, 57' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,9 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000906' ,N'Fleischkoloss' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,4 ,N'1W6' ,2 ,2 ,35 ,9999 ,0 ,0 ,0 ,8 ,NULL ,3 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,NULL ,3 ,5 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Lebensraub I, Wachstum (Einverleibte Opfer), Zerbersten
+Ahnenmacht: Gestank, Pestspeichel (2W6), Teilung
+Besondere Kampfregeln und -manöver: Ringen-Manöver Niederringen, Schwitzkasten, Würgegriff (KK 18)' ,N'VTuU 137, 60' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000907' ,N'Drachenschildkröte (Tutuxa, 2000 Jahre)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/sumpfechse.png' ,9 ,N'1W6' ,2 ,0 ,161 ,350 ,150 ,0 ,0 ,7 ,19 ,4 ,8 ,NULL ,14 ,14 ,14 ,14 ,14 ,14 ,14 ,14 ,20 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Schildkröte' ,N'Größe: 10 Schritt Körperlange Gewicht: 20 Quader
+MU 14-18 KL 15-25 IN 16-22 CH 15-22
+FF 2-6 GE 8-14 KO 25-30 KK 15-20
+Besondere Kampfregeln: sehr großer Gegner, Gelände (Wasser), Unterwasserkampf, Niederwerfen (Rammstoß und Wasserstrahl, 5 / 6 / 7), Gezielter Angriff / Verbeißen (3, Biss) Magie: meisterlich in Gedankensprache, Verständigung und Hellsicht, kompetent in Elementar(Wasser), Antimagie, Umwelt und Temporal
+Konfliktverhalten: Drachenschildkröten sehen Kämpfe nur als letztes Mittel und versuchen sie zu vermeiden. Sie greifen nur unterstützend durch Rat, aber auch Magie, für die Seite des Guten ein. Falls sie zum Kampf gezwungen sind, setzen sie zur Verteidigung ihre Wassermagie und Wasserstrahlen ein. Unter Wasser nutzen sie auch Rammstöße und Bisse. Sie scheuen sich nicht, sich zurückzuziehen, falls nötig, jedoch verteidigen sie im Falle von Gefahren für eine sie wichtige Sache notfalls auch bis zum Tode.' ,N'U3 132, 133' ,N'Uthuria' ,N'offenes Meer' ,NULL ,N'Panzer (500 Dukaten)' ,N'einzeln' ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000908' ,N'Yaq-Hai (wildes Tier)' ,NULL ,NULL ,14 ,N'1W6' ,2 ,12 ,35 ,9999 ,0 ,0 ,0 ,6 ,NULL ,11 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14 ,NULL ,7 ,6 ,NULL ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Lebensraub I, Regeneration I, Schreckgestalt I 
+Ahnenmacht: Tiermanöver Raserei (3, erster Schaden), Untotenanführer, Schreckgeheul I
+Besondere Kampfregeln und -manöver: Anspringen (6–8), Doppelangriff (2x Klauenhieb), Gezielter Biss, Hinterhalt (10), Niederwerfen/ Umreißen (2–6), Verbeißen / Festkrallen, Wuchtschlag' ,N'VTuU 129, 48' ,N'Aventurien' ,N'Dschungel' ,NULL ,NULL ,NULL ,18 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000909' ,N'Wandelnder Fels (Tetelcua)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,2 ,0 ,90 ,100 ,0 ,0 ,0 ,14 ,NULL ,8 ,NULL ,NULL ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,8 ,15 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Größe: bis 10 Schritt Durchmesser
+Gewicht: bis 20 Quader
+
+Besondere Kampfregeln: großer Gegner, Hinterhalt (8),
+Wuchtschlag, Hammerschlag, Niederwerfen (10), Überrennen
+(10) / Trampeln (5W6+10, versteinerndes Sekret), keine
+Kampfunfähigkeit bei unter 5 LeP
+
+Besondere Eigenschaften: Lebenssinn (3 Schritt), Schreckgestalt
+I (manche Exemplare), Steinhaut (BF-Test bei jeder
+gelungenen AT), Versteinerndes Sekret: Die Haut versteinert,
+was zu AT, PA, INI, GE und FF -1 je 5 SP führt, gleichzeitig
+zu RS +1 je 10 SP; Mit Heilung der LeP oder durch
+VERWANDLUNG BEENDEN bzw. REVERSALIS PARALYSIS wird
+die Wirkung aufgehoben. Wartet man jedoch bis zur natürlichen
+Regeneration, verbleiben pro 5 geheilte LeP permanente
+Nachteile nach Wahl des Meisters im Wert von 5 GP
+aus folgender Liste: Behäbig (5), Einarmig (15), Einäugig
+(5), Einbeinig (25), Einhändig (10), Eingeschränkter Sinn (5),
+Kältestarre (10), Lahm (15), Miserable Eigenschaft (GE, FF,
+je 10), Stigma (5 oder 10), Unansehnlich (5), Widerwärtiges
+Aussehen (15)
+' ,N'U2 120' ,N'Uthuria' ,N'Felswänden und auf Hochplateaus' ,N'Als Fels lauern, aufwachen, Opfer zertrümmern und sich auf ihnen niederlassen, um sie mit seinem Leib zu vereinen; das ist das typische Vorgehen der Tetelcua. Für Flucht sind sie zu wenig intelligent und zu langsam. Schmerz kennen sie kaum, weshalb sie bis zum Tod kämpfen.' ,N'versteinerndes Sekret (50 D)' ,N'einzeln' ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000910' ,N'Aranische "Nicht Sterbende"' ,NULL ,NULL ,11 ,N'1W6' ,2 ,8 ,40 ,32 ,46 ,0 ,0 ,17 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Furie, Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften:
+MU 16    KL 14 
+IN 17       CH 17
+FF 10       GE 9 
+KO 13      KK 10
+
+Kurzcharakteristik: Weises, aber gnadenloses Orakel; uralter Quell von Wissen
+Wichtige Vor-/Nachteile: Eigeboren, Herausragendes Aussehen, Magiegespür 9, Prophezeien 14,Wohlklang / Arroganz 10, Eitelkeit 9, Jähzorn 9, Neid 12, Vorurteile (Männer) 12, Weltfremd (Welt der Lebenden) 9 Wichtige Talente: Betören 17, Selbstbeherrschung 15, Sinnenschärfe 12, Menschenkenntnis 17, Überreden 14
+
+Wichtige Zauber: GROSSE GIER 16, SATUARIAS HERRLICHKEIT 18, VIPERNBLICK 15
+
+Ausweichen 7
+
+Magische Sonderfertigkeiten: Merkmalskenntnis (Einfluss, Herrschaft), Repräsentation (Hexe), Ritualkenntnis (Hexe) 10
+
+Hexenflüche: Ängste mehren, Krötenkuss, Mit Blindheit schlagen, Schlaf rauben, Todesfl uch, Zunge lähmen
+
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Astralsinn, Belebte Gliedmaßen, Einlullen, Halluzinationen (Blick), Lähmender Blick, Lockruf, Schreckgestalt I, Schwächende Aura, Resistenz (profane Waffen), Lebenssinn, Regeneration I, Wahnsinn Vertrautenmagie mit untoter Katze: Hexe finden, Ungesehener Beobachter, Zwiegespräch' ,N'VTuU 142, 68' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,12 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000911' ,N'Ghul (Fresser)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,2 ,0 ,35 ,60 ,0 ,0 ,0 ,15 ,10 ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Eigenschaften: Ghul (Schreckgestalt I (3), Erhöhtes Infektionsrisiko (5))
+Besondere Kampfregeln und -maöver: Gezielter Angriff (Biss mit 1W+4TP, Ghulgift)
+Ghulgift: Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'VTuU 118, 25' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000912' ,N'Ghul (Wühler)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ghul.png' ,8 ,N'1W6' ,2 ,0 ,35 ,60 ,0 ,0 ,0 ,15 ,10 ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,8 ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Eigenschaften: Ghul (Schreckgestalt I (3), Erhöhte Infektionsrisiko (5)), Blind, Grabklauen
+Besondere Kampfregeln und -manöver: Gezielter Angriff (Biss mit 1W+4 TP), Hinterhalt
+Ghulgift: Stufe 10, pro KR KK und GE je –1 für 2W20 KR, fallen KK oder GE auf 0, setzt vollständige Lähmung ein. Die Werte regenerieren sich nach drei Stunden mit je einem Punkt pro SR. Wer einem Ghulsbiss überlebt hat und nicht mit einem Heiltrank, einem Gegengift oder der Formel KLARUM PURUM (10) behandelt wird, verwandelt sich mit einer Wahrscheinlichkeit von 5 % pro 5 erlittener SP binnen drei Tagen selbst in einen Ghul.' ,N'VTuU 118, 25' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000913' ,N'Wasserleiche' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,6 ,N'1W6' ,2 ,5 ,40 ,9999 ,0 ,0 ,0 ,12 ,NULL ,3 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,6 ,NULL ,4 ,5 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Wasserleiche (Regeneration I (Charyptoroth-Unheiligtümer), Schwere Empfindlichkeit gegen geweihte Objekte des Efferd, Immunität gegen Wunden, Ersäufen)
+Ahnenmacht: Angriff (Wasser), Nebel, Untotenanführer 
+Besondere Kampfregeln und -manöver: Kampf im Wasser, Würgen (WdS 114)' ,N'VTuU 136' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000914' ,N'Xo''Artal-Krieger (Haikrieger, erfahren)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,38 ,39 ,0 ,0 ,14 ,4 ,NULL ,7 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 9
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Finte, Gezielter Stich, Kampf im Wasser, Rüstungsgewöhnung I (Rochenlederrüstung), Kampfre exe, weitere passende Manöver.' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000915' ,N'Flussfetzer-Grätengerippe' ,NULL ,NULL ,6 ,N'1W6' ,2 ,0 ,4 ,9999 ,0 ,0 ,0 ,5 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,NULL ,4 ,2 ,1 ,N'Untoter, Thargunitoth, Tijakool, Boron, Skelett, Fisch, Piranha, Tierkadaver' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Lähmender Biss, Immunität gegen Schwerter, Säble, Stäbe
+Besondere Kampfregeln und -manöver: Gelände (Wasser), Tiermanöver Raserei (2, Blut im Wasser), sehr kleiner Gegner (+4/+8)' ,N'VTuU 135, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,9 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000916' ,N'Geister-Nagha' ,NULL ,NULL ,6 ,N'1W6' ,2 ,0 ,38 ,9999 ,0 ,0 ,0 ,14 ,NULL ,-2 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,13 ,NULL ,6 ,4 ,2 ,N'Untoter, Skelett' ,N'Eigenschaften: Skelett (Resitenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Lebenssinn
+Ahnenmacht: Einlullen (Blick), Lähmender Blick, Lockruf
+Bersondere Kampfregeln und -maöver: Kleiner Gegner, Hinterhalt, Würgen' ,N'VTuU 115, 22' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000917' ,N'Kriegerspinne (Chilmani-Tocatl)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/maraskantarantel.png' ,17 ,N'2W6' ,4 ,0 ,150 ,180 ,0 ,0 ,0 ,16 ,NULL ,14 ,NULL ,NULL ,9 ,9 ,9 ,9 ,9 ,9 ,9 ,9 ,17 ,NULL ,NULL ,NULL ,NULL ,N'Spinne' ,N'Größe: 5 Schritt Torso Gewicht: 1 Quader
+MU 20-25 KL 8-11 IN 12-15 CH 6-9
+GE 14-18 FF 6-12 KO 30-34 KK 24-28
+Besondere Kampfregeln: Sehr großer Gegner, Festnageln (Bein), Finte, Gezielter Stich (Bein), Hinterhalt (7), Nachtsicht, Netz (8), Schreckgestalt I, Todesstoß (Bein), Trampeln (4W6+8), Überrennen (10, 5W6), Gezielter Angriff/ Verbeißen (Biss), zusätzliche Aktion (2) / zusätzliche Aktion (4)
+Konfliktverhalten: Kriegerspinnen spüren keinen Schmerz und kämpfen loyal bis zum Ende. Sie beginnen einen Kampf gerne mit entweder einem Hinterhalt oder dem Verschießen ihrer Netze. Gleich darauf greifen sie das überraschte oder im Netz eingesponnene Ziel gnadenlos und gezielt mit ihren Beinen mit gezielten Stichen, Todesstößen oder Festnageln an.' ,N'U3 130' ,N'Uthuria' ,N'Höhlen' ,NULL ,N'Gift (5 D), Chitinpanzerung (300 D)' ,N'einzeln oder zu mehreren' ,0 ,4);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000918' ,N'Elefant (untot)' ,NULL ,NULL ,2 ,N'1W6' ,2 ,0 ,80 ,9999 ,0 ,0 ,0 ,9 ,NULL ,10 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,18 ,NULL ,7 ,3 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, untotes Pferd, Skelett, Tierkadaver' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Steinknochen, Immunität gegen Schwerter, Säbel, Stäbe
+Besondere Kampfregeln und -manöver: Niederwerfen (Stoßzähne,10), Überrennen (14, 5W6), Trampeln, sehr großer Gegner' ,N'VTuU 134, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000919' ,N'Dagalsdach-Hexe' ,NULL ,NULL ,11 ,N'1W6' ,2 ,8 ,48 ,30 ,0 ,0 ,0 ,14 ,NULL ,8 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Furie, Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften:
+MU 15      KL 9 
+IN 16        CH 12
+FF 9          GE 11 
+KO 16       KK 14
+
+Wichtige Vor-/Nachteile: Dämmerungssicht / Blutdurst 9, Blutrausch, Jähzorn 13
+
+Wichtige Talente: Fliegen 14, Selbstbeherrschung 6, Sinnenschärfe 9, Menschenkenntnis 10, Überreden 8
+
+Wichtige Zauber: KRÄHENRUF 13 (Faulkrähen), RADAU 16
+
+Ausweichen 10
+
+Sonderfertigkeiten: Ausweichen I
+
+Magische Sonderfertigkeiten: Repräsentation (Hexe), Ritualkenntnis (Hexe) 11, Vertrautenbindung
+
+Hexenflüche: Ängste mehren, Beute!, Mit Blindheit schlagen, Schlaf rauben, Todesfluch
+
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Zombie (Immunität gegen Wunden) oder Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Halluzinationen (geistiger Kontakt), Krallen(2), Lebenssinn, Regeneration I, Schreckgestalt II, Schreckgeheul I, Unnatürliche Aura,
+Wahnsinn, Vertrautenmagie mit Faulkrähe (siehe Seite 133): Dinge aufspüren, Tiersinne, Schlaf rauben, Ungesehener Beobachter, Wachsame Augen' ,N'VTuU 142, 68' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,16 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000920' ,N'Leviatan (untot)' ,NULL ,NULL ,11 ,N'1W6' ,2 ,0 ,75 ,9999 ,0 ,0 ,0 ,10 ,NULL ,6 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,14 ,NULL ,7 ,7 ,5 ,N'Untoter, Skelett' ,N'Eigenschaften: Skelett (Resitenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Untotenanführer, Steinknochen, Schreckgeheul (Kampfschrei)
+Besondere Kampfregeln und -manöver: Anspringen (6), Doppelangriff, Niederwerfen (6), Finte, Wuchtschlag, Überrennen' ,N'VTuU 115' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,3 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000921' ,N'Plagenbringer' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,6 ,N'1W6' ,2 ,2 ,20 ,9999 ,0 ,0 ,0 ,8 ,NULL ,4 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,3 ,5 ,2 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Erhöhtes Infektionsrisiko (5), Infektion (Krankheit), Pestodem
+Ahnenmacht: Belebte Gliedmaßen, Gestank, Pestspeichel (2W6)
+Besondere Kampfregeln und -manöver: Ringen-Manöver, Griff, Würgegriff (KK 14).
+Mögliche übertragbare Krankheiten: Lutanas, Schlachtfeldfieber, Sumpffieber, Wundfieber; stirbt
+ein Opfer infolge einer Infektion durch Zombies, besteht die Gefahr von 1–16 auf 1W20, nach dem Tod selbst als Zombie aufzuerstehen.' ,N'VTuU 138, 59' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000922' ,N'Xo''Artal-Krieger (Jaguarkrieger, Anführer)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,40 ,41 ,-2 ,-1 ,14 ,4 ,NULL ,6 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 13
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante), Eisern
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung I (Pflanzenfaserrüstung), Wuchtschlag, Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,2 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000923' ,N'Skrechu-Skelett' ,NULL ,NULL ,13 ,N'1W6' ,3 ,0 ,55 ,9999 ,0 ,0 ,0 ,16 ,NULL ,6 ,NULL ,-1 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,15 ,NULL ,9 ,9 ,NULL ,N'Untot' ,N'Eigenschaften: Skelett (Resitenz gegen Schwerter, Säbe, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Zusätzliche Aktion
+Ahnenmacht: Formlosigkeit I, Lähmender Blick, Schwarmkörper (sehr klein, Schlangenkadaver)
+Besondere Kampfregel und -manöver: Ausfall, Beidhändiger Kampf I, Beidhändiger Kampf II, Defensiver Kampfstil, Doppelangriff, Entwaffen, Finte, Linkhand, Klingensturm, Klingenwand, Meisterparade' ,N'VTuU 114, 21' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000924' ,N'Aurishak-Krieger' ,NULL ,NULL ,11 ,N'1W6' ,2 ,0 ,30 ,40 ,0 ,0 ,0 ,4 ,NULL ,8 ,14 ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14   KL 9 
+IN 12     CH 10
+FF 12     GE 15 
+KO 14     KK 14 
+SO 3
+Kampfregeln: Sturz ug, Flugangri ; Aufmerksamkeit, Improvisierte Waffen, Wuchtschlag
+
+Konfliktverhalten: Die Aurishak-Krieger greifen meist in Geschwadern von einem Dutzend Kriegern an. Sie lassen in mehreren Überflügen ihre Steine und Fallspeere fallen, bevor sie sich im Sturzflug mit Schnabel oder Krallen voran auf ihre Ziele werfen. Gegner, die dann noch leben, werden mit den Schnabelkeulen im Nahkampf mit Wuchtschlägen attackiert. Rückzug erfolgt durch die Luft, wenn der Feind übermächtig erscheint.' ,N'U3 86' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,18);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000925' ,N'tödliche Unschuld (Lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,0 ,N'1W6' ,2 ,0 ,28 ,9999 ,0 ,0 ,0 ,5 ,NULL ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,4 ,NULL ,3 ,4 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Krallen (2), Unschuldiges Antlitz
+Ahnenmacht: Lebenshauch, Lähmender Schrei, Lockruf
+Besondere Kampfregelen und -manöver: Tiermanöver: Raserei (2, fremde Berührung, Anblick eines Bekannten aus Lebenszeiten)' ,N'VTuU 121, 33' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000926' ,N'Modender Schatten' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,13 ,N'1W6' ,2 ,7 ,0 ,1 ,0 ,0 ,14 ,0 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Seelenfresser, Untoter' ,N'Eigenschaften:
+MU 16    KL 9 
+IN 12     CH 8
+FF 14     GE 17 
+KO 14    KK 16
+
+Wichtige Vor-/Nachteile: Gefahreninstinkt 6, Nachtsicht / Blutdurst 11, Rachsucht 13, Jähzorn 9
+Wichtige Talente: Schleichen 17, Sich Verstecken 18, Sinnenschärfe 11, Menschenkenntnis 12
+
+Sonderfertigkeiten: Aufmerksamkeit, Ausweichen III, Finte, Gezielter Stich, Todesstoß
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Formlosigkeit II, Immunität gegen profane Waffen, Immunität gegen Wunden, Immunität gegen kritische Treffer, Lähmender Blick, Lebensraub II, Lebenssinn, Regeneration I, Schwächende Aura, Verhüllung' ,N'VTuU 145, 74' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,17 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000927' ,N'Xo''Artal-Krieger (Stierkrieger)' ,NULL ,NULL ,11 ,N'1W6' ,2 ,0 ,35 ,41 ,0 ,0 ,14 ,4 ,NULL ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 8
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Niederwerfen, Rüstungsgewöhnung I (Schwerer Hartholzharnisch), Wuchtschlag' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000928' ,N'Schädelspinne (Knochengolem)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,8 ,N'1W6' ,2 ,0 ,38 ,500 ,0 ,0 ,0 ,15 ,NULL ,5 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,12 ,NULL ,14 ,1 ,NULL ,N'Golem, Skelett, Thargunitoth' ,N'Besondere Kampfregeln und -manöver: Netz (5), TaW Klettern 7, sehr kleiner Gegner (+4/+8)
+Besondere Eigenschaften: Skelett (Resitenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Immunität gegen Form, leichte Empfindlichkeit gegen geweihte Objekte, mittlere Empfindlichkeit gegen geweihte Objekte des Boron, Schwächender Biss' ,N'VTuU 120, 33' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000929' ,N'Der "Kalte Hauch des Todes"' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,8 ,N'1W6' ,2 ,0 ,35 ,9999 ,0 ,0 ,0 ,9 ,NULL ,4 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,10 ,NULL ,3 ,3 ,3 ,N'Untoter, Humanoid, Eisleiche' ,N'Eigenschaften: Eisleiche (Regeneration I (Nagrach-Unheiligtümer), Schwere Empfidnlichkeit gegen geweihte Objekte des Firun, Kältegriff (2, auch bei Berührung mit der Axt), Immunität gegen Eis und Kälte, Verwundbarkeit gegen Feuer und Vulkanglas), Aura (Kälte)
+Ahnenmacht (Eis), Untotenanführer, Bewegung durch Eis, Nebel
+Besondere Kampfregel und -manöver: Wuchtschlag, Niederwerfen, Schildspalter, Hammerschlag' ,N'VTuU 116, 23' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,-3);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000930' ,N'Panther-Gesela' ,NULL ,NULL ,11 ,N'1W6' ,2 ,11 ,32 ,38 ,15 ,0 ,0 ,3 ,NULL ,9 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 13  KL 11 
+IN 13    CH 12
+FF 13    GE 14 
+KO 14   KK 13 
+SO 4
+
+Vorteile/Nachteile: Entfernungssinn, Dämmerungssicht, Flink, Hitzeresistenz
+
+Meisterhandwerk: GE, Athletik, Körperbeherrschung, Sich Verstecken
+Sonderfertigkeiten: Ritualkenntnis Durro-Dûn 6, Hauch des Odûn, Ausweichen I
+Übernatürliche Begabungen: Adlerauge, Attributo, Katzenaugen, Sensattaco, Spurlos' ,N'U3 86' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,15 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000931' ,N'Schindmähre (Zombie)' ,NULL ,NULL ,6 ,N'1W6' ,2 ,6 ,54 ,9999 ,0 ,0 ,0 ,1 ,NULL ,11 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,8 ,NULL ,5 ,2 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, untotes Pferd, Tierkadaver' ,N'Eigenschaften: Zombie (Immunität gegen Wunden) / Resistenz (Schwerter, Säbel, Stäbe), Immunität (Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Nebel, Unnatürliche Aura
+Ahnenmacht: Flimmernde Körperlosigkeit, Limbuswanderer, Feuerhufe (3, wie Feuer-Griff)
+Besondere Kampfregeln und -manöver: Niederwerfen (4, Tritt), großer Gegner' ,N'VTuU 134, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,9 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000932' ,N'Obsidianschmetterling (Itzpapalotl)' ,NULL ,NULL ,0 ,N'1W6' ,2 ,0 ,100 ,300 ,0 ,0 ,0 ,15 ,NULL ,8 ,NULL ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,14 ,NULL ,NULL ,NULL ,NULL ,N'Mensch, Insekt, Schmetterling' ,N'Besondere Kampfregeln: 3 Aktionen pro KR, Raserei (4, Kontakt mit Blut), Umreißen (8, Flügel), Doppelangrif (Flügel und Biss), Gezielter Angriff (Biss)
+Besondere Eigenschaften: Immunität gegen Feuer, Stich, Gift, Krankheiten und das Merkmal Form, Lebenssinn, Verbindung zum Beschwörer' ,N'U2 23, 112' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000933' ,N'Universalkonstrukt (Knochengolrm)' ,NULL ,NULL ,0 ,N'1W6' ,4 ,4 ,88 ,9999 ,0 ,0 ,22 ,15 ,NULL ,3 ,1 ,-3 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,12 ,NULL ,30 ,1 ,NULL ,N'Golem, Skelett, Thargunitoth' ,N'Besondere Kampfregeln und -maöver: Niederwerfen, Zusätzliche Aktionen (2), erhöhte Patzerwahrscheinlichkeit (18-20), sehr großer Gegner' ,N'VTuU 120, 32' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000934' ,N'Sklaventreiber' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/pirat.png' ,10 ,N'1W6' ,2 ,13 ,31 ,31 ,0 ,0 ,14 ,3 ,NULL ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14    KL 9 
+IN 14      CH 11
+FF 12      GE 13 
+KO 13     KK 14 
+SO 6
+
+Sonderfertigkeiten: Aufmerksamkeit, Betäubungsschlag, Finte, Meisterparade, Niederwerfen, Rüstungsgewöhnung I (Tuchrüstung), Umreißen, Wuchtschlag
+Talente: Körperbeherrschung 9, Schwimmen 7, Selbstbeherrschung 8,Sinnenschärfe 8, Menschenkenntnis 9, Überreden 6' ,N'U3 85, 86' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,16 ,21);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000935' ,N'Prügelknabe (Knochengolem)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,8 ,N'1W6' ,2 ,0 ,93 ,300 ,2 ,0 ,17 ,0 ,NULL ,4 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,12 ,NULL ,23 ,1 ,NULL ,N'Golem, Skelett, Thargunitoth' ,N'Besondere Kampfregeln und -manöver: Großer Gegner
+Besondere Eigenschaften: Zombie (Immunität gegen Wunden), Immunität gegen Form, leichte Empfindlichkeit gegen geweihte Objekte, mittlere Empfindlichkeit gegen geweihte Objekte des Boron, Resitenz gegen profane Angriffe' ,N'VTuU 119, 32' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000936' ,N'Untoter Kriegsherr' ,NULL ,NULL ,16 ,N'1W6' ,2 ,13 ,60 ,60 ,0 ,0 ,17 ,12 ,NULL ,8 ,NULL ,NULL ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,6 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Untoter' ,N'Eigenschaften:
+MU 17   KL 13 
+IN 12     CH 14
+FF 10     GE 12 
+KO 17    KK 18
+
+Wichtige Vor-/Nachteile: Akademische Ausbildung (Krieger), Begabung für Kampftalente, Eisern, Gefahreninstinkt (6), Nachtsicht, Richtungssinn / Blutdurst 10, Feinde (SO 30, andere Kriegsfürsten
+etc.), Größenwahn 7, Rachsucht 9
+
+Wichtige Talente: Dolche 12, Schwerter 15, Selbstbeherrschung 19, Sinnenschärfe 12, Menschenkenntnis 11, Überreden 15, Kriegskunst 17
+
+Sonderfertigkeiten: Aufmerksamkeit, Ausfall, Ausweichen II, Befreiungsschlag, Binden, Entwaffnen, Finte, Gegenhalten, Formation, Kampfreflexe, Linkhand, Meisterparade, Niederwerfen, Rüstungsgewöhnung III, Schildkampf II, Schildspalter, Umreißen, Wuchtschlag, Ausweichen 11
+
+Eigenschaften (zusätzlich zu Untoteneigenschaften): Nebel, Resistenz gegen Wunden, Schreckgeheul I, Schwächende Aura
+Besonderheit: Mit einer Berührung durch den Marschallsstab kann der Kriegsherr Leichen wie mit der SF Geber des Funkens erheben. Diese Fähigkeit kostet ihn 1 AuP.' ,N'VTuU 146, 76' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,19 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000937' ,N'Nimu-Wanaq' ,NULL ,NULL ,9 ,N'1W6' ,2 ,11 ,30 ,32 ,0 ,0 ,0 ,4 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch, Waldmensch' ,N'Sonderfertigkeiten: Kampf im Wasser 
+Konfliktverhalten: Die Nimu-Wanaq sind kein kriegerischer Stamm und vermeiden den Verlust von Menschleben bei Freund und Feind, wann immer es möglich ist. Nur wenn es unvermeidlich ist, begeben sie sich in eine körperliche Auseinandersetzung, wobei sie den Kampf in oder auf dem Fluss dem Dschungel vorziehen. Sie kämpfen nur dann bis zum Tod, wenn das Heil eines geliebten Menschen oder der Sippe davon abhängt. Ansonsten versuchen sie bei einer bevorstehenden Niederlage zu  iehen oder geben auf.
+
+zu ASP) Beim Aufeinandertreten mit einem Nimu-Wanaq werfen Sie einen W6. Bei einer 6 ist das Stammesmitglied wissentlich oder unwissentlich mit einem der Flussgeister im Bunde. (Sichtbares) Zeichen dafür ist meist irgendein körperlicher Makel, repräsentiert durch einen Nachteil wie Einäugig, Kleinwüchsig, Stigma etc. Regeltechnisch handelt es sich dann um einen Magiedilletanten mit einem Schutzgeist (Wege der Zauberei 35  .). Hierzu stehen ihm AsP in Höhe der GP des Nachteils zur Verfügung.' ,N'U1 41, 118' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,11 ,11);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000938' ,N'Krakonischer Leichnam' ,NULL ,NULL ,5 ,N'1W6' ,2 ,0 ,35 ,9999 ,0 ,0 ,0 ,9 ,NULL ,4 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,7 ,NULL ,5 ,6 ,3 ,N'Untoter, Zombie, Wasserleiche, Thargunitoth' ,N'Eigenschaften: Wasserleiche (Regeneration I (Charyptoroth-Unheiligtümer), Schwere Empfindlichkeit gegen geweihte Objekte des Efferd, Immunität gegen Wunden, Ersäufen), Lähmung (Sekret)
+Ahnenmacht: Einlullen (Sekret), Halluzinationen (Sekret), Gestank
+Besondere Kampfregeln und -manöver: Kampf im Wasser, Unterwasserkampf, Würgen' ,N'VTuU 115' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000939' ,N'Buruxal-Blutpriester' ,NULL ,NULL ,9 ,N'1W6' ,2 ,10 ,28 ,28 ,0 ,27 ,12 ,5 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14    KL 13 
+IN 12     CH 13
+FF 12     GE 11 
+KO 12    KK 11
+
+Vorteile / Nachteile: Geweiht (Xo’Artal-Panthoen), Resistenz gegen Krankheiten; Arroganz 8, Blutsteingebunden, Moralkodex
+
+Talente: Athletik 4, Selbstbeherrschung 7, Sinnenschärfe 6, Menschenkenntnis 7, Überreden 8, Überzeugen 8, Götter/ Kulte 8
+
+Sonderfertigkeiten: Karmalqueste, Liturgiekenntnis (Xo’Artal-Pantheon) 6
+
+Liturgien: Blutopfer der Tlamachil, Weisheitssegen (Ziel nur G), Schutzsegen, Märtyrersegen, Eidsegen, Tranksegen, Innere Ruhe, Namenloses Vergessen (I), Pech und Schwefel, Namenlose Raserei (II), Waffenfluch (III)' ,N'U3 85' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,10 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000940' ,N'Rattenschwarm' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/ratte.png' ,5 ,N'2W6' ,2 ,0 ,4 ,0 ,0 ,0 ,0 ,0 ,NULL ,2 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,3 ,2 ,1 ,N'Untoter, Thargunitoth, Tijakool, Boron, Tierkadaver' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen), Erhöhtes Infektionsrisiko (5)
+Ahnenmacht: Nekrotischer Biss, Unnatürliche Aura
+Besondere Kampfregeln und -manöver: Gezielter Biss, sehr kleiner Gegner (AT+4 / PA+7), Tiermanöver Raserei (1, erstes vernichtetes Wesen im Rudel), Verbeißen' ,N'VTuU 134, 53' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,4 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000941' ,N'Kriegermumie (Lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,14 ,N'1W6' ,3 ,11 ,0 ,9999 ,0 ,0 ,0 ,15 ,NULL ,7 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,13 ,NULL ,8 ,7 ,5 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Mumie (Belebte Gliedmaßen, Schreckgestalt I, Resitenz (profane Waffen), Verwundbarkeit (Feuer), Erhöhte Infektionsrisiko (1))
+Ahnenmacht: Langer Arm, Lebenssinn, Untotenanführer; zusätzliche Aktion
+Besondere Kampfregeln und -manöver: Ausfall, Binden, Gegenhalten, Meisterparade, Sturmangriff, Wuchtschlag, Mumie (Gezielter Angriff/ Niederwerfen (2), +8TP Waffenschaden durch ihre hohe Stärke. Jeder Waffenangriff ist automatisch ein Niederwerfen-Manöver.
+Zu dem RS von 2 kommt noch der entsprechende RS hinzu. Als Rüstungen werden oft Iryianleder, ein Ringelpanzer oder ein Spiegelpanzer getragen. Gelegentlich kommen Waffen-Artefakte vor (zum Beispiel: Eisenrost, Corpofesso).' ,N'VTuU 123, 41' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000942' ,N'Wachsmumie (lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,14 ,N'1W6' ,2 ,10 ,45 ,9999 ,0 ,0 ,0 ,0 ,NULL ,7 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,12 ,NULL ,7 ,7 ,5 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Mumie (Belebte Gliedmaßen, Schreckgestalt I, Resistenz (profane Waffen), Verwundbarkeit (Feuer), Erhöhtes Infektionsrisiko (I)), Folgeschaden (Gift); Nicht Lichtscheu
+Ahnenmacht: Flächenangriff (Bienenschwarm), Regeneration I, Schwarmkörper (winzig, Bienen)
+Besondere Kampfregeln und -manöver: Mumie (Gezielter Angriff/ Niederwerfen (2), +8TP Waffenschaden durch ihre hohe Stärke. Jeder Waffenangriff ist automatisch ein Niederwerfen-Manöver)' ,N'VTuU 125, 42' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000943' ,N'Gefiederte Schlange (Coatl, 500 Jahre)' ,NULL ,NULL ,15 ,N'1W6' ,3 ,0 ,120 ,150 ,90 ,0 ,0 ,10 ,NULL ,22 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,18 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Schuppenkriechtier, Schlange' ,N'Größe: 12 Schritt Spannweite Gewicht: 3 Quader
+
+MU 17-21
+FF 6-10 
+KL 10-13 
+GE 17-21
+IN 10-13 
+KO 17-26 
+CH 9-14 
+KK 17-28
+
+Besondere Kampfregeln: großer Gegner, Flugangriff (Klauen), Flugangriff / Umschlingen (5) / Biss, Flugangriff / Schwanzschlag / Niederwerfen (7), Niederwerfen (Schwanzschlag oder Halsschwenker, 6), Sturzflug (Klauen), Gezielter Angriff / Verbeißen (6, Biss), zusätzliche Aktion (1)
+Magie: kompetent in Gedankensprache, Flugfähigkeit, durchschnittlich in Einfluss, Hellsicht, Telekinese, Verständigung' ,N'U2 117, 118' ,N'Uthuria' ,N'Dschungelgebiete oder Gebirgsketten' ,N'Je nach Individuum unterschiedlich, jedoch fallen ihnen durch ihre Flugfähigkeiten sowohl Überraschungsangriffe als auch eine Flucht sehr leicht.' ,N'Federn (je 5 D, insgesamt etwa 2000 Dukaten), Karfunkel (400 D)' ,N'Einzelgänger' ,5 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000944' ,N'Xo''Artal-Krieger (Schlangenkrieger)' ,NULL ,NULL ,11 ,N'1W6' ,2 ,0 ,35 ,36 ,0 ,0 ,14 ,4 ,NULL ,8 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 8
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Gezielter Stich, Rüstungsgewöhnung I (Schlangenlederkleidung)' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000945' ,N'Xo''Artal-Krieger (Jaguarkrieger,elite)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,0 ,40 ,41 ,-2 ,-1 ,14 ,4 ,NULL ,6 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 10
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung I (Pflanzenfaserrüstung), Wuchtschlag, Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,2 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000946' ,N'Xo''Artal-Krieger (Adlerkrieger, elite)' ,NULL ,NULL ,15 ,N'1W6' ,2 ,-7 ,40 ,41 ,0 ,0 ,15 ,0 ,NULL ,7 ,-2 ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 10
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86).
+Sonderfertigkeiten: Aufmerksamkeit, Finte, Rüstungsgewöhnung (Iryanrüstung) I, Schnellziehen, Scharfschütze, Kampfreflexe, weitere passende Manöver.' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000947' ,N'Xo''Artal-Krieger (Haikrieger)' ,NULL ,NULL ,11 ,N'1W6' ,2 ,0 ,33 ,36 ,0 ,0 ,14 ,4 ,NULL ,7 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 14      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 14       KK 14 
+SO 8
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Finte, Gezielter Stich, Kampf im Wasser, Rüstungsgewöhnung I (Rochenlederrüstung)' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000948' ,N'Zombie, stark' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,10 ,N'1W6' ,3 ,9 ,25 ,9999 ,0 ,0 ,0 ,6 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,NULL ,5 ,7 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron, Zombie' ,N'Eigenschaften: Zombie (Immunität gegen Wunden), Schreckgeheul I
+Ahnenmacht: Gestank, Säure-Geifer, Untotenanführer, Zusätzliche Aktion
+Besondere Kampfregeln und -manöver: Tiermanöver Raserei (3, Sichtung von Opfern)
+DK und TP je nach Waffe' ,N'VTuU 138, 62' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000949' ,N'Wandelnde (Lebender Leichnam)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,0 ,N'1W6' ,2 ,0 ,25 ,9999 ,0 ,0 ,0 ,5 ,NULL ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,4 ,NULL ,2 ,3 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Ahnenmacht: Lebenshauch, Lockruf, Lähmende Berührung' ,N'VTuU 121, 33' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000950' ,N'Xo''Artal-Krieger (Haikrieger, elite)' ,NULL ,NULL ,12 ,N'1W6' ,2 ,0 ,40 ,41 ,0 ,0 ,15 ,4 ,NULL ,7 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften:
+MU 15      KL 12 
+IN 12        CH 12
+FF 12        GE 13 
+KO 15       KK 14 
+SO 10
+
+Vorteile / Nachteile: Akademische Ausbildung (Krieger), Hitzeresistenz/ Arroganz 7, Prinzipientreue (10; Gehorsam gegenüber Priestern, Schutz der Stadt, weitere nach Variante)
+Konfliktverhalten: Xo’Artal Krieger sind tapfere Kämpfer, die die Initiative ergreifen, sich jedem Gegner stellen und darauf setzen, selber der Bezwinger eines Feindes zu sein. Der Tod wird einer Gefangenschaft meist bevorzugt, ein taktischer Rückzug bei 1/3 LeP ist aber denkbar. Mehr zu ihrem Kampfverhalten finden Sie auch bei der Beschreibung der einzelnen Kriegerschulen (siehe Der Fluch des Blutsteins 86)
+Sonderfertigkeiten: Finte, Gezielter Stich, Kampf im Wasser, Rüstungsgewöhnung I (Rochenlederrüstung), Kampfreflexe, weitere passende Manöver' ,N'U3 84' ,N'Uthuria' ,NULL ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000951' ,N'Zombie-Teil (Hand)' ,NULL ,NULL ,0 ,N'1W6' ,2 ,4 ,4 ,9999 ,0 ,0 ,0 ,6 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,3 ,NULL ,2 ,2 ,1 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Besondere Kampfregeln und -manöver: Ringen-Manöver, Griff, Würgen' ,N'VTuU 139, 61' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,11 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000952' ,N'Riesenalligator' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/alligator.png' ,9 ,N'1W6' ,2 ,0 ,55 ,45 ,0 ,0 ,0 ,6 ,8 ,7 ,8 ,NULL ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,4 ,11 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Reptil, Krokodil, Alligator' ,N'Besondere Kampfregeln: Hinterhalt (9), Kampf im/unter Wasser, Verbeißen, Niederwerfen (11)' ,N'U1 86' ,N'Uthuria' ,NULL ,NULL ,N'80 Rationen Fleisch, Haut (Leder, teuer), Zähne (Trophäe)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000953' ,N'Oger-Skelett' ,NULL ,NULL ,6 ,N'1W6' ,2 ,2 ,50 ,9999 ,0 ,0 ,0 ,6 ,NULL ,8 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,12 ,NULL ,6 ,6 ,5 ,N'Untoter Oger, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Steinknochen Stufe 1, Gestank, Untotenanführer
+Besondere Kampfregeln und -manöver: Großer Gegner, Wuchtschlag, Niederwerfen' ,N'VTuU 126, 44' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,11 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000954' ,N'Brandbock ' ,N'Untot' ,N'' ,9 ,N'1W6' ,2 ,8 ,25 ,0 ,0 ,0 ,0 ,12 ,10 ,5 ,NULL ,NULL ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,2 ,10 ,NULL ,5 ,NULL ,3 ,N'Untoter' ,N'Eigenschaften: Brandleiche (Folgeschaden (Feuer), Immunität gegen Feuer), Durch (Feuer) gehen, Regeneration I, Wachstum (Schaden durch Feuer)
+Ahnenmacht: Zerbersten (Feuer), Fliegen, Aura (Feuer) Besondere Kampfregeln und -manöver: Niederwerfen (3)*' ,N'VTuU 112, 19' ,N'Aventurien' ,N'' ,N'' ,N'' ,N'' ,13 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000955' ,N'Buruxal-Blutmagier (erfahren)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/magier.png' ,6 ,N'1W6' ,2 ,12 ,28 ,28 ,43 ,0 ,12 ,8 ,NULL ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften
+MU 14     KL 14 
+IN 12       CH 13
+FF 12       GE 12 
+KO 12      KK 12
+
+Vorteile / Nachteile: Eisenaffine Aura, Feste Matrix, Vollzauberer,Aufmerksamkeit,
+Ausweichen I, Speisegebote, Blutsteingebunden, Wahrer Name, Arroganz 6, Neugier 5
+Talente: Athletik 4, Selbstbeherrschung 7, Sinnenschärfe 6, Menschenkenntnis 7, Überreden 8, Magiekunde 8
+
+Sonderfertigkeiten: Regeneration I, Große Meditation, Repräsentation
+Blutmagier, Ritualkenntnis Blutmagier 6, Verbotene
+Pforten
+Zauber: Goldene Haut 9, Attributo 9, Blick aufs Wesen 10, Horriphobus 12, Plumbumbarum 10, Arachnea 11, Spinnenlauf 10, Somnigravis 10, Höllenpein 9, Hexengalle 6, Odem Arcanum 10, Blutklinge 9
+
+Rituale: Ritualkenntnis Blutmagier 10, Blutopfer der Tetlachi (I), kleine Formung des Blutsteins, Apport (I), Kraft des Tieres (II), Haut des Erdblutes (III), Blutraub (III), weitere passende Rituale' ,N'U3 85' ,N'Uhruia' ,NULL ,NULL ,NULL ,NULL ,14 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000956' ,N'Tigerbaum (Tapili''mar)' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/schrat.png' ,0 ,N'1W6' ,2 ,0 ,80 ,200 ,0 ,0 ,0 ,16 ,9 ,8 ,NULL ,NULL ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,5 ,14 ,NULL ,NULL ,NULL ,NULL ,N'fleischfressender Baum' ,N'Größe: 5-10 Schritt Gewicht: 4.000-8.000 Stein
+Besondere Kampfregeln: großer Gegner, Hinterhalt (6), Umschlingen (5, Peitschenwurzeln), 4 Aktionen pro KR
+Konfliktverhalten: Im Hinterhalt warten sie auf Opfer und reagieren mit wilden Hieben und Umschlingen ihrer nur locker im Boden liegenden Wurzeln und Äste auf jedes mindestens hasengroße Wesen im Umkreis von 5 Schritt. Packen sie ein Opfer, ziehen sie es zu ihrem Maul mit ‚Zähnen‘ aus spitzen Holzzapfen und töten es mit Bissen.' ,N'U3 129, 130' ,N'Uhturia' ,N'Dschungel, Sumpf' ,NULL ,NULL ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Skelett ' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/skelett.png' ,10 ,N'1W6' ,2 ,6 ,25 ,9999 ,0 ,0 ,0 ,5 ,NULL ,5 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,7 ,NULL ,4 ,5 ,3 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Skelett (Resistenz gegen Schwerter, Säbel, Stäbe, Immunität gegen Fechtwaffen, Dolche, Speere, Pfeile, Bolzen)
+Ahnenmacht: Untotenanführer, Immunität gegen Schwerter, Säbel, Stäbe
+Besondere Kampfregeln und -manöver: –
+Skelette können mit allen erdenklichen Waffen ausgerüstet werden. Beispielhaft sind hier einige Waffen genannt. Für den Eigenbau ziehen Sie die INI und AT/PA-Werte des unbewaffneten Skeletts als Grundlage heran. Auch hinsichtlich der Rüstungen stehen alle Varianten aus Wege des Schwerts offen, gebräuchlich sind Kettenhemden (RS 4) oder Fetzen von Lederpanzern (RS 1 oder 2). Je nach Kultur können regionale Waffen und Rüstungen verwendet werden.' ,N'VTuU 130, 49' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,10 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000958' ,N'Weißfell (Guereni) unerfahren' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/sumpfranze.png' ,0 ,N'1W6' ,2 ,0 ,90 ,100 ,0 ,0 ,0 ,15 ,NULL ,12 ,NULL ,NULL ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,13 ,NULL ,NULL ,NULL ,NULL ,N'Tier, Säuger, Primat, Affe' ,N'Sonderfertigkeiten: Entwaffnen, Hammerschlag, Sturmangriff, Wuchtschlag
+
+Besondere Kampfregeln: Anspringen (4/6/8), Doppelangriff (zwei Prankenhiebe oder Prankenhieb und Biss), Gezielter Angriff (Biss) / Lebensraub I, großer Gegner, Raserei (5, LeP unter 20)
+
+Besondere Eigenschaften*: Beben**, Dunkelsicht, Lebenssinn***, Lebensraub II, Resistenz (profane, elementar, magisch),
+Schreckgebrüll****, Verwundbarkeit (Mindorium)
+
+*) Seine Eigenschaften erhält der Guereni durch die Obsidianaugen. Wenn er mit der Verwundbarkeit konfrontiert wird
+(Mindorium im Blut oder etwa 1 Stein in bis zu 5 Schritt Umgebung), verliert er sie alle (bis auf die Verwundbarkeit). Weiterhin sinken INI, AT, PA, MR, GS je um 5 und die TP um 1W.
+**) Durch stampfende Fußtritte und Hiebe kann er die Erde im Radius von 5 Schritt auf magische Weise so heftig erbeben lassen, dass Körperbeherrschung-Proben +5 nötig sind, um auf den Beinen zu bleiben.
+***) Erkennt zusätzlich auch die Höhe der LeP
+****) Sein Gebrüll, für das er 1 Aktion aufwendet, geht in Mark und Bein. Wer es hört, muss eine MU-Probe erschwert um Aberglaube ablegen, bei deren Misslingen er -1W6 auf MU, KL, CH, FF, AT, PA, FK und INI-Basis erhält (keine Neuberechnung der Werte). Die Mali bauen sich mit 1 Punkt pro SR wieder ab.
+Bei Gelingen muss man für diesen Kampf keine weiteren Proben gegen das Gebrüll mehr ablegen.' ,N'U1 96' ,N'Uthuria' ,NULL ,NULL ,N'100 Rationen Fleisch (ungenießbar), Fell (Luxus), Obsidianaugen' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000959' ,N'Zombie, taumelnd' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/zombie.png' ,6 ,N'1W6' ,2 ,2 ,25 ,9999 ,0 ,0 ,0 ,8 ,NULL ,4 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,6 ,NULL ,3 ,4 ,2 ,N'Untoter, Thargunitoth, Tijakool, Boron' ,N'Eigenschaften: Zombie (Immunität gegen Wunden)
+Ahnenmacht: Belebte Gliedmaßen, Gestank, Krallen (2), Säure-Geifer
+Besondere Kampfregeln und -manöver: –' ,N'VTuU 139, 59' ,N'Aventurien' ,NULL ,NULL ,NULL ,NULL ,9 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000960' ,N'Zweikopf (Kibakaba)' ,NULL ,NULL ,7 ,N'2W6' ,2 ,0 ,18 ,30 ,0 ,0 ,0 ,6 ,3 ,3 ,NULL ,NULL ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,NULL ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Besondere Kampfregeln: Gift (verursacht der Biss Schaden, kommt das Gift zum Tragen, siehe Vipern bzw. Natterngift)
+Konfliktverhalten: In der Regel beißt der Zweikopf einzelne Gegner mehrfach mit demselben Kopf und wartet, bis sie tot
+sind. Auf mehrere Gegner verteilt er seine Angriffe so, dass er nie ein Opfer mit beiden Köpfen beißt.' ,N'U1 94' ,N'Uthuria' ,NULL ,NULL ,N'10 bis 12 Rationen Fleisch, Gift (10 D), Haut (Leder, Luxusartikel)' ,NULL ,0 ,0);
+INSERT INTO [GegnerBase] (  [GegnerBaseGUID],  [Name],  [Typ],  [Bild],  [INIBasis],  [INIZufall],  [Aktionen],  [PA],  [LE],  [AU],  [AE],  [KE],  [KO],  [MRGeist],  [MRKörper],  [GS],  [GS2],  [GS3],  [RSKopf],  [RSBrust],  [RSRücken],  [RSArmL],  [RSArmR],  [RSBauch],  [RSBeinL],  [RSBeinR],  [GW],  [Jagd],  [Beschwörung],  [Kontrolle],  [Beschwörungskosten],  [Tags],  [Bemerkung],  [Literatur],  [Setting],  [Verbreitung],  [Jagdreaktion],  [Beute],  [Auftreten],  [AT],  [FK]) 
+ VALUES ('00000000-0000-0000-006e-000000000961' ,N'Buruxal-Blutmagier' ,NULL ,N'/DSA MeisterGeister;component/Images/Wesen/magier.png' ,6 ,N'1W6' ,2 ,11 ,28 ,28 ,38 ,0 ,12 ,6 ,NULL ,8 ,NULL ,NULL ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,NULL ,NULL ,NULL ,NULL ,NULL ,N'Kultur, Säuger, Primat, Homo, Mensch' ,N'Eigenschaften
+MU 14     KL 14 
+IN 12       CH 13
+FF 12       GE 12 
+KO 12      KK 12
+
+Vorteile / Nachteile: Eisenaffine Aura, Feste Matrix, Vollzauberer, Speisegebote, Blutsteingebunden, Wahrer Name, Arroganz 6, Neugier 5
+
+Talente: Athletik 4, Selbstbeherrschung 7, Sinnenschärfe 6, Menschenkenntnis 7, Überreden 8, Magiekunde 8
+
+Sonderfertigkeiten: Regeneration I, Große Meditation, Repräsentation Blutmagier, Ritualkenntnis Blutmagier 6, Verbotene Pforten
+Zauber: Goldene Haut 6, Attributo 6, Blick aufs Wesen 7, Horriphobus 8, Plumbumbarum 6, Arachnea 8, Spinnenlauf 6, Somnigravis 7, Höllenpein 7, Hexengalle 5, Odem Arcanum 7, Blutklinge 7
+
+Rituale: Ritualkenntnis Blutmagier 5, Blutopfer der Tetlachi (I), kleine Formung des Blutsteins, Apport (I), Kraft des Tieres (II)' ,N'U3 85' ,N'Uhruia' ,NULL ,NULL ,NULL ,NULL ,13 ,-5);
 
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000001' ,N'Stoß ' ,6 ,1 ,2 ,6 ,N'H' ,NULL ,NULL ,4);
@@ -5298,6 +6454,14 @@ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [T
  VALUES ('00000000-0000-0000-006e-000000000001' ,N'Trampeln' ,6 ,3 ,0 ,8 ,N'H' ,NULL ,NULL ,4);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000002' ,N'Wasserstrahl' ,6 ,2 ,3 ,15 ,N'N' ,NULL ,N'' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000003' ,N'Hände' ,6 ,1 ,5 ,9 ,N'H' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000003' ,N'Szepter' ,6 ,1 ,11 ,12 ,N'N' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000004' ,N'Hände' ,6 ,1 ,2 ,10 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000004' ,N'Speer' ,6 ,1 ,4 ,11 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,7);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000005' ,N'Ausweichen I' ,6 ,0 ,0 ,0 ,N'None' ,NULL ,NULL ,10);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
@@ -5474,6 +6638,8 @@ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [T
  VALUES ('00000000-0000-0000-006e-000000000079' ,N'Trampeln' ,6 ,3 ,0 ,7 ,N'H' ,NULL ,NULL ,5);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000080' ,N'Stinkender Nebel' ,6 ,1 ,0 ,12 ,N'HNS' ,NULL ,N'TP = SP' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000082' ,N'Hände' ,6 ,1 ,4 ,10 ,N'H' ,NULL ,NULL ,3);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000087' ,N'Luftstoß' ,6 ,1 ,4 ,14 ,N'H' ,NULL ,N'' ,0);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
@@ -5939,6 +7105,8 @@ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [T
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000279' ,N'Ausweichen I' ,6 ,0 ,0 ,0 ,N'None' ,NULL ,NULL ,11);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000280' ,N'Feuer ' ,6 ,2 ,0 ,15 ,N'H' ,NULL ,N'Feuerschaden' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000281' ,N'Faust' ,6 ,2 ,2 ,6 ,N'HN' ,NULL ,NULL ,2);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000282' ,N'Biss' ,6 ,2 ,2 ,11 ,N'H' ,NULL ,NULL ,8);
@@ -6174,6 +7342,14 @@ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [T
  VALUES ('00000000-0000-0000-006e-000000000363' ,N'Stachel' ,6 ,1 ,0 ,15 ,N'HNSP' ,NULL ,N'* + Gift**' ,0);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000364' ,N'Stachel' ,6 ,1 ,0 ,6 ,N'HN' ,NULL ,N'*+Gift**' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000365' ,N'Biss' ,6 ,1 ,5 ,12 ,N'H' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000365' ,N'Säbel' ,6 ,1 ,3 ,13 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet ein Säbel zwei zusätzliche TP an.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000365' ,N'Schwanz ' ,6 ,2 ,4 ,12 ,N'H' ,NULL ,N'TP(A)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000365' ,N'Streitaxt' ,6 ,1 ,4 ,13 ,N'N' ,NULL ,NULL ,9);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000366' ,N'Gebiss' ,6 ,1 ,5 ,16 ,N'N' ,NULL ,NULL ,13);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
@@ -7187,6 +8363,8 @@ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [T
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000802' ,N'Biss' ,6 ,1 ,1 ,10 ,N'H' ,NULL ,N'*' ,0);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000803' ,N'Hände' ,6 ,1 ,0 ,7 ,N'H' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000804' ,N'Biss' ,6 ,1 ,3 ,13 ,N'H' ,NULL ,NULL ,7);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000808' ,N'Stoßzähne' ,6 ,2 ,0 ,12 ,N'HNS' ,NULL ,NULL ,0);
@@ -7234,3 +8412,675 @@ INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [T
  VALUES ('00000000-0000-0000-006e-000000000814' ,N'Keule' ,6 ,1 ,4 ,13 ,N'N' ,NULL ,NULL ,11);
 INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
  VALUES ('00000000-0000-0000-006e-000000000814' ,N'Kopfstoß' ,6 ,1 ,4 ,11 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000815' ,N'Biss' ,6 ,1 ,0 ,15 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000817' ,N'Faust ' ,6 ,2 ,9 ,15 ,N'HN' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000817' ,N'Keule' ,6 ,3 ,8 ,14 ,N'NS' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000818' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000818' ,N'Tepoztopilli' ,6 ,1 ,6 ,16 ,N'S' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000818' ,N'Wurfspeer' ,6 ,1 ,4 ,21 ,NULL ,30 ,N'Wird der Angriff mit einem Schild abgewehrt, bleibt dieser stecken und verdoppelt so den AT-Malus des Schildes, während der PA-Bonus um 1 sinkt. Um den Speer aus dem Schild zu ziehen, benötigt der Schildträger 3 Aktionen.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000819' ,N'Krallen' ,6 ,1 ,2 ,14 ,N'H' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000820' ,N'Entermesser' ,6 ,1 ,5 ,17 ,N'N' ,NULL ,N'Das Entermesser ist eine meisterlich gefertigte magische Waffe mit einer verfluchten Astralseele.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000821' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000821' ,N'Tepoztopilli' ,6 ,1 ,0 ,18 ,N'S' ,NULL ,N'INI 6+1W6' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000821' ,N'Zweihand-Macuahuitl' ,6 ,2 ,1 ,15 ,N'NS' ,NULL ,N'INI 4+1W6' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000822' ,N'Äste' ,6 ,2 ,3 ,15 ,N'NS' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000822' ,N'Maul' ,6 ,1 ,8 ,12 ,N'H' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000824' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000824' ,N'Stahl-Macuahuitl' ,6 ,1 ,5 ,16 ,N'N' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000825' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000825' ,N'Tepoztopilli' ,6 ,1 ,0 ,17 ,N'S' ,NULL ,N'INI 6+1W6' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000825' ,N'Zweihand-Macuahuitl' ,6 ,2 ,1 ,14 ,N'NS' ,NULL ,N'INI 4+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000826' ,N'Hände' ,6 ,1 ,2 ,10 ,N'H' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000827' ,N'Biss' ,6 ,1 ,3 ,11 ,N'HN' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000827' ,N'Klauen' ,6 ,1 ,2 ,8 ,N'H' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000828' ,N'Nesseln' ,6 ,1 ,0 ,10 ,N'HN' ,NULL ,N'Gift (Stufe 5, bei Schaden für W6 KR je 1 SP / KR)' ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000829' ,N'Hände' ,6 ,1 ,2 ,10 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000829' ,N'Schlingzunge' ,6 ,1 ,0 ,12 ,N'NS' ,NULL ,N'Die ledrige Schlingzunge hat 10 LeP und kann durch gezielte Angriffe abgetrennt werden.' ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000830' ,N'Biss' ,6 ,1 ,4 ,15 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000830' ,N'Chitinklingen' ,6 ,2 ,2 ,18 ,N'HN' ,NULL ,N'Die Klingen sind sehr scharf und spitz, so dass Wunden bereits bei KO/2-2 entstehen' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000831' ,N'Biss' ,6 ,4 ,6 ,17 ,N'HN' ,NULL ,N'15+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000831' ,N'Prankenhieb' ,6 ,3 ,4 ,21 ,N'HNS' ,NULL ,N'17+1W6' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000831' ,N'Überrennen' ,6 ,5 ,6 ,17 ,N'H' ,NULL ,N'16+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000832' ,N'Ringen' ,6 ,1 ,0 ,12 ,N'H' ,NULL ,N'TP(A)' ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000833' ,N'Biss' ,6 ,2 ,1 ,12 ,N'H' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000833' ,N'Prankenhieb' ,6 ,1 ,4 ,12 ,N'H' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000834' ,N'Klauen' ,6 ,1 ,3 ,17 ,N'HN' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000834' ,N'Schwert ' ,6 ,1 ,6 ,19 ,N'NS' ,NULL ,N'Persönliche Waffe mit AT/PA-WM +1 und TP +2.' ,19);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000835' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000835' ,N'Tepoztopilli' ,6 ,1 ,6 ,17 ,N'S' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000835' ,N'Wurfspeer' ,6 ,1 ,4 ,22 ,NULL ,30 ,N'Wird der Angriff mit einem Schild abgewehrt, bleibt dieser stecken und verdoppelt so den AT-Malus des Schildes, während der PA-Bonus um 1 sinkt. Um den Speer aus dem Schild zu ziehen, benötigt der Schildträger 3 Aktionen.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000836' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000836' ,N'Stahl-Macuahuitl' ,6 ,1 ,5 ,15 ,N'N' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000837' ,N'Rondrakamm' ,6 ,2 ,2 ,17 ,N'NS' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000838' ,N'Fliegendes Flammen-Tuzakmesser' ,6 ,1 ,6 ,15 ,N'HN' ,NULL ,N'Feuer; Mit der Verwandlung des Stabes in dieses Flammenschwert übertragen sich die kalten, schwarzen Flammen auch auf seinen Körper. Er erhält die Eigenschaft Aura aus Feuer.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000838' ,N'Krallen' ,6 ,1 ,2 ,13 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000838' ,N'Magierstab    ' ,6 ,1 ,2 ,14 ,N'S' ,NULL ,NULL ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000839' ,N'Steinkeule' ,6 ,1 ,4 ,10 ,N'N' ,NULL ,N'Waffe enstpricht einem Streitkolben. Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000839' ,N'Wurfspeer' ,6 ,1 ,3 ,18 ,NULL ,30 ,N'Wurfspeere richten bereits eine Wunde an bei KO/2-2. Wird der Angriff mit einem Schild abgewehrt, bleibt dieser stecken und verdoppelt so den AT-Malus des Schildes, während der PA-Bonus um 1 sinkt. Um den Speer aus dem Schild zu ziehen, benötigt der Schildträger 3 Aktionen.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000840' ,N'Stoß ' ,6 ,1 ,1 ,8 ,N'H' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000841' ,N'Obsidiandolch' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'INI 10+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000841' ,N'Obsidian-Macuahuitl' ,6 ,1 ,4 ,14 ,N'N' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000841' ,N'Speer' ,6 ,1 ,3 ,12 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000841' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000842' ,N'Klauen' ,6 ,1 ,6 ,10 ,N'HN' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000842' ,N'Schwanz ' ,6 ,1 ,8 ,12 ,N'NS' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000842' ,N'Überrennen' ,6 ,1 ,0 ,11 ,N'NS' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000843' ,N'Kurzschwert' ,6 ,1 ,2 ,17 ,N'HN' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000843' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000844' ,N'Hände' ,6 ,1 ,2 ,14 ,N'H' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000844' ,N'Hellebarde' ,6 ,1 ,5 ,14 ,N'S' ,NULL ,N'Schläge einer Hellebarde können mit Dolchen und Fechtwaffen nicht pariert werden.' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000844' ,N'Ogerschelle +verstärkter Schild' ,6 ,2 ,2 ,12 ,N'N' ,NULL ,N'INI: 7' ,17);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000844' ,N'Schwert +verstärkter Schild' ,6 ,1 ,4 ,12 ,N'N' ,NULL ,N'INI: 9' ,17);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000844' ,N'Zweihänder' ,6 ,2 ,4 ,14 ,N'NS' ,NULL ,N'Der Schlag eines Zweihänders kann mit Fechtwaffen und Dolchen nicht pariert werden.' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000845' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000845' ,N'Tepoztopilli' ,6 ,1 ,0 ,18 ,N'S' ,NULL ,N'INI 6+1W6' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000845' ,N'Zweihand-Macuahuitl' ,6 ,2 ,1 ,15 ,N'NS' ,NULL ,N'INI 4+1W6' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000846' ,N'Biss' ,6 ,2 ,3 ,12 ,N'HN' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000846' ,N'Stoß ' ,6 ,1 ,5 ,14 ,N'H' ,NULL ,NULL ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000846' ,N'Trampeln' ,6 ,3 ,2 ,11 ,N'H' ,NULL ,NULL ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000847' ,N'Kurzschwert' ,6 ,1 ,2 ,17 ,N'HN' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000847' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000848' ,N'Biss' ,6 ,1 ,0 ,12 ,N'H' ,NULL ,N'Folgeschaden (Gift, 1W3 SP/KR) ' ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000849' ,N'Faust ' ,6 ,1 ,0 ,9 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000850' ,N'Biss' ,6 ,3 ,4 ,14 ,N'HNS' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000850' ,N'Halsschwenker' ,6 ,1 ,1 ,8 ,N'NS' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000850' ,N'Klauen' ,6 ,1 ,5 ,8 ,N'HN' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000850' ,N'Schwanzschlag' ,6 ,2 ,1 ,11 ,N'HNSP' ,NULL ,NULL ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000850' ,N'Umschlingen' ,6 ,2 ,3 ,15 ,N'HN' ,NULL ,N'TP (A)' ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000850' ,N'Windstoß' ,6 ,4 ,0 ,15 ,N'None' ,0 ,N'DK= 49 Schritt; TP(A)= 4W6+(Alter/100)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000851' ,N'Klauen' ,6 ,1 ,2 ,12 ,N'HN' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000852' ,N'Biss' ,6 ,2 ,2 ,13 ,N'HN' ,NULL ,NULL ,1);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000852' ,N'Schwanz ' ,6 ,1 ,2 ,6 ,N'NS' ,NULL ,NULL ,1);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000853' ,N'Hände ' ,6 ,1 ,2 ,7 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000854' ,N'Kurzschwert' ,6 ,1 ,2 ,16 ,N'HN' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000854' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000855' ,N'Blutpeitschen' ,6 ,1 ,4 ,16 ,N'HN' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000855' ,N'Maul' ,6 ,2 ,3 ,12 ,N'H' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000856' ,N'Speer' ,6 ,1 ,3 ,11 ,N'S' ,NULL ,N'mit Schild, Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000856' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,12 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000856' ,N'Wurfbeil' ,6 ,1 ,3 ,11 ,N'H' ,NULL ,N'Bei TP/KK 13/3 richtet die Fernkampfwaffe +1 TP an.' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000856' ,N'Wurfbeil (Fernkampf)' ,6 ,1 ,3 ,12 ,NULL ,25 ,N'Bei TP/KK 13/3 richtet die Fernkampfwaffe +1 TP an.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000857' ,N'Obsidiandolch' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'INI 10+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000857' ,N'Obsidian-Macuahuitl' ,6 ,1 ,4 ,13 ,N'N' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000857' ,N'Speer' ,6 ,1 ,3 ,11 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000857' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000858' ,N'Klauen' ,6 ,1 ,2 ,13 ,N'HN' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000859' ,N'Bastardschwert' ,6 ,1 ,5 ,14 ,N'N' ,NULL ,N'INI: 11+1W6; Erfordert mindestens KK 15 für die einhändige Führung mit dem Talent Schwerter.' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000859' ,N'Hände' ,6 ,1 ,2 ,14 ,N'H' ,NULL ,N'INI: 10+1W6' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000859' ,N'Kriegshammer' ,6 ,2 ,3 ,13 ,N'N' ,NULL ,N'INI: 9+1W6; Schläge eines Kriegshammers können mit Dolchen und Fechtwaffen nicht pariert werden. Kann ab KK 18 einhändig mit dem Talent Hiebwaffen geführt werden (TP/KK dann 15/3).' ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000859' ,N'Morgenstern' ,6 ,1 ,5 ,13 ,N'N' ,NULL ,N'INI: 10 +1W6 Die PA des Gegners ist um 2 Punkte erschwert (sofern eine PA überhaupt möglich ist).' ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000859' ,N'Säbel' ,6 ,1 ,3 ,14 ,N'N' ,NULL ,N'INI: 12+1W6; Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet ein Säbel zwei zusätzliche TP an.' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000859' ,N'Schwert' ,6 ,1 ,4 ,14 ,N'N' ,NULL ,N'INI: 11+1W6; Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet die Waffe 2 zusätzliche TP an.' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000860' ,N'Ahnenschwert (Karmulka)' ,6 ,1 ,4 ,13 ,N'N' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000860' ,N'Raufen/ Ringen' ,6 ,1 ,-1 ,12 ,N'H' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000860' ,N'Steinmesser' ,6 ,1 ,-1 ,12 ,N'H' ,NULL ,N'Regelung siehe Arsenal.' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000861' ,N'Biss' ,6 ,1 ,0 ,11 ,N'N' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000862' ,N'Klauen' ,6 ,1 ,3 ,13 ,N'HN' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000863' ,N'Obsidiandolch' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'INI 10+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000863' ,N'Obsidian-Macuahuitl' ,6 ,1 ,4 ,15 ,N'N' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000863' ,N'Speer' ,6 ,1 ,5 ,15 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000863' ,N'Speer (Fernkampf)' ,6 ,1 ,5 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000864' ,N'Hände' ,6 ,1 ,3 ,0 ,N'H' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000864' ,N'Segnungsstab' ,6 ,1 ,4 ,12 ,N'N' ,NULL ,N'+Zauber (drei Ladungen Schwarz und Rot (12ZfP*), Auslösen einfache Aktion oder frei nach erfolgreicher Attacke' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000865' ,N'Hände' ,6 ,1 ,3 ,12 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000865' ,N'Holzfälleraxt' ,6 ,2 ,0 ,11 ,N'N' ,NULL ,N'INI: 7+1W6; Schläge mit der Holzfälleraxt können von Dolchen und Fechtwaffen nicht pariert werden.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000866' ,N'Biss' ,6 ,2 ,1 ,10 ,N'H' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000866' ,N'Rammstoß' ,6 ,3 ,1 ,9 ,N'HNS' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000866' ,N'Wasserstrahl' ,6 ,1 ,0 ,17 ,N'N' ,NULL ,N'DK 49 Schritt, TP(A) 4W6+(Alter/100)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000867' ,N'Biss' ,6 ,4 ,8 ,14 ,N'HN' ,NULL ,N'11+1W6' ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000867' ,N'Rammstoß' ,6 ,5 ,0 ,16 ,N'HNS' ,NULL ,N'12+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000867' ,N'Schwanzschlag' ,6 ,3 ,3 ,16 ,N'SP' ,NULL ,N'15+1W6' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000868' ,N'Schnabel/ Klaue' ,6 ,1 ,-2 ,7 ,N'N' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000869' ,N'Hände' ,6 ,1 ,2 ,10 ,N'H' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000869' ,N'Kurzbogen' ,6 ,1 ,4 ,20 ,NULL ,60 ,N'Der Munitionspreis in Myranor ist nur 2 Perkunos.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000870' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000870' ,N'Tepoztopilli' ,6 ,1 ,6 ,15 ,N'S' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000870' ,N'Wurfspeer' ,6 ,1 ,4 ,20 ,NULL ,30 ,N'Wird der Angriff mit einem Schild abgewehrt, bleibt dieser stecken und verdoppelt so den AT-Malus des Schildes, während der PA-Bonus um 1 sinkt. Um den Speer aus dem Schild zu ziehen, benötigt der Schildträger 3 Aktionen.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000871' ,N'Biss' ,6 ,2 ,0 ,13 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000871' ,N'Prankenhieb' ,6 ,1 ,3 ,13 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000872' ,N'Faust ' ,6 ,2 ,7 ,15 ,N'HN' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000872' ,N'Keule' ,6 ,3 ,8 ,14 ,N'NS' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000873' ,N'Biss' ,6 ,2 ,6 ,16 ,N'H' ,NULL ,N'INI: 16+1W6' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000873' ,N'Klauen' ,6 ,1 ,7 ,18 ,N'N' ,NULL ,N'INI: 17+1W6' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000874' ,N'Mondspeer' ,6 ,1 ,5 ,18 ,N'S' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000874' ,N'Mondstrahl' ,6 ,1 ,0 ,18 ,N'N' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000875' ,N'Blasrohr' ,6 ,1 ,1 ,19 ,NULL ,40 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000875' ,N'Kurzbogen' ,6 ,1 ,4 ,21 ,NULL ,60 ,N'Der Munitionspreis in Myranor ist nur 2 Perkunos.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000875' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,17 ,N'H' ,NULL ,N'TP(A)' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000875' ,N'Speer' ,6 ,1 ,3 ,17 ,N'S' ,NULL ,N'INI 10+1W6. Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000875' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,21 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000876' ,N'Maul des Balges' ,6 ,2 ,1 ,10 ,N'H' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000877' ,N'Faust ' ,6 ,1 ,3 ,13 ,N'N' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000877' ,N'Kopfstoß' ,6 ,1 ,6 ,12 ,N'H' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000877' ,N'Sense' ,6 ,1 ,7 ,13 ,N'S' ,NULL ,N'INI 6+1W6' ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000877' ,N'Zweihandaxt' ,6 ,2 ,6 ,12 ,N'N' ,NULL ,N'INI 5+1W6' ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000878' ,N'Biss' ,6 ,1 ,3 ,9 ,N'H' ,NULL ,N'Gift: Wirkung: Lähmung / Alle körperlichen Eigenschaften -3; Beginn: sofort, Dauer: 3 Stunden; Stufe: 10 (tierisches Gift)' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000879' ,N'Biss' ,6 ,3 ,2 ,19 ,N'H' ,NULL ,N'Gift: Stufe 6; Wirkung: AT, PA, GE und KK je –1; Beginn: 3 KR; Dauer: Regeneration von 1 Punkt pro Stunde; bei gelungenem Resistenzwurf keine Wirkung' ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000879' ,N'Spinnfäden' ,6 ,1 ,3 ,24 ,N'N' ,NULL ,N'TP(A), RW – / 3 / 6 / 15 / 25' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000879' ,N'Stich mit dem Bein' ,6 ,2 ,6 ,20 ,N'NS' ,NULL ,N'Die Beinklingen sind sehr scharf, so dass Wunden bereits bei KO/2-2 entstehen' ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000880' ,N'Biss' ,6 ,1 ,5 ,13 ,N'H' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000881' ,N'Biss' ,6 ,1 ,2 ,8 ,N'H' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000882' ,N'Hände' ,6 ,1 ,3 ,11 ,N'H' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000883' ,N'Biss' ,6 ,3 ,4 ,16 ,N'HNS' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000883' ,N'Halsschwenker' ,6 ,1 ,1 ,10 ,N'NS' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000883' ,N'Klauen' ,6 ,1 ,5 ,10 ,N'HN' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000883' ,N'Schwanzschlag' ,6 ,2 ,1 ,13 ,N'HNSP' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000883' ,N'Umschlingen' ,6 ,2 ,3 ,17 ,N'HN' ,NULL ,N'TP (A)' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000883' ,N'Windstoß' ,6 ,4 ,0 ,15 ,N'None' ,0 ,N'DK= 49 Schritt; TP(A)= 4W6+(Alter/100)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000884' ,N'Faust ' ,6 ,2 ,1 ,8 ,N'HN' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000885' ,N'Hände' ,6 ,1 ,4 ,13 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000886' ,N'Knochenkeule ' ,6 ,1 ,12 ,14 ,N'N' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000887' ,N'Biss' ,6 ,1 ,2 ,15 ,N'H' ,NULL ,N'Gift (Stufe 6, nach 1W6 Kampfrunden INI, AT, PA, GE je -1 und 1W6 SP pro Biss)' ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000888' ,N'Stoß ' ,6 ,1 ,1 ,8 ,N'H' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000889' ,N'Schnabelstich' ,3 ,1 ,0 ,10 ,N'H' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000890' ,N'Biss 1' ,6 ,1 ,-2 ,10 ,N'H' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000890' ,N'Biss 2' ,6 ,1 ,0 ,10 ,N'N' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000891' ,N'Biss' ,6 ,2 ,2 ,12 ,N'H' ,NULL ,NULL ,14);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000891' ,N'Rammstoß' ,6 ,3 ,3 ,11 ,N'HNS' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000891' ,N'Wasserstrahl' ,6 ,1 ,0 ,17 ,N'N' ,NULL ,N'DK 49 Schritt, TP(A) 4W6+(Alter/100)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000892' ,N'Biss' ,6 ,1 ,5 ,10 ,N'N' ,NULL ,N'INI 10+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000892' ,N'Rammstoß' ,6 ,1 ,2 ,12 ,N'H' ,NULL ,N'*) Neben dem Strukturschaden am Boot erfordert der Ruck eine Körperbeherrschung-Probe +TP. Bei Misslingen fällt der Held ins Wasser.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000893' ,N'Stab ' ,6 ,1 ,1 ,11 ,N'S' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000894' ,N'Klauen' ,6 ,1 ,2 ,10 ,N'HN' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000895' ,N'Biss' ,6 ,2 ,2 ,13 ,N'H' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000895' ,N'Keule' ,6 ,1 ,5 ,15 ,N'N' ,NULL ,NULL ,17);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000895' ,N'Stein ' ,6 ,1 ,1 ,17 ,N'None' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000896' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000896' ,N'Speer' ,6 ,1 ,5 ,17 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000896' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000897' ,N'Biss' ,6 ,2 ,6 ,17 ,N'H' ,NULL ,N'18+1W6' ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000897' ,N'Saugzunge' ,6 ,1 ,6 ,19 ,N'NS' ,NULL ,N'Lebensraub I (Saugzunge; W6 LeP je Treffer mit Schaden)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000897' ,N'Schwanz ' ,6 ,1 ,4 ,17 ,N'SP' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000898' ,N'Klauen' ,6 ,1 ,1 ,9 ,N'HN' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000899' ,N'Biss' ,6 ,1 ,3 ,11 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000899' ,N'Lanze' ,6 ,1 ,0 ,18 ,N'N' ,NULL ,N'TP 1W6+6/2W6+8/3W6+10' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000899' ,N'Niederreiten' ,6 ,1 ,0 ,14 ,N'N' ,NULL ,N'TP 1W6/2W6/2W6+2' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000899' ,N'Streitkolben' ,6 ,1 ,4 ,12 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000899' ,N'Tritt' ,6 ,1 ,6 ,12 ,N'H' ,NULL ,N'Der Angriff Tritt ist ein Angriff zum Niederwerfen (4).' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000900' ,N'Blasrohr' ,6 ,1 ,1 ,16 ,NULL ,40 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000900' ,N'Kurzbogen' ,6 ,1 ,4 ,18 ,NULL ,60 ,N'Der Munitionspreis in Myranor ist nur 2 Perkunos.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000900' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000900' ,N'Speer' ,6 ,1 ,3 ,14 ,N'S' ,NULL ,N'INI 10+1W6. Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000900' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,18 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000901' ,N'Biss' ,6 ,2 ,2 ,13 ,N'H' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000901' ,N'Rammstoß' ,6 ,3 ,0 ,16 ,N'HNS' ,NULL ,N'INI: 11+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000901' ,N'Rammstoß mit Panzermaske' ,6 ,3 ,8 ,16 ,N'HNS' ,NULL ,N'INI: 11+1W6' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000901' ,N'Schwanzschlag ' ,6 ,4 ,0 ,16 ,N'NSP' ,NULL ,N'INI 12+1W6' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000901' ,N'Schwanzschlag mit Schwanzwaffe' ,6 ,4 ,8 ,16 ,N'NSP' ,NULL ,N'INI 12+1W6' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000902' ,N'Biss' ,6 ,1 ,2 ,13 ,N'H' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000903' ,N'Biss' ,6 ,4 ,6 ,19 ,N'HN' ,NULL ,N'15+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000903' ,N'Prankenhieb' ,6 ,3 ,4 ,23 ,N'HNS' ,NULL ,N'17+1W6' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000903' ,N'Überrennen' ,6 ,5 ,6 ,18 ,N'H' ,NULL ,N'16+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000904' ,N'Hand ' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000905' ,N'Biss' ,6 ,2 ,2 ,8 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000905' ,N'Entermesser' ,6 ,1 ,3 ,10 ,N'N' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000905' ,N'Würgen' ,6 ,1 ,2 ,9 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000906' ,N'Biss' ,6 ,1 ,4 ,11 ,N'N' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000906' ,N'Hände' ,6 ,1 ,2 ,8 ,N'H' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000906' ,N'Ringen' ,6 ,1 ,2 ,14 ,N'N' ,NULL ,N'TP(A)' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000907' ,N'Biss' ,6 ,2 ,4 ,14 ,N'H' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000907' ,N'Rammstoß' ,6 ,3 ,5 ,12 ,N'HNS' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000907' ,N'Wasserstrahl' ,6 ,1 ,0 ,17 ,N'N' ,NULL ,N'DK 49 Schritt, TP(A) 4W6+(Alter/100)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000908' ,N'Biss' ,6 ,1 ,0 ,18 ,N'N' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000908' ,N'Klauen' ,6 ,1 ,5 ,16 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000909' ,N'Fäuste' ,6 ,4 ,4 ,17 ,N'HN' ,NULL ,N'INI 8+1W6' ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000909' ,N'Felsbrocken' ,6 ,6 ,10 ,19 ,N'None' ,NULL ,N'INI 7+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000910' ,N'Hände' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000911' ,N'Klauen' ,6 ,1 ,2 ,11 ,N'HN' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000912' ,N'Klauen' ,6 ,1 ,2 ,8 ,N'HN' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000913' ,N'Biss' ,6 ,1 ,4 ,8 ,N'N' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000913' ,N'Entermesser' ,6 ,1 ,4 ,10 ,N'N' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000913' ,N'Würgen' ,6 ,1 ,2 ,9 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000914' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,15 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000914' ,N'Speer' ,6 ,1 ,5 ,16 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000914' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000915' ,N'Biss' ,6 ,1 ,0 ,9 ,N'H' ,NULL ,N'1 SP' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000916' ,N'Biss' ,6 ,1 ,1 ,9 ,N'H' ,NULL ,N'Gift (Stufe 8, KL und IN -1 pro SR für 2W6 SR; Halluzinationen, Wahnvorstellungen, fieberhafte Albträume)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000916' ,N'Würgen' ,6 ,1 ,1 ,14 ,N'N' ,NULL ,N'pro KR' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000917' ,N'Biss' ,6 ,3 ,2 ,17 ,N'H' ,NULL ,N'Gift: Stufe 6; Wirkung: AT, PA, GE und KK je –1; Beginn: 3 KR; Dauer: Regeneration von 1 Punkt pro Stunde; bei gelungenem Resistenzwurf keine Wirkung' ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000917' ,N'Spinnfäden' ,6 ,1 ,3 ,20 ,N'N' ,NULL ,N'TP(A), RW – / 3 / 6 / 15 / 25' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000917' ,N'Stich mit dem Bein' ,6 ,2 ,6 ,18 ,N'NS' ,NULL ,N'Die Beinklingen sind sehr scharf, so dass Wunden bereits bei KO/2-2 entstehen' ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000918' ,N'Stoßzähne' ,6 ,2 ,-2 ,11 ,N'HNS' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000918' ,N'Trampeln' ,20 ,3 ,-2 ,5 ,N'H' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000920' ,N'Klauen' ,6 ,2 ,0 ,14 ,N'N' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000920' ,N'Schwanz ' ,6 ,1 ,4 ,15 ,N'N' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000921' ,N'Biss' ,6 ,1 ,3 ,11 ,N'H' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000921' ,N'Hände' ,6 ,1 ,2 ,9 ,N'H' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000921' ,N'Ringen' ,6 ,1 ,0 ,12 ,N'H' ,NULL ,N'TP(A)' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000922' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000922' ,N'Stahl-Macuahuitl' ,6 ,1 ,5 ,17 ,N'N' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000923' ,N'Biss' ,6 ,1 ,0 ,10 ,N'H' ,NULL ,N'Gift (Stufe 6, GE und KK -1 je pro SR für 2W6; Lähmungserscheinungen)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000923' ,N'Säbel' ,6 ,1 ,5 ,17 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet ein Säbel zwei zusätzliche TP an.' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000924' ,N'Fallspeer' ,6 ,2 ,3 ,18 ,N'N' ,NULL ,N'RW 5/20/50/100/200  TP+ (+0/+0/+1/+2/+3) Die Reichweiten gelten für Höhen, aus denen die Waffe abgeworfen wird. Der Aurishak muss über dem Ziel fliegen, um es angreifen zu können. Die TP+ steigen entsprechend der Abwurfhöhe' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000924' ,N'Krallen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000924' ,N'Schnabel' ,6 ,1 ,2 ,14 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000924' ,N'Schnabelkeule' ,6 ,1 ,5 ,16 ,N'N' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000924' ,N'Stein ' ,6 ,2 ,0 ,18 ,N'N' ,NULL ,N'RW 5/20/40/80/150*  TP+ (+0/+0/+0/+1/+2) Die Reichweiten gelten für Höhen, aus denen die Waffe abgeworfen wird. Der Aurishak muss über dem Ziel fliegen, um es angreifen zu können. Die TP+ steigen entsprechend der Abwurfhöhe' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000925' ,N'Krallen' ,6 ,1 ,4 ,12 ,N'H' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000926' ,N'Schattendolch ' ,6 ,1 ,3 ,17 ,N'H' ,NULL ,N'Der Schattendolch wirkt wie ein Schwächender Biss' ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000927' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000927' ,N'Tepoztopilli' ,6 ,1 ,0 ,16 ,N'S' ,NULL ,N'INI 6+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000927' ,N'Zweihand-Macuahuitl' ,6 ,2 ,1 ,13 ,N'NS' ,NULL ,N'INI 4+1W6' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000928' ,N'Biss ' ,6 ,1 ,0 ,8 ,N'H' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000929' ,N'Frostige Axt' ,6 ,1 ,0 ,13 ,N'N' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000929' ,N'Hände' ,6 ,1 ,3 ,11 ,N'H' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000930' ,N'Steinkeule' ,6 ,1 ,4 ,0 ,N'N' ,NULL ,N'(entspricht Streitkolben) Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000931' ,N'Biss 1' ,6 ,1 ,-1 ,9 ,N'H' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000931' ,N'Biss 2' ,6 ,1 ,1 ,9 ,N'N' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000932' ,N'Biss' ,6 ,2 ,3 ,17 ,N'H' ,NULL ,N'INI 14+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000932' ,N'Flügel ' ,6 ,1 ,7 ,19 ,N'NS' ,NULL ,N'INI 16+1W6, Die Obsidianflügel sind so scharf, dass Wunden bereits bei KO/2-2 entstehen' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000933' ,N'Knochenscheren' ,6 ,4 ,8 ,14 ,N'N' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000933' ,N'Rammen' ,6 ,5 ,4 ,13 ,N'H' ,NULL ,N'erzeugt Strukturschaden' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000933' ,N'Ringen' ,6 ,1 ,5 ,12 ,N'HNS' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000933' ,N'Skorpionstachel' ,6 ,2 ,6 ,10 ,N'N' ,NULL ,N'Gift: Stufe 6, KO und KK je -1 für 1 SR' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000934' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP (A)' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000934' ,N'Sichelschwert' ,6 ,1 ,4 ,16 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer richtet das Sichelschwert zwei zusätzliche TP an. Alle Manöver zum Entwaffnen sind mit dem Sichelschwert um 2 Punkte erleichtert. Umreißen ist mit dieser Waffe erlaubt.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000934' ,N'Sichelwurfbeil' ,6 ,1 ,0 ,16 ,N'None' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000935' ,N'Faust ' ,6 ,3 ,3 ,6 ,N'NS' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000936' ,N'Dolch' ,6 ,1 ,2 ,16 ,N'H' ,NULL ,NULL ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000936' ,N'Dolch (Fernkampf)' ,6 ,1 ,0 ,0 ,NULL ,10 ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000936' ,N'Schwert' ,6 ,1 ,5 ,19 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet die Waffe 2 zusätzliche TP an.' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000936' ,N'Schwert mit Großschild' ,6 ,1 ,5 ,17 ,N'N' ,NULL ,N'INI: 12' ,18);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000937' ,N'Raufen/ Ringen' ,6 ,1 ,0 ,10 ,N'N' ,NULL ,N'Ausdauerschaden' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000937' ,N'Steinmesser' ,6 ,1 ,0 ,10 ,N'H' ,NULL ,N'Regelung siehe Arsenal.' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000937' ,N'Taiaha' ,6 ,2 ,0 ,11 ,N'NS' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000938' ,N'Hände ' ,6 ,1 ,3 ,10 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000939' ,N'Obsidiandolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,N'INI 10+1W6' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000939' ,N'Obsidian-Macuahuitl' ,6 ,1 ,4 ,12 ,N'N' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000939' ,N'Speer' ,6 ,1 ,3 ,10 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000939' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000940' ,N'Biss' ,6 ,1 ,0 ,4 ,N'N' ,NULL ,N'1 SP' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000941' ,N'Doppelkhunchomer' ,6 ,1 ,14 ,14 ,N'NS' ,NULL ,N'Beachte die Regelung im Arsenal.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000941' ,N'Hände' ,6 ,1 ,5 ,14 ,N'H' ,NULL ,NULL ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000941' ,N'Khunchomer' ,6 ,1 ,12 ,14 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer, richtet ein Khunchomer zwei zusätzliche TP an.' ,11);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000942' ,N'Hände' ,6 ,1 ,4 ,13 ,N'H' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000942' ,N'Streitkolben' ,6 ,1 ,7 ,13 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet der Streitkolben zwei zusätzliche TP an.' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000943' ,N'Biss' ,6 ,3 ,5 ,15 ,N'HNS' ,NULL ,N'' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000943' ,N'Halsschwenker' ,6 ,1 ,2 ,9 ,N'NS' ,NULL ,N'' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000943' ,N'Klauen' ,6 ,1 ,5 ,9 ,N'HN' ,NULL ,NULL ,7);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000943' ,N'Schwanzschlag' ,6 ,2 ,2 ,12 ,N'HNSP' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000943' ,N'Umschlingen' ,6 ,2 ,3 ,16 ,N'HN' ,NULL ,N'TP (A)' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000943' ,N'Windstoß' ,6 ,4 ,0 ,15 ,N'None' ,0 ,N'DK= 49 Schritt; TP(A)= 4W6+(Alter/100)' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000944' ,N'Kurzschwert' ,6 ,1 ,2 ,15 ,N'HN' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000944' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000945' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000945' ,N'Stahl-Macuahuitl' ,6 ,1 ,5 ,17 ,N'N' ,NULL ,NULL ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000946' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000946' ,N'Tepoztopilli' ,6 ,1 ,6 ,17 ,N'S' ,NULL ,NULL ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000946' ,N'Wurfspeer' ,6 ,1 ,4 ,22 ,NULL ,30 ,N'Wird der Angriff mit einem Schild abgewehrt, bleibt dieser stecken und verdoppelt so den AT-Malus des Schildes, während der PA-Bonus um 1 sinkt. Um den Speer aus dem Schild zu ziehen, benötigt der Schildträger 3 Aktionen.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000947' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,14 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,13);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000947' ,N'Speer' ,6 ,1 ,5 ,15 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000947' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000949' ,N'Hände' ,6 ,1 ,2 ,8 ,N'H' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000950' ,N'Raufen/ Ringen' ,6 ,1 ,1 ,16 ,N'H' ,NULL ,N'TP(A), Waffenloser Kampfstil je nach Variante' ,15);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000950' ,N'Speer' ,6 ,1 ,5 ,17 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,12);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000950' ,N'Speer (Fernkampf)' ,6 ,1 ,3 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000951' ,N'Ringen' ,6 ,1 ,0 ,11 ,N'H' ,NULL ,N'TP(A)' ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000952' ,N'Biss' ,6 ,2 ,3 ,13 ,N'H' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000952' ,N'Schwanz ' ,6 ,2 ,0 ,12 ,N'N' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000953' ,N'Keule' ,6 ,2 ,4 ,11 ,N'NS' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000953' ,N'Klauen' ,6 ,1 ,5 ,11 ,N'HN' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000954' ,N'Keule' ,6 ,1 ,3 ,13 ,N'N' ,NULL ,NULL ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000954' ,N'Ramme' ,6 ,2 ,2 ,13 ,N'H' ,NULL ,N'INI: 8, Richtet Strukturschaden an (WdS 192).' ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000955' ,N'Obsidiandolch' ,6 ,1 ,1 ,13 ,N'H' ,NULL ,N'INI 10+1W6' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000955' ,N'Obsidian-Macuahuitl' ,6 ,1 ,4 ,14 ,N'N' ,NULL ,NULL ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000955' ,N'Speer' ,6 ,1 ,5 ,14 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,10);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000955' ,N'Speer (Fernkampf)' ,6 ,1 ,5 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000956' ,N'Biss' ,6 ,3 ,2 ,9 ,N'H' ,NULL ,N'INI 9+1W6' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000956' ,N'Peitschenäste' ,6 ,1 ,3 ,13 ,N'NSP' ,NULL ,N'INI 14+1W6' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000956' ,N'Peitschenwurzeln' ,6 ,1 ,4 ,11 ,N'HNS' ,NULL ,N'INI 14+1W6' ,8);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000956' ,N'Sprossengeschoss' ,6 ,1 ,1 ,18 ,N'N' ,0 ,N'Fernkampf: RW – / 3 / 6 / 15 / 25; Das Gift (Stufe 6, je Kapsel 1W6+1 SP pro Tag für 2W6 Tage) wirkt blutvergiftend und lässt getro ene Körperteile schmerzhaft nekrotisch werden.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Hände' ,6 ,1 ,2 ,10 ,N'H' ,NULL ,NULL ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Kriegshammer' ,6 ,2 ,3 ,9 ,N'N' ,NULL ,N'Schläge eines Kriegshammers können mit Dolchen und Fechtwaffen nicht pariert werden. Kann ab KK 18 einhändig mit dem Talent Hiebwaffen geführt werden (TP/KK dann 15/3).' ,3);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Morgenstern' ,6 ,1 ,5 ,7 ,N'N' ,NULL ,N'Die PA des Gegners ist um 2 Punkte erschwert (sofern eine PA überhaupt möglich ist).' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Schwert' ,6 ,1 ,4 ,10 ,N'N' ,NULL ,N'Vom Pferderücken aus gegen Fußkämpfer eingesetzt, richtet die Waffe 2 zusätzliche TP an.' ,6);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Speer' ,6 ,1 ,5 ,10 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Speer (Fernkampf)' ,6 ,1 ,5 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Streitaxt' ,6 ,1 ,4 ,10 ,N'N' ,NULL ,NULL ,5);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000957' ,N'Sturmsense' ,6 ,1 ,4 ,9 ,N'S' ,NULL ,NULL ,4);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000958' ,N'Biss' ,6 ,4 ,4 ,14 ,N'HN' ,NULL ,N'INI 14' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000958' ,N'Prankenhieb' ,6 ,3 ,2 ,19 ,N'HNS' ,NULL ,N'INI 16' ,16);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000958' ,N'Überrennen' ,6 ,5 ,4 ,16 ,N'H' ,NULL ,N'INI 15' ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000959' ,N'Biss' ,6 ,1 ,3 ,11 ,N'H' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000959' ,N'Hände' ,6 ,1 ,2 ,9 ,N'H' ,NULL ,NULL ,2);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000960' ,N'Biss' ,6 ,1 ,0 ,0 ,N'N' ,NULL ,NULL ,0);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000961' ,N'Obsidiandolch' ,6 ,1 ,1 ,12 ,N'H' ,NULL ,N'INI 10+1W6' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000961' ,N'Obsidian-Macuahuitl' ,6 ,1 ,4 ,13 ,N'N' ,NULL ,NULL ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000961' ,N'Speer' ,6 ,1 ,5 ,13 ,N'S' ,NULL ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,9);
+INSERT INTO [GegnerBase_Angriff] (  [GegnerBaseGUID],  [Name],  [TPWürfel],  [TPWürfelAnzahl],  [TPBonus],  [AT],  [DK],  [Reichweite],  [Bemerkung],  [PA]) 
+ VALUES ('00000000-0000-0000-006e-000000000961' ,N'Speer (Fernkampf)' ,6 ,1 ,5 ,0 ,NULL ,40 ,N'Kann ab KK 15 einhändig geführt werden (TP/KK dann 13/5). Die Manöver Gegenhalten und Gezielter Stich sind um 2 Punkte erleichtert.' ,0);
