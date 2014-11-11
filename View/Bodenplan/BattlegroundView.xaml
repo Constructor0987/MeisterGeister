@@ -13,7 +13,7 @@
              xmlns:wpfxb="clr-namespace:WPFExtensions.AttachedBehaviours;assembly=WPFExtensions"
              mc:Ignorable="d" 
              x:Name="view"
-             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource Background1}">
+             d:DesignHeight="1100" d:DesignWidth="1280" KeyDown="UserControl_KeyDown" KeyUp="UserControl_KeyUp" Background="{StaticResource Background1}" Unloaded="view_Unloaded">
     <Grid>
         <Grid.Resources>
             <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
@@ -39,8 +39,8 @@
                             </Grid>
                         </Border>
                         <CheckBox IsChecked="{Binding ShowCreatureName}" Content="Namen Anzeigen" Height="16" HorizontalAlignment="Left" Margin="133,17,0,0" Name="checkBox4" VerticalAlignment="Top" Width="108" />
-                        <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="133,86,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
-                        <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="246,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
+                        <CheckBox IsChecked="{Binding LeftShiftPressed}" Content="Freizeichnen" Height="16" HorizontalAlignment="Left" Margin="703,7,0,0" x:Name="checkBox4_Copy" VerticalAlignment="Top" />
+                        <Border BorderBrush="Silver" BorderThickness="1" Height="100" HorizontalAlignment="Left" Margin="1048,7,0,0" x:Name="border1_Copy" VerticalAlignment="Top" Width="220">
                             <Grid Margin="0,0,9,0">
                                 <Button Content="Speichern" Width="75" Margin="10,35,0,0" Height="25" VerticalAlignment="Top" Click="Button_SaveXML_Click" HorizontalAlignment="Left"/>
                                 <Button Content="Laden" Width="75" Margin="10,5,0,0" Height="25" VerticalAlignment="Top" Click="Button_LoadXML_Click" HorizontalAlignment="Left"/>
@@ -49,8 +49,10 @@
                                 <Button Content="Reset" Width="75" Margin="10,0,124,5" Height="25" VerticalAlignment="Bottom" Click="Button_Reset_Click"/>
                             </Grid>
                         </Border>
-                        <xctk:CheckListBox Height="100" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="1136,7,0,0" />
-                        <Border Margin="471,7,0,5" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Width="252">
+              <!-- Kontroll hidden, cause of no future development, but maybe later -->          
+                        <xctk:CheckListBox Visibility="Hidden" Height="100" HorizontalAlignment="Left" x:Name="checkListBox_paintedObjects" VerticalAlignment="Top" Width="110" ItemsSource="{Binding BattlegroundObjects}" DisplayMemberPath="ObjectName" SelectedValue="{Binding SelectedObjectsFromListBox}" SelectedItemsOverride="{Binding SelectedListBoxBattlegroundObjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="text" Margin="1136,7,0,0" />
+              <!-- Hidden kontroll end  -->
+                        <Border Margin="791,7,0,5" BorderBrush="Silver" BorderThickness="1" HorizontalAlignment="Left" Width="252">
                             <Grid>
                                 <Label Content="Tool zum plazieren von Helden und Gegnern"  Margin="0,0,0,69"></Label>
                                 <Button Content="Stick Helden" Margin="10,72,160,0" Height="22" VerticalAlignment="Top" Click="ButtonStickHeroes_Click"/>
@@ -73,8 +75,7 @@
         </Expander>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" /><ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Expander Grid.Column="0" IsExpanded="True" ExpandDirection="Right" HorizontalAlignment="Left">
                 <Expander.Content>
@@ -101,23 +102,7 @@
                             <Label Content="Fill Color" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="label2" Width="56" FontSize="10" Margin="10,29,0,0" Height="28" VerticalAlignment="Top" />
                             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateLine, Mode=TwoWay}" Content="[1] Line" Name="PathLineButton" Height="25" HorizontalAlignment="Left" Width="77" VerticalAlignment="Top" />
                             <ToggleButton Grid.Column="1" Grid.Row="3" IsChecked="{Binding CreateFilledLine, Mode=TwoWay}" Content="[2] Fläche" Name="FilledPathLineButton" Height="25" HorizontalAlignment="Right" Width="77" VerticalAlignment="Top" />
-                            <!--
-                            <Grid Grid.Row="4" Name="PictureButtonGrid" Grid.Column="1" Height="439" VerticalAlignment="Top" Margin="0,0,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="50" />
-                                    <ColumnDefinition Width="50" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="50" />
-                                </Grid.RowDefinitions>
-                            </Grid>-->
+        
                             <ScrollViewer x:Name="MyScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="4" Grid.Column="1" Height="379" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="0,0,10,0">
                                 <WrapPanel Grid.Row="4" Grid.Column="1" Name="PictureButtonWrapPanel" Width="165" Margin="0,0,1,0"/>
                             </ScrollViewer>
@@ -134,14 +119,15 @@
                 </Expander.Content>
             </Expander>
 
-
+          <!-- ZOOM KONTROLL & Listbox with Templates for Creatures, Lines and Pictures -->
             <wpfxc:ZoomControl Grid.Column="1" x:Name="ArenaScrollViewer" Background="#FF367536" 
                            MaxZoom="3" MinZoom="0.08" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
                            Mode="Original" TranslateX="0" TranslateY="0"
                            LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
                            ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"  VerticalAlignment="Bottom">
-                <!--<local:DragScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="ArenaScrollViewer" ScrollChanged="ArenaScrollViewer_ScrollChanged" Margin="220,131,12,12">-->
-                <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Multiple">
+
+
+                <ListBox ItemsSource="{Binding BattlegroundObjects}" SelectedItem="{Binding SelectedObject, Mode=TwoWay}" Name="ArenaGrid" PreviewMouseRightButtonDown="ArenaGrid_PreviewRightMouseButtonDown"  MouseRightButtonDown="ArenaGrid_MouseRightButtonDown" MouseLeftButtonDown="ArenaGrid_MouseLeftButtonDown" MouseLeftButtonUp="ArenaGrid_MouseLeftButtonUp" MouseMove="ArenaGrid_MouseMove" Height="10000" Width="10000" PreviewMouseLeftButtonUp="ArenaGrid_PreviewMouseLeftButtonUp" PreviewMouseLeftButtonDown="ArenaGrid_PreviewMouseLeftButtonDown" SelectionChanged="ArenaGrid_SelectionChanged" SelectionMode="Single" >
                     <ListBox.Resources>
 
                         <!--Datatemplate BattlegroundCreature (Hero & Enemy)-->
@@ -171,6 +157,12 @@
                                                         Visibility="{Binding DataContext.ShowCreatureName, 
                                                                     RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            <!--Kneel, Lie, Stand, Fly - Position Button-->
+                                             <!--<Button Name="PositionButton" IsHitTestVisible="True" BorderThickness="0"  Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}"
+                                                    Width="80" Height="80" MouseLeftButtonDown="PositionButton_MouseLeftButtonDown" Content="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png">
+                                               <ImageBrush ImageSource="H:\\privat\\DSA MeisterGeister\\Images\\Bodenplan\\FloatingCreature.png" Stretch="Fill" /> 
+                                            </Button>-->
+                                            <Image Width="50" Height="50" Source="{Binding CreaturePosition}" Canvas.Top="{Binding CreatureNameY}" Canvas.Left="{Binding CreatureNameX}" />
                                             <Canvas.Effect>
                                                 <DropShadowEffect Color="{Binding DataContext.Farbmarkierung, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}} }" ShadowDepth="10" BlurRadius="20" />
                                             </Canvas.Effect>

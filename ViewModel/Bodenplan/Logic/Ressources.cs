@@ -52,6 +52,11 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             return GetFullApplicationPath() + "\\Daten\\Bodenplan\\";
         }
 
+        public static string GetRelativeApplicationPathForImagesIcons()
+        {
+            return "/DSA MeisterGeister;component/Images/Bodenplan/";
+        }
+
         public static List<int> GetZLevelsFromInputString(String input)
         {
             try

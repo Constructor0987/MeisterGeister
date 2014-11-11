@@ -112,8 +112,9 @@ namespace MeisterGeister.View.Bodenplan
 
         }
 
-        private void ArenaGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        void ArenaGrid_PreviewRightMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
+            e.Handled = true;
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null)
             {
@@ -128,6 +129,10 @@ namespace MeisterGeister.View.Bodenplan
                     ((ImageObject)vm.SelectedObject).CalculateNewDirection(new Point(e.GetPosition(ArenaGrid).X, e.GetPosition(ArenaGrid).Y));
                 }
             }
+        }
+
+        private void ArenaGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
 
         }
 
@@ -194,6 +199,14 @@ namespace MeisterGeister.View.Bodenplan
                 }
                 else if (vm.SelectedObject != null)
                 {
+                    if (e.Device.Target is Image)
+                    {
+                        //Change position
+                        //((BattlegroundCreature)vm.SelectedObject).UpdateCreaturePosition(Position.stehend, true);
+                        if (((Wesen)vm.SelectedObject).Position == Position.stehend) ((Wesen)vm.SelectedObject).Position = Position.liegend;
+                        else if (((Wesen)vm.SelectedObject).Position == Position.liegend) ((Wesen)vm.SelectedObject).Position = Position.kniend;
+                        else ((Wesen)vm.SelectedObject).Position = Position.stehend;
+                    }
                     ArenaGrid.Cursor = Cursors.Arrow;
                 }
             }
@@ -412,6 +425,11 @@ namespace MeisterGeister.View.Bodenplan
         {
             var vm = DataContext as BattlegroundViewModel;
             if (vm != null) vm.StickEnemies();
+        }
+
+        private void view_Unloaded(object sender, RoutedEventArgs e)
+        {
+            VM.Dispose();
         }
     }
 }

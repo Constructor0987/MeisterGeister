@@ -13,7 +13,7 @@ using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.ViewModel.Bodenplan
 {
-    public class BattlegroundViewModel:INotifyPropertyChanged
+    public class BattlegroundViewModel:INotifyPropertyChanged,IDisposable
     {
 //  *Hintergrundfarbe
 //  *ZLevel bei initialisierung fix
@@ -66,18 +66,39 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     _kampfVM.KämpferListe.CollectionChanged += OnKämpferListeChanged;
                     _kampfVM.PropertyChanged += OnKampfPropertyChanged;
                 }
+                UpdateCreaturesFromChangedKampferlist();
             }
+        }
+
+        public void UpdateCreaturesFromChangedKampferlist()
+        {
+            foreach (var k in KampfVM.KämpferListe)
+            {
+                ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
+            }
+            foreach (var k in KampfVM.KämpferListe)
+            {
+                ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged += OnWesenPropertyChanged;
+            }
+            
         }
 
         private void OnKampfPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "SelectedKämpferInfo"&&KampfVM.SelectedKämpfer!=null)
-            { 
+            {
                 //TODO: Update SelectedObject
                 //SelectedObject = BattlegroundObjects.Select(x=>x is BattlegroundCreature).First(x=>((BattlegroundCreature)x) == KampfVM.SelectedKämpfer);
                 //Console.WriteLine("Ein anderer Kämpfer ({0}) wurde ausgewählt", KampfVM.SelectedKämpfer.Name );
             }
             //Console.WriteLine("Property Changed");
+        }
+
+
+        //Event gets fired when Wesen.PropertyChanged event fires...
+        private void OnWesenPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Position") ((BattlegroundCreature)sender).UpdateCreaturePosition();
         }
 
         private void OnKämpferListeChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -134,7 +155,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             else
             {
-                ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, true);
+                ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
             }
         }
@@ -159,7 +180,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 if (BattlegroundObjects[i] is BattlegroundCreature)
                 {
                     BattlegroundObjects.Remove(BattlegroundObjects[i]);
-                    Console.WriteLine("Remove All Creatures");
                 }
             
         }
@@ -766,6 +786,46 @@ namespace MeisterGeister.ViewModel.Bodenplan
             {
                 PropertyChangedEventHandler handler = PropertyChanged;
                 if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        #endregion
+
+        #region Dispose
+            bool disposed = false;
+
+            // Public implementation of Dispose pattern callable by consumers. 
+            public void Dispose()
+            { 
+                Dispose(true);
+                GC.SuppressFinalize(this);           
+            }
+
+            // Protected implementation of Dispose pattern. 
+            protected virtual void Dispose(bool disposing)
+            {
+                if (disposed)
+                    return; 
+
+                if (disposing) {
+                    // Free any other managed objects here. 
+                    if (KampfVM != null)
+                    {
+                        _kampfVM.KämpferListe.CollectionChanged -= OnKämpferListeChanged;
+                        _kampfVM.PropertyChanged -= OnKampfPropertyChanged;
+                        foreach (var k in KampfVM.KämpferListe)
+                        {
+                            ((Wesen)((KämpferInfo)k).Kämpfer).PropertyChanged -= OnWesenPropertyChanged;
+                        }
+                    }
+                }
+
+                // Free any unmanaged objects here. 
+                //
+                disposed = true;
+            }
+
+            ~BattlegroundViewModel()
+            {
+                Dispose(false);
             }
         #endregion
     }

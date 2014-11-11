@@ -12,6 +12,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         schwebend = -1,
         stehend = 0,
         kniend = 1,
-        liegend = 2
+        liegend = 2,
+        reitend = 3
     }
 }

@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Windows.Media;
 using System.Windows;
 using System.IO;
+using MeisterGeister.ViewModel.Kampf.Logic;
 
 namespace MeisterGeister.ViewModel.Bodenplan.Logic
 {
@@ -24,6 +25,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _sightAreaLength = 120;
 
         public static String ICON_DIR = "/Images/Icons/General/";
+
+        public string _creaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+        public string CreaturePosition 
+        {
+            get { return _creaturePosition; }
+            set
+            {
+                _creaturePosition = value;
+                OnChanged("CreaturePosition");
+            }
+        }
 
         public BattlegroundCreature()
         {
@@ -300,6 +312,16 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             else SightLineSektor = 4;
             
             CalculateSightArea(); //update sightarea
+        }
+
+        public void UpdateCreaturePosition()
+        {
+            if (((Wesen)this).Position == Position.liegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "OnTheGroundCreature.png";
+            else if (((Wesen)this).Position == Position.kniend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "KneelingCreature.png";
+            else if (((Wesen)this).Position == Position.stehend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "StandingCreature.png";
+            else if (((Wesen)this).Position == Position.schwebend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FloatingCreature.png";
+            else if (((Wesen)this).Position == Position.fliegend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "FlyingCreature.png";
+            else if (((Wesen)this).Position == Position.reitend) CreaturePosition = Ressources.GetRelativeApplicationPathForImagesIcons() + "RidingCreature.png";    
         }
     }
 }

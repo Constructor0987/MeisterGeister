@@ -193,8 +193,8 @@ namespace MeisterGeister.ViewModel.Kampf
                     ki = new KämpferInfo(held, Kampf);
                     KämpferListe.Add(held);
 
-                    //if (BodenplanWindow != null)
-                    //   ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).AddHero(held);
+                    if (BodenplanWindow != null)
+                        ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).UpdateCreaturesFromChangedKampferlist();
                     
                 }
             }
@@ -218,10 +218,8 @@ namespace MeisterGeister.ViewModel.Kampf
             {
                 IKämpfer k = SelectedKämpferInfo.Kämpfer;
                 KämpferListe.Remove(SelectedKämpferInfo);
-                //if (BodenplanWindow != null)
-                //{
-                //    ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).RemoveCreature(k);
-                //}
+                if (BodenplanWindow != null)
+                    ((BattlegroundViewModel)BodenplanWindow.battlegroundView1.DataContext).UpdateCreaturesFromChangedKampferlist();
             }
         }
 
