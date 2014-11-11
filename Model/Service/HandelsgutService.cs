@@ -14,9 +14,12 @@ namespace MeisterGeister.Model.Service
 
         public List<Model.Handelsgut> HandelsgüterListe
         {
-            get { return Liste<Handelsgut>(); }
-            // TODO: Mit Setting Filter extrem langsam (2-3 Mal länger)
-            //get { return Liste<Handelsgut>().Where(s => s.Handelsgut_Setting.Any(a_s => Setting.AktiveSettings.Contains(a_s.Setting))).ToList(); }
+            get 
+            {
+                string sql = @"SELECT Handelsgut.* FROM Handelsgut INNER JOIN Handelsgut_Setting ON Handelsgut.HandelsgutGUID = Handelsgut_Setting.HandelsgutGUID
+                                WHERE Handelsgut_Setting.SettingGUID IN (SELECT SettingGUID FROM Setting WHERE Aktiv = 1)";
+                return Context.ExecuteStoreQuery<Handelsgut>(sql).ToList<Handelsgut>();
+            }
         }
 
         #endregion
