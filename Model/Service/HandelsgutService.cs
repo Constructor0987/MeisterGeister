@@ -16,9 +16,11 @@ namespace MeisterGeister.Model.Service
         {
             get 
             {
-                string sql = @"SELECT Handelsgut.* FROM Handelsgut INNER JOIN Handelsgut_Setting ON Handelsgut.HandelsgutGUID = Handelsgut_Setting.HandelsgutGUID
-                                WHERE Handelsgut_Setting.SettingGUID IN (SELECT SettingGUID FROM Setting WHERE Aktiv = 1)";
-                return Context.ExecuteStoreQuery<Handelsgut>(sql).ToList<Handelsgut>();
+                // TODO: Funktioniert so leider noch nicht ganz, da Setting spezifische Daten nicht geladen werden, wie z.B. der Preis
+//                string sql = @"SELECT Handelsgut.* FROM Handelsgut INNER JOIN Handelsgut_Setting ON Handelsgut.HandelsgutGUID = Handelsgut_Setting.HandelsgutGUID
+//                                WHERE Handelsgut_Setting.SettingGUID IN (SELECT SettingGUID FROM Setting WHERE Aktiv = 1)";
+//                return Context.ExecuteStoreQuery<Handelsgut>(sql).ToList<Handelsgut>();
+                return Liste<Handelsgut>();
             }
         }
 
