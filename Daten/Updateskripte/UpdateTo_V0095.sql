@@ -1,4 +1,11 @@
-﻿-- Literatur korrigieren
+﻿--- Audio Playlite mit Wartezeit vor dem Abspielen
+ALTER TABLE [Audio_Playlist] ADD [WarteZeitAktiv] bit NOT NULL DEFAULT 0;
+ALTER TABLE [Audio_Playlist] ADD [WarteZeit] bigint NOT NULL DEFAULT 4000;
+ALTER TABLE [Audio_Playlist] ADD [WarteZeitChange] bit NOT NULL DEFAULT 1;
+ALTER TABLE [Audio_Playlist] ADD [WarteZeitMin] bigint NOT NULL DEFAULT 0;
+ALTER TABLE [Audio_Playlist] ADD [WarteZeitMax] bigint NOT NULL DEFAULT 10000;
+
+-- Literatur korrigieren
 UPDATE [Literatur] SET [Abkürzung] = 'VTuU' WHERE [LiteraturGUID] = '00000000-0000-0000-0011-000000000011';
 
 -- Neue Sonderfertigkeiten

@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using MeisterGeister.Model;
+using System.Windows.Data;
 
 namespace MeisterGeister.ViewModel.AudioPlayer
 {
@@ -53,31 +54,83 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         #endregion
 
     }
+
+    public class MultiBooleanToVisibilityConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values,
+                                Type targetType,
+                                object parameter,
+                                System.Globalization.CultureInfo culture)
+        {
+            bool visible = true;
+            foreach (object value in values)
+                if (value is bool)
+                    visible = visible && (bool)value;
+
+            if (visible)
+                return System.Windows.Visibility.Visible;
+            else
+                return System.Windows.Visibility.Hidden;
+        }
+
+        public object[] ConvertBack(object value,
+                                    Type[] targetTypes,
+                                    object parameter,
+                                    System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     
     public class AudioPlayerViewModel : Base.ViewModelBase
     {
-        #region //---- FELDER ----
-        private double _anzahl = 1.0;
+        #region //---- FELDER & EIGENSCHAFTEN ----
 
-
-        #endregion
-
-        #region //---- EIGENSCHAFTEN ----
-
-
-        public double Anzahl
+        private Audio_Playlist _aktKlangPlaylist;
+        public Audio_Playlist AktKlangPlaylist
         {
-            get { return _anzahl; }
+            get { return _aktKlangPlaylist; }
             set
             {
-                if (_anzahl == value || value < 0.0)
-                    return;
-                _anzahl = value;
-                OnChanged("Anzahl");
+                _aktKlangPlaylist = value;
+                OnChanged();
             }
         }
 
+        private List<Audio_Playlist> _playlistListe;
+
+        public List<Audio_Playlist> PlaylistListe
+        {
+            get { return _playlistListe; }
+            set
+            {
+                _playlistListe = value;
+                OnChanged("PlaylistListe");
+            }
+        }
+
+        
+
         #endregion
+
+        private Base.CommandBase _onWarteZeitMinPlus = null;
+        public Base.CommandBase OnWarteZeitMinPlus
+        {
+            get
+            {
+                if (_onWarteZeitMinPlus == null)
+                    _onWarteZeitMinPlus = new Base.CommandBase(WarteZeitMinPlus, null);
+                return _onWarteZeitMinPlus;
+            }
+        }
+
+        private void WarteZeitMinPlus(object obj)
+        {
+            // TODO: WarteZeitMin erhöhen
+            AktKlangPlaylist.WarteZeitMin = 200;
+        }
+
 
         #region //---- KONSTRUKTOR ----
 
@@ -101,25 +154,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         #endregion
 
-        Audio_Playlist _aPlayList = new Audio_Playlist();
-        public Audio_Playlist APlayList
-        {
-            get { return _aPlayList; }
-            set { _aPlayList = value; OnChanged("APlayList"); }
-        }
-
-
-        private List<Audio_Playlist> _playlistListe;
-
-        public List<Audio_Playlist> PlaylistListe
-        {
-            get { return _playlistListe; }
-            set
-            {
-                _playlistListe = value;
-                OnChanged("PlaylistListe"); 
-            }
-        }
 
         private ObservableCollection<TitelInfo> _titelListe = new ObservableCollection<TitelInfo>();
 
@@ -215,5 +249,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             return tmp;
         }
 
+        
     }
 }

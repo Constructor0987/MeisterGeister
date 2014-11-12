@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MeisterGeister.Model.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,17 @@ namespace MeisterGeister.Model
         public Audio_Playlist()
         {
             Audio_PlaylistGUID = Guid.NewGuid();
+        }
+
+        [DependentProperty("WarteZeitMin")]
+        public string WarteZeitToolTip
+        {
+            get
+            {
+                long wert = WarteZeitMin;
+                return "Minimale Wartezeit bei variabeler Pausenzeit (in ms)\n"
+                    + ((wert < 1000) ? wert + " ms" : (wert < 60000) ? wert / 1000 + " sek." : wert / 60000 + " min.");
+            }
         }
 
         #region Import Export

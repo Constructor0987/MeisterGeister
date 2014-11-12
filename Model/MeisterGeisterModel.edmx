@@ -396,10 +396,15 @@
     <Property Name="Key" Type="nvarchar" MaxLength="30" />
     <Property Name="Modifiers" Type="nvarchar" MaxLength="25" />
     <Property Name="Shuffle" Type="bit" Nullable="false" />
-    <Property Name="Repeat" Type="bit" Nullable="false" />
+    <Property Name="Repeat" Type="bit" />
     <Property Name="Fading" Type="bit" Nullable="false" />
     <Property Name="DoForce" Type="bit" Nullable="false" />
     <Property Name="ForceVolume" Type="int" Nullable="false" />
+    <Property Name="WarteZeitAktiv" Type="bit" Nullable="false" />
+    <Property Name="WarteZeit" Type="bigint" Nullable="false" />
+    <Property Name="WarteZeitChange" Type="bit" Nullable="false" />
+    <Property Name="WarteZeitMin" Type="bigint" Nullable="false" />
+    <Property Name="WarteZeitMax" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Audio_Playlist_Titel">
     <Key>
@@ -2490,10 +2495,15 @@
     <Property Name="Key" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
     <Property Name="Modifiers" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
     <Property Name="Shuffle" Type="Boolean" Nullable="false" />
-    <Property Name="Repeat" Type="Boolean" Nullable="false" />
+    <Property Name="Repeat" Type="Boolean" />
     <Property Name="Fading" Type="Boolean" Nullable="false" />
     <Property Name="DoForce" Type="Boolean" Nullable="false" />
     <Property Name="ForceVolume" Type="Int32" Nullable="false" />
+    <Property Name="WarteZeitAktiv" Type="Boolean" Nullable="false" />
+    <Property Name="WarteZeit" Type="Int64" Nullable="false" />
+    <Property Name="WarteZeitChange" Type="Boolean" Nullable="false" />
+    <Property Name="WarteZeitMin" Type="Int64" Nullable="false" />
+    <Property Name="WarteZeitMax" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Audio_Playlist_Titel" Relationship="DatabaseDSAModel.fk_Audio_Playlist_Titel_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Playlist_Titel" />
     <NavigationProperty Name="Audio_Theme" Relationship="DatabaseDSAModel.Audio_Theme_Playlist" FromRole="Audio_Playlist" ToRole="Audio_Theme" />
   </EntityType>
@@ -4256,6 +4266,11 @@
           <ScalarProperty Name="Fading" ColumnName="Fading" />
           <ScalarProperty Name="DoForce" ColumnName="DoForce" />
           <ScalarProperty Name="ForceVolume" ColumnName="ForceVolume" />
+          <ScalarProperty Name="WarteZeitAktiv" ColumnName="WarteZeitAktiv" />
+          <ScalarProperty Name="WarteZeit" ColumnName="WarteZeit" />
+          <ScalarProperty Name="WarteZeitChange" ColumnName="WarteZeitChange" />
+          <ScalarProperty Name="WarteZeitMin" ColumnName="WarteZeitMin" />
+          <ScalarProperty Name="WarteZeitMax" ColumnName="WarteZeitMax" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

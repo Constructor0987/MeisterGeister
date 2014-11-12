@@ -63,14 +63,14 @@
 
                 <Slider Name="sldKlangVol"  Grid.Column="5" Margin="6,2,4,1" ToolTip="50 %" LargeChange="10" SmallChange="1" Maximum="100" VerticalAlignment="Center" />
                 <CheckBox Name="chkVolMove" Grid.Column="6" Tag="0" IsTabStop="False" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,6,1,6" ToolTip="Lautstärke der Klangzeile automatisch variieren" />
-                <TextBox Name="tboxVolMin" Grid.Column="7" Text="0" HorizontalContentAlignment="Center" Margin="0,2,36,2" Tag="0" Padding="0" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" />
+                <TextBox Name="tboxVolMin" Grid.Column="7" Text="0" HorizontalContentAlignment="Center" Margin="0,2,36,2" Tag="0" Padding="0" ToolTip="Minimale Lautstärke bei variabeler Lautstärke (in %)" TextChanged="chkValidChange" />
                 <Button Name="_btnVolMinMinus" Width="18" Height="18" Grid.Column="7" HorizontalAlignment="Right" Margin="0,4,18,3" Tag="-5" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
                 <Button Name="_btnVolMinPlus" Width="18" Height="18" Grid.Column="7" HorizontalAlignment="Right" Tag="5" IsTabStop="False" Margin="0,4,0,3">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <TextBox Name="tboxVolMax" Grid.Column="8" Margin="0,2,36,2" Text="100" HorizontalContentAlignment="Center" DataContext="{Binding}" MaxLength="3" Tag="0" Padding="0" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" />
+                <TextBox Name="tboxVolMax" Grid.Column="8" Margin="0,2,36,2" Text="100" HorizontalContentAlignment="Center" DataContext="{Binding}" MaxLength="3" Tag="0" Padding="0" ToolTip="Maximale Lautstärke bei variabeler Lautstärke (in %)" TextChanged="chkValidChange" />
                 <Button Name="_btnVolMaxMinus" Width="18" Height="18" Grid.Column="8" HorizontalAlignment="Right" Margin="0,4,18,3" Tag="-5" IsTabStop="False">
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
@@ -80,23 +80,23 @@
                 <Border VerticalAlignment="Bottom" Grid.ColumnSpan="6" BorderBrush="Gray" Margin="0,0,105,24" Height="1" Grid.Column="4" BorderThickness="1" Name="brdTrennstrich" Grid.Row="1" />
 
 
-                <Slider Name="sldKlangPause" Grid.Column="5" Grid.Row="1" Value="0.1" Maximum="50000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
+                <Slider Name="sldKlangPause" Grid.Column="5" Grid.Row="1" Value="0.1" Maximum="900000" ToolTip="100 ms"  IsSnapToTickEnabled="True" TickPlacement="BottomRight" 
                         Foreground="DarkSlateGray" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="6,3,4,0" 
-                        Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000,7000,8000,9000,10000,12000,14000,16000,18000,20000,25000,30000,35000,40000,45000, 50000" />
+                        Ticks="0, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000, 5000, 7500, 8000, 9000, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 60000, 90000, 120000, 180000, 240000, 300000, 450000, 600000, 900000" />
 
                 <CheckBox Name="chkKlangPauseMove" Grid.Column="6" Grid.Row="1" Tag="0" IsTabStop="False" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,6,1,6" ToolTip="Pausezeiten der Klangzeile automatisch variieren" />
-                <TextBox Name="tboxPauseMin" Grid.Column="7" Grid.Row="1" Margin="0,2,36,2" Text="12345" HorizontalContentAlignment="Center" Tag="0" Padding="0" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" />
-                <Button Name="_btnPauseMinMinus" Grid.Column="7" Grid.Row="1" Margin="0,3,18,4" Tag="-200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False">
+                <TextBox Name="tboxPauseMin" Grid.Column="7" Grid.Row="1" Margin="0,2,36,2" Text="12345" HorizontalContentAlignment="Center" Tag="0" Padding="0" ToolTip="Minimale Pause bei variabeler Pausenzeit (in ms)" TextChanged="tboxPauseMax_TextChanged"  />
+                <Button Name="_btnPauseMinMinus" Grid.Column="7" Grid.Row="1" Margin="0,3,18,4" Tag="-200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Click="_btnPauseMinMinus_Click" >
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
-                <Button Name="_btnPauseMinPlus" Grid.Column="7" Grid.Row="1" Tag="200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Margin="0,3,0,4">
+                <Button Name="_btnPauseMinPlus" Grid.Column="7" Grid.Row="1" Tag="200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Margin="0,3,0,4" Click="_btnPauseMinPlus_Click">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
-                <TextBox Name="tboxPauseMax" Grid.Column="8" Grid.Row="1" Margin="0,2,36,2" HorizontalContentAlignment="Center" Tag="0" Text="12345" Padding="0" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" />
-                <Button Name="_btnPauseMaxMinus" Width="18" Height="18" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Right" Margin="0,3,18,4" Tag="-200" IsTabStop="False">
+                <TextBox Name="tboxPauseMax"  Grid.Column="8" Grid.Row="1" Margin="0,2,36,2" HorizontalContentAlignment="Center" Tag="0" Text="12345" Padding="0" ToolTip="Maximale Pause bei variabeler Pausenzeit (in ms)" TextChanged="tboxPauseMax_TextChanged"  />
+                <Button Name="_btnPauseMaxMinus" Width="18" Height="18" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Right" Margin="0,3,18,4" Tag="-200" IsTabStop="False" Click="_btnPauseMaxMinus_Click" >
                     <Image Source="/Images/Icons/General/entf_02.png" />
                 </Button>
-                <Button Name="_btnPauseMaxPlus" Width="18" Height="18" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Right" Tag="200" IsTabStop="False" Margin="0,3,0,4">
+                <Button Name="_btnPauseMaxPlus" Width="18" Height="18" Grid.Column="8" Grid.Row="1" HorizontalAlignment="Right" Tag="200" IsTabStop="False" Margin="0,3,0,4" Click="_btnPauseMaxPlus_Click">
                     <Image Source="/Images/Icons/General/add.png" />
                 </Button>
                 <Image Source="/Images/Icons/General/schildkröte.png" Grid.Column="9" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="8,3,0,5" Width="25" Cursor="Hand" MouseUp="Image_MouseUp" />

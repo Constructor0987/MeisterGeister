@@ -235,6 +235,67 @@ namespace MeisterGeister.Model
         }
         private Nullable<bool> _repeat;
 
+        
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual bool WarteZeitAktiv
+        {
+            get { return _warteZeitAktiv; }
+            set
+            {
+                Set(ref _warteZeitAktiv, value);
+            }
+        }
+        private bool _warteZeitAktiv;
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual long WarteZeit
+        {
+            get { return _warteZeit; }
+            set
+            {
+                Set(ref _warteZeit, value);
+            }
+        }
+        private long _warteZeit;
+        
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual bool WarteZeitChange
+        {
+            get { return _warteZeitChange; }
+            set
+            {
+                Set(ref _warteZeitChange, value);
+            }
+        }
+        private bool _warteZeitChange;
+        
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual long WarteZeitMin
+        {
+            get { return _warteZeitMin; }
+            set
+            {
+                Set(ref _warteZeitMin, value);
+            }
+        }
+        private long _warteZeitMin;
+
+        ///<summary>Database persistent property</summary>
+        [DataMember]
+        public virtual long WarteZeitMax
+        {
+            get { return _warteZeitMax; }
+            set
+            {
+                Set(ref _warteZeitMax, value);
+            }
+        }
+        private long _warteZeitMax;
+        
         #endregion
 
         #region Navigation Properties
