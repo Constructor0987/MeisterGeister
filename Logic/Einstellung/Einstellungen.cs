@@ -80,7 +80,8 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "GegnerDetailViewExpandedSections", Kontext = "Gegner", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = "110" },
                 new Model.Einstellung() { Name = "SpielerInfoBilderPfad", Kontext = "SpielerInfo", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = string.Empty },
                 new Model.Einstellung() { Name = "INTERN", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
-                new Model.Einstellung() { Name = "SlideShowInterval", Kontext = "SpielerInfo", Kategorie = "Versteckt", Typ = "Double", Beschreibung = "", Wert = "6" }
+                new Model.Einstellung() { Name = "SlideShowInterval", Kontext = "SpielerInfo", Kategorie = "Versteckt", Typ = "Double", Beschreibung = "", Wert = "6" },
+                new Model.Einstellung() { Name = "MeisterGeisterID", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = Guid.NewGuid().ToString() }
             };
         }
 
@@ -665,6 +666,18 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("ShowChangeLog", value);
+            }
+        }
+
+        public static string MeisterGeisterID
+        {
+            get
+            {
+                return GetEinstellung<string>("MeisterGeisterID");
+            }
+            set
+            {
+                SetEinstellung<string>("MeisterGeisterID", value);
             }
         }
     }

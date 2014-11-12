@@ -246,8 +246,11 @@ namespace MeisterGeister {
             XmlDocument xmlDoc;
             try {
                 xmlDoc = new XmlDocument();
-                xmlDoc.Load("http://meistergeister.org/download/675/");
-
+                WebClient webClient = new WebClient();
+                webClient.Headers.Add("user-agent", string.Format("MeisterGeister/{0} (OS: {1}, Id: {2})", App.GetVersionStringLong(), Environment.OSVersion.ToString(), Einstellungen.MeisterGeisterID));
+                string xmlString = webClient.DownloadString("http://meistergeister.org/download/675/");
+                xmlDoc.LoadXml(xmlString);
+                
                 string version = string.Empty;
 
                 XmlNodeList versionXml = xmlDoc.SelectNodes("meistergeister/version");
@@ -278,6 +281,19 @@ namespace MeisterGeister {
             }
 
             return versionen;
+        }
+
+        public static string GetVersionStringLong()
+        {
+            string intern = string.Empty;
+            if (Global.INTERN)
+            {
+                intern = "INTERN";
+            }
+#if TEST
+            intern = "TEST";
+#endif
+            return string.Format("Version: {0} / {1}   {2}", App.GetVersionString(App.GetVersionProgramm()), DatabaseUpdate.DatenbankVersionAktuell, intern);
         }
 
         public static string GetVersionString(Version v) {

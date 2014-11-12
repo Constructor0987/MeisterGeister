@@ -31,7 +31,7 @@ namespace MeisterGeister.View.Windows
 
             InitializeComponent();
             Title = "Systeminformationen";
-            _textBoxMsg.Text = GetVersionString() + "\n\n" + GetSysInfoString();
+            _textBoxMsg.Text = App.GetVersionStringLong() + "\n\n" + GetSysInfoString();
         }
 
         public MsgWindow(string header, string msg, bool showHilfe = true)
@@ -42,7 +42,7 @@ namespace MeisterGeister.View.Windows
             InitializeComponent();
             Title = header;
             if (showHilfe)
-                msg += "\n\n" + GetVersionString() + "\n\n" + GetHilfeString();
+                msg += "\n\n" + App.GetVersionStringLong() + "\n\n" + GetHilfeString();
 
             _textBoxMsg.Text = msg;
         }
@@ -57,7 +57,7 @@ namespace MeisterGeister.View.Windows
 
             msg += "\n\n" + GetHilfeString();
 
-            msg += "\n\n" + GetVersionString();
+            msg += "\n\n" + App.GetVersionStringLong();
             msg += "\n\nSource: " + ex.Source;
             msg += "\nMessage: " + ex.Message;
             msg += "\nType: " + ex.GetType().ToString();
@@ -153,19 +153,6 @@ namespace MeisterGeister.View.Windows
                     msg += item.State + " - " + (item.Entity ?? "null") + "\n   ";
             }
             return msg;
-        }
-
-        private string GetVersionString()
-        {
-            string intern = string.Empty;
-            if (Global.INTERN)
-            {
-                intern = "INTERN";
-            }
-#if TEST
-            intern = "TEST";
-#endif
-            return string.Format("Version: {0} / {1}   {2}", App.GetVersionString(App.GetVersionProgramm()), DatabaseUpdate.DatenbankVersionAktuell, intern);
         }
 
         private string GetHilfeString()
