@@ -218,11 +218,11 @@ namespace MeisterGeister.View.Windows
                 Console.WriteLine(String.Format("{0}", ex.ToString()));
             }
 
-            return string.Format("Systeminformationen\n\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\n.NET Framework:{14}\nSQL-CE-Version: {4}\nArbeitsverzeichnis: {5}\nMeisterGeister-Verzeichnis: {6}"
+            return string.Format("Systeminformationen\n\nMeisterGeisterID: {15}\nBetriebssystem: {0} ({1})\n64bit-System: {2}\nCLR-Version: {3}\n.NET Framework:{14}\nSQL-CE-Version: {4}\nArbeitsverzeichnis: {5}\nMeisterGeister-Verzeichnis: {6}"
                 + "\nLaufwerk: {7}\nProzessoranzahl: {8}\nWorkingSet: {9}\nRenderingebene: {10}\nAuflösung: {11}\nBildschirme: {12}\n\nPerformance:{13}",
                 Environment.OSVersion.ToString(), App.GetOSName(), Environment.Is64BitOperatingSystem.ToString(), Environment.Version.ToString(), App.SqlCompactVersion == null ? "-" : App.SqlCompactVersion.ToString(), Environment.CurrentDirectory,
                 Logic.Extensions.FileExtensions.GetHomeDirectory(), driveInfoText, Environment.ProcessorCount, Environment.WorkingSet, renderTierInfo, auflösung, screenInfo,
-                Logic.General.Logger.PerformanceLog, App.GetFrameworkFromRegistry());
+                Logic.General.Logger.PerformanceLog, App.GetFrameworkFromRegistry(), Logic.Einstellung.Einstellungen.MeisterGeisterID);
         }
 
         #region // Display Informationen
