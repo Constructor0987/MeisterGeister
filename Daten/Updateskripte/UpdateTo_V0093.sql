@@ -6,5 +6,3 @@ INSERT INTO [Einstellung] (Kontext, Name, Typ, Wert) VALUES ('Audioplayer', 'Gen
 UPDATE [Audio_Playlist] SET [Fading] = 0 WHERE [Länge] < ANY
     (SELECT CONVERT(float, CONVERT(nvarchar, [Wert])) * 2 FROM 
         [Einstellung] WHERE [Kontext] = 'Audioplayer' AND [Name] = 'Fading');
-
--- evtl. weitere Updates ergänzen...

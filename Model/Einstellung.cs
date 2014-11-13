@@ -45,6 +45,10 @@ namespace MeisterGeister.Model
                     if (Wert == "0")
                         return false;
                 }
+                else if (Type == typeof(DateTime))
+                {
+                    return DateTime.Parse(Wert);
+                }
                 return Converter.ConvertFromInvariantString(Wert);
             }
             set { Wert = Converter.ConvertToInvariantString(value); OnChanged("Value"); }

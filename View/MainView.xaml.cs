@@ -79,6 +79,9 @@ namespace MeisterGeister.View
             InitializeComponent();
             Opacity = 0.5;
 
+            // MeisterGeisterID abrufen
+            Guid mgID = Einstellungen.MeisterGeisterID;
+
             InitializeMenuPunkte();
 
             _tabControlMain.SelectionChanged -= _tabControlMain_SelectionChanged;
@@ -499,7 +502,7 @@ namespace MeisterGeister.View
 
 #if !(DEBUG)
             // UpdateCheck (nicht ausführen, wenn von IDE ausgeführt)
-            if (System.Diagnostics.Debugger.IsAttached == false && Einstellungen.CheckForUpdates && Einstellungen.LastUpdateCheck.CompareTo(DateTime.Now.Date) != 0)
+            if (System.Diagnostics.Debugger.IsAttached == true && Einstellungen.CheckForUpdates && Einstellungen.LastUpdateCheck.CompareTo(DateTime.Now.Date) != 0)
                 CheckForUpdates(false);
 
             // ChangeLog Meldung (nicht ausführen, wenn von IDE ausgeführt)

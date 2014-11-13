@@ -264,11 +264,15 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        // TODO: Einstellung wird gecached, um Absturz verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<bool> _checkForUpdates = null;
         public static bool CheckForUpdates
         {
             get
             {
-                return GetEinstellung<bool>("CheckForUpdates");
+                if (_checkForUpdates == null)
+                    _checkForUpdates = GetEinstellung<bool>("CheckForUpdates");
+                return _checkForUpdates.GetValueOrDefault();
             }
             set
             {
@@ -276,11 +280,15 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        // TODO: Einstellung wird gecached, um Absturz verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<DateTime> _lastUpdateCheck = null;
         public static DateTime LastUpdateCheck
         {
             get
             {
-                return GetEinstellung<DateTime>("LastUpdateCheck");
+                if (_lastUpdateCheck == null)
+                    _lastUpdateCheck = GetEinstellung<DateTime>("LastUpdateCheck");
+                return _lastUpdateCheck.GetValueOrDefault();
             }
             set
             {
@@ -669,15 +677,19 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
-        public static string MeisterGeisterID
+        // TODO: Einstellung wird gecached, um Absturz verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<Guid> _meisterGeisterID = null;
+        public static Guid MeisterGeisterID
         {
             get
             {
-                return GetEinstellung<string>("MeisterGeisterID");
+                if (_meisterGeisterID == null)
+                    _meisterGeisterID = Guid.Parse(GetEinstellung<string>("MeisterGeisterID"));
+                return _meisterGeisterID.GetValueOrDefault();
             }
             set
             {
-                SetEinstellung<string>("MeisterGeisterID", value);
+                SetEinstellung<string>("MeisterGeisterID", value.ToString());
             }
         }
     }

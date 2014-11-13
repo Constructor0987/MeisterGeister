@@ -51,12 +51,19 @@ namespace MeisterGeister
 
         #region //EIGENSCHAFTSMETHODEN
 
+        // TODO: Einstellung wird gecached, um Absturz zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<bool> _INTERN = null;
         /// <summary>
         /// Gibt an, ob der INTERN Modus aktiviert ist.
         /// </summary>
         public static bool INTERN
         {
-            get { return Logic.Einstellung.Einstellungen.INTERN; }
+            get 
+            {
+                if (_INTERN == null)
+                    _INTERN = Logic.Einstellung.Einstellungen.INTERN;
+                return _INTERN.Value;
+            }
         }
 
         /// <summary>

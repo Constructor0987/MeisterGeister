@@ -247,7 +247,7 @@ namespace MeisterGeister {
             try {
                 xmlDoc = new XmlDocument();
                 WebClient webClient = new WebClient();
-                webClient.Headers.Add("user-agent", string.Format("MeisterGeister/{0} (OS: {1}, Id: {2})", App.GetVersionStringLong(), Environment.OSVersion.ToString(), Einstellungen.MeisterGeisterID));
+                webClient.Headers.Add("user-agent", string.Format("MeisterGeister/{0} (OS: {1}, Id: {2})", App.GetVersionStringLong(), Environment.OSVersion.ToString(), Einstellungen.MeisterGeisterID.ToString()));
                 string xmlString = webClient.DownloadString("http://meistergeister.org/download/675/");
                 xmlDoc.LoadXml(xmlString);
                 
