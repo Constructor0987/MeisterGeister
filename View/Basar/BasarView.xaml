@@ -29,7 +29,11 @@
                 <StackPanel>
                     <StackPanel Margin="0,2,0,0" Orientation="Horizontal">
                         <TextBlock Margin="2,2,0,0" Width="250" FontWeight="Bold" Text="{Binding Path=Name}" TextWrapping="WrapWithOverflow" VerticalAlignment="Center" />
-                        <TextBlock Margin="2,2,0,0" Width="260" Text="{Binding Path=Kategorie}" ToolTip="Kategorie" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" />
+                        <TextBlock Margin="2,2,0,0" Width="260" Text="{Binding Path=Kategorie}" ToolTip="Kategorie (Mit Doppel-Klick filtern)" VerticalAlignment="Center" TextWrapping="WrapWithOverflow">
+                            <TextBlock.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OnFilterKategorie}" />
+                            </TextBlock.InputBindings>
+                        </TextBlock>
                         <TextBlock Name="myTextBlock" Margin="2,2,5,2" Width="Auto" FontWeight="Bold" MinWidth="80" Text="{Binding Path=Preis}" TextAlignment="Left" VerticalAlignment="Center" >
                             <TextBlock.ToolTip>
                                 <TextBlock Text="{Binding Path=WährungsText, StringFormat=Preis in {0:C}}" />
@@ -100,8 +104,8 @@
                         <ComboBox Height="23" VerticalAlignment="Center"  Width="186" ToolTip="Benutzte Währung" ItemsSource="{Binding Währungen}" DisplayMemberPath="Key" SelectedValuePath="Key" SelectedValue="{Binding WährungsText}"  IsEditable="True" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchtext" />
-                        <TextBox Margin="5,10" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchtext" />
+                        <Image Margin="5" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchfilter" />
+                        <TextBox Margin="5,10" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchfilter" />
                         <TextBlock Margin="5" Text="Anzahl:" VerticalAlignment="Center" />
                         <ViewGeneral:DoubleBox Height="23" Margin="5" Width="75" MinValue="0" ShowButtons="True" Value="{Binding Anzahl}" VerticalAlignment="Center" />
                         <TextBlock Margin="5" Text="Rabatt/Aufschlag:" VerticalAlignment="Center" />

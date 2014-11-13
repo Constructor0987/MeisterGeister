@@ -312,7 +312,16 @@ namespace MeisterGeister.ViewModel.Basar
         {
             BasarItem basarItem = new BasarItem() { Item = item };
             basarItem.InventarAddEvent += (s, e) => { AddToInventar(s); };
+            basarItem.FilterKategorieEvent += (s, e) => { FilterKategorie(s); };
             return basarItem;
+        }
+
+        private void FilterKategorie(object sender)
+        {
+            if (sender != null && sender is BasarItem)
+            {
+                SuchText = ((BasarItem)sender).Kategorie;
+            }
         }
 
         void AddToInventar(object sender)

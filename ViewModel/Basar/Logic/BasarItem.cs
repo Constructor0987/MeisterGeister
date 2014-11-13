@@ -28,9 +28,6 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         private string _währungsCode = "S";
         private string _währungsText = "Silbertaler";
 
-        //Commands
-        private Base.CommandBase _onInventarAdd;
-
         #endregion
 
         #region //---- EIGENSCHAFTEN ----
@@ -205,10 +202,30 @@ namespace MeisterGeister.ViewModel.Basar.Logic
             }
         }
 
-        //Commands
+        #endregion
+
+        #region //---- COMMANDS ----
+
+        private Base.CommandBase _onInventarAdd;
         public Base.CommandBase OnInventarAdd
         {
-            get { return _onInventarAdd; }
+            get 
+            { 
+                if (_onInventarAdd == null)
+                    _onInventarAdd = new Base.CommandBase(InventarAdd, null);
+                return _onInventarAdd; 
+            }
+        }
+
+        private Base.CommandBase _onFilterKategorie;
+        public Base.CommandBase OnFilterKategorie
+        {
+            get
+            {
+                if (_onFilterKategorie == null)
+                    _onFilterKategorie = new Base.CommandBase(FilterKategorie, null);
+                return _onFilterKategorie;
+            }
         }
 
         #endregion
@@ -219,8 +236,6 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         {
             // Event-Handler zur DependentProperty-Notification
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
-
-            _onInventarAdd = new Base.CommandBase(InventarAdd, null);
         }
 
         #endregion
@@ -260,6 +275,15 @@ namespace MeisterGeister.ViewModel.Basar.Logic
         }
 
         public event EventHandler InventarAddEvent;
+
+
+        private void FilterKategorie(object obj)
+        {
+            if (FilterKategorieEvent != null)
+                FilterKategorieEvent(this, new EventArgs());
+        }
+
+        public event EventHandler FilterKategorieEvent;
 
         #endregion
 
