@@ -1749,6 +1749,7 @@
     <Resource Include="Images\Bodenplan\OnTheGroundCreature.png" />
     <Resource Include="Images\Bodenplan\StandingCreature.png" />
     <Resource Include="Images\Bodenplan\RidingCreature.png" />
+    <Resource Include="Daten\Updateskripte\UpdateTo_V0096.sql" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
