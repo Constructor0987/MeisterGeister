@@ -97,6 +97,7 @@ namespace MeisterGeister.View
 
             _labelVersion.Content = string.Format("V {0} / {1}", App.GetVersionString(App.GetVersionProgramm()),
                 DatabaseUpdate.DatenbankVersionAktuell);
+            _labelVersion.ToolTip = string.Format("MeisterGeisterID: {0}", mgID.ToString());
 
 #if TEST
             _labelVersion.Foreground = Brushes.Red;
