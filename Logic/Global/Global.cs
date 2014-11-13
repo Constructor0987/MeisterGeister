@@ -61,8 +61,22 @@ namespace MeisterGeister
             get 
             {
                 if (_INTERN == null)
-                    _INTERN = Logic.Einstellung.Einstellungen.INTERN;
+                    _INTERN = Logic.Einstellung.Einstellungen.GetEinstellung<bool>("INTERN");
                 return _INTERN.Value;
+            }
+            set
+            {
+                string pwd = View.General.ViewHelper.InputDialog("Passwort", "Passwort für INTERN Modus eingeben.", string.Empty);
+                if (Global.Intern_CheckPwd(pwd))
+                {
+                    Logic.Einstellung.Einstellungen.SetEinstellung<bool>("INTERN", value);
+                    _INTERN = value;
+                }
+                else
+                {
+                    Logic.Einstellung.Einstellungen.SetEinstellung<bool>("INTERN", false);
+                    _INTERN = false;
+                }
             }
         }
 

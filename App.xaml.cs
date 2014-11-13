@@ -277,7 +277,8 @@ namespace MeisterGeister {
                     versionen[1] = vIntern;
                 }
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Auf Updates prüfen");
+                MsgWindow errWin = new MsgWindow("Fehler bei Update-Prüfung", "Beim Prüfung auf Updates ist ein Fehler aufgetreten!", ex);
+                errWin.ShowDialog();
             }
 
             return versionen;
@@ -311,52 +312,63 @@ namespace MeisterGeister {
         }
 
         public static void CheckUpdates(bool popupWhenUpToDate) {
-            Version[] vDownload = GetVersionDownload();
-            Version vProgramm = GetVersionProgramm();
-            string vDownloadString = GetVersionString(vDownload[0]);
-            string vDownloadInternString = GetVersionString(vDownload[1]);
-            string vProgrammString = GetVersionString(vProgramm);
-            string infoText = string.Empty;
-            int compareVersions = int.MinValue;
+            try
+            {
+                Version[] vDownload = GetVersionDownload();
+                Version vProgramm = GetVersionProgramm();
+                string vDownloadString = GetVersionString(vDownload[0]);
+                string vDownloadInternString = GetVersionString(vDownload[1]);
+                string vProgrammString = GetVersionString(vProgramm);
+                string infoText = string.Empty;
+                int compareVersions = int.MinValue;
 
-            if (vDownload == null || vDownload[0] == null || vDownload[0] == new Version())
-                infoText = "Die aktuelle Programm Version konnte nicht geprüft werden.";
-            else {
-                vProgramm = new Version(vProgramm.Major, vProgramm.Minor, vProgramm.Revision, vProgramm.Build);
-                vDownload[0] = new Version(vDownload[0].Major, vDownload[0].Minor, vDownload[0].Revision, vDownload[0].Build);
-                if (vDownload[1] == null || vDownload[1] == new Version())
-                    vDownload[1] = new Version(0, 0, 0, 0);
-                else
-                    vDownload[1] = new Version(vDownload[1].Major, vDownload[1].Minor, vDownload[1].Revision, vDownload[1].Build);
-
-                compareVersions = vDownload[0].CompareTo(vProgramm);
-                if (compareVersions == 0)
-                    infoText += string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
-                else if (compareVersions > 0)
-                    infoText = string.Format("Es liegt eine neue Programm-Version vor.\n\nInstallierte Version: {0}\nDownload Version: {1}"
-                    + "\n\nDie aktuelle Version kann unter '{2}' runtergeladen werden.", vProgrammString, vDownloadString,
-                    MeisterGeister.Properties.Settings.Default.MeisterGeisterURL);
+                if (vDownload == null || vDownload[0] == null || vDownload[0] == new Version())
+                    infoText = "Die aktuelle Programm Version konnte nicht geprüft werden.";
                 else
                 {
-                    // möglicherweise handelt es sich um einen Intern-Release
-                    compareVersions = vDownload[1].CompareTo(vProgramm);
-                    if (compareVersions == 0)
-                        infoText = string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
+                    vProgramm = new Version(vProgramm.Major, vProgramm.Minor, vProgramm.Revision, vProgramm.Build);
+                    vDownload[0] = new Version(vDownload[0].Major, vDownload[0].Minor, vDownload[0].Revision, vDownload[0].Build);
+                    if (vDownload[1] == null || vDownload[1] == new Version())
+                        vDownload[1] = new Version(0, 0, 0, 0);
                     else
-                        infoText = string.Format("Die installierte Programm-Version ist neuer als die Download-Version.\n\nInstallierte Version: {0}\nDownload Version: {1}",
-                            vProgrammString, vDownloadString);
+                        vDownload[1] = new Version(vDownload[1].Major, vDownload[1].Minor, vDownload[1].Revision, vDownload[1].Build);
+
+                    compareVersions = vDownload[0].CompareTo(vProgramm);
+                    if (compareVersions == 0)
+                        infoText += string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
+                    else if (compareVersions > 0)
+                        infoText = string.Format("Es liegt eine neue Programm-Version vor.\n\nInstallierte Version: {0}\nDownload Version: {1}"
+                        + "\n\nDie aktuelle Version kann unter '{2}' runtergeladen werden.", vProgrammString, vDownloadString,
+                        MeisterGeister.Properties.Settings.Default.MeisterGeisterURL);
+                    else
+                    {
+                        // möglicherweise handelt es sich um einen Intern-Release
+                        compareVersions = vDownload[1].CompareTo(vProgramm);
+                        if (compareVersions == 0)
+                            infoText = string.Format("Das Programm ist auf dem aktuellsten Stand.\n\nInstallierte Version: {0}", vProgrammString);
+                        else
+                            infoText = string.Format("Die installierte Programm-Version ist neuer als die Download-Version.\n\nInstallierte Version: {0}\nDownload Version: {1}",
+                                vProgrammString, vDownloadString);
+                    }
                 }
+
+                infoText += "\n\nLetzte Update-Prüfung: " + Einstellungen.LastUpdateCheck;
+                DateTime checkTime = DateTime.Now;
+                Einstellungen.LastUpdateCheck = checkTime.ToString();
+                infoText += Einstellungen.CheckForUpdates ? "\nNächste automatische Prüfung frühestens: " + checkTime.Date.AddDays(1) : string.Empty;
+                infoText += "\n\n(Die automatische Update-Prüfung kann in den Einstellungen deaktiviert werden.)";
+
+
+                if (compareVersions == 0 && !popupWhenUpToDate)
+                    return;
+
+                MessageBox.Show(infoText, "Versions-Prüfung", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-
-            infoText += "\n\nLetzte Update-Prüfung: " + Einstellungen.LastUpdateCheck.ToShortDateString();
-            infoText += "\n(Die automatische Update-Prüfung kann in den Einstellungen deaktiviert werden.)";
-
-            Einstellungen.LastUpdateCheck = DateTime.Now.Date;
-
-            if (compareVersions == 0 && !popupWhenUpToDate)
-                return;
-            
-            MessageBox.Show(infoText, "Versions-Prüfung", MessageBoxButton.OK, MessageBoxImage.Information);
+            catch (Exception ex)
+            {
+                MsgWindow errWin = new MsgWindow("Fehler bei Update-Prüfung", "Beim Prüfung auf Updates ist ein Fehler aufgetreten!", ex);
+                errWin.ShowDialog();
+            }
         }
 
 

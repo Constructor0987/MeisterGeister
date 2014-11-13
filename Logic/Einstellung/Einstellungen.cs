@@ -61,7 +61,7 @@ namespace MeisterGeister.Logic.Einstellung
                 new Model.Einstellung() { Name = "ToolTitelAusblenden", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Tool Name im Tab-Titel ausblenden", Wert = "False" },
 
                 new Model.Einstellung() { Name = "CheckForUpdates", Kontext = "Allgemein", Kategorie = null, Typ = "Boolean", Beschreibung = "Täglich nach neuen Updates suchen", Wert = "True" },
-                new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "DateTime", Beschreibung = "", Wert = DateTime.Now.ToString() },
+                new Model.Einstellung() { Name = "LastUpdateCheck", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "String", Beschreibung = "", Wert = DateTime.Now.ToString() },
 
                 //Versteckte
                 new Model.Einstellung() { Name = "IsReadOnly", Kontext = "Allgemein", Kategorie = "Versteckt", Typ = "Boolean", Beschreibung = "", Wert = "False" },
@@ -135,7 +135,7 @@ namespace MeisterGeister.Logic.Einstellung
             target.Kategorie = source.Kategorie;
             target.Name = source.Name;
             target.Beschreibung = source.Beschreibung;
-            if(mitWert)
+            if(mitWert) 
                 target.Wert = source.Wert;
         }
 
@@ -152,22 +152,6 @@ namespace MeisterGeister.Logic.Einstellung
                 return e;
             }
             return null;
-        }
-
-        public static bool INTERN
-        {
-            get
-            {
-                return GetEinstellung<bool>("INTERN");
-            }
-            set
-            {
-                string pwd = View.General.ViewHelper.InputDialog("Passwort", "Passwort für INTERN Modus eingeben.", string.Empty);
-                if (Global.Intern_CheckPwd(pwd))
-                    SetEinstellung<bool>("INTERN", value);
-                else
-                    SetEinstellung<bool>("INTERN", false);
-            }
         }
 
         // TODO: Einstellung wird gecached, um Absturz bei Poben zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
@@ -277,22 +261,24 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<bool>("CheckForUpdates", value);
+                _checkForUpdates = value;
             }
         }
 
         // TODO: Einstellung wird gecached, um Absturz verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
-        private static Nullable<DateTime> _lastUpdateCheck = null;
-        public static DateTime LastUpdateCheck
+        private static string _lastUpdateCheck = null;
+        public static string LastUpdateCheck
         {
             get
             {
                 if (_lastUpdateCheck == null)
-                    _lastUpdateCheck = GetEinstellung<DateTime>("LastUpdateCheck");
-                return _lastUpdateCheck.GetValueOrDefault();
+                    _lastUpdateCheck = GetEinstellung<string>("LastUpdateCheck");
+                return _lastUpdateCheck;
             }
             set
             {
-                SetEinstellung<DateTime>("LastUpdateCheck", value);
+                SetEinstellung<string>("LastUpdateCheck", value);
+                _lastUpdateCheck = value;
             }
         }
 
@@ -695,6 +681,7 @@ namespace MeisterGeister.Logic.Einstellung
             set
             {
                 SetEinstellung<string>("MeisterGeisterID", value.ToString());
+                _meisterGeisterID = value;
             }
         }
     }

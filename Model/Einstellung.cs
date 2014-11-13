@@ -45,10 +45,6 @@ namespace MeisterGeister.Model
                     if (Wert == "0")
                         return false;
                 }
-                else if (Type == typeof(DateTime))
-                {
-                    return DateTime.Parse(Wert);
-                }
                 return Converter.ConvertFromInvariantString(Wert);
             }
             set { Wert = Converter.ConvertToInvariantString(value); OnChanged("Value"); }
@@ -71,8 +67,6 @@ namespace MeisterGeister.Model
                     return typeof(bool);
                 if (Typ == "Double" || Typ == "Float")
                     return typeof(double);
-                if (Typ == "DateTime")
-                    return typeof(DateTime);
                 return Type.GetType(Typ, true, true); 
             }
         }

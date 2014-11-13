@@ -55,7 +55,7 @@ namespace MeisterGeister.View.Windows
             if (e.ClickCount == 2 && e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
             {
                 // toggle INTERN Modus
-                Logic.Einstellung.Einstellungen.INTERN = !Global.INTERN;
+                Global.INTERN = !Global.INTERN;
                 if (Global.INTERN)
                 {
                     if (View.General.ViewHelper.Confirm("GegnerDaten laden", "Der INTERN Modus wurde aktiviert.\n Sollen die Gegnerdaten geladen werden?\nIm Anschluss das Programm bitte neu starten."))
