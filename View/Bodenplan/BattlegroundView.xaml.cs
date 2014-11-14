@@ -206,7 +206,7 @@ namespace MeisterGeister.View.Bodenplan
                 }
                 else if (vm.SelectedObject != null)
                 {
-                    if (e.Device.Target is Image)
+                    if (e.Device.Target is Image && vm.SelectedObject is Wesen)
                     {
                         //Change position
                         //((BattlegroundCreature)vm.SelectedObject).UpdateCreaturePosition(Position.stehend, true);
