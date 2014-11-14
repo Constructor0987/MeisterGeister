@@ -1805,6 +1805,24 @@ namespace MeisterGeister.Model {
             Global.ContextHeld.UpdateList<Held_Sonderfertigkeit>();
             Global.ContextHeld.UpdateList<Held_VorNachteil>();
         }
+
+        /// <summary>
+        /// Prüft, ob der Held aus der HeldenSoftware importiert wurde.
+        /// </summary>
+        public bool IsImportedFromHeldenSoftware
+        {
+            get { return HeldGUID.ToString().ToLowerInvariant().StartsWith("4e1d3250-f700-3000-"); }
+        }
+
+        /// <summary>
+        /// Prüft, ob der Held aus einem Heldenblatt importiert wurde.
+        /// </summary>
+        public bool IsImportedFromHeldenblatt
+        {
+            // TODO: Es gibt noch keine eindeutige Heldenblatt-GUID
+            get { return HeldGUID.ToString().ToLowerInvariant().StartsWith("GUID..."); }
+        }
+
         #endregion
 
         #region Sonstiges
