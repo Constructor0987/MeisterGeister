@@ -412,7 +412,7 @@
                                 <Image Source="/Images/Icons/General/OK.png" VerticalAlignment="Center" Visibility="{Binding Path=IsChecked, ElementName=tbtnPlaylistWartezeit, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                             </ToggleButton>
 
-                            <StackPanel Grid.Column="2" Visibility="{Binding Path=IsChecked, ElementName=1tbtnPlaylistWartezeit, Converter={StaticResource BooleanToVisibilityConverter1}}" >
+                            <StackPanel Grid.Column="2" Visibility="{Binding Path=IsChecked, ElementName=tbtnPlaylistWartezeit, Converter={StaticResource BooleanToVisibilityConverter1}}" >
                                 <Grid Margin="0,0,5,0" >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="18*"/>
@@ -434,7 +434,7 @@
                                     <Button Name="_btnPlaylistWartezeitMinMinus" Grid.Column="2" Margin="0,3,18,4" Tag="-200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Grid.RowSpan="2" Click="_btnPlaylistWartezeitMinMinus_Click" >
                                         <Image Source="/Images/Icons/General/entf_02.png" />
                                     </Button>
-                                    <Button Name="_btnPlaylistWartezeitMinPlus" Grid.Column="2" Tag="200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Margin="0,3,0,4" Grid.RowSpan="2" Click="_btnPlaylistWartezeitMinPlus_Click" Command="{Binding OnWarteZeitMinPlus}">
+                                    <Button Name="_btnPlaylistWartezeitMinPlus" Grid.Column="2" Tag="200" Width="18" Height="18" HorizontalAlignment="Right" IsTabStop="False" Margin="0,3,0,4" Grid.RowSpan="2" Click="_btnPlaylistWartezeitMinPlus_Click" >
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                     <TextBox Name="tboxPlaylistWartezeitMax"  Grid.Column="3" Margin="0,2,36,2" HorizontalContentAlignment="Center" Tag="0" Text="10000" Padding="0" ToolTip="Maximale Wartezeit bei variabeler Pausenzeit (in ms)" Grid.RowSpan="2" TextChanged="tboxPlaylistWartezeitMin_TextChanged" />
@@ -1119,7 +1119,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Name="tiAbenteuer" Header="Abenteuer" >
+            <TabItem Name="tiAbenteuer" Header="Abenteuer" Visibility="Hidden" >
                 <Grid Background="{StaticResource Background1}" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60" />

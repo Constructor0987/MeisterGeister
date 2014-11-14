@@ -9705,13 +9705,13 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 if (IsInitialized)
                 {
-              //      chkValidChange(sender, e);
+                    chkValidChange(sender, e);
                     int wert = Convert.ToInt32(((TextBox)sender).Text);
-                    //((TextBox)sender).ToolTip = (wert < 1000) ? wert + " ms" : (wert < 60000) ? wert / 1000 + " sek." : wert / 60000 + " min.";
+                    ((TextBox)sender).ToolTip = (wert < 1000) ? wert + " ms" : (wert < 60000) ? wert / 1000 + " sek." : wert / 60000 + " min.";
 
                     AktKlangPlaylist.WarteZeitMax = Convert.ToInt64(tboxPlaylistWartezeitMax.Text);
-                    //AktKlangPlaylist.WarteZeitMin = Convert.ToInt64(tboxPlaylistWartezeitMin.Text);
-                    //Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
+                    AktKlangPlaylist.WarteZeitMin = Convert.ToInt64(tboxPlaylistWartezeitMin.Text);
+                    Global.ContextAudio.Update<Audio_Playlist>(AktKlangPlaylist);
                 }
             }
             catch (Exception) { }
@@ -9763,24 +9763,24 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void _btnPlaylistWartezeitMinPlus_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    ((Button)sender).Tag = (Convert.ToInt32(tboxPlaylistWartezeitMin.Text) >= 10000) ? 5000 :
-            //                           (Convert.ToInt32(tboxPlaylistWartezeitMin.Text) >= 2000) ? 1000 : 200;
+            try
+            {
+                ((Button)sender).Tag = (Convert.ToInt32(tboxPlaylistWartezeitMin.Text) >= 10000) ? 5000 :
+                                       (Convert.ToInt32(tboxPlaylistWartezeitMin.Text) >= 2000) ? 1000 : 200;
 
-            //    int sollWert = Convert.ToInt32(tboxPlaylistWartezeitMin.Text) + Convert.ToInt32(((Button)sender).Tag);
-            //    int max = Convert.ToInt32(sldPlaylistWartezeit.Maximum);
-            //    int pauseMin_wert = (sollWert >= Convert.ToInt32(sldPlaylistWartezeit.Minimum)) ? sollWert > max ? max : sollWert : max;
+                int sollWert = Convert.ToInt32(tboxPlaylistWartezeitMin.Text) + Convert.ToInt32(((Button)sender).Tag);
+                int max = Convert.ToInt32(sldPlaylistWartezeit.Maximum);
+                int pauseMin_wert = (sollWert >= Convert.ToInt32(sldPlaylistWartezeit.Minimum)) ? sollWert > max ? max : sollWert : max;
 
-            //    tboxPlaylistWartezeitMin.Text = Convert.ToString(pauseMin_wert);
+                tboxPlaylistWartezeitMin.Text = Convert.ToString(pauseMin_wert);
 
-            //    if (pauseMin_wert > Convert.ToInt32(tboxPlaylistWartezeitMax.Text))
-            //        tboxPlaylistWartezeitMax.Text = tboxPlaylistWartezeitMin.Text;
+                if (pauseMin_wert > Convert.ToInt32(tboxPlaylistWartezeitMax.Text))
+                    tboxPlaylistWartezeitMax.Text = tboxPlaylistWartezeitMin.Text;
 
-            //    ((Button)sender).Tag = (pauseMin_wert >= 10000) ? 5000 :
-            //                           (pauseMin_wert >= 2000) ? 1000 : 200;
-            //}
-            //catch (Exception) { }
+                ((Button)sender).Tag = (pauseMin_wert >= 10000) ? 5000 :
+                                       (pauseMin_wert >= 2000) ? 1000 : 200;
+            }
+            catch (Exception) { }
         }
 
         private void _btnPlaylistWartezeitMinMinus_Click(object sender, RoutedEventArgs e)
