@@ -48,19 +48,43 @@
                                 <StackPanel>
                                     <TextBlock Text="Eindeutige Held-ID:" FontStyle="Italic" />
                                     <TextBlock Text="{Binding SelectedHeld.HeldGUID}" />
-                                    <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedHeld.IsImportedFromHeldenSoftware, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Height="28" Stretch="Uniform" />
-                                        <TextBlock Text="Held wurde aus der HeldenSoftware importiert." Margin="5,0,0,0" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedHeld.IsImportedFromHeldenblatt, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                        <Image Margin="2" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Height="28" Stretch="Uniform" />
-                                        <TextBlock Text="Held wurde aus einem Heldenblatt importiert." Margin="5,0,0,0" />
-                                    </StackPanel>
                                 </StackPanel>
                             </TextBox.ToolTip>
                         </TextBox>
-                        <Image Grid.Column="1" Grid.Row="0" Height="28" Margin="1" Visibility="{Binding SelectedHeld.IsImportedFromHeldenSoftware, Converter={StaticResource BooleanToVisibilityConverter1}}" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Uniform" ToolTip="Held wurde aus der HeldenSoftware importiert." HorizontalAlignment="Right" />
-                        <Image Grid.Column="1" Grid.Row="0" Height="28" Margin="1" Visibility="{Binding SelectedHeld.IsImportedFromHeldenblatt, Converter={StaticResource BooleanToVisibilityConverter1}}" Source="/DSA MeisterGeister;component/Images/Icons/General/import.png" Stretch="Uniform" ToolTip="Held wurde aus einem Heldenblatt importiert." HorizontalAlignment="Right" />
+                        <Grid Grid.Column="1" Grid.Row="0" Margin="4" HorizontalAlignment="Right" Visibility="{Binding SelectedHeld.IsImportedFromHeldenSoftware, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Logos/HeldenSoftware_Logo.png" Height="18" Margin="-2,-2,2,2" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/Import.png" Height="18" Margin="4,4,-4,-4" />
+                            <Grid.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="Eindeutige Held-ID:" FontStyle="Italic" />
+                                    <TextBlock Text="{Binding SelectedHeld.HeldGUID}" />
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedHeld.IsImportedFromHeldenSoftware, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                        <Grid Margin="4" ToolTip="Held wurde aus der HeldenSoftware importiert.">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Logos/HeldenSoftware_Logo.png" Height="20" Margin="-2,-2,2,2" />
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/Import.png" Height="20" Margin="4,4,-4,-4" />
+                                        </Grid>
+                                        <TextBlock Text="Held wurde aus der HeldenSoftware importiert." Margin="5,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid.ToolTip>
+                        </Grid>
+                        <Grid Grid.Column="1" Grid.Row="0" Margin="4" HorizontalAlignment="Right" Visibility="{Binding SelectedHeld.IsImportedFromHeldenblatt, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                            <Image Source="/DSA MeisterGeister;component/Images/Logos/Heldenblatt_Logo.png" Height="10" Margin="-2,-2,2,2" />
+                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/Import.png" Height="18" Margin="4,4,-4,-4" HorizontalAlignment="Right" />
+                            <Grid.ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="Eindeutige Held-ID:" FontStyle="Italic" />
+                                    <TextBlock Text="{Binding SelectedHeld.HeldGUID}" />
+                                    <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedHeld.IsImportedFromHeldenblatt, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                        <Grid Margin="4" ToolTip="Held wurde aus einem Heldenblatt importiert.">
+                                            <Image Source="/DSA MeisterGeister;component/Images/Logos/Heldenblatt_Logo.png" Height="16" Margin="-2,-2,2,2" />
+                                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/Import.png" Height="20" Margin="4,4,-4,-4" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <TextBlock Text="Held wurde aus einem Heldenblatt importiert." Margin="5,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid.ToolTip>
+                        </Grid>
                         <Image Grid.Column="2" Grid.Row="0" Height="28" Margin="1" Cursor="Hand" MouseDown="ImageWikiHeldenbrief_MouseDown" Source="/DSA MeisterGeister;component/Images/Logos/WikiAventurica_Logo.png" Stretch="Uniform" ToolTip="Charakterbeschreibung im Wiki-Aventurica anzeigen (falls vorhanden)." />
                         <Label Grid.Column="3" Grid.Row="0" Content="Spieler:" FontWeight="Bold" VerticalAlignment="Center" />
                         <TextBox Grid.Column="4" Grid.Row="0" Margin="2" Text="{Binding SelectedHeld.Spieler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Name des Spielers des Helden" IsReadOnly="{Binding IsReadOnly}" Style="{DynamicResource ReadOnlyStyle}" />
