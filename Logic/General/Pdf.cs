@@ -107,7 +107,7 @@ namespace MeisterGeister.Logic.General
             }
             catch (System.ComponentModel.Win32Exception ex)
             {
-                throw new System.ComponentModel.Win32Exception("Der PDF Reader konnte nicht gefunden werden.", ex);
+                throw new System.ComponentModel.Win32Exception(string.Format("Der PDF Reader konnte nicht gefunden werden.\nReader: {0}\nDatei: {1}", OpenCommand, fileName), ex);
             }
             return p;
         }

@@ -292,7 +292,7 @@ namespace MeisterGeister.ViewModel.Settings
             }
             catch (Exception ex)
             {
-                View.General.ViewHelper.ShowError("Das PDF konnte nicht geöffnet werden.", ex);
+                View.General.ViewHelper.ShowError(string.Format("Das PDF konnte nicht geöffnet werden.\nReader: {0}\nDatei: {1}\n", Logic.General.Pdf.OpenCommand, Pfad), ex);
             }
         }
 
