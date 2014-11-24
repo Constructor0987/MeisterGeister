@@ -389,7 +389,7 @@
                         </Grid>
                     </Border>
 
-                    <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Left" Margin="5,0,-10,0" >
+                    <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" HorizontalAlignment="Left" Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditPList, Converter={StaticResource BooleanToVisibilityConverter1}}" Margin="5,0,-10,0" >
                         <!--<Border.Visibility>
                             <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
                                 <Binding ElementName="rbEditorEditPList" Path="IsChecked" />

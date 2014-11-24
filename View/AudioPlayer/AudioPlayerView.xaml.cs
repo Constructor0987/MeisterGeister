@@ -5038,10 +5038,8 @@ namespace MeisterGeister.View.AudioPlayer {
             {
                 if (e.Key == Key.Return)
                 {
-                    tboxEditorName.Text = tboxEditorName.Text.Replace("--", "-");
-                    while (tboxEditorName.Text.EndsWith("-") || tboxEditorName.Text.EndsWith(" "))
-                        tboxEditorName.Text = tboxEditorName.Text.Substring(0, tboxEditorName.Text.Length - 1);
-
+                    tboxEditorName.Text = validateString(tboxEditorName.Text);
+                    
                     if (rbEditorEditTheme.IsChecked.Value)
                     {
                         if (AktKlangTheme == null)
@@ -8079,15 +8077,19 @@ namespace MeisterGeister.View.AudioPlayer {
             setStdPfad();
             fadingTime = MeisterGeister.Logic.Einstellung.Einstellungen.Fading;
 
-            DataContext = _zeile;
+            //DataContext = _zeile;
         }
 
         private void btnAudioDatenImport_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int mrRes = ViewHelper.ConfirmYesNoCancel("Löschen bestehender Daten", "Soll die aktuelle Datenbank erweitert werden?" + Environment.NewLine + Environment.NewLine + "Wählen sie 'Ja' damit die Datenbank erweitert wird." +
-                    Environment.NewLine + "Wählen Sie 'Nein' um die bestehende Datenbank zu ersetzten. Achtung! Alle Daten gehen verloren.");
+                int mrRes;
+                if (Global.ContextAudio.PlaylistListe.Count == 0 && Global.ContextAudio.ThemeListe.Count == 0)
+                    mrRes = 2;
+                else
+                    mrRes = ViewHelper.ConfirmYesNoCancel("Löschen bestehender Daten", "Soll die aktuelle Datenbank erweitert werden?" + Environment.NewLine + Environment.NewLine + "Wählen sie 'Ja' damit die Datenbank erweitert wird." +
+                        Environment.NewLine + "Wählen Sie 'Nein' um die bestehende Datenbank zu ersetzten. Achtung! Alle Daten gehen verloren.");
                 if (mrRes == 2 || mrRes == 1)
                 {
                     Global.SetIsBusy(true);
@@ -8251,7 +8253,9 @@ namespace MeisterGeister.View.AudioPlayer {
 
                             if (pfad.EndsWith(".xml"))
                             {
-                                AktKlangPlaylist = Audio_Playlist.Import(pfad, "Audio_Playlist", _nicht_first);
+                                if (AktKlangPlaylist == null) AktKlangPlaylist = new Audio_Playlist();
+                                if ( Audio_Playlist.Import(pfad, "Audio_Playlist", _nicht_first) != null)
+                                    AktKlangPlaylist = Global.ContextAudio.Liste<Audio_Playlist>()[0];
                             }
                             else
                             {
@@ -8436,6 +8440,20 @@ namespace MeisterGeister.View.AudioPlayer {
             }
         }
 
+        private string validateString(string s)
+        {
+            while (s.Contains("--"))
+                s = s.Replace("--", "-");
+
+            s = s.TrimEnd(new char[] { ' ', '-', '/' });
+            s = s.TrimStart(new char[] { ' ', '-', '/' });
+
+            while (s.EndsWith("-.xml") || s.EndsWith(" .xml"))
+                s = s.Substring(0, s.Length - 5) + ".xml";
+
+            return s;
+        }
+
 
         private void lbItembtnExportPlaylist_Click(object sender, RoutedEventArgs e)
         {
@@ -8451,10 +8469,8 @@ namespace MeisterGeister.View.AudioPlayer {
                     {
                         Global.SetIsBusy(true, string.Format("Die Playlist wird exportiert ..."));
 
-                        datei = datei.Replace("--", "-");
-                        while (datei.EndsWith("-.xml") || datei.EndsWith(" .xml"))
-                            datei = datei.Substring(0, datei.Length - 5) + ".xml";       
-
+                        datei = validateString(datei);
+                        
                         File.Delete(datei);
                         aPlaylist.Export(datei, g);
 
@@ -8505,9 +8521,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 Global.SetIsBusy(true, string.Format("Theme '" + aTheme.Name + "' wird exportiert"));
                 string pfaddatei = dlgFolder + "\\Theme_" + aTheme.Name.Replace("/", "_") + ".xml";
 
-                pfaddatei = pfaddatei.Replace("--", "-");
-                while (pfaddatei.EndsWith("-.xml") || pfaddatei.EndsWith(" .xml"))
-                    pfaddatei = pfaddatei.Substring(0, pfaddatei.Length - 5) + ".xml";
+                pfaddatei = validateString(pfaddatei);
 
                 ExportTheme(aTheme, pfaddatei);
             }
@@ -8553,6 +8567,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 {
                     Global.SetIsBusy(true, string.Format("Export aller Playlisten wird vorbereitet..."));
                     string pfad = folderDlg.SelectedPath;
+                    
                     Audio_Playlist.Export(Global.ContextAudio.PlaylistListe, pfad);
 
                     if (btnAudioDatenExport.Tag != null && Convert.ToBoolean(btnAudioDatenExport.Tag))
@@ -9006,9 +9021,7 @@ namespace MeisterGeister.View.AudioPlayer {
                 {
                     string pfaddatei = ViewHelper.ChooseFile("Theme exportieren", "Theme_" + aTheme.Name.Replace("/", "_") + ".xml", true, "xml");
 
-                    pfaddatei = pfaddatei.Replace("--", "-");
-                    while (pfaddatei.EndsWith("-.xml") || pfaddatei.EndsWith(" .xml"))
-                        pfaddatei = pfaddatei.Substring(0, pfaddatei.Length - 5) + ".xml";
+                    pfaddatei = validateString(pfaddatei);
 
                     ExportTheme(aTheme, pfaddatei);
                     ViewHelper.Popup("Die Themeliste wurde erfolgreich gesichert." + Environment.NewLine + Environment.NewLine +
