@@ -761,27 +761,27 @@
                             </ToggleButton>
 
                             <Border Width="2" Height="26" Margin="-205,0,0,0" />
-                            <Button Width="30" Height="30" Click="btnBGStoppen_Click" Name="btnBGStoppen" Margin="-150,0,0,0" IsEnabled="False" Style="{StaticResource GlasButton}" Background="Black" >
+                            <Button Width="30" Height="30" Click="btnBGStoppen_Click" Name="btnBGStoppen" Margin="-150,0,0,0" IsEnabled="False" Style="{StaticResource GlasButton}" Background="Black" ToolTip="Stopp" >
                                 <Image Name="imgbtnBGStoppen" Source="/DSA%20MeisterGeister;component/Images/Icons/General/stop.png" Style="{StaticResource ImageEnabled}" Margin="5,6,4,4" />
                             </Button>
 
-                            <Button Name="btnBGPrev" Width="30" Height="30" Background="Black" Margin="-80,0,0,0" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" IsEnabled="False" >
+                            <Button Name="btnBGPrev" Width="30" Height="30" Background="Black" Margin="-80,0,0,0" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" IsEnabled="False" ToolTip="Zurück" >
                                 <Image Name="imgbtnBGPrev" Margin="2,4,2,2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_prev.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
-                            <Button Name="btnBGAbspielen" IsEnabled="False" ClickMode="Press" Tag="0" Grid.Column="2" Width="40" Height="40" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click" >
+                            <Button Name="btnBGAbspielen" IsEnabled="False" ClickMode="Press" Tag="0" Grid.Column="2" Width="40" Height="40" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click" ToolTip="Abspielen/Pause" >
                                 <Image Name="imgbtnBGAbspielen" Margin="5"  Width="30" Height="30" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
-                            <Button Name="btnBGNext" IsEnabled="False" Grid.Column="2" Width="30" Height="30" Background="Black"  Margin="80,0,0,0" Style="{StaticResource GlasButton}" Click="btnBGNext_Click" >
+                            <Button Name="btnBGNext" IsEnabled="False" Grid.Column="2" Width="30" Height="30" Background="Black"  Margin="80,0,0,0" Style="{StaticResource GlasButton}" Click="btnBGNext_Click" ToolTip="Vor" >
                                 <Image Name="imgbtnBGNext" Margin="2,4,2,2" Source="/DSA%20MeisterGeister;component/Images/Icons/General/play_next.png" Style="{StaticResource ImageEnabled}" />
                             </Button>
 
-                            <Button Width="26" Height="26" Name="btnBGSpeaker" Click="btnBGSpeaker_Click" Margin="170,0,0,0" Tag="-1" >
+                            <Button Width="26" Height="26" Name="btnBGSpeaker" Click="btnBGSpeaker_Click" Margin="170,0,0,0" Tag="-1" ToolTip="Ton aus/an" >
                                 <Image Name="imgbtnBGSpeaker" Width="20" Height="20" Margin="0,6,0,0" Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" />
                             </Button>
 
-                            <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" MouseWheel="slBGVolume_MouseWheel" />
+                            <Slider Height="22" Margin="290,0,00,0" Maximum="100" Name="slBGVolume" UseLayoutRounding="True" Value="50" Width="80" SmallChange="1" LargeChange="10" ValueChanged="slBGVolume_ValueChanged" MouseWheel="slBGVolume_MouseWheel" ToolTip="Lautstärke" />
                         </Grid>
                     </Border>
 
@@ -901,7 +901,7 @@
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
-                            <Border HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,-100,0" Style="{DynamicResource ControlContentBorder}" ToolTip="Übergeordneter Filter" >
+                            <Border HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,-100,0" Style="{DynamicResource ControlContentBorder}" ToolTip="Übergeordneter Filter auf Namen und/oder Kategorien aller Bereiche" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="26" />
@@ -961,7 +961,7 @@
                                         <TextBlock Text="Themes" Style="{DynamicResource TextTitel}" />
                                     </StackPanel>
                                 </Expander.Header>
-                                <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
+                                <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top" ToolTip="Liste aller erstellten Themes (Zusammenstellungen von Musik und Geräusche-Playlisten)">
                                     <ScrollViewer VerticalScrollBarVisibility="Visible" Margin="0,0,0,6">
                                         <WrapPanel Name="wpnlPListThemes" ItemHeight="50" ItemWidth="130" MinHeight="60" />
                                     </ScrollViewer>
@@ -992,29 +992,29 @@
                                 <ColumnDefinition Width="187*" MinWidth="100" MaxWidth="280" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Top">
-                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGStoppen}" Width="30" Height="30" Click="btnBGStoppen_Click" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" >
+                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGStoppen}" Width="30" Height="30" Click="btnBGStoppen_Click" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" ToolTip="Stopp" >
                                     <Image Source="{Binding Source, ElementName=imgbtnBGStoppen}" Style="{StaticResource ImageEnabled}" Margin="5,6,4,4" />
                                 </Button>
 
-                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGPrev}" Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" Margin="0,0,5,0" >
+                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGPrev}" Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Click="btnBGPrev_Click" Margin="0,0,5,0" ToolTip="Zurück" >
                                     <Image Source="{Binding Source, ElementName=imgbtnBGPrev}" Margin="2,4,2,2" Style="{StaticResource ImageEnabled}" />
                                 </Button>
 
-                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGAbspielen}"  ClickMode="Press" Tag="0"  Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click">
+                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGAbspielen}"  ClickMode="Press" Tag="0"  Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnBGAbspielen_Click" ToolTip="Abspielen/Pause">
                                     <Image Source="{Binding Source, ElementName=imgbtnBGAbspielen}" Margin="5"  Width="30" Height="30" Style="{StaticResource ImageEnabled}" />
                                 </Button>
 
-                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGNext}" Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Margin="0,0,5,0" Click="btnBGNext_Click" >
+                                <Button IsEnabled="{Binding IsEnabled, ElementName=btnBGNext}" Width="30" Height="30" Background="Black" Style="{StaticResource GlasButton}" Margin="0,0,5,0" Click="btnBGNext_Click" ToolTip="Vor" >
                                     <Image Source="{Binding Source, ElementName=imgbtnBGNext}" Margin="2,4,2,2" Style="{StaticResource ImageEnabled}" />
                                 </Button>
 
-                                <Button Width="26" Height="26" Click="btnBGSpeaker_Click" >
+                                <Button Width="26" Height="26" Click="btnBGSpeaker_Click" ToolTip="Ton aus/an" >
                                     <Image Source="{Binding Source, ElementName=imgbtnBGSpeaker}" Width="20" Height="20" Margin="0,6,0,0" />
                                 </Button>
 
                                 <Slider Value="{Binding Value, ElementName=slBGVolume}" ToolTip="{Binding ToolTip, ElementName=slBGVolume}" MouseWheel="slBGVolume_MouseWheel" Height="22" Maximum="100" UseLayoutRounding="True" Width="80" SmallChange="1" LargeChange="10"  Margin="10,0,0,0" />
                             </StackPanel>
-                            <Border Grid.Column="2" HorizontalAlignment="Stretch" Height="28" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Filter aller Musik-Playlisten" Margin="5,0,15,0">
+                            <Border Grid.Column="2" HorizontalAlignment="Stretch" Height="28" Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Center" ToolTip="Filter aller Musik-Playlisten auf Namen und/oder Kategorie" Margin="5,0,15,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="26" />
@@ -1039,15 +1039,24 @@
                                 <ColumnDefinition Width="187*" MinWidth="100" MaxWidth="280" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"  Margin="17,0,0,0" VerticalAlignment="Center">
-                                <Button Name="btnThemeGeräuscheAus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,10,0" ToolTip="Alle Geräusche ausschalten" Click="btnThemeGeräuscheAus_Click" />
+                                <Button Name="btnThemeGeräuscheAus" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,10,0" ToolTip="Alle Geräusche ausschalten" Click="btnThemeGeräuscheAus_Click" >
+                                    <Grid>
+                                        <Image Source="/Images/Icons/General/OK.png" />
+                                        <Image Source="/Images/Icons/General/gestrichen.png" />
+                                    </Grid>
+                                </Button>
                                 <Button Name="btnThemeGeräuscheFilterAktiv" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" Width="20" Height="20" Margin="0,0,10,0" ToolTip="Nur aktive Playlists zeigen" Click="btnThemeGeräuscheFilterAktiv_Click" >
                                     <Grid>
                                         <Image Source="/Images/Icons/General/OK.png" VerticalAlignment="Center" />
                                         <Image Source="/Images/Icons/General/Filter.png" VerticalAlignment="Center" Margin="4,-2,-8,-2" />
                                     </Grid>
                                 </Button>
-                                <Button Grid.Column="2" Click="btnPListAktFilter_Click" ToolTip="Aktiv-Filter löschen" Width="20" Height="25"  Name="btnPListAktFilter" Margin="0,0,10,0" Visibility="Hidden">
-                                    <Image Source="/Images/Icons/Wuerfel/w6_blank.png" Stretch="Fill" HorizontalAlignment="Stretch" Width="15" Height="25" />
+                                <Button Grid.Column="2" Click="btnPListAktFilter_Click" ToolTip="Aktiv-Filter löschen" Width="20" Height="20"  Name="btnPListAktFilter" Margin="-5,0,10,0" Visibility="Hidden" >
+                                    <Grid>
+                                        <Image Source="/Images/Icons/General/OK.png" VerticalAlignment="Center" />
+                                        <Image Source="/Images/Icons/General/Filter.png" VerticalAlignment="Center" Margin="4,-2,-8,-2" />
+                                        <Image Source="/Images/Icons/General/gestrichen.png" />
+                                    </Grid>
                                 </Button>
                                 <TextBlock Padding="4,2,4,0" />
                                 <Button ClickMode="Press" Tag="false" Width="40" Height="40" Margin="0,0,5,0" Style="{StaticResource GlasButton}" Background="Black" Click="btnPListPListAbspielen_Click" Name="btnPListPListAbspielen" IsEnabled="False" >
@@ -1066,7 +1075,7 @@
                                 </Slider>
                                 <TextBlock Padding="4,2,4,0" />
                             </StackPanel>
-                            <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" Height="28" VerticalAlignment="Center" ToolTip="Filter aller Geräusche-Playlisten" Margin="3,0,20,0">
+                            <Border Grid.Column="2" Style="{DynamicResource ControlContentBorder}" Height="28" VerticalAlignment="Center" ToolTip="Filter aller Geräusche-Playlisten auf Namen und/oder Kategorie" Margin="3,0,20,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="26" />
@@ -1097,7 +1106,8 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ListBox Name="lbPListMusik"  Background="Transparent" VerticalAlignment="Stretch" SelectionChanged="lbPListMusik_SelectionChanged" ToolTip="Anklicken um den Titel abzuspielen" ItemContainerStyle="{StaticResource SimpleListBoxItem}" />
+                                <ListBox Name="lbPListMusik"  Background="Transparent" VerticalAlignment="Stretch" SelectionChanged="lbPListMusik_SelectionChanged" ItemContainerStyle="{StaticResource SimpleListBoxItem}" 
+                                         ToolTip="Liste der Musik-Playlisten. Zum Abspielen auswählen oder das entsprechende Theme aktivieren" />
                             </Border>
                         </Expander>
                     </Border>
@@ -1111,7 +1121,8 @@
                                 </StackPanel>
                             </Expander.Header>
                             <Border Style="{DynamicResource ControlContentBorder}" VerticalAlignment="Top">
-                                <ListBox Name="lbPListGeräusche" ItemContainerStyle="{StaticResource SimpleListBoxItem}" Background="Transparent" VerticalAlignment="Stretch" Style="{StaticResource ReadOnlyStyle}" />
+                                <ListBox Name="lbPListGeräusche" ItemContainerStyle="{StaticResource SimpleListBoxItem}" Background="Transparent" VerticalAlignment="Stretch" Style="{StaticResource ReadOnlyStyle}" 
+                                         ToolTip="Liste aller Geräusche-Playlisten. Zum Anspielen einen Haken setzen oder das entsprechende Theme auswählen"/>
                             </Border>
                         </Expander>
                     </Border>

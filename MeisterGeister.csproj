@@ -1752,6 +1752,7 @@
     <Resource Include="Daten\Updateskripte\UpdateTo_V0096.sql" />
     <Resource Include="Images\Logos\HeldenSoftware_Logo.png" />
     <Resource Include="Images\Logos\Heldenblatt_Logo.png" />
+    <Resource Include="Images\Icons\General\gestrichen.png" />
     <Content Include="Libs\Ares.MeisterGeisterPlugin.dll" />
     <Content Include="Libs\ArtefaktGenerator.dll" />
     <Content Include="Libs\de\Ares.MeisterGeisterPlugin.resources.dll" />
