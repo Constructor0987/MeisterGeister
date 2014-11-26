@@ -2146,7 +2146,7 @@ namespace MeisterGeister.View.AudioPlayer {
                         }
                         break;
                     case 4:                                                 // Titel duplizieren    
-                        AudioZeileItemAblegen(kZeile.audioZeile, AktKlangPlaylist, null);
+                        AudioZeileItemAblegen(kZeile.audioZeile, AktKlangPlaylist, null, sender);
                         break;
                     case 5:                                                 // Dateipfad öffnen
                         if (Directory.Exists(kZeile.audiotitel.Audio_Titel.Pfad) &&
@@ -2766,9 +2766,10 @@ namespace MeisterGeister.View.AudioPlayer {
 
                 if (neuerstellen)
                 {
+                    klZeile.audioZeile.Drop += audioZeile_Drop;
                     klZeile.audioZeile.PreviewMouseLeftButtonDown += audiozeile_PreviewMouseLeftButtonDown;
                     klZeile.audioZeile.lbiEditorRow.MouseMove += audiozeileLbi_MouseMove;
-                    klZeile.audioZeile.grdEditorRow.Drop += audiozeile_Drop;
+                    klZeile.audioZeile.grdEditorRow.Drop += audioZeile_Drop;
                     klZeile.audioZeile.GiveFeedback += audiozeile_GiveFeedback;
 
                     klZeile.audioZeile.MouseEnter += audioZeile_MouseEnter;
@@ -2857,6 +2858,7 @@ namespace MeisterGeister.View.AudioPlayer {
             if (playlisttitel.PauseChange) grpobj.anzPauseChange++;
             rowErstellt++;
         }
+
 
         private void abspielProzess(GruppenObjekt grpObj, bool checkStatus, bool sollStandby, KlangZeile klZeile, RoutedEventArgs e)
         {
@@ -9260,7 +9262,7 @@ namespace MeisterGeister.View.AudioPlayer {
         private void lbEditor_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("meineAudioZeile"))
-                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, AktKlangPlaylist, e);
+                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, AktKlangPlaylist, e, sender);
             else
             {
                 try
@@ -9282,9 +9284,9 @@ namespace MeisterGeister.View.AudioPlayer {
             }
         }
 
-        private void audiozeile_Drop(object sender, DragEventArgs e)
+        private void audioZeile_Drop(object sender, DragEventArgs e)
         {
-            audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(((Grid)((ListBoxItem)(sender as Grid).Parent).Parent).Parent as AudioZeile);
+            audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(sender  as AudioZeile);//((Grid)((ListBoxItem)(sender as Grid).Parent).Parent).Parent as AudioZeile);
         }
 
         private void brdEditorTheme_Drop(object sender, DragEventArgs e)
@@ -9301,14 +9303,14 @@ namespace MeisterGeister.View.AudioPlayer {
             if (e.Data.GetDataPresent("meineAudioZeile"))
             {
                 Audio_Playlist aplaylist = Global.ContextAudio.PlaylistListe.FirstOrDefault(t => t.Audio_PlaylistGUID == (Guid)((ListboxItemIcon)sender).Tag);
-                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, aplaylist, e);
+                AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, aplaylist, e, sender);
             }
             else
                 if (e.Data.GetDataPresent("meinListBoxItemIcon"))
                     _dndZeilenCursor = null;
         }
 
-        private void AudioZeileItemAblegen(AudioZeile aZeile, Audio_Playlist aPlaylist, DragEventArgs e)
+        private void AudioZeileItemAblegen(AudioZeile aZeile, Audio_Playlist aPlaylist, DragEventArgs e, object sender)
         {
             try
             {
@@ -9317,25 +9319,31 @@ namespace MeisterGeister.View.AudioPlayer {
 
                 List<string> gedroppteDateien = new List<string>();
                 gedroppteDateien.Add((string)aZeile.chkTitel.Tag);
-
+ 
                 _DateienAufnehmen(gedroppteDateien, aZeile, aPlaylist, audioZeileMouseOverDropped - 1, true);
+                
                 if (aPlaylist == AktKlangPlaylist && Keyboard.Modifiers != ModifierKeys.Control) // Verschieben in akt. Playliste
                 {
-                    Audio_Playlist_Titel aplytitel1 = Global.ContextAudio.PlaylistTitelListe.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)aZeile.Tag);
+                    Audio_Playlist_Titel aplytitel1 = aPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)aZeile.Tag);// Global.ContextAudio.PlaylistTitelListe
                     int oldReihenfolge = aplytitel1.Reihenfolge;
-                    Audio_Playlist_Titel aplytitel2 = Global.ContextAudio.PlaylistTitelListe.FirstOrDefault(t => t.Reihenfolge == audioZeileMouseOverDropped);
-                    aplytitel1.Reihenfolge = aplytitel2.Reihenfolge != aplytitel1.Reihenfolge ? aplytitel2.Reihenfolge - 1 : aplytitel2.Reihenfolge;
+                    Audio_Playlist_Titel aplytitel2 = aPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Reihenfolge == audioZeileMouseOverDropped);// Global.ContextAudio.PlaylistTitelListe
+                    
+                    if (sender != typeof(ListBox) && aplytitel2.Reihenfolge == aplytitel1.Reihenfolge && aplytitel1.Audio_TitelGUID == aplytitel2.Audio_TitelGUID)
+                        aplytitel1.Reihenfolge = aPlaylist.Audio_Playlist_Titel.Count;
+                    else
+                        aplytitel1.Reihenfolge = aplytitel2.Reihenfolge != aplytitel1.Reihenfolge ? aplytitel2.Reihenfolge : aplytitel2.Reihenfolge;
 
                     sortPlaylist(aPlaylist, oldReihenfolge < aplytitel1.Reihenfolge ? oldReihenfolge : aplytitel1.Reihenfolge);
 
                     lbEditorListe.SelectedIndex = lbEditorListe.Items.Count - 1;
                     lbEditorListe.Items.MoveCurrentToPosition(audioZeileMouseOverDropped);
                 }
-
+               
                 if (aPlaylist != AktKlangPlaylist && !kopieren)             //Verschieben = Löschen in akt. Playliste
                 {
                     Audio_Titel aTitel = Global.ContextAudio.TitelListe.FirstOrDefault(t => t.Audio_TitelGUID == (Guid)aZeile.Tag);
                     Global.ContextAudio.RemoveTitelFromPlaylist(AktKlangPlaylist, aTitel);
+                    lbEditorListe.Items.Remove(aZeile);
                 }
                 audioZeileMouseOverDropped = 0;
                 _dndZeilenCursor = null;
