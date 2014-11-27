@@ -9261,6 +9261,8 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void lbEditor_Drop(object sender, DragEventArgs e)
         {
+            if (audioZeileMouseOverDropped == -1)
+                return;
             if (e.Data.GetDataPresent("meineAudioZeile"))
                 AudioZeileItemAblegen(e.Data.GetData("meineAudioZeile") as AudioZeile, AktKlangPlaylist, e, sender);
             else
@@ -9286,7 +9288,29 @@ namespace MeisterGeister.View.AudioPlayer {
 
         private void audioZeile_Drop(object sender, DragEventArgs e)
         {
-            audioZeileMouseOverDropped = lbEditorListe.Items.IndexOf(sender  as AudioZeile);//((Grid)((ListBoxItem)(sender as Grid).Parent).Parent).Parent as AudioZeile);
+
+            if (e.Data.GetDataPresent("meineAudioZeile"))
+            {
+                int drag = lbEditorListe.Items.IndexOf(e.Data.GetData("meineAudioZeile") as AudioZeile);
+                
+                object o = sender;
+                if (o != typeof(AudioZeile))
+                {
+                    while (!Object.ReferenceEquals(o.GetType(), typeof(AudioZeile))) 
+                    {
+                        if (Object.ReferenceEquals(o.GetType(), typeof(Grid))) 
+                            o = (o as Grid).Parent;
+                        else
+                            if (Object.ReferenceEquals(o.GetType(), typeof(ListBoxItem)))
+                                o = (o as ListBoxItem).Parent;
+                    }
+                }
+                int drop = lbEditorListe.Items.IndexOf((AudioZeile)o);                    
+                if (drag != drop)
+                    audioZeileMouseOverDropped = drop;
+                else
+                    audioZeileMouseOverDropped = -1;
+            }
         }
 
         private void brdEditorTheme_Drop(object sender, DragEventArgs e)
