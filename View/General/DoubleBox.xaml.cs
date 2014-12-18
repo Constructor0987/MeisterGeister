@@ -203,8 +203,8 @@ namespace MeisterGeister.View.General
 
         private void IncreaseValueCeiling()
         {
-            double nextValue = Math.Ceiling(Value.Value);
-            double addValue = (nextValue == Value) ? 1 : nextValue - Value.Value;
+            double nextValue = Math.Ceiling(Value.GetValueOrDefault());
+            double addValue = (nextValue == Value) ? 1 : nextValue - Value.GetValueOrDefault();
             IncreaseValue(addValue);
         }
 
@@ -216,8 +216,8 @@ namespace MeisterGeister.View.General
 
         private void DecreaseValueFloor()
         {
-            double nextValue = Math.Floor(Value.Value);
-            double subValue = (nextValue == Value) ? 1 : Value.Value - nextValue;
+            double nextValue = Math.Floor(Value.GetValueOrDefault());
+            double subValue = (nextValue == Value) ? 1 : Value.GetValueOrDefault() - nextValue;
             DecreaseValue(subValue);
         }
 
