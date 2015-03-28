@@ -356,6 +356,7 @@
     <Compile Include="Model\Munition_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\MusikZeileModel.cs" />
     <Compile Include="Model\Name_Poco.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -451,6 +452,12 @@
     <Compile Include="ViewModel\Almanach\Logic\AlmanachItem.cs" />
     <Compile Include="ViewModel\Arena\Logic\HexGridCell.cs" />
     <Compile Include="ViewModel\AudioPlayer\AudioPlayerViewModel.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\AudioZeileViewModel.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\btnHotkeyVM.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\grdThemeBtnVM.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\lbEditorItem.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\lbThemeItem.cs" />
+    <Compile Include="ViewModel\AudioPlayer\Logic\MusikZeileVM.cs" />
     <Compile Include="ViewModel\Base\ToolViewModelBase.cs" />
     <Compile Include="ViewModel\Beschwörung\BeschwörungViewModel.cs" />
     <Compile Include="ViewModel\Bodenplan\BattlegroundViewModel.cs" />
@@ -552,14 +559,20 @@
     <Compile Include="View\AresPlayer\AresPlayerView.xaml.cs">
       <DependentUpon>AresPlayerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AudioPlayer\AudioPlayerView.xaml.cs">
+      <DependentUpon>AudioPlayerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AudioPlayer\AudioZeile.xaml.cs">
       <DependentUpon>AudioZeile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AudioPlayer\grdThemeButton.xaml.cs">
-      <DependentUpon>grdThemeButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\AudioPlayer\boxThemeTheme.xaml.cs">
       <DependentUpon>boxThemeTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\btnHotykey.xaml.cs">
+      <DependentUpon>btnHotykey.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AudioPlayer\grdThemeButton.xaml.cs">
+      <DependentUpon>grdThemeButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AudioPlayer\HotKeyZeile.xaml.cs">
       <DependentUpon>HotKeyZeile.xaml</DependentUpon>
@@ -612,9 +625,6 @@
     <Compile Include="View\Arena\CreatureContextMenu.cs" />
     <Compile Include="View\ArtGen\ArtGenView.xaml.cs">
       <DependentUpon>ArtGenView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AudioPlayer\AudioPlayerView.xaml.cs">
-      <DependentUpon>AudioPlayerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logic\Umrechner\Flächen.cs" />
     <Compile Include="Logic\Umrechner\Längen.cs" />
@@ -965,15 +975,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AudioPlayer\AudioPlayerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\AudioPlayer\AudioZeile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AudioPlayer\grdThemeButton.xaml">
+    <Page Include="View\AudioPlayer\boxThemeTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\AudioPlayer\boxThemeTheme.xaml">
+    <Page Include="View\AudioPlayer\btnHotykey.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AudioPlayer\grdThemeButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1032,10 +1050,6 @@
     <Page Include="View\ArtGen\ArtGenView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\AudioPlayer\AudioPlayerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Basar\BasarView.xaml">
       <SubType>Designer</SubType>

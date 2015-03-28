@@ -24,19 +24,7 @@ namespace MeisterGeister.View.AudioPlayer
         {
             InitializeComponent();
         }
-
-        private void lbi_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (lblStdPfad.Content != null && lblStdPfad.Content.ToString() != "")
-                imgIcon.Visibility = Visibility.Visible;
-        }
-
-        private void lbi_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (lblStdPfad.Content != null)
-                imgIcon.Visibility = Visibility.Hidden;
-        }
-
+        
         private void btnStdPfad_Click(object sender, RoutedEventArgs e)
         {
             ((ListBox)lbi.Parent).SelectedItem = lbi;

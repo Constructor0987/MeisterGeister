@@ -12,6 +12,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//eigene 
+using MeisterGeister.Model;
+using VM = MeisterGeister.ViewModel.AudioPlayer.Logic;
+
 namespace MeisterGeister.View.AudioPlayer
 {
     /// <summary>
@@ -19,21 +23,71 @@ namespace MeisterGeister.View.AudioPlayer
     /// </summary>
     public partial class grdThemeButton : UserControl
     {
+        private string _suchtext = string.Empty;
+        
+        
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.grdThemeBtnVM VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.grdThemeBtnVM))
+                    return null;
+                return DataContext as VM.grdThemeBtnVM;
+            }
+            set { DataContext = value; }
+        }
+
+
         public grdThemeButton()
         {
-            InitializeComponent();        
+            InitializeComponent();
+            VM = new VM.grdThemeBtnVM();
         }
 
-        private void grdTheme_MouseEnter(object sender, MouseEventArgs e)
+
+
+        #region //---- INSTANZMETHODEN ----
+
+        /// <summary>
+        /// Prüft, ob 'suchWort' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// </summary>
+        /// <param name="suchWort"></param>
+        /// <returns></returns>
+        public bool Contains(string suchWort)
         {
-            chkbxPlus.Visibility = Visibility.Visible;
+            _suchtext = VM.Theme.Name.ToLower() + ((VM.Theme.Kategorie !=null)? VM.Theme.Kategorie.ToLower(): "");
+            return _suchtext.Contains(suchWort);
         }
 
-        private void grdTheme_MouseLeave(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Prüft, ob die 'suchWorte' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// Es wird dabei eine UND-Prüfung durchgeführt.
+        /// </summary>
+        /// <param name="suchWorte"></param>
+        /// <returns></returns>
+        public bool Contains(string[] suchWorte)
         {
-            if (this.Height != 42)
-                chkbxPlus.Visibility = Visibility.Hidden;
+            foreach (string wort in suchWorte)
+            {
+                if (!Contains(wort))
+                    return false;
+            }
+            return true;
         }
 
+        #endregion
+
+        private void grd_MouseEnter(object sender, MouseEventArgs e)
+        {
+            VM.ForceVolumeVis = true;
+        }
+
+        private void grd_MouseLeave(object sender, MouseEventArgs e)
+        {
+            VM.ForceVolumeVis = VM.NormalSize;
+        }
     }
 }

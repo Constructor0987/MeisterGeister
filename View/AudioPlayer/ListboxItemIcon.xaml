@@ -3,28 +3,97 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vmAudioPlayer="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
              mc:Ignorable="d" 
-             d:DesignHeight="27" d:DesignWidth="700" >
+             d:DesignHeight="27" d:DesignWidth="700" MouseDoubleClick="ListBoxItem_MouseDoubleClick" >
+    <ListBoxItem.Resources>
+        <vmAudioPlayer:MultiBooleanToVisibilityConverter x:Key="MultiBooleanToVisibilityConverter1" />
+        <vmAudioPlayer:MultiBooleanAndConverter x:Key="MultiBooleanAndConverter1" />
+    </ListBoxItem.Resources>
+    
+    <StackPanel Name="spnllbiIcon" Orientation="Horizontal"
+                        Tag="{Binding Path=APlaylist.Audio_PlaylistGUID}"
+                        PreviewMouseLeftButtonDown="lbiEditorPlaylist_PreviewMouseLeftButtonDown"
+                        PreviewMouseMove="lbiEditorPlaylist_MouseMove" >
+                <Grid Name="grd">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25" />
+                        <ColumnDefinition Width="40*" MinWidth="40" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                    </Grid.RowDefinitions>
 
-    <StackPanel Name="spnllbiIcon" MouseEnter="spnllbiIcon_MouseEnter" MouseLeave="spnllbiIcon_MouseLeave" Orientation="Horizontal">
-        <Grid Name="grd">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25" />
-                <ColumnDefinition Width="40*" MinWidth="40" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-            </Grid.RowDefinitions>
-
-            <Image Name="imgIcon" Source="/Images/Icons/General/copy.png" Stretch="Fill" ToolTip="Theme" Tag="0"/>
-            <Label Name="lbText" Grid.Column="1" FontSize="14" Padding="5,2,5,5" />
-        </Grid>
-        <Button Name="btnExport" Width="22" Visibility="Collapsed" Cursor="Hand" ToolTip="Exportieren der Playlist" >
-            <Image Source="/Images/Icons/General/export.png"/>
-        </Button>
-
-        <Button Name="btnLöschen" Width="22" Visibility="Collapsed" Cursor="Hand" ToolTip="Löschen der Playlist" >
-            <Image Source="/Images/Icons/General/entf_01.png" />
-        </Button>
-    </StackPanel>
+            <Image Name="imgIcon" Stretch="Fill" ToolTip="Theme" Tag="0" Source="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/copy.png" >
+                <!--"{Binding ListBoxItemIconBild}" >-->
+                <!--<Image.Style>
+                    <Style TargetType="Image">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding PlayerVM.AktKlangPlaylist}" Value="{x:Null}" >
+                                <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/copy.png" />
+                            </DataTrigger>-->
+                            
+                            <!--<DataTrigger>
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
+                                        --><!--<Binding Path="APlaylist"  TargetNullValue="true" />--><!--
+                                        <Binding Path="APlaylist.Hintergrundmusik" Converter="{StaticResource InverseBooleanConverter1}" />
+                                        <Binding Path="APlaylist.Hintergrundmusik" Converter="{StaticResource InverseBooleanConverter1}" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" />
+                            </DataTrigger>-->
+                            
+                            <!--<DataTrigger>
+                                <DataTrigger.Binding>
+                                    <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}" FallbackValue="False">
+                                        <Binding Path="APlaylist"  TargetNullValue="True" FallbackValue="False" />
+                                        <Binding Path="APlaylist.Hintergrundmusik" Converter="{StaticResource InverseBooleanConverter1}" />
+                                    </MultiBinding>
+                                </DataTrigger.Binding>
+                                <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png" />
+                            </DataTrigger>-->
+                            
+                            <!--<DataTrigger Binding="{Binding APlaylist, Converter={StaticResource  InverseBooleanConverter1}}" Value="{x:Null}">
+                                <DataTrigger Binding="{Binding APlaylist.Hintergrundmusik}" Value="True">
+                                    <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" />                                    
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding APlaylist.Hintergrundmusik, Path=""}" Value="False">
+                                    <Setter Property="Source" Value="pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png" />
+                                </DataTrigger>
+                                <Setter Property="Height" Value="*" />
+                            </DataTrigger>--><!--
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>-->
+                <!--if (APlaylist != null)
+                    return (APlaylist.Hintergrundmusik ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" :
+                                                         "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png");
+                else
+                    return "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/copy.png";-->
+                
+            </Image>
+            <Label Content="{ Binding Path=APlaylist.Name}" Grid.Column="1" FontSize="14" Padding="5,2,5,5" />
+                </Grid>
+                <Button Width="22" Cursor="Hand" ToolTip="Exportieren der Playlist" 
+                        Command="{Binding OnBtnExportLbEditor}" >
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                            <Binding Path="IsMouseOver" ElementName="spnllbiIcon"   />
+                            <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
+                        </MultiBinding>
+                    </Button.Visibility>
+                    <Image Source="/Images/Icons/General/export.png"/>
+                </Button>
+                <Button Width="22" Cursor="Hand" ToolTip="Löschen der Playlist" 
+                        Command="{Binding OnBtnLöschenLbEditor}" >
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource MultiBooleanToVisibilityConverter1}" >
+                            <Binding Path="IsMouseOver" ElementName="spnllbiIcon" />
+                            <Binding ElementName="rbEditorEditPList" Path="IsChecked" />
+                        </MultiBinding>
+                    </Button.Visibility>
+                    <Image Source="/Images/Icons/General/entf_01.png" />
+                </Button>
+            </StackPanel>
 </ListBoxItem>

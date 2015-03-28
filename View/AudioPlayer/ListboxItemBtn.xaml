@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             d:DesignHeight="27" MouseLeave="lbi_MouseLeave" MouseEnter="lbi_MouseEnter" >
-
+             d:DesignHeight="27" >
     <StackPanel Name="spnllbiIcon" Orientation="Horizontal" Margin="1" >
         <Grid Name="grd" >
             <Grid.ColumnDefinitions>

@@ -12,18 +12,46 @@ namespace MeisterGeister.Model
         {
             Audio_PlaylistGUID = Guid.NewGuid();
         }
-
-        [DependentProperty("WarteZeitMin")]
+                
+        [DependentProperty("WarteZeit")]
         public string WarteZeitToolTip
         {
             get
             {
-                long wert = WarteZeitMin;
-                return "Minimale Wartezeit bei variabeler Pausenzeit (in ms)\n"
-                    + ((wert < 1000) ? wert + " ms" : (wert < 60000) ? wert / 1000 + " sek." : wert / 60000 + " min.");
+                long wert = WarteZeit;
+                return "Minimale Wartezeit bei variabeler Pausenzeit\n"
+                    + ((wert < 1000) ? wert + " ms" : (wert < 60000) ? 
+                    Math.Round((double)(wert) / 1000, 2) + " sek." : 
+                    Math.Round((double)(wert) / 60000,2) + " min.");
             }
         }
 
+
+        [DependentProperty("WarteZeitMin")]
+        public string WarteZeitMinToolTip
+        {
+            get
+            {
+                long wert = WarteZeitMin;
+                return ("Minimale Wartezeit bei variabeler Pausenzeit\n"
+                    + ((wert < 1000) ? wert + " ms" : (wert < 60000) ? 
+                    Math.Round((double)(wert) / 1000, 2) + " sek." : 
+                    Math.Round((double)(wert) / 60000, 2) + " min."));
+            }
+        }
+
+        [DependentProperty("WarteZeitMax")]
+        public string WarteZeitMaxToolTip
+        {
+            get
+            {
+                long wert = WarteZeitMax;
+                return "Maximale Wartezeit bei variabeler Pausenzeit\n"
+                    + ((wert < 1000) ? wert + " ms" : (wert < 60000) ? 
+                    Math.Round((double)(wert) / 1000, 2) + " sek." : 
+                    Math.Round((double)(wert) / 60000, 2) + " min.");
+            }
+        }
         #region Import Export
 
         public static Audio_Playlist Import(string pfad, string soll, bool batch = false)

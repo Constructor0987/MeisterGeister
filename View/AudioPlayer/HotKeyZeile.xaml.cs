@@ -22,7 +22,7 @@ namespace MeisterGeister.View.AudioPlayer
     {
         public string lastPath = "C:\\";
         public bool aktiv = false;
-        public Char taste = new Char();
+        //public Char taste = new Char();
 
         public HotKeyZeile()
         {

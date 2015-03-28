@@ -3,19 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vmAudioPlayer="clr-namespace:MeisterGeister.ViewModel.AudioPlayer"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="160">
+             d:DesignHeight="47" d:DesignWidth="160">
 
-    <GroupBox Margin="5">
+    <GroupBox Margin="5" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition Width="76*" />
                 <ColumnDefinition Width="27" />
             </Grid.ColumnDefinitions>
-            <Image Name="imgIcon" Source="/Images/Icons/General/copy.png" Margin="3"/>
-            <TextBlock Name="txblkName" VerticalAlignment="Center" Grid.Column="1" Margin="3" />            
-            <Button Name="btnClose" ToolTip="Entfernen des untergeordneten Themes" Margin="5,5,2,5" Grid.Column="2" >
+            <Image Name="imgIcon" Margin="1,5,2,0" />
+            <TextBlock Name="txblkName" TextWrapping="Wrap" Text="{Binding aPlaylist.Name, NotifyOnTargetUpdated=True}" Padding="2"
+                    TargetUpdated="OnPlaylistNameUpdated" VerticalAlignment="Center" Grid.Column="1" Margin="2,2,2,0" IsEnabled="False" />
+            <Button Name="btnRemove" ToolTip="Entfernen des untergeordneten Themes" Margin="5,5,2,0" Grid.Column="2" >
                 <Image Source="/Images/Icons/General/entf_01.png" />
             </Button>
         </Grid>

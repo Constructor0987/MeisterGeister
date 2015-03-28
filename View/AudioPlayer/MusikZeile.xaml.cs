@@ -11,32 +11,87 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+//eigene 
+using MeisterGeister.Model;
+using VM = MeisterGeister.ViewModel.AudioPlayer.Logic;
+using System.Globalization;
 
 namespace MeisterGeister.View.AudioPlayer
 {
+
     /// <summary>
     /// Interaktionslogik für MusikZeile.xaml
     /// </summary>
     public partial class MusikZeile : ListBoxItem
     {
+        /// <summary>
+        /// Ruft das ViewModel des Views ab oder legt es fest und weist das ViewModel dem DataContext zu.
+        /// </summary>
+        public VM.MusikZeileVM VM
+        {
+            get
+            {
+                if (DataContext == null || !(DataContext is VM.MusikZeileVM))
+                    return null;
+                return DataContext as VM.MusikZeileVM;
+            }
+            set { DataContext = value; }
+        }
+
+        /// <summary>
+        /// Eine Zusammenführung aller durchsuchbaren Felder.
+        /// </summary>
+        private string _suchtext = string.Empty;
+
         public MusikZeile()
         {
             InitializeComponent();
+            VM = new VM.MusikZeileVM();
+
+            _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
+        }
+        
+
+        #region //---- INSTANZMETHODEN ----
+
+        /// <summary>
+        /// Prüft, ob 'suchWort' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// </summary>
+        /// <param name="suchWort"></param>
+        /// <returns></returns>
+        public bool Contains(string suchWort)
+        {
+            _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
+            return _suchtext.Contains(suchWort);
         }
 
-        private void tbtnCheck_Checked(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Prüft, ob die 'suchWorte' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// Es wird dabei eine UND-Prüfung durchgeführt.
+        /// </summary>
+        /// <param name="suchWorte"></param>
+        /// <returns></returns>
+        public bool Contains(string[] suchWorte)
         {
-            btnImgOK.Visibility = Visibility.Visible;
+            foreach (string wort in suchWorte)
+            {
+                if (!Contains(wort))
+                    return false;
+            }
+            return true;
         }
 
-        private void tbtnCheck_Unchecked(object sender, RoutedEventArgs e)
+        private void tboxTextChanged(object sender, TextChangedEventArgs e)
         {
-            btnImgOK.Visibility = Visibility.Hidden;
+            _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
         }
 
-        private void sldForceVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OnTitelNameUpdated(object sender, DataTransferEventArgs e)
         {
-            ((Slider)sender).ToolTip = Math.Round(((Slider)sender).Value) + " %";
-        }        
+            //tblkTitel.Text = VM.TitelName;
+            _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
+        }
+
+        #endregion
     }
 }

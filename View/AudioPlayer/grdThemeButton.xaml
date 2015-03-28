@@ -3,26 +3,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:MeisterGeister.ViewModel.AudioPlayer.Logic"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="42" d:DesignWidth="130" MouseEnter="grdTheme_MouseEnter" MouseLeave="grdTheme_MouseLeave">    
-        <Grid Width="119" >
-        <ToggleButton Name="tbtnTheme" Focusable="False" Margin="0" Padding="1,-1,1,1" >
+             d:DesignHeight="42" d:DesignWidth="130" MouseEnter="grd_MouseEnter" MouseLeave="grd_MouseLeave" >
+    
+    <Grid Width="119" >
+        <ToggleButton Name="tbtnTheme" Focusable="False" Margin="0" Padding="1,-1,1,1" 
+            ToolTip="{Binding ThemeTooltip}" >            
+            <ToggleButton.Style>
+                <Style TargetType="ToggleButton">
+                    <Setter Property="Height" Value="42" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding NormalSize}" Value="False">
+                            <Setter Property="Height" Value="22" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToggleButton.Style>
             <ToggleButton.Content>
                 <StackPanel>
-                    <Label Name="lblTheme" Content="Barzarg" Padding="2,0,0,0" />
-                    <Border Name="brdKategorie" Height="15" Width="110" CornerRadius="5" >
+                    <Label Name="lblName" Content="{Binding Theme.Name}" Padding="2,0,0,0" >
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tbtnTheme,Path=IsChecked}" Value="True">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                           
+                    <Border Name="brdKategorie" Height="15" Width="110" CornerRadius="5" >                        
                         <Border.Background>
                             <LinearGradientBrush EndPoint="1,0.5" Opacity="0.6" StartPoint="0,0.5">
                                 <GradientStop Color="Beige" Offset="0" />
                                 <GradientStop Color="#FFFFFFC7" Offset="1" />
                             </LinearGradientBrush>
                         </Border.Background>
-                        <Label Name="lblKategorie" Padding="2,0" FontSize="10" FontStyle="Italic" />
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NormalSize}" Value="False" >
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Theme.Kategorie}" Value="{x:Null}" >
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Label Name="lblKategorie" Content="{Binding Theme.Kategorie}" Padding="2,0" FontSize="10" FontStyle="Italic" />                        
                     </Border>
                 </StackPanel>
             </ToggleButton.Content>
+
+            <!--<i:Interaction.Triggers>
+                <i:EventTrigger EventName="Checked">
+                    <i:InvokeCommandAction Command="{Binding Path=tbtnThemeChecked}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Unchecked">
+                    <i:InvokeCommandAction Command="{Binding Path=tbtnThemeUnChecked}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>-->
+
         </ToggleButton>
-        <CheckBox Name="chkbxPlus" Visibility="Hidden" ToolTip="Nur Geräusche des Themes hinzufügen" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3" FlowDirection="RightToLeft" >
+        <CheckBox Name="chkbxPlus" ToolTip="Nur Geräusche des Themes hinzufügen" HorizontalAlignment="Right" 
+                  VerticalAlignment="Top" Margin="3,5,3,3" FlowDirection="RightToLeft" 
+                  IsChecked="{Binding Theme.NurGeräusche}" Padding="4,1,0,0"
+                  Visibility="{Binding ForceVolumeVis, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}" >
+            <!--<CheckBox.Style>
+                <Style TargetType="CheckBox">
+                    --><!--<Setter Property="Visibility" Value="{Binding NormalSize, Converter={StaticResource BooleanToVisibilityConverter1}}" />--><!--
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=chkbxPlus,Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding ElementName=NormalSize}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible" />
+                        </MultiDataTrigger>                       
+                    </Style.Triggers>
+                </Style>
+            </CheckBox.Style>-->
             <Image Source="/DSA%20MeisterGeister;component/Images/Icons/General/speaker.png" Height="20" Width="20" Margin="-5,-2,0,-5"/>
         </CheckBox>
     </Grid>

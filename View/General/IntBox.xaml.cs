@@ -39,9 +39,11 @@ namespace MeisterGeister.View.General
 
         public int MaxValue
         {
-            get;
-            set;
+            get { return (int)GetValue(MaxValueProperty); }
+            set { SetValue(MaxValueProperty, value); }
         }
+        public static DependencyProperty MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(int), typeof(IntBox),
+                new PropertyMetadata(0));
 
         public Visibility ButtonHiddenMode
         {
