@@ -133,7 +133,7 @@ public class MathUtil {
 	 *  @param mod The upper bound (if offset is 0), or the length of the destination range (if offset is not 0).
 	 *	@param offset The lower bound of the destination range.
 	 */
-	public static int modulo(int val, int mod, int offset) {
+	public static long modulo(long val, long mod, long offset) {
 		// Filter out invalid values
 		if (0 == mod) {
 			// Behave nicely
@@ -146,7 +146,7 @@ public class MathUtil {
 			return -modulo(-val, -mod, 0) + offset;
 		}
 		if (val < 0) {
-			int a = (-val) % mod;
+			long a = (-val) % mod;
 			if (0 == a) {
 				return (a) + offset;
 			}
@@ -160,7 +160,7 @@ public class MathUtil {
 	 *
 	 * @see #modulo
 	 */
-	public static int modulo(int val, int mod) {
+	public static long modulo(long val, long mod) {
 		return modulo(val, mod, 0);
 	}
 
@@ -195,7 +195,8 @@ public class MathUtil {
 	 *  @throws ArithmeticException thrown if <em>div</em> is 0.
 	 *  @see #modulo
 	 */
-	public static int divisio(int val, int div, int offset) {
+    public static long divisio(long val, long div, long offset)
+    {
 		// First do a normation and get rid of the offset
 		val = val - offset;
 		// Now have a look at all the different cases
@@ -216,7 +217,8 @@ public class MathUtil {
 	 *
 	 * @see #divisio
 	 */
-	public static int divisio(int val, int div) {
+    public static long divisio(long val, long div)
+    {
 		return divisio(val, div, 0);
 	}
 

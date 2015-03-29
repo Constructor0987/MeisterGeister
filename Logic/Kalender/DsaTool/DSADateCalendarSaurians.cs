@@ -90,7 +90,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public int getWeekday()
         {
-            return MathUtil.modulo(getDaysSinceBF() + 2, DAYS_PER_WEEK);
+            return (int)MathUtil.modulo(getDaysSinceBF() + 2, DAYS_PER_WEEK);
         }
 
         public int getDay()
@@ -122,11 +122,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             if (0 == modulo)
             {
-                return MathUtil.divisio(getDaysSinceYear0(), divisor);
+                return (int)MathUtil.divisio(getDaysSinceYear0(), divisor);
             }
             else
             {
-                return MathUtil.divisio(MathUtil.modulo(getDaysSinceYear0(), divisor * modulo), divisor);
+                return (int)MathUtil.divisio(MathUtil.modulo(getDaysSinceYear0(), divisor * modulo), divisor);
             }
         }
 

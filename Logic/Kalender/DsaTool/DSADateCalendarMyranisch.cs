@@ -86,11 +86,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         {
             if (0 == modulo)
             {
-                return MathUtil.divisio(value, divisor);
+                return (int)MathUtil.divisio(value, divisor);
             }
             else
             {
-                return MathUtil.divisio(MathUtil.modulo(value, divisor * modulo), divisor);
+                return (int)MathUtil.divisio(MathUtil.modulo(value, divisor * modulo), divisor);
             }
         }
 

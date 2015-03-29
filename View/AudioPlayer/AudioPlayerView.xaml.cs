@@ -539,14 +539,14 @@ namespace MeisterGeister.View.AudioPlayer {
                 int drag = lbEditorListe.Items.IndexOf(e.Data.GetData("meineAudioZeile") as AudioZeile);
                 
                 object o = sender;
-                if (o != typeof(AudioZeile))
+                if (o is AudioZeile)
                 {
-                    while (!Object.ReferenceEquals(o.GetType(), typeof(AudioZeile))) 
+                    while (!(o is AudioZeile)) 
                     {
-                        if (Object.ReferenceEquals(o.GetType(), typeof(Grid))) 
+                        if (o is Grid) 
                             o = (o as Grid).Parent;
                         else
-                            if (Object.ReferenceEquals(o.GetType(), typeof(ListBoxItem)))
+                            if (o is ListBoxItem)
                                 o = (o as ListBoxItem).Parent;
                     }
                 }
@@ -598,7 +598,7 @@ namespace MeisterGeister.View.AudioPlayer {
                     int oldReihenfolge = aplytitel1.Reihenfolge;
                     Audio_Playlist_Titel aplytitel2 = aPlaylist.Audio_Playlist_Titel.FirstOrDefault(t => t.Reihenfolge == VM.audioZeileMouseOverDropped);// Global.ContextAudio.PlaylistTitelListe
                     
-                    if (sender != typeof(ListBox) && aplytitel2.Reihenfolge == aplytitel1.Reihenfolge && aplytitel1.Audio_TitelGUID == aplytitel2.Audio_TitelGUID)
+                    if (!(sender is ListBox) && aplytitel2.Reihenfolge == aplytitel1.Reihenfolge && aplytitel1.Audio_TitelGUID == aplytitel2.Audio_TitelGUID)
                         aplytitel1.Reihenfolge = aPlaylist.Audio_Playlist_Titel.Count;
                     else
                         aplytitel1.Reihenfolge = aplytitel2.Reihenfolge != aplytitel1.Reihenfolge ? aplytitel2.Reihenfolge : aplytitel2.Reihenfolge;

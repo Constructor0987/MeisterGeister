@@ -739,9 +739,9 @@ namespace MeisterGeister.Model.Service
             }
 #if !DEBUG
         }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
                 //Debug.WriteLine(e.Message);
                 //Debug.WriteLine(e.InnerException);
                 //return false;

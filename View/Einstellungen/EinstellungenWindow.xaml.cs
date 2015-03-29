@@ -116,11 +116,11 @@ namespace MeisterGeister.View.Settings
             if (((Button)sender).Tag != null)
             {
                 string s = "";
-                if (lbiBtn.lblStdPfad.Content == "")
+                if ((string)lbiBtn.lblStdPfad.Content == "")
                     stdPfad.Add("");
                 for (int i = 0; i < stdPfad.Count; i++)
                 {
-                    if (lbiBtn.lblStdPfad.Content != stdPfad[i])
+                    if ((string)lbiBtn.lblStdPfad.Content != stdPfad[i])
                         s += stdPfad[i] + "|";
                     else
                         s += lbiBtn.btnStdPfad.Tag.ToString() + "|";

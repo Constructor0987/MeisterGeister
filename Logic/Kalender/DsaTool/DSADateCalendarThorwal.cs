@@ -51,8 +51,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public override String getHeadingText()
         {
             int jday = getJDay() - 1;
-            int monthdiv = MathUtil.divisio(jday, DAYS_PER_MONTH);
-            int monthmod = MathUtil.modulo(jday, DAYS_PER_MONTH);
+            int monthdiv = (int)MathUtil.divisio(jday, DAYS_PER_MONTH);
+            int monthmod = (int)MathUtil.modulo(jday, DAYS_PER_MONTH);
 
             string s = String.Format("{0}. {1} ({2}.) {3}", monthmod + 1, monthNames[monthdiv], monthdiv + 1, getYearString());
             return s;

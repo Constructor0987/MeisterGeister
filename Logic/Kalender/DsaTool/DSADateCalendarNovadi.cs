@@ -47,8 +47,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public override String getHeadingText()
         {
             int jday = getJDay() - 1;
-            int rastdiv = MathUtil.divisio(jday, DAYS_PER_MONTH);
-            int rastmod = MathUtil.modulo(jday, DAYS_PER_MONTH);
+            int rastdiv = (int)MathUtil.divisio(jday, DAYS_PER_MONTH);
+            int rastmod = (int)MathUtil.modulo(jday, DAYS_PER_MONTH);
             string s = "";
             if (DAYS_PER_MONTH - 1 == rastmod)
             { // Rastullahellah
@@ -56,8 +56,8 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
             }
             else
             {
-                int weekday = MathUtil.modulo(rastmod, DAYS_PER_WEEK);
-                int week = MathUtil.divisio(rastmod, DAYS_PER_WEEK) + rastdiv * WEEKS_PER_MONTH;
+                int weekday = (int)MathUtil.modulo(rastmod, DAYS_PER_WEEK);
+                int week = (int)MathUtil.divisio(rastmod, DAYS_PER_WEEK) + rastdiv * WEEKS_PER_MONTH;
                 s = String.Format("{0}. Tag ({1}) im {2}. Gottesnamen {3}", weekday + 1, weekdayNames[weekday], week + 1, getYearString());
             }
             return s;

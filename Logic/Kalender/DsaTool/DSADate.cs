@@ -17,7 +17,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
     public class DSADate
     {
 
-        private int daysSinceBF = 0;
+        private long daysSinceBF = 0;
 
         /** Creates a date representing Praios 1st, 0 BF. */
         public DSADate()
@@ -28,7 +28,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /**
          * Creates a date with the given number of days distance to Praios 1st, 0 BF. 
          */
-        public DSADate(int daysSinceBF)
+        public DSADate(long daysSinceBF)
         {
             this.daysSinceBF = daysSinceBF;
         }
@@ -45,7 +45,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         /**
          * @return the days since Praios 1st, 0 BF
          */
-        public int getDaysSinceBF()
+        public long getDaysSinceBF()
         {
             return daysSinceBF;
         }
@@ -74,7 +74,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public int getMoonday()
         {
             const int moonDayAtPraios1st0BF = 16;
-            return MathUtil.modulo(daysSinceBF + moonDayAtPraios1st0BF, MOON_MONTH_DAYS);
+            return (int)MathUtil.modulo(daysSinceBF + moonDayAtPraios1st0BF, MOON_MONTH_DAYS);
         }
 
         /**
@@ -85,7 +85,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
         public int getDaysSinceLastLunarEclipse()
         {
             const int daysSinceLastLunarEclipseAtPraios1st0BF = (15 - 1) + (24 - 1) * MOON_MONTH_DAYS;
-            return MathUtil.modulo(daysSinceBF + daysSinceLastLunarEclipseAtPraios1st0BF, DAYS_BETWEEN_LUNAR_ECLIPSES);
+            return (int)MathUtil.modulo(daysSinceBF + daysSinceLastLunarEclipseAtPraios1st0BF, DAYS_BETWEEN_LUNAR_ECLIPSES);
         }
 
         /** The duration in days of a standard earth year. */
@@ -115,11 +115,11 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public DateTime toEarthDate()
         {
-            int daysSinceBF = getDaysSinceBF();
-            int avYear = MathUtil.divisio(daysSinceBF, DAYS_PER_EARTH_YEAR);
-            int avJday = MathUtil.modulo(daysSinceBF, DAYS_PER_EARTH_YEAR);
-            int earthYear;
-            int earthJday;
+            long daysSinceBF = getDaysSinceBF();
+            long avYear = MathUtil.divisio(daysSinceBF, DAYS_PER_EARTH_YEAR);
+            long avJday = MathUtil.modulo(daysSinceBF, DAYS_PER_EARTH_YEAR);
+            long earthYear;
+            long earthJday;
             if (1019 <= avYear)
             { // Since 1996 (or 1019 BF), one earth year is one Aventurian year
                 earthYear = 1996 - 1019 + avYear;
@@ -139,13 +139,13 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
                 }
             }
 
-            bool isLeapYear = DateTime.IsLeapYear(earthYear);
+            bool isLeapYear = DateTime.IsLeapYear((int)earthYear);
             if (isLeapYear && earthJday >= JDAY_FEB29)
             { // Get rid of February 29th.
                 earthJday++;
             }
 
-            DateTime earthDate = new DateTime(earthYear, 1, 1, 12, 0, 0);
+            DateTime earthDate = new DateTime((int)earthYear, 1, 1, 12, 0, 0);
             earthDate = earthDate.AddDays(earthJday);
             // We choose noon to avoid problems at night when switching summer and winter time
             //logger.debug("Aventurian date " + daysSinceBF + " (Year " + avYear + " JDay " + avJday + ") --> " + earthDate);
@@ -207,7 +207,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public Season season()
         {
-            int jday = MathUtil.modulo(daysSinceBF, DAYS_PER_EARTH_YEAR);
+            int jday = (int)MathUtil.modulo(daysSinceBF, DAYS_PER_EARTH_YEAR);
             Season s = Season.Summer;
             if (jday < 60)
             {
@@ -237,7 +237,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          * (The result may get negative if this date is before the other.)
          * @param other the date with which is compared
          */
-        public int daysAfter(DSADate other)
+        public long daysAfter(DSADate other)
         {
             return (daysSinceBF - other.daysSinceBF);
         }
@@ -290,7 +290,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
 
         public override int GetHashCode()
         {
-            return daysSinceBF;
+            return (int)daysSinceBF;
         }
 
         public override string ToString()

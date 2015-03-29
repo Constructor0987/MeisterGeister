@@ -129,7 +129,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getDaysSinceBF()
         {
-            return date.getDaysSinceBF();
+            return (int)date.getDaysSinceBF();
         }
 
         /**
@@ -146,7 +146,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getJDayBF()
         {
-            return MathUtil.modulo(getDaysSinceBF(), DAYS_PER_YEAR_BF) + 1;
+            return (int)MathUtil.modulo(getDaysSinceBF(), DAYS_PER_YEAR_BF) + 1;
         }
 
         /**
@@ -154,7 +154,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getYearBF()
         {
-            return MathUtil.divisio(getDaysSinceBF(), DAYS_PER_YEAR_BF);
+            return (int)MathUtil.divisio(getDaysSinceBF(), DAYS_PER_YEAR_BF);
         }
 
         /**
@@ -192,7 +192,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getJDay()
         {
-            return MathUtil.modulo(getDaysSinceYear0(), getDaysPerYear()) + 1;
+            return (int)MathUtil.modulo(getDaysSinceYear0(), getDaysPerYear()) + 1;
         }
 
         /**
@@ -200,7 +200,7 @@ namespace MeisterGeister.Logic.Kalender.DsaTool
          */
         public int getYear()
         {
-            int year = MathUtil.divisio(getDaysSinceYear0(), getDaysPerYear());
+            int year = (int)MathUtil.divisio(getDaysSinceYear0(), getDaysPerYear());
             if (!hasYear0())
             {
                 if (0 >= year)

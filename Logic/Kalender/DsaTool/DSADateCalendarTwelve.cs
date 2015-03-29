@@ -120,7 +120,7 @@ public class DSADateCalendarTwelve : DSADateCalendar {
      * @return The day of the month, ranges from 1 to 30.
      */
     public int getDay() {
-        return (MathUtil.modulo(getJDay() - 1, 30) + 1);
+        return (int)(MathUtil.modulo(getJDay() - 1, 30) + 1);
     }
 
     /**
