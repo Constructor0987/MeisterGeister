@@ -524,15 +524,15 @@
                                                         <BitmapImage  UriSource="/DSA MeisterGeister;component/Images/Icons/ruestung.png" />
                                                     </Image.Source>
                                                 </Image>
-                                                <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedGegnerBase.RS[Gesamt]}" />
-                                                <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedGegnerBase.RS[Kopf]}" />
-                                                <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedGegnerBase.RS[Brust]}" />
-                                                <ViewGeneral:IntBox Margin="130,59,62,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedGegnerBase.RS[Rücken]}" />
-                                                <ViewGeneral:IntBox Margin="17,95,175,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedGegnerBase.RS[ArmR]}" />
-                                                <ViewGeneral:IntBox Margin="177,95,15,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedGegnerBase.RS[ArmL]}" />
-                                                <ViewGeneral:IntBox Margin="81,125,84,118" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedGegnerBase.RS[Bauch]}" />
-                                                <ViewGeneral:IntBox Margin="40,179,125,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinR]}" />
-                                                <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedGegnerBase.RS[BeinL]}" />
+                                                <ViewGeneral:IntBox Margin="159,20,6,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Gesamt)" Value="{Binding SelectedHeld.RS[Gesamt]}" />
+                                                <ViewGeneral:IntBox Margin="81,20,84,223" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Kopf)" Value="{Binding SelectedHeld.RS[Kopf]}" />
+                                                <ViewGeneral:IntBox Margin="60,59,132,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Brust)" Value="{Binding SelectedHeld.RS[Brust]}" />
+                                                <ViewGeneral:IntBox Margin="130,59,62,184" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Rücken)" Value="{Binding SelectedHeld.RS[Rücken]}" />
+                                                <ViewGeneral:IntBox Margin="17,95,175,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechter Arm)" Value="{Binding SelectedHeld.RS[ArmR]}" />
+                                                <ViewGeneral:IntBox Margin="177,95,15,148" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linker Arm)" Value="{Binding SelectedHeld.RS[ArmL]}" />
+                                                <ViewGeneral:IntBox Margin="81,125,84,118" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (Bauch)" Value="{Binding SelectedHeld.RS[Bauch]}" />
+                                                <ViewGeneral:IntBox Margin="40,179,125,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (rechtes Bein)" Value="{Binding SelectedHeld.RS[BeinR]}" />
+                                                <ViewGeneral:IntBox Margin="130,179,35,28" Width="45" ShowButtons="False" ToolTip="Rüstungsschutz (linkes Bein)" Value="{Binding SelectedHeld.RS[BeinL]}" />
                                             </Grid>
                                         </StackPanel>
                                     </Button.ToolTip>
