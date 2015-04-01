@@ -69,6 +69,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding EntityHA.Anzahl}" TextWrapping="Wrap"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text="{Binding Gewicht}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -77,6 +78,13 @@
                         <TextBlock Grid.Column="4" Grid.ColumnSpan="2" Text="{Binding EntityFW.Reichweiten}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="6" Grid.ColumnSpan="2" Text="{Binding EntityFW.TPReichweiten}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Column="8" Text="{Binding EntityFW.Laden}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ListBox Grid.Column="9" ItemsSource="{Binding Kampftalente}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Fernkampfwert}" ToolTip="{Binding Talentname}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </Grid>
                     <Button HorizontalAlignment="Right" Grid.Column="3" Width="25" Command="{Binding OnRemoveNahkampfwaffe}" Style="{DynamicResource ReadOnlyButtonStyle}" IsEnabled="{Binding ElementName=userControl, Path=VM.IsReadOnly, Converter={StaticResource InverseBooleanConverter}}">
                         <Image>
@@ -978,6 +986,7 @@
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
                                                         <ColumnDefinition />
+                                                        <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Anzahl" Grid.Column="0" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Gewicht" Grid.Column="1" />
@@ -986,6 +995,7 @@
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Reichweiten" Grid.Column="4" Grid.ColumnSpan="2" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="TP+" Grid.Column="6" Grid.ColumnSpan="2" />
                                                     <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="Laden" Grid.Column="8" />
+                                                    <Label Style="{DynamicResource sLblStretchTextCenterHighlight}" Content="FK" Grid.Column="9" />
                                                 </Grid>
                                             </Border>
                                             <Border Grid.Row="2" x:Name="FIListe" BorderBrush="#B3996C" BorderThickness="1,0,1,1" VerticalAlignment="Top" >

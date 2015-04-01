@@ -1313,6 +1313,14 @@ namespace MeisterGeister.ViewModel.Inventar {
         public string Gewicht { get { return gewicht; } set { gewicht = value; OnChanged("Gewicht"); } }
         public string Preis { get { return preis; } set { preis = value; OnChanged("Preis"); } }
 
+        public List<Model.Held_Talent> Kampftalente
+        {
+            get
+            {
+                return EntityHA.Held.Kampftalente.Where(t => EntityFW.Talent.Contains(t.Talent)).ToList(); ;
+            }
+        }
+
         //Commands
         public Base.CommandBase OnRemoveNahkampfwaffe {
             get { return onRemoveFernkampfwaffe; }
