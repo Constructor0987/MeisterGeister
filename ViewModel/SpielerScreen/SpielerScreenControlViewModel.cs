@@ -253,6 +253,17 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private Base.CommandBase onOpenPath = null;
+        public Base.CommandBase OnOpenPath
+        {
+            get
+            {
+                if (onOpenPath == null)
+                    onOpenPath = new Base.CommandBase(OpenPath, null);
+                return onOpenPath;
+            }
+        }
+
         private Base.CommandBase onOpenImage = null;
         public Base.CommandBase OnOpenImage
         {
@@ -514,6 +525,18 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                         PopUp("Bild konnte nicht geladn werden:\n" + path);
                     }
                 });
+        }
+
+        private void OpenPath(object sender = null)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(DirectoryPath);
+            }
+            catch (Exception ex)
+            {
+                ShowError("Beim Öffnen des Dateipfads ist ein Fehler aufgetreten!", ex);
+            }
         }
 
         private void ReLoadImages(object sender = null)
