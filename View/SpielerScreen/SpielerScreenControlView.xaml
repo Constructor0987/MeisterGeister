@@ -86,17 +86,23 @@
                             <ViewGeneral:DoubleBox Margin="5" MinWidth="65" ShowButtons="True" Value="{Binding SlideShowInterval}" ToolTip="Änderungen am Intervall werden beim nächsten Bild übernommen." />
                             <TextBlock Margin="5" Text="(Slide-Show Intervall in Sekunden)" VerticalAlignment="Center" />
                         </StackPanel>
-                        <StackPanel Grid.Column="0" Grid.Row="1" Margin="6" Orientation="Horizontal">
-                            <Button Command="{Binding OnReLoadImages}" Height="14" Width="14" ToolTip="Bilder neu laden">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" />
-                            </Button>
-                            <Button Command="{Binding OnOpenPath}" Height="14" Width="14" ToolTip="Ordnerpfad im Explorer öffnen...">
-                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
-                            </Button>
-                            <Image Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" Visibility="{Binding PathNotFound, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
-                            <TextBlock Text="{Binding DirectoryPath}" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bilder-Ordner" />
+                        <StackPanel Grid.Column="0" Grid.Row="1" Margin="6" Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Command="{Binding OnReLoadImages}" Height="14" Width="14" ToolTip="Bilder neu laden">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/refresh.png" />
+                                </Button>
+                                <Button Command="{Binding OnOpenPath}" Height="14" Width="14" ToolTip="Ordnerpfad im Explorer öffnen...">
+                                    <Image Source="/DSA MeisterGeister;component/Images/Icons/General/oeffnen.png" />
+                                </Button>
+                                <Image Source="/DSA MeisterGeister;component/Images/Icons/General/info_rot.png" Height="14" ToolTip="Pfag nicht gefunden!" Visibility="{Binding PathNotFound, Converter={StaticResource BooleanToVisibilityConverter1}, TargetNullValue=Collapsed}" />
+                                <TextBlock Text="{Binding DirectoryPath}" TextWrapping="WrapWithOverflow" ToolTip="Pfad zum Bilder-Ordner" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="1" Source="/Images/Icons/General/suchen.png" Width="24" ToolTip="Suchfilter" />
+                                <TextBox Margin="1,3" Width="250" Name="_textBoxFilter" Text="{Binding Path=SuchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Suchfilter" />
+                            </StackPanel>
                         </StackPanel>
-                        <CheckBox Grid.Row="1" Grid.Column="1" Margin="5" IsChecked="{Binding IsPointerVisible}" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="11">
+                        <CheckBox Grid.Row="1" Grid.Column="1" Margin="5" IsChecked="{Binding IsPointerVisible}" VerticalAlignment="Top" VerticalContentAlignment="Center" FontSize="11">
                             <CheckBox.ToolTip>
                                 <TextBlock TextWrapping="Wrap" MaxWidth="200" Text="Auf dem Bild einen Zeiger anzeigen." />
                             </CheckBox.ToolTip>
@@ -107,7 +113,7 @@
                                 </StackPanel>
                             </CheckBox.Content>
                         </CheckBox>
-                        <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding Images}" Background="Transparent" SelectedItem="{Binding SelectedImageObject}" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" MouseDoubleClick="_listBoxDirectory_MouseDoubleClick" />
+                        <ListBox Grid.Column="0" Grid.Row="2" Margin="6" Name="_listBoxDirectory" ItemsSource="{Binding FilteredImages}" Background="Transparent" SelectedItem="{Binding SelectedImageObject}" ToolTip="Ordner-Inhalt" ItemTemplate="{StaticResource ImageListBoxItemTemplate}" KeyDown="ListBoxDirectory_KeyDown" MouseDoubleClick="_listBoxDirectory_MouseDoubleClick" />
                         <Viewbox Grid.Column="1" Grid.Row="2" Name="viewboxImage" Margin="6" MinWidth="226">
                             <Viewbox.InputBindings>
                                 <MouseBinding MouseAction="MiddleClick" Command="{Binding OnOpenImageExtern}" />

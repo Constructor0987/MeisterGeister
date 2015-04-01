@@ -238,6 +238,29 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             }
         }
 
+        private List<ImageItem> _filteredImages = null;
+        public List<ImageItem> FilteredImages
+        {
+            get { return _filteredImages; }
+            set
+            {
+                _filteredImages = value;
+                OnChanged("FilteredImages");
+            }
+        }
+
+        private string _suchText = string.Empty;
+        public string SuchText
+        {
+            get { return _suchText; }
+            set
+            {
+                _suchText = value;
+                OnChanged("SuchText");
+                FilterListe();
+            }
+        }
+
         #endregion
 
         #region //---- COMMANDS ----
@@ -426,6 +449,22 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             SlideShowInterval = Logic.Einstellung.Einstellungen.SlideShowInterval;
         }
 
+        private void FilterListe()
+        {
+            if (Images == null)
+                return;
+
+            string suchText = SuchText.ToLower().Trim();
+            string[] suchWorte = suchText.Split(' ');
+
+            if (suchText == string.Empty) // kein Suchwort
+                FilteredImages = Images.AsParallel().OrderBy(n => n.Name).ToList();
+            else if (suchWorte.Length == 1) // nur ein Suchwort
+                FilteredImages = Images.AsParallel().Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
+            else // mehrere Suchwörter
+                FilteredImages = Images.AsParallel().Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+        }
+
         private void OpenImage(object sender = null)
         {
             string pfad = ChooseFile("Bild auswähllen", "", false, false, Logic.Extensions.FileExtensions.EXTENSIONS_IMAGES);
@@ -577,12 +616,14 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             AddImages(fileList, filesTiff);
 
             Images = fileList.OrderBy(img => img.Name).ToList();
+
+            FilterListe();
         }
 
         private void AddImages(List<ImageItem> fileList, string[] files)
         {
             foreach (string file in files)
-                fileList.Add(new ImageItem() { Pfad = file, Name = Path.GetFileNameWithoutExtension(file), IsInSlideShow = true });
+                fileList.Add(new ImageItem(file));
         }
 
         // TODO: Der Laserpointer sollte überarbeitet werden, da das Feature 'quick & dirty' implementiert ist
@@ -730,9 +771,66 @@ namespace MeisterGeister.ViewModel.SpielerScreen
 
     public class ImageItem : ViewModel.Base.ViewModelBase
     {
-        public string Name { get; set; }
+        /// <summary>
+        /// Eine Zusammenführung aller durchsuchbaren Felder.
+        /// </summary>
+        private string _suchtext = string.Empty;
+        private string _name = string.Empty;
+        public string Name
+        { 
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                SetSuchtext();
+                OnChanged("Name");
+            }
+        }
         public string Pfad { get; set; }
         public bool IsInSlideShow { get; set; }
+
+        public ImageItem(string file)
+        {
+            Pfad = file;
+            _name = Path.GetFileNameWithoutExtension(file);
+            IsInSlideShow = true;
+
+            SetSuchtext();
+        }
+
+        private void SetSuchtext()
+        {
+            _suchtext = _name.ToLower();
+        }
+
+        /// <summary>
+        /// Prüft, ob 'suchWort' im Namen vorkommt.
+        /// </summary>
+        /// <param name="suchWort"></param>
+        /// <returns></returns>
+        public bool Contains(string suchWort)
+        {
+            return _suchtext.Contains(suchWort);
+        }
+
+        /// <summary>
+        /// Prüft, ob die 'suchWorte' im Namen, der Kategorie oder in den Tags vorkommt.
+        /// Es wird dabei eine UND-Prüfung durchgeführt.
+        /// </summary>
+        /// <param name="suchWorte"></param>
+        /// <returns></returns>
+        public bool Contains(string[] suchWorte)
+        {
+            foreach (string wort in suchWorte)
+            {
+                if (!Contains(wort))
+                    return false;
+            }
+            return true;
+        }
     }
 
     #endregion
