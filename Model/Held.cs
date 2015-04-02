@@ -1759,7 +1759,7 @@ namespace MeisterGeister.Model {
             get
             {
                 List<KämpferNahkampfwaffe> waffen = new List<KämpferNahkampfwaffe>();
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha, true)));
                 //TODO: Raufen, Ringen
                 return waffen;
             }
@@ -1770,7 +1770,7 @@ namespace MeisterGeister.Model {
             get
             {
                 List<KämpferFernkampfwaffe> waffen = new List<KämpferFernkampfwaffe>();
-                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha, true)));
                 return waffen;
             }
         }

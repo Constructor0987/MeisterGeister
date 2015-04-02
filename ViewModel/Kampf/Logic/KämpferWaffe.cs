@@ -14,13 +14,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private Held_Talent _talent;
         private Gegner_Angriff _gegner_angriff;
 
-        public KämpferNahkampfwaffe(Held_Ausrüstung ha)
+        public KämpferNahkampfwaffe(Held_Ausrüstung ha, bool bestesTalent = false)
         {
             if (ha.Held == null || ha.Ausrüstung == null || ha.Ausrüstung.Waffe == null)
                 throw new ArgumentNullException("Held_Ausrüstung enthält keinen Held oder keine Waffe.");
             _held = ha.Held;
             _waffe = ha.Ausrüstung.Waffe;
-            _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).OrderByDescending(ht => ht.TaW).FirstOrDefault();
+            if (bestesTalent)
+                _talent = ha.Held.Kampftalente.Where(t => ha.Ausrüstung.Waffe.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
+            else
+                _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).FirstOrDefault();
         }
 
         public KämpferNahkampfwaffe(Held held, Waffe waffe, Held_Talent ht)
@@ -264,13 +267,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private Model.Fernkampfwaffe _waffe;
         private Gegner_Angriff _gegner_angriff;
 
-        public KämpferFernkampfwaffe(Held_Ausrüstung ha)
+        public KämpferFernkampfwaffe(Held_Ausrüstung ha, bool bestesTalent = false)
         {
             if (ha.Held == null || ha.Ausrüstung == null || ha.Ausrüstung.Fernkampfwaffe == null)
                 throw new ArgumentNullException("Held_Ausrüstung enthält keinen Held oder keine Waffe.");
             _held = ha.Held;
             _waffe = ha.Ausrüstung.Fernkampfwaffe;
-            _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).OrderByDescending(ht => ht.TaW).FirstOrDefault();
+            if (bestesTalent)
+                _talent = ha.Held.Kampftalente.Where(t => ha.Ausrüstung.Fernkampfwaffe.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).FirstOrDefault();
+            else
+                _talent = _held.Held_Talent.Where(ht => ht.TalentGUID == ha.TalentGUID).FirstOrDefault();
         }
 
         public KämpferFernkampfwaffe(Held held, Model.Fernkampfwaffe waffe, Held_Talent ht)

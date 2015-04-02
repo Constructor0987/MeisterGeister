@@ -53,15 +53,20 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        // TODO: Einstellung wird gecached, um Absturz bei Poben zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<bool> _cached_tpKK = null;
         public static bool TPKK
         {
             get
             {
-                return GetRegelValue("TPKK");
+                if (_cached_tpKK == null)
+                    _cached_tpKK = GetRegelValue("TPKK");
+                return _cached_tpKK.GetValueOrDefault();
             }
             set
             {
                 SetRegelValue("TPKK", value);
+                _cached_tpKK = value;
             }
         }
 

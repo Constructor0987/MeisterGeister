@@ -1336,7 +1336,7 @@ namespace MeisterGeister.ViewModel.Inventar {
         {
             get
             {
-                return EntityHA.Held.Kampftalente.Where(t => EntityFW.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).ToList(); ;
+                return EntityHA.Held.Kampftalente.Where(t => EntityFW.Talent.Contains(t.Talent)).OrderByDescending(t => t.TaW).ToList();
             }
         }
 
