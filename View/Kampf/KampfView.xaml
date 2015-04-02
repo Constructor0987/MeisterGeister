@@ -12,6 +12,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" d:DesignHeight="615" d:DesignWidth="964" Background="{StaticResource Background1}">
     <UserControl.Resources>
+        <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
         <!--<ViewGeneral:EnumItemsSource x:Key="KampfstilValueConverter" Type="{x:Type KampfLogic:Kampfstil}" />-->
         <ViewGeneral:EnumItemsSource x:Key="TrefferzonenValues" Type="{x:Type KampfLogic:Trefferzone}" />
@@ -492,7 +493,7 @@
                             </TextBox>
                             <Image Grid.Row="1" Grid.Column="3" Grid.RowSpan="1" Margin="5,5,5,0" Height="120" Width="120" VerticalAlignment="Top">
                                 <Image.Source>
-                                    <Binding Path="SelectedKämpfer.Bild" IsAsync="True" Mode="OneWay">
+                                    <Binding Path="SelectedKämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
                                         <Binding.FallbackValue>
                                             <ImageSource>
                                                 /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png

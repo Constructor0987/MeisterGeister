@@ -10,6 +10,7 @@
              x:Name="UserControl" Background="{DynamicResource Background1}" d:DesignHeight="543.038" Width="675.291"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
+        <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
         <ObjectDataProvider x:Key="DistanzklasseValues" MethodName="GetNames" ObjectType="{x:Type KampfLogic:Distanzklasse}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="KampfLogic:Distanzklasse" />
@@ -92,7 +93,7 @@
                                     </Border.InputBindings>
                                     <Image>
                                         <Image.Source>
-                                            <Binding Path="SelectedGegnerBase.Bild" IsAsync="True" Mode="OneWay">
+                                            <Binding Path="SelectedGegnerBase.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
                                                 <Binding.FallbackValue>
                                                     <ImageSource>
                                                         /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png

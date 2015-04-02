@@ -21,7 +21,7 @@ namespace MeisterGeister.Logic.Extensions
             Uri file = new Uri(path);
             Uri homePath = new Uri(GetHomeDirectory());
             Uri relativePath = homePath.MakeRelativeUri(file);
-            return Uri.UnescapeDataString(relativePath.ToString()).Replace("/", "\\").Insert(0, "\\");
+            return Uri.UnescapeDataString(relativePath.ToString()).Replace("/", "\\");
         }
 
         /// <summary>

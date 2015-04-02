@@ -13,6 +13,7 @@
     Loaded="AllgemeinLoaded" Unloaded="UserControl_Unloaded">    
 	<UserControl.Resources>        
 		<General:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <General:ImagePathConverter x:Key="ImagePathConverter" />
 	</UserControl.Resources>
     <Grid x:Name="LayoutRoot">
 		<Grid>
@@ -174,7 +175,7 @@
                         </Border.InputBindings>
                         <Image>
                             <Image.Source>
-                                <Binding Path="SelectedHeld.Bild" IsAsync="True" Mode="OneWay">
+                                <Binding Path="SelectedHeld.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
                                     <Binding.FallbackValue>
                                         <ImageSource>
                                             /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png

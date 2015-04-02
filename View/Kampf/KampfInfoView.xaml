@@ -10,6 +10,7 @@
              d:DesignHeight="306" d:DesignWidth="669"
              Background="{StaticResource Background1}">
     <UserControl.Resources>
+        <ViewGeneral:ImagePathConverter x:Key="ImagePathConverter" />
         <KampfLogic:KampfstilListe x:Key="KampfstilValues" />
         <ViewGeneral:ColorToSolidBrushValueConverter x:Key="ColorToBrushConverter" />
         <Style x:Key="KämpferListItemStyle" TargetType="{x:Type StackPanel}">
@@ -55,7 +56,7 @@
             <StackPanel Orientation="Horizontal">
                 <Image Margin="3" Height="65" Width="65" VerticalAlignment="Top">
                     <Image.Source>
-                        <Binding Path="KämpferInfo.Kämpfer.Bild" IsAsync="True" Mode="OneWay">
+                        <Binding Path="KämpferInfo.Kämpfer.Bild" IsAsync="True" Mode="OneWay" Converter="{StaticResource ImagePathConverter}">
                             <Binding.FallbackValue>
                                 <ImageSource>
                                     /DSA MeisterGeister;component/Images/Icons/General/fragezeichen.png
