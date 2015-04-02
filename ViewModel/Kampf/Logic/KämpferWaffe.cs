@@ -12,7 +12,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private Held _held;
         private Waffe _waffe;
         private Held_Talent _talent;
-        private GegnerBase_Angriff _gegner_angriff;
+        private Gegner_Angriff _gegner_angriff;
 
         public KämpferNahkampfwaffe(Held_Ausrüstung ha)
         {
@@ -28,7 +28,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             _held = held; _waffe = waffe; _talent = ht;
         }
 
-        public KämpferNahkampfwaffe(GegnerBase_Angriff ga)
+        public KämpferNahkampfwaffe(Gegner_Angriff ga)
         {
             _gegner_angriff = ga;
         }
@@ -48,7 +48,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.Distanzklasse;
+                    return _gegner_angriff.Base_Angriff.Distanzklasse;
                 return _waffe.Distanzklasse;
             }
         }
@@ -63,12 +63,22 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             }
         }
 
+        public string TPString
+        {
+            get
+            {
+                int tpBonus = TPBonusMitKK;
+                return String.Format("{0}W{1}", TPWürfelAnzahl, TPWürfel)
+                    + ((tpBonus != 0) ? ((tpBonus > 0) ? "+" : "-") + tpBonus.ToString() : String.Empty);
+            }
+        }
+
         public int TPWürfel
         {
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPWürfel;
+                    return _gegner_angriff.Base_Angriff.TPWürfel;
                 return _waffe.TPWürfel;
             }
         }
@@ -78,7 +88,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPWürfelAnzahl;
+                    return _gegner_angriff.Base_Angriff.TPWürfelAnzahl;
                 return _waffe.TPWürfelAnzahl;
             }
         }
@@ -88,7 +98,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPBonus;
+                    return _gegner_angriff.Base_Angriff.TPBonus;
                 return _waffe.TPBonus;
             }
         }
@@ -98,8 +108,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPKKBonus;
+                    return _gegner_angriff.Base_Angriff.TPKKBonus;
                 return _waffe.TPKKBonus(_held);
+            }
+        }
+
+        public int TPBonusMitKK
+        {
+            get
+            {
+                return TPBonus + TPKKBonus;
             }
         }
 
@@ -122,6 +140,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         else
                             heldat += 1;
                     }
+                    // Waffenmodifikator
+                    if (_waffe != null)
+                        heldat += _waffe.WMAT.Value;
                     //TODO Waffenmeister
                 }
                 return heldat;
@@ -145,9 +166,84 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                         if (_talent.IsZuteilbar)
                             heldpa += 1;
                     }
+                    // Waffenmodifikator
+                    if (_waffe != null)
+                        heldpa += _waffe.WMPA.Value;
                     //TODO Waffenmeister
                 }
                 return heldpa;
+            }
+        }
+
+        public int AttackeOhneMod
+        {
+            get
+            {
+                int at = 0;
+                if (_talent != null)
+                {
+                    at = _talent.AttackeOhneMod + (_waffe != null ? _waffe.WMAT.Value : 0);
+                    if (_held != null && _held.HatSonderfertigkeitUndVoraussetzungen("Waffenspezialisierung", Name))
+                    {
+                        if (!_talent.IsZuteilbar)
+                            at += 2;
+                        else
+                            at += 1;
+                    }
+                }
+                else if (_gegner_angriff != null)
+                    at = _gegner_angriff.AT;
+                else
+                    at = AT;
+                return at;
+            }
+        }
+
+        public int ParadeOhneMod
+        {
+            get
+            {
+                int pa = 0;
+                if (_talent != null)
+                {
+                    pa = _talent.ParadeOhneMod + (_waffe != null ? _waffe.WMPA.Value : 0);
+                    if (_held != null && _held.HatSonderfertigkeitUndVoraussetzungen("Waffenspezialisierung", Name))
+                    {
+                        if (_talent.IsZuteilbar)
+                            pa += 1;
+                    }
+                }
+                else if (_gegner_angriff != null)
+                    pa = _gegner_angriff.PA;
+                else
+                    pa = PA;
+                return pa;
+            }
+        }
+
+        public List<dynamic> ModifikatorenListeAT
+        {
+            get
+            {
+                if (_held != null)
+                    return _held.ModifikatorenListe(typeof(Modifikatoren.IModAT), AttackeOhneMod);
+                else if (_gegner_angriff != null)
+                    return _gegner_angriff.ModifikatorenListeAT;
+                else
+                    return new List<dynamic>();
+            }
+        }
+
+        public List<dynamic> ModifikatorenListePA
+        {
+            get
+            {
+                if (_held != null)
+                    return _held.ModifikatorenListe(typeof(Modifikatoren.IModPA), ParadeOhneMod);
+                else if (_gegner_angriff != null)
+                    return _gegner_angriff.ModifikatorenListePA;
+                else
+                    return new List<dynamic>();
             }
         }
 
@@ -158,7 +254,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private Held _held;
         private Held_Talent _talent;
         private Model.Fernkampfwaffe _waffe;
-        private GegnerBase_Angriff _gegner_angriff;
+        private Gegner_Angriff _gegner_angriff;
 
         public KämpferFernkampfwaffe(Held_Ausrüstung ha)
         {
@@ -174,7 +270,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             _held = held; _waffe = waffe; _talent = ht;
         }
 
-        public KämpferFernkampfwaffe(GegnerBase_Angriff ga)
+        public KämpferFernkampfwaffe(Gegner_Angriff ga)
         {
             _gegner_angriff = ga;
         }
@@ -189,12 +285,20 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //    }
         //}
 
+        public string Reichweiten
+        {
+            get
+            {
+                return ((RWSehrNah == null) ? "-" : RWSehrNah.Value.ToString()) + "/" + ((RWNah == null) ? "-" : RWNah.Value.ToString()) + "/" + ((RWMittel == null) ? "-" : RWMittel.Value.ToString()) + "/" + ((RWWeit == null) ? "-" : RWWeit.Value.ToString()) + "/" + ((RWSehrWeit == null) ? "-" : RWSehrWeit.Value.ToString());
+            }
+        }
+
         public int? RWSehrNah
         {
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.RWSehrNah;
+                    return _gegner_angriff.Base_Angriff.RWSehrNah;
                 return _waffe.RWSehrNah;
             }
         }
@@ -204,7 +308,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.RWNah;
+                    return _gegner_angriff.Base_Angriff.RWNah;
                 return _waffe.RWNah;
             }
         }
@@ -214,7 +318,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.RWMittel;
+                    return _gegner_angriff.Base_Angriff.RWMittel;
                 return _waffe.RWMittel;
             }
         }
@@ -224,7 +328,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.RWWeit;
+                    return _gegner_angriff.Base_Angriff.RWWeit;
                 return _waffe.RWWeit;
             }
         }
@@ -234,8 +338,19 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.RWSehrWeit;
+                    return _gegner_angriff.Base_Angriff.RWSehrWeit;
                 return _waffe.RWSehrWeit;
+            }
+        }
+
+        public string TPString
+        {
+            get
+            {
+                int tpBonus = TPBonusMitKK;
+                return String.Format("{0}W{1}", TPWürfelAnzahl, TPWürfel)
+                    + ((tpBonus != 0) ? ((tpBonus > 0) ? "+" : "-") + tpBonus.ToString() : String.Empty)
+                    + " (" + ((TPSehrNah == null) ? "-" : TPSehrNah.Value.ToString()) + "/" + ((TPNah == null) ? "-" : TPNah.Value.ToString()) + "/" + ((TPMittel == null) ? "-" : TPMittel.Value.ToString()) + "/" + ((TPWeit == null) ? "-" : TPWeit.Value.ToString()) + "/" + ((TPSehrWeit == null) ? "-" : TPSehrWeit.Value.ToString()) + ")";
             }
         }
 
@@ -244,7 +359,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPSehrNah;
+                    return _gegner_angriff.Base_Angriff.TPSehrNah;
                 return _waffe.TPSehrNah;
             }
         }
@@ -254,7 +369,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPNah;
+                    return _gegner_angriff.Base_Angriff.TPNah;
                 return _waffe.TPNah;
             }
         }
@@ -264,7 +379,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPMittel;
+                    return _gegner_angriff.Base_Angriff.TPMittel;
                 return _waffe.TPMittel;
             }
         }
@@ -274,7 +389,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPWeit;
+                    return _gegner_angriff.Base_Angriff.TPWeit;
                 return _waffe.TPWeit;
             }
         }
@@ -284,7 +399,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPSehrWeit;
+                    return _gegner_angriff.Base_Angriff.TPSehrWeit;
                 return _waffe.TPSehrWeit;
             }
         }
@@ -304,7 +419,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPWürfel;
+                    return _gegner_angriff.Base_Angriff.TPWürfel;
                 return _waffe.TPWürfel ?? 0;
             }
         }
@@ -314,8 +429,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPWürfelAnzahl;
+                    return _gegner_angriff.Base_Angriff.TPWürfelAnzahl;
                 return _waffe.TPWürfelAnzahl ?? 0;
+            }
+        }
+
+        public int TPBonusMitKK
+        {
+            get
+            {
+                return TPBonus + TPKKBonus;
             }
         }
 
@@ -324,7 +447,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPBonus;
+                    return _gegner_angriff.Base_Angriff.TPBonus;
                 return _waffe.TPBonus ?? 0;
             }
         }
@@ -334,7 +457,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
             get
             {
                 if (_gegner_angriff != null)
-                    return _gegner_angriff.TPKKBonus;
+                    return _gegner_angriff.Base_Angriff.TPKKBonus;
                 return _waffe.TPKKBonus(_held);
             }
         }
@@ -356,6 +479,38 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     //TODO Waffenmeister
                 }
                 return heldat;
+            }
+        }
+
+        public int FernkampfOhneMod
+        {
+            get
+            {
+                int at = 0;
+                if (_talent != null)
+                {
+                    at = _talent.FernkampfwertOhneMod;
+                    if (_held != null && _held.HatSonderfertigkeitUndVoraussetzungen("Waffenspezialisierung", Name))
+                        at += 2;
+                }
+                else if (_gegner_angriff != null)
+                    at = _gegner_angriff.AT;
+                else
+                    at = AT;
+                return at;
+            }
+        }
+
+        public List<dynamic> ModifikatorenListeFK
+        {
+            get
+            {
+                if (_held != null)
+                    return _held.ModifikatorenListe(typeof(Modifikatoren.IModFK), FernkampfOhneMod);
+                else if (_gegner_angriff != null)
+                    return _gegner_angriff.ModifikatorenListeAT;
+                else
+                    return new List<dynamic>();
             }
         }
     }

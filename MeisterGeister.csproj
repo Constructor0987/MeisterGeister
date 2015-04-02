@@ -1353,6 +1353,7 @@
       <DependentUpon>Wuerfeleingabe.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>

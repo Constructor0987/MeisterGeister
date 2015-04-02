@@ -127,6 +127,16 @@ namespace MeisterGeister.Model {
                 return list;
             }
         }
+        [DependsOnModifikator(typeof(Mod.IModFK))]
+        public List<dynamic> ModifikatorenListeFK
+        {
+            get
+            {
+                List<dynamic> list = ModifikatorenListe(typeof(Mod.IModFKBasis), FernkampfBasisOhneMod);
+                list.AddRange(ModifikatorenListe(typeof(Mod.IModFK), list.Count() == 0 ? FernkampfBasisOhneMod : list.LastOrDefault().Wert));
+                return list;
+            }
+        }
         [DependsOnModifikator(typeof(Mod.IModFKBasis))]
         public List<dynamic> ModifikatorenListeFKbasis {
             get {
@@ -1740,6 +1750,27 @@ namespace MeisterGeister.Model {
                 waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
                 waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
                 //TODO: Raufen, Ringen
+                return waffen;
+            }
+        }
+
+        public IList<KämpferNahkampfwaffe> Nahkampfwaffen
+        {
+            get
+            {
+                List<KämpferNahkampfwaffe> waffen = new List<KämpferNahkampfwaffe>();
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Waffe != null).Select(ha => new KampfLogic.KämpferNahkampfwaffe(ha)));
+                //TODO: Raufen, Ringen
+                return waffen;
+            }
+        }
+
+        public IList<KämpferFernkampfwaffe> Fernkampfwaffen
+        {
+            get
+            {
+                List<KämpferFernkampfwaffe> waffen = new List<KämpferFernkampfwaffe>();
+                waffen.AddRange(Held_Ausrüstung.Where(ha => ha.Ausrüstung.Fernkampfwaffe != null).Select(ha => new KampfLogic.KämpferFernkampfwaffe(ha)));
                 return waffen;
             }
         }

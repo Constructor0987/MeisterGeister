@@ -608,30 +608,63 @@
                                             <StackPanel>
                                                 <StackPanel.Resources>
                                                     <DataTemplate DataType="{x:Type model:Held}">
-                                                        <ListBox ItemsSource="{Binding Path=Kampftalente, IsAsync=True}" Background="Transparent">
-                                                            <ListBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel Orientation="Horizontal">
-                                                                        <TextBlock Text="{Binding Talentname}" MinWidth="150" />
-                                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" ToolTip="FK-Wert inkl. BE" Visibility="{Binding HatFernkampf, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
-                                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="FK-Wert"
-                                                                                  StartWert="{Binding FernkampfwertBasisOhneMod}" Wert="{Binding Fernkampfwert}" />
+                                                        <StackPanel Orientation="Vertical">
+                                                            <ListBox ItemsSource="{Binding Path=Nahkampfwaffen, IsAsync=True}" Background="Transparent">
+                                                                <ListBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="{Binding Name}" MinWidth="150" />
+                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
+                                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                                                                <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
+                                                                            </StackPanel>
+                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="50">
+                                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
+                                                                                <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
+                                                                                  StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
+                                                                            </StackPanel>
+                                                                            <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
+                                                                                <StackPanel Orientation="Horizontal" MinWidth="50">
+                                                                                    <StackPanel.ToolTip>
+                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                            <TextBlock Text="TP(KK) " FontWeight="Bold" />
+                                                                                            <TextBlock Text="{Binding TPKKBonus}" Margin="2,0,0,0" />
+                                                                                        </StackPanel>
+                                                                                    </StackPanel.ToolTip>
+                                                                                    <TextBlock Text="TP " FontWeight="Bold" />
+                                                                                    <TextBlock Text="{Binding TPString}" Margin="2,0,0,0" />
+                                                                                </StackPanel>
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <TextBlock Text="DK " FontWeight="Bold" Margin="20,0,0,0" />
+                                                                                    <TextBlock Text="{Binding Distanzklasse}" Margin="2,0,0,0" />
+                                                                                </StackPanel>
+                                                                            </StackPanel>
                                                                         </StackPanel>
-                                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding HatAttacke, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
-                                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert"
-                                                                                  StartWert="{Binding AttackeBasisOhneMod}" Wert="{Binding Attacke}" />
+                                                                    </DataTemplate>
+                                                                </ListBox.ItemTemplate>
+                                                            </ListBox>
+                                                            <ListBox ItemsSource="{Binding Path=Fernkampfwaffen, IsAsync=True}" Background="Transparent">
+                                                                <ListBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <TextBlock Text="{Binding Name}" MinWidth="150" />
+                                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40">
+                                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/fernkampf.png" Height="14" Width="14" />
+                                                                                <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeFK}" WertName="AT-Wert"
+                                                                                  StartWert="{Binding FernkampfOhneMod}" Wert="{Binding AT}" />
+                                                                            </StackPanel>
+                                                                            <StackPanel Orientation="Horizontal" Margin="25,0,0,0">
+                                                                                <TextBlock Text="TP " FontWeight="Bold" />
+                                                                                <TextBlock Text="{Binding TPString}" Margin="2,0,0,0" />
+                                                                                <TextBlock Text="Reichweite " FontWeight="Bold" Margin="20,0,0,0" />
+                                                                                <TextBlock Text="{Binding Reichweiten}" Margin="2,0,0,0" />
+                                                                            </StackPanel>
                                                                         </StackPanel>
-                                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinWidth="40" Visibility="{Binding HatParade, Converter={StaticResource BooleanToVisibilityConverter1}}">
-                                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="2,0,0,0" Height="14" Width="14" />
-                                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert"
-                                                                                  StartWert="{Binding ParadeBasisOhneMod}" Wert="{Binding Parade}" />
-                                                                        </StackPanel>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </ListBox.ItemTemplate>
-                                                        </ListBox>
+                                                                    </DataTemplate>
+                                                                </ListBox.ItemTemplate>
+                                                            </ListBox>
+                                                        </StackPanel>
                                                     </DataTemplate>
                                                     <DataTemplate DataType="{x:Type model:Gegner}">
                                                         <ListBox ItemsSource="{Binding Path=Angriffe, IsAsync=True}" Background="Transparent">

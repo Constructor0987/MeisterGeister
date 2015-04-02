@@ -236,15 +236,20 @@ namespace MeisterGeister.Logic.Einstellung
             }
         }
 
+        // TODO: Einstellung wird gecached, um Absturz bei Poben zu verhindern. Da sich dadurch die Einstellung nach Änderung ggf. nicht mehr aktuell sein könnte, sollte das Caching noch überarbeitet werden.
+        private static Nullable<bool> _cached_WundenVerändernWundschwelle = null;
         public static bool WundenVerändernWundschwelle
         {
             get
             {
-                return GetEinstellung<bool>("WundenVerändernWundschwelle");
+                if (_cached_WundenVerändernWundschwelle == null)
+                    _cached_WundenVerändernWundschwelle = GetEinstellung<bool>("WundenVerändernWundschwelle");
+                return _cached_WundenVerändernWundschwelle.GetValueOrDefault();
             }
             set
             {
                 SetEinstellung<bool>("WundenVerändernWundschwelle", value);
+                _cached_WundenVerändernWundschwelle = value;
             }
         }
 
